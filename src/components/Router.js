@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
+//Poorly written examples to be removed
 const HomeScreen = (props) => (
   <TouchableOpacity
     style={styles.container}

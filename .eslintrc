@@ -1,0 +1,10 @@
+{
+  "extends": "rallycoding",
+  "rules": {
+    "arrow-body-style": 0,
+    "global-require": 0,
+    "prefer-template": 0,
+    "no-underscore-dangle": 0,
+    "react/sort-comp": 0
+  }
+}
