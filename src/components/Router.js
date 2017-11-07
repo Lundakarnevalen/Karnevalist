@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import CheckBox from './common/CheckBox';
 
 //Poorly written examples to be removed
 const HomeScreen = (props) => (
@@ -9,6 +10,7 @@ const HomeScreen = (props) => (
     onPress={() => props.navigation.navigate('ExampleScreenOne')}
   >
     <Text>Tryck var som för att navigera till nästa skärm!</Text>
+    <CheckBox title='Testing Checking' />
   </TouchableOpacity>
 );
 
@@ -30,7 +32,6 @@ const Router = StackNavigator({
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'green'
