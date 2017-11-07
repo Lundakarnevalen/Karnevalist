@@ -5,7 +5,6 @@ class Input extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
       borderColor: '#000'
     }
   }
@@ -38,14 +37,14 @@ class Input extends Component {
 
   render() {
     const { inputStyle } = styles
-    const { width, placeholder, secureText, autoCorrect = false } = this.props
+    const { value, width, placeholder, secureText, autoCorrect = false } = this.props
     return (
       <View>
         {this.getTitle()}
         <TextInput
           onBlur={() => this.onBlur()}
-          onChangeText={(value) => this.setState({ value })}
-          value={this.state.value}
+          onChangeText={(text) => this.props.onChangeText(text)}
+          value={value}
           placeholder={placeholder}
           style={[inputStyle, { width, borderColor: this.state.borderColor }]}
           secureTextEntry={secureText}
