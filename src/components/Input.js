@@ -24,7 +24,8 @@ class Input extends Component {
   }
 
   onBlur() {
-    if (this.state.value === '') {
+    const { value } = this.props
+    if (value === '') {
       this.setState({
         borderColor: 'red'
       })
@@ -70,7 +71,7 @@ const styles = {
     backgroundColor: '#ecf0f1',
     borderRadius: 6,
     borderWidth: 1
-	}
+  }
 }
 
 export default Input
