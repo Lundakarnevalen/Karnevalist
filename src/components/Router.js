@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import Dropdownpicker from './common/Dropdownpicker'
 
 //Poorly written examples to be removed
 const HomeScreen = (props) => (
@@ -15,7 +16,9 @@ const HomeScreen = (props) => (
 const ExampleScreenOne = () => (
   <View style={[styles.container, { backgroundColor: 'blue' }]}>
     <Text>Man kan dra för att gå tillbaka lol!</Text>
+    <Dropdownpicker items={[{ name: 'Hej' }, { name: '123' }]} />
   </View>
+
 );
 
 const Router = StackNavigator({
