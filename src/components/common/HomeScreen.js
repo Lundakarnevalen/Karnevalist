@@ -13,6 +13,8 @@ const HomeScreen = () => (
     <CustomButton
       color='#62EFCD'
       text='Skapa profil'
+      noBorder='true'
+      underline='true'
     />
   </View>
 );
