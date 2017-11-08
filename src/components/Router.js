@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import CustomButton from './common/CustomButton';
 
 //Poorly written examples to be removed
 const HomeScreen = (props) => (
@@ -8,13 +9,17 @@ const HomeScreen = (props) => (
     style={styles.container}
     onPress={() => props.navigation.navigate('ExampleScreenOne')}
   >
-    <Text>Tryck var som för att navigera till nästa skärm!</Text>
+  <Text>Tryck var som för att navigera till nästa skärm!</Text>
   </TouchableOpacity>
 );
 
-const ExampleScreenOne = () => (
+const ExampleScreenOne = (props) => (
   <View style={[styles.container, { backgroundColor: 'blue' }]}>
-    <Text>Man kan dra för att gå tillbaka lol!</Text>
+    <CustomButton
+      text='Tryck här för att gå tillbaka ;)'
+      color='orange'
+      onPress={() => props.navigation.navigate('HomeScreen')}
+    />
   </View>
 );
 
@@ -30,7 +35,6 @@ const Router = StackNavigator({
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'green'
