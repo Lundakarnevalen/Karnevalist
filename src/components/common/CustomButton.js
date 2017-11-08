@@ -13,7 +13,7 @@ const CustomButton = (props) => {
 
 const getWidth = (width) => {
   if (typeof width === 'undefined') {
-    return { width: Dimensions.get('window').width };
+    return { width: Dimensions.get('window').width / 2 };
   }
   return { width };
 };
