@@ -13,10 +13,9 @@ const HomeScreen = (props) => (
   </TouchableOpacity>
 );
 
-const ExampleScreenOne = () => (
+const ExampleScreenOne = (props) => (
   <View style={[styles.container, { backgroundColor: 'blue' }]}>
-    <Text>Man kan dra för att gå tillbaka lol!</Text>
-    <CustomButton text='Knapp ;)' width={200} height={40}/>
+    <CustomButton text='Tryck här för att gå tillbaka ;)' color='orange' onPress={() => props.navigation.navigate('HomeScreen')}/>
   </View>
 );
 
