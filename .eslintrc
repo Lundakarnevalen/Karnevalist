@@ -5,6 +5,7 @@
     "global-require": 0,
     "prefer-template": 0,
     "no-underscore-dangle": 0,
-    "react/sort-comp": 0
+    "react/sort-comp": 0,
+    "semi": 0
   }
 }
