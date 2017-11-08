@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Dropdownpicker from './common/Dropdownpicker'
+import ModalPicker from './common/ModalPicker'
 
 //Poorly written examples to be removed
 const HomeScreen = (props) => (
@@ -13,10 +14,10 @@ const HomeScreen = (props) => (
   </TouchableOpacity>
 );
 
-const ExampleScreenOne = () => (
+const ExampleScreenOne = (props) => (
   <View style={[styles.container, { backgroundColor: 'blue' }]}>
     <Text>Man kan dra för att gå tillbaka lol!</Text>
-    <Dropdownpicker items={[{ name: 'Hej' }, { name: '123' }]} />
+    <Dropdownpicker navigation={props.navigation} items={['hej','bra', 'skit', '123']} />
   </View>
 
 );
@@ -27,6 +28,9 @@ const Router = StackNavigator({
   },
   ExampleScreenOne: {
     screen: ExampleScreenOne
+  },
+  ModalDropDownPicker: {
+    screen: ModalPicker
   }
 });
 

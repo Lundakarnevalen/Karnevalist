@@ -1,59 +1,67 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Alert, Dimensions, Text, ListView } from 'react-native';
+import { Modal, Image, TouchableOpacity, View, Alert, Dimensions, Text, ListView } from 'react-native';
+import ModalPicker from './ModalPicker'
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
+
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 class Dropdownpicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'default',
+      value: 'Choose a value',
       isOpen: false,
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      dataSource: ds.cloneWithRows(['row 1', 'row 2', 'row 3', 'row 4', 'row 5', 'row 6']),
     };
   }
-//Possible to change mode in Android: dropdown or dialog
-
-  openListView() {
-    Alert.alert('Alert Title')
-  }
-  renderList() {
-    if (this.state.isOpen) {
-      return (
-        <View
-        style={{
-          width: WIDTH,
-          height: HEIGHT,
-          backgroundColor: 'white',
-          zIndex: 2,
-          top: 0,
-          left: 0,
-          position: 'absolute' }}
-        >
-          <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(rowData) => <Text>{rowData}</Text>}
-          />
-        </View>);
-    }
+  setValue(value) {
+    this.setState({ value })
   }
 
   render() {
+    if (this.props.navigation)
     return (
       <View>
-        <TouchableOpacity onPress={() => this.setState({ isOpen: true })}>
-        <Text>Press me!</Text>
+        <TouchableOpacity
+        style={styles.container}
+          onPress={() =>
+          this.props.navigation.navigate('ModalDropDownPicker',
+            {
+            items: this.props.items,
+            setValue: (value) => this.setValue(value)
+          }
+        )}
+        >
+        <Text style={styles.textStyle}>{this.state.value}</Text>
+        <Image
+          style={{ width: 50, height: 50 }}
+          source={require('./images/dropdownarrow.png')}
+        />
         </TouchableOpacity>
-        { this.renderList() }
       </View>
     );
+    return (
+      <View>
+      {Alert.alert('Needs navigation as prop')}
+      </View>
+    )
   }
 }
 
 const styles = {
   container: {
-    flex: 1,
+    minWidth: WIDTH / 3,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 6,
+    borderWidth: 1
+  },
+  textStyle: {
+    fontSize: 20,
+    textDecorationLine: 'underline'
   }
 };
 export default Dropdownpicker
