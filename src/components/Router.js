@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import CustomButton from './common/CustomButton';
+import Header from './common/Header';
 
 //Poorly written examples to be removed
 const HomeScreen = (props) => (
@@ -15,6 +16,7 @@ const HomeScreen = (props) => (
 
 const ExampleScreenOne = (props) => (
   <View style={[styles.container, { backgroundColor: 'blue' }]}>
+    <Header title={'test'} />
     <CustomButton
       text='Tryck här för att gå tillbaka ;)'
       color='orange'
@@ -36,7 +38,6 @@ const styles = {
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'green'
   },
 };
