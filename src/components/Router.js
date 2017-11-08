@@ -1,5 +1,3 @@
-import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import CustomButton from './common/CustomButton';
 import Header from './common/Header';
