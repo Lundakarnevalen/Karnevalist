@@ -1,34 +1,35 @@
 import React from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
 
-const CustomButton = (props) => (
-  <TouchableOpacity
-    onPress={props.onPress}
-    style={[styles.container, getWidth(props.width), getHeight(props.height), getColor(props.color)]}
+const CustomButton = (props) => {
+  const { width, height, onPress, color, text } = props;
+  return (<TouchableOpacity
+    onPress={onPress}
+    style={[styles.container, getWidth(width), getHeight(height), getColor(color)]}
   >
-    <Text>{props.text}</Text>
-  </TouchableOpacity>
-);
+    <Text>{text}</Text>
+  </TouchableOpacity>);
+};
 
 const getWidth = (width) => {
   if (typeof width === 'undefined') {
-    return {width: Dimensions.get('window').width};
+    return { width: Dimensions.get('window').width };
   }
-  return {width: width};
+  return { width };
 };
 
 const getHeight = (height) => {
   if (typeof height === 'undefined') {
-    return {height: Dimensions.get('window').height/20};
+    return { height: Dimensions.get('window').height / 20 };
   }
-  return {height: height};
+  return { height };
 };
 
 const getColor = (color) => {
   if (typeof color === 'undefined') {
-    return {backgroundColor: 'red'};
+    return { backgroundColor: 'red' };
   }
-  return {backgroundColor: color};
+  return { backgroundColor: color };
 };
 
 const styles = {

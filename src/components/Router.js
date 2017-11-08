@@ -15,7 +15,11 @@ const HomeScreen = (props) => (
 
 const ExampleScreenOne = (props) => (
   <View style={[styles.container, { backgroundColor: 'blue' }]}>
-    <CustomButton text='Tryck här för att gå tillbaka ;)' color='orange' onPress={() => props.navigation.navigate('HomeScreen')}/>
+    <CustomButton
+      text='Tryck här för att gå tillbaka ;)'
+      color='orange'
+      onPress={() => props.navigation.navigate('HomeScreen')}
+    />
   </View>
 );
 
@@ -31,7 +35,6 @@ const Router = StackNavigator({
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'green'
