@@ -15,7 +15,7 @@ const CustomButton = (props) => {
         ]}
     >
     <Text 
-      style={[getUnderline(underline), getTextColor(textColor)]}
+      style={[getUnderline(underline), getTextColor(textColor), styles.text]}
     >
       {text}
     </Text>
