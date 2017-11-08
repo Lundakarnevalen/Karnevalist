@@ -13,11 +13,13 @@ const HomeScreen = (props) => (
     <Text>Tryck var som för att navigera till nästa skärm!</Text>
   </TouchableOpacity>
 );
+const exampleArray = []
+for (let i = 0; i < 25; i++) exampleArray.push('Option' + i)
 
 const ExampleScreenOne = (props) => (
   <View style={[styles.container, { backgroundColor: 'blue' }]}>
     <Text>Man kan dra för att gå tillbaka lol!</Text>
-    <Dropdownpicker navigation={props.navigation} items={['hej','bra', 'skit', '123']} />
+    <Dropdownpicker navigation={props.navigation} items={exampleArray} />
   </View>
 
 );
