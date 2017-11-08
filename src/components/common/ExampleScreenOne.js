@@ -1,9 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import CustomButton from './CustomButton';
+import Header from './Header';
 
 const ExampleScreenOne = (props) => (
   <View style={[styles.container, { backgroundColor: 'blue' }]}>
+  <Header title={'test'} />
     <CustomButton
       text='Tryck här för att gå tillbaka ;)'
       color='orange'

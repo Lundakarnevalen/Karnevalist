@@ -2,12 +2,23 @@ import React from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
 
 const CustomButton = (props) => {
-  const { width, height, onPress, color, text } = props;
-  return (<TouchableOpacity
-    onPress={onPress}
-    style={[styles.container, getWidth(width), getHeight(height), getColor(color)]}
-  >
-    <Text>{text}</Text>
+  const { width, height, onPress, color, text, noBorder, underline, textColor } = props;
+  return (
+    <TouchableOpacity 
+      onPress={onPress} 
+      style={[
+        styles.button,
+        getWidth(width),
+        getHeight(height),
+        getColor(color),
+        getNoBorder(noBorder)
+        ]}
+    >
+    <Text 
+      style={[getUnderline(underline), getTextColor(textColor)]}
+    >
+      {text}
+    </Text>
   </TouchableOpacity>);
 };
 
@@ -32,11 +43,34 @@ const getColor = (backgroundColor) => {
   return { backgroundColor };
 };
 
+const getNoBorder = (noBorder) => {
+  if (typeof noBorder === 'undefined') {
+    return { borderWidth: 2 };
+  }
+  return { 
+    borderWidth: 0,
+    backgroundColor: 'transparent'
+  };
+};
+
+const getUnderline = (underline) => {
+  if (typeof underline === 'undefined') {
+    return { textDecorationLine: 'none' };
+  }
+  return { textDecorationLine: 'underline' };
+};
+
+const getTextColor = (textColor) => {
+  if (typeof textColor === 'undefined') {
+    return { color: 'black' };
+  }
+  return { color: textColor };
+};
+
 const styles = {
-  container: {
+  button: {
     marginTop: 10,
     marginBottom: 10,
-    borderWidth: 2,
     borderColor: 'black',
     borderRadius: 10,
     alignItems: 'center',
