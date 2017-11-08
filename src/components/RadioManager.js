@@ -11,6 +11,7 @@ class RadioManager extends Component {
         };
         this.buttonInputVector = this.props.buttonInputVector;
         this.length = this.buttonInputVector.length;
+        this.markedButtons = [];
     }
 
     createButton(name, id) {
@@ -26,16 +27,29 @@ class RadioManager extends Component {
         }
 
         whenPressed(id) {
-            if (this.props.unCheckable) {
+            if (this.props.unCheckable && this.props.multipleChoice) {  //checkBox
+                if (this.state.currentlyPressed !== id) {
+                    this.setState({ currentlyPressed: id });
+                    this.markedButtons.push(id);
+                    console.log(this.markedButtons.length);
+                } else {
+                    const index = this.markedButtons.indexOf(id);
+                    this.markedButtons.splice(index, 1);
+                    this.setState({ currentlyPressed: null });
+                    console.log(this.markedButtons.length);
+                }
+            }
+            if (this.props.unCheckable && !this.props.multipleChoice) {    //radio
                 if (this.state.currentlyPressed !== id) {
                     this.setState({ currentlyPressed: id });
                 } else {
                     this.setState({ currentlyPressed: null });
                 }
-            } else {
+            }
+            if (!this.props.unCheckable && !this.props.multipleChoice) {
                 this.setState({ currentlyPressed: id });
             }
-        }
+    }
 
         addButtons() {
             const buttons = [];
@@ -43,6 +57,16 @@ class RadioManager extends Component {
                 buttons.push(this.createButton(this.buttonInputVector[i], i));
             }
             return buttons;
+        }
+
+        contains(a, obj) {
+            let i = a.length;
+            while (i--) {
+                if (a[i] === obj) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         render() {
