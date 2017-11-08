@@ -26,7 +26,7 @@ const getHeight = (height) => {
 };
 
 const getColor = (backgroundColor) => {
-  if (typeof color === 'undefined') {
+  if (typeof backgroundColor === 'undefined') {
     return { backgroundColor: 'red' };
   }
   return { backgroundColor };
