@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
 
 const CustomButton = (props) => {
-  const { width, height, onPress, color, text, noBorder, underline } = props;
+  const { width, height, onPress, color, text, noBorder, underline, textColor } = props;
   return (
     <TouchableOpacity 
       onPress={onPress} 
@@ -14,7 +14,11 @@ const CustomButton = (props) => {
         getNoBorder(noBorder)
         ]}
     >
-    <Text style={getUnderline(underline)}>{text}</Text>
+    <Text 
+      style={[getUnderline(underline), getTextColor(textColor)]}
+    >
+      {text}
+    </Text>
   </TouchableOpacity>);
 };
 
@@ -54,6 +58,13 @@ const getUnderline = (underline) => {
     return { textDecorationLine: 'none' };
   }
   return { textDecorationLine: 'underline' };
+};
+
+const getTextColor = (textColor) => {
+  if (typeof textColor === 'undefined') {
+    return { color: 'black' };
+  }
+  return { color: textColor };
 };
 
 const styles = {
