@@ -25,11 +25,11 @@ const getHeight = (height) => {
   return { height };
 };
 
-const getColor = (color) => {
+const getColor = (backgroundColor) => {
   if (typeof color === 'undefined') {
     return { backgroundColor: 'red' };
   }
-  return { backgroundColor: color };
+  return { backgroundColor };
 };
 
 const styles = {

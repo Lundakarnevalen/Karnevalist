@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import CustomButton from './CustomButton';
+import CustomButton from './common/CustomButton';
 
 //Poorly written examples to be removed
 const HomeScreen = (props) => (
