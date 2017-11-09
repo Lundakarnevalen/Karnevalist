@@ -8,7 +8,7 @@ class Dropdownpicker extends Component {
       value: props.default || 'Choose a value',
     };
   }
-  setValue(value) {
+  onChange(value) {
     this.setState({ value })
     this.props.onChange(value)
   }
@@ -16,27 +16,29 @@ class Dropdownpicker extends Component {
   render() {
     const propsStyle = this.props.style || {}
     const propsImageStyle = this.props.imageStyle || {}
+    const propsTextStyle = this.props.textStyle || {}
     if (this.props.navigation) {
       return (
-        <View >
+        <View>
           <TouchableOpacity
           style={[styles.container, propsStyle]}
-            onPress={() =>
-              this.props.navigation.navigate('DropdownPickerScreen',
-                {
+          onPress={() =>
+            this.props.navigation.navigate(
+              'DropdownPickerScreen',
+              {
                 items: this.props.items,
-                setValue: (value) => this.setValue(value),
+                onChange: (value) => this.onChange(value),
                 listStyle: this.props.listStyle,
                 pickerItemStyle: this.props.pickerItemStyle
-                }
-              )
-            }
+              }
+            )
+          }
           >
-          <Text style={styles.textStyle}>{ this.state.value }</Text>
-          <Image
-            style={[styles.imageStyle, propsImageStyle]}
-            source={require('./images/dropdownarrow.png')}
-          />
+            <Text style={[styles.textStyle, propsTextStyle]}>{ this.state.value }</Text>
+            <Image
+              style={[styles.imageStyle, propsImageStyle]}
+              source={require('./images/dropdownarrow.png')}
+            />
           </TouchableOpacity>
         </View>
       )

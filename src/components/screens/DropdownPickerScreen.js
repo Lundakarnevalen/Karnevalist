@@ -6,18 +6,20 @@ const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 class DropdownPickerScreen extends Component {
   constructor(props) {
     super(props)
-    const { items } = props.navigation.state.params
+    const items = props.navigation.state.params.items || ['']
     this.state = {
       isOpen: false,
       dataSource: ds.cloneWithRows(items),
     };
   }
-  setValue(value) {
+
+  onPress(value) {
     const { goBack } = this.props.navigation;
-    const { setValue } = this.props.navigation.state.params;
-    setValue(value)
+    const { onChange } = this.props.navigation.state.params;
+    onChange(value)
     goBack(null)
   }
+
   render() {
     const { params } = this.props.navigation.state
     const propsItemStyle = params.pickerItemStyle || {}
@@ -28,14 +30,14 @@ class DropdownPickerScreen extends Component {
         dataSource={this.state.dataSource}
         renderRow={(rowData) =>
           <TouchableOpacity
-          onPress={() => this.setValue(rowData)}
+          onPress={() => this.onPress(rowData)}
           >
             <Text
             style={[styles.textStyle, propsItemStyle]}
             >
             {rowData}
             </Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
           }
         />
       </View>
