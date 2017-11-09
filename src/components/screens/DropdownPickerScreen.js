@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, View, Text, ListView } from 'react-native';
 
-
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
-class ModalPicker extends Component {
+class DropdownPickerScreen extends Component {
   constructor(props) {
     super(props)
     const { items } = props.navigation.state.params
     this.state = {
-      value: 'default',
       isOpen: false,
       dataSource: ds.cloneWithRows(items),
     };
@@ -21,8 +19,11 @@ class ModalPicker extends Component {
     goBack(null)
   }
   render() {
+    const { params } = this.props.navigation.state
+    const propsItemStyle = params.pickerItemStyle || {}
+    const propsStyle = params.listStyle || {}
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, propsStyle]}>
         <ListView
         dataSource={this.state.dataSource}
         renderRow={(rowData) =>
@@ -30,7 +31,7 @@ class ModalPicker extends Component {
           onPress={() => this.setValue(rowData)}
           >
             <Text
-            style={styles.textStyle}
+            style={[styles.textStyle, propsItemStyle]}
             >
             {rowData}
             </Text>
@@ -55,4 +56,4 @@ const styles = {
   }
 };
 
-export default ModalPicker
+export default DropdownPickerScreen
