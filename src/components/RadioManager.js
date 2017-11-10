@@ -7,7 +7,7 @@ class RadioManager extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentlyPressed: null
+            currentlyPressedButtons: null
         };
         this.buttonInputVector = this.props.buttonInputVector;
         this.length = this.buttonInputVector.length;
@@ -21,16 +21,16 @@ class RadioManager extends Component {
             key={name}
             multipleChoice={this.props.multipleChoice}  //TODO
             unCheckable={this.props.unCheckable}
-            isPressed={id === this.state.currentlyPressed}
+            isPressed={this.contains(this.markedButtons, id)}
             onPress={() => this.whenPressed(id)}
             />);
         }
 
         whenPressed(id) {
             if (this.props.unCheckable && this.props.multipleChoice) {  //checkBox
-                if (this.state.currentlyPressed !== id) {
-                    this.setState({ currentlyPressed: id });
+                if (!this.contains(this.markedButtons, id)) {
                     this.markedButtons.push(id);
+                    this.setState({ currentlyPressed: id });
                     console.log(this.markedButtons.length);
                 } else {
                     const index = this.markedButtons.indexOf(id);
@@ -40,16 +40,25 @@ class RadioManager extends Component {
                 }
             }
             if (this.props.unCheckable && !this.props.multipleChoice) {    //radio
-                if (this.state.currentlyPressed !== id) {
+                if (!this.contains(this.markedButtons, id) && this.markedButtons.length === 0) {
+                    this.markedButtons.push(id);
                     this.setState({ currentlyPressed: id });
                 } else {
+                    const index = this.markedButtons.indexOf(id);
+                    this.markedButtons.splice(index, 1);
                     this.setState({ currentlyPressed: null });
+                    this.markedButtons.push(id);
+                    this.setState({ currentlyPressed: id });
                 }
             }
             if (!this.props.unCheckable && !this.props.multipleChoice) {
+                if (this.markedButtons.length === 0) {
+                this.markedButtons.push(id);
                 this.setState({ currentlyPressed: id });
             }
+        }
     }
+
 
         addButtons() {
             const buttons = [];
