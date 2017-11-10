@@ -8,11 +8,11 @@ const CustomButton = (props) => {
       onPress={onPress} 
       style={[
         styles.button,
-        getWidth(width),
-        getHeight(height),
+        getWidth(width, noBorder),
+        getHeight(height, noBorder),
         getColor(color),
         getNoBorder(noBorder)
-        ]}
+      ]}
     >
     <Text 
       style={[getUnderline(underline), getTextColor(textColor), styles.text]}
@@ -22,15 +22,21 @@ const CustomButton = (props) => {
   </TouchableOpacity>);
 };
 
-const getWidth = (width) => {
+const getWidth = (width, noBorder) => {
   if (typeof width === 'undefined') {
+    if (typeof noBorder !== 'undefined') {
+      return { borderWidth: 0 };
+    }
     return { width: Dimensions.get('window').width / 2 };
   }
   return { width };
 };
 
-const getHeight = (height) => {
+const getHeight = (height, noBorder) => {
   if (typeof height === 'undefined') {
+    if (typeof noBorder !== 'undefined') {
+      return { borderWidth: 0 };
+    }
     return { height: Dimensions.get('window').height / 20 };
   }
   return { height };
@@ -69,8 +75,7 @@ const getTextColor = (textColor) => {
 
 const styles = {
   button: {
-    marginTop: 10,
-    marginBottom: 10,
+    margin: 10,
     borderColor: 'black',
     borderRadius: 10,
     alignItems: 'center',

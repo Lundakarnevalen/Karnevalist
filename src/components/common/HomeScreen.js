@@ -49,7 +49,9 @@ const styles = {
   },
   container2: {
     flex: 0,
-    margin: 0
+    margin: 0,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
   }
 };
 
