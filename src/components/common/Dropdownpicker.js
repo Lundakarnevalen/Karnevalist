@@ -8,35 +8,35 @@ class Dropdownpicker extends Component {
       value: props.default || 'Choose a value',
     };
   }
+
   onChange(value) {
     this.setState({ value })
     this.props.onChange(value)
   }
 
   render() {
-    const propsStyle = this.props.style || {}
-    const propsImageStyle = this.props.imageStyle || {}
-    const propsTextStyle = this.props.textStyle || {}
-    if (this.props.navigation) {
+    const { imageStyle, textStyle, items, style, pickerItemStyle, listStyle, navigation } = this.props
+    const { container, defaultTextStyle, defaultImageStyle } = styles
+    if (navigation) {
       return (
         <View>
           <TouchableOpacity
-          style={[styles.container, propsStyle]}
+          style={[container, style]}
           onPress={() =>
-            this.props.navigation.navigate(
-              'DropdownPickerScreen',
+            navigation.navigate(
+              'DropdownPickerModal',
               {
-                items: this.props.items,
+                items: items,
                 onChange: (value) => this.onChange(value),
-                listStyle: this.props.listStyle,
-                pickerItemStyle: this.props.pickerItemStyle
+                listStyle: listStyle,
+                pickerItemStyle: pickerItemStyle
               }
             )
           }
           >
-            <Text style={[styles.textStyle, propsTextStyle]}>{ this.state.value }</Text>
+            <Text style={[defaultTextStyle, textStyle]}>{ this.state.value }</Text>
             <Image
-              style={[styles.imageStyle, propsImageStyle]}
+              style={[defaultImageStyle, imageStyle]}
               source={require('./images/dropdownarrow.png')}
             />
           </TouchableOpacity>
@@ -45,10 +45,11 @@ class Dropdownpicker extends Component {
     }
     return (
       <View style={{ borderRadius: 3 }}>
-      <Text
-      style={{ color: 'red', backgroundColor: 'white' }}
-      >
-      Dropdownpicker needs navigation as prop to work</Text>
+        <Text
+        style={{ color: 'red', backgroundColor: 'white' }}
+        >
+        Dropdownpicker needs navigation as prop to work
+        </Text>
       </View>
     )
   }
@@ -63,12 +64,13 @@ const styles = {
     padding: 3,
     borderWidth: 1,
   },
-  textStyle: {
+  defaultTextStyle: {
     fontSize: 20,
     textDecorationLine: 'underline'
   },
-  imageStyle: {
+  defaultImageStyle: {
     width: 30,
-    height: 30 }
+    height: 30
+  }
 };
 export default Dropdownpicker

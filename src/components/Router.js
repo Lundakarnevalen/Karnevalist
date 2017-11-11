@@ -10,9 +10,9 @@ const Router = StackNavigator({
   ExampleScreenOne: {
     screen: ExampleScreenOne
   },
-  DropdownPickerScreen: {
-      screen: DropdownPickerScreen
-    }
+  DropdownPickerModal: {
+    screen: DropdownPickerScreen
+  }
 });
 
 export default Router;

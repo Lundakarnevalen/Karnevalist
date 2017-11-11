@@ -14,18 +14,16 @@ class DropdownPickerScreen extends Component {
   }
 
   onPress(value) {
-    const { goBack } = this.props.navigation;
     const { onChange } = this.props.navigation.state.params;
     onChange(value)
-    goBack(null)
+    this.props.navigation.goBack(null);
   }
 
   render() {
-    const { params } = this.props.navigation.state
-    const propsItemStyle = params.pickerItemStyle || {}
-    const propsStyle = params.listStyle || {}
+    const { pickerItemStyle, listStyle } = this.props.navigation.state.params
+    const { container, defaultItemStyle } = styles
     return (
-      <View style={[styles.container, propsStyle]}>
+      <View style={[container, listStyle]}>
         <ListView
         dataSource={this.state.dataSource}
         renderRow={(rowData) =>
@@ -33,7 +31,7 @@ class DropdownPickerScreen extends Component {
           onPress={() => this.onPress(rowData)}
           >
             <Text
-            style={[styles.textStyle, propsItemStyle]}
+            style={[defaultItemStyle, pickerItemStyle]}
             >
             {rowData}
             </Text>
@@ -48,7 +46,8 @@ const styles = {
   container: {
     backgroundColor: 'white'
   },
-  textStyle: {
+  defaultItemStyle: {
+    backgroundColor: 'white',
     borderBottomWidth: 1,
     borderBottomColor: '#d3d3d3',
     textAlign: 'center',
