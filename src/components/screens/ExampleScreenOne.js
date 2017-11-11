@@ -18,10 +18,11 @@ const ExampleScreenOne = (props) => (
       default="This is now default"
       navigation={props.navigation}
       items={exampleArray}
-      style={{ width: 250, borderRadius: 10, backgroundColor: 'lightblue' }}
+      style={{ width: 225, borderRadius: 10, backgroundColor: 'lightblue' }}
       textStyle={{ color: 'black' }}
       listStyle={{ backgroundColor: 'lightgrey' }}
       pickerItemStyle={{ backgroundColor: 'white', color: 'green' }}
+      imageStyle={{ paddingLeft: 10, color: 'blue', fontSize: 25 }}
       onChange={(value) => Alert.alert('You chose ' + value)}
     />
   </View>

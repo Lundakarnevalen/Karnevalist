@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 class Dropdownpicker extends Component {
   constructor(props) {
@@ -35,9 +36,9 @@ class Dropdownpicker extends Component {
           }
           >
             <Text style={[defaultTextStyle, textStyle]}>{ this.state.value }</Text>
-            <Image
-              style={[defaultImageStyle, imageStyle]}
-              source={require('./images/dropdownarrow.png')}
+            <Ionicons
+            style={[defaultImageStyle, imageStyle]}
+            name="ios-arrow-dropdown-circle"
             />
           </TouchableOpacity>
         </View>
@@ -69,8 +70,9 @@ const styles = {
     textDecorationLine: 'underline'
   },
   defaultImageStyle: {
-    width: 30,
-    height: 30
-  }
+    padding: 5,
+    fontSize: 27
+  },
+
 };
 export default Dropdownpicker
