@@ -24,62 +24,65 @@ class RegistrationPage extends Component {
   render() {
     console.log(this.state.firstName)
     console.log(this.state.lastName)
+    const { flexHorizontal } = styles;
     return (
       <View>
         <Header title='Create Profile' />
         <Input
         title='First name*'
-        onChangeText={(firstName) => {
-            this.setState({ firstName: firstName })
+        onChangeText={(firstNameInput) => {
+            this.setState({ firstName: firstNameInput })
           }
         }
         />
         <Input
         title='Last name*'
-        onChangeText={(lastName) => {
-            this.setState({ lastName: lastName })
+        onChangeText={(lastNameInput) => {
+            this.setState({ lastName: lastNameInput })
           }
         }
         />
         <Input
         title='Email*'
-        onChangeText={(email) => {
-            this.setState({ email: email })
+        onChangeText={(emailInput) => {
+            this.setState({ email: emailInput })
           }
         }
         />
         <Input
         title='Confirm email*'
-        onChangeText={(email) => {
-            this.setState({ confirmedEmail: email })
+        onChangeText={(emailInput) => {
+            this.setState({ confirmedEmail: emailInput })
           }
         }
         />
         <Input
         title='Address*'
-        onChangeText={(address) => {
-            this.setState({ address: address })
+        onChangeText={(addressInput) => {
+            this.setState({ address: addressInput })
           }
         }
         />
-        <Input
-        title='Postcode*'
-        onChangeText={(postcode) => {
-            this.setState({ postcode: postcode })
+        <View style={flexHorizontal}>
+          <Input
+          title='Postcode*'
+          onChangeText={(postcodeInput) => {
+              this.setState({ postcode: postcodeInput })
+            }
           }
-        }
-        />
-        <Input
-        title='City*'
-        onChangeText={(city) => {
-            this.setState({ city: city })
+          />
+          <Input
+          title='City*'
+          onChangeText={(cityInput) => {
+              this.setState({ city: cityInput })
+            }
           }
-        }
-        />
+          />
+        </View>
         <Input
         title='Phone number*'
-        onChangeText={(phoneNbr) => {
-            this.setState({ phoneNbr: phoneNbr })
+        onChangeText={(phoneNbrInput) => {
+            this.setState({ phoneNbr: phoneNbrInput })
           }
         }
         />
@@ -96,6 +99,11 @@ const styles = {
   },
   titelTextStyle: {
     fontSize: 40
+  },
+  flexHorizontal: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-between'
   }
 }
 
