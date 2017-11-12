@@ -3,13 +3,18 @@ import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
 
 const HomeScreen = () => (
-  <View style={{ backgroundColor: '#FF992C', flex: 1 }}>
+  <View style={{ backgroundColor: '#FFF', flex: 1 }}>
     <View style={styles.container2}>
       <CustomButton
         text='Change to English'
-        noBorder='true'
-        textColor='blue'
-        underline='true'
+        textStyle={{
+          color: 'blue',
+          textDecorationLine: 'underline'
+        }}
+        buttonStyle={{
+          backgroundColor: 'transparent',
+          borderWidth: 0
+        }}
       />
     </View>
     <View style={styles.container1}>
@@ -23,19 +28,40 @@ const HomeScreen = () => (
       />
       <Text>Logga in med ditt</Text>
       <CustomButton
-        color='#62EFCD'
         text='Personnummer'
+        textStyle={{
+          color: 'white',
+          fontSize: 20
+        }}
+        buttonStyle={{
+          backgroundColor: '#e600ac',
+          padding: 10,
+          width: Dimensions.get('window').width / 1.5
+        }}
       />
       <Text>eller</Text>
       <CustomButton
-        color='#62EFCD'
         text='Skapa profil'
+        textStyle={{
+          color: 'white',
+          fontSize: 20
+        }}
+        buttonStyle={{
+          backgroundColor: '#e600ac',
+          padding: 10,
+          width: Dimensions.get('window').width / 1.5
+        }}
       />
       <CustomButton
-        noBorder='true'
         text='Läs mer om registreringen'
-        underline='true'
-        textColor='blue'
+        textStyle={{
+          color: 'blue',
+          textDecorationLine: 'underline'
+        }}
+        buttonStyle={{
+          backgroundColor: 'transparent',
+          borderWidth: 0
+        }}
       />
     </View>
   </View>
