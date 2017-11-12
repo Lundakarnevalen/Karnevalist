@@ -1,38 +1,98 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
 
-const HomeScreen = (props) => (
-  <View style={[styles.container, { backgroundColor: '#FF992C' }]}>
-    <Text>Logga in med ditt</Text>
-    <CustomButton
-      color='#62EFCD'
-      text='Personnummer'
-    />
-    <Text>eller</Text>
-    <CustomButton
-      color='#62EFCD'
-      text='Skapa profil'
-      noBorder='true'
-      underline='true'
-      textColor='blue'
-    />
-    <TouchableOpacity
-    style={{ height: 50, backgroundColor: 'green' }}
-    onPress={() => props.navigation.navigate('ExampleScreenOne')}
-    >
-   <Text>Tryck här för att navigera till nästa skärm!</Text>
-   </TouchableOpacity>
+const HomeScreen = () => (
+  <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
+    <View style={styles.container2}>
+      <CustomButton
+        text='Change to English'
+        textStyle={{
+          color: 'blue',
+          textDecorationLine: 'underline'
+        }}
+        buttonStyle={{
+          backgroundColor: 'transparent',
+          borderWidth: 0
+        }}
+      />
+    </View>
+    <View style={styles.container1}>
+      <Image
+        style={{
+          marginBottom: Dimensions.get('window').height / 10,
+          width: Dimensions.get('window').width / 2,
+          height: Dimensions.get('window').width / 2
+        }}
+        source={require('../../../res/Karneval.png')}
+      />
+      <Text 
+        style={{
+          color: 'white',
+          fontSize: 20
+        }}
+      >
+        Logga in med ditt
+      </Text>
+      <CustomButton
+        text='Personnummer'
+        textStyle={{
+          color: 'white',
+          fontSize: 20
+        }}
+        buttonStyle={{
+          backgroundColor: '#e600ac',
+          padding: 10,
+          width: Dimensions.get('window').width / 1.5
+        }}
+      />
+      <Text 
+        style={{
+          color: 'white',
+          fontSize: 20
+        }}
+      >
+        eller
+      </Text>
+      <CustomButton
+        text='Skapa profil'
+        textStyle={{
+          color: 'white',
+          fontSize: 20
+        }}
+        buttonStyle={{
+          backgroundColor: '#e600ac',
+          padding: 10,
+          width: Dimensions.get('window').width / 1.5
+        }}
+      />
+      <CustomButton
+        text='Läs mer om registreringen'
+        textStyle={{
+          color: 'blue',
+          textDecorationLine: 'underline'
+        }}
+        buttonStyle={{
+          backgroundColor: 'transparent',
+          borderWidth: 0
+        }}
+      />
+    </View>
   </View>
 );
 
 const styles = {
-  container: {
+  container1: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'green'
+    justifyContent: 'center'
   },
+  container2: {
+    flex: 0,
+    margin: 0,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
+  }
 };
 
 export default HomeScreen;
