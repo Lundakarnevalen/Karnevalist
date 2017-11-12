@@ -3,7 +3,7 @@ import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
 
 const HomeScreen = () => (
-  <View style={{ backgroundColor: '#FFF', flex: 1 }}>
+  <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
     <View style={styles.container2}>
       <CustomButton
         text='Change to English'
@@ -26,7 +26,14 @@ const HomeScreen = () => (
         }}
         source={require('../../../res/Karneval.png')}
       />
-      <Text>Logga in med ditt</Text>
+      <Text 
+        style={{
+          color: 'white',
+          fontSize: 20
+        }}
+      >
+        Logga in med ditt
+      </Text>
       <CustomButton
         text='Personnummer'
         textStyle={{
@@ -39,7 +46,14 @@ const HomeScreen = () => (
           width: Dimensions.get('window').width / 1.5
         }}
       />
-      <Text>eller</Text>
+      <Text 
+        style={{
+          color: 'white',
+          fontSize: 20
+        }}
+      >
+        eller
+      </Text>
       <CustomButton
         text='Skapa profil'
         textStyle={{
