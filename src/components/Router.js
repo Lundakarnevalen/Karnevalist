@@ -1,22 +1,7 @@
-import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-
-//Poorly written examples to be removed
-const HomeScreen = (props) => (
-  <TouchableOpacity
-    style={styles.container}
-    onPress={() => props.navigation.navigate('ExampleScreenOne')}
-  >
-    <Text>Tryck var som för att navigera till nästa skärm!</Text>
-  </TouchableOpacity>
-);
-
-const ExampleScreenOne = () => (
-  <View style={[styles.container, { backgroundColor: 'blue' }]}>
-    <Text>Man kan dra för att gå tillbaka lol!</Text>
-  </View>
-);
+import HomeScreen from './screens/HomeScreen';
+import ExampleScreenOne from './screens/ExampleScreenOne';
+import DropdownPickerScreen from './screens/DropdownPickerScreen';
 
 const Router = StackNavigator({
   HomeScreen: {
@@ -24,17 +9,10 @@ const Router = StackNavigator({
   },
   ExampleScreenOne: {
     screen: ExampleScreenOne
+  },
+  DropdownPickerModal: {
+    screen: DropdownPickerScreen
   }
 });
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'green'
-  },
-};
 
 export default Router;
