@@ -1,6 +1,7 @@
 import { StackNavigator } from 'react-navigation';
-import HomeScreen from './common/HomeScreen';
-import ExampleScreenOne from './common/ExampleScreenOne';
+import HomeScreen from './screens/HomeScreen';
+import ExampleScreenOne from './screens/ExampleScreenOne';
+import DropdownPickerScreen from './screens/DropdownPickerScreen';
 
 const Router = StackNavigator({
   HomeScreen: {
@@ -8,6 +9,9 @@ const Router = StackNavigator({
   },
   ExampleScreenOne: {
     screen: ExampleScreenOne
+  },
+  DropdownPickerModal: {
+    screen: DropdownPickerScreen
   }
 });
 

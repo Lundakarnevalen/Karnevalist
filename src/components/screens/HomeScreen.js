@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image, Dimensions } from 'react-native';
-import CustomButton from './CustomButton';
+import CustomButton from '../common/CustomButton';
 
 const HomeScreen = () => (
   <View style={{ backgroundColor: '#FF992C', flex: 1 }}>
