@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import CustomButton from './CustomButton';
+import { Text, View, TouchableOpacity } from 'react-native';
+import CustomButton from '../common/CustomButton';
 
-const HomeScreen = () => (
+const HomeScreen = (props) => (
   <View style={[styles.container, { backgroundColor: '#FF992C' }]}>
     <Text>Logga in med ditt</Text>
     <CustomButton
@@ -17,6 +17,12 @@ const HomeScreen = () => (
       underline='true'
       textColor='blue'
     />
+    <TouchableOpacity
+    style={{ height: 50, backgroundColor: 'green' }}
+    onPress={() => props.navigation.navigate('ExampleScreenOne')}
+    >
+   <Text>Tryck här för att navigera till nästa skärm!</Text>
+   </TouchableOpacity>
   </View>
 );
 
