@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { ScrollView, View, Dimensions } from 'react-native'
 import Header from '../common/Header'
-import Input from '../Input'
+import Input from '../common/Input'
+import Dropdownpicker from '../common/Dropdownpicker'
+
+const width = Dimensions.get('window').width
 
 class RegistrationPage extends Component {
 
@@ -26,38 +29,38 @@ class RegistrationPage extends Component {
     console.log(this.state.lastName)
     const { flexHorizontal } = styles;
     return (
-      <View>
+      <ScrollView>
         <Header title='Create Profile' />
         <Input
-        title='First name*'
+        title='First name'
         onChangeText={(firstNameInput) => {
             this.setState({ firstName: firstNameInput })
           }
         }
         />
         <Input
-        title='Last name*'
+        title='Last name'
         onChangeText={(lastNameInput) => {
             this.setState({ lastName: lastNameInput })
           }
         }
         />
         <Input
-        title='Email*'
+        title='Email'
         onChangeText={(emailInput) => {
             this.setState({ email: emailInput })
           }
         }
         />
         <Input
-        title='Confirm email*'
+        title='Confirm email'
         onChangeText={(emailInput) => {
             this.setState({ confirmedEmail: emailInput })
           }
         }
         />
         <Input
-        title='Address*'
+        title='Address'
         onChangeText={(addressInput) => {
             this.setState({ address: addressInput })
           }
@@ -65,28 +68,50 @@ class RegistrationPage extends Component {
         />
         <View style={flexHorizontal}>
           <Input
-          title='Postcode*'
+          title='Postcode'
           onChangeText={(postcodeInput) => {
               this.setState({ postcode: postcodeInput })
             }
           }
+          width={width / 2}
           />
           <Input
-          title='City*'
+          title='City'
           onChangeText={(cityInput) => {
               this.setState({ city: cityInput })
             }
           }
+          width={width / 2}
           />
         </View>
         <Input
-        title='Phone number*'
+        title='Phone number'
         onChangeText={(phoneNbrInput) => {
             this.setState({ phoneNbr: phoneNbrInput })
           }
         }
         />
-      </View>
+        <Dropdownpicker
+          default="Matpreferenser"
+          navigation={this.props.navigation}
+          items={['Glutenfri', 'Vegan', 'Hästkött']}
+        />
+        <Dropdownpicker
+          default="Tröjstorlek"
+          navigation={this.props.navigation}
+          items={['S', 'M', 'L', 'XL', 'XXL']}
+        />
+        <Dropdownpicker
+          default="Jag är/har varit aktiv i kår..."
+          navigation={this.props.navigation}
+          items={['Teknologkåren', 'Något annat']}
+        />
+        <Dropdownpicker
+          default="Jag är/har varit aktiv i nation..."
+          navigation={this.props.navigation}
+          items={['Kalmar nation', 'Smålands', 'Lunds nation']}
+        />
+      </ScrollView>
     )
   }
 
@@ -101,9 +126,7 @@ const styles = {
     fontSize: 40
   },
   flexHorizontal: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between'
+    flexDirection: 'row'
   }
 }
 

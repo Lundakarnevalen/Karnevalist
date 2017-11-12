@@ -1,14 +1,20 @@
 import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen';
-import ExampleScreenOne from './screens/ExampleScreenOne';
+import RegistrationPage from './screens/RegistrationPage';
 import DropdownPickerScreen from './screens/DropdownPickerScreen';
 
 const Router = StackNavigator({
   HomeScreen: {
-    screen: HomeScreen
+    screen: HomeScreen,
+    navigationOptions: {
+      header: null
+    }
   },
-  ExampleScreenOne: {
-    screen: ExampleScreenOne
+  RegistrationPage: {
+    screen: RegistrationPage,
+    navigationOptions: {
+      header: null
+    }
   },
   DropdownPickerModal: {
     screen: DropdownPickerScreen

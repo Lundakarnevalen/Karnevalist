@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
 
-const HomeScreen = () => (
+const HomeScreen = (props) => (
   <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
     <View style={styles.container2}>
       <CustomButton
@@ -26,7 +26,7 @@ const HomeScreen = () => (
         }}
         source={require('../../../res/Karneval.png')}
       />
-      <Text 
+      <Text
         style={{
           color: 'white',
           fontSize: 20
@@ -46,7 +46,7 @@ const HomeScreen = () => (
           width: Dimensions.get('window').width / 1.5
         }}
       />
-      <Text 
+      <Text
         style={{
           color: 'white',
           fontSize: 20
@@ -65,6 +65,7 @@ const HomeScreen = () => (
           padding: 10,
           width: Dimensions.get('window').width / 1.5
         }}
+        onPress={() => props.navigation.navigate('RegistrationPage')}
       />
       <CustomButton
         text='Läs mer om registreringen'
