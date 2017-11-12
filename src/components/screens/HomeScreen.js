@@ -1,9 +1,16 @@
 import React from 'react';
-import { Text, View, Image, Dimensions } from 'react-native';
+import { Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import CustomButton from '../common/CustomButton';
+import Header from '../common/Header'
 
-const HomeScreen = () => (
+
+const HomeScreen = (props) => (
   <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
+    <Header
+    title="Example Screen"
+    style={{ height: 50 }}
+    leftIcon={null}
+    />
     <View style={styles.container2}>
       <CustomButton
         text='Change to English'
@@ -26,7 +33,12 @@ const HomeScreen = () => (
         }}
         source={require('../../../res/Karneval.png')}
       />
-      <Text 
+      <Text
+      onPress={() => props.navigation.navigate('ExampleScreenOne')}
+      >
+      Gå till testskärm
+      </Text>
+      <Text
         style={{
           color: 'white',
           fontSize: 20
@@ -46,7 +58,7 @@ const HomeScreen = () => (
           width: Dimensions.get('window').width / 1.5
         }}
       />
-      <Text 
+      <Text
         style={{
           color: 'white',
           fontSize: 20

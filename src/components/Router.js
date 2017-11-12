@@ -5,10 +5,16 @@ import DropdownPickerScreen from './screens/DropdownPickerScreen';
 
 const Router = StackNavigator({
   HomeScreen: {
-    screen: HomeScreen
+    screen: HomeScreen,
+    navigationOptions: {
+      header: null,
+    }
   },
   ExampleScreenOne: {
-    screen: ExampleScreenOne
+    screen: ExampleScreenOne,
+    navigationOptions: {
+      header: null,
+    }
   },
   DropdownPickerModal: {
     screen: DropdownPickerScreen
