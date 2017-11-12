@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
 
-let size = 0;
-
-class RadioButton extends Component {
+class RadioAndCheckButton extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isPressed: true
         };
-    }
-
-    componentWillMount() {
-        size = this.props.size;
-        console.log(size);
     }
 
     colorCheck() {
@@ -30,6 +24,28 @@ class RadioButton extends Component {
         return styles.multipleChoiceStyle.notPressedStyle;
     }
 
+    renderCheckbox() {
+        if (!this.props.isPressed) {
+            return (
+                <TouchableOpacity
+                style={[styles.notPressedStyle, { height: this.props.size, width: this.props.size }]}
+                onPress={this.props.onPress}
+                />
+            )
+        }
+        return (
+            <TouchableOpacity
+            style={[styles.notPressedStyle, { height: this.props.size, width: this.props.size }]}
+            onPress={this.props.onPress}
+            >
+                <Entypo
+                    name={['check']}
+                    size={20}
+                    color={'#000'}
+                />
+            </TouchableOpacity>
+        );
+        }
 
     render() {
         return (
@@ -40,10 +56,8 @@ class RadioButton extends Component {
                 alignItems: 'center'
             }}
             >
-            <TouchableOpacity
-            style={[this.colorCheck(), { height: this.props.size, width: this.props.size }]}
-            onPress={this.props.onPress}
-            />
+            {this.renderCheckbox()}
+
             <Text
             style={{ fontSize: 15 }}
             >
@@ -61,7 +75,7 @@ const styles = {
             borderRadius: 5
         },
         notPressedStyle: {
-            backgroundColor: '#FFB6C1',
+            backgroundColor: 'blue',
             borderRadius: 5
         }
     },
@@ -70,9 +84,9 @@ const styles = {
         borderRadius: 20
     },
     notPressedStyle: {
-        backgroundColor: '#FFB6C1',
+        backgroundColor: 'blue',
         borderRadius: 20
     },
 };
 
-export default RadioButton;
+export default RadioAndCheckButton;

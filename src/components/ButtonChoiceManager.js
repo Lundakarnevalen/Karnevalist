@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, } from 'react-native';
-import RadioButton from './RadioButton';
+import RadioAndCheckButton from './RadioAndCheckButton';
 
-class RadioManager extends Component {
+class ButtonChoiceManager extends Component {
 
     constructor(props) {
         super(props);
@@ -13,9 +13,8 @@ class RadioManager extends Component {
 
     createButton(name, id) {
         return (
-            <RadioButton
+            <RadioAndCheckButton
             name={name}
-            key={name}
             size={this.props.size}
             multipleChoice={this.props.multipleChoice}
             isPressed={this.contains(this.state.markedButtons, id)}
@@ -34,9 +33,9 @@ class RadioManager extends Component {
                     this.setState({ newMarkedButtons: this.state.markedButtons });
                 }
             }
-            if (!this.props.multipleChoice) {    //radio
+            if (!this.props.multipleChoice) {    //radioButton
                 if (!this.contains(this.state.markedButtons, id)
-                    && this.state.markedButtons.length === 0) {
+                && this.state.markedButtons.length === 0) {
                     this.state.markedButtons.push(id);
                     this.setState({ newMarkedButtons: this.state.markedButtons });
                 } else {
@@ -47,7 +46,7 @@ class RadioManager extends Component {
                     this.setState({ newMarkedButtons: this.state.markedButtons });
                 }
             }
-    }
+        }
 
 
         addButtons() {
@@ -82,4 +81,4 @@ class RadioManager extends Component {
         }
     }
 
-    export default RadioManager;
+    export default ButtonChoiceManager;
