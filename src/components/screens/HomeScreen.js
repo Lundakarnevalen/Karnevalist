@@ -29,9 +29,9 @@ const HomeScreen = () => (
       />
       <ButtonChoiceManager
       size={20}
-      multipleChoice
+      multipleChoice={false}
       alignment={'row'}
-      buttonInputVector={['Ja']}
+      buttonInputVector={['Ja', 'Nej']}
       />
       <Text
         style={{

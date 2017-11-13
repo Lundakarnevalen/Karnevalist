@@ -14,38 +14,62 @@ class RadioAndCheckButton extends Component {
     colorCheck() {
         if (!this.props.multipleChoice) {
             if (this.props.isPressed === true) {
-                return styles.isPressedStyle;
+                return styles.radioStyle;
             }
-            return styles.notPressedStyle;
+            return styles.radioStyle;
         }
         if (this.props.isPressed === true) {
-            return styles.multipleChoiceStyle.isPressedStyle;
+            return styles.multipleChoiceStyle;
         }
-        return styles.multipleChoiceStyle.notPressedStyle;
+        return styles.multipleChoiceStyle;
     }
 
     renderCheckbox() {
+        if (!this.props.multipleChoice) {
         if (!this.props.isPressed) {
             return (
                 <TouchableOpacity
-                style={[styles.notPressedStyle, { height: this.props.size, width: this.props.size }]}
+                style={[styles.radioStyle, { height: this.props.size, width: this.props.size }]}
                 onPress={this.props.onPress}
                 />
             )
         }
         return (
             <TouchableOpacity
-            style={[styles.notPressedStyle, { height: this.props.size, width: this.props.size }]}
+            style={[styles.radioStyle, { height: this.props.size, width: this.props.size }]}
             onPress={this.props.onPress}
             >
                 <Entypo
                     name={['check']}
-                    size={20}
+                    size={15}
+                    borderRadius={20}
                     color={'#000'}
                 />
             </TouchableOpacity>
         );
         }
+            if (!this.props.isPressed) {
+                return (
+                    <TouchableOpacity
+                    style={[styles.multipleChoiceStyle, { height: this.props.size, width: this.props.size }]}
+                    onPress={this.props.onPress}
+                    />
+                )
+            }
+            return (
+                <TouchableOpacity
+                style={[styles.multipleChoiceStyle, { height: this.props.size, width: this.props.size }]}
+                onPress={this.props.onPress}
+                >
+                    <Entypo
+                        name={['check']}
+                        size={15}
+                        backgroundColor={'blue'}
+                        color={'#000'}
+                    />
+                </TouchableOpacity>
+            );
+    }
 
     render() {
         return (
@@ -70,23 +94,13 @@ class RadioAndCheckButton extends Component {
 
 const styles = {
     multipleChoiceStyle: {
-        isPressedStyle: {
             backgroundColor: '#FF00FF',
-            borderRadius: 5
-        },
-        notPressedStyle: {
-            backgroundColor: 'blue',
-            borderRadius: 5
-        }
+            borderRadius: 3
     },
-    isPressedStyle: {
+    radioStyle: {
         backgroundColor: '#FF00FF',
         borderRadius: 20
-    },
-    notPressedStyle: {
-        backgroundColor: 'blue',
-        borderRadius: 20
-    },
+    }
 };
 
 export default RadioAndCheckButton;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, } from 'react-native';
-import RadioAndCheckButton from './RadioAndCheckButton';
+import RadioAndCheckButton from './RadioAndCheckButton'
 
 class ButtonChoiceManager extends Component {
 
