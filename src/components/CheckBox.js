@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
-class RadioButton extends Component {
+class CheckBox extends Component {
 
 
     constructor(props) {
@@ -13,36 +14,40 @@ class RadioButton extends Component {
         };
     }
 
+
     renderCheckbox() {
         if (!this.props.isPressed) {
             return (
                 <TouchableOpacity
-                style={[styles.radioStyle, { height: this.props.size, width: this.props.size }]}
+                style={[styles.multipleChoiceStyle, { height: this.props.size, width: this.props.size }]}
                 onPress={this.props.onPress}
                 >
-                <Ionicons
-                    name={['ios-radio-button-off']}
-                    size={23}
-                    color={'#FF00FF'}
-                    style={{ backgroundColor: 'transparent' }}
+                <MaterialIcons
+                name={['check-box-outline-blank']}
+                size={20}
+                color={'#FF00FF'}
+                style={{ backgroundColor: 'transparent' }}
+                
                 />
                 </TouchableOpacity>
             )
         }
         return (
             <TouchableOpacity
-            style={[styles.radioStyle, { height: this.props.size, width: this.props.size }]}
+            style={[styles.multipleChoiceStyle, { height: this.props.size, width: this.props.size }]}
             onPress={this.props.onPress}
             >
-                <Ionicons
-                    name={['ios-radio-button-on']}
-                    size={23}
-                    color={'#FF00FF'}
+                <Entypo
+                    name={['check']}
+                    size={20}
+                    backgroundColor={'blue'}
+                    color={'#fff'}
                     style={{ backgroundColor: 'transparent' }}
                 />
             </TouchableOpacity>
         );
     }
+
 
     render() {
         return (
@@ -69,9 +74,10 @@ class RadioButton extends Component {
 
 const styles = {
 
-    radioStyle: {
-        borderRadius: 20
+    multipleChoiceStyle: {
+        backgroundColor: '#FF00FF',
+        borderRadius: 5
     }
 };
 
-export default RadioButton;
+export default CheckBox;

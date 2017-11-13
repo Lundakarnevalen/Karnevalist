@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, } from 'react-native';
-import RadioAndCheckButton from './RadioAndCheckButton'
+import RadioButton from './RadioButton'
+import CheckBox from './CheckBox'
 
 class ButtonChoiceManager extends Component {
 
@@ -12,8 +13,18 @@ class ButtonChoiceManager extends Component {
     }
 
     createButton(name, id) {
+        if (this.props.multipleChoice) {
+            return (
+                <CheckBox
+                name={name}
+                size={this.props.size}
+                multipleChoice={this.props.multipleChoice}
+                isPressed={this.contains(this.state.markedButtons, id)}
+                onPress={() => this.whenPressed(id)}
+                />);
+        }
         return (
-            <RadioAndCheckButton
+            <RadioButton
             name={name}
             size={this.props.size}
             multipleChoice={this.props.multipleChoice}
