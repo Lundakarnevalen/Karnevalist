@@ -12,6 +12,13 @@ class ButtonChoiceManager extends Component {
     };
   }
 
+  componentWillMount() {
+    const { multipleChoice, buttonInputVector } = this.props;
+    if (!multipleChoice && buttonInputVector.length >= 1) {
+      this.whenPressedRadio(0);
+    }
+  }
+
   createButton(name, id) {
     const { multipleChoice, size } = this.props;
     const { markedButtons } = this.state;
