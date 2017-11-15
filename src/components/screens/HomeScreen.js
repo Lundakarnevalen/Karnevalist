@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
+import ButtonChoiceManager from '../ButtonChoiceManager';
 
 const HomeScreen = () => (
   <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
@@ -26,7 +27,13 @@ const HomeScreen = () => (
         }}
         source={require('../../../res/Karneval.png')}
       />
-      <Text 
+      <ButtonChoiceManager
+      size={20}
+      multipleChoice={false}
+      alignment={'row'}
+      buttonInputVector={['Ja', 'Nej']}
+      />
+      <Text
         style={{
           color: 'white',
           fontSize: 20
@@ -46,7 +53,7 @@ const HomeScreen = () => (
           width: Dimensions.get('window').width / 1.5
         }}
       />
-      <Text 
+      <Text
         style={{
           color: 'white',
           fontSize: 20
