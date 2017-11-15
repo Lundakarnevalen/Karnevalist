@@ -13,7 +13,7 @@ class CheckBox extends Component {
   }
 
   renderCheckbox() {
-    const { size, onPress } = this.props
+    const { size, onPress, color } = this.props
       return (
         <TouchableOpacity
         style={[styles.multipleChoiceStyle, { height: size, width: size }]}
@@ -21,8 +21,8 @@ class CheckBox extends Component {
         >
         <MaterialIcons
         name={this.getIconName()}
-        size={20}
-        color={'#FF00FF'}
+        size={size}
+        color={color}
         style={{ backgroundColor: 'transparent' }}
         />
         </TouchableOpacity>

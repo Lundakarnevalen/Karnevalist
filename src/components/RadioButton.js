@@ -6,15 +6,16 @@ import { Ionicons } from '@expo/vector-icons';
 class RadioButton extends Component {
 
   renderRadioButton() {
+    const { size, onPress, color } = this.props;
       return (
         <TouchableOpacity
-        style={[styles.radioStyle, { height: this.props.size, width: this.props.size }]}
-        onPress={this.props.onPress}
+        style={[styles.radioStyle, { height: size, width: size }]}
+        onPress={onPress}
         >
         <Ionicons
         name={this.getIconName()}
-        size={23}
-        color={'#FF00FF'}
+        size={size}
+        color={color}
         style={{ backgroundColor: 'transparent' }}
         />
         </TouchableOpacity>

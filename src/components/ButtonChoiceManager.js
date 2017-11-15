@@ -20,13 +20,14 @@ class ButtonChoiceManager extends Component {
   }
 
   createButton(name, id) {
-    const { multipleChoice, size } = this.props;
+    const { multipleChoice, size, color } = this.props;
     const { markedButtons } = this.state;
     if (this.props.multipleChoice) {
       return (
         <CheckBox
         name={name}
         size={size}
+        color={color}
         multipleChoice={multipleChoice}
         key={id}
         isPressed={this.contains(markedButtons, id)}
@@ -40,6 +41,7 @@ class ButtonChoiceManager extends Component {
         multipleChoice={multipleChoice}
         key={id}
         id={id}
+        color={color}
         isPressed={this.contains(markedButtons, id)}
         onPress={() => this.whenPressedRadio(id)}
         />);
