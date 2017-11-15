@@ -45,59 +45,56 @@ class ButtonChoiceManager extends Component {
         isPressed={this.contains(markedButtons, id)}
         onPress={() => this.whenPressedRadio(id)}
         />);
-      }
-
-      whenPressedCheckBox(id) {
-        const { markedButtons } = this.state;
-
-        if (!this.contains(markedButtons, id)) {
-          const newMarkedButtons = markedButtons;
-          newMarkedButtons.push(id);
-          this.setState({ markedButtons: newMarkedButtons });
-        } else {
-          this.setState({ markedButtons: markedButtons.filter(markedButtonID =>
-             markedButtonID !== id) });
+    }
+    whenPressedCheckBox(id) {
+      const { markedButtons } = this.state;
+      if (!this.contains(markedButtons, id)) {
+        const newMarkedButtons = markedButtons;
+        newMarkedButtons.push(id);
+        this.setState({ markedButtons: newMarkedButtons });
+      } else {
+        this.setState({ markedButtons: markedButtons.filter(markedButtonID =>
+          markedButtonID !== id) });
         }
-      }
+    }
 
-      whenPressedRadio(id) {
-        const { markedButtons } = this.state;
-
-        if (!this.contains(markedButtons, id)
-        && markedButtons.length === 0) {
-          const newMarkedButtons = markedButtons;
-          newMarkedButtons.push(id);
-          this.setState({ markedButtons: newMarkedButtons });
-        } else if (id !== markedButtons[0]) {
-            const newMarkedButtons = markedButtons;
-            newMarkedButtons.shift();
-            newMarkedButtons.push(id);
-            this.setState({ markedButtons: newMarkedButtons });
-          }
-      }
-
-      addButtons() {
-        const { buttonInputVector } = this.props;
-        const buttons = [];
-        for (let i = 0; i < buttonInputVector.length; i++) {
-          buttons.push(this.createButton(buttonInputVector[i], i));
-        }
-        return buttons;
-      }
-
-      contains(list, toFind) {
-          return list.indexOf(toFind) !== -1
-      }
-
-      render() {
-        return (
-          <View
-          style={{ flexDirection: this.props.alignment || 'row' }}
-          >
-          {this.addButtons()}
-          </View>
-        );
+    whenPressedRadio(id) {
+      const { markedButtons } = this.state;
+      if (!this.contains(markedButtons, id)
+      && markedButtons.length === 0) {
+        const newMarkedButtons = markedButtons;
+        newMarkedButtons.push(id);
+        this.setState({ markedButtons: newMarkedButtons });
+      } else if (id !== markedButtons[0]) {
+        const newMarkedButtons = markedButtons;
+        newMarkedButtons.shift();
+        newMarkedButtons.push(id);
+        this.setState({ markedButtons: newMarkedButtons });
       }
     }
 
-    export default ButtonChoiceManager;
+    addButtons() {
+      const { buttonInputVector } = this.props;
+      const buttons = [];
+      for (let i = 0; i < buttonInputVector.length; i++) {
+        buttons.push(this.createButton(buttonInputVector[i], i));
+      }
+      return buttons;
+    }
+
+    contains(list, toFind) {
+      return list.indexOf(toFind) !== -1
+    }
+
+    render() {
+      return (
+        <View
+        style={{ flexDirection: this.props.alignment || 'row' }}
+        >
+        {this.addButtons()}
+        </View>
+      );
+    }
+}
+
+export default ButtonChoiceManager;
