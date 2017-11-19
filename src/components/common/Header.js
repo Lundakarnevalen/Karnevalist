@@ -3,52 +3,47 @@ import {
   View,
   Dimensions,
   Text,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons'
 
 const WIDTH = Dimensions.get('window').width;
 
-/**
-* TODO: Move alternating options to props
-*/
 class Header extends Component {
 
   renderRightIcon() {
-    if (this.props.rightIcon === null)
-      return <View style={{ flex: 1, alignItems: 'center' }} />
-    if (this.props.rightIcon)
+    const { rightIcon } = this.props
+    if (rightIcon)
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
-        {this.props.rightIcon}
+        {rightIcon}
       </View>
     )
     return (
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <Ionicons
-        size={30}
-        name="md-information-circle"
-        />
-      </View>
+      <View style={{ flex: 1, alignItems: 'center' }} />
   )
   }
 
   renderLeftIcon() {
-    if (this.props.leftIcon === null)
+    const { leftIcon, navigation } = this.props
+    if (leftIcon === null)
       return <View style={{ flex: 1, alignItems: 'center' }} />
-    if (this.props.leftIcon)
+    if (leftIcon)
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
-          {this.props.leftIcon}
+          {leftIcon}
         </View>
     )
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
+        <TouchableOpacity onPress={() => navigation.goBack(null)}>
         <Ionicons
         size={30}
         name="md-arrow-back"
         />
+        </TouchableOpacity>
       </View>
   )
   }
@@ -71,7 +66,7 @@ class Header extends Component {
 const styles = {
   containerStyle: {
     width: WIDTH,
-    height: 67.5,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

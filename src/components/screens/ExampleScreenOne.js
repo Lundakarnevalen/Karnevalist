@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Alert, TouchableOpacity, Text, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import CustomButton from '../common/CustomButton';
 import Dropdownpicker from '../common/Dropdownpicker'
 import Header from '../common/Header'
@@ -16,9 +15,13 @@ const ExampleScreenOne = (props) => (
   >
     <Header
     title="Example Screen"
+    navigation={props.navigation}
     rightIcon={
-      <TouchableOpacity style={{ padding: 10, backgroundColor: 'red' }}>
-        <Text>Luadl</Text>
+      <TouchableOpacity
+       onPress={() => Alert.alert('Alert')}
+       style={{ padding: 10, backgroundColor: 'red' }}
+      >
+        <Text>Alert</Text>
       </TouchableOpacity>
     }
     />

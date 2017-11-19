@@ -1,13 +1,14 @@
 import React from 'react';
-import { Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
 import Header from '../common/Header'
+import ButtonChoiceManager from '../common/ButtonChoiceManager';
 
 
 const HomeScreen = (props) => (
   <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
     <Header
-    title="Example Screen"
+    title="Home Screen"
     style={{ height: 50 }}
     leftIcon={null}
     />
@@ -38,6 +39,12 @@ const HomeScreen = (props) => (
       >
       Gå till testskärm
       </Text>
+      <ButtonChoiceManager
+      size={20}
+      multipleChoice={false}
+      alignment={'row'}
+      buttonInputVector={['Ja', 'Nej']}
+      />
       <Text
         style={{
           color: 'white',
