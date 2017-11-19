@@ -70,7 +70,7 @@ class Header extends Component {
 const styles = {
   containerStyle: {
     width: WIDTH,
-    height: 67.5,
+    height: Platform.os === 'ios' ? 67.5 : 50,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

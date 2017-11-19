@@ -9,9 +9,7 @@ for (let i = 0; i < 25; i++) exampleArray.push('Option ' + i)
 
 const ExampleScreenOne = (props) => (
   <View
-  style={{ flex: 1,
-    backgroundColor: 'green'
-    }}
+  style={{ flex: 1, backgroundColor: 'green' }}
   >
     <Header
     title='Example Screen'
