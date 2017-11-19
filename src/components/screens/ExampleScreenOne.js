@@ -29,6 +29,11 @@ const ExampleScreenOne = (props) => (
         color='orange'
         onPress={() => props.navigation.navigate('HomeScreen')}
       />
+      <CustomButton
+        text='Tryck här för att gå till NavbarScreen ;)'
+        color='green'
+        onPress={() => props.navigation.navigate('NavbarScreen')}
+      />
       <Dropdownpicker
         default="This is now default"
         navigation={props.navigation}

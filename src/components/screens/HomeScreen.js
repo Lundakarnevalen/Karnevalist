@@ -1,9 +1,8 @@
 import React from 'react';
 import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
-import Header from '../common/Header'
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
-
+import Header from '../common/Header'
 
 const HomeScreen = (props) => (
   <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
