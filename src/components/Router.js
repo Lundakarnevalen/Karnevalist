@@ -21,8 +21,11 @@ const Router = StackNavigator({
     screen: DropdownPickerScreen
   },
   NavbarScreen: {
-    screen: NavbarScreen
-  }
-});
+    screen: NavbarScreen,
+    navigationOptions: {
+      header: null,
+    }
+  },
+})
 
 export default Router;

@@ -1,52 +1,91 @@
 import React, { Component } from 'react';
-import { Ionicons } from '@expo/vector-icons'
+import { Image } from 'react-native'
 import { TabNavigator } from 'react-navigation';
-import HomeScreen from './HomeScreen';
-import ExampleScreenOne from './ExampleScreenOne';
+import { Ionicons, FontAwesome } from '@expo/vector-icons'
+import NavHomeScreen from './NavHomeScreen';
+import SectionScreen from './SectionScreen';
+import AmusementScreen from './AmusementScreen'
+import NewsScreen from './NewsScreen'
+import ProfileScreen from './ProfileScreen'
 
 class NavbarScreen extends Component {
-  static navigationOptions = {
-    tabBarLabel: 'Home',
-    // Note: By default the icon is only shown on iOS. Search the showIcon option below.
-    tabBarIcon: ({ tintColor }) => (
-      <Ionicons
-      size={30}
-      name="md-arrow-back"
-      style={[styles.icon, {tintColor: tintColor}]}
-      />
-    ),
-  };
-
   render() {
     return (
-      <Button
-        onPress={() => this.props.navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
-    );
+      <TabNav />
+    )
   }
 }
 
-
-const styles = ({
-  icon: {
-    width: 26,
-    height: 26,
-  },
-});
-
-const MyApp = TabNavigator({
+const TabNav = TabNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: NavHomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: () => (
+        <Ionicons
+        size={30}
+        name="md-home"
+        />
+      )
+    }
   },
-  Notifications: {
-    screen: ExampleScreenOne,
+  Sections: {
+    screen: SectionScreen,
+    navigationOptions: {
+      tabBarLabel: 'Sections',
+      tabBarIcon: () => (
+        <Ionicons
+        size={30}
+        name="md-information-circle"
+        />
+      )
+    }
   },
+  Amusements: {
+    screen: AmusementScreen,
+    navigationOptions: {
+      tabBarLabel: 'Amusements',
+      tabBarIcon: () => (
+        <Ionicons
+        size={30}
+        name="md-happy"
+        />
+      )
+    }
+  },
+  News: {
+    screen: NewsScreen,
+    navigationOptions: {
+      tabBarLabel: 'News',
+      tabBarIcon: () => (
+        <FontAwesome
+        size={30}
+        name="newspaper-o"
+        />
+      )
+    }
+  },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: {
+      tabBarLabel: 'My profile',
+      tabBarIcon: () => (
+        <FontAwesome
+        size={30}
+        name="user"
+        />
+      )
+    }
+  }
 }, {
-  tabBarPosition: 'top',
+  tabBarPosition: 'bottom',
   animationEnabled: true,
   tabBarOptions: {
+    showIcon: true,
     activeTintColor: '#e91e63',
+    labelStyle: {
+      fontSize: 10
+    }
   },
-});
+})
 export default NavbarScreen
