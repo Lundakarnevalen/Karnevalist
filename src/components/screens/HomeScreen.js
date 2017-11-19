@@ -9,8 +9,6 @@ const HomeScreen = (props) => (
   <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
     <Header
     title="Home Screen"
-    style={{ height: 50 }}
-    leftIcon={null}
     />
     <View style={styles.container2}>
       <CustomButton
@@ -36,6 +34,7 @@ const HomeScreen = (props) => (
       />
       <Text
       onPress={() => props.navigation.navigate('ExampleScreenOne')}
+      style={{ borderWidth: 2, padding: 3, backgroundColor: 'white' }}
       >
       Gå till testskärm
       </Text>

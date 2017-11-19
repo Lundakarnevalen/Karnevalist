@@ -36,14 +36,18 @@ class Header extends Component {
           {leftIcon}
         </View>
     )
+    const backButton = navigation ?
+      (
+      <TouchableOpacity onPress={() => navigation.goBack(null)}>
+          <Ionicons
+          size={30}
+          name="md-arrow-back"
+          />
+      </TouchableOpacity>
+      ) : null
     return (
       <View style={{ flex: 1, alignItems: 'center' }}>
-        <TouchableOpacity onPress={() => navigation.goBack(null)}>
-        <Ionicons
-        size={30}
-        name="md-arrow-back"
-        />
-        </TouchableOpacity>
+      {backButton}
       </View>
   )
   }
@@ -55,7 +59,7 @@ class Header extends Component {
       <View style={[containerStyle, style]}>
         {this.renderLeftIcon()}
         <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }} >
-          <Text style={[headerStyle, textStyle]}>{title}</Text>
+          <Text style={[headerStyle, textStyle]}>{title || 'Placeholder'}</Text>
         </View>
         {this.renderRightIcon()}
       </View>
@@ -66,7 +70,7 @@ class Header extends Component {
 const styles = {
   containerStyle: {
     width: WIDTH,
-    height: 50,
+    height: 67.5,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

@@ -14,7 +14,7 @@ const ExampleScreenOne = (props) => (
     }}
   >
     <Header
-    title="Example Screen"
+    title='Example Screen'
     navigation={props.navigation}
     rightIcon={
       <TouchableOpacity
