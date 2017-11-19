@@ -1,10 +1,21 @@
-import React from 'react';
-import { Text, View, Image, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, Image, Dimensions, TouchableHighlight } from 'react-native';
 import CustomButton from '../common/CustomButton';
-import ButtonChoiceManager from '../ButtonChoiceManager';
+import SuperAgileAlert from '../common/SuperAgileAlert';
 
-const HomeScreen = () => (
+class HomeScreen extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      alertVisible: false
+    }
+  }
+
+  render() {
+    return (
   <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
+
     <View style={styles.container2}>
       <CustomButton
         text='Change to English'
@@ -19,6 +30,18 @@ const HomeScreen = () => (
       />
     </View>
     <View style={styles.container1}>
+    <SuperAgileAlert
+    header={'Superduperagilert'}
+    info={'hejsan, detta är vår info'}
+    alertVisible={this.state.alertVisible}
+    />
+    <TouchableHighlight
+      onPress={() => {
+                  this.setState({ alertVisible: true });
+             }}
+    >
+         <Text>Show Modal</Text>
+       </TouchableHighlight>
       <Image
         style={{
           marginBottom: Dimensions.get('window').height / 10,
@@ -26,12 +49,6 @@ const HomeScreen = () => (
           height: Dimensions.get('window').width / 2
         }}
         source={require('../../../res/Karneval.png')}
-      />
-      <ButtonChoiceManager
-      size={20}
-      multipleChoice={false}
-      alignment={'row'}
-      buttonInputVector={['Ja', 'Nej']}
       />
       <Text
         style={{
@@ -87,6 +104,8 @@ const HomeScreen = () => (
     </View>
   </View>
 );
+}
+}
 
 const styles = {
   container1: {

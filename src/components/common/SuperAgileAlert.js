@@ -7,36 +7,40 @@ class SuperAgileAlert extends Component {
   constructor(props) {
   super(props);
   this.state = {
-    modalIsVisable: true
+    visible: false
   }
 }
 
-onPress() {
-  console.log('pressed')
+onPress(visible) {
+  this.setState({ modalVisible: visible });
 }
 
   render() {
+    console.log(this.props.alertVisible)
     return (
       <Modal
-      style={{ justifyContent: 'center' }}
       transparent
-      visible={this.state.modalIsVisable}
+      visible={this.props.alertVisible}
       >
-      <View
-      style={{ alignItems: 'center' }}
-      transparent={false}
-      >
-      <Text>{this.props.header}</Text>
-      <Text>{this.props.info}</Text>
-      <CustomButton
-      onPress={this.onPress}
-      text={'Ja'}
-      />
-      <CustomButton
-      onPress={this.onPress}
-      text={'Nej'}
-      />
-      </View>
+        <View
+        style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+        transparent={false}
+        >
+        <View
+        style={{ width: 300, height: 300, backgroundColor: '#000' }}
+        >
+          <Text>{this.props.header}</Text>
+          <Text>{this.props.info}</Text>
+          <CustomButton
+          onPress={this.onPress}
+          text={'Ja'}
+          />
+          <CustomButton
+          onPress={this.onPress}
+          text={'Nej'}
+          />
+          </View>
+        </View>
       </Modal>
     );
   }
