@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native'
 import { TabNavigator } from 'react-navigation';
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
-import NavHomeScreen from './NavHomeScreen';
-import SectionScreen from './SectionScreen';
-import AmusementScreen from './AmusementScreen'
-import NewsScreen from './NewsScreen'
-import ProfileScreen from './ProfileScreen'
+import NavHomeScreen from './MyPageNavbarScreens/NavHomeScreen';
+import SectionScreen from './MyPageNavbarScreens/SectionScreen';
+import AmusementScreen from './MyPageNavbarScreens/AmusementScreen'
+import NewsScreen from './MyPageNavbarScreens/NewsScreen'
+import ProfileScreen from './MyPageNavbarScreens/ProfileScreen'
 
-class NavbarScreen extends Component {
+class MyPageNavbarScreen extends Component {
   render() {
     return (
       <TabNav />
@@ -17,18 +16,6 @@ class NavbarScreen extends Component {
 }
 
 const TabNav = TabNavigator({
-  Home: {
-    screen: NavHomeScreen,
-    navigationOptions: {
-      tabBarLabel: 'Home',
-      tabBarIcon: () => (
-        <Ionicons
-        size={30}
-        name="md-home"
-        />
-      )
-    }
-  },
   Sections: {
     screen: SectionScreen,
     navigationOptions: {
@@ -49,6 +36,18 @@ const TabNav = TabNavigator({
         <Ionicons
         size={30}
         name="md-happy"
+        />
+      )
+    }
+  },
+  Home: {
+    screen: NavHomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: () => (
+        <Ionicons
+        size={40}
+        name="md-home"
         />
       )
     }
@@ -80,6 +79,7 @@ const TabNav = TabNavigator({
 }, {
   tabBarPosition: 'bottom',
   animationEnabled: true,
+  initialRouteName: 'Home',
   tabBarOptions: {
     showIcon: true,
     activeTintColor: '#e91e63',
@@ -88,4 +88,4 @@ const TabNav = TabNavigator({
     }
   },
 })
-export default NavbarScreen
+export default MyPageNavbarScreen

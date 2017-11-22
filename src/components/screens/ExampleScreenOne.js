@@ -16,8 +16,8 @@ const ExampleScreenOne = (props) => (
     navigation={props.navigation}
     rightIcon={
       <TouchableOpacity
-       onPress={() => Alert.alert('Alert')}
        style={{ padding: 10, backgroundColor: 'red' }}
+       onPress={() => Alert.alert('Alert')}
       >
         <Text>Alert</Text>
       </TouchableOpacity>
@@ -29,11 +29,12 @@ const ExampleScreenOne = (props) => (
         color='orange'
         onPress={() => props.navigation.navigate('HomeScreen')}
       />
-      <CustomButton
-        text='Tryck här för att gå till NavbarScreen ;)'
-        color='green'
-        onPress={() => props.navigation.navigate('NavbarScreen')}
-      />
+      <TouchableOpacity
+        style={{ backgroundColor: 'green', borderWidth: 2, padding: 5 }}
+        onPress={() => props.navigation.navigate('MyPageNavbarScreen')}
+      >
+        <Text>Tryck här för att gå till MyPageNavbarScreen ;)</Text>
+      </TouchableOpacity>
       <Dropdownpicker
         default="This is now default"
         navigation={props.navigation}

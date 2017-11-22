@@ -2,7 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen';
 import ExampleScreenOne from './screens/ExampleScreenOne';
 import DropdownPickerScreen from './screens/DropdownPickerScreen';
-import NavbarScreen from './screens/NavbarScreen';
+import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
 
 const Router = StackNavigator({
   HomeScreen: {
@@ -20,8 +20,8 @@ const Router = StackNavigator({
   DropdownPickerModal: {
     screen: DropdownPickerScreen
   },
-  NavbarScreen: {
-    screen: NavbarScreen,
+  MyPageNavbarScreen: {
+    screen: MyPageNavbarScreen,
     navigationOptions: {
       header: null,
     }
