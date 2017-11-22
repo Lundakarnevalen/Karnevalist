@@ -82,10 +82,13 @@ const TabNav = TabNavigator({
   initialRouteName: 'Home',
   tabBarOptions: {
     showIcon: true,
-    activeTintColor: '#e91e63',
+    activeTintColor: '#8A4797',
     labelStyle: {
       fontSize: 10
-    }
+    },
+    style: {
+    backgroundColor: '#FBBCC0',
+  },
   },
 })
 export default MyPageNavbarScreen
