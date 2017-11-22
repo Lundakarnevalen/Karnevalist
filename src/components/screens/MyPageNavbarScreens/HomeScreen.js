@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import Header from '../../common/Header'
+import CustomButton from '../../common/CustomButton'
 
-class NavHomeScreen extends Component {
+class HomeScreen extends Component {
 
   render() {
     return (
@@ -12,6 +13,7 @@ class NavHomeScreen extends Component {
           leftIcon={null}
           navigation={this.props.navigation}
         />
+        <CustomButton />
       </View>
     );
   }
@@ -21,4 +23,4 @@ const styles = ({
 
 });
 
-export default NavHomeScreen
+export default HomeScreen

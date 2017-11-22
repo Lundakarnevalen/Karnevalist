@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TabNavigator } from 'react-navigation';
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
-import NavHomeScreen from './MyPageNavbarScreens/NavHomeScreen';
+import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import AmusementScreen from './MyPageNavbarScreens/AmusementScreen'
 import NewsScreen from './MyPageNavbarScreens/NewsScreen'
@@ -41,7 +41,7 @@ const TabNav = TabNavigator({
     }
   },
   Home: {
-    screen: NavHomeScreen,
+    screen: HomeScreen,
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: () => (
