@@ -8,7 +8,9 @@ class NewsScreen extends Component {
     return (
       <View>
         <Header
-          title='News'
+          textStyle={{ color: '#FBBCC0' }}
+          style={{ backgroundColor: '#8A4797' }}
+          title='Nyheter'
           leftIcon={null}
           navigation={this.props.navigation}
         />

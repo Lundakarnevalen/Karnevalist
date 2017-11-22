@@ -25,7 +25,7 @@ class HomeScreen extends Component {
             backgroundColor: '#FBBCC0',
             fontSize: 20,
             flex: 1,
-            margin: 'auto',
+            marginLeft: 'auto',
             color: '#F4376D'
            }}
         >
@@ -47,7 +47,11 @@ class HomeScreen extends Component {
         />
           <CustomButton
             textStyle={{ color: 'white', fontSize: 22 }}
-            buttonStyle={{ padding: 10, backgroundColor: '#e600ac', width: width / 1.2 }}
+            buttonStyle={{
+              padding: 10,
+              backgroundColor: '#e600ac',
+              width: width / 1.2
+            }}
             text='Checka in'
           />
         </View>
@@ -59,7 +63,8 @@ class HomeScreen extends Component {
 const styles = {
   container: {
     alignItems: 'center',
-    width: width
+    width: width,
+    marginTop: 15
   },
   imageStyle: {
     resizeMode: 'contain',

@@ -8,6 +8,8 @@ class AmusementsScreen extends Component {
     return (
       <View>
         <Header
+          textStyle={{ color: '#FBBCC0' }}
+          style={{ backgroundColor: '#8A4797' }}
           title='Amusement'
           leftIcon={null}
           navigation={this.props.navigation}

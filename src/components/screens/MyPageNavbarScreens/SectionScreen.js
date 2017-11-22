@@ -8,7 +8,9 @@ class SectionScreen extends Component {
     return (
       <View>
         <Header
-          title='Sections'
+          textStyle={{ color: '#FBBCC0' }}
+          style={{ backgroundColor: '#8A4797' }}
+          title='Sektioner'
           leftIcon={null}
           navigation={this.props.navigation}
         />
