@@ -32,8 +32,12 @@ class HomeScreen extends Component {
     <View style={styles.container1}>
     <SuperAgileAlert
     header={'Superduperagilert'}
-    info={'hejsan, detta är vår info'}
+    info={'hejsan, detta är vår info "Pressing Cancel will XYZ", but there is no cancel button. Als'}
     alertVisible={this.state.alertVisible}
+    buttonsIn={[{ text: 'Yes', onPress: () => console.log('Yes was pressed') },
+    { text: 'Cancel', onPress: () => this.setState({ alertVisible: false }) },
+    { text: 'Later', onPress: () => this.setState({ alertVisible: false }) },
+    { text: 'hihihi', onPress: () => this.setState({ alertVisible: false }) }]}
     />
     <TouchableHighlight
       onPress={() => {
