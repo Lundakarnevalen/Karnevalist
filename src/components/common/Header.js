@@ -3,33 +3,63 @@ import {
   View,
   Dimensions,
   Text,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 import { Constants } from 'expo';
+import { Ionicons } from '@expo/vector-icons'
 
 const WIDTH = Dimensions.get('window').width;
 
-/**
-* TODO: Move alternating options to props
-*/
 class Header extends Component {
 
   renderRightIcon() {
-    return <View style={{ flex: 1 }} />;
+    const { rightIcon } = this.props
+    if (rightIcon)
+    return (
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        {rightIcon}
+      </View>
+    )
+    return (
+      <View style={{ flex: 1, alignItems: 'center' }} />
+  )
   }
 
   renderLeftIcon() {
-    return <View style={{ flex: 1 }} />;
+    const { leftIcon, navigation } = this.props
+    if (leftIcon === null)
+      return <View style={{ flex: 1, alignItems: 'center' }} />
+    if (leftIcon)
+      return (
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          {leftIcon}
+        </View>
+    )
+    const backButton = navigation ?
+      (
+      <TouchableOpacity onPress={() => navigation.goBack(null)}>
+          <Ionicons
+          size={30}
+          name="md-arrow-back"
+          />
+      </TouchableOpacity>
+      ) : null
+    return (
+      <View style={{ flex: 1, alignItems: 'center' }}>
+      {backButton}
+      </View>
+  )
   }
 
   render() {
     const { containerStyle, headerStyle } = styles;
-    const { title } = this.props;
+    const { title, textStyle, style } = this.props;
     return (
-      <View style={[containerStyle]}>
+      <View style={[containerStyle, style]}>
         {this.renderLeftIcon()}
         <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }} >
-          <Text style={[headerStyle]}>{title}</Text>
+          <Text style={[headerStyle, textStyle]}>{title || 'Placeholder'}</Text>
         </View>
         {this.renderRightIcon()}
       </View>
@@ -40,7 +70,7 @@ class Header extends Component {
 const styles = {
   containerStyle: {
     width: WIDTH,
-    height: 67.5,
+    height: Platform.os === 'ios' ? 67.5 : 50,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
