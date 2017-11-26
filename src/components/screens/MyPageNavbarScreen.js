@@ -46,7 +46,7 @@ const TabNav = TabNavigator({
       tabBarLabel: 'Home',
       tabBarIcon: () => (
         <Ionicons
-        size={40}
+        size={30}
         name="md-home"
         />
       )
