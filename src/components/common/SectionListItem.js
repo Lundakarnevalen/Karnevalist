@@ -1,32 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
-const CustomButton = (props) => {
-  const { onPress, text, buttonStyle, textStyle } = props;
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[
-        styles.button,
-        buttonStyle
-      ]}
-    >
-    <Text
-      style={[styles.text, textStyle]}
-    >
-      {text}
-    </Text>
-  </TouchableOpacity>);
-};
+class SectionListItem extends Component {
+
+  render() {
+    return (
+    <TouchableOpacity style={styles.containerStyle}>
+      <Text>
+        {this.props.sectionTitle}
+      </Text>
+      <Text>
+        {this.props.sectionInfoText}
+      </Text>
+    </TouchableOpacity>
+  )
+  }
+}
 
 const styles = {
-  button: {
-    margin: 10,
-    borderColor: 'black',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+  containerStyle: {
+    height: 60
   },
+  titleStyle: {
+    fontSize: 20
+  },
+  infoStyle: {
+    fontSize: 10
+  }
 };
-
-export default CustomButton;
