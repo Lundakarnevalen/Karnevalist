@@ -21,7 +21,6 @@ class SectionScreen extends Component {
   }
 
   render() {
-    const { container, defaultItemStyle } = styles
     return (
       <View>
         <View>
@@ -55,18 +54,6 @@ class SectionScreen extends Component {
 }
 
 const styles = {
-  container: {
-    backgroundColor: 'white'
-  },
-  defaultItemStyle: {
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#d3d3d3',
-    textAlign: 'center',
-    fontSize: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-  }
 };
 
 export default SectionScreen

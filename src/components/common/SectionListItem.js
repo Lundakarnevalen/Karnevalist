@@ -8,24 +8,27 @@ class SectionListItem extends Component {
     const { containerStyle, titleStyle, infoStyle } = styles
     const { sectionTitle, sectionInfoText, onPress, } = this.props
     return (
-    <TouchableOpacity onPress={() => onPress(sectionTitle)} style={containerStyle}>
-      <View style={{ flex: 8 }}>
-        <Text style={titleStyle}>
-          {sectionTitle}
-        </Text>
-        <Text style={infoStyle}>
-          {sectionInfoText}
-        </Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <MaterialIcons
-        name='keyboard-arrow-right'
-        style={{ marginRight: 0, color: '#8A4797' }}
-        size={40}
-        />
-      </View>
-    </TouchableOpacity>
-  )
+      <TouchableOpacity
+        onPress={() => onPress(sectionTitle)}
+        style={containerStyle}
+      >
+        <View style={{ flex: 8 }}>
+          <Text style={titleStyle}>
+            {sectionTitle}
+          </Text>
+          <Text style={infoStyle}>
+            {sectionInfoText}
+          </Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <MaterialIcons
+            name='keyboard-arrow-right'
+            style={{ marginRight: 0, color: '#8A4797' }}
+            size={40}
+          />
+        </View>
+      </TouchableOpacity>
+    )
   }
 }
 
