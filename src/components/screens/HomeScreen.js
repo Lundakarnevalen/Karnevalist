@@ -14,7 +14,7 @@ class HomeScreen extends Component {
 
   render() {
     return (
-  <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
+  <View style={{ backgroundColor: '#ffbbcc', flex: 1 }}>
 
     <View style={styles.container2}>
       <CustomButton
@@ -31,13 +31,13 @@ class HomeScreen extends Component {
     </View>
     <View style={styles.container1}>
     <SuperAgileAlert
-    header={'Superduperagilert'}
-    info={'hejsan, detta är vår info "Pressing Cancel will XYZ", but there is no cancel button. Als'}
+    header={'Header'}
+    info={'Här skriver du in din info...'}
     alertVisible={this.state.alertVisible}
     buttonsIn={[{ text: 'Yes', onPress: () => console.log('Yes was pressed') },
-    { text: 'Cancel', onPress: () => this.setState({ alertVisible: false }) },
-    { text: 'Later', onPress: () => this.setState({ alertVisible: false }) },
-    { text: 'hihihi', onPress: () => this.setState({ alertVisible: false }) }]}
+      { text: 'Cancel', onPress: () => this.setState({ alertVisible: false }) },
+      { text: 'Later', onPress: () => this.setState({ alertVisible: false }) }]}
+
     />
     <TouchableHighlight
       onPress={() => {
@@ -69,7 +69,7 @@ class HomeScreen extends Component {
           fontSize: 20
         }}
         buttonStyle={{
-          backgroundColor: '#e600ac',
+          backgroundColor: '#f4376d',
           padding: 10,
           width: Dimensions.get('window').width / 1.5
         }}
@@ -89,7 +89,7 @@ class HomeScreen extends Component {
           fontSize: 20
         }}
         buttonStyle={{
-          backgroundColor: '#e600ac',
+          backgroundColor: '#f4376d',
           padding: 10,
           width: Dimensions.get('window').width / 1.5
         }}

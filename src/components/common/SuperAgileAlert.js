@@ -95,7 +95,7 @@ class SuperAgileAlert extends Component {
         width: Dimensions.get('window').width / 1.1,
         height: Dimensions.get('window').height / 3.5,
         borderRadius: 5,
-        backgroundColor: 'pink' }}
+        backgroundColor: '#ffbbcc' }}
       >
       <View
       style={{
@@ -154,7 +154,7 @@ class SuperAgileAlert extends Component {
     },
     buttonStyle: {
         height: Dimensions.get('window').height / (4 * 4),
-        backgroundColor: '#e600ac',
+        backgroundColor: '#f4376d',
         borderRadius: 0,
         margin: 0,
         marginLeft: 0.4,
