@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { View, ListView, TouchableOpacity, Text } from 'react-native';
+import { View, ListView, TouchableOpacity, Alert } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
 const exampleArray = []
-for (let i = 0; i < 25; i++) exampleArray.push({ title:'Option ' + i, info:"Kul stuff här är en text som testar hur mycket text"})
-
+for (let i = 0; i < 25; i++) exampleArray.push({
+  title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text'
+})
 class SectionScreen extends Component {
   constructor(props) {
     super(props)
@@ -24,6 +26,10 @@ class SectionScreen extends Component {
       <View>
         <View>
         <Header
+          rightIcon={
+            <TouchableOpacity onPress={() => Alert.alert('Går till confirm..')}>
+              <FontAwesome name='list-alt' size={30} />
+            </TouchableOpacity>}
           textStyle={{ color: '#FBBCC0' }}
           style={{ backgroundColor: '#8A4797' }}
           title='Sektioner'
@@ -38,7 +44,7 @@ class SectionScreen extends Component {
               <SectionListItem
                 sectionTitle={rowData.title}
                 sectionInfoText={rowData.info}
-              onPress={() => this.onPress(rowData)}
+                onPress={(title) => Alert.alert(title + '\n ' + rowData.info)}
               />
             }
           />

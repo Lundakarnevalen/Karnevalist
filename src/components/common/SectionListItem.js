@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 
 class SectionListItem extends Component {
 
   render() {
     const { containerStyle, titleStyle, infoStyle } = styles
+    const { sectionTitle, sectionInfoText, onPress, } = this.props
     return (
-    <TouchableOpacity style={containerStyle}>
+    <TouchableOpacity onPress={() => onPress(sectionTitle)} style={containerStyle}>
       <View style={{ flex: 8 }}>
         <Text style={titleStyle}>
-          {this.props.sectionTitle}
+          {sectionTitle}
         </Text>
         <Text style={infoStyle}>
-          {this.props.sectionInfoText}
+          {sectionInfoText}
         </Text>
       </View>
       <View style={{ flex: 1 }}>
