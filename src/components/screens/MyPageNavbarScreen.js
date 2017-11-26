@@ -19,7 +19,7 @@ const TabNav = TabNavigator({
   Sections: {
     screen: SectionScreen,
     navigationOptions: {
-      tabBarLabel: 'Sections',
+      tabBarLabel: 'Sektioner',
       tabBarIcon: () => (
         <Ionicons
         size={30}
@@ -31,7 +31,7 @@ const TabNav = TabNavigator({
   Amusements: {
     screen: AmusementScreen,
     navigationOptions: {
-      tabBarLabel: 'Amusements',
+      tabBarLabel: 'Nöjen',
       tabBarIcon: () => (
         <Ionicons
         size={30}
@@ -43,10 +43,10 @@ const TabNav = TabNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: 'Home',
+      tabBarLabel: 'Hem',
       tabBarIcon: () => (
         <Ionicons
-        size={40}
+        size={30}
         name="md-home"
         />
       )
@@ -55,7 +55,7 @@ const TabNav = TabNavigator({
   News: {
     screen: NewsScreen,
     navigationOptions: {
-      tabBarLabel: 'News',
+      tabBarLabel: 'Nyheter',
       tabBarIcon: () => (
         <FontAwesome
         size={30}
@@ -67,7 +67,7 @@ const TabNav = TabNavigator({
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
-      tabBarLabel: 'My profile',
+      tabBarLabel: 'Min profil',
       tabBarIcon: () => (
         <FontAwesome
         size={30}
