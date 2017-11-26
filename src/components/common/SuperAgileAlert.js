@@ -12,15 +12,6 @@ class SuperAgileAlert extends Component {
     }
   }
 
-  onPressYes() {
-
-  }
-  onPressNo() {
-
-  }
-  onPressClose() {
-
-  }
   createButtons() {
     const { buttonsIn } = this.props;
     let i = 0
@@ -31,6 +22,7 @@ class SuperAgileAlert extends Component {
     }
     return buttonsToReturn;
   }
+
   createSingleButton(i) {
     const { buttonsIn } = this.props;
     const buttonWidth = { width: ((Dimensions.get('window').width / (this.state.totalNbrOfButtons * 1.1)) - ((0.4 * (buttonsIn.length - 1)) / buttonsIn.length)) };
@@ -132,7 +124,6 @@ class SuperAgileAlert extends Component {
         <View
         style={{
           flexDirection: 'row',
-
         }}
         >
         {this.createButtons()}
