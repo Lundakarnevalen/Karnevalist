@@ -38,9 +38,9 @@ class Input extends Component {
 
   render() {
     const { inputStyle } = styles
-    const { value, width, placeholder, secureText, autoCorrect = false } = this.props
+    const { value, width, placeholder, secureText, autoCorrect = false, viewStyle } = this.props
     return (
-      <View>
+      <View style={viewStyle}>
         {this.getTitle()}
         <TextInput
           onBlur={() => this.onBlur()}
