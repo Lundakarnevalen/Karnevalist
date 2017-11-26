@@ -19,7 +19,6 @@ class SectionScreen extends Component {
   }
 
   render() {
-    const { pickerItemStyle, listStyle } = this.props
     const { container, defaultItemStyle } = styles
     return (
       <View>
@@ -33,16 +32,16 @@ class SectionScreen extends Component {
         />
         </View>
         <View>
-        <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) =>
-          <SectionListItem
-            sectionTitle={rowData.title}
-            sectionInfoText={rowData.info}
-          onPress={() => this.onPress(rowData)}
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData) =>
+              <SectionListItem
+                sectionTitle={rowData.title}
+                sectionInfoText={rowData.info}
+              onPress={() => this.onPress(rowData)}
+              />
+            }
           />
-        }
-        />
         </View>
       </View>
     );

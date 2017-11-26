@@ -8,7 +8,7 @@ class SectionListItem extends Component {
     const { containerStyle, titleStyle, infoStyle } = styles
     return (
     <TouchableOpacity style={containerStyle}>
-      <View style={{ flex: 6 }}>
+      <View style={{ flex: 8 }}>
         <Text style={titleStyle}>
           {this.props.sectionTitle}
         </Text>
@@ -19,7 +19,7 @@ class SectionListItem extends Component {
       <View style={{ flex: 1 }}>
         <MaterialIcons
         name='keyboard-arrow-right'
-        style={{ marginRight: 0 }}
+        style={{ marginRight: 0, color: '#8A4797' }}
         size={40}
         />
       </View>
@@ -32,11 +32,11 @@ const styles = {
   containerStyle: {
     height: 60,
     borderBottomWidth: 1,
-    borderBottomColor: '#d3d3d3',
-    flexDirection: 'row'
+    borderBottomColor: '#8A4797',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   titleStyle: {
-    color: '#8A4797',
     fontSize: 20
   },
   infoStyle: {
