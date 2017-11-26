@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { View, Dimensions, Text, Image } from 'react-native';
 import Header from '../../common/Header'
 import CustomButton from '../../common/CustomButton'
+import CountDown from '../../common/countDown/CountDown';
 
 const { width } = Dimensions.get('window')
 const { height } = Dimensions.get('window')
 class HomeScreen extends Component {
   render() {
-    const { container, imageStyle, idStyle, buttonText, buttonStyle, wehejStyle } = styles
+    const { container, imageStyle, buttonText, buttonStyle, wehejStyle } = styles
     return (
       <View>
         <Header
@@ -17,9 +18,8 @@ class HomeScreen extends Component {
           leftIcon={null}
           navigation={this.props.navigation}
         />
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ fontSize: 28, flex: 1 }}>COUNTDOWN</Text>
-          <Text style={idStyle}>PROFIL-ID: 1234</Text>
+        <View style={{ justifyContent: 'center', marginTop: 15 }}>
+          <CountDown />
         </View>
         <View style={container}>
           <Text style={wehejStyle}>
@@ -43,21 +43,13 @@ class HomeScreen extends Component {
 const styles = {
   container: {
     alignItems: 'center',
-    width: width,
+    width,
     marginTop: 15
   },
   imageStyle: {
     resizeMode: 'contain',
     width: width / 1.1,
     height: height / 2.3
-  },
-  idStyle: {
-    padding: 5,
-    backgroundColor: '#FBBCC0',
-    fontSize: 20,
-    flex: 1,
-    marginLeft: 'auto',
-    color: '#F4376D'
   },
   buttonText: {
    color: 'white',

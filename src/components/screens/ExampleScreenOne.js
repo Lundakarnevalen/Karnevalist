@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Alert, TouchableOpacity, Text, Dimensions } from 'react-native';
+import CountDown from '../common/countDown/CountDown';
 import CustomButton from '../common/CustomButton';
 import Dropdownpicker from '../common/Dropdownpicker'
 import Header from '../common/Header'
@@ -24,6 +25,7 @@ const ExampleScreenOne = (props) => (
     }
     />
     <View style={[styles.container, { backgroundColor: 'blue' }]}>
+      <CountDown />
       <CustomButton
         text='Tryck här för att gå tillbaka ;)'
         color='orange'
