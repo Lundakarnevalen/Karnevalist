@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
-import ButtonChoiceManager from '../common/ButtonChoiceManager';
-import Header from '../common/Header'
 
-const HomeScreen = (props) => (
-  <View style={{ backgroundColor: '#ffb3ec', flex: 1 }}>
-    <Header
-    title="Home Screen"
-    />
+class HomeScreen extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      alertVisible: false
+    }
+  }
+
+  render() {
+    return (
+  <View style={{ backgroundColor: '#ffbbcc', flex: 1 }}>
+
     <View style={styles.container2}>
       <CustomButton
         text='Change to English'
@@ -32,18 +38,6 @@ const HomeScreen = (props) => (
         source={require('../../../res/Karneval.png')}
       />
       <Text
-      onPress={() => props.navigation.navigate('ExampleScreenOne')}
-      style={{ borderWidth: 2, padding: 3, backgroundColor: 'white' }}
-      >
-      Gå till testskärm
-      </Text>
-      <ButtonChoiceManager
-      size={20}
-      multipleChoice={false}
-      alignment={'row'}
-      buttonInputVector={['Ja', 'Nej']}
-      />
-      <Text
         style={{
           color: 'white',
           fontSize: 20
@@ -58,7 +52,7 @@ const HomeScreen = (props) => (
           fontSize: 20
         }}
         buttonStyle={{
-          backgroundColor: '#e600ac',
+          backgroundColor: '#f4376d',
           padding: 10,
           width: Dimensions.get('window').width / 1.5
         }}
@@ -78,7 +72,7 @@ const HomeScreen = (props) => (
           fontSize: 20
         }}
         buttonStyle={{
-          backgroundColor: '#e600ac',
+          backgroundColor: '#f4376d',
           padding: 10,
           width: Dimensions.get('window').width / 1.5
         }}
@@ -97,6 +91,8 @@ const HomeScreen = (props) => (
     </View>
   </View>
 );
+}
+}
 
 const styles = {
   container1: {
