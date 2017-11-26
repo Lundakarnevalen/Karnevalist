@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ListView, TouchableOpacity, Text } from 'react-native';
 import Header from '../../common/Header'
 
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+
+const exampleArray = []
+for (let i = 0; i < 25; i++) exampleArray.push('Option ' + i)
+
 class SectionScreen extends Component {
+  constructor(props) {
+    super(props)
+    const items = props.items || exampleArray || ['']
+    this.state = {
+      isOpen: false,
+      dataSource: ds.cloneWithRows(items),
+    };
+  }
 
   render() {
+    const { pickerItemStyle, listStyle } = this.props
+    const { container, defaultItemStyle } = styles
     return (
       <View>
+        <View>
         <Header
           textStyle={{ color: '#FBBCC0' }}
           style={{ backgroundColor: '#8A4797' }}
@@ -14,13 +30,41 @@ class SectionScreen extends Component {
           leftIcon={null}
           navigation={this.props.navigation}
         />
+        </View>
+        <View>
+        <ListView
+        dataSource={this.state.dataSource}
+        renderRow={(rowData) =>
+          <TouchableOpacity
+          onPress={() => this.onPress(rowData)}
+          >
+            <Text
+            style={[defaultItemStyle, pickerItemStyle]}
+            >
+            {rowData}
+            </Text>
+          </TouchableOpacity>
+          }
+        />
+        </View>
       </View>
     );
   }
 }
 
-const styles = ({
-
-});
+const styles = {
+  container: {
+    backgroundColor: 'white'
+  },
+  defaultItemStyle: {
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#d3d3d3',
+    textAlign: 'center',
+    fontSize: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+  }
+};
 
 export default SectionScreen
