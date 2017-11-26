@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, ListView, TouchableOpacity, Text } from 'react-native';
 import Header from '../../common/Header'
+import SectionListItem from '../../common/SectionListItem'
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
 const exampleArray = []
-for (let i = 0; i < 25; i++) exampleArray.push('Option ' + i)
+for (let i = 0; i < 25; i++) exampleArray.push({ title:'Option ' + i, info:"Kul stuff här är en text som testar hur mycket text"})
 
 class SectionScreen extends Component {
   constructor(props) {
@@ -35,16 +36,12 @@ class SectionScreen extends Component {
         <ListView
         dataSource={this.state.dataSource}
         renderRow={(rowData) =>
-          <TouchableOpacity
+          <SectionListItem
+            sectionTitle={rowData.title}
+            sectionInfoText={rowData.info}
           onPress={() => this.onPress(rowData)}
-          >
-            <Text
-            style={[defaultItemStyle, pickerItemStyle]}
-            >
-            {rowData}
-            </Text>
-          </TouchableOpacity>
-          }
+          />
+        }
         />
         </View>
       </View>
