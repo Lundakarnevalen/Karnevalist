@@ -25,7 +25,8 @@ class SuperAgileAlert extends Component {
 
   createSingleButton(i) {
     const { buttonsIn } = this.props;
-    const buttonWidth = { width: ((Dimensions.get('window').width / (this.state.totalNbrOfButtons * 1.1)) - ((0.4 * (buttonsIn.length - 1)) / buttonsIn.length)) };
+    const buttonWidth = { width: ((Dimensions.get('window').width /
+    (this.state.totalNbrOfButtons * 1.1)) - ((0.4 * (buttonsIn.length - 1)) / buttonsIn.length)) };
     if (buttonsIn.length === 1) {
       return (
         <CustomButton
@@ -74,63 +75,56 @@ class SuperAgileAlert extends Component {
       transparent
       visible={this.props.alertVisible}
       >
-      <BlurView tint='dark' intensity={70} style={StyleSheet.absoluteFill}>
-      <View
-      style={styles.outerViewStyle}
-      transparent={false}
-      >
-      <View
-      style={{
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        width: Dimensions.get('window').width / 1.1,
-        height: Dimensions.get('window').height / 3.5,
-        borderRadius: 5,
-        backgroundColor: '#ffbbcc' }}
-      >
-      <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1
-      }}
-      >
-      <View
-      style={{
-        justifyContent: 'flex-top',
-        margin: 10,
-        flex: 1
-      }}
-      >
-        <Text
-        style={{
-          textAlign: 'center',
-          fontWeight: 'bold'
-        }}
-        >
-        {this.props.header}</Text>
-        </View>
-        <View style={{ flex: 5 }}>
-        <Text
-        style={{
-            textAlign: 'center',
-            margin: 7
-        }}
-        >
-        {this.props.info}</Text>
-        </View>
-      </View>
-        <View
-        style={{
-          flexDirection: 'row',
-        }}
-        >
-        {this.createButtons()}
-        </View>
-        </View>
-        </View>
-        </BlurView>
+        <BlurView tint='dark' intensity={70} style={StyleSheet.absoluteFill}>
+          <View
+          style={styles.outerViewStyle}
+          transparent={false}
+          >
+          <View
+            style={styles.alertButtonStyle}
+          >
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1
+                }}
+              >
+                <View
+                  style={{
+                    justifyContent: 'flex-top',
+                    margin: 10,
+                    flex: 1
+                  }}
+                >
+                  <Text
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: 'bold'
+                  }}
+                  >
+                  {this.props.header}</Text>
+                    </View>
+                      <View style={{ flex: 5 }}>
+                        <Text
+                        style={{
+                          textAlign: 'center',
+                          margin: 7
+                        }}
+                        >
+                        {this.props.info}</Text>
+                        </View>
+                      </View>
+                    <View
+                        style={{
+                          flexDirection: 'row',
+                        }}
+                    >
+                  {this.createButtons()}
+                </View>
+              </View>
+            </View>
+          </BlurView>
         </Modal>
       );
     }
@@ -144,16 +138,25 @@ class SuperAgileAlert extends Component {
       justifyContent: 'center'
     },
     buttonStyle: {
-        height: Dimensions.get('window').height / (4 * 4),
-        backgroundColor: '#f4376d',
-        borderRadius: 0,
-        margin: 0,
-        marginLeft: 0.4,
-        marginRight: 0.4,
+      height: Dimensions.get('window').height / (4 * 4),
+      backgroundColor: '#f4376d',
+      borderRadius: 0,
+      margin: 0,
+      marginLeft: 0.4,
+      marginRight: 0.4,
     },
     buttonTextStyle: {
       color: 'white',
       fontSize: 16,
+    },
+    alertButtonStyle: {
+      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      width: Dimensions.get('window').width / 1.1,
+      height: Dimensions.get('window').height / 3.5,
+      borderRadius: 5,
+      backgroundColor: '#ffbbcc'
     }
   }
 

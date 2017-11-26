@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Dimensions, TouchableHighlight } from 'react-native';
+import { Text, View, Image, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
-import SuperAgileAlert from '../common/SuperAgileAlert';
 
 class HomeScreen extends Component {
 
@@ -30,22 +29,6 @@ class HomeScreen extends Component {
       />
     </View>
     <View style={styles.container1}>
-    <SuperAgileAlert
-    header={'Header'}
-    info={'Här skriver du in din info...'}
-    alertVisible={this.state.alertVisible}
-    buttonsIn={[{ text: 'Yes', onPress: () => console.log('Yes was pressed') },
-      { text: 'Cancel', onPress: () => this.setState({ alertVisible: false }) },
-      { text: 'Later', onPress: () => this.setState({ alertVisible: false }) }]}
-
-    />
-    <TouchableHighlight
-      onPress={() => {
-                  this.setState({ alertVisible: true });
-             }}
-    >
-         <Text>Show Modal</Text>
-       </TouchableHighlight>
       <Image
         style={{
           marginBottom: Dimensions.get('window').height / 10,
