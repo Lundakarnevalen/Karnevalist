@@ -27,7 +27,7 @@ class RegistrationPage extends Component {
       city: '',
       phoneNbr: '',
       foodPreferences: '',
-      shirtSize: '',
+      shirtSize: 'small',
       showShirtPicker: false
     }
   }
@@ -39,6 +39,7 @@ class RegistrationPage extends Component {
             this.setState({ shirtSize })
           }}
           items={itemArray}
+          value={this.state.shirtSize}
           isShowing={this.state.showShirtPicker}
           close={() => this.setState({ showShirtPicker: false })}
         />
@@ -51,7 +52,10 @@ class RegistrationPage extends Component {
     const { flexHorizontal } = styles;
     return (
       <View>
-        <Header title='Create Profile' />
+        <Header
+        title='Create Profile'
+        navigation={this.props.navigation}
+        />
         <ScrollView style={{ height: (height - 64) }}>
           <Input
           title='First name'

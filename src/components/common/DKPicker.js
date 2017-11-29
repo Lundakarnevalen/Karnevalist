@@ -22,14 +22,14 @@ class DKPicker extends Component {
     } else {
       Animated.timing(
         this.state.bottom,
-        { toValue: -this.state.height }
+        { toValue: (-this.state.height - 22) }
       ).start()
     }
   }
 
   render() {
     const { picker, buttonStyle } = styles;
-    const { items } = this.props;
+    const { items, value } = this.props;
     return (
       <Animated.View
         style={[picker, { width, bottom: this.state.bottom }]}
@@ -45,10 +45,11 @@ class DKPicker extends Component {
           onPress={() => this.props.close()}
         />
         <Picker
-          onValueChange={(itemValue) => this.props.onValueChange({ itemValue })}
+          onValueChange={(itemValue) => this.props.onValueChange(itemValue)}
+          selectedValue={value}
         >
         {items.map(item => {
-          return (<Picker.Item label={item.label} value={item.value} />);
+          return (<Picker.Item key={item.label} label={item.label} value={item.value} />);
         })}
         </Picker>
       </View>
