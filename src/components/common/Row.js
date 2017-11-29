@@ -74,28 +74,35 @@ class Row extends Component {
         this._style,
         ]}
       >
-        <Image source={{ uri: data.image }} style={styles.image} />
+        <View
+          style={{
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Image source={{ uri: data.image }} style={styles.image} />
+        </View>
+        <View
+          style={{
+          flexDirection: 'column'
+          }}
+        >
+          <Text style={styles.headerText}>{data.text}</Text>
           <View
             style={{
-            flexDirection: 'column'
+              flex: 1,
+              width: window.width - (30 * 5) - 6
             }}
           >
-            <Text style={styles.headerText}>{data.text}</Text>
-            <View
-              style={{
-                flex: 1,
-                width: window.width - (30 * 5) - 6
-                }}
-            >
-              <Text style={styles.infoText}>{data.infoText}</Text>
+            <Text style={styles.infoText}>{data.infoText}</Text>
             </View>
-
           </View>
           <View
             style={{
               position: 'absolute',
               right: 0,
-              top: 7
+              top: 15
             }}
           >
             <MaterialIcons
@@ -148,7 +155,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginRight: 10,
-    borderRadius: 25,
+    borderRadius: 20,
   },
 
   headerText: {

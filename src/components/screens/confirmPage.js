@@ -53,8 +53,9 @@ export default class ConfirmPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.addAlert()}
+
         <Text style={styles.title}>Confirmation List</Text>
+        {this.createIndexes()}
         <SortableList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
@@ -62,22 +63,34 @@ export default class ConfirmPage extends Component {
           onPressRow={() => this.onPressRow()}
           renderRow={this._renderRow}
         />
-        <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end'
-        }}
-        >
-        <CustomButton
-        buttonStyle={styles.confimButtonStyle}
-        textStyle={styles.confimTextStyle}
-        text={'Confim'}
-        onPress={() => Alert.alert('Gör något kul efter confirm')}
-        />
-        </View>
-
+          <CustomButton
+          buttonStyle={styles.confimButtonStyle}
+          textStyle={styles.confimTextStyle}
+          text={'Confim'}
+          onPress={() => Alert.alert('Gör något kul efter confirm')}
+          />
       </View>
     );
+  }
+
+  createIndexes() {
+    const listOfIndexes = [];
+    let i;
+    for (i = 1; i < 6; i++) {
+      listOfIndexes.push(
+        <View
+        style={{
+          position: 'absolute',
+          top: 5,
+          left: 11,
+          marginTop: ((window.height / 9) * 1.5) + (((window.height / 9) + 14) * (i - 1))
+        }}
+        >
+        <Text>i</Text>    //vill få värdet av i , inte stängen "i"!!
+        </View>
+      )
+    }
+    return listOfIndexes
   }
 
   _renderRow = ({ data, active }) => {
