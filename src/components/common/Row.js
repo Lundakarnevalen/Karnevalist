@@ -7,7 +7,12 @@ import {
   Platform,
   StyleSheet,
   Dimensions,
+  View,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'
+import SectionListItem from '../common/SectionListItem'
 
 const window = Dimensions.get('window');
 
@@ -64,67 +69,63 @@ class Row extends Component {
 
     return (
       <Animated.View
-style={[
+        style={[
         styles.row,
         this._style,
-      ]}
+        ]}
       >
         <Image source={{ uri: data.image }} style={styles.image} />
-        <Text style={styles.text}>{data.text}</Text>
+          <View
+            style={{
+            flexDirection: 'column'
+            }}
+          >
+            <Text style={styles.headerText}>{data.text}</Text>
+            <View
+              style={{
+                flex: 1,
+                width: window.width - (30 * 5) - 6
+                }}
+            >
+              <Text style={styles.infoText}>{data.infoText}</Text>
+            </View>
+
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 7
+            }}
+          >
+            <MaterialIcons
+              name='keyboard-arrow-right'
+              style={{ color: '#8A4797' }}
+              size={30}
+            />
+          </View>
       </Animated.View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#eee',
-
-    ...Platform.select({
-      ios: {
-        paddingTop: 20,
-      },
-    }),
-  },
 
   title: {
     fontSize: 20,
-    paddingVertical: 20,
+    paddingVertical: 10,
     color: '#999999',
-  },
-
-  list: {
-    flex: 1,
-  },
-
-  contentContainer: {
-    width: window.width,
-
-    ...Platform.select({
-      ios: {
-        paddingHorizontal: 30,
-      },
-
-      android: {
-        paddingHorizontal: 0,
-      }
-    })
   },
 
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 16,
-    height: 50,
+    backgroundColor: '#F4376D',
+    padding: 1,
+    height: window.height / 9,
     flex: 1,
     marginTop: 7,
-    marginBottom: 12,
-    borderRadius: 4,
-
+    marginBottom: 7,
+    borderRadius: 1,
 
     ...Platform.select({
       ios: {
@@ -145,13 +146,18 @@ const styles = StyleSheet.create({
 
   image: {
     width: 50,
-    height: 30,
-    marginRight: 30,
+    height: 50,
+    marginRight: 10,
     borderRadius: 25,
   },
 
-  text: {
-    fontSize: 24,
+  headerText: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#222222',
+  },
+  infoText: {
+    fontSize: 10,
     color: '#222222',
   },
 });

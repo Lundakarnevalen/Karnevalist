@@ -27,9 +27,9 @@ const ExampleScreenOne = (props) => (
     <View style={[styles.container, { backgroundColor: 'blue' }]}>
       <CountDown />
       <CustomButton
-        text='Tryck här för att gå tillbaka ;)'
+        text='Tryck här för att gå till ConfirmPage'
         color='orange'
-        onPress={() => props.navigation.navigate('HomeScreen')}
+        onPress={() => props.navigation.navigate('ConfirmPage')}
       />
       <TouchableOpacity
         style={{ backgroundColor: 'green', borderWidth: 2, padding: 5 }}

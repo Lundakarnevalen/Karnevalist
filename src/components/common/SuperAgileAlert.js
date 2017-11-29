@@ -3,12 +3,20 @@ import { BlurView } from 'expo';
 import { View, Text, Modal, Dimensions, StyleSheet } from 'react-native';
 import CustomButton from './CustomButton';
 
+//ex:
+/*
+header={'MyHeader'}
+info={'Håll in och flytta sektionerna i önskad ordning'}
+alertVisible={this.state.alertVisible}
+buttonsIn={[{ text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }]}
+*/
+
 class SuperAgileAlert extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      totalNbrOfButtons: this.props.buttonsIn.length
+      totalNbrOfButtons: props.buttonsIn.length
     }
   }
 
@@ -70,12 +78,13 @@ class SuperAgileAlert extends Component {
     )
   }
   render() {
+    const { alertVisible = true } = this.props;
     return (
       <Modal
       transparent
-      visible={this.props.alertVisible}
+      visible={alertVisible}
       >
-        <BlurView tint='dark' intensity={70} style={StyleSheet.absoluteFill}>
+        <BlurView tint='dark' intensity={80} style={StyleSheet.absoluteFill}>
           <View
           style={styles.outerViewStyle}
           transparent={false}
@@ -138,7 +147,7 @@ class SuperAgileAlert extends Component {
       justifyContent: 'center'
     },
     buttonStyle: {
-      height: Dimensions.get('window').height / (4 * 4),
+      height: Dimensions.get('window').height / (4 * 3),
       backgroundColor: '#f4376d',
       borderRadius: 0,
       margin: 0,
@@ -154,7 +163,7 @@ class SuperAgileAlert extends Component {
       flexDirection: 'column',
       justifyContent: 'flex-end',
       width: Dimensions.get('window').width / 1.1,
-      height: Dimensions.get('window').height / 3.5,
+      height: Dimensions.get('window').height / 3,
       borderRadius: 5,
       backgroundColor: '#ffbbcc'
     }

@@ -5,77 +5,67 @@ import {
   View,
   Dimensions,
   Platform,
-  Alert
 } from 'react-native';
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row'
-import SuperAgileAlert from '../common/SuperAgileAlert'
-import CustomButton from '../common/CustomButton'
 
 const window = Dimensions.get('window');
 
+
 const data = {
+  0: {
+    image: 'https://placekitten.com/200/240',
+    text: 'Chloe',
+  },
   1: {
     image: 'https://placekitten.com/200/201',
     text: 'Jasper',
-    infoText: 'testfoTexfror irr ceocc ced ihinhd nubueei ubt1'
   },
   2: {
     image: 'https://placekitten.com/200/202',
     text: 'Pepper',
-    infoText: 'testaoText2'
   },
   3: {
     image: 'https://placekitten.com/200/203',
     text: 'Oscar',
-    infoText: 'testaInfoText3'
   },
   4: {
     image: 'https://placekitten.com/200/204',
     text: 'Dusty',
-    infoText: 'testaInfoText'
   },
   5: {
     image: 'https://placekitten.com/200/205',
     text: 'Spooky',
-    infoText: 'testaInfoText'
+  },
+  6: {
+    image: 'https://placekitten.com/200/210',
+    text: 'Kiki',
+  },
+  7: {
+    image: 'https://placekitten.com/200/215',
+    text: 'Smokey',
+  },
+  8: {
+    image: 'https://placekitten.com/200/220',
+    text: 'Gizmo',
+  },
+  9: {
+    image: 'https://placekitten.com/220/239',
+    text: 'Kitty',
   },
 };
 
-export default class ConfirmPage extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      alertVisible: true
-    }
-  }
+export default class Basic extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.addAlert()}
         <Text style={styles.title}>Confirmation List</Text>
         <SortableList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
           data={data}
-          onPressRow={() => this.onPressRow()}
           renderRow={this._renderRow}
         />
-        <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end'
-        }}
-        >
-        <CustomButton
-        buttonStyle={styles.confimButtonStyle}
-        textStyle={styles.confimTextStyle}
-        text={'Confim'}
-        onPress={() => Alert.alert('Gör något kul efter confirm')}
-        />
-        </View>
-
       </View>
     );
   }
@@ -83,29 +73,15 @@ export default class ConfirmPage extends Component {
   _renderRow = ({ data, active }) => {
     return <Row data={data} active={active} />
   }
-
-  onPressRow() {
-    Alert.alert('Navigera till ' + data.text + '-sektionen')
-  }
-
-  addAlert() {
-    return (
-      <SuperAgileAlert
-      header={'OBS!'}
-      info={'Håll in och flytta sektionerna i önskad ordning'}
-      alertVisible={this.state.alertVisible}
-      buttonsIn={[{ text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }]}
-      />
-    )
-  }
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#eee',
 
     ...Platform.select({
       ios: {
@@ -118,16 +94,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingVertical: 20,
     color: '#999999',
-  },
-  confimTextStyle: {
-    fontSize: 15
-  },
-  confimButtonStyle: {
-    height: window.height / 9,
-    backgroundColor: '#F4376D',
-    borderRadius: 0,
-    margin: 0,
-    width: window.width
   },
 
   list: {
@@ -148,9 +114,38 @@ const styles = StyleSheet.create({
     })
   },
 
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 16,
+    height: 50,
+    flex: 1,
+    marginTop: 7,
+    marginBottom: 12,
+    borderRadius: 4,
+
+
+    ...Platform.select({
+      ios: {
+        width: window.width - (30 * 2),
+        shadowColor: 'rgba(0,0,0,0.2)',
+        shadowOpacity: 1,
+        shadowOffset: { height: 2, width: 2 },
+        shadowRadius: 2,
+      },
+
+      android: {
+        width: window.width - (30 * 2),
+        elevation: 0,
+        marginHorizontal: 30,
+      },
+    })
+  },
+
   image: {
     width: 50,
-    height: 50,
+    height: 30,
     marginRight: 30,
     borderRadius: 25,
   },
