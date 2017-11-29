@@ -28,7 +28,7 @@ class DKPicker extends Component {
   }
 
   render() {
-    const { picker, buttonStyle } = styles;
+    const { picker } = styles;
     const { items, value } = this.props;
     return (
       <Animated.View
@@ -38,10 +38,10 @@ class DKPicker extends Component {
         onLayout={(event) => {
           this.setState({ height: event.nativeEvent.layout.height })
         }}
-      >
+      > 
         <CustomButton
           text="OK"
-          buttonStyle={buttonStyle}
+          style='acceptButton'
           onPress={() => this.props.close()}
         />
         <Picker
@@ -62,10 +62,6 @@ const styles = {
   picker: {
     backgroundColor: 'white',
     position: 'absolute'
-  },
-  buttonStyle: {
-    backgroundColor: 'green',
-    height: 44
   }
 }
 

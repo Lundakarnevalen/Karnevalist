@@ -18,14 +18,7 @@ class HomeScreen extends Component {
     <View style={styles.container2}>
       <CustomButton
         text='Change to English'
-        textStyle={{
-          color: 'blue',
-          textDecorationLine: 'underline'
-        }}
-        buttonStyle={{
-          backgroundColor: 'transparent',
-          borderWidth: 0
-        }}
+        style='textButton'
       />
     </View>
     <View style={styles.container1}>
@@ -47,15 +40,7 @@ class HomeScreen extends Component {
       </Text>
       <CustomButton
         text='Personnummer'
-        textStyle={{
-          color: 'white',
-          fontSize: 20
-        }}
-        buttonStyle={{
-          backgroundColor: '#f4376d',
-          padding: 10,
-          width: Dimensions.get('window').width / 1.5
-        }}
+        style='standardButton'
       />
       <Text
         style={{
@@ -67,27 +52,12 @@ class HomeScreen extends Component {
       </Text>
       <CustomButton
         text='Skapa profil'
-        textStyle={{
-          color: 'white',
-          fontSize: 20
-        }}
-        buttonStyle={{
-          backgroundColor: '#f4376d',
-          padding: 10,
-          width: Dimensions.get('window').width / 1.5
-        }}
+        style='standardButton'
         onPress={() => this.props.navigation.navigate('RegistrationPage')}
       />
       <CustomButton
         text='Läs mer om registreringen'
-        textStyle={{
-          color: 'blue',
-          textDecorationLine: 'underline'
-        }}
-        buttonStyle={{
-          backgroundColor: 'transparent',
-          borderWidth: 0
-        }}
+        style='textButton'
       />
     </View>
   </View>
