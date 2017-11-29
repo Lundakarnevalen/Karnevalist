@@ -8,11 +8,6 @@ import CustomButton from '../common/CustomButton'
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
-const itemArray = [
-  { label: 'Small', value: 'small' },
-  { label: 'Medium', value: 'medium' }
-];
-
 class RegistrationPage extends Component {
 
   constructor(props) {
@@ -28,21 +23,11 @@ class RegistrationPage extends Component {
       phoneNbr: '',
       foodPreferences: '',
       shirtSize: '',
-      showShirtPicker: false
+      studenUnion: '',
+      studentUnionInfo: '',
+      showShirtPicker: false,
+      showStudentUnionPicker: false
     }
-  }
-
-  renderDKPicker() {
-      return (
-        <DKPicker
-          onValueChange={(shirtSize) => {
-            this.setState({ shirtSize })
-          }}
-          items={itemArray}
-          isShowing={this.state.showShirtPicker}
-          close={() => this.setState({ showShirtPicker: false })}
-        />
-      );
   }
 
   render() {
@@ -113,12 +98,68 @@ class RegistrationPage extends Component {
             }
           }
           />
+          <Input
+          title='Food preferences'
+          onChangeText={(foodPreferencesInput) => {
+              this.setState({ foodPreferences: foodPreferencesInput })
+            }
+          }
+          />
           <CustomButton
-            text={this.state.shirtSize}
+            text={this.state.shirtSize === '' ? 'Välj tröjstorlek' : this.state.shirtSize}
+            textStyle={{
+              color: 'white',
+              fontSize: 16
+            }}
+            buttonStyle={{
+              backgroundColor: '#f4376d',
+              padding: 10
+            }}
             onPress={() => this.setState({ showShirtPicker: true })}
           />
+          <CustomButton
+            text={this.state.studenUnion === '' ? 'Choose studenunion' : this.state.studenUnion}
+            textStyle={{
+              color: 'white',
+              fontSize: 16
+            }}
+            buttonStyle={{
+              backgroundColor: '#f4376d',
+              padding: 10
+            }}
+            onPress={() => this.setState({ showStudentUnionPicker: true })}
+          />
+          <Input
+          title='What did you do there?'
+          onChangeText={(studentUnionInfoInput) => {
+              this.setState({ studentUnionInfo: studentUnionInfoInput })
+            }
+          }
+          />
         </ScrollView>
-        {this.renderDKPicker()}
+        <DKPicker
+          onValueChange={(shirtSize) => {
+            this.setState({ shirtSize })
+          }}
+          items={[
+            { label: 'Small', value: 'small' },
+            { label: 'Medium', value: 'medium' },
+            { label: 'Large', value: 'large' }
+          ]}
+          isShowing={this.state.showShirtPicker}
+          close={() => this.setState({ showShirtPicker: false })}
+        />
+        <DKPicker
+          onValueChange={(studenUnion) => {
+            this.setState({ studenUnion })
+          }}
+          items={[
+            { label: 'Lunds Nation', value: 'lundsNation' },
+            { label: 'Kalmar Nation', value: 'kalmarNation' }
+          ]}
+          isShowing={this.state.showStudentUnionPicker}
+          close={() => this.setState({ showStudentUnionPicker: false })}
+        />
       </View>
     )
   }
