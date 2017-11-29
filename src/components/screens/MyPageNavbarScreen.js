@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TabNavigator } from 'react-navigation';
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
-import NavHomeScreen from './MyPageNavbarScreens/NavHomeScreen';
+import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import AmusementScreen from './MyPageNavbarScreens/AmusementScreen'
 import NewsScreen from './MyPageNavbarScreens/NewsScreen'
@@ -19,7 +19,7 @@ const TabNav = TabNavigator({
   Sections: {
     screen: SectionScreen,
     navigationOptions: {
-      tabBarLabel: 'Sections',
+      tabBarLabel: 'Sektioner',
       tabBarIcon: () => (
         <Ionicons
         size={30}
@@ -31,7 +31,7 @@ const TabNav = TabNavigator({
   Amusements: {
     screen: AmusementScreen,
     navigationOptions: {
-      tabBarLabel: 'Amusements',
+      tabBarLabel: 'Nöjen',
       tabBarIcon: () => (
         <Ionicons
         size={30}
@@ -41,12 +41,12 @@ const TabNav = TabNavigator({
     }
   },
   Home: {
-    screen: NavHomeScreen,
+    screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: 'Home',
+      tabBarLabel: 'Hem',
       tabBarIcon: () => (
         <Ionicons
-        size={40}
+        size={30}
         name="md-home"
         />
       )
@@ -55,7 +55,7 @@ const TabNav = TabNavigator({
   News: {
     screen: NewsScreen,
     navigationOptions: {
-      tabBarLabel: 'News',
+      tabBarLabel: 'Nyheter',
       tabBarIcon: () => (
         <FontAwesome
         size={30}
@@ -67,7 +67,7 @@ const TabNav = TabNavigator({
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
-      tabBarLabel: 'My profile',
+      tabBarLabel: 'Min profil',
       tabBarIcon: () => (
         <FontAwesome
         size={30}
@@ -82,10 +82,13 @@ const TabNav = TabNavigator({
   initialRouteName: 'Home',
   tabBarOptions: {
     showIcon: true,
-    activeTintColor: '#e91e63',
+    activeTintColor: '#8A4797',
     labelStyle: {
       fontSize: 10
-    }
+    },
+    style: {
+    backgroundColor: '#FBBCC0',
+  },
   },
 })
 export default MyPageNavbarScreen

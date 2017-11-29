@@ -8,7 +8,9 @@ class ProfileScreen extends Component {
     return (
       <View>
         <Header
-          title='Profile'
+          textStyle={{ color: '#FBBCC0' }}
+          style={{ backgroundColor: '#8A4797' }}
+          title='Min profil'
           leftIcon={null}
           navigation={this.props.navigation}
         />
