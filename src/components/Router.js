@@ -3,6 +3,7 @@ import HomeScreen from './screens/HomeScreen';
 import ExampleScreenOne from './screens/ExampleScreenOne';
 import DropdownPickerScreen from './screens/DropdownPickerScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
+import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
 
 const Router = StackNavigator({
   HomeScreen: {
@@ -22,6 +23,12 @@ const Router = StackNavigator({
   },
   MyPageNavbarScreen: {
     screen: MyPageNavbarScreen,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  SectionItemScreen: {
+    screen: SectionItemScreen,
     navigationOptions: {
       header: null,
     }

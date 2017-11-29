@@ -9,15 +9,15 @@ class SectionListItem extends Component {
     const { sectionTitle, sectionInfoText, onPress, } = this.props
     return (
       <TouchableOpacity
-        onPress={() => onPress(sectionTitle)}
+        onPress={() => onPress(sectionTitle, sectionInfoText)}
         style={containerStyle}
       >
-        <View style={{ flex: 8 }}>
+        <View style={{ flex: 8, margin: 3 }}>
           <Text style={titleStyle}>
             {sectionTitle}
           </Text>
           <Text style={infoStyle}>
-            {sectionInfoText}
+            {sectionInfoText.substring(0, 50)}
           </Text>
         </View>
         <View style={{ flex: 1 }}>
