@@ -55,7 +55,7 @@ class SectionScreen extends Component {
                     image:
                       <Image
                         style={{ width: WIDTH - 10, height: WIDTH - 50 }}
-                        source={require('../../../../res/Karneval.png')}
+                        source={require('../../../../res/KaffeKarl.png')}
                       />
                   }
                   )

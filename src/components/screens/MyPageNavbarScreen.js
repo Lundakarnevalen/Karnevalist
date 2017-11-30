@@ -92,7 +92,7 @@ const TabNav = TabNavigator({
       backgroundColor: '#FBBCC0',
     },
     indicatorStyle: {
-      color: '#8A4797',
+      backgroundColor: '#8A4797',
     }
   },
 })

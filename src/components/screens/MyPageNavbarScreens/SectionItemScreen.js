@@ -32,11 +32,8 @@ class SectionItemScreen extends Component {
           </TouchableOpacity>
         }
         />
-        <View style={[styles.container, { }]}>
-        <Image
-          style={styles.imageStyle}
-          source={require('../../../../res/Monstergubbe.png')}
-        />
+        <View style={[styles.container, {}]}>
+        {image}
           <ScrollView style={styles.someStyle}>
             <Text style={{ fontSize: 20, margin: 4 }}>{description}</Text>
           </ScrollView>
