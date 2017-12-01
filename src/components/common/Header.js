@@ -15,27 +15,29 @@ class Header extends Component {
 
   renderRightIcon() {
     const { rightIcon } = this.props
-    if (rightIcon)
-    return (
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        {rightIcon}
-      </View>
-    )
+    if (rightIcon) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          {rightIcon}
+        </View>
+      )
+    }
     return (
       <View style={{ flex: 1, alignItems: 'center' }} />
-  )
+    )
   }
 
   renderLeftIcon() {
     const { leftIcon, navigation } = this.props
-    if (leftIcon === null)
+    if (leftIcon === null) {
       return <View style={{ flex: 1, alignItems: 'center' }} />
-    if (leftIcon)
+    } else if (leftIcon) {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
           {leftIcon}
         </View>
-    )
+      )
+    }
     const backButton = navigation ?
       (
       <TouchableOpacity onPress={() => navigation.goBack(null)}>
@@ -70,7 +72,7 @@ class Header extends Component {
 const styles = {
   containerStyle: {
     width: WIDTH,
-    height: Platform.os === 'ios' ? 67.5 : 50,
+    height: Platform.OS === 'ios' ? 64 : 50,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

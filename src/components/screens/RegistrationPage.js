@@ -1,12 +1,25 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Dimensions } from 'react-native'
+import { ScrollView, View, Text, Dimensions } from 'react-native'
 import Header from '../common/Header'
 import Input from '../common/Input'
 import DKPicker from '../common/DKPicker'
 import CustomButton from '../common/CustomButton'
+import ButtonChoiceManager from '../common/ButtonChoiceManager'
 
-const width = Dimensions.get('window').width
+const width = Dimensions.get('window').width - 32
 const height = Dimensions.get('window').height
+
+const shirtSizeArray = [
+  { label: '-', value: '' },
+  { label: 'Small', value: 'small' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'Large', value: 'large' }
+]
+const studentUnionArray = [
+  { label: '-', value: '' },
+  { label: 'Lunds Nation', value: 'lundsNation' },
+  { label: 'Kalmar Nation', value: 'kalmarNation' }
+]
 
 class RegistrationPage extends Component {
 
@@ -23,8 +36,10 @@ class RegistrationPage extends Component {
       phoneNbr: '',
       foodPreferences: '',
       shirtSize: '',
-      studenUnion: '',
+      shirtSizeTitle: '',
+      studentUnion: '',
       studentUnionInfo: '',
+      studentUnionTitle: '',
       showShirtPicker: false,
       showStudentUnionPicker: false
     }
@@ -36,77 +51,89 @@ class RegistrationPage extends Component {
     const { flexHorizontal } = styles;
     return (
       <View>
-        <Header title='Create Profile' />
-        <ScrollView style={{ height: (height - 64) }}>
+        <Header
+          title='Create Profile'
+          navigation={this.props.navigation}
+        />
+        <ScrollView
+          contentContainerStyle={styles.contentContainer}
+          style={{ height: (height - 64) }}
+        >
           <Input
-          title='First name'
-          onChangeText={(firstNameInput) => {
+            placeholder='First name'
+            onChangeText={(firstNameInput) => {
               this.setState({ firstName: firstNameInput })
-            }
-          }
+            }}
+            style={{ marginBottom: 8 }}
           />
           <Input
-          title='Last name'
-          onChangeText={(lastNameInput) => {
+            placeholder='Last name'
+            onChangeText={(lastNameInput) => {
               this.setState({ lastName: lastNameInput })
-            }
-          }
+            }}
+            style={{ marginBottom: 8 }}
           />
           <Input
-          title='Email'
-          onChangeText={(emailInput) => {
+            placeholder='Email'
+            onChangeText={(emailInput) => {
               this.setState({ email: emailInput })
-            }
-          }
+            }}
+            style={{ marginBottom: 8 }}
           />
           <Input
-          title='Confirm email'
-          onChangeText={(emailInput) => {
+            placeholder='Confirm email'
+            onChangeText={(emailInput) => {
               this.setState({ confirmedEmail: emailInput })
-            }
-          }
+            }}
+            style={{ marginBottom: 8 }}
           />
           <Input
-          title='Address'
-          onChangeText={(addressInput) => {
+            placeholder='Address'
+            onChangeText={(addressInput) => {
               this.setState({ address: addressInput })
-            }
-          }
+            }}
+            style={{ marginBottom: 8 }}
           />
           <View style={flexHorizontal}>
             <Input
-            title='Postcode'
-            onChangeText={(postcodeInput) => {
+              placeholder='Postcode'
+              onChangeText={(postcodeInput) => {
                 this.setState({ postcode: postcodeInput })
-              }
-            }
-            width={width / 2}
+              }}
+              width={(width / 2) - 4}
+              style={{ marginBottom: 8 }}
+            />
+            <View
+              width={8}
             />
             <Input
-            title='City'
-            onChangeText={(cityInput) => {
+              placeholder='City'
+              onChangeText={(cityInput) => {
                 this.setState({ city: cityInput })
-              }
-            }
-            width={width / 2}
+              }}
+              width={(width / 2) - 4}
+              style={{ marginBottom: 8 }}
             />
           </View>
           <Input
-          title='Phone number'
-          onChangeText={(phoneNbrInput) => {
+            placeholder='Phone number'
+            onChangeText={(phoneNbrInput) => {
               this.setState({ phoneNbr: phoneNbrInput })
-            }
-          }
+            }}
+            style={{ marginBottom: 8 }}
           />
           <Input
-          title='Food preferences'
-          onChangeText={(foodPreferencesInput) => {
+            placeholder='Food preferences'
+            onChangeText={(foodPreferencesInput) => {
               this.setState({ foodPreferences: foodPreferencesInput })
-            }
-          }
+            }}
+            style={{ marginBottom: 8 }}
           />
+          <Text>
+            Choose shirt size
+          </Text>
           <CustomButton
-            text={this.state.shirtSize === '' ? 'Välj tröjstorlek' : this.state.shirtSize}
+            text={this.state.shirtSizeTitle === '' ? 'Choose' : this.state.shirtSizeTitle}
             textStyle={{
               color: 'white',
               fontSize: 16
@@ -117,8 +144,15 @@ class RegistrationPage extends Component {
             }}
             onPress={() => this.setState({ showShirtPicker: true })}
           />
+          <ButtonChoiceManager
+            buttonInputVector={['I have a drives license']}
+            multipleChoice
+          />
+          <Text>
+            Choose student union
+          </Text>
           <CustomButton
-            text={this.state.studenUnion === '' ? 'Choose studenunion' : this.state.studenUnion}
+            text={this.state.studentUnionTitle === '' ? 'Choose' : this.state.studentUnionTitle}
             textStyle={{
               color: 'white',
               fontSize: 16
@@ -130,33 +164,43 @@ class RegistrationPage extends Component {
             onPress={() => this.setState({ showStudentUnionPicker: true })}
           />
           <Input
-          title='What did you do there?'
-          onChangeText={(studentUnionInfoInput) => {
+            title='What did you do at the student union?'
+            onChangeText={(studentUnionInfoInput) => {
               this.setState({ studentUnionInfo: studentUnionInfoInput })
-            }
-          }
+            }}
+          />
+          <ButtonChoiceManager
+            buttonInputVector={['I was engaged in the karneval 2014']}
+            multipleChoice
           />
         </ScrollView>
         <DKPicker
           onValueChange={(shirtSize) => {
             this.setState({ shirtSize })
+            shirtSizeArray.map(item => {
+              if (shirtSize === item.value) {
+                return (this.setState({ shirtSizeTitle: item.label }))
+              }
+              return (null)
+            })
           }}
-          items={[
-            { label: 'Small', value: 'small' },
-            { label: 'Medium', value: 'medium' },
-            { label: 'Large', value: 'large' }
-          ]}
+          items={shirtSizeArray}
+          value={this.state.shirtSize}
           isShowing={this.state.showShirtPicker}
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
-          onValueChange={(studenUnion) => {
-            this.setState({ studenUnion })
+          onValueChange={(studentUnion) => {
+            this.setState({ studentUnion })
+            studentUnionArray.map(item => {
+              if (studentUnion === item.value) {
+                return (this.setState({ studentUnionTitle: item.label }))
+              }
+              return (null)
+            })
           }}
-          items={[
-            { label: 'Lunds Nation', value: 'lundsNation' },
-            { label: 'Kalmar Nation', value: 'kalmarNation' }
-          ]}
+          items={studentUnionArray}
+          value={this.state.studentUnion}
           isShowing={this.state.showStudentUnionPicker}
           close={() => this.setState({ showStudentUnionPicker: false })}
         />
@@ -176,6 +220,12 @@ const styles = {
   flexHorizontal: {
     flexDirection: 'row'
   },
+  contentContainer: {
+    paddingTop: 32,
+    paddingRight: 16,
+    paddingBottom: 64,
+    paddingLeft: 16
+  }
 }
 
 export default RegistrationPage;

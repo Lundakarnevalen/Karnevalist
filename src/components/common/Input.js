@@ -40,7 +40,7 @@ class Input extends Component {
     const { inputStyle } = styles
     const { value, width, placeholder, secureText, autoCorrect = false } = this.props
     return (
-      <View>
+      <View style={this.props.style}>
         {this.getTitle()}
         <TextInput
           onBlur={() => this.onBlur()}
