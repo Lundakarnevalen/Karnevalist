@@ -7,10 +7,11 @@ import {
   Platform,
   Alert
 } from 'react-native';
-import SortableList from 'react-native-sortable-list';
+import SortableList from 'react-native-sortable-list'
 import Row from '../common/Row'
 import SuperAgileAlert from '../common/SuperAgileAlert'
 import CustomButton from '../common/CustomButton'
+import Header from '../common/Header'
 
 const window = Dimensions.get('window');
 
@@ -54,7 +55,13 @@ export default class ConfirmPage extends Component {
     return (
       <View style={styles.container}>
 
-        <Text style={styles.title}>Confirmation List</Text>
+      <Header
+        textStyle={{ color: '#FBBCC0' }}
+        style={{ backgroundColor: '#8A4797', marginBottom: 30 }}
+        title='Confirmation page'
+        leftIcon={null}
+        navigation={this.props.navigation}
+      />
         {this.createIndexes()}
         <SortableList
           style={styles.list}
@@ -125,12 +132,6 @@ const styles = StyleSheet.create({
         paddingTop: 20,
       },
     }),
-  },
-
-  title: {
-    fontSize: 20,
-    paddingVertical: 20,
-    color: '#999999',
   },
   confimTextStyle: {
     fontSize: 15

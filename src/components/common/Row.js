@@ -107,7 +107,7 @@ class Row extends Component {
           >
             <MaterialIcons
               name='keyboard-arrow-right'
-              style={{ color: '#8A4797' }}
+              style={{ color: '#8A4797', marginTop: (window.height / 9) / 9 }}
               size={30}
             />
           </View>
