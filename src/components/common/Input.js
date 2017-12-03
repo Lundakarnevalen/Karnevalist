@@ -11,11 +11,11 @@ class Input extends Component {
 
   getTitle() {
     const { textStyle } = styles
-    const { title } = this.props
+    const { title, headerTextStyle } = this.props
     if (title) {
       return (
         <Text
-          style={textStyle}
+          style={[textStyle, headerTextStyle]}
         >
           {title}
         </Text>
@@ -38,16 +38,18 @@ class Input extends Component {
 
   render() {
     const { inputStyle } = styles
-    const { value, width, placeholder, secureText, autoCorrect = false } = this.props
+    const { value, width, placeholder, secureText, textInputStyle,
+      autoCorrect = false, viewStyle, underlineColorAndroid } = this.props
     return (
-      <View>
+      <View style={viewStyle}>
         {this.getTitle()}
         <TextInput
+          underlineColorAndroid={underlineColorAndroid}
           onBlur={() => this.onBlur()}
           onChangeText={(text) => this.props.onChangeText(text)}
           value={value}
           placeholder={placeholder}
-          style={[inputStyle, { width, borderColor: this.state.borderColor }]}
+          style={[inputStyle, { width, borderColor: this.state.borderColor }, textInputStyle]}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
         />
