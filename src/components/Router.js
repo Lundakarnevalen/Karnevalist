@@ -1,6 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen';
-import RegistrationPage from './screens/RegistrationPage';
+import RegistrationScreen from './screens/RegistrationScreen';
+import ConfirmationScreen from './screens/ConfirmationScreen';
 import DropdownPickerScreen from './screens/DropdownPickerScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
 
@@ -11,8 +12,14 @@ const Router = StackNavigator({
       header: null
     }
   },
-  RegistrationPage: {
-    screen: RegistrationPage,
+  RegistrationScreen: {
+    screen: RegistrationScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ConfirmationScreen: {
+    screen: ConfirmationScreen,
     navigationOptions: {
       header: null
     }

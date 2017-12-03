@@ -76,7 +76,7 @@ class HomeScreen extends Component {
           padding: 10,
           width: Dimensions.get('window').width / 1.5
         }}
-        onPress={() => this.props.navigation.navigate('RegistrationPage')}
+        onPress={() => this.props.navigation.navigate('RegistrationScreen')}
       />
       <CustomButton
         text='Läs mer om registreringen'

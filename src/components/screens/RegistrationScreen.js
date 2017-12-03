@@ -21,7 +21,7 @@ const studentUnionArray = [
   { label: 'Kalmar Nation', value: 'kalmarNation' }
 ]
 
-class RegistrationPage extends Component {
+class RegistrationScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -46,8 +46,6 @@ class RegistrationPage extends Component {
   }
 
   render() {
-    console.log(this.state.firstName)
-    console.log(this.state.lastName)
     const { flexHorizontal } = styles;
     return (
       <View>
@@ -101,10 +99,10 @@ class RegistrationPage extends Component {
                 this.setState({ postcode: postcodeInput })
               }}
               width={(width / 2) - 4}
-              style={{ marginBottom: 8 }}
-            />
-            <View
-              width={8}
+              style={{
+                marginBottom: 8,
+                marginRight: 8
+              }}
             />
             <Input
               placeholder='City'
@@ -173,6 +171,18 @@ class RegistrationPage extends Component {
             buttonInputVector={['I was engaged in the karneval 2014']}
             multipleChoice
           />
+          <CustomButton
+            text='Register'
+            textStyle={{
+              color: 'white',
+              fontSize: 16
+            }}
+            buttonStyle={{
+              backgroundColor: '#f4376d',
+              padding: 10
+            }}
+            onPress={() => this.props.navigation.navigate('ConfirmationScreen')}
+          />
         </ScrollView>
         <DKPicker
           onValueChange={(shirtSize) => {
@@ -228,4 +238,4 @@ const styles = {
   }
 }
 
-export default RegistrationPage;
+export default RegistrationScreen;
