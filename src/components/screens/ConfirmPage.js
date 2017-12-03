@@ -16,27 +16,27 @@ import Header from '../common/Header'
 const window = Dimensions.get('window');
 
 const data = {
-  1: {
+  test1: {
     image: 'https://placekitten.com/200/201',
     text: 'Jasper',
     infoText: 'testfoTexfror irr ceocc ced ihinhd nubueei ubt1'
   },
-  2: {
+  test2: {
     image: 'https://placekitten.com/200/202',
     text: 'Pepper',
     infoText: 'testaoText2'
   },
-  3: {
+  test3: {
     image: 'https://placekitten.com/200/203',
     text: 'Oscar',
     infoText: 'testaInfoText3'
   },
-  4: {
+  test4: {
     image: 'https://placekitten.com/200/204',
     text: 'Dusty',
     infoText: 'testaInfoText'
   },
-  5: {
+  test5: {
     image: 'https://placekitten.com/200/205',
     text: 'Spooky',
     infoText: 'testaInfoText'
@@ -67,7 +67,7 @@ export default class ConfirmPage extends Component {
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
           data={data}
-          onPressRow={() => this.onPressRow()}
+          onPressRow={(key) => this.onPressRow(data[key])}
           renderRow={this._renderRow}
         />
           <CustomButton
@@ -101,11 +101,12 @@ export default class ConfirmPage extends Component {
   }
 
   _renderRow = ({ data, active }) => {
-    return <Row data={data} active={active} />
+    return <Row data={data} onPress={(key) => this.onPressRow(key)} active={active} />
   }
 
-  onPressRow() {
-    Alert.alert('Navigera till ' + data.text + '-sektionen')
+  onPressRow(key) {
+    
+    Alert.alert('Navigera till ' + key.text + '-sektionen')
   }
 
   addAlert() {
