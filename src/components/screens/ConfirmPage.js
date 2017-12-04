@@ -90,7 +90,7 @@ export default class ConfirmPage extends Component {
           position: 'absolute',
           top: 5,
           left: 11,
-          marginTop: ((window.height / 9) * 1.5) + (((window.height / 9) + 14) * (i - 1))
+          marginTop: ((window.height / 8) * 1.5) + (((window.height / 9) + 14) * (i - 1))
         }}
         >
         <Text>{i}</Text>
@@ -105,7 +105,6 @@ export default class ConfirmPage extends Component {
   }
 
   onPressRow(key) {
-    
     Alert.alert('Navigera till ' + key.text + '-sektionen')
   }
 
