@@ -19,7 +19,7 @@ const data = {
   test1: {
     image: 'https://placekitten.com/200/201',
     text: 'Jasper',
-    infoText: 'testfoTexfror irr ceocc ced ihinhd nubueei ubt1'
+    infoText: 'Hej jag heter OscarHej jag hlllter OscarHej jag he'
   },
   test2: {
     image: 'https://placekitten.com/200/202',
@@ -39,6 +39,11 @@ const data = {
   test5: {
     image: 'https://placekitten.com/200/205',
     text: 'Spooky',
+    infoText: 'testaInfoText'
+  },
+  test6: {
+    image: 'https://placekitten.com/200/205',
+    text: 'Oscar',
     infoText: 'testaInfoText'
   },
 };
@@ -62,7 +67,6 @@ export default class ConfirmPage extends Component {
         leftIcon={null}
         navigation={this.props.navigation}
       />
-        {this.createIndexes()}
         <SortableList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
@@ -83,7 +87,7 @@ export default class ConfirmPage extends Component {
   createIndexes() {
     const listOfIndexes = [];
 
-    for (let i = 1; i < 6; i++) {
+    for (let i = 0; i < Object.keys(data).length + 1; i++) {
       listOfIndexes.push(
         <View
         style={{
@@ -100,8 +104,15 @@ export default class ConfirmPage extends Component {
     return listOfIndexes
   }
 
-  _renderRow = ({ data, active }) => {
-    return <Row data={data} onPress={(key) => this.onPressRow(key)} active={active} />
+  _renderRow = ({ data, active, index }) => {
+    return (
+      <Row
+      data={data}
+      index={index + 1}
+      onPress={(key) => this.onPressRow(key)}
+      active={active}
+      />
+    )
   }
 
   onPressRow(key) {
@@ -134,11 +145,14 @@ const styles = StyleSheet.create({
     }),
   },
   confimTextStyle: {
-    fontSize: 15
+    fontSize: 15,
+    color: '#ffffff'
   },
   confimButtonStyle: {
     height: window.height / 9,
     backgroundColor: '#F4376D',
+    borderTopWidth: 1,
+    borderColor: 'white',
     borderRadius: 0,
     margin: 0,
     width: window.width

@@ -8,11 +8,8 @@ import {
   StyleSheet,
   Dimensions,
   View,
-  TouchableOpacity,
-  Alert,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'
-import SectionListItem from '../common/SectionListItem'
 
 const window = Dimensions.get('window');
 
@@ -81,38 +78,59 @@ class Row extends Component {
             justifyContent: 'center'
           }}
         >
-          <Image source={{ uri: data.image }} style={styles.image} />
-        </View>
-        <View
-          style={{
-          flexDirection: 'column'
-          }}
-        >
-          <Text style={styles.headerText}>{data.text}</Text>
-          <View
-            style={{
-              flex: 1,
-              width: window.width - (30 * 5) - 6
-            }}
-          >
-            <Text style={styles.infoText}>{data.infoText}</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              position: 'absolute',
-              right: 0,
-              top: 15
-            }}
-          >
-            <MaterialIcons
-              name='keyboard-arrow-right'
-              style={{ color: '#8A4797', marginTop: (window.height / 9) / 9 }}
-              size={30}
-            />
+        {this.createRows(data)}
           </View>
       </Animated.View>
     );
+  }
+
+  createRows(data) {
+    return (
+      <View
+      style={{
+        flexDirection: 'row',
+        flex: 1,
+        width: window.width - (30 * 2)
+      }}
+      >
+      <View
+      style={{
+        justifyContent: 'center'
+        }}
+      >
+        <Text style={styles.headerText}>{this.props.index}</Text>
+      </View>
+
+      <Image source={{ uri: data.image }} style={styles.image} />
+
+      <View
+      style={{
+        flexDirection: 'column',
+        marginRight: 32,
+        flex: 1
+      }}
+      >
+      <Text style={styles.headerText}>{data.text}</Text>
+
+      <Text style={styles.infoText}>{data.infoText}</Text>
+
+
+      </View>
+
+      <MaterialIcons
+      name='keyboard-arrow-right'
+      style={{
+        color: '#8A4797',
+        position: 'absolute',
+        marginTop: (window.height / 5) / 9,
+        right: 2
+      }}
+      size={30}
+      />
+
+      </View>
+
+    )
   }
 }
 
@@ -127,7 +145,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     backgroundColor: '#F4376D',
-    padding: 1,
+    padding: 0,
     height: window.height / 9,
     flex: 1,
     marginTop: 7,
@@ -137,10 +155,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         width: window.width - (30 * 2),
-        shadowColor: 'rgba(0,0,0,0.2)',
-        shadowOpacity: 1,
-        shadowOffset: { height: 2, width: 2 },
-        shadowRadius: 2,
+
       },
 
       android: {
@@ -152,20 +167,22 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
+    alignSelf: 'center',
+    marginLeft: 10,
     marginRight: 10,
-    borderRadius: 20,
+    borderRadius: 25,
   },
 
   headerText: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#222222',
+    color: '#ffffff',
   },
   infoText: {
     fontSize: 10,
-    color: '#222222',
+    color: '#ffffff'
   },
 });
 export default Row
