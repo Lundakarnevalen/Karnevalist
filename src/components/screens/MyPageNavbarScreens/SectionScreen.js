@@ -8,7 +8,7 @@ const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
 const exampleArray = []
 for (let i = 0; i < 25; i++) exampleArray.push({
-  title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats'
+  title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får platsKul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats'
 })
 const WIDTH = Dimensions.get('window').width
 class SectionScreen extends Component {
@@ -39,9 +39,8 @@ class SectionScreen extends Component {
           navigation={navigation}
         />
         </View>
-        <View style={styles.buttonStyle}>
+        <View style={styles.bottomStyle}>
           <ListView
-          // style={{ maxHeight: 420 }} //TODO FIX THIS HEIGHT
             dataSource={this.state.dataSource}
             renderRow={(rowData) =>
               <SectionListItem
@@ -70,7 +69,7 @@ class SectionScreen extends Component {
 }
 
 const styles = {
-  buttonStyle: {
+  bottomStyle: {
     paddingBottom: (Platform.OS === 'ios') ? 100 : 148
   },
 };

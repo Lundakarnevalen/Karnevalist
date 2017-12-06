@@ -12,6 +12,7 @@ const { height } = Dimensions.get('window')
 
 class SectionItemScreen extends Component {
   render() {
+    console.log(Platform.OS);
     const { navigation } = this.props
     const { title, description, image } = navigation.state.params
     return (
@@ -33,11 +34,12 @@ class SectionItemScreen extends Component {
         }
         />
         <View style={[styles.container, {}]}>
-        {image}
-          <ScrollView style={styles.someStyle}>
-            <Text style={{ fontSize: 20, margin: 4 }}>{description}</Text>
-          </ScrollView>
+          {image}
         </View>
+        <View style={{height: 10, backgroundColor: '#8A4797'}}/>
+        <ScrollView style={styles.someStyle}>
+          <Text style={{ fontSize: 20, margin: 4 }}>{description}</Text>
+        </ScrollView>
       </View>
     )
   }
@@ -50,16 +52,8 @@ const styles = {
     justifyContent: 'center',
     width: Dimensions.get('window').width
   },
-  imageStyle: {
-    resizeMode: 'contain',
-    width: width / 1.1,
-    height: height / 2.3
-  },
   someStyle: {
-    maxHeight: Platform.os === 'ios' ? HEIGHT - WIDTH - 67.5 - 15 : HEIGHT - WIDTH - 5 - Constants.statusBarHeight,
-    borderTopWidth: 4,
-    borderTopColor: '#8A4797',
-    marginTop: 3
+    maxHeight: Platform.OS === 'ios' ? HEIGHT - WIDTH - 32 : HEIGHT - WIDTH - 5 - Constants.statusBarHeight,
   }
 };
 
