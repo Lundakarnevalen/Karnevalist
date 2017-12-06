@@ -5,6 +5,7 @@ import Input from '../common/Input'
 import DKPicker from '../common/DKPicker'
 import CustomButton from '../common/CustomButton'
 import ButtonChoiceManager from '../common/ButtonChoiceManager'
+import SuperAgileAlert from '../common/SuperAgileAlert'
 
 const width = Dimensions.get('window').width - 32
 const height = Dimensions.get('window').height
@@ -30,6 +31,8 @@ class RegistrationScreen extends Component {
       lastName: '',
       email: '',
       confirmedEmail: '',
+      password: '',
+      confirmedPassword: '',
       address: '',
       postcode: '',
       city: '',
@@ -41,8 +44,40 @@ class RegistrationScreen extends Component {
       studentUnionInfo: '',
       studentUnionTitle: '',
       showShirtPicker: false,
-      showStudentUnionPicker: false
+      showStudentUnionPicker: false,
+      alertVisible: false
     }
+  }
+
+  validate() {
+    if (this.validateInputs()) {
+      this.props.navigation.navigate('ConfirmationScreen')
+    } else {
+      this.setState({ alertVisible: true });
+    }
+  }
+
+  validateInputs() {
+    if (this.validateEmail() && this.validatePassword()) {
+      return true;
+    }
+    return false;
+  }
+  validateEmail() {
+    if (this.state.email === this.state.confirmedEmail) {
+      if (this.state.email.indexOf('@') > -1) {
+        if (this.state.email.indexOf('.') > -1) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  validatePassword() {
+    let res = false;
+    res = this.state.password === this.state.confirmedPassword;
+    return res;
   }
 
   render() {
@@ -84,6 +119,22 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedEmail: emailInput })
             }}
             style={{ marginBottom: 8 }}
+          />
+          <Input
+            placeholder='Password'
+            onChangeText={(passwordInput) => {
+              this.setState({ password: passwordInput })
+            }}
+            style={{ marginBottom: 8 }}
+            secureText='true'
+          />
+          <Input
+            placeholder='Confirm password'
+            onChangeText={(passwordInput) => {
+              this.setState({ confirmedPassword: passwordInput })
+            }}
+            style={{ marginBottom: 8 }}
+            secureText='true'
           />
           <Input
             placeholder='Address'
@@ -161,9 +212,9 @@ class RegistrationScreen extends Component {
           />
           <CustomButton
             text='Register'
-            style='standardButton'
+            style='acceptButton'
             width={width}
-            onPress={() => this.props.navigation.navigate('ConfirmationScreen')}
+            onPress={() => this.validate()}
           />
         </ScrollView>
         <DKPicker
@@ -195,6 +246,12 @@ class RegistrationScreen extends Component {
           value={this.state.studentUnion}
           isShowing={this.state.showStudentUnionPicker}
           close={() => this.setState({ showStudentUnionPicker: false })}
+        />
+        <SuperAgileAlert
+          header={'Invalid Input'}
+          info={'Don\'t be retarded please..'}
+          alertVisible={this.state.alertVisible}
+          buttonsIn={[{ text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }]}
         />
       </View>
     )
