@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Alert } from 'react-native';
 import CustomButton from '../common/CustomButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import Input from '../common/Input';
 import Header from '../common/Header';
 
 class HomeScreen extends Component {
@@ -17,7 +16,7 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { titelTextStyle, container, containerStyle, infoTextStyle, line } = styles
+    const { titelTextStyle, container, containerStyle, line } = styles
     const { sectionTitle, onPress, } = this.props
     return (
       <View>
@@ -37,7 +36,7 @@ class HomeScreen extends Component {
           </Text>
 
           <TouchableOpacity
-            onPress={() => onPress(sectionTitle)}
+            onPress={() => Alert.alert('Information om detta steget')}
             style={containerStyle}
           >
             <View style={{ flex: 1 }}>
@@ -53,7 +52,7 @@ class HomeScreen extends Component {
           <View style={line} />
 
           <TouchableOpacity
-            onPress={() => onPress(sectionTitle)}
+            onPress={() => Alert.alert('Information om detta steget')}
             style={containerStyle}
           >
             <View style={{ flex: 1 }}>
@@ -69,7 +68,7 @@ class HomeScreen extends Component {
           <View style={line} />
 
           <TouchableOpacity
-            onPress={() => onPress(sectionTitle)}
+            onPress={() => Alert.alert('Information om detta steget')}
             style={containerStyle}
           >
             <View style={{ flex: 1 }}>
@@ -85,6 +84,9 @@ class HomeScreen extends Component {
           <CustomButton
             style='standardButton'
             text='Jag förstår'
+            onPress={() => {
+              this.props.navigation.goBack(null)
+            }}
           />
 
         </View>
@@ -113,11 +115,7 @@ const styles = {
   },
   titelTextStyle: {
     fontSize: 30
-  },
-  infoTextStyle: {
-    marginRight: 0,
-    fontSize: 30
-  },
+  }
 };
 
 export default HomeScreen;
