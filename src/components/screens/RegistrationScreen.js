@@ -132,14 +132,8 @@ class RegistrationScreen extends Component {
           </Text>
           <CustomButton
             text={this.state.shirtSizeTitle === '' ? 'Choose' : this.state.shirtSizeTitle}
-            textStyle={{
-              color: 'white',
-              fontSize: 16
-            }}
-            buttonStyle={{
-              backgroundColor: '#f4376d',
-              padding: 10
-            }}
+            style='standardButton'
+            width={width}
             onPress={() => this.setState({ showShirtPicker: true })}
           />
           <ButtonChoiceManager
@@ -151,14 +145,8 @@ class RegistrationScreen extends Component {
           </Text>
           <CustomButton
             text={this.state.studentUnionTitle === '' ? 'Choose' : this.state.studentUnionTitle}
-            textStyle={{
-              color: 'white',
-              fontSize: 16
-            }}
-            buttonStyle={{
-              backgroundColor: '#f4376d',
-              padding: 10
-            }}
+            style='standardButton'
+            width={width}
             onPress={() => this.setState({ showStudentUnionPicker: true })}
           />
           <Input
@@ -173,14 +161,8 @@ class RegistrationScreen extends Component {
           />
           <CustomButton
             text='Register'
-            textStyle={{
-              color: 'white',
-              fontSize: 16
-            }}
-            buttonStyle={{
-              backgroundColor: '#f4376d',
-              padding: 10
-            }}
+            style='standardButton'
+            width={width}
             onPress={() => this.props.navigation.navigate('ConfirmationScreen')}
           />
         </ScrollView>
