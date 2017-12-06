@@ -4,6 +4,7 @@ import RegistrationScreen from './screens/RegistrationScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
 import DropdownPickerScreen from './screens/DropdownPickerScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
+import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 
 const Router = StackNavigator({
   HomeScreen: {
@@ -33,6 +34,12 @@ const Router = StackNavigator({
       header: null,
     }
   },
+  SingleNewsScreen: {
+    screen: SingleNewsScreen,
+    navigationOptions: {
+      header: null,
+    }
+  }
 })
 
 export default Router;
