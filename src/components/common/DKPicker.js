@@ -22,7 +22,7 @@ class DKPicker extends Component {
     } else {
       Animated.timing(
         this.state.bottom,
-        { toValue: (-this.state.height) }
+        { toValue: (-this.state.height - 22) }
       ).start()
     }
   }
@@ -38,7 +38,7 @@ class DKPicker extends Component {
         onLayout={(event) => {
           this.setState({ height: event.nativeEvent.layout.height })
         }}
-      > 
+      >
         <CustomButton
           text="OK"
           style='acceptButton'
