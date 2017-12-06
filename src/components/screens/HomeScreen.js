@@ -98,6 +98,9 @@ class HomeScreen extends Component {
           />
           <CustomButton
             text='Läs mer om registreringen'
+            onPress={() => {
+              this.props.navigation.navigate('RegistrationInfo')
+            }}  
             textStyle={{
               color: 'white',
               fontSize: 12
