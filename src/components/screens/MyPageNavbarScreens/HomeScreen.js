@@ -30,8 +30,7 @@ class HomeScreen extends Component {
             source={require('../../../../res/Monstergubbe.png')}
           />
           <CustomButton
-            textStyle={buttonText}
-            buttonStyle={buttonStyle}
+            style='standardButton'
             text='Checka in'
           />
         </View>

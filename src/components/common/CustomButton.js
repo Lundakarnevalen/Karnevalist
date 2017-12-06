@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
 
-const width = Dimensions.get('window').width
+const WIDTH = Dimensions.get('window').width
 
 class CustomButton extends Component {
 
@@ -32,14 +32,15 @@ class CustomButton extends Component {
   }
 
   render() {
-    const { onPress, text } = this.props;
+    const { onPress, text, width = WIDTH / 1.5 } = this.props;
     const { button } = styles;
     return (
       <TouchableOpacity
         onPress={onPress}
         style={[
           this.getStyle(),
-          button
+          button,
+          { width }
         ]}
       >
         <Text style={[this.getTextStyle()]}>
@@ -54,7 +55,7 @@ class CustomButton extends Component {
       marginTop: 10,
       marginBottom: 10,
       borderColor: 'black',
-      borderRadius: 10,
+      borderRadius: 1,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -64,8 +65,7 @@ class CustomButton extends Component {
     },
     standardButton: {
       backgroundColor: '#f4376d',
-      padding: 10,
-      width: width / 1.5
+      padding: 10
     },
     acceptButton: {
       backgroundColor: 'green',
