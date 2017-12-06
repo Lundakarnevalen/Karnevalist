@@ -69,7 +69,7 @@ class SectionScreen extends Component {
 
 const styles = {
   style: {
-    paddingBottom: (Platform.OS === 'ios') ? 135 : 148
+    paddingBottom: (Platform.OS === 'ios') ? 132 : 148
   },
 };
 

@@ -7,12 +7,8 @@ import Header from '../../common/Header'
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
-const { width } = Dimensions.get('window')
-const { height } = Dimensions.get('window')
-
 class SectionItemScreen extends Component {
   render() {
-    console.log(Platform.OS);
     const { navigation } = this.props
     const { title, description, image } = navigation.state.params
     const { container, someStyle } = styles
@@ -54,7 +50,7 @@ const styles = {
     width: Dimensions.get('window').width
   },
   someStyle: {
-    maxHeight: Platform.OS === 'ios' ? HEIGHT - WIDTH - 32 : HEIGHT - WIDTH - 5 - Constants.statusBarHeight,
+    maxHeight: Platform.OS === 'ios' ? HEIGHT - WIDTH - 29 : HEIGHT - WIDTH - 5 - Constants.statusBarHeight,
   }
 };
 
