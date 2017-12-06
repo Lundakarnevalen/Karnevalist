@@ -114,19 +114,6 @@ const styles = {
     justifyContent: 'flex-start',
     alignItems: 'flex-end'
   },
-  normalButtonStyle: {
-    backgroundColor: '#f4376d',
-    padding: 10,
-    width: Dimensions.get('window').width * 0.9,
-    borderRadius: 0,
-    borderWidth: 1,
-    borderColor: 'white'
-  },
-  transparentButtonStyle: {
-    marginTop: 30,
-    backgroundColor: 'transparent',
-    borderWidth: 0
-  },
   textInputStyle: {
     borderRadius: 0,
     borderWidth: 0
