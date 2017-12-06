@@ -41,7 +41,7 @@ class Input extends Component {
     const { value, width, placeholder, secureText, textInputStyle,
       autoCorrect = false, viewStyle, underlineColorAndroid } = this.props
     return (
-      <View style={viewStyle}>
+      <View style={this.props.style}>
         {this.getTitle()}
         <TextInput
           underlineColorAndroid={underlineColorAndroid}
