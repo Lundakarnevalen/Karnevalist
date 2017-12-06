@@ -61,7 +61,7 @@ class SectionScreen extends Component {
               />
             }
           />
-        </View>
+        </View >
       </View>
     );
   }
