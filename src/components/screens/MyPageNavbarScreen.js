@@ -88,6 +88,7 @@ const TabNav = TabNavigator({
     labelStyle: {
       fontSize: 10
     },
+
     style: {
       backgroundColor: '#FBBCC0',
     },

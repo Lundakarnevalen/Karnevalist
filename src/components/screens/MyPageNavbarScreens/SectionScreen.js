@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
-import { View, ListView, TouchableOpacity, Alert, Image, Dimensions } from 'react-native';
+import { View, ListView, TouchableOpacity, Alert, Text, Image, Dimensions, FlatList, Platform } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
 
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
-
 const exampleArray = []
 for (let i = 0; i < 25; i++) exampleArray.push({
-  title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats'
+  title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats', key:i
 })
 const WIDTH = Dimensions.get('window').width
+const HEIGHT = Dimensions.get('window').height
+
 class SectionScreen extends Component {
   constructor(props) {
     super(props)
     const items = props.items || exampleArray || ['']
     this.state = {
       isOpen: false,
-      dataSource: ds.cloneWithRows(items),
+      data: items
     };
   }
 
   render() {
     const { navigation, screenProps } = this.props
-    console.log(this.props);
     return (
       <View>
         <View>
@@ -39,19 +38,18 @@ class SectionScreen extends Component {
           navigation={navigation}
         />
         </View>
-        <View>
-          <ListView
-          style={{ maxHeight: 420 }} //TODO FIX THIS HEIGHT
-            dataSource={this.state.dataSource}
-            renderRow={(rowData) =>
+        <View style={styles.style}>
+          <FlatList
+            data={this.state.data}
+            renderItem={({ item }) =>
               <SectionListItem
-                sectionTitle={rowData.title}
-                sectionInfoText={rowData.info}
-                onPress={(title, description) => screenProps.navigate(
+                sectionTitle={item.title}
+                sectionInfoText={item.info}
+                onPress={() => screenProps.navigate(
                   'SectionItemScreen',
                   {
-                    title,
-                    description,
+                    title: item.title,
+                    description: item.info,
                     image:
                       <Image
                         style={{ width: WIDTH - 10, height: WIDTH - 50 }}
@@ -70,6 +68,9 @@ class SectionScreen extends Component {
 }
 
 const styles = {
+  style: {
+    paddingBottom: (Platform.OS === 'ios') ? 100 : 148
+  },
 };
 
 export default SectionScreen
