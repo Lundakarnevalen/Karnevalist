@@ -55,7 +55,7 @@ class HomeScreen extends Component {
             placeholder='Lösenord'
             title='Lösenord'
             width={Dimensions.get('window').width * 0.9}
-            secureText={true}
+            secureText
             viewStyle={{ marginBottom: 11 }}
             textInputStyle={styles.textInputStyle}
             headerTextStyle={styles.inputHeaderTextStyle}
@@ -87,6 +87,9 @@ class HomeScreen extends Component {
           </Text>
           <CustomButton
             text='Skapa profil'
+            onPress={() => {
+              this.props.navigation.navigate('RegistrationScreen')
+            }}
             textStyle={{
               color: 'white',
               fontSize: 20
