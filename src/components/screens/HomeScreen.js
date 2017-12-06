@@ -16,11 +16,11 @@ class HomeScreen extends Component {
 
   render() {
     return (
-      <Image 
+      <Image
         style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }}
         source={require('../../../res/Flicka_Tuba_Byggnader.png')}
       >
-        <View 
+        <View
           style={{
             position: 'absolute',
             top: 0,
@@ -29,7 +29,7 @@ class HomeScreen extends Component {
             height: Dimensions.get('window').height,
             width: Dimensions.get('window').width,
             opacity: 0.7
-          }} 
+          }}
         />
         <View style={styles.container1}>
           <Image
@@ -77,7 +77,7 @@ class HomeScreen extends Component {
               color: 'white',
               fontSize: 20
             }}
-            buttonStyle={[styles.normalButtonStyle, 
+            buttonStyle={[styles.normalButtonStyle,
               { marginBottom: Dimensions.get('window').height * (1 / 14) }]}
           />
           <Text
