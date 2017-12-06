@@ -12,41 +12,43 @@ import Row from '../common/Row'
 import SuperAgileAlert from '../common/SuperAgileAlert'
 import CustomButton from '../common/CustomButton'
 import Header from '../common/Header'
+import { EvilIcons } from '@expo/vector-icons'
 
 const window = Dimensions.get('window');
 
-const data = {
-  test1: {
+const data = [
+  {
     image: 'https://placekitten.com/200/201',
-    text: 'Jasper',
+    text: 'OMRÅDESSEKTIONOMRÅDESSEKTIONERNAOMRÅDESSEKTIONERNAERNA',
     infoText: 'Hej jag heter OscarHej jag hlllter OscarHej jag he'
   },
-  test2: {
+  {
     image: 'https://placekitten.com/200/202',
     text: 'Pepper',
     infoText: 'testaoText2'
   },
-  test3: {
+  {
     image: 'https://placekitten.com/200/203',
     text: 'Oscar',
     infoText: 'testaInfoText3'
   },
-  test4: {
+  {
     image: 'https://placekitten.com/200/204',
     text: 'Dusty',
     infoText: 'testaInfoText'
   },
-  test5: {
-    image: 'https://placekitten.com/200/205',
-    text: 'Spooky',
+  {
+    image: 'https://placekitten.com/200/204',
+    text: 'Dusty',
     infoText: 'testaInfoText'
   },
-  test6: {
-    image: 'https://placekitten.com/200/205',
-    text: 'Oscar',
+  {
+    image: 'https://placekitten.com/200/204',
+    text: 'Dusty',
     infoText: 'testaInfoText'
   },
-};
+
+];
 
 export default class ConfirmPage extends Component {
 
@@ -62,9 +64,20 @@ export default class ConfirmPage extends Component {
         style={{ backgroundColor: '#8A4797', marginBottom: 5 }}
         title='Confirmation page'
         leftIcon={null}
+        rightIcon={
+          <EvilIcons
+            name='trash'
+            style={{
+              color: '#ffffff',
+              right: 0,
+              top: 0
+            }}
+            size={35}
+          />
+        }
         navigation={this.props.navigation}
       />
-      <View style={styles.innerView}>
+
       <SortableList
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
@@ -72,20 +85,25 @@ export default class ConfirmPage extends Component {
         onPressRow={(key) => this.onPressRow(data[key])}
         renderRow={this._renderRow}
       />
-      </View>
+      <View
+      style={{
+        flexDirection: 'column',
+      }}
+      >
       <CustomButton
         buttonStyle={styles.confimButtonStyle}
         textStyle={styles.confimTextStyle}
         text={'Confim'}
-        onPress={() => Alert.alert('Gör något kul efter confirm')}
+        onPress={() => this.onPressConfirmButton()}
       />
+      </View>
       </View>
     );
   }
 
   createIndexes() {
     const listOfIndexes = [];
-    for (let i = 0; i < Object.keys(data).length + 1; i++) {
+    for (let i = 0; i < data.length + 1; i++) {
       listOfIndexes.push(
         <View
         style={{
@@ -116,6 +134,13 @@ export default class ConfirmPage extends Component {
   onPressRow(key) {
     Alert.alert('Navigera till ' + key.text + '-sektionen')
   }
+  onPressConfirmButton() {
+    if (data.length < 5) {
+      Alert.alert('Vänligen välj minst 5 sektioner')
+    } else {
+      Alert.alert('Tack för dina val, vi ska göra allt vi kan för att upfylla dina önskningar!')
+}
+  }
 
   addAlert() {
     return (
@@ -133,7 +158,6 @@ const styles = StyleSheet.create({
   container: {
     width: window.width,
     height: window.height,
-    position: 'absolute',
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0)',
     paddingTop: 0,
@@ -149,16 +173,16 @@ const styles = StyleSheet.create({
   },
   confimTextStyle: {
     fontSize: 15,
-    color: '#ffffff'
+    color: '#F4376D'
   },
   confimButtonStyle: {
     height: window.height / 9,
-    backgroundColor: '#F4376D',
+    backgroundColor: '#ffffff',
     borderTopWidth: 1,
-    borderColor: 'white',
+    borderColor: '#F4376D',
     borderRadius: 0,
     margin: 0,
-    position: 'absolute',
+    alignSelf: 'flex-start',
     bottom: 0,
     width: window.width
   },

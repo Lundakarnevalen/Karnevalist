@@ -83,6 +83,16 @@ class Row extends Component {
     );
   }
 
+  getHeaderStyle() {
+    const headerText = {
+        fontSize: this.props.data.text.length < 10 ? 12 : 10,
+        fontWeight: 'bold',
+        color: '#F4376D',
+        left: 0
+      };
+      return headerText;
+  }
+
   createRows(data) {
     return (
       <View
@@ -95,17 +105,24 @@ class Row extends Component {
       >
         <Text style={styles.indexStyle}>{this.props.index}</Text>
         <Image source={{ uri: data.image }} style={styles.image} />
-        <Text style={styles.headerText}>{data.text}</Text>
+      <View
+        style={{
+          flex: 0.7,
+          justifyContent: 'center',
 
+        }}
+      >
+        <Text style={this.getHeaderStyle()}>{data.text}</Text>
+      </View>
         <MaterialIcons
-          name='keyboard-arrow-right'
+          name='drag-handle'
           style={{
-            color: '#ffffff',
+            color: '#F4376D',
             alignSelf: 'center',
             position: 'absolute',
-            right: 0,
+            right: 25,
           }}
-          size={50}
+          size={40}
         />
       </View>
     )
@@ -119,14 +136,17 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    backgroundColor: '#F4376D',
+    backgroundColor: '#ffffff',
     padding: 0,
     height: size * 1.5,
     flex: 1,
     marginTop: 7,
     marginBottom: 7,
+    borderWidth: 1,
+    borderColor: '#F4376D',
     borderRadius: 1,
-    width: window.width - 20,
+    alignSelf: 'center',
+    width: window.width - 40,
     elevation: 0,
   },
   image: {
@@ -140,18 +160,19 @@ const styles = StyleSheet.create({
   indexStyle: {
     alignSelf: 'center',
     fontSize: 22,
+
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: '#F4376D',
   },
   headerText: {
-    fontSize: 18,
+    fontSize: 10,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: '#F4376D',
     alignSelf: 'center'
   },
   infoText: {
     fontSize: 10,
-    color: '#ffffff'
+    color: '#F4376D'
   },
 });
 export default Row
