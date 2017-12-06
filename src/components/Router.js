@@ -4,6 +4,7 @@ import RegistrationScreen from './screens/RegistrationScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
 import DropdownPickerScreen from './screens/DropdownPickerScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
+import RegistrationInfo from './screens/RegistrationInfo';
 
 const Router = StackNavigator({
   HomeScreen: {
@@ -14,6 +15,12 @@ const Router = StackNavigator({
   },
   RegistrationScreen: {
     screen: RegistrationScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  RegistrationInfo: {
+    screen: RegistrationInfo,
     navigationOptions: {
       header: null
     }
