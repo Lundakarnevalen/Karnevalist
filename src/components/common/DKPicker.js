@@ -22,7 +22,7 @@ class DKPicker extends Component {
     } else {
       Animated.timing(
         this.state.bottom,
-        { toValue: (-this.state.height - 22) }
+        { toValue: (-this.state.height) }
       ).start()
     }
   }
