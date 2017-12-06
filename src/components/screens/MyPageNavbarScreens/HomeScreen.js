@@ -8,7 +8,7 @@ const { width } = Dimensions.get('window')
 const { height } = Dimensions.get('window')
 class HomeScreen extends Component {
   render() {
-    const { container, imageStyle, buttonText, buttonStyle, wehejStyle } = styles
+    const { container, imageStyle, wehejStyle } = styles
     return (
       <View>
         <Header
@@ -49,15 +49,6 @@ const styles = {
     resizeMode: 'contain',
     width: width / 1.1,
     height: height / 2.3
-  },
-  buttonText: {
-   color: 'white',
-   fontSize: 22
-  },
-  buttonStyle: {
-    padding: 10,
-    backgroundColor: '#e600ac',
-    width: width / 1.2
   },
   wehejStyle: {
     fontSize: 50,

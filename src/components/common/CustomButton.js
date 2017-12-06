@@ -55,7 +55,7 @@ class CustomButton extends Component {
       marginTop: 10,
       marginBottom: 10,
       borderColor: 'black',
-      borderRadius: 1,
+      borderRadius: 5,
       alignItems: 'center',
       justifyContent: 'center',
     },
