@@ -75,6 +75,9 @@ class HomeScreen extends Component {
           </Text>
           <CustomButton
             text='Skapa profil'
+            onPress={() => {
+              this.props.navigation.navigate('RegistrationScreen')
+            }}
             textStyle={{
               color: 'white',
               fontSize: 20
