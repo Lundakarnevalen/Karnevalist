@@ -15,26 +15,14 @@ class HomeScreen extends Component {
   }
 
   render() {
+    const { opacityStyle } = styles
     return (
-      <Image 
+      <Image
         style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }}
         source={require('../../../res/Flicka_Tuba_Byggnader.png')}
       >
-        <View 
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            backgroundColor: '#8A4797',
-            height: Dimensions.get('window').height,
-            width: Dimensions.get('window').width,
-            opacity: 0.7
-          }} 
-        />
+        <View style={opacityStyle} />
         <View style={styles.container1}>
-          <Image
-            source={require('../../../res/LK2018logga.png')}
-          />
           <Input
             placeholder='Personnummer'
             title='Personnummer'
@@ -55,7 +43,7 @@ class HomeScreen extends Component {
             placeholder='Lösenord'
             title='Lösenord'
             width={Dimensions.get('window').width * 0.9}
-            secureText={true}
+            secureText
             viewStyle={{ marginBottom: 11 }}
             textInputStyle={styles.textInputStyle}
             headerTextStyle={styles.inputHeaderTextStyle}
@@ -77,7 +65,7 @@ class HomeScreen extends Component {
               color: 'white',
               fontSize: 20
             }}
-            buttonStyle={[styles.normalButtonStyle, 
+            buttonStyle={[styles.normalButtonStyle,
               { marginBottom: Dimensions.get('window').height * (1 / 14) }]}
           />
           <Text
@@ -139,6 +127,15 @@ const styles = {
   inputHeaderTextStyle: {
     color: 'white',
     fontSize: 12
+  },
+  opacityStyle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: '#8A4797',
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    opacity: 0.7
   }
 };
 
