@@ -15,6 +15,7 @@ class SectionItemScreen extends Component {
     console.log(Platform.OS);
     const { navigation } = this.props
     const { title, description, image } = navigation.state.params
+    const { container, someStyle } = styles
     return (
       <View
       style={{ flex: 1, backgroundColor: 'white' }}
@@ -33,12 +34,12 @@ class SectionItemScreen extends Component {
           </TouchableOpacity>
         }
         />
-        <View style={[styles.container, {}]}>
+        <View style={[container, {}]}>
           {image}
         </View>
         <View style={{height: 10, backgroundColor: '#8A4797'}}/>
-        <ScrollView style={styles.someStyle}>
-          <Text style={{ fontSize: 20, margin: 4 }}>{description}</Text>
+        <ScrollView style={someStyle}>
+          <Text style={{ fontSize: 20, margin: 10 }}>{description}</Text>
         </ScrollView>
       </View>
     )
