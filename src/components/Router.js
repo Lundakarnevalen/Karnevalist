@@ -1,5 +1,5 @@
 import { StackNavigator } from 'react-navigation';
-import HomeScreen from './screens/HomeScreen';
+import HomeScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
