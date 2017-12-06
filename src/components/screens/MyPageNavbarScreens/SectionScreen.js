@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, TouchableOpacity, Alert, Image, Dimensions } from 'react-native';
+import { View, ListView, TouchableOpacity, Alert, Image, Dimensions, Platform } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
@@ -39,9 +39,9 @@ class SectionScreen extends Component {
           navigation={navigation}
         />
         </View>
-        <View>
+        <View style={styles.buttonStyle}>
           <ListView
-          style={{ maxHeight: 420 }} //TODO FIX THIS HEIGHT
+          // style={{ maxHeight: 420 }} //TODO FIX THIS HEIGHT
             dataSource={this.state.dataSource}
             renderRow={(rowData) =>
               <SectionListItem
@@ -63,13 +63,16 @@ class SectionScreen extends Component {
               />
             }
           />
-        </View>
+        </View >
       </View>
     );
   }
 }
 
 const styles = {
+  buttonStyle: {
+    paddingBottom: (Platform.OS === 'ios') ? 100 : 148
+  },
 };
 
 export default SectionScreen
