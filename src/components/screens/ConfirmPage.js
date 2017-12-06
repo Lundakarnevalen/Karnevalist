@@ -52,41 +52,39 @@ export default class ConfirmPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      alertVisible: true
-    }
+    this.state = { data }
   }
   render() {
     return (
       <View style={styles.container}>
-
       <Header
-        textStyle={{ color: '#FBBCC0' }}
-        style={{ backgroundColor: '#8A4797', marginBottom: 30 }}
+        textStyle={{ color: '#ffffff' }}
+        style={{ backgroundColor: '#8A4797', marginBottom: 5 }}
         title='Confirmation page'
         leftIcon={null}
         navigation={this.props.navigation}
       />
-        <SortableList
-          style={styles.list}
-          contentContainerStyle={styles.contentContainer}
-          data={data}
-          onPressRow={(key) => this.onPressRow(data[key])}
-          renderRow={this._renderRow}
-        />
-          <CustomButton
-          buttonStyle={styles.confimButtonStyle}
-          textStyle={styles.confimTextStyle}
-          text={'Confim'}
-          onPress={() => Alert.alert('Gör något kul efter confirm')}
-          />
+      <View style={styles.innerView}>
+      <SortableList
+        style={styles.list}
+        contentContainerStyle={styles.contentContainer}
+        data={data}
+        onPressRow={(key) => this.onPressRow(data[key])}
+        renderRow={this._renderRow}
+      />
+      </View>
+      <CustomButton
+        buttonStyle={styles.confimButtonStyle}
+        textStyle={styles.confimTextStyle}
+        text={'Confim'}
+        onPress={() => Alert.alert('Gör något kul efter confirm')}
+      />
       </View>
     );
   }
 
   createIndexes() {
     const listOfIndexes = [];
-
     for (let i = 0; i < Object.keys(data).length + 1; i++) {
       listOfIndexes.push(
         <View
@@ -107,10 +105,10 @@ export default class ConfirmPage extends Component {
   _renderRow = ({ data, active, index }) => {
     return (
       <Row
-      data={data}
-      index={index + 1}
-      onPress={(key) => this.onPressRow(key)}
-      active={active}
+        data={data}
+        index={index + 1}
+        onPress={(key) => this.onPressRow(key)}
+        active={active}
       />
     )
   }
@@ -122,10 +120,10 @@ export default class ConfirmPage extends Component {
   addAlert() {
     return (
       <SuperAgileAlert
-      header={'OBS!'}
-      info={'Håll in och flytta sektionerna i önskad ordning'}
-      alertVisible={this.state.alertVisible}
-      buttonsIn={[{ text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }]}
+        header={'OBS!'}
+        info={'Håll in och flytta sektionerna i önskad ordning'}
+        alertVisible={this.state.alertVisible}
+        buttonsIn={[{ text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }]}
       />
     )
   }
@@ -133,16 +131,21 @@ export default class ConfirmPage extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: window.width,
+    height: window.height,
+    position: 'absolute',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0)',
+    paddingTop: 0,
+  },
+  innerView: {
+    width: window.width,
+    height: window.height - 100,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
-
-    ...Platform.select({
-      ios: {
-        paddingTop: 20,
-      },
-    }),
+    backgroundColor: 'rgba(255,255,255,0)',
+    padding: 10,
+    paddingTop: 0
   },
   confimTextStyle: {
     fontSize: 15,
@@ -155,34 +158,22 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: 0,
     margin: 0,
+    position: 'absolute',
+    bottom: 0,
     width: window.width
   },
-
   list: {
     flex: 1,
   },
-
   contentContainer: {
     width: window.width,
-
-    ...Platform.select({
-      ios: {
-        paddingHorizontal: 30,
-      },
-
-      android: {
-        paddingHorizontal: 0,
-      }
-    })
   },
-
   image: {
     width: 50,
     height: 50,
     marginRight: 30,
     borderRadius: 25,
   },
-
   text: {
     fontSize: 24,
     color: '#222222',

@@ -12,6 +12,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons'
 
 const window = Dimensions.get('window');
+const size = 60;
 
 class Row extends Component {
 
@@ -34,7 +35,6 @@ class Row extends Component {
             outputRange: [2, 10],
           }),
         },
-
         android: {
           transform: [{
             scale: this._active.interpolate({
@@ -63,12 +63,11 @@ class Row extends Component {
 
   render() {
    const { data, active } = this.props;
-
     return (
       <Animated.View
         style={[
-        styles.row,
-        this._style,
+          styles.row,
+          this._style,
         ]}
       >
         <View
@@ -79,7 +78,7 @@ class Row extends Component {
           }}
         >
         {this.createRows(data)}
-          </View>
+        </View>
       </Animated.View>
     );
   }
@@ -87,98 +86,68 @@ class Row extends Component {
   createRows(data) {
     return (
       <View
-      style={{
-        flexDirection: 'row',
-        flex: 1,
-        width: window.width - (30 * 2)
-      }}
-      >
-      <View
-      style={{
-        justifyContent: 'center'
+        style={{
+          flexDirection: 'row',
+          flex: 1,
+          padding: 10,
+          width: window.width - 20,
         }}
       >
-        <Text style={styles.headerText}>{this.props.index}</Text>
+        <Text style={styles.indexStyle}>{this.props.index}</Text>
+        <Image source={{ uri: data.image }} style={styles.image} />
+        <Text style={styles.headerText}>{data.text}</Text>
+
+        <MaterialIcons
+          name='keyboard-arrow-right'
+          style={{
+            color: '#ffffff',
+            alignSelf: 'center',
+            position: 'absolute',
+            right: 0,
+          }}
+          size={50}
+        />
       </View>
-
-      <Image source={{ uri: data.image }} style={styles.image} />
-
-      <View
-      style={{
-        flexDirection: 'column',
-        marginRight: 32,
-        flex: 1
-      }}
-      >
-      <Text style={styles.headerText}>{data.text}</Text>
-
-      <Text style={styles.infoText}>{data.infoText}</Text>
-
-
-      </View>
-
-      <MaterialIcons
-      name='keyboard-arrow-right'
-      style={{
-        color: '#8A4797',
-        position: 'absolute',
-        marginTop: (window.height / 5) / 9,
-        right: 2
-      }}
-      size={30}
-      />
-
-      </View>
-
     )
   }
 }
 
 const styles = StyleSheet.create({
-
   title: {
     fontSize: 20,
-    paddingVertical: 10,
     color: '#999999',
   },
-
   row: {
     flexDirection: 'row',
     backgroundColor: '#F4376D',
     padding: 0,
-    height: window.height / 9,
+    height: size * 1.5,
     flex: 1,
     marginTop: 7,
     marginBottom: 7,
     borderRadius: 1,
-
-    ...Platform.select({
-      ios: {
-        width: window.width - (30 * 2),
-
-      },
-
-      android: {
-        width: window.width - (30 * 2),
-        elevation: 0,
-        marginHorizontal: 30,
-      },
-    })
+    width: window.width - 20,
+    elevation: 0,
   },
-
   image: {
-    width: 60,
-    height: 60,
+    width: size,
+    height: size,
     alignSelf: 'center',
     marginLeft: 10,
     marginRight: 10,
-    borderRadius: 25,
+    borderRadius: size / 2,
   },
-
-  headerText: {
-    fontSize: 12,
+  indexStyle: {
+    alignSelf: 'center',
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#ffffff',
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    alignSelf: 'center'
   },
   infoText: {
     fontSize: 10,
