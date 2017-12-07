@@ -9,7 +9,7 @@ import {
   Dimensions,
   View,
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'
+import { EvilIcons } from '@expo/vector-icons'
 
 const window = Dimensions.get('window');
 const size = 60;
@@ -114,18 +114,24 @@ class Row extends Component {
       >
         <Text style={this.getHeaderStyle()}>{data.text}</Text>
       </View>
-        <MaterialIcons
-          name='drag-handle'
+        <EvilIcons
+          name={this.props.iconName}
           style={{
             color: '#F4376D',
             alignSelf: 'center',
             position: 'absolute',
             right: 25,
           }}
-          size={40}
+          onPress={() => this.getOnPress()}
+          size={35}
         />
       </View>
     )
+  }
+  getOnPress() {
+    if (this.props.iconName === 'trash') {
+      this.props.deleteRow()
+    }
   }
 }
 

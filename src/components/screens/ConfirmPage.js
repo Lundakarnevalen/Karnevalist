@@ -4,48 +4,54 @@ import {
   Text,
   View,
   Dimensions,
-  Platform,
+  TouchableOpacity,
   Alert
 } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'
 import SortableList from 'react-native-sortable-list'
 import Row from '../common/Row'
 import SuperAgileAlert from '../common/SuperAgileAlert'
 import CustomButton from '../common/CustomButton'
 import Header from '../common/Header'
-import { EvilIcons } from '@expo/vector-icons'
 
 const window = Dimensions.get('window');
 
-const data = [
+const inputJSON = [
   {
     image: 'https://placekitten.com/200/201',
     text: 'OMRÅDESSEKTIONOMRÅDESSEKTIONERNAOMRÅDESSEKTIONERNAERNA',
-    infoText: 'Hej jag heter OscarHej jag hlllter OscarHej jag he'
+    infoText: 'Hej jag heter OscarHej jag hlllter OscarHej jag he',
+    id: 0
   },
   {
     image: 'https://placekitten.com/200/202',
     text: 'Pepper',
-    infoText: 'testaoText2'
+    infoText: 'testaoText2',
+    id: 1
   },
   {
     image: 'https://placekitten.com/200/203',
     text: 'Oscar',
-    infoText: 'testaInfoText3'
+    infoText: 'testaInfoText3',
+    id: 2
   },
   {
     image: 'https://placekitten.com/200/204',
     text: 'Dusty',
-    infoText: 'testaInfoText'
+    infoText: 'testaInfoText',
+    id: 3
   },
   {
     image: 'https://placekitten.com/200/204',
     text: 'Dusty',
-    infoText: 'testaInfoText'
+    infoText: 'testaInfoText',
+    id: 4
   },
   {
     image: 'https://placekitten.com/200/204',
     text: 'Dusty',
-    infoText: 'testaInfoText'
+    infoText: 'testaInfoText',
+    id: 5
   },
 
 ];
@@ -54,7 +60,14 @@ export default class ConfirmPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { data }
+    this.state = {
+      data: [],
+      editMode: false
+    }
+  }
+
+  componentWillMount() {
+    this.setState({ data: inputJSON })
   }
   render() {
     return (
@@ -65,15 +78,22 @@ export default class ConfirmPage extends Component {
         title='Confirmation page'
         leftIcon={null}
         rightIcon={
-          <EvilIcons
-            name='trash'
+          <TouchableOpacity
+          style={{
+            width: 50,
+            alignItems: 'center'
+          }}
+          onPress={() => this.onPressHeaderButton()}
+          >
+          <MaterialIcons
+            name={this.getHeaderIconName()}
             style={{
               color: '#ffffff',
-              right: 0,
-              top: 0
+              right: 0
             }}
             size={35}
           />
+          </TouchableOpacity>
         }
         navigation={this.props.navigation}
       />
@@ -81,9 +101,8 @@ export default class ConfirmPage extends Component {
       <SortableList
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
-        data={data}
-        onPressRow={(key) => this.onPressRow(data[key])}
-        renderRow={this._renderRow}
+        data={this.state.data}
+        renderRow={this.renderRow.bind(this)}
       />
       <View
       style={{
@@ -93,7 +112,7 @@ export default class ConfirmPage extends Component {
       <CustomButton
         buttonStyle={styles.confimButtonStyle}
         textStyle={styles.confimTextStyle}
-        text={'Confim'}
+        text={'Send'}
         onPress={() => this.onPressConfirmButton()}
       />
       </View>
@@ -103,7 +122,7 @@ export default class ConfirmPage extends Component {
 
   createIndexes() {
     const listOfIndexes = [];
-    for (let i = 0; i < data.length + 1; i++) {
+    for (let i = 0; i < this.state.data.length + 1; i++) {
       listOfIndexes.push(
         <View
         style={{
@@ -120,26 +139,54 @@ export default class ConfirmPage extends Component {
     return listOfIndexes
   }
 
-  _renderRow = ({ data, active, index }) => {
-    return (
-      <Row
-        data={data}
-        index={index + 1}
-        onPress={(key) => this.onPressRow(key)}
-        active={active}
-      />
-    )
+  deleteRow(id) {
+    const newData = this.state.data.filter(dataItem => dataItem.id !== id)
+    this.setState({ data: newData });
   }
 
-  onPressRow(key) {
+  renderRow(item) {
+    return (
+      <Row
+        data={item.data}
+        index={item.index + 1}
+        iconName={this.getRowIconName()}
+        active={item.active}
+        deleteRow={() => this.deleteRow(item.data.id)}
+      />
+    );
+  }
+
+  getHeaderIconName() {
+    if (this.state.editMode) {
+      return 'done'
+    }
+    return 'edit'
+  }
+
+  getRowIconName() {
+    if (this.state.editMode) {
+      return 'trash'
+    }
+    return 'navicon'
+  }
+
+  onPressTrash(key) {
     Alert.alert('Navigera till ' + key.text + '-sektionen')
   }
   onPressConfirmButton() {
-    if (data.length < 5) {
+    if (this.state.data.length < 5) {
       Alert.alert('Vänligen välj minst 5 sektioner')
     } else {
       Alert.alert('Tack för dina val, vi ska göra allt vi kan för att upfylla dina önskningar!')
-}
+    }
+  }
+
+  onPressHeaderButton() {
+    if (this.state.editMode) {
+        this.setState({ editMode: false });
+    } else {
+        this.setState({ editMode: true });
+    }
   }
 
   addAlert() {
