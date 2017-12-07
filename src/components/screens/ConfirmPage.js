@@ -61,7 +61,8 @@ export default class ConfirmPage extends Component {
     super(props);
     this.state = {
       data: [],
-      editMode: false
+      editMode: false,
+      alertVisible: false
     }
   }
 
@@ -102,6 +103,13 @@ export default class ConfirmPage extends Component {
         contentContainerStyle={styles.contentContainer}
         data={this.state.data}
         renderRow={this.renderRow.bind(this)}
+      />
+      <SuperAgileAlert
+      header={'MyHeader'}
+      info={'Håll in och flytta sektionerna i önskad ordning'}
+      alertVisible={this.state.alertVisible}
+      buttonsIn={[{ text: 'Cancel', onPress: () => this.setState({ alertVisible: false }) },
+                  { text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }]}
       />
       <View
       style={{
@@ -174,13 +182,8 @@ export default class ConfirmPage extends Component {
     Alert.alert('Navigera till ' + key.text + '-sektionen')
   }
   onPressConfirmButton() {
-    if (this.state.data.length < 5) {
-      Alert.alert('Vänligen välj minst 5 sektioner')
-    } else {
-      Alert.alert('Tack för dina val, vi ska göra allt vi kan för att upfylla dina önskningar!')
-      this.props.navigation.navigate('HomeScreen')
-    }
-  }
+    this.setState({ alertVisible: true })
+}
 
   onPressHeaderButton() {
     if (this.state.editMode) {
