@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, ListView, Dimensions } from 'react-native';
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
+import BackgroundImage from '../../common/BackgroundImage';
 
 const height = Dimensions.get('window').height
 
@@ -23,15 +24,19 @@ class ProfileScreen extends Component {
   render() {
     return (
       <View>
+        <BackgroundImage
+          imagePath={require('../../../../assets/images/background5.png')}
+        />
         <Header
-          textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: 'white' }}
           title='Min profil'
           leftIcon={null}
           navigation={this.props.navigation}
         />
         <ListView
           style={{ height: (height - 64) }}
+          contentContainerStyle={{ alignItems: 'center' }}
           dataSource={this.state.dataSource}
           renderRow={(rowData) =>
             <SectionListItem

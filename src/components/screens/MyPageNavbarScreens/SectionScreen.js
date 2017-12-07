@@ -3,6 +3,7 @@ import { View, ListView, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
+import BackgroundImage from '../../common/BackgroundImage';
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
@@ -23,14 +24,17 @@ class SectionScreen extends Component {
   render() {
     return (
       <View>
+        <BackgroundImage
+          imagePath={require('../../../../assets/images/background5.png')}
+        />
         <View>
         <Header
           rightIcon={
             <TouchableOpacity onPress={() => Alert.alert('Går till confirm..')}>
-              <FontAwesome name='list-alt' size={30} />
+              <FontAwesome name='list-alt' size={30} color={'#f4376d'} />
             </TouchableOpacity>}
-          textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: 'white' }}
           title='Sektioner'
           leftIcon={null}
           navigation={this.props.navigation}
@@ -39,6 +43,7 @@ class SectionScreen extends Component {
         <View>
           <ListView
             dataSource={this.state.dataSource}
+            contentContainerStyle={{ alignItems: 'center' }}
             renderRow={(rowData) =>
               <SectionListItem
                 sectionTitle={rowData.title}

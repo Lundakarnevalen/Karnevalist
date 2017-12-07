@@ -22,10 +22,11 @@ const TabNav = TabNavigator({
     screen: SectionScreen,
     navigationOptions: {
       tabBarLabel: 'Sektioner',
-      tabBarIcon: () => (
+      tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
-        size={30}
-        name="md-information-circle"
+          size={30}
+          name='md-information-circle'
+          color={focused ? tintColor : '#A9A9A9'}
         />
       )
     }
@@ -34,10 +35,11 @@ const TabNav = TabNavigator({
     screen: AmusementScreen,
     navigationOptions: {
       tabBarLabel: 'Nöjen',
-      tabBarIcon: () => (
+      tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
-        size={30}
-        name="md-happy"
+          size={30}
+          name='md-happy'
+          color={focused ? tintColor : '#A9A9A9'}
         />
       )
     }
@@ -46,10 +48,11 @@ const TabNav = TabNavigator({
     screen: HomeScreen,
     navigationOptions: {
       tabBarLabel: 'Hem',
-      tabBarIcon: () => (
+      tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
-        size={30}
-        name="md-home"
+          size={30}
+          name='md-home'
+          color={focused ? tintColor : '#A9A9A9'}
         />
       )
     }
@@ -58,10 +61,11 @@ const TabNav = TabNavigator({
     screen: NewsScreen,
     navigationOptions: {
       tabBarLabel: 'Nyheter',
-      tabBarIcon: () => (
+      tabBarIcon: ({ tintColor, focused }) => (
         <FontAwesome
-        size={30}
-        name="newspaper-o"
+          size={30}
+          name='newspaper-o'
+          color={focused ? tintColor : '#A9A9A9'}
         />
       )
     }
@@ -70,10 +74,11 @@ const TabNav = TabNavigator({
     screen: ProfileScreen,
     navigationOptions: {
       tabBarLabel: 'Min profil',
-      tabBarIcon: () => (
+      tabBarIcon: ({ tintColor, focused }) => (
         <FontAwesome
         size={30}
-        name="user"
+        name='user'
+        color={focused ? tintColor : '#A9A9A9'}
         />
       )
     }
@@ -84,12 +89,12 @@ const TabNav = TabNavigator({
   initialRouteName: 'Home',
   tabBarOptions: {
     showIcon: true,
-    activeTintColor: '#8A4797',
+    activeTintColor: '#f4376d',
     labelStyle: {
       fontSize: 10
     },
     style: {
-    backgroundColor: '#FBBCC0',
+    backgroundColor: 'white',
   },
   },
 })
