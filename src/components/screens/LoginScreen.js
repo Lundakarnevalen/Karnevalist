@@ -3,6 +3,8 @@ import { Image, Text, View, Dimensions } from 'react-native';
 import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
 
+const WIDTH = Dimensions.get('window').width * 0.9;
+
 class HomeScreen extends Component {
 
   constructor(props) {
@@ -38,7 +40,7 @@ class HomeScreen extends Component {
           <Input
             placeholder='Personnummer'
             title='Personnummer'
-            width={Dimensions.get('window').width * 0.9}
+            width={WIDTH}
             viewStyle={{ marginBottom: 2 }}
             textInputStyle={styles.textInputStyle}
             headerTextStyle={styles.inputHeaderTextStyle}
@@ -54,7 +56,7 @@ class HomeScreen extends Component {
           <Input
             placeholder='Lösenord'
             title='Lösenord'
-            width={Dimensions.get('window').width * 0.9}
+            width={WIDTH}
             secureText
             viewStyle={{ marginBottom: 11 }}
             textInputStyle={styles.textInputStyle}
@@ -73,12 +75,8 @@ class HomeScreen extends Component {
             onPress={() => {
               this.props.navigation.navigate('MyPageNavbarScreen')
             }}
-            textStyle={{
-              color: 'white',
-              fontSize: 20
-            }}
-            buttonStyle={[styles.normalButtonStyle,
-              { marginBottom: Dimensions.get('window').height * (1 / 14) }]}
+            style='standardButton'
+            width={WIDTH}
           />
           <Text
             style={{ color: 'white', fontSize: 12 }}
@@ -87,22 +85,16 @@ class HomeScreen extends Component {
           </Text>
           <CustomButton
             text='Skapa profil'
+            width={WIDTH}
             onPress={() => {
               this.props.navigation.navigate('RegistrationScreen')
             }}
-            textStyle={{
-              color: 'white',
-              fontSize: 20
-            }}
-            buttonStyle={[styles.normalButtonStyle, { marginBottom: 10 }]}
+            style='standardButton'
           />
           <CustomButton
             text='Läs mer om registreringen'
-            textStyle={{
-              color: 'white',
-              fontSize: 12
-            }}
-            buttonStyle={[styles.transparentButtonStyle, { marginTop: 10 }]}
+            width={WIDTH}
+            style='textButton'
           />
         </View>
       </Image>
@@ -121,19 +113,6 @@ const styles = {
     margin: 0,
     justifyContent: 'flex-start',
     alignItems: 'flex-end'
-  },
-  normalButtonStyle: {
-    backgroundColor: '#f4376d',
-    padding: 10,
-    width: Dimensions.get('window').width * 0.9,
-    borderRadius: 0,
-    borderWidth: 1,
-    borderColor: 'white'
-  },
-  transparentButtonStyle: {
-    marginTop: 30,
-    backgroundColor: 'transparent',
-    borderWidth: 0
   },
   textInputStyle: {
     borderRadius: 0,

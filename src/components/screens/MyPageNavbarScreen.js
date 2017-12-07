@@ -10,7 +10,9 @@ import ProfileScreen from './MyPageNavbarScreens/ProfileScreen'
 class MyPageNavbarScreen extends Component {
   render() {
     return (
-      <TabNav />
+      <TabNav
+        screenProps={this.props.navigation}
+      />
     )
   }
 }
