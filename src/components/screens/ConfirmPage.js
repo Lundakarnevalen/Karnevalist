@@ -11,7 +11,6 @@ import { MaterialIcons } from '@expo/vector-icons'
 import SortableList from 'react-native-sortable-list'
 import Row from '../common/Row'
 import SuperAgileAlert from '../common/SuperAgileAlert'
-import CustomButton from '../common/CustomButton'
 import Header from '../common/Header'
 
 const window = Dimensions.get('window');
@@ -76,7 +75,7 @@ export default class ConfirmPage extends Component {
         textStyle={{ color: '#ffffff' }}
         style={{ backgroundColor: '#8A4797', marginBottom: 5 }}
         title='Confirmation page'
-        leftIcon={null}
+        navigation={this.props.navigation}
         rightIcon={
           <TouchableOpacity
           style={{
@@ -109,12 +108,13 @@ export default class ConfirmPage extends Component {
         flexDirection: 'column',
       }}
       >
-      <CustomButton
-        buttonStyle={styles.confimButtonStyle}
-        textStyle={styles.confimTextStyle}
-        text={'Send'}
+      <TouchableOpacity
+        style={styles.confimButtonStyle}
+
         onPress={() => this.onPressConfirmButton()}
-      />
+      >
+        <Text style={styles.confimTextStyle}> Send </Text>
+      </TouchableOpacity>
       </View>
       </View>
     );
@@ -178,6 +178,7 @@ export default class ConfirmPage extends Component {
       Alert.alert('Vänligen välj minst 5 sektioner')
     } else {
       Alert.alert('Tack för dina val, vi ska göra allt vi kan för att upfylla dina önskningar!')
+      this.props.navigation.navigate('HomeScreen')
     }
   }
 
@@ -219,17 +220,17 @@ const styles = StyleSheet.create({
     paddingTop: 0
   },
   confimTextStyle: {
-    fontSize: 15,
-    color: '#F4376D'
+    fontSize: 20,
+    color: '#ffffff'
   },
   confimButtonStyle: {
     height: window.height / 9,
-    backgroundColor: '#ffffff',
-    borderTopWidth: 1,
-    borderColor: '#F4376D',
+    backgroundColor: '#F4376D',
+    borderColor: '#ffffff',
     borderRadius: 0,
     margin: 0,
-    alignSelf: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     bottom: 0,
     width: window.width
   },

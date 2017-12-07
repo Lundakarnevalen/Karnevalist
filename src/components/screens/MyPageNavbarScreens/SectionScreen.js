@@ -7,9 +7,11 @@ import SectionListItem from '../../common/SectionListItem'
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
 const exampleArray = []
-for (let i = 0; i < 25; i++) exampleArray.push({
+for (let i = 0; i < 25; i++) {
+ exampleArray.push({
   title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text'
 })
+}
 class SectionScreen extends Component {
   constructor(props) {
     super(props)
@@ -26,7 +28,7 @@ class SectionScreen extends Component {
         <View>
         <Header
           rightIcon={
-            <TouchableOpacity onPress={() => Alert.alert('Går till confirm..')}>
+            <TouchableOpacity onPress={() => this.props.screenProps.navigate('ConfirmPage')}>
               <FontAwesome name='list-alt' size={30} />
             </TouchableOpacity>}
           textStyle={{ color: '#FBBCC0' }}
