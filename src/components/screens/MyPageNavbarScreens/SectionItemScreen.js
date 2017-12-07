@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Alert, TouchableOpacity, Text, Dimensions, ScrollView, Platform, Image } from 'react-native';
-import { MaterialIcons} from '@expo/vector-icons'
+import { View, Alert, TouchableOpacity, Text, Dimensions, ScrollView, Platform } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'
 import { Constants } from 'expo';
 import Header from '../../common/Header'
 
