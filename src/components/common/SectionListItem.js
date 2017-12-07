@@ -35,8 +35,6 @@ class SectionListItem extends Component {
 const styles = {
   containerStyle: {
     height: 80,
-    borderBottomWidth: 1,
-    borderBottomColor: '#8A4797',
     flexDirection: 'row',
     alignItems: 'center',
     width: WIDTH - 50,

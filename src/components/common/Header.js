@@ -91,7 +91,7 @@ const styles = {
     fontSize: 18,
     color: 'black',
     backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold'
+    fontFamily: 'Avenir Next Medium'
   }
 };
 
