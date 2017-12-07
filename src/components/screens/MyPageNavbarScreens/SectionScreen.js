@@ -25,7 +25,7 @@ class SectionScreen extends Component {
     return (
       <View>
         <BackgroundImage
-          imagePath={require('../../../../assets/images/background5.png')}
+          imagePath={require('../../../../assets/images/background1.png')}
         />
         <View>
         <Header
