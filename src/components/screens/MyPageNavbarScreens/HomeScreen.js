@@ -3,10 +3,12 @@ import { View, Dimensions, Text, Image } from 'react-native';
 import Header from '../../common/Header'
 import CustomButton from '../../common/CustomButton'
 import CountDown from '../../common/countDown/CountDown';
+import HomeScreenTimeLine from '../../common/HomeScreenTimeline'
 
 const { width } = Dimensions.get('window')
 const { height } = Dimensions.get('window')
 class HomeScreen extends Component {
+
   render() {
     const { container, imageStyle, wehejStyle } = styles
     return (
@@ -21,6 +23,7 @@ class HomeScreen extends Component {
         <View style={{ justifyContent: 'center', marginTop: 15 }}>
           <CountDown />
         </View>
+        <HomeScreenTimeLine />
         <View style={container}>
           <Text style={wehejStyle}>
             Wehej!!
