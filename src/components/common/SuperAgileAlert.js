@@ -3,94 +3,85 @@ import { BlurView } from 'expo';
 import { View, Text, Modal, Dimensions, StyleSheet } from 'react-native';
 import CustomButton from './CustomButton';
 
-//ex:
-/*
-header={'MyHeader'}
-info={'Håll in och flytta sektionerna i önskad ordning'}
-alertVisible={this.state.alertVisible}
-buttonsIn={[{ text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }]}
-*/
-
 class SuperAgileAlert extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      totalNbrOfButtons: props.buttonsIn.length
+      totalNbrOfButtons: this.props.buttonsIn.length,
+      buttonWidth: 0
     }
+  }
+
+  componentDidMount() {
+    this.setState({ buttonWidth: ((Dimensions.get('window').width /
+        (this.state.totalNbrOfButtons * 1.1)) - ((0.4 *
+          (this.props.buttonsIn.length - 1)) / this.props.buttonsIn.length)) })
   }
 
   createButtons() {
     const { buttonsIn } = this.props;
-    let i = 0
+    let index = 0
     const buttonsToReturn = [];
-    for (i; i < buttonsIn.length; i++) {
-      const item = this.createSingleButton(i, buttonsIn.length)
+    for (index; index < buttonsIn.length; index++) {
+      const item = this.createSingleButton(index, buttonsIn.length)
       buttonsToReturn.push(item)
     }
     return buttonsToReturn;
   }
 
-  createSingleButton(i) {
+  createSingleButton(index) {
     const { buttonsIn } = this.props;
-    const buttonWidth = { width: ((Dimensions.get('window').width /
-    (this.state.totalNbrOfButtons * 1.1)) - ((0.4 * (buttonsIn.length - 1)) / buttonsIn.length)) };
+    const { buttonWidth } = this.state;
+
     if (buttonsIn.length === 1) {
       return (
         <CustomButton
-        onPress={buttonsIn[i].onPress}
-        text={buttonsIn[i].text}
-        buttonStyle={[styles.buttonStyle, buttonWidth,
-          { borderBottomLeftRadius: 5,
-           borderBottomRightRadius: 5 }]}
-        textStyle={styles.buttonTextStyle}
+        onPress={buttonsIn[index].onPress}
+        text={buttonsIn[index].text}
+        style={'alertButton'}
+        width={this.state.buttonWidth}
         />
       )
     }
-    if (i === 0) {
+    if (index === 0) {
       return (
         <CustomButton
-        onPress={buttonsIn[i].onPress}
-        text={buttonsIn[i].text}
-        buttonStyle={[styles.buttonStyle, buttonWidth,
-           { borderBottomLeftRadius: 5 }]}
-        textStyle={styles.buttonTextStyle}
+        onPress={buttonsIn[index].onPress}
+        text={buttonsIn[index].text}
+        style={'alertButton'}
         />
       )
-    } if (i === buttonsIn.length - 1) {
+    } if (index === buttonsIn.length - 1) {
       return (
         <CustomButton
-        onPress={buttonsIn[i].onPress}
-        text={buttonsIn[i].text}
-        buttonStyle={[styles.buttonStyle, buttonWidth,
-           { borderBottomRightRadius: 5 }]}
-        textStyle={styles.buttonTextStyle}
+        onPress={buttonsIn[index].onPress}
+        text={buttonsIn[index].text}
+        style={'alertButton'}
         />
       )
     }
     return (
       <CustomButton
-      onPress={buttonsIn[i].onPress}
-      text={buttonsIn[i].text}
-      buttonStyle={[styles.buttonStyle, buttonWidth]}
-      textStyle={styles.buttonTextStyle}
+      onPress={buttonsIn[index].onPress}
+      text={buttonsIn[index].text}
+      style={['alertButton', { width: buttonWidth }]}
       />
     )
   }
   render() {
-    const { alertVisible = true } = this.props;
     return (
       <Modal
       transparent
-      visible={alertVisible}
+      visible={this.props.alertVisible}
       >
-        <BlurView tint='dark' intensity={80} style={StyleSheet.absoluteFill}>
+        <BlurView tint='dark' intensity={70} style={StyleSheet.absoluteFill}>
           <View
           style={styles.outerViewStyle}
           transparent={false}
           >
           <View
-            style={styles.alertButtonStyle}
+            style={styles.alertBoxStyle}
           >
               <View
                 style={{
@@ -113,22 +104,24 @@ class SuperAgileAlert extends Component {
                   }}
                   >
                   {this.props.header}</Text>
-                    </View>
-                      <View style={{ flex: 5 }}>
-                        <Text
-                        style={{
-                          textAlign: 'center',
-                          margin: 7
-                        }}
-                        >
-                        {this.props.info}</Text>
-                        </View>
-                      </View>
-                    <View
-                        style={{
-                          flexDirection: 'row',
-                        }}
-                    >
+                </View>
+                <View style={{ flex: 5 }}>
+                  <Text
+                  style={{
+                    textAlign: 'center',
+                    margin: 7
+                  }}
+                  >
+                  {this.props.info}</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+
+                  }}
+                >
                   {this.createButtons()}
                 </View>
               </View>
@@ -146,24 +139,15 @@ class SuperAgileAlert extends Component {
       alignItems: 'center',
       justifyContent: 'center'
     },
-    buttonStyle: {
-      height: Dimensions.get('window').height / (4 * 3),
-      backgroundColor: '#f4376d',
-      borderRadius: 0,
-      margin: 0,
-      marginLeft: 0.4,
-      marginRight: 0.4,
-    },
     buttonTextStyle: {
       color: 'white',
       fontSize: 16,
     },
-    alertButtonStyle: {
+    alertBoxStyle: {
       alignItems: 'center',
       flexDirection: 'column',
-      justifyContent: 'flex-end',
       width: Dimensions.get('window').width / 1.1,
-      height: Dimensions.get('window').height / 3,
+      height: Dimensions.get('window').height / 3.5,
       borderRadius: 5,
       backgroundColor: '#ffbbcc'
     }

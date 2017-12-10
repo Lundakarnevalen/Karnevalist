@@ -36,19 +36,37 @@ const inputJSON = [
   },
   {
     image: 'https://placekitten.com/200/204',
-    text: 'Dusty',
+    text: 'Dusty1',
     infoText: 'testaInfoText',
     id: 3
   },
   {
     image: 'https://placekitten.com/200/204',
-    text: 'Dusty',
+    text: 'Dusty2',
     infoText: 'testaInfoText',
     id: 4
   },
   {
     image: 'https://placekitten.com/200/204',
-    text: 'Dusty',
+    text: 'Dusty3',
+    infoText: 'testaInfoText',
+    id: 5
+  },
+  {
+    image: 'https://placekitten.com/200/204',
+    text: 'Dusty4',
+    infoText: 'testaInfoText',
+    id: 3
+  },
+  {
+    image: 'https://placekitten.com/200/204',
+    text: 'Dusty5',
+    infoText: 'testaInfoText',
+    id: 4
+  },
+  {
+    image: 'https://placekitten.com/200/204',
+    text: 'Dusty6',
     infoText: 'testaInfoText',
     id: 5
   },
@@ -62,7 +80,8 @@ export default class ConfirmPage extends Component {
     this.state = {
       data: [],
       editMode: false,
-      alertVisible: false
+      alertVisible: false,
+      rows: []
     }
   }
 
@@ -105,11 +124,11 @@ export default class ConfirmPage extends Component {
         renderRow={this.renderRow.bind(this)}
       />
       <SuperAgileAlert
-      header={'MyHeader'}
-      info={'Håll in och flytta sektionerna i önskad ordning'}
+      header={'Header'}
+      info={'Här skriver du in din info...'}
       alertVisible={this.state.alertVisible}
-      buttonsIn={[{ text: 'Cancel', onPress: () => this.setState({ alertVisible: false }) },
-                  { text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }]}
+      buttonsIn={[{ text: 'Yes', onPress: () => console.log('Yes was pressed') },
+                    { text: 'No', onPress: () => console.log('No was pressed') }]}
       />
       <View
       style={{
@@ -128,24 +147,6 @@ export default class ConfirmPage extends Component {
     );
   }
 
-  createIndexes() {
-    const listOfIndexes = [];
-    for (let i = 0; i < this.state.data.length + 1; i++) {
-      listOfIndexes.push(
-        <View
-        style={{
-          position: 'absolute',
-          top: 5,
-          left: 11,
-          marginTop: ((window.height / 8) * 1.5) + (((window.height / 9) + 14) * (i - 1))
-        }}
-        >
-        <Text>{i}</Text>
-        </View>
-      )
-    }
-    return listOfIndexes
-  }
 
   deleteRow(id) {
     const newData = this.state.data.filter(dataItem => dataItem.id !== id)
@@ -153,6 +154,11 @@ export default class ConfirmPage extends Component {
   }
 
   renderRow(item) {
+    if (this.state.rows.length > this.state.data.length) {
+      this.setState({ rows: [] })
+    } else {
+      this.state.rows.push(item)
+    }
     return (
       <Row
         data={item.data}
@@ -182,7 +188,12 @@ export default class ConfirmPage extends Component {
     Alert.alert('Navigera till ' + key.text + '-sektionen')
   }
   onPressConfirmButton() {
-    this.setState({ alertVisible: true })
+    const { rows } = this.state;
+    const toReturn = []
+    for (let i = 0; i < 5; i++) {
+      toReturn.push(rows[i])
+    }
+    console.log(toReturn)
 }
 
   onPressHeaderButton() {
