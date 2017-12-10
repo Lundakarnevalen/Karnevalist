@@ -189,11 +189,7 @@ export default class ConfirmPage extends Component {
   }
   onPressConfirmButton() {
     const { rows } = this.state;
-    const toReturn = []
-    for (let i = 0; i < 5; i++) {
-      toReturn.push(rows[i])
-    }
-    console.log(toReturn)
+    console.log(rows)
 }
 
   onPressHeaderButton() {
