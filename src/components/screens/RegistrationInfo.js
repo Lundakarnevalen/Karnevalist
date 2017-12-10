@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, Alert, TouchableHighlight, Animated } from 'react-native';
 import CustomButton from '../common/CustomButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Header from '../common/Header';
+
 
 class HomeScreen extends Component {
 
@@ -11,13 +12,45 @@ class HomeScreen extends Component {
     this.state = {
       alertVisible: false,
       socSecNbr: '',
-      password: ''
+      password: '',
+      animation: new Animated.Value(),
+      expanded: false
     }
   }
 
+  toggle() {
+    //Step 1
+    let initialValue = this.state.expanded ? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
+        finalValue = this.state.expanded ? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
+
+    this.setState({
+        expanded: !this.state.expanded  //Step 2
+    });
+
+    this.state.animation.setValue(initialValue);  //Step 3
+    Animated.spring(     //Step 4
+        this.state.animation,
+        {
+            toValue: finalValue
+        }
+    ).start();  //Step 5
+  }
+
+  setMaxHeight(event) {
+    this.setState({
+        maxHeight: event.nativeEvent.layout.height
+    });
+  }
+
+  setMinHeight(event) {
+    this.setState({
+        minHeight: event.nativeEvent.layout.height
+    });
+  }
+
   render() {
-    const { titelTextStyle, container, containerStyle, line } = styles
-    const { sectionTitle, onPress, } = this.props
+    const { titelTextStyle, container, containerStyle, line, rows, one, body, button, buttonImage, title, container1, titleContainer } = styles
+
     return (
       <View>
         <Header
@@ -35,17 +68,44 @@ class HomeScreen extends Component {
             Karnevalist
           </Text>
 
+          <Animated.View
+            style={[styles.container, { height: this.state.animation }]}
+          >
+                <View style={titleContainer} onLayout={(event) => this.setMinHeight(event)}>
+                    <Text style={title}>{this.state.title}</Text>
+                    <TouchableHighlight
+                        style={button}
+                        onPress={() => this.toggle()}
+                        underlayColor="#f1f1f1"
+                    >
+                      <MaterialCommunityIcons
+                        name="numeric-3-box-outline"
+                        style={{ marginRight: 0, color: 'orange', flex: 4, backgroundColor: 'transparent' }}
+                        size={35}
+                      />
+                    </TouchableHighlight>
+                </View>
+
+                <View style={styles.body} onLayout={(event) => this.setMaxHeight(event)} >
+                  <Text>
+                    hejhej
+                  </Text>
+                </View>
+          </Animated.View>
+
           <TouchableOpacity
             onPress={() => Alert.alert('Information om detta steget')}
             style={containerStyle}
           >
-            <View style={{ flex: 1 }}>
+            <View style={rows}>
               <MaterialCommunityIcons
                 name="numeric-1-box-outline"
-                style={{ marginRight: 0, color: '#8A4797' }}
-                size={120}
-                hej={sectionTitle}
+                style={one}
+                size={140}
               />
+              <Text style={{ fontSize: 20, textAlign: 'center', color: 'brown', flex: 3 }}>
+                Skapa Profil
+              </Text>
             </View>
           </TouchableOpacity>
 
@@ -55,13 +115,15 @@ class HomeScreen extends Component {
             onPress={() => Alert.alert('Information om detta steget')}
             style={containerStyle}
           >
-            <View style={{ flex: 1 }}>
+            <View style={rows}>
               <MaterialCommunityIcons
                 name="numeric-2-box-outline"
-                style={{ marginRight: 0, color: '#8A4797' }}
-                size={120}
-                hej={sectionTitle}
+                style={{ marginRight: 0, color: 'grey', flex: 4, backgroundColor: 'transparent' }}
+                size={140}
               />
+              <Text style={{ fontSize: 20, textAlign: 'center', color: 'grey', flex: 3 }}>
+                Kom på uppropet och välj sektion
+              </Text>
             </View>
           </TouchableOpacity>
 
@@ -71,13 +133,15 @@ class HomeScreen extends Component {
             onPress={() => Alert.alert('Information om detta steget')}
             style={containerStyle}
           >
-            <View style={{ flex: 1 }}>
+            <View style={rows}>
               <MaterialCommunityIcons
                 name="numeric-3-box-outline"
-                style={{ marginRight: 0, color: '#8A4797' }}
-                size={120}
-                hej={sectionTitle}
+                style={{ marginRight: 0, color: 'orange', flex: 4, backgroundColor: 'transparent' }}
+                size={140}
               />
+              <Text style={{ fontSize: 20, textAlign: 'center', color: 'orange', flex: 3 }}>
+                Skicka din ansökan
+              </Text>
             </View>
           </TouchableOpacity>
 
@@ -96,6 +160,20 @@ class HomeScreen extends Component {
 }
 
 const styles = {
+  rows: {
+    flexDirection: 'row',
+    width: 280,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  one: {
+    marginRight: 0,
+    color: 'brown',
+    flex: 4,
+    backgroundColor: 'transparent',
+    marginTop: 'auto',
+    marginBottom: 'auto'
+  },
   containerStyle: {
     height: 130,
     width: 330,
@@ -104,6 +182,7 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FBBCC0',
+    borderRadius: 10,
   },
   line: {
     height: 10,
@@ -111,10 +190,35 @@ const styles = {
   },
   container: {
     alignItems: 'center',
-    marginTop: 15
+    marginTop: 15,
   },
   titelTextStyle: {
     fontSize: 30
+  },
+  container1: {
+    backgroundColor: '#fff',
+    margin:10,
+    overflow:'hidden'
+  },
+  titleContainer: {
+    flexDirection: 'row'
+  },
+  title: {
+    flex: 1,
+    padding: 10,
+    color:'#2a2f43',
+    fontWeight:'bold'
+  },
+  button: {
+
+  },
+  buttonImage: {
+    width: 30,
+    height: 25
+  },
+  body: {
+    padding: 10,
+    paddingTop: 0
   }
 };
 
