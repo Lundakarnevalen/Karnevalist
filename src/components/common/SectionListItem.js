@@ -4,20 +4,27 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 class SectionListItem extends Component {
 
+  getInfoText(sectionInfoText) {
+    let text = sectionInfoText
+    if (text && text.length > 50)
+      text = text.substring(0, 50) + '...'
+    return text
+  }
+
   render() {
     const { containerStyle, titleStyle, infoStyle } = styles
     const { sectionTitle, sectionInfoText, onPress, } = this.props
     return (
       <TouchableOpacity
-        onPress={() => onPress(sectionTitle)}
+        onPress={() => onPress()}
         style={containerStyle}
       >
-        <View style={{ flex: 8 }}>
+        <View style={{ flex: 8, margin: 3 }}>
           <Text style={titleStyle}>
             {sectionTitle}
           </Text>
           <Text style={infoStyle}>
-            {sectionInfoText}
+            {this.getInfoText(sectionInfoText)}
           </Text>
         </View>
         <View style={{ flex: 1 }}>
