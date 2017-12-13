@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { View, Alert, TouchableOpacity, Text, Dimensions, ScrollView, Platform } from 'react-native';
+import { View, TouchableOpacity, Text, Dimensions, ScrollView, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'
 import { Constants } from 'expo';
 import Header from '../../common/Header'
-import { getItem, saveItem, getSections, removeItem } from '../../LocalSave'
+import { saveItem, getSections } from '../../../helpers/LocalSave'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 class SectionItemScreen extends Component {
   render() {
-    getSections(sections => console.log("SECIOSN",sections));
-    getItem('sektion501',sections => console.log("SECIOSN",sections))
+    getSections(sections => console.log('SECTIONS', sections));
     const { navigation } = this.props
     const { title, description, image, id } = navigation.state.params
     const { container, scrollStyle } = styles
@@ -25,7 +24,7 @@ class SectionItemScreen extends Component {
           rightIcon={
             <TouchableOpacity
              style={{ padding: 1, backgroundColor: '#8A4797' }}
-             onPress={() => removeItem('sektion' + id)}
+             onPress={() => saveItem('sektion' + id, title)}
             >
                < MaterialIcons name='playlist-add' size={30} />
             </TouchableOpacity>
