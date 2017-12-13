@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Text, Image } from 'react-native';
+import { View, Dimensions, Image } from 'react-native';
 import Header from '../../common/Header'
-import CustomButton from '../../common/CustomButton'
 import CountDown from '../../common/countDown/CountDown';
 import HomeScreenTimeLine from '../../common/HomeScreenTimeline'
 
@@ -10,9 +9,9 @@ const { height } = Dimensions.get('window')
 class HomeScreen extends Component {
 
   render() {
-    const { container, imageStyle, wehejStyle } = styles
+    const { container, imageStyle } = styles
     return (
-      <View>
+      <View style={{ flex: 1 }} >
         <Header
           textStyle={{ color: '#FBBCC0' }}
           style={{ backgroundColor: '#8A4797' }}
@@ -20,22 +19,19 @@ class HomeScreen extends Component {
           leftIcon={null}
           navigation={this.props.navigation}
         />
-        <View style={{ justifyContent: 'center', marginTop: 15 }}>
-          <CountDown />
-        </View>
-        <HomeScreenTimeLine />
-        <View style={container}>
-          <Text style={wehejStyle}>
-            Wehej!!
-          </Text>
-          <Image
-            style={imageStyle}
-            source={require('../../../../res/Monstergubbe.png')}
-          />
-          <CustomButton
-            style='standardButton'
-            text='Checka in'
-          />
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+          <View style={{ marginTop: 0 }} >
+            <HomeScreenTimeLine />
+          </View>
+          <View style={container}>
+            <Image
+              style={imageStyle}
+              source={require('../../../../res/Monstergubbe.png')}
+            />
+          </View>
+          <View style={{ marginTop: 15 }} >
+            <CountDown />
+          </View>
         </View>
       </View>
     );
@@ -50,12 +46,8 @@ const styles = {
   },
   imageStyle: {
     resizeMode: 'contain',
-    width: width / 1.1,
-    height: height / 2.3
-  },
-  wehejStyle: {
-    fontSize: 50,
-    color: '#e600ac',
+    width: width * 0.9,
+    height: height * 0.35
   }
 }
 
