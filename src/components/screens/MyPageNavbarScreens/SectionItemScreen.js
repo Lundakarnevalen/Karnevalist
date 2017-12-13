@@ -3,14 +3,17 @@ import { View, Alert, TouchableOpacity, Text, Dimensions, ScrollView, Platform }
 import { MaterialIcons } from '@expo/vector-icons'
 import { Constants } from 'expo';
 import Header from '../../common/Header'
+import { getItem, saveItem, getSections, removeItem } from '../../LocalSave'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 class SectionItemScreen extends Component {
   render() {
+    getSections(sections => console.log("SECIOSN",sections));
+    getItem('sektion501',sections => console.log("SECIOSN",sections))
     const { navigation } = this.props
-    const { title, description, image } = navigation.state.params
+    const { title, description, image, id } = navigation.state.params
     const { container, scrollStyle } = styles
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }} >
@@ -22,7 +25,7 @@ class SectionItemScreen extends Component {
           rightIcon={
             <TouchableOpacity
              style={{ padding: 1, backgroundColor: '#8A4797' }}
-             onPress={() => Alert.alert('Tillagd')}
+             onPress={() => removeItem('sektion' + id)}
             >
                < MaterialIcons name='playlist-add' size={30} />
             </TouchableOpacity>

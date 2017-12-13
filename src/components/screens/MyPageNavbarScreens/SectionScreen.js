@@ -1,24 +1,38 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
+import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform, fetch } from 'react-native';
+import * as axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
 
-const exampleArray = []
-for (let i = 0; i < 25; i++) exampleArray.push({
-  key: i, title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får platsKul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats'
-})
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 class SectionScreen extends Component {
   constructor(props) {
     super(props)
-    const items = props.items || exampleArray || ['']
     this.state = {
       isOpen: false,
-      data: items
+      data: []
     };
+  }
+
+  componentWillMount() {
+    this.getSectionInfo()
+  }
+
+  getSectionInfo() {
+    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/'
+    axios.get(url)
+      .then((response) => {
+        const sections = response.data.map(item => (
+           { key: item.id, id: item.id, title: item.title.rendered, info: item.title.rendered }
+        ))
+        this.setState({ data: sections })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -48,6 +62,7 @@ class SectionScreen extends Component {
                 onPress={() => screenProps.navigate(
                   'SectionItemScreen',
                   {
+                    id: item.id,
                     title: item.title,
                     description: item.info,
                     image:
