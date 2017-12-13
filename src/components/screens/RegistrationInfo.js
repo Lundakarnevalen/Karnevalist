@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Alert, TouchableHighlight, Animated } from 'react-native';
+import { Text, View, TouchableOpacity, Alert, TouchableHighlight, Animated, ScrollView } from 'react-native';
 import CustomButton from '../common/CustomButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Header from '../common/Header';
+import ExpandeblePanel from '../common/ExpandeblePanel';
 
 
 class HomeScreen extends Component {
@@ -49,7 +50,7 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { titelTextStyle, container, containerStyle, line, rows, one, body, button, buttonImage, title, container1, titleContainer } = styles
+    const { titelTextStyle, container, containerStyle, line, rows, one, body, button, buttonImage, title, container1, titleContainer, container4 } = styles
 
     return (
       <View>
@@ -68,30 +69,16 @@ class HomeScreen extends Component {
             Karnevalist
           </Text>
 
-          <Animated.View
-            style={[styles.container, { height: this.state.animation }]}
-          >
-                <View style={titleContainer} onLayout={(event) => this.setMinHeight(event)}>
-                    <Text style={title}>{this.state.title}</Text>
-                    <TouchableHighlight
-                        style={button}
-                        onPress={() => this.toggle()}
-                        underlayColor="#f1f1f1"
-                    >
-                      <MaterialCommunityIcons
-                        name="numeric-3-box-outline"
-                        style={{ marginRight: 0, color: 'orange', flex: 4, backgroundColor: 'transparent' }}
-                        size={35}
-                      />
-                    </TouchableHighlight>
-                </View>
+          <ScrollView>
+            <ExpandeblePanel title="Skapa profil">
+              <Text>Första steget är att skp en profil,
+                antingen här eller på Karnevalist.se.
+                När du skapat en profil tilldelas du ett profil-ID
+                som du använder vid incheckning under uppropsdagen.
+              </Text>
+            </ExpandeblePanel>
+          </ScrollView>
 
-                <View style={styles.body} onLayout={(event) => this.setMaxHeight(event)} >
-                  <Text>
-                    hejhej
-                  </Text>
-                </View>
-          </Animated.View>
 
           <TouchableOpacity
             onPress={() => Alert.alert('Information om detta steget')}
@@ -191,6 +178,11 @@ const styles = {
   container: {
     alignItems: 'center',
     marginTop: 15,
+  },
+  container4: {
+    flex            : 1,
+    backgroundColor : '#f4f7f9',
+    paddingTop      : 30
   },
   titelTextStyle: {
     fontSize: 30
