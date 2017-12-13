@@ -23,14 +23,12 @@ class SectionScreen extends Component {
 
   getSectionInfo() {
     const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/'
-    axios.get(url)
-      .then((response) => {
-        const sections = response.data.map(item => (
-           { key: item.id, id: item.id, title: item.title.rendered, info: item.title.rendered }
-        ))
-        this.setState({ data: sections })
-      })
-      .catch((error) => {
+    axios.get(url).then((response) => {
+      const sections = response.data.map(item => (
+         { key: item.id, id: item.id, title: item.title.rendered, info: item.title.rendered }
+      ))
+      this.setState({ data: sections })
+      }).catch((error) => {
         console.log(error);
       });
   }
