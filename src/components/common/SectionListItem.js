@@ -4,13 +4,6 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 class SectionListItem extends Component {
 
-  getInfoText(sectionInfoText) {
-    let text = sectionInfoText
-    if (text && text.length > 50)
-      text = text.substring(0, 50) + '...'
-    return text
-  }
-
   render() {
     const { containerStyle, titleStyle, infoStyle } = styles
     const { sectionTitle, sectionInfoText, onPress, } = this.props
@@ -23,8 +16,8 @@ class SectionListItem extends Component {
           <Text style={titleStyle}>
             {sectionTitle}
           </Text>
-          <Text style={infoStyle}>
-            {this.getInfoText(sectionInfoText)}
+          <Text ellipsizeMode={'tail'} numberOfLines={1} style={infoStyle}>
+            {sectionInfoText}
           </Text>
         </View>
         <View style={{ flex: 1 }}>
