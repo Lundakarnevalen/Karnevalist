@@ -3,6 +3,7 @@ import { View, ListView, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
+import BackgroundImage from '../../common/BackgroundImage'
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
 
@@ -23,6 +24,9 @@ class SectionScreen extends Component {
   render() {
     return (
       <View>
+        <BackgroundImage
+          imagePath={require('../../../../res/background1.png')}
+        />
         <View>
         <Header
           rightIcon={
@@ -30,7 +34,7 @@ class SectionScreen extends Component {
               <FontAwesome name='list-alt' size={30} />
             </TouchableOpacity>}
           textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          style={{ backgroundColor: '#FFFFFF' }}
           title='Sektioner'
           leftIcon={null}
           navigation={this.props.navigation}
