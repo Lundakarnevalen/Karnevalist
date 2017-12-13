@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform, fetch } from 'react-native';
+import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
 import * as axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
@@ -14,7 +14,8 @@ class SectionScreen extends Component {
     super(props)
     this.state = {
       isOpen: false,
-      data: []
+      data: [],
+      images: {}
     };
   }
 
@@ -22,17 +23,37 @@ class SectionScreen extends Component {
     this.getSectionInfo()
   }
 
+  getImage(url, section) {
+    axios.get(url).then((r) => {
+      const data = this.state.data
+      const image = (
+        <Image
+          style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+          source={{ uri: r.data.source_url }}
+          defaultSource={require('../../../../res/LK2018logga.png')}
+        />)
+        section.image = image
+        data.push(section)
+        this.setState({ data })
+      }).catch((error) => {
+        console.error(error)
+      })
+  }
+
   getSectionInfo() {
     const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/'
     axios.get(url).then((response) => {
-      const sections = response.data.map(item => (
-         { key: item.id, id: item.id, title: item.title.rendered, info: item.title.rendered }
-      ))
-      this.setState({ data: sections })
+      response.data.forEach(item => {
+        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/ig, '')
+        const imgId = item.featured_media
+        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId
+        const section = { key: item.id, id: item.id, title: item.title.rendered, info: strippedContent }
+        this.getImage(imgUrl, section)
+      })
       }).catch((error) => {
-        console.log(error);
-      });
-  }
+        console.error(error)
+      })
+}
 
   render() {
     const { navigation, screenProps } = this.props
@@ -67,11 +88,8 @@ class SectionScreen extends Component {
                     id: item.id,
                     title: item.title,
                     description: item.info,
-                    image:
-                      <Image
-                        style={{ width: WIDTH - 10, height: WIDTH - 50 }}
-                        source={require('../../../../res/KaffeKarl.png')}
-                      />
+                    image: item.image
+
                   }
                   )
                 }
