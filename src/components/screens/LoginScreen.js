@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Text, View, Dimensions } from 'react-native';
+import axios from 'axios';
 import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
 
@@ -11,7 +12,7 @@ class HomeScreen extends Component {
     super(props)
     this.state = {
       alertVisible: false,
-      socSecNbr: '',
+      email: '',
       password: ''
     }
   }
@@ -38,8 +39,8 @@ class HomeScreen extends Component {
             source={require('../../../res/LK2018logga.png')}
           />
           <Input
-            placeholder='Personnummer'
-            title='Personnummer'
+            placeholder='Email address'
+            title='Email address'
             width={WIDTH}
             viewStyle={{ marginBottom: 2 }}
             textInputStyle={styles.textInputStyle}
@@ -48,7 +49,7 @@ class HomeScreen extends Component {
             onChangeText={
               text => {
                 return this.setState(() => {
-                  return { socSecNbr: { text } }
+                  return { email: { text } }
                 });
               }
             }
@@ -73,6 +74,19 @@ class HomeScreen extends Component {
           <CustomButton
             text='Logga in'
             onPress={() => {
+              console.log(this.state.email)
+              console.log(this.state.password)
+              axios.post(
+                'http://146.185.173.31:3000/login/email',
+                {
+                  email: this.state.email.text,
+                  password: this.state.password.text
+                }
+              ).then((response) => {
+                console.log(response);
+              }).catch((error) => {
+                console.log(error);
+              })
               this.props.navigation.navigate('MyPageNavbarScreen')
             }}
             style='standardButton'
