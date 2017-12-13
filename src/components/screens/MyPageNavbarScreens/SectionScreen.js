@@ -4,6 +4,7 @@ import * as axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
+import BackgroundImage from '../../common/BackgroundImage'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -37,6 +38,9 @@ class SectionScreen extends Component {
     const { navigation, screenProps } = this.props
     return (
       <View>
+        <BackgroundImage
+          imagePath={require('../../../../res/background1.png')}
+        />
         <View>
         <Header
           rightIcon={
@@ -44,7 +48,7 @@ class SectionScreen extends Component {
               <FontAwesome name='list-alt' size={30} />
             </TouchableOpacity>}
           textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          style={{ backgroundColor: '#FFFFFF' }}
           title='Sektioner'
           leftIcon={null}
           navigation={navigation}
