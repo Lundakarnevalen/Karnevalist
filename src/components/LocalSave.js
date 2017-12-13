@@ -1,49 +1,48 @@
-import React from 'react';
 import { AsyncStorage } from 'react-native';
 
-export async function saveItem(key, value) {
-  try {
-     await AsyncStorage.setItem(key, value)
-  } catch (error) {
-    // Error saving data
-  }
-}
-
-export async function getItem(key ,callback) {
-  try {
-    const response =  await AsyncStorage.getItem(key)
-    if (response !== null) {
-      return callback(response)
+export function getItem(key, callback) {
+  AsyncStorage.getItem(key, (err, result) => {
+    if (err) {
+      console.error(err);
+      return
     }
-  } catch (error) {
-      callback(error)
-  }
-}
-
-export async function getSections(cb) {
-  const sections = AsyncStorage.getAllKeys((err, keys) => {
-    const l = keys.filter(k => {
-      return  k.includes('Sektion')
-    })
-    cb(l)
-    AsyncStorage.multiGet(l, (err, stores) => {
-      cb(stores.map((result, i, store) => {
-      // get at each store's key/value so you can work with it
-        let key = store[i][0];
-        let value = store[i][1];
-        return [key,value]
-    }))
+    callback(result)
   })
-})
 }
 
-export async function removeItem(key ,callback) {
-  try {
-    const response =  await AsyncStorage.removeItem(key)
-    if (response !== null) {
-      return callback(response)
+export function saveItem(key, value) {
+  AsyncStorage.setItem(key, value, (err) => {
+    if (err)
+      console.error(err);
+  })
+}
+
+export function getSections(cb) {
+  AsyncStorage.getAllKeys((err, keys) => {
+    const sectionKeys = keys.filter(k => (
+       k.includes('sektion')
+    ))
+    AsyncStorage.multiGet(sectionKeys, (error, stores) => {
+      cb(stores.map((result, i, store) => {
+        const key = store[i][0]
+        const value = store[i][1]
+        return { key, value }
+      }))
+    })
+  })
+}
+
+export function removeItem(key) {
+  AsyncStorage.removeItem(key, (error) => {
+    if (error) {
+      console.error(error)
+      return
     }
-  } catch (error) {
-      callback(error)
-  }
+  })
+}
+export function removeItems(keys) {
+  AsyncStorage.multiRemove(keys, err => {
+    if (err)
+      console.error(err)
+  })
 }
