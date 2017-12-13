@@ -35,7 +35,7 @@ class HomeScreenTimeLine extends Component {
       			alignItems: 'center'
       		}}
       	>
-      		<View style={[styles.roundView, { marginRight: -5}]}>
+      		<View style={[styles.roundView, { marginRight: -5 }]}>
       			<Ionicons
       				name='md-checkmark'
       				size={Dimensions.get('window').width / 7}
