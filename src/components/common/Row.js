@@ -5,48 +5,48 @@ import {
   Text,
   Image,
   Platform,
-  StyleSheet,
   Dimensions,
-  View,
+  View
 } from 'react-native';
-import { EvilIcons } from '@expo/vector-icons'
+import { EvilIcons } from '@expo/vector-icons';
 
 const window = Dimensions.get('window');
 const size = 60;
 
 class Row extends Component {
-
   constructor(props) {
     super(props);
-
     this._active = new Animated.Value(0);
-
     this._style = {
       ...Platform.select({
         ios: {
-          transform: [{
-            scale: this._active.interpolate({
-              inputRange: [0, 1],
-              outputRange: [1, 1.1],
-            }),
-          }],
+          transform: [
+            {
+              scale: this._active.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 1.1]
+              })
+            }
+          ],
           shadowRadius: this._active.interpolate({
             inputRange: [0, 1],
-            outputRange: [2, 10],
-          }),
+            outputRange: [2, 10]
+          })
         },
         android: {
-          transform: [{
-            scale: this._active.interpolate({
-              inputRange: [0, 1],
-              outputRange: [1, 1.07],
-            }),
-          }],
+          transform: [
+            {
+              scale: this._active.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 1.07]
+              })
+            }
+          ],
           elevation: this._active.interpolate({
             inputRange: [0, 1],
-            outputRange: [2, 6],
-          }),
-        },
+            outputRange: [2, 6]
+          })
+        }
       })
     };
   }
@@ -56,41 +56,18 @@ class Row extends Component {
       Animated.timing(this._active, {
         duration: 300,
         easing: Easing.bounce,
-        toValue: Number(nextProps.active),
+        toValue: Number(nextProps.active)
       }).start();
     }
   }
 
-  render() {
-   const { data } = this.props;
-    return (
-      <Animated.View
-        style={[
-          styles.row,
-          this._style,
-        ]}
-      >
-        <View
-          style={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-        {this.createRows(data)}
-        </View>
-      </Animated.View>
-    );
-  }
-
-  getHeaderStyle() {
-    const headerText = {
-        fontSize: this.props.data.text.length < 10 ? 12 : 10,
-        fontWeight: 'bold',
-        color: '#F4376D',
-        left: 0
-      };
-      return headerText;
+  getInfoTextStyle() {
+    return {
+      fontSize: this.props.data.text.length < 10 ? 12 : 10,
+      fontWeight: 'bold',
+      color: '#F4376D',
+      left: 0
+    };
   }
 
   createRows(data) {
@@ -100,7 +77,7 @@ class Row extends Component {
           flexDirection: 'row',
           flex: 1,
           padding: 10,
-          width: window.width - 20,
+          width: window.width - 20
         }}
       >
         <Text style={styles.indexStyle}>{this.props.index}</Text>
@@ -108,10 +85,10 @@ class Row extends Component {
         <View
           style={{
             flex: 0.7,
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
-          <Text style={this.getHeaderStyle()}>{data.text}</Text>
+          <Text style={this.getInfoTextStyle()}>{data.text}</Text>
         </View>
         <EvilIcons
           name={this.props.iconName}
@@ -120,21 +97,33 @@ class Row extends Component {
           size={35}
         />
       </View>
-    )
+    );
   }
-  
+
   getOnPress() {
     if (this.props.iconName === 'trash') {
-      this.props.deleteRow()
+      this.props.deleteRow();
     }
+  }
+  render() {
+    const { data } = this.props;
+    return (
+      <Animated.View style={[styles.row, this._style]}>
+        <View
+          style={{
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          {this.createRows(data)}
+        </View>
+      </Animated.View>
+    );
   }
 }
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    color: '#999999',
-  },
+const styles = {
   row: {
     flexDirection: 'row',
     backgroundColor: '#ffffff',
@@ -148,7 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     alignSelf: 'center',
     width: window.width - 40,
-    elevation: 0,
+    elevation: 0
   },
   image: {
     width: size,
@@ -156,30 +145,19 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: 10,
     marginRight: 10,
-    borderRadius: size / 2,
+    borderRadius: size / 2
   },
   indexStyle: {
     alignSelf: 'center',
     fontSize: 22,
-
     fontWeight: 'bold',
-    color: '#F4376D',
-  },
-  headerText: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    color: '#F4376D',
-    alignSelf: 'center'
-  },
-  infoText: {
-    fontSize: 10,
     color: '#F4376D'
   },
   iconStyle: {
     color: '#F4376D',
     alignSelf: 'center',
     position: 'absolute',
-    right: 25,
+    right: 25
   }
-});
-export default Row
+};
+export default Row;
