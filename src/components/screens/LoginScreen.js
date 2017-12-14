@@ -90,9 +90,7 @@ class HomeScreen extends Component {
             style='standardButton'
             width={WIDTH}
           />
-          <Text
-            style={{ color: 'white', fontSize: 12 }}
-          >
+          <Text style={{ color: 'white', fontSize: 12, backgroundColor: 'transparent' }}>
             Har du ingen profil?
           </Text>
           <CustomButton
