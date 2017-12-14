@@ -14,17 +14,17 @@ class DKPicker extends Component {
   }
 
   componentDidUpdate() {
-      if (this.props.isShowing) {
-        Animated.timing(
-          this.state.bottom,
-          { toValue: 0 }
-        ).start()
-      } else {
-        Animated.timing(
-          this.state.bottom,
-          { toValue: (-this.state.height - 22) }
-        ).start()
-      }
+    if (this.props.isShowing) {
+      Animated.timing(
+        this.state.bottom,
+        { toValue: 0 }
+      ).start()
+    } else {
+      Animated.timing(
+        this.state.bottom,
+        { toValue: (-this.state.height - 22) }
+      ).start()
+    }
   }
 
   render() {
@@ -32,27 +32,27 @@ class DKPicker extends Component {
     const { items, value } = this.props;
     return (
       <Animated.View
-        style={[picker, { width, bottom: this.state.bottom }]}
+      style={[picker, { width, bottom: this.state.bottom }]}
       >
-      <View
+        <View
         onLayout={(event) => {
           this.setState({ height: event.nativeEvent.layout.height })
         }}
-      >
-        <CustomButton
+        >
+          <CustomButton
           text="OK"
           style='acceptButton'
           onPress={() => this.props.close()}
-        />
-        <Picker
+          />
+          <Picker
           onValueChange={(itemValue) => this.props.onValueChange(itemValue)}
           selectedValue={value}
-        >
-        {items.map(item => {
-          return (<Picker.Item key={item.label} label={item.label} value={item.value} />);
-        })}
-        </Picker>
-      </View>
+          >
+          {items.map(item => {
+            return (<Picker.Item key={item.label} label={item.label} value={item.value} />);
+          })}
+          </Picker>
+        </View>
       </Animated.View>
     )
   }
