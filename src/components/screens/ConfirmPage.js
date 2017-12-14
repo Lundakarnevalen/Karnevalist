@@ -178,19 +178,6 @@ class ConfirmPage extends Component {
       this.setState({ editMode: true });
     }
   }
-
-  addAlert() {
-    return (
-      <SuperAgileAlert
-        header={'OBS!'}
-        info={'Håll in och flytta sektionerna i önskad ordning'}
-        alertVisible={this.state.alertVisible}
-        buttonsIn={[
-          { text: 'Ok', onPress: () => this.setState({ alertVisible: false }) }
-        ]}
-      />
-    );
-  }
 }
 
 const styles = StyleSheet.create({
