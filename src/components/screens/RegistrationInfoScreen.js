@@ -5,7 +5,7 @@ import CustomButton from '../common/CustomButton';
 import Header from '../common/Header';
 import ExpandeblePanel from '../common/ExpandeblePanel';
 
-class HomeScreen extends Component {
+class RegistrationInfoScreen extends Component {
 
   constructor(props) {
     super(props)
@@ -15,7 +15,6 @@ class HomeScreen extends Component {
 
   render() {
     const { titelTextStyle, container, imageStyle1, imageStyle2, imageStyle3, textStyle1, textStyle2, textStyle3 } = styles
-
     const image1 = (
       <MaterialCommunityIcons
         name="numeric-1-box-outline"
@@ -134,4 +133,4 @@ const styles = {
   }
 };
 
-export default HomeScreen;
+export default RegistrationInfoScreen;

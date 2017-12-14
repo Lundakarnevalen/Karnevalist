@@ -17,56 +17,45 @@ class ExpandeblePanel extends Component {
     const finalValue = this.state.expanded ? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
 
     this.setState({
-        expanded: !this.state.expanded
+      expanded: !this.state.expanded
     });
 
     this.state.animation.setValue(initialValue);
-    Animated.spring(
-        this.state.animation,
-        {
-            toValue: finalValue
-        }
-    ).start();
+    Animated.spring(this.state.animation, { toValue: finalValue })
+      .start();
   }
-  _setMaxHeight(event) {
-    this.setState({
-        maxHeight: event.nativeEvent.layout.height + 10
-    });
-}
 
-  _setMinHeight() {
-      this.setState({
-          minHeight: 142
-      });
+  setMaxHeight(event) {
+    this.setState({ maxHeight: event.nativeEvent.layout.height + 10 });
+  }
+
+  setMinHeight() {
+    this.setState({ minHeight: 142 });
   }
 
   render() {
     const { container, titleContainer, rows } = styles
 
-      return (
-        <Animated.View
-          style={[container, { height: this.state.animation }]}
-        >
-              <View style={titleContainer} onLayout={() => this._setMinHeight()}>
-                  <TouchableHighlight
-                      onPress={() => this.toggle()}
-                      underlayColor="#FBBCC0"
-                  >
-                  <View style={rows}>
-                    {this.props.image}
-                    <Text style={this.props.style}>
-                      {this.state.title}
-                    </Text>
-                  </View>
-                  </TouchableHighlight>
-              </View>
-
-              <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
-                {this.props.children}
-              </View>
-
-        </Animated.View>
-      );
+    return (
+      <Animated.View
+        style={[container, { height: this.state.animation }]}
+      >
+        <View style={titleContainer} onLayout={() => this.setMinHeight()}>
+          <TouchableHighlight
+            onPress={() => this.toggle()}
+            underlayColor="#FBBCC0"
+          >
+            <View style={rows}>
+              {this.props.image}
+              <Text style={this.props.style}>{this.state.title}</Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+        <View style={styles.body} onLayout={(event) => this.setMaxHeight(event)}>
+          {this.props.children}
+        </View>
+      </Animated.View>
+    );
   }
 }
 const styles = {
