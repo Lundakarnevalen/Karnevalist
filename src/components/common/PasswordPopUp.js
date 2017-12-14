@@ -48,7 +48,7 @@ class PasswordPopUp extends Component {
             {
               borderBottomLeftRadius: this.getBorderLeftRadius(index),
               borderBottomRightRadius: this.getBorderRightRadius(index),
-              borderRightWidth: this.getRightMargin(index)
+              marginRight: this.getRightMargin(index)
             }
           ]}
         >
@@ -73,7 +73,7 @@ class PasswordPopUp extends Component {
                 <View
                   style={{
                     position: 'absolute',
-                    bottom: 50,
+                    bottom: 68,
                     width: Dimensions.get('window').width / 1.2
                   }}
                 >
@@ -110,7 +110,7 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'column',
     width: Dimensions.get('window').width / 1.1,
-    height: Dimensions.get('window').height / 3.2,
+    height: Dimensions.get('window').height / 2.8,
     borderRadius: 5,
     backgroundColor: '#d999fa'
   },
@@ -125,7 +125,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f4376d',
-    height: 40,
+    height: 50,
     borderColor: 'white',
     width: Dimensions.get('window').width / (1.1 * 2)
   },
@@ -147,7 +147,7 @@ const styles = {
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
-    height: 40
+    height: 50
   }
 };
 
