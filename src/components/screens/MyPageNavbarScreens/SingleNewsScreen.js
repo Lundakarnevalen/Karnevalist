@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { View, WebView } from 'react-native';
+import { View, WebView, Dimensions } from 'react-native';
 import Header from '../../common/Header';
 
 class NewsScreen extends Component {
   render() {
     return (
-      <View>
+      <View
+        style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}
+      >
         <Header
-          textStyle={{ color: '#FBBCC0' }}
+          textStyle={{ color: '#f4376d' }}
           style={{ backgroundColor: '#FFFFFF' }}
           title={this.props.navigation.state.params.info.title}
           navigation={this.props.navigation}

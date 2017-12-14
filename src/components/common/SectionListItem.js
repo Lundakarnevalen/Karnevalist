@@ -4,13 +4,30 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width - 48;
 
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'June',
+  'July',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+];
+
 class SectionListItem extends Component {
   renderDateView(sectionDate) {
     const { dateViewStyle, dateStyle } = styles;
+    const sectionDateParts = sectionDate.split('T')[0].split('-');
+    const sectionDateText = sectionDateParts[2] + '\n' + months[sectionDateParts[1] - 1];
     if (sectionDate) {
       return (
         <View style={dateViewStyle}>
-          <Text style={dateStyle}>{sectionDate}</Text>
+          <Text style={dateStyle}>{sectionDateText}</Text>
         </View>
       );
     }
