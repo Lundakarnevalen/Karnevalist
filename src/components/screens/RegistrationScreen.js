@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Dimensions, Platform, Picker, Alert } from 'react-native';
+import { Alert, ScrollView, View, Dimensions, Picker, Platform } from 'react-native';
+import axios from 'axios';
 import Header from '../common/Header';
 import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
 import CustomButton from '../common/CustomButton';
-import axios from 'axios';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
 import BackgroundImage from '../common/BackgroundImage';
 
@@ -31,6 +31,8 @@ class RegistrationScreen extends Component {
       lastName: '',
       email: '',
       confirmedEmail: '',
+      password: '',
+      confirmedPassword: '',
       address: '',
       postcode: '',
       city: '',
@@ -39,18 +41,17 @@ class RegistrationScreen extends Component {
       shirtSize: '',
       shirtSizeTitle: '',
       studentUnion: '',
-      studentUnionInfo: '',
       studentUnionTitle: '',
       showShirtPicker: false,
       showStudentUnionPicker: false
     };
   }
 
-  renderPickerForPlatform(title, tag) {
+  renderPickerForPlatform(defaultTitle, title, tag) {
     if (Platform.OS === 'ios') {
       return (
         <CustomButton
-          text={title === '' ? 'Choose' : title}
+          text={title === '' ? defaultTitle : title}
           style="standardButton"
           width={width}
           onPress={() => {
@@ -123,7 +124,8 @@ class RegistrationScreen extends Component {
       city,
       phoneNbr,
       foodPreferences,
-      studentUnionInfo
+      password,
+      confirmedPassword
     } = this.state;
     return (
       <View>
@@ -141,7 +143,6 @@ class RegistrationScreen extends Component {
               this.setState({ firstName: firstNameInput });
             }}
             value={firstName}
-            style={{ marginBottom: 8 }}
           />
           <Input
             placeholder="Last name"
@@ -149,7 +150,6 @@ class RegistrationScreen extends Component {
               this.setState({ lastName: lastNameInput });
             }}
             value={lastName}
-            style={{ marginBottom: 8 }}
           />
           <Input
             placeholder="Email"
@@ -157,7 +157,6 @@ class RegistrationScreen extends Component {
               this.setState({ email: emailInput });
             }}
             value={email}
-            style={{ marginBottom: 8 }}
           />
           <Input
             placeholder="Confirm email"
@@ -165,7 +164,22 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedEmail: emailInput });
             }}
             value={confirmedEmail}
-            style={{ marginBottom: 8 }}
+          />
+          <Input
+            placeholder="Password"
+            onChangeText={text => {
+              this.setState({ password: text });
+            }}
+            value={password}
+            secureText
+          />
+          <Input
+            placeholder="Confirm password"
+            onChangeText={text => {
+              this.setState({ confirmedPassword: text });
+            }}
+            value={confirmedPassword}
+            secureText
           />
           <Input
             placeholder="Address"
@@ -173,7 +187,6 @@ class RegistrationScreen extends Component {
               this.setState({ address: addressInput });
             }}
             value={address}
-            style={{ marginBottom: 8 }}
           />
           <View style={flexHorizontal}>
             <Input
@@ -182,10 +195,7 @@ class RegistrationScreen extends Component {
                 this.setState({ postcode: postcodeInput });
               }}
               width={width / 2 - 4}
-              style={{
-                marginBottom: 8,
-                marginRight: 8
-              }}
+              extraContainerStyle={{ marginRight: 8 }}
               value={postcode}
             />
             <Input
@@ -194,7 +204,6 @@ class RegistrationScreen extends Component {
                 this.setState({ city: cityInput });
               }}
               width={width / 2 - 4}
-              style={{ marginBottom: 8 }}
               value={city}
             />
           </View>
@@ -203,7 +212,6 @@ class RegistrationScreen extends Component {
             onChangeText={phoneNbrInput => {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
-            style={{ marginBottom: 8 }}
             value={phoneNbr}
           />
           <Input
@@ -211,53 +219,80 @@ class RegistrationScreen extends Component {
             onChangeText={foodPreferencesInput => {
               this.setState({ foodPreferences: foodPreferencesInput });
             }}
-            style={{ marginBottom: 8 }}
             value={foodPreferences}
           />
-          <Text>Choose shirt size</Text>
-          {this.renderPickerForPlatform(this.state.shirtSizeTitle, 'shirt')}
-          <ButtonChoiceManager buttonInputVector={['I have a drives license']} multipleChoice />
-          <Text>Choose student union</Text>
-          {this.renderPickerForPlatform(this.state.studentUnionTitle, 'union')}
-          <Input
-            title="What did you do at the student union?"
-            onChangeText={studentUnionInfoInput => {
-              this.setState({ studentUnionInfo: studentUnionInfoInput });
-            }}
-            value={studentUnionInfo}
-          />
+          {this.renderPickerForPlatform('Choose shirt size', this.state.shirtSizeTitle, 'shirt')}
+          {this.renderPickerForPlatform(
+            'Choose student union',
+            this.state.studentUnionTitle,
+            'union'
+          )}
           <ButtonChoiceManager
             buttonInputVector={['I was engaged in the karneval 2014']}
             multipleChoice
+            size={30}
+            color={'rgb(138, 71, 151)'}
+          />
+          <ButtonChoiceManager
+            buttonInputVector={['I have a drives license']}
+            multipleChoice
+            size={30}
+            color={'rgb(138, 71, 151)'}
           />
           <CustomButton
-            text="Register"
-            style="standardButton"
+            text={'Register'}
+            style={'standardButton'}
             width={width}
             onPress={() => {
-              axios
-                .post('http://146.185.173.31:3000/register', {
-                  email: this.state.email,
-                  password: '123',
-                  postNumber: this.state.postcode,
-                  talent: 'saknas'
-                })
-                .then(() => {
-                  this.props.navigation.navigate('HomeScreen');
-                })
-                .catch(error => {
-                  let msg;
-                  if (error.message.includes('400')) {
-                    msg = 'Invalid email or password';
-                  } else if (error.message.includes('401')) {
-                    msg = 'Invalid email or password';
-                  } else if (error.message.includes('404')) {
-                    msg = 'Something went wrong...';
-                  } else {
-                    msg = 'Internal error, please try again later';
-                  }
-                  Alert.alert('Error', msg);
-                });
+              if (firstName === '') {
+                Alert.alert('Error', 'First name is required.');
+              } else if (lastName === '') {
+                Alert.alert('Error', 'Last name is required.');
+              } else if (email === '') {
+                Alert.alert('Error', 'Email is required.');
+              } else if (confirmedEmail === '') {
+                Alert.alert('Error', 'Please confirm your email.');
+              } else if (address === '') {
+                Alert.alert('Error', 'Address is required.');
+              } else if (postcode === '') {
+                Alert.alert('Error', 'Postcode is required.');
+              } else if (city === '') {
+                Alert.alert('Error', 'City is required.');
+              } else if (phoneNbr === '') {
+                Alert.alert('Error', 'Phone number is required.');
+              } else if (password === '') {
+                Alert.alert('Error', 'Password is required.');
+              } else if (confirmedPassword === '') {
+                Alert.alert('Error', 'Please confirm your password.');
+              } else if (email !== confirmedEmail) {
+                Alert.alert('Error', "Your emails doesn't match.");
+              } else if (password !== confirmedPassword) {
+                Alert.alert('Error', "Your passwords doesn't match.");
+              } else {
+                axios
+                  .post('http://146.185.173.31:3000/register', {
+                    email: this.state.email,
+                    password: '123',
+                    postNumber: this.state.postcode,
+                    talent: 'saknas'
+                  })
+                  .then(() => {
+                    this.props.navigation.navigate('HomeScreen');
+                  })
+                  .catch(error => {
+                    let msg;
+                    if (error.message.includes('400')) {
+                      msg = 'Invalid email or password';
+                    } else if (error.message.includes('401')) {
+                      msg = 'Invalid email or password';
+                    } else if (error.message.includes('404')) {
+                      msg = 'Something went wrong...';
+                    } else {
+                      msg = 'Internal error, please try again later';
+                    }
+                    Alert.alert('Error', msg);
+                  });
+              }
             }}
           />
         </ScrollView>

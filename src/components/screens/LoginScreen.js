@@ -1,114 +1,115 @@
 import React, { Component } from 'react';
-import { Alert, Image, Text, View, Dimensions } from 'react-native';
+import { Alert, Image, View, Dimensions } from 'react-native';
 import axios from 'axios';
 import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
+import PasswordPopUp from '../common/PasswordPopUp';
 
 const WIDTH = Dimensions.get('window').width * 0.9;
 
 class HomeScreen extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       alertVisible: false,
       email: '',
       password: ''
-    }
+    };
   }
 
   render() {
-    const { opacityStyle, imageStyle } = styles
+    const { opacityStyle, imageStyle } = styles;
     return (
-      <Image
-        style={imageStyle}
-        source={require('../../../res/Flicka_Tuba_Byggnader.png')}
-      >
+      <Image style={imageStyle} source={require('../../../res/Flicka_Tuba_Byggnader.png')}>
         <View style={opacityStyle} />
         <View style={styles.container1}>
           <Input
-            placeholder='Email address'
-            title='Email address'
+            placeholder="Email address"
+            title="Email address"
             width={WIDTH}
             viewStyle={{ marginBottom: 2 }}
             textInputStyle={styles.textInputStyle}
             headerTextStyle={styles.inputHeaderTextStyle}
-            underlineColorAndroid='transparent'
-            onChangeText={
-              text => {
-                return this.setState(() => {
-                  return { email: { text } }
-                });
-              }
-            }
+            underlineColorAndroid="transparent"
+            onChangeText={text => {
+              return this.setState(() => {
+                return { email: { text } };
+              });
+            }}
           />
           <Input
-            placeholder='Lösenord'
-            title='Lösenord'
+            placeholder="Lösenord"
+            title="Lösenord"
             width={WIDTH}
             secureText
             viewStyle={{ marginBottom: 11 }}
             textInputStyle={styles.textInputStyle}
             headerTextStyle={styles.inputHeaderTextStyle}
-            underlineColorAndroid='transparent'
-            onChangeText={
-              text => {
-                return this.setState(() => {
-                  return { password: { text } }
-                });
-              }
-            }
+            underlineColorAndroid="transparent"
+            onChangeText={text => {
+              return this.setState(() => {
+                return { password: { text } };
+              });
+            }}
           />
           <CustomButton
-            text='Logga in'
+            text="Logga in"
             onPress={() => {
-              axios.post(
-                'http://146.185.173.31:3000/login/email',
-                {
+              axios
+                .post('http://146.185.173.31:3000/login/email', {
                   email: this.state.email.text,
                   password: this.state.password.text
-                }
-              ).then(() => {
-                this.props.navigation.navigate('MyPageNavbarScreen')
-              }).catch((error) => {
-                let msg;
-                if (error.message.includes('400')) {
-                  msg = 'Wrong email or password';
-                } else if (error.message.includes('401')) {
-                  msg = 'Wrong email or password';
-                } else if (error.message.includes('404')) {
-                  msg = 'Something went wrong...';
-                } else {
-                  msg = 'Internal error, please try again later';
-                }
-                Alert.alert(
-                  'Error',
-                  msg
-                );
-              })
+                })
+                .then(() => {
+                  this.props.navigation.navigate('MyPageNavbarScreen');
+                })
+                .catch(error => {
+                  let msg;
+                  if (error.message.includes('400')) {
+                    msg = 'Wrong email or password';
+                  } else if (error.message.includes('401')) {
+                    msg = 'Wrong email or password';
+                  } else if (error.message.includes('404')) {
+                    msg = 'Something went wrong...';
+                  } else {
+                    msg = 'Internal error, please try again later';
+                  }
+                  Alert.alert('Error', msg);
+                });
             }}
-            style='standardButton'
+            style="standardButton"
             width={WIDTH}
           />
-          <Text
-            style={{ color: 'white', fontSize: 12 }}
-          >
-            Har du ingen profil?
-          </Text>
           <CustomButton
-            text='Skapa profil'
-            width={WIDTH}
+            text="Glömt lösenord?"
             onPress={() => {
-              this.props.navigation.navigate('RegistrationScreen')
+              this.setState({ alertVisible: true });
             }}
-            style='standardButton'
+            style="textButton"
           />
           <CustomButton
-            text='Läs mer om registreringen'
+            text="Skapa profil"
+            width={WIDTH}
             onPress={() => {
-              this.props.navigation.navigate('RegistrationInfo')
+              this.props.navigation.navigate('RegistrationScreen');
             }}
-            style='textButton'
+            style="standardButton"
+          />
+          <CustomButton
+            text="Läs mer om registreringen"
+            onPress={() => {
+              this.props.navigation.navigate('RegistrationInfo');
+            }}
+            style="textButton"
+          />
+          <PasswordPopUp
+            alertVisible={this.state.alertVisible}
+            buttonsIn={[
+              { text: 'Cancel', onPress: () => this.setState({ alertVisible: false }) },
+              { text: 'Reset password', onPress: () => this.setState({ alertVisible: false }) }
+            ]}
+            header={'Forgot password?'}
+            info={'Please, fill in your email address below and you will receive a new password'}
           />
         </View>
       </Image>
