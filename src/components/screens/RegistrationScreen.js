@@ -85,7 +85,6 @@ class RegistrationScreen extends Component {
               this.setState({ firstName: firstNameInput })
             }}
             value={firstName}
-            style={{ marginBottom: 8 }}
           />
           <Input
             placeholder='Last name'
@@ -93,7 +92,6 @@ class RegistrationScreen extends Component {
               this.setState({ lastName: lastNameInput })
             }}
             value={lastName}
-            style={{ marginBottom: 8 }}
           />
           <Input
             placeholder='Email'
@@ -101,7 +99,6 @@ class RegistrationScreen extends Component {
               this.setState({ email: emailInput })
             }}
             value={email}
-            style={{ marginBottom: 8 }}
           />
           <Input
             placeholder='Confirm email'
@@ -109,7 +106,6 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedEmail: emailInput })
             }}
             value={confirmedEmail}
-            style={{ marginBottom: 8 }}
           />
           <Input
             placeholder='Password'
@@ -117,7 +113,6 @@ class RegistrationScreen extends Component {
               this.setState({ password: text })
             }}
             value={password}
-            style={{ marginBottom: 8 }}
             secureText
           />
           <Input
@@ -126,7 +121,6 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedPassword: text })
             }}
             value={confirmedPassword}
-            style={{ marginBottom: 8 }}
             secureText
           />
           <Input
@@ -135,7 +129,6 @@ class RegistrationScreen extends Component {
               this.setState({ address: addressInput })
             }}
             value={address}
-            style={{ marginBottom: 8 }}
           />
           <View style={flexHorizontal}>
             <Input
@@ -144,10 +137,7 @@ class RegistrationScreen extends Component {
                 this.setState({ postcode: postcodeInput })
               }}
               width={(width / 2) - 4}
-              style={{
-                marginBottom: 8,
-                marginRight: 8
-              }}
+              extraContainerStyle={{ marginRight: 8 }}
               value={postcode}
             />
             <Input
@@ -156,7 +146,6 @@ class RegistrationScreen extends Component {
                 this.setState({ city: cityInput })
               }}
               width={(width / 2) - 4}
-              style={{ marginBottom: 8 }}
               value={city}
             />
           </View>
@@ -165,7 +154,6 @@ class RegistrationScreen extends Component {
             onChangeText={(phoneNbrInput) => {
               this.setState({ phoneNbr: phoneNbrInput })
             }}
-            style={{ marginBottom: 8 }}
             value={phoneNbr}
           />
           <Input
@@ -173,7 +161,6 @@ class RegistrationScreen extends Component {
             onChangeText={(foodPreferencesInput) => {
               this.setState({ foodPreferences: foodPreferencesInput })
             }}
-            style={{ marginBottom: 8 }}
             value={foodPreferences}
           />
           <CustomButton
