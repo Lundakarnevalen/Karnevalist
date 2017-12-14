@@ -6,9 +6,12 @@ import SectionListItem from '../../common/SectionListItem'
 import BackgroundImage from '../../common/BackgroundImage'
 
 const exampleArray = []
-for (let i = 0; i < 25; i++) exampleArray.push({
+
+for (let i = 0; i < 25; i++) {
+ exampleArray.push({
   key: i, title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får platsKul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats'
 })
+}
 const WIDTH = Dimensions.get('window').width
 
 class SectionScreen extends Component {
@@ -31,8 +34,8 @@ class SectionScreen extends Component {
         <View>
         <Header
           rightIcon={
-            <TouchableOpacity onPress={() => Alert.alert('Går till confirm..')}>
-              <FontAwesome name='list-alt' size={30} color={'#f4376d'} />
+            <TouchableOpacity onPress={() => this.props.screenProps.navigate('ConfirmPage')}>
+              <FontAwesome name='list-alt' size={30} />
             </TouchableOpacity>}
           textStyle={{ color: '#f4376d' }}
           style={{ backgroundColor: 'white' }}
