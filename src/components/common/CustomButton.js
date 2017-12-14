@@ -13,6 +13,8 @@ class CustomButton extends Component {
           return styles.standardButton;
         case 'acceptButton':
           return styles.acceptButton;
+        case 'alertButton':
+          return styles.alertButton;
         default:
             return styles.button;
       }
@@ -21,11 +23,13 @@ class CustomButton extends Component {
   getTextStyle() {
     switch (this.props.style) {
       case 'textButton':
-        return styles.blueText;
+        return styles.underlineText;
       case 'standardButton':
         return styles.whiteText;
       case 'acceptButton':
         return styles.whiteText;
+      case 'alertButton':
+        return styles.whiteText
       default:
           return styles.button;
     }
@@ -55,7 +59,7 @@ class CustomButton extends Component {
       marginTop: 10,
       marginBottom: 10,
       borderColor: 'black',
-      borderRadius: 5,
+      borderRadius: 3,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -64,19 +68,27 @@ class CustomButton extends Component {
       borderWidth: 0
     },
     standardButton: {
-      backgroundColor: '#f4376d',
+      backgroundColor: '#fff',
       padding: 10
     },
     acceptButton: {
       backgroundColor: 'green',
       height: 44
     },
+    alertButton: {
+      height: Dimensions.get('window').height / (4 * 4),
+      backgroundColor: '#f4376d',
+      borderRadius: 0,
+      margin: 0,
+      marginLeft: 0.4,
+      marginRight: 0.4,
+    },
     whiteText: {
-      color: 'white',
+      color: '#f4376d',
       fontSize: 20
     },
-    blueText: {
-      color: 'blue',
+    underlineText: {
+      color: 'white',
       textDecorationLine: 'underline'
     },
     blackText: {

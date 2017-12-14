@@ -1,28 +1,67 @@
 import React, { Component } from 'react';
-import { View, ListView, TouchableOpacity, Alert } from 'react-native';
+import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
+import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
+import BackgroundImage from '../../common/BackgroundImage'
 
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+const WIDTH = Dimensions.get('window').width
+const HEIGHT = Dimensions.get('window').height
 
-const exampleArray = []
-for (let i = 0; i < 25; i++) exampleArray.push({
-  title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text'
-})
 class SectionScreen extends Component {
   constructor(props) {
     super(props)
-    const items = props.items || exampleArray || ['']
     this.state = {
       isOpen: false,
-      dataSource: ds.cloneWithRows(items),
+      data: [],
+      images: {}
     };
   }
 
+  componentWillMount() {
+    this.getSectionInfo()
+  }
+
+  getImage(url, section) {
+    axios.get(url).then((r) => {
+      const data = this.state.data
+      const image = (
+        <Image
+          style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+          source={{ uri: r.data.source_url }}
+          //defaultSource={require('../../../../res/LK2018logga.png')}
+        />)
+        section.image = image
+        data.push(section)
+        this.setState({ data })
+      }).catch((error) => {
+        console.error(error)
+      })
+  }
+
+  getSectionInfo() {
+    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/'
+    axios.get(url).then((response) => {
+      response.data.forEach(item => {
+        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/ig, '')
+        const imgId = item.featured_media
+        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId
+        const section = { key: item.id, id: item.id, title: item.title.rendered, info: strippedContent }
+        this.getImage(imgUrl, section)
+      })
+      }).catch((error) => {
+        console.error(error)
+      })
+}
+
   render() {
+    const { navigation, screenProps } = this.props
     return (
       <View>
+        <BackgroundImage
+          imagePath={require('../../../../res/background1.png')}
+        />
         <View>
         <Header
           rightIcon={
@@ -30,30 +69,43 @@ class SectionScreen extends Component {
               <FontAwesome name='list-alt' size={30} />
             </TouchableOpacity>}
           textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          style={{ backgroundColor: '#FFFFFF' }}
           title='Sektioner'
           leftIcon={null}
-          navigation={this.props.navigation}
+          navigation={navigation}
         />
         </View>
-        <View>
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={(rowData) =>
+        <View style={styles.style}>
+          <FlatList
+            data={this.state.data}
+            contentContainerStyle={{ alignItems: 'center' }}
+            renderItem={({ item }) =>
               <SectionListItem
-                sectionTitle={rowData.title}
-                sectionInfoText={rowData.info}
-                onPress={(title) => Alert.alert(title + '\n ' + rowData.info)}
+                sectionTitle={item.title}
+                sectionInfoText={item.info}
+                onPress={() => screenProps.navigate(
+                  'SectionItemScreen',
+                  {
+                    id: item.id,
+                    title: item.title,
+                    description: item.info,
+                    image: item.image
+                  }
+                  )
+                }
               />
             }
           />
-        </View>
+        </View >
       </View>
     );
   }
 }
 
 const styles = {
+  style: {
+    paddingBottom: (Platform.OS === 'ios') ? 132 : 148
+  },
 };
 
 export default SectionScreen

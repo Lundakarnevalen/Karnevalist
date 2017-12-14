@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, ListView, Dimensions } from 'react-native';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
+import BackgroundImage from '../../common/BackgroundImage';
 import { getNews } from '../../../helpers/ApiManager';
 
 const height = Dimensions.get('window').height;
@@ -28,9 +29,10 @@ class NewsScreen extends Component {
     console.log(this.state.dataSource);
     return (
       <View>
+        <BackgroundImage imagePath={require('../../../../assets/images/background4.png')} />
         <Header
-          textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: 'white' }}
           title="Nyheter"
           leftIcon={null}
           navigation={this.props.navigation}
@@ -38,6 +40,7 @@ class NewsScreen extends Component {
         <ListView
           style={{ height: height - 64 }}
           dataSource={this.state.dataSource}
+          contentContainerStyle={{ alignItems: 'center' }}
           renderRow={rowData => (
             <SectionListItem
               sectionTitle={rowData.title.rendered}

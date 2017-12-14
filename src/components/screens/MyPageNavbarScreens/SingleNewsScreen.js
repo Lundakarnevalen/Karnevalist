@@ -8,7 +8,7 @@ class NewsScreen extends Component {
       <View>
         <Header
           textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          style={{ backgroundColor: '#FFFFFF' }}
           title={this.props.navigation.state.params.info.title}
           navigation={this.props.navigation}
         />
