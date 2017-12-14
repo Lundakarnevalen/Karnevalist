@@ -19,18 +19,15 @@ class HomeScreen extends Component {
 
   render() {
     const { opacityStyle, imageStyle } = styles;
+    const { email, password } = this.state;
     return (
       <Image style={imageStyle} source={require('../../../res/Flicka_Tuba_Byggnader.png')}>
         <View style={opacityStyle} />
         <View style={styles.container1}>
           <Input
+            value={email}
             placeholder="Email address"
-            title="Email address"
             width={WIDTH}
-            viewStyle={{ marginBottom: 2 }}
-            textInputStyle={styles.textInputStyle}
-            headerTextStyle={styles.inputHeaderTextStyle}
-            underlineColorAndroid="transparent"
             onChangeText={text => {
               return this.setState(() => {
                 return { email: { text } };
@@ -38,14 +35,10 @@ class HomeScreen extends Component {
             }}
           />
           <Input
+            value={password}
             placeholder="Lösenord"
-            title="Lösenord"
             width={WIDTH}
             secureText
-            viewStyle={{ marginBottom: 11 }}
-            textInputStyle={styles.textInputStyle}
-            headerTextStyle={styles.inputHeaderTextStyle}
-            underlineColorAndroid="transparent"
             onChangeText={text => {
               return this.setState(() => {
                 return { password: { text } };
