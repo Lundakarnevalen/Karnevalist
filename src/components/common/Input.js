@@ -23,7 +23,7 @@ class Input extends Component {
     const { value } = this.props;
     if (value === '') {
       Animated.parallel([
-        Animated.timing(this.state.fontSize, { toValue: 15, duration: 150 }),
+        Animated.timing(this.state.fontSize, { toValue: 18, duration: 150 }),
         Animated.timing(this.state.position, { toValue: { x: 9, y: 11 }, duration: 150 })
       ]).start()
     }

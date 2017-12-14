@@ -182,26 +182,23 @@ class RegistrationScreen extends Component {
             width={width}
             onPress={() => this.setState({ showShirtPicker: true })}
           />
-          <ButtonChoiceManager
-            buttonInputVector={['I have a drives license']}
-            multipleChoice
-          />
           <CustomButton
             text={this.state.studentUnionTitle === '' ? 'Choose student union' : this.state.studentUnionTitle}
             style='standardButton'
             width={width}
             onPress={() => this.setState({ showStudentUnionPicker: true })}
           />
-          <Input
-            title='What did you do at the student union?'
-            onChangeText={(studentUnionInfoInput) => {
-              this.setState({ studentUnionInfo: studentUnionInfoInput })
-            }}
-            value={studentUnionInfo}
-          />
           <ButtonChoiceManager
             buttonInputVector={['I was engaged in the karneval 2014']}
             multipleChoice
+            size={30}
+            color={'rgb(138, 71, 151)'}
+          />
+          <ButtonChoiceManager
+            buttonInputVector={['I have a drives license']}
+            multipleChoice
+            size={30}
+            color={'rgb(138, 71, 151)'}
           />
           <CustomButton
             text='Register'
