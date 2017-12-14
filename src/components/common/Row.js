@@ -105,29 +105,24 @@ class Row extends Component {
       >
         <Text style={styles.indexStyle}>{this.props.index}</Text>
         <Image source={{ uri: data.image }} style={styles.image} />
-      <View
-        style={{
-          flex: 0.7,
-          justifyContent: 'center',
-
-        }}
-      >
-        <Text style={this.getHeaderStyle()}>{data.text}</Text>
-      </View>
+        <View
+          style={{
+            flex: 0.7,
+            justifyContent: 'center',
+          }}
+        >
+          <Text style={this.getHeaderStyle()}>{data.text}</Text>
+        </View>
         <EvilIcons
           name={this.props.iconName}
-          style={{
-            color: '#F4376D',
-            alignSelf: 'center',
-            position: 'absolute',
-            right: 25,
-          }}
+          style={styles.iconStyle}
           onPress={() => this.getOnPress()}
           size={35}
         />
       </View>
     )
   }
+  
   getOnPress() {
     if (this.props.iconName === 'trash') {
       this.props.deleteRow()
@@ -180,5 +175,11 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#F4376D'
   },
+  iconStyle: {
+    color: '#F4376D',
+    alignSelf: 'center',
+    position: 'absolute',
+    right: 25,
+  }
 });
 export default Row

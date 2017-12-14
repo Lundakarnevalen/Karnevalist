@@ -52,25 +52,6 @@ const inputJSON = [
     infoText: 'testaInfoText',
     id: 5
   },
-  {
-    image: 'https://placekitten.com/200/204',
-    text: 'Dusty4',
-    infoText: 'testaInfoText',
-    id: 3
-  },
-  {
-    image: 'https://placekitten.com/200/204',
-    text: 'Dusty5',
-    infoText: 'testaInfoText',
-    id: 4
-  },
-  {
-    image: 'https://placekitten.com/200/204',
-    text: 'Dusty6',
-    infoText: 'testaInfoText',
-    id: 5
-  },
-
 ];
 
 export default class ConfirmPage extends Component {
@@ -88,61 +69,60 @@ export default class ConfirmPage extends Component {
   componentWillMount() {
     this.setState({ data: inputJSON })
   }
+
   render() {
     return (
       <View style={styles.container}>
-      <Header
-        textStyle={{ color: '#ffffff' }}
-        style={{ backgroundColor: '#8A4797', marginBottom: 5 }}
-        title='Confirmation page'
-        navigation={this.props.navigation}
-        rightIcon={
-          <TouchableOpacity
-          style={{
-            width: 50,
-            alignItems: 'center'
-          }}
-          onPress={() => this.onPressHeaderButton()}
-          >
-          <MaterialIcons
-            name={this.getHeaderIconName()}
+        <Header
+          textStyle={{ color: '#ffffff' }}
+          style={{ backgroundColor: '#8A4797', marginBottom: 5 }}
+          title='Confirmation page'
+          navigation={this.props.navigation}
+          rightIcon={
+            <TouchableOpacity
             style={{
-              color: '#ffffff',
-              right: 0
+              width: 50,
+              alignItems: 'center'
             }}
-            size={35}
-          />
-          </TouchableOpacity>
-        }
-        navigation={this.props.navigation}
-      />
-
-      <SortableList
-        style={styles.list}
-        contentContainerStyle={styles.contentContainer}
-        data={this.state.data}
-        renderRow={this.renderRow.bind(this)}
-      />
-      <SuperAgileAlert
-      header={'Header'}
-      info={'Här skriver du in din info...'}
-      alertVisible={this.state.alertVisible}
-      buttonsIn={[{ text: 'Yes', onPress: () => console.log('Yes was pressed') },
-                    { text: 'No', onPress: () => console.log('No was pressed') }]}
-      />
-      <View
-      style={{
-        flexDirection: 'column',
-      }}
-      >
-      <TouchableOpacity
-        style={styles.confimButtonStyle}
-
-        onPress={() => this.onPressConfirmButton()}
-      >
-        <Text style={styles.confimTextStyle}> Send </Text>
-      </TouchableOpacity>
-      </View>
+            onPress={() => this.onPressHeaderButton()}
+            >
+            <MaterialIcons
+              name={this.getHeaderIconName()}
+              style={{
+                color: '#ffffff',
+                right: 0
+              }}
+              size={35}
+            />
+            </TouchableOpacity>
+          }
+          navigation={this.props.navigation}
+        />
+        <SortableList
+          style={styles.list}
+          contentContainerStyle={styles.contentContainer}
+          data={this.state.data}
+          renderRow={this.renderRow.bind(this)}
+        />
+        <SuperAgileAlert
+          header={'Header'}
+          info={'Här skriver du in din info...'}
+          alertVisible={this.state.alertVisible}
+          buttonsIn={[{ text: 'Yes', onPress: () => console.log('Yes was pressed') },
+                      { text: 'No', onPress: () => console.log('No was pressed') }]}
+        />
+        <View
+          style={{
+            flexDirection: 'column',
+          }}
+        >
+        <TouchableOpacity
+          style={styles.confimButtonStyle}
+          onPress={() => this.onPressConfirmButton()}
+        >
+          <Text style={styles.confimTextStyle}> Send </Text>
+        </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -187,10 +167,16 @@ export default class ConfirmPage extends Component {
   onPressTrash(key) {
     Alert.alert('Navigera till ' + key.text + '-sektionen')
   }
+
   onPressConfirmButton() {
     const { rows } = this.state;
-    console.log(rows)
-}
+    if (rows.length < 5) {
+      Alert.alert('Vänligen väls minst 5 stycken sektioner')
+    } else {
+      Alert.alert('Tack för dina val')
+      this.props.navigation.navigate('HomeScreen')
+    }
+  }
 
   onPressHeaderButton() {
     if (this.state.editMode) {
