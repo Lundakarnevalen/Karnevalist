@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
 import axios from 'axios';
-import { FontAwesome } from '@expo/vector-icons'
-import Header from '../../common/Header'
-import SectionListItem from '../../common/SectionListItem'
-import BackgroundImage from '../../common/BackgroundImage'
+import { FontAwesome } from '@expo/vector-icons';
+import Header from '../../common/Header';
+import SectionListItem from '../../common/SectionListItem';
+import BackgroundImage from '../../common/BackgroundImage';
 
-const WIDTH = Dimensions.get('window').width
-const HEIGHT = Dimensions.get('window').height
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 class SectionScreen extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isOpen: false,
       data: [],
@@ -20,83 +20,92 @@ class SectionScreen extends Component {
   }
 
   componentWillMount() {
-    this.getSectionInfo()
+    this.getSectionInfo();
   }
 
   getImage(url, section) {
-    axios.get(url).then((r) => {
-      const data = this.state.data
-      const image = (
-        <Image
-          style={{ width: WIDTH - 10, height: WIDTH - 50 }}
-          source={{ uri: r.data.source_url }}
-          //defaultSource={require('../../../../res/LK2018logga.png')}
-        />)
-        section.image = image
-        data.push(section)
-        this.setState({ data })
-      }).catch((error) => {
-        console.error(error)
+    axios
+      .get(url)
+      .then(r => {
+        const data = this.state.data;
+        const image = (
+          <Image
+            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+            source={{ uri: r.data.source_url }}
+            //defaultSource={require('../../../../res/LK2018logga.png')}
+          />
+        );
+        section.image = image;
+        data.push(section);
+        this.setState({ data });
       })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   getSectionInfo() {
-    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/'
-    axios.get(url).then((response) => {
-      response.data.forEach(item => {
-        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/ig, '')
-        const imgId = item.featured_media
-        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId
-        const section = { key: item.id, id: item.id, title: item.title.rendered, info: strippedContent }
-        this.getImage(imgUrl, section)
+    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
+    axios
+      .get(url)
+      .then(response => {
+        response.data.forEach(item => {
+          const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
+          const imgId = item.featured_media;
+          const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
+          const section = {
+            key: item.id,
+            id: item.id,
+            title: item.title.rendered,
+            info: strippedContent
+          };
+          this.getImage(imgUrl, section);
+        });
       })
-      }).catch((error) => {
-        console.error(error)
-      })
-}
+      .catch(error => {
+        console.error(error);
+      });
+  }
 
   render() {
-    const { navigation, screenProps } = this.props
+    const { navigation, screenProps } = this.props;
     return (
       <View>
-        <BackgroundImage
-          imagePath={require('../../../../res/background1.png')}
-        />
+        <BackgroundImage imagePath={require('../../../../res/background1.png')} />
         <View>
-        <Header
-          rightIcon={
-            <TouchableOpacity onPress={() => Alert.alert('Går till confirm..')}>
-              <FontAwesome name='list-alt' size={30} />
-            </TouchableOpacity>}
-          textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#FFFFFF' }}
-          title='Sektioner'
-          leftIcon={null}
-          navigation={navigation}
-        />
+          <Header
+            rightIcon={
+              <TouchableOpacity onPress={() => Alert.alert('Går till confirm..')}>
+                <FontAwesome name="list-alt" size={30} color={'#f4376d'} />
+              </TouchableOpacity>
+            }
+            textStyle={{ color: '#f4376d' }}
+            style={{ backgroundColor: '#FFFFFF' }}
+            title="Sektioner"
+            leftIcon={null}
+            navigation={navigation}
+          />
         </View>
         <View style={styles.style}>
           <FlatList
             data={this.state.data}
             contentContainerStyle={{ alignItems: 'center' }}
-            renderItem={({ item }) =>
+            renderItem={({ item }) => (
               <SectionListItem
                 sectionTitle={item.title}
                 sectionInfoText={item.info}
-                onPress={() => screenProps.navigate(
-                  'SectionItemScreen',
-                  {
+                onPress={() =>
+                  screenProps.navigate('SectionItemScreen', {
                     id: item.id,
                     title: item.title,
                     description: item.info,
                     image: item.image
-                  }
-                  )
+                  })
                 }
               />
-            }
+            )}
           />
-        </View >
+        </View>
       </View>
     );
   }
@@ -104,8 +113,8 @@ class SectionScreen extends Component {
 
 const styles = {
   style: {
-    paddingBottom: (Platform.OS === 'ios') ? 132 : 148
-  },
+    paddingBottom: Platform.OS === 'ios' ? 132 : 148
+  }
 };
 
-export default SectionScreen
+export default SectionScreen;
