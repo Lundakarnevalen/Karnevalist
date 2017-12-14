@@ -73,7 +73,7 @@ class PasswordPopUp extends Component {
                 <View
                   style={{
                     position: 'absolute',
-                    bottom: 40,
+                    bottom: 50,
                     width: Dimensions.get('window').width / 1.2
                   }}
                 >
@@ -127,7 +127,6 @@ const styles = {
     backgroundColor: '#f4376d',
     height: 40,
     borderColor: 'white',
-    marginTop: 5,
     width: Dimensions.get('window').width / (1.1 * 2)
   },
   buttonTextStyle: {
@@ -148,7 +147,7 @@ const styles = {
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
-    height: 30
+    height: 40
   }
 };
 
