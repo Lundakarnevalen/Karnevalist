@@ -184,20 +184,17 @@ class RegistrationScreen extends Component {
                   postNumber: this.state.postcode,
                   talent: 'saknas',
                 }
-              ).then((response) => {
-                if (response.data.success) {
-                  this.props.navigation.navigate('HomeScreen')
-                }
-              }
-              ).catch((error) => {
-                let msg = '';
+              ).then(() => {
+                this.props.navigation.navigate('HomeScreen')
+              }).catch((error) => {
+                let msg;
                 if (error.message.includes('400')) {
                   msg = 'Invalid email or password';
                 } else if (error.message.includes('401')) {
                   msg = 'Invalid email or password';
                 } else if (error.message.includes('404')) {
                   msg = 'Something went wrong...';
-                } else if (error.message.includes('500')) {
+                } else {
                   msg = 'Internal error, please try again later';
                 }
                 Alert.alert(

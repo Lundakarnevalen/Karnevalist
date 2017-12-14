@@ -68,25 +68,17 @@ class HomeScreen extends Component {
                   email: this.state.email.text,
                   password: this.state.password.text
                 }
-              ).then((response) => {
-                if (response.data.success) {
-                  this.props.navigation.navigate('MyPageNavbarScreen')
-                } else {
-                  Alert.alert(
-                    'Error',
-                    response.data.message
-                  );
-                }
+              ).then(() => {
+                this.props.navigation.navigate('MyPageNavbarScreen')
               }).catch((error) => {
-                console.log(error);
-                let msg = '';
+                let msg;
                 if (error.message.includes('400')) {
                   msg = 'Wrong email or password';
                 } else if (error.message.includes('401')) {
                   msg = 'Wrong email or password';
                 } else if (error.message.includes('404')) {
                   msg = 'Something went wrong...';
-                } else if (error.message.includes('500')) {
+                } else {
                   msg = 'Internal error, please try again later';
                 }
                 Alert.alert(
