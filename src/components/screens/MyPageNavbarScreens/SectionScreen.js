@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
-import * as axios from 'axios';
+import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
@@ -89,7 +89,6 @@ class SectionScreen extends Component {
                     title: item.title,
                     description: item.info,
                     image: item.image
-
                   }
                   )
                 }
