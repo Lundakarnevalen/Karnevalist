@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { BlurView } from 'expo';
-import { View, Text, Modal, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  Platform
+} from 'react-native';
 import Input from '../common/Input';
 
 class PasswordPopUp extends Component {
@@ -73,7 +81,7 @@ class PasswordPopUp extends Component {
                 <View
                   style={{
                     position: 'absolute',
-                    bottom: 68,
+                    bottom: Platform.OS === 'ios' ? 68 : 73,
                     width: Dimensions.get('window').width / 1.2
                   }}
                 >
@@ -110,7 +118,7 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'column',
     width: Dimensions.get('window').width / 1.1,
-    height: Dimensions.get('window').height / 2.5,
+    height: 220,
     borderRadius: 5,
     backgroundColor: '#d999fa'
   },
