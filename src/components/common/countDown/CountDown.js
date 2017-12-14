@@ -71,8 +71,8 @@ const styles = {
   textStyle: {
     fontSize: 32,
     backgroundColor: 'transparent',
-    color: '#8A4797',
-    fontWeight: 'bold'
+    color: 'white',
+    fontFamily: 'Avenir Next Medium'
   }
 }
 
