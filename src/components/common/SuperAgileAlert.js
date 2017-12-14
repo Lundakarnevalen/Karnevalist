@@ -18,16 +18,6 @@ class SuperAgileAlert extends Component {
           (this.props.buttonsIn.length - 1)) / this.props.buttonsIn.length)) })
     }
 
-  createButtons() {
-    const { buttonsIn } = this.props;
-    const buttonsToReturn = [];
-    for (let index = 0; index < buttonsIn.length; index++) {
-      const item = this.createSingleButton(index, buttonsIn.length);
-      buttonsToReturn.push(item);
-    }
-    return buttonsToReturn;
-  }
-
   createSingleButton(index) {
     const { buttonsIn } = this.props;
     const { buttonWidth } = this.state;
@@ -95,7 +85,7 @@ class SuperAgileAlert extends Component {
                 </View>
               </View>
               <View style={{ position: 'absolute', bottom: 0 }}>
-                {this.createButtons()}
+                {this.createSingleButton()}
               </View>
             </View>
           </View>
