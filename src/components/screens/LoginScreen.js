@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Text, View, Dimensions } from 'react-native';
+import { Alert, Image, Text, View, Dimensions } from 'react-native';
 import axios from 'axios';
 import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
@@ -74,8 +74,6 @@ class HomeScreen extends Component {
           <CustomButton
             text='Logga in'
             onPress={() => {
-              console.log(this.state.email)
-              console.log(this.state.password)
               axios.post(
                 'http://146.185.173.31:3000/login/email',
                 {
@@ -83,11 +81,31 @@ class HomeScreen extends Component {
                   password: this.state.password.text
                 }
               ).then((response) => {
-                console.log(response);
+                if (response.data.success === true) {
+                  this.props.navigation.navigate('MyPageNavbarScreen')
+                } else {
+                  Alert.alert(
+                    'Error',
+                    response.data.message
+                  );
+                }
               }).catch((error) => {
                 console.log(error);
+                let msg = '';
+                if (error.message.includes('400')) {
+                  msg = 'Wrong email or password';
+                } else if (error.message.includes('401')) {
+                  msg = 'Wrong email or password';
+                } else if (error.message.includes('404')) {
+                  msg = 'Something went wrong...';
+                } else if (error.message.includes('500')) {
+                  msg = 'Internal error, please try again later';
+                }
+                Alert.alert(
+                  'Error',
+                  msg
+                );
               })
-              this.props.navigation.navigate('MyPageNavbarScreen')
             }}
             style='standardButton'
             width={WIDTH}
@@ -134,7 +152,8 @@ const styles = {
   },
   inputHeaderTextStyle: {
     color: 'white',
-    fontSize: 12
+    fontSize: 12,
+    backgroundColor: 'transparent'
   }
 };
 
