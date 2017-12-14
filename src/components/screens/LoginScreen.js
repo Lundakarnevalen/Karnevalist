@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Alert, Image, View, Dimensions } from 'react-native';
+import { Alert, View, Dimensions } from 'react-native';
 import axios from 'axios';
 import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
 import PasswordPopUp from '../common/PasswordPopUp';
+import BackgroundImage from '../common/BackgroundImage';
 
 const WIDTH = Dimensions.get('window').width * 0.9;
+const HEIGHT = Dimensions.get('window').height;
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -18,40 +20,32 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { opacityStyle, imageStyle } = styles;
+    const { containerStyle } = styles;
     const { email, password } = this.state;
     return (
-      <Image style={imageStyle} source={require('../../../res/Flicka_Tuba_Byggnader.png')}>
-        <View style={opacityStyle} />
+      <View style={containerStyle}>
+        <BackgroundImage imagePath={require('../../../assets/images/background4.png')} />
         <View style={styles.container1}>
           <Input
             value={email}
             placeholder="Email address"
             width={WIDTH}
-            onChangeText={text => {
-              return this.setState(() => {
-                return { email: { text } };
-              });
-            }}
+            onChangeText={text => this.setState({ email: text })}
           />
           <Input
             value={password}
             placeholder="Lösenord"
             width={WIDTH}
             secureText
-            onChangeText={text => {
-              return this.setState(() => {
-                return { password: { text } };
-              });
-            }}
+            onChangeText={text => this.setState({ password: text })}
           />
           <CustomButton
             text="Logga in"
             onPress={() => {
               axios
                 .post('http://146.185.173.31:3000/login/email', {
-                  email: this.state.email.text,
-                  password: this.state.password.text
+                  email,
+                  password
                 })
                 .then(() => {
                   this.props.navigation.navigate('MyPageNavbarScreen');
@@ -105,7 +99,7 @@ class HomeScreen extends Component {
             info={'Please, fill in your email address below and you will receive a new password'}
           />
         </View>
-      </Image>
+      </View>
     );
   }
 }
@@ -114,7 +108,8 @@ const styles = {
   container1: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
   },
   container2: {
     flex: 0,
@@ -130,20 +125,9 @@ const styles = {
     color: 'white',
     fontSize: 12
   },
-  opacityStyle: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    backgroundColor: '#8A4797',
-    height: Dimensions.get('window').height,
+  containerStyle: {
     width: Dimensions.get('window').width,
-    opacity: 0.7
-  },
-  imageStyle: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: 'cover'
+    height: HEIGHT
   }
 };
 

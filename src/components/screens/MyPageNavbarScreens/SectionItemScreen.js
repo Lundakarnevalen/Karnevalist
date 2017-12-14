@@ -10,6 +10,7 @@ const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
   render() {
+    getSections(sections => console.log('SECTIONS', sections));
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
     const { container, scrollStyle } = styles;
@@ -18,14 +19,14 @@ class SectionItemScreen extends Component {
         <Header
           title={title}
           style={{ backgroundColor: '#8A4797' }}
-          textStyle={{ color: '#FBBCC0' }}
+          textStyle={{ color: '#f4376d' }}
           navigation={navigation}
           rightIcon={
             <TouchableOpacity
               style={{ padding: 1, backgroundColor: '#8A4797' }}
               onPress={() => saveItem('sektion' + id, title)}
             >
-              <MaterialIcons name="playlist-add" size={30} />
+              <MaterialIcons name="playlist-add" size={30} color={'#f4376d'} />
             </TouchableOpacity>
           }
         />
