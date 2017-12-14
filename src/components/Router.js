@@ -1,7 +1,6 @@
 import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
-import ConfirmationScreen from './screens/ConfirmationScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
 import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
@@ -42,12 +41,6 @@ const Register = StackNavigator(
   {
     RegistrationScreen: {
       screen: RegistrationScreen,
-      navigationOptions: {
-        header: null
-      }
-    },
-    ConfirmationScreen: {
-      screen: ConfirmationScreen,
       navigationOptions: {
         header: null
       }
