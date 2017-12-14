@@ -90,7 +90,8 @@ const styles = {
   headerStyle: {
     fontSize: 18,
     color: 'black',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Medium'
   }
 };
 

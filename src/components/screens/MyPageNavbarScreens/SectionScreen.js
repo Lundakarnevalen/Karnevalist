@@ -30,7 +30,7 @@ class SectionScreen extends Component {
         <Image
           style={{ width: WIDTH - 10, height: WIDTH - 50 }}
           source={{ uri: r.data.source_url }}
-          defaultSource={require('../../../../res/LK2018logga.png')}
+          //defaultSource={require('../../../../res/LK2018logga.png')}
         />)
         section.image = image
         data.push(section)
