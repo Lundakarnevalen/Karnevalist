@@ -1,29 +1,59 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
+import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
 import BackgroundImage from '../../common/BackgroundImage'
 
-const exampleArray = []
-
-for (let i = 0; i < 25; i++) {
- exampleArray.push({
-  key: i, title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får platsKul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats'
-}) 
-}
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 class SectionScreen extends Component {
   constructor(props) {
     super(props)
-    const items = props.items || exampleArray || ['']
     this.state = {
       isOpen: false,
-      data: items
+      data: [],
+      images: {}
     };
   }
+
+  componentWillMount() {
+    this.getSectionInfo()
+  }
+
+  getImage(url, section) {
+    axios.get(url).then((r) => {
+      const data = this.state.data
+      const image = (
+        <Image
+          style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+          source={{ uri: r.data.source_url }}
+          //defaultSource={require('../../../../res/LK2018logga.png')}
+        />)
+        section.image = image
+        data.push(section)
+        this.setState({ data })
+      }).catch((error) => {
+        console.error(error)
+      })
+  }
+
+  getSectionInfo() {
+    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/'
+    axios.get(url).then((response) => {
+      response.data.forEach(item => {
+        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/ig, '')
+        const imgId = item.featured_media
+        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId
+        const section = { key: item.id, id: item.id, title: item.title.rendered, info: strippedContent }
+        this.getImage(imgUrl, section)
+      })
+      }).catch((error) => {
+        console.error(error)
+      })
+}
 
   render() {
     const { navigation, screenProps } = this.props
@@ -35,7 +65,7 @@ class SectionScreen extends Component {
         <View>
         <Header
           rightIcon={
-            <TouchableOpacity onPress={() => this.props.screenProps.navigate('ConfirmPage')}>
+            <TouchableOpacity onPress={() => Alert.alert('Går till confirm..')}>
               <FontAwesome name='list-alt' size={30} />
             </TouchableOpacity>}
           textStyle={{ color: '#FBBCC0' }}
@@ -48,6 +78,7 @@ class SectionScreen extends Component {
         <View style={styles.style}>
           <FlatList
             data={this.state.data}
+            contentContainerStyle={{ alignItems: 'center' }}
             renderItem={({ item }) =>
               <SectionListItem
                 sectionTitle={item.title}
@@ -55,13 +86,10 @@ class SectionScreen extends Component {
                 onPress={() => screenProps.navigate(
                   'SectionItemScreen',
                   {
+                    id: item.id,
                     title: item.title,
                     description: item.info,
-                    image:
-                      <Image
-                        style={{ width: WIDTH - 10, height: WIDTH - 50 }}
-                        source={require('../../../../res/KaffeKarl.png')}
-                      />
+                    image: item.image
                   }
                   )
                 }

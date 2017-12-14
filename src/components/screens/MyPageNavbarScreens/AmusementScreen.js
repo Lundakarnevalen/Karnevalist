@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import Header from '../../common/Header';
-import BackgroundImage from '../../common/BackgroundImage'
+import Header from '../../common/Header'
+import BackgroundImage from '../../common/BackgroundImage';
 
 class AmusementsScreen extends Component {
 
@@ -9,11 +9,11 @@ class AmusementsScreen extends Component {
     return (
       <View>
         <BackgroundImage
-          imagePath={require('../../../../res/background2.png')}
+          imagePath={require('../../../../assets/images/background2.png')}
         />
         <Header
-          textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#FFFFFF' }}
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: 'white' }}
           title='Amusement'
           leftIcon={null}
           navigation={this.props.navigation}
@@ -22,9 +22,5 @@ class AmusementsScreen extends Component {
     );
   }
 }
-
-const styles = ({
-
-});
 
 export default AmusementsScreen
