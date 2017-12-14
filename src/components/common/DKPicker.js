@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Picker, Dimensions, Animated, Platform } from 'react-native'
+import { View, Picker, Dimensions, Animated } from 'react-native'
 import CustomButton from '../common/CustomButton'
 
 const width = Dimensions.get('window').width
