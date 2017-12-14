@@ -23,7 +23,7 @@ class Input extends Component {
     const { value } = this.props;
     if (value === '') {
       Animated.parallel([
-        Animated.timing(this.state.fontSize, { toValue: 15, duration: 150 }),
+        Animated.timing(this.state.fontSize, { toValue: 18, duration: 150 }),
         Animated.timing(this.state.position, { toValue: { x: 9, y: 11 }, duration: 150 })
       ]).start()
     }
@@ -44,10 +44,12 @@ class Input extends Component {
   }
 
   render() {
-    const { inputStyle } = styles
-    const { value, width, placeholder, secureText, textInputStyle, autoCorrect = false } = this.props
+    const { inputStyle, containerStyle } = styles
+    const { value, width, placeholder, secureText, textInputStyle, autoCorrect = false, extraContainerStyle } = this.props
     return (
-      <View style={this.props.style}>
+      <View style={[containerStyle, extraContainerStyle, { width }]}>
+        {placeholder === '' ? null
+          : <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>}
         <TextInput
           onFocus={() => this.inputSelected()}
           underlineColorAndroid={'transparent'}
@@ -58,8 +60,6 @@ class Input extends Component {
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
         />
-        {placeholder === '' ? null
-          : <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>}
       </View>
     )
   }
@@ -67,14 +67,17 @@ class Input extends Component {
 }
 
 const styles = {
+  containerStyle: {
+    marginBottom: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 2,
+    borderWidth: 1
+  },
   inputStyle: {
     height: 44,
     paddingLeft: 8,
     paddingRight: 8,
-    color: '#000',
-    borderRadius: 2,
-    borderWidth: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)'
+    color: '#000'
   }
 }
 

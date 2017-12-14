@@ -15,15 +15,16 @@ class CheckBox extends Component {
     const { size, onPress, color } = this.props
       return (
         <TouchableOpacity
-        style={[styles.multipleChoiceStyle, { height: size, width: size }]}
-        onPress={onPress}
+          style={[styles.multipleChoiceStyle, { height: size, width: size }]}
+          onPress={onPress}
         >
-        <MaterialIcons
-        name={this.getIconName()}
-        size={size}
-        color={color}
-        style={{ backgroundColor: 'transparent' }}
-        />
+          <MaterialIcons
+            name={this.getIconName()}
+            size={size}
+            color={color}
+            style={{ backgroundColor: 'transparent' }}
+          />
+          <Text style={{ fontSize: 15 }}>{this.props.name}</Text>
         </TouchableOpacity>
       );
   }
@@ -36,28 +37,35 @@ class CheckBox extends Component {
   }
 
   render() {
+    const { size, onPress, color } = this.props
+    const { textStyle, multipleChoiceStyle } = styles;
     return (
-      <View
-      style={{
-        flexDirection: 'row',
-        margin: 4,
-        alignItems: 'center'
-      }}
+      <TouchableOpacity
+        style={multipleChoiceStyle}
+        onPress={onPress}
       >
-      {this.renderCheckbox()}
-      <Text
-      style={{ fontSize: 15 }}
-      >
-      {this.props.name}
-      </Text>
-      </View>
+        <MaterialIcons
+          name={this.getIconName()}
+          size={size}
+          color={color}
+          style={{ backgroundColor: 'transparent' }}
+        />
+        <Text style={[textStyle, { color }]}>{this.props.name}</Text>
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = {
   multipleChoiceStyle: {
-    borderRadius: 5
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  },
+  textStyle: {
+    fontSize: 16,
+    backgroundColor: 'transparent'
   }
 };
 
