@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import Header from '../../common/Header'
+import { View, WebView } from 'react-native';
+import Header from '../../common/Header';
 
 class NewsScreen extends Component {
-
   render() {
     return (
       <View>
@@ -13,12 +12,10 @@ class NewsScreen extends Component {
           title={this.props.navigation.state.params.info.title}
           navigation={this.props.navigation}
         />
-        <Text>
-          { this.props.navigation.state.params.info.message }
-        </Text>
+        <WebView source={{ uri: this.props.navigation.state.params.info.url }} />
       </View>
     );
   }
 }
 
-export default NewsScreen
+export default NewsScreen;
