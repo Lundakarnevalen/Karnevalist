@@ -3,6 +3,8 @@ import { View, Dimensions, Text, Image } from 'react-native';
 import Header from '../../common/Header'
 import CustomButton from '../../common/CustomButton'
 import CountDown from '../../common/countDown/CountDown';
+import BackgroundImage from '../../common/BackgroundImage'
+
 
 const { width } = Dimensions.get('window')
 const { height } = Dimensions.get('window')
@@ -11,9 +13,12 @@ class HomeScreen extends Component {
     const { container, imageStyle, wehejStyle } = styles
     return (
       <View>
+        <BackgroundImage
+          imagePath={require('../../../../res/background3.png')}
+        />
         <Header
           textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          style={{ backgroundColor: '#FFFFFF' }}
           title='Home'
           leftIcon={null}
           navigation={this.props.navigation}

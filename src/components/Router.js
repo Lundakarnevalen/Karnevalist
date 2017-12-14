@@ -3,6 +3,7 @@ import HomeScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
+import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 import ConfirmPage from './screens/ConfirmPage';
 
@@ -25,7 +26,14 @@ const LoggedIn = StackNavigator(
       navigationOptions: {
         header: null
       }
-    }
+    },
+    SectionItemScreen: {
+      screen: SectionItemScreen,
+      navigationOptions: {
+        header: null,
+      }
+    },
+
   }
 )
 
