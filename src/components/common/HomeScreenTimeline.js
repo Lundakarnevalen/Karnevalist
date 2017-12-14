@@ -5,11 +5,19 @@ import { Ionicons } from '@expo/vector-icons'
 class HomeScreenTimeLine extends Component {
 
   getIconColor(nbr) {
+<<<<<<< HEAD
     if (nbr < this.props.timelineProgress) {
       return 'black'
     }
     return 'transparent'
   }
+=======
+		if (nbr < this.props.timelineProgress) {
+			return 'black'
+		}
+		return 'transparent'
+	}
+>>>>>>> 36710286d8cc5b48d9c853b7956526a50b217a7a
 
   render() {
     return (
