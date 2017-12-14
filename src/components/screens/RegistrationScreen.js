@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Text, Dimensions } from 'react-native'
+import { Alert, ScrollView, View, Text, Dimensions } from 'react-native'
+import axios from 'axios'
 import Header from '../common/Header'
 import Input from '../common/Input'
 import DKPicker from '../common/DKPicker'
@@ -191,7 +192,34 @@ class RegistrationScreen extends Component {
             text='Register'
             style='standardButton'
             width={width}
-            onPress={() => this.props.navigation.navigate('ConfirmationScreen')}
+            onPress={() => {
+              axios.post(
+                'http://146.185.173.31:3000/register',
+                {
+                  email: this.state.email,
+                  password: '123',
+                  postNumber: this.state.postcode,
+                  talent: 'saknas',
+                }
+              ).then(() => {
+                this.props.navigation.navigate('HomeScreen')
+              }).catch((error) => {
+                let msg;
+                if (error.message.includes('400')) {
+                  msg = 'Invalid email or password';
+                } else if (error.message.includes('401')) {
+                  msg = 'Invalid email or password';
+                } else if (error.message.includes('404')) {
+                  msg = 'Something went wrong...';
+                } else {
+                  msg = 'Internal error, please try again later';
+                }
+                Alert.alert(
+                  'Error',
+                  msg
+                );
+              })
+            }}
           />
         </ScrollView>
         <DKPicker
