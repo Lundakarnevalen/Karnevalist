@@ -52,7 +52,7 @@ class RegistrationScreen extends Component {
         text={title === '' ? 'Choose' : title}
         style='standardButton'
         width={width}
-        onPress={() => this.setState({ showShirtPicker: true })}
+        onPress={() => { return (tag === 'shirt' ? this.setState({ showShirtPicker: true }) : this.setState({ showStudentUnionPicker: true })) }}
         />
       )
     }
