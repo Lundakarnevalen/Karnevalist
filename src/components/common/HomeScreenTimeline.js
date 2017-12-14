@@ -20,9 +20,9 @@ class HomeScreenTimeLine extends Component {
 
   render() {
     return (
-    	<View
-    		style={{
-    			backgroundColor: 'transparent',
+      <View
+        style={{
+          backgroundColor: 'transparent',
     			justifyContent: 'center',
     			alignItems: 'center'
     		}}

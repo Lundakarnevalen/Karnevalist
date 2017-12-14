@@ -1,37 +1,35 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Image } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import Header from '../../common/Header'
+import CustomButton from '../../common/CustomButton'
+import BackgroundImage from '../../common/BackgroundImage';
 import CountDown from '../../common/countDown/CountDown';
 import HomeScreenTimeLine from '../../common/HomeScreenTimeline'
 
-const { width } = Dimensions.get('window')
-const { height } = Dimensions.get('window')
+const WIDTH = Dimensions.get('window').width
+
 class HomeScreen extends Component {
 
   render() {
-    const { container, imageStyle } = styles
+    const { container } = styles
     return (
-      <View style={{ flex: 1 }} >
+      <View>
+        <BackgroundImage
+          imagePath={require('../../../../assets/images/background3.png')}
+        />
         <Header
-          textStyle={{ color: '#FBBCC0' }}
-          style={{ backgroundColor: '#8A4797' }}
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: 'white' }}
           title='Home'
           leftIcon={null}
           navigation={this.props.navigation}
         />
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-          <View style={{ marginTop: 0 }} >
-            <HomeScreenTimeLine />
-          </View>
-          <View style={container}>
-            <Image
-              style={imageStyle}
-              source={require('../../../../res/Monstergubbe.png')}
-            />
-          </View>
-          <View style={{ marginTop: 15 }} >
-            <CountDown />
-          </View>
+        <View style={container}>
+          <CountDown />
+          <CustomButton
+            style='standardButton'
+            text='Checka in'
+          />
         </View>
       </View>
     );
@@ -41,13 +39,8 @@ class HomeScreen extends Component {
 const styles = {
   container: {
     alignItems: 'center',
-    width,
+    width: WIDTH,
     marginTop: 15
-  },
-  imageStyle: {
-    resizeMode: 'contain',
-    width: width * 0.9,
-    height: height * 0.35
   }
 }
 
