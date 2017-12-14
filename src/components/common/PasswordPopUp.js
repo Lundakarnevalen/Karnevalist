@@ -7,8 +7,10 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
+import axios from 'axios';
 import Input from '../common/Input';
 
 class PasswordPopUp extends Component {
@@ -43,6 +45,35 @@ class PasswordPopUp extends Component {
     }
     return 0;
   }
+  getOnPress(index) {
+    const { email } = this.state.emailAddress;
+    if (email === '') {
+      Alert.alert('Error', 'Wrong fromat on email');
+    } else if (index === 1) {
+      axios
+        .post('http://146.185.173.31:3000/login/forgotpassword', {
+          email: this.state.emailAddress
+        })
+        .then(() => {
+          Alert.alert('tack så mycket');
+        })
+        .catch(error => {
+          let msg;
+          if (error.message.includes('400')) {
+            msg = 'Wrong email or password';
+          } else if (error.message.includes('401')) {
+            msg = 'Wrong email or password';
+          } else if (error.message.includes('404')) {
+            msg = 'Something went wrong...';
+          } else {
+            msg = 'Internal error, please try again later';
+          }
+          Alert.alert('Error', msg);
+        });
+    } else {
+      Alert.alert(this.state.emailAddress);
+    }
+  }
 
   createButtons() {
     const { buttonsIn } = this.props;
@@ -50,7 +81,7 @@ class PasswordPopUp extends Component {
     for (let index = 0; index < 2; index++) {
       toReturn.push(
         <TouchableOpacity
-          onPress={buttonsIn[index].onPress}
+          onPress={() => this.getOnPress(index)}
           style={[
             styles.buttonStyle,
             {
@@ -90,11 +121,7 @@ class PasswordPopUp extends Component {
                     title="E-mail"
                     width={Dimensions.get('window').width / 1.2}
                     underlineColorAndroid="transparent"
-                    onChangeText={text => {
-                      return this.setState(() => {
-                        return { emailAddress: { text } };
-                      });
-                    }}
+                    onChangeText={text => this.setState({ emailAddress: text })}
                   />
                 </View>
                 <View style={styles.buttonViewStyle}>{this.createButtons()}</View>
