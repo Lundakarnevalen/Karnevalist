@@ -4,12 +4,12 @@ import { Ionicons } from '@expo/vector-icons'
 
 class HomeScreenTimeLine extends Component {
 
-	getIconColor(nbr) {
-		if (nbr < this.props.timelineProgress) {
-			return 'black'
-		}
-		return 'transparent'
-	}
+  getIconColor(nbr) {
+    if (nbr < this.props.timelineProgress) {
+      return 'black'
+    }
+    return 'transparent'
+  }
 
   render() {
     return (
@@ -89,35 +89,35 @@ class HomeScreenTimeLine extends Component {
 }
 
 const styles = {
-	roundView: {
-		backgroundColor: '#F7A021',
-		height: Dimensions.get('window').width / 7,
-		width: Dimensions.get('window').width / 7,
-		borderRadius: 90,
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	barView: {
-		height: Dimensions.get('window').width / 9 / 4,
-		width: Dimensions.get('window').width / 8,
-		backgroundColor: '#F7A021'
-	},
-	bufferView: {
-		height: Dimensions.get('window').width / 9 / 4,
-		width: Dimensions.get('window').width / 8,
-		backgroundColor: 'transparent',
-		margin: -10
-	},
-	textView: {
-		backgroundColor: 'transparent',
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: (Dimensions.get('window').width / 7) + 10
-	},
-	textStyle: {
-		textAlign: 'center',
-		fontSize: 11
-	}
+  roundView: {
+    backgroundColor: '#F7A021',
+    height: Dimensions.get('window').width / 7,
+    width: Dimensions.get('window').width / 7,
+    borderRadius: 90,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  barView: {
+    height: Dimensions.get('window').width / 9 / 4,
+    width: Dimensions.get('window').width / 8,
+    backgroundColor: '#F7A021'
+  },
+  bufferView: {
+    height: Dimensions.get('window').width / 9 / 4,
+    width: Dimensions.get('window').width / 8,
+    backgroundColor: 'transparent',
+    margin: -10
+  },
+  textView: {
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: (Dimensions.get('window').width / 7) + 10
+  },
+  textStyle: {
+    textAlign: 'center',
+    fontSize: 11
+  }
 }
 
 export default HomeScreenTimeLine;
