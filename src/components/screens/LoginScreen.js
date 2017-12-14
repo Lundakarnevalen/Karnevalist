@@ -17,10 +17,10 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { opacityStyle } = styles
+    const { opacityStyle, imageStyle } = styles
     return (
       <Image
-        style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }}
+        style={imageStyle}
         source={require('../../../res/Flicka_Tuba_Byggnader.png')}
       >
         <View style={opacityStyle} />
@@ -118,6 +118,12 @@ const styles = {
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
     opacity: 0.7
+  },
+  imageStyle: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover'
   }
 };
 

@@ -14,7 +14,7 @@ class SectionListItem extends Component {
   }
 
   render() {
-    const { containerStyle, titleStyle, infoStyle } = styles
+    const { containerStyle, titleStyle, infoStyle, continueIconIndicatorStyle } = styles
     const { sectionTitle = '', sectionInfoText = '', onPress, } = this.props
     return (
       <TouchableOpacity
@@ -30,7 +30,7 @@ class SectionListItem extends Component {
         <View style={{ flex: 1 }}>
           <MaterialIcons
             name='keyboard-arrow-right'
-            style={{ marginRight: 0, color: '#f4376d', backgroundColor: 'transparent' }}
+            style={continueIconIndicatorStyle}
             size={60}
           />
         </View>
@@ -57,6 +57,11 @@ const styles = {
   },
   infoStyle: {
     fontSize: 14,
+  },
+  continueIconIndicatorStyle: {
+    marginRight: 0,
+    color: '#f4376d',
+    backgroundColor: 'transparent'
   }
 };
 export default SectionListItem
