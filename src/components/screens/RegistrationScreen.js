@@ -6,6 +6,7 @@ import Input from '../common/Input'
 import DKPicker from '../common/DKPicker'
 import CustomButton from '../common/CustomButton'
 import ButtonChoiceManager from '../common/ButtonChoiceManager'
+import BackgroundImage from '../common/BackgroundImage';
 
 const width = Dimensions.get('window').width - 32
 const height = Dimensions.get('window').height
@@ -48,11 +49,17 @@ class RegistrationScreen extends Component {
 
   render() {
     const { flexHorizontal } = styles;
+    const { firstName, lastName, email, confirmedEmail, address, postcode, city, phoneNbr, foodPreferences, studentUnionInfo } = this.state;
     return (
       <View>
+        <BackgroundImage
+          imagePath={require('../../../assets/images/background5.png')}
+        />
         <Header
           title='Create Profile'
           navigation={this.props.navigation}
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: '#FFFFFF' }}
         />
         <ScrollView
           contentContainerStyle={styles.contentContainer}
@@ -63,6 +70,7 @@ class RegistrationScreen extends Component {
             onChangeText={(firstNameInput) => {
               this.setState({ firstName: firstNameInput })
             }}
+            value={firstName}
             style={{ marginBottom: 8 }}
           />
           <Input
@@ -70,6 +78,7 @@ class RegistrationScreen extends Component {
             onChangeText={(lastNameInput) => {
               this.setState({ lastName: lastNameInput })
             }}
+            value={lastName}
             style={{ marginBottom: 8 }}
           />
           <Input
@@ -77,6 +86,7 @@ class RegistrationScreen extends Component {
             onChangeText={(emailInput) => {
               this.setState({ email: emailInput })
             }}
+            value={email}
             style={{ marginBottom: 8 }}
           />
           <Input
@@ -84,6 +94,7 @@ class RegistrationScreen extends Component {
             onChangeText={(emailInput) => {
               this.setState({ confirmedEmail: emailInput })
             }}
+            value={confirmedEmail}
             style={{ marginBottom: 8 }}
           />
           <Input
@@ -91,6 +102,7 @@ class RegistrationScreen extends Component {
             onChangeText={(addressInput) => {
               this.setState({ address: addressInput })
             }}
+            value={address}
             style={{ marginBottom: 8 }}
           />
           <View style={flexHorizontal}>
@@ -104,6 +116,7 @@ class RegistrationScreen extends Component {
                 marginBottom: 8,
                 marginRight: 8
               }}
+              value={postcode}
             />
             <Input
               placeholder='City'
@@ -112,6 +125,7 @@ class RegistrationScreen extends Component {
               }}
               width={(width / 2) - 4}
               style={{ marginBottom: 8 }}
+              value={city}
             />
           </View>
           <Input
@@ -120,6 +134,7 @@ class RegistrationScreen extends Component {
               this.setState({ phoneNbr: phoneNbrInput })
             }}
             style={{ marginBottom: 8 }}
+            value={phoneNbr}
           />
           <Input
             placeholder='Food preferences'
@@ -127,12 +142,10 @@ class RegistrationScreen extends Component {
               this.setState({ foodPreferences: foodPreferencesInput })
             }}
             style={{ marginBottom: 8 }}
+            value={foodPreferences}
           />
-          <Text>
-            Choose shirt size
-          </Text>
           <CustomButton
-            text={this.state.shirtSizeTitle === '' ? 'Choose' : this.state.shirtSizeTitle}
+            text={this.state.shirtSizeTitle === '' ? 'Choose shirt size' : this.state.shirtSizeTitle}
             style='standardButton'
             width={width}
             onPress={() => this.setState({ showShirtPicker: true })}
@@ -141,11 +154,8 @@ class RegistrationScreen extends Component {
             buttonInputVector={['I have a drives license']}
             multipleChoice
           />
-          <Text>
-            Choose student union
-          </Text>
           <CustomButton
-            text={this.state.studentUnionTitle === '' ? 'Choose' : this.state.studentUnionTitle}
+            text={this.state.studentUnionTitle === '' ? 'Choose student union' : this.state.studentUnionTitle}
             style='standardButton'
             width={width}
             onPress={() => this.setState({ showStudentUnionPicker: true })}
@@ -155,6 +165,7 @@ class RegistrationScreen extends Component {
             onChangeText={(studentUnionInfoInput) => {
               this.setState({ studentUnionInfo: studentUnionInfoInput })
             }}
+            value={studentUnionInfo}
           />
           <ButtonChoiceManager
             buttonInputVector={['I was engaged in the karneval 2014']}
@@ -233,10 +244,6 @@ class RegistrationScreen extends Component {
 }
 
 const styles = {
-  header: {
-    backgroundColor: 'pink',
-    alignItems: 'center'
-  },
   titelTextStyle: {
     fontSize: 40
   },
