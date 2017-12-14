@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
+import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'
+
+const WIDTH = Dimensions.get('window').width
 
 class SectionListItem extends Component {
 
@@ -12,26 +14,24 @@ class SectionListItem extends Component {
   }
 
   render() {
-    const { containerStyle, titleStyle, infoStyle } = styles
-    const { sectionTitle, sectionInfoText, onPress, } = this.props
+    const { containerStyle, titleStyle, infoStyle, continueIconIndicatorStyle } = styles
+    const { sectionTitle = '', sectionInfoText = '', onPress, } = this.props
     return (
       <TouchableOpacity
         onPress={() => onPress()}
         style={containerStyle}
       >
-        <View style={{ flex: 8, margin: 3 }}>
+        <View style={{ flex: 6, margin: 3 }}>
           <Text style={titleStyle}>
             {sectionTitle}
           </Text>
-          <Text style={infoStyle}>
-            {this.getInfoText(sectionInfoText)}
-          </Text>
+          {sectionInfoText === '' ? null : <Text style={infoStyle}>{this.getInfoText(sectionInfoText)}</Text>}
         </View>
         <View style={{ flex: 1 }}>
           <MaterialIcons
             name='keyboard-arrow-right'
-            style={{ marginRight: 0, color: '#8A4797' }}
-            size={40}
+            style={continueIconIndicatorStyle}
+            size={60}
           />
         </View>
       </TouchableOpacity>
@@ -41,17 +41,27 @@ class SectionListItem extends Component {
 
 const styles = {
   containerStyle: {
-    height: 60,
-    borderBottomWidth: 1,
-    borderBottomColor: '#8A4797',
+    height: 80,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: WIDTH - 50,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#f4376d',
+    marginTop: 10,
+    padding: 10
   },
   titleStyle: {
-    fontSize: 20
+    fontSize: 20,
+    color: '#f4376d'
   },
   infoStyle: {
     fontSize: 14,
+  },
+  continueIconIndicatorStyle: {
+    marginRight: 0,
+    color: '#f4376d',
+    backgroundColor: 'transparent'
   }
 };
 export default SectionListItem

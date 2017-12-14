@@ -59,7 +59,7 @@ class CustomButton extends Component {
       marginTop: 10,
       marginBottom: 10,
       borderColor: 'black',
-      borderRadius: 5,
+      borderRadius: 3,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -68,7 +68,7 @@ class CustomButton extends Component {
       borderWidth: 0
     },
     standardButton: {
-      backgroundColor: '#f4376d',
+      backgroundColor: '#fff',
       padding: 10
     },
     acceptButton: {
@@ -84,7 +84,7 @@ class CustomButton extends Component {
       marginRight: 0.4,
     },
     whiteText: {
-      color: 'white',
+      color: '#f4376d',
       fontSize: 20
     },
     blueText: {

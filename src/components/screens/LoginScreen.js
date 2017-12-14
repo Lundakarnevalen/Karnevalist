@@ -17,26 +17,14 @@ class HomeScreen extends Component {
   }
 
   render() {
+    const { opacityStyle, imageStyle } = styles
     return (
       <Image
-        style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }}
+        style={imageStyle}
         source={require('../../../res/Flicka_Tuba_Byggnader.png')}
       >
-        <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            backgroundColor: '#8A4797',
-            height: Dimensions.get('window').height,
-            width: Dimensions.get('window').width,
-            opacity: 0.7
-          }}
-        />
+        <View style={opacityStyle} />
         <View style={styles.container1}>
-          <Image
-            source={require('../../../res/LK2018logga.png')}
-          />
           <Input
             placeholder='Personnummer'
             title='Personnummer'
@@ -121,6 +109,21 @@ const styles = {
   inputHeaderTextStyle: {
     color: 'white',
     fontSize: 12
+  },
+  opacityStyle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: '#8A4797',
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    opacity: 0.7
+  },
+  imageStyle: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover'
   }
 };
 
