@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import { Font, ScreenOrientation } from 'expo';
 import Router from './src/components/Router';
+import reducers from './src/reducers';
 
 class App extends Component {
   constructor(props) {
@@ -11,7 +14,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-  ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
+    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
     Font.loadAsync({
       'Avenir Next Bold': require('./assets/fonts/AvenirNext-Bold-01.ttf'),
       'Avenir Next Bold Italic': require('./assets/fonts/AvenirNext-BoldItalic-02.ttf'),
@@ -31,7 +34,9 @@ class App extends Component {
   render() {
     if (this.state.fontsLoaded) {
       return (
-        <Router />
+        <Provider store={createStore(reducers)}>
+          <Router />
+        </Provider>
       );
     }
     return null;
