@@ -25,7 +25,7 @@ class SectionListItem extends Component {
           <Text style={titleStyle}>
             {sectionTitle}
           </Text>
-          {sectionInfoText === '' ? null : <Text style={infoStyle}>{this.getInfoText(sectionInfoText)}</Text>}
+          {sectionInfoText === '' ? null : <Text ellipsizeMode={'tail'} numberOfLines={1} style={infoStyle}>{this.getInfoText(sectionInfoText)}</Text>}
         </View>
         <View style={{ flex: 1 }}>
           <MaterialIcons
