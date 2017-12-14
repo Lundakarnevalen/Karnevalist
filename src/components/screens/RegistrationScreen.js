@@ -31,6 +31,8 @@ class RegistrationScreen extends Component {
       lastName: '',
       email: '',
       confirmedEmail: '',
+      password: '',
+      confirmedPassword: '',
       address: '',
       postcode: '',
       city: '',
@@ -48,7 +50,20 @@ class RegistrationScreen extends Component {
 
   render() {
     const { flexHorizontal } = styles;
-    const { firstName, lastName, email, confirmedEmail, address, postcode, city, phoneNbr, foodPreferences, studentUnionInfo } = this.state;
+    const {
+      firstName,
+      lastName,
+      email,
+      confirmedEmail,
+      address,
+      postcode,
+      city,
+      phoneNbr,
+      foodPreferences,
+      studentUnionInfo,
+      password,
+      confirmedPassword
+    } = this.state;
     return (
       <View>
         <BackgroundImage
@@ -95,6 +110,24 @@ class RegistrationScreen extends Component {
             }}
             value={confirmedEmail}
             style={{ marginBottom: 8 }}
+          />
+          <Input
+            placeholder='Password'
+            onChangeText={(text) => {
+              this.setState({ password: text })
+            }}
+            value={password}
+            style={{ marginBottom: 8 }}
+            secureText
+          />
+          <Input
+            placeholder='Confirm password'
+            onChangeText={(text) => {
+              this.setState({ confirmedPassword: text })
+            }}
+            value={confirmedPassword}
+            style={{ marginBottom: 8 }}
+            secureText
           />
           <Input
             placeholder='Address'
