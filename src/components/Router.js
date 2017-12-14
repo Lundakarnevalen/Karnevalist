@@ -6,6 +6,7 @@ import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
 import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 import ConfirmPage from './screens/ConfirmPage';
+import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
 
 const LoggedIn = StackNavigator(
   {
@@ -64,6 +65,12 @@ const Router = StackNavigator(
     },
     RegistrationScreen: {
       screen: Register,
+      navigationOptions: {
+        header: null
+      }
+    },
+    RegistrationInfo: {
+      screen: RegistrationInfoScreen,
       navigationOptions: {
         header: null
       }

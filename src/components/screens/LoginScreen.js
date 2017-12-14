@@ -81,7 +81,9 @@ class HomeScreen extends Component {
           />
           <CustomButton
             text='Läs mer om registreringen'
-            width={WIDTH}
+            onPress={() => {
+              this.props.navigation.navigate('RegistrationInfo')
+            }}
             style='textButton'
           />
         </View>
