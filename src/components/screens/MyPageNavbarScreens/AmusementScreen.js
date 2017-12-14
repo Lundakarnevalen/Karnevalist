@@ -23,8 +23,4 @@ class AmusementsScreen extends Component {
   }
 }
 
-const styles = ({
-
-});
-
 export default AmusementsScreen

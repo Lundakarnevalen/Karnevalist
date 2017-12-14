@@ -6,24 +6,31 @@ const WIDTH = Dimensions.get('window').width
 
 class SectionListItem extends Component {
 
+  getInfoText(sectionInfoText) {
+    let text = sectionInfoText
+    if (text && text.length > 50)
+      text = text.substring(0, 50) + '...'
+    return text
+  }
+
   render() {
     const { containerStyle, titleStyle, infoStyle } = styles
     const { sectionTitle = '', sectionInfoText = '', onPress, } = this.props
     return (
       <TouchableOpacity
-        onPress={() => onPress(sectionTitle)}
+        onPress={() => onPress()}
         style={containerStyle}
       >
-        <View style={{ flex: 5 }}>
+        <View style={{ flex: 6, margin: 3 }}>
           <Text style={titleStyle}>
             {sectionTitle}
           </Text>
-          {sectionInfoText === '' ? null : <Text style={infoStyle}>{sectionInfoText}</Text>}
+          {sectionInfoText === '' ? null : <Text style={infoStyle}>{this.getInfoText(sectionInfoText)}</Text>}
         </View>
         <View style={{ flex: 1 }}>
           <MaterialIcons
             name='keyboard-arrow-right'
-            style={{ marginRight: 0, color: '#f4376d' }}
+            style={{ marginRight: 0, color: '#f4376d', backgroundColor: 'transparent' }}
             size={60}
           />
         </View>

@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
-import { View, ListView, TouchableOpacity, Alert } from 'react-native';
+import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'
 import Header from '../../common/Header'
 import SectionListItem from '../../common/SectionListItem'
-import BackgroundImage from '../../common/BackgroundImage';
-
-const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+import BackgroundImage from '../../common/BackgroundImage'
 
 const exampleArray = []
 for (let i = 0; i < 25; i++) exampleArray.push({
-  title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text'
+  key: i, title: 'Sektion ' + i, info: 'Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får platsKul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats,Kul stuff här är en text som testar hur mycket text som faktiskt får plats här. Kan nog vara ganska mycket förhoppningvis! Sök till denna sektionen om du gillar att testa att se om långa texter får plats'
 })
+const WIDTH = Dimensions.get('window').width
+
 class SectionScreen extends Component {
   constructor(props) {
     super(props)
     const items = props.items || exampleArray || ['']
     this.state = {
       isOpen: false,
-      dataSource: ds.cloneWithRows(items),
+      data: items
     };
   }
 
   render() {
+    const { navigation, screenProps } = this.props
     return (
       <View>
         <BackgroundImage
@@ -37,28 +38,46 @@ class SectionScreen extends Component {
           style={{ backgroundColor: 'white' }}
           title='Sektioner'
           leftIcon={null}
-          navigation={this.props.navigation}
+          navigation={navigation}
         />
         </View>
-        <View>
-          <ListView
-            dataSource={this.state.dataSource}
-            contentContainerStyle={{ alignItems: 'center' }}
-            renderRow={(rowData) =>
+        <View style={styles.style}>
+          <FlatList
+            data={this.state.data}
+            renderItem={({ item }) =>
               <SectionListItem
-                sectionTitle={rowData.title}
-                sectionInfoText={rowData.info}
-                onPress={(title) => Alert.alert(title + '\n ' + rowData.info)}
+                sectionTitle={item.title}
+                sectionInfoText={item.info}
+                contentContainerStyle={{ alignItems: 'center' }}
+                onPress={() => screenProps.navigate(
+                  'SectionItemScreen',
+                  {
+                    title: item.title,
+                    description: item.info,
+                    image:
+                      <Image
+                        style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+                        source={require('../../../../res/KaffeKarl.png')}
+                      />
+                  }
+                  )
+                }
               />
             }
           />
-        </View>
+        </View >
       </View>
     );
   }
 }
 
 const styles = {
+  style: {
+    paddingBottom: (Platform.OS === 'ios') ? 132 : 148,
+    width: WIDTH,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 };
 
 export default SectionScreen

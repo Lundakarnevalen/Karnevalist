@@ -94,8 +94,11 @@ const TabNav = TabNavigator({
       fontSize: 10
     },
     style: {
-    backgroundColor: 'white',
-  },
+      backgroundColor: '#ffffff',
+    },
+    indicatorStyle: {
+      backgroundColor: '#8A4797',
+    }
   },
 })
 export default MyPageNavbarScreen
