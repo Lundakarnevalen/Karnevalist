@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Picker, Dimensions, Animated } from 'react-native'
+import { View, Picker, Dimensions, Animated, Platform } from 'react-native'
 import CustomButton from '../common/CustomButton'
 
 const width = Dimensions.get('window').width
@@ -14,17 +14,17 @@ class DKPicker extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.isShowing) {
-      Animated.timing(
-        this.state.bottom,
-        { toValue: 0 }
-      ).start()
-    } else {
-      Animated.timing(
-        this.state.bottom,
-        { toValue: (-this.state.height - 22) }
-      ).start()
-    }
+      if (this.props.isShowing) {
+        Animated.timing(
+          this.state.bottom,
+          { toValue: 0 }
+        ).start()
+      } else {
+        Animated.timing(
+          this.state.bottom,
+          { toValue: (-this.state.height - 22) }
+        ).start()
+      }
   }
 
   render() {
