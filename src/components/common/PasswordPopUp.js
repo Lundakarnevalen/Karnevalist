@@ -110,7 +110,7 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'column',
     width: Dimensions.get('window').width / 1.1,
-    height: Dimensions.get('window').height / 3.35,
+    height: Dimensions.get('window').height / 3.2,
     borderRadius: 5,
     backgroundColor: '#d999fa'
   },
@@ -118,7 +118,7 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     flex: 1,
-    marginTop: 15,
+    marginTop: 17,
     marginBottom: 0
   },
   buttonStyle: {
@@ -127,6 +127,7 @@ const styles = {
     backgroundColor: '#f4376d',
     height: 40,
     borderColor: 'white',
+    marginTop: 5,
     width: Dimensions.get('window').width / (1.1 * 2)
   },
   buttonTextStyle: {
