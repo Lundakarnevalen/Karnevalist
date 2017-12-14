@@ -46,7 +46,7 @@ class RegistrationScreen extends Component {
   }
 
   renderPickerForPlatform(title, tag) {
-    if (Platform === 'ios') {
+    if (Platform.OS === 'ios') {
       return (
         <CustomButton
         text={title === '' ? 'Choose' : title}
