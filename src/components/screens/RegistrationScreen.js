@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, ScrollView, View, Text, Dimensions } from 'react-native';
+import { Alert, ScrollView, View, Dimensions, Picker, Platform } from 'react-native';
 import axios from 'axios';
 import Header from '../common/Header';
 import Input from '../common/Input';
@@ -12,13 +12,13 @@ const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
 
 const shirtSizeArray = [
-  { label: '-', value: '' },
+  { label: 'Shirt size', value: '' },
   { label: 'Small', value: 'small' },
   { label: 'Medium', value: 'medium' },
   { label: 'Large', value: 'large' }
 ];
 const studentUnionArray = [
-  { label: '-', value: '' },
+  { label: 'Student Union', value: '' },
   { label: 'Lunds Nation', value: 'lundsNation' },
   { label: 'Kalmar Nation', value: 'kalmarNation' }
 ];
@@ -41,11 +41,75 @@ class RegistrationScreen extends Component {
       shirtSize: '',
       shirtSizeTitle: '',
       studentUnion: '',
-      studentUnionInfo: '',
       studentUnionTitle: '',
       showShirtPicker: false,
       showStudentUnionPicker: false
     };
+  }
+
+  renderPickerForPlatform(defaultTitle, title, tag) {
+    if (Platform.OS === 'ios') {
+      return (
+        <CustomButton
+          text={title === '' ? defaultTitle : title}
+          style="standardButton"
+          width={width}
+          onPress={() => {
+            return tag === 'shirt'
+              ? this.setState({ showShirtPicker: true })
+              : this.setState({ showStudentUnionPicker: true });
+          }}
+        />
+      );
+    }
+    return (
+      <View>
+        <Picker
+          onValueChange={itemValue => {
+            return tag === 'shirt'
+              ? this.onValueChangeShirtSize(itemValue)
+              : this.onValueChangeStudentUnion(itemValue);
+          }}
+          selectedValue={tag === 'shirt' ? this.state.shirtSize : this.state.studentUnion}
+          style={styles.androidPicker}
+        >
+          {this.renderPickerArray(tag)}
+        </Picker>
+      </View>
+    );
+  }
+
+  renderPickerArray(tag) {
+    if (tag === 'shirt') {
+      return shirtSizeArray.map(item => {
+        return <Picker.Item key={item.label} label={item.label} value={item.value} />;
+      });
+    }
+    return studentUnionArray.map(item => {
+      return <Picker.Item key={item.label} label={item.label} value={item.value} />;
+    });
+  }
+
+  onValueChangeShirtSize(shirtSize) {
+    this.setState({ shirtSize });
+    shirtSizeArray.map(item => {
+      if (shirtSize === item.value) {
+        return this.setState({ shirtSizeTitle: item.label });
+      }
+      return null;
+    });
+    return null;
+  }
+
+  onValueChangeStudentUnion(studentUnion) {
+    this.setState({ studentUnion });
+    shirtSizeArray.map(item => {
+      if (studentUnion === item.value) {
+        return this.setState({ studentUnionTitle: item.label });
+      }
+      return null;
+    });
+    return null;
   }
 
   render() {
@@ -157,24 +221,12 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
           />
-          <CustomButton
-            text={
-              this.state.shirtSizeTitle === '' ? 'Choose shirt size' : this.state.shirtSizeTitle
-            }
-            style="standardButton"
-            width={width}
-            onPress={() => this.setState({ showShirtPicker: true })}
-          />
-          <CustomButton
-            text={
-              this.state.studentUnionTitle === ''
-                ? 'Choose student union'
-                : this.state.studentUnionTitle
-            }
-            style="standardButton"
-            width={width}
-            onPress={() => this.setState({ showStudentUnionPicker: true })}
-          />
+          {this.renderPickerForPlatform('Choose shirt size', this.state.shirtSizeTitle, 'shirt')}
+          {this.renderPickerForPlatform(
+            'Choose student union',
+            this.state.studentUnionTitle,
+            'union'
+          )}
           <ButtonChoiceManager
             buttonInputVector={['I was engaged in the karneval 2014']}
             multipleChoice
@@ -245,30 +297,14 @@ class RegistrationScreen extends Component {
           />
         </ScrollView>
         <DKPicker
-          onValueChange={shirtSize => {
-            this.setState({ shirtSize });
-            shirtSizeArray.map(item => {
-              if (shirtSize === item.value) {
-                return this.setState({ shirtSizeTitle: item.label });
-              }
-              return null;
-            });
-          }}
+          onValueChange={shirtSize => this.onValueChangeShirtSize(shirtSize)}
           items={shirtSizeArray}
           value={this.state.shirtSize}
           isShowing={this.state.showShirtPicker}
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
-          onValueChange={studentUnion => {
-            this.setState({ studentUnion });
-            studentUnionArray.map(item => {
-              if (studentUnion === item.value) {
-                return this.setState({ studentUnionTitle: item.label });
-              }
-              return null;
-            });
-          }}
+          onValueChange={studentUnion => this.onValueChangeStudentUnion(studentUnion)}
           items={studentUnionArray}
           value={this.state.studentUnion}
           isShowing={this.state.showStudentUnionPicker}
@@ -291,6 +327,16 @@ const styles = {
     paddingRight: 16,
     paddingBottom: 64,
     paddingLeft: 16
+  },
+  androidPicker: {
+    color: '#f4376d',
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    borderColor: 'black',
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 };
 
