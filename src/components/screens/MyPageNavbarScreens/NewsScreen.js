@@ -26,7 +26,6 @@ class NewsScreen extends Component {
   }
 
   render() {
-    console.log(this.state.dataSource);
     return (
       <View>
         <BackgroundImage imagePath={require('../../../../assets/images/background4.png')} />
@@ -47,7 +46,7 @@ class NewsScreen extends Component {
               sectionDate={rowData.date}
               onPress={() =>
                 this.props.screenProps.navigate('SingleNewsScreen', {
-                  info: { title: rowData.title.rendered, url: rowData.content.rendered }
+                  info: { title: rowData.title.rendered, url: rowData.link }
                 })
               }
             />

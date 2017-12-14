@@ -27,24 +27,30 @@ class SectionListItem extends Component {
   }
 
   render() {
-    const { containerStyle, titleStyle, infoStyle, continueIconIndicatorStyle } = styles;
-    const { sectionTitle = '', sectionInfoText = '', sectionDate, onPress } = this.props;
+    const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
+    const { sectionTitle = '', sectionInfoText = '', sectionDate = '', onPress } = this.props;
     return (
       <TouchableOpacity onPress={() => onPress()} style={containerStyle}>
         <View style={{ flexDirection: 'row' }}>
           {this.renderDateView(sectionDate)}
-          <View style={{ flexDirection: 'column' }}>
-            <Text numberOfLines={1} style={{ maxWidth: 100 }}>
+          <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+            <Text
+              numberOfLines={1}
+              style={[titleStyle, { width: sectionDate === '' ? WIDTH * 0.8 : WIDTH * 0.65 }]}
+            >
               {sectionTitle}
             </Text>
             {sectionInfoText === '' ? null : (
-              <Text ellipsizeMode={'tail'} numberOfLines={1} style={infoStyle}>
+              <Text
+                numberOfLines={1}
+                style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.8 : WIDTH * 0.65 }]}
+              >
                 {sectionInfoText}
               </Text>
             )}
           </View>
         </View>
-        <View style={justifyContent: 'flex-end'}>
+        <View>
           <MaterialIcons name="keyboard-arrow-right" style={continueIconIndicatorStyle} size={60} />
         </View>
       </TouchableOpacity>
@@ -55,7 +61,7 @@ class SectionListItem extends Component {
 const styles = {
   containerStyle: {
     height: 60,
-    //backgroundColor: 'white',
+    backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
     width: WIDTH,
@@ -66,11 +72,13 @@ const styles = {
   titleStyle: {
     fontSize: 20,
     marginLeft: 8,
-    color: '#f4376d'
+    color: '#f4376d',
+    backgroundColor: 'transparent'
   },
   contentStyle: {
     fontSize: 14,
-    marginLeft: 8
+    marginLeft: 8,
+    backgroundColor: 'transparent'
   },
   dateViewStyle: {
     height: 60,
@@ -81,7 +89,8 @@ const styles = {
   },
   dateStyle: {
     fontSize: 16,
-    color: 'white'
+    color: 'white',
+    backgroundColor: 'transparent'
   },
   continueIconIndicatorStyle: {
     marginRight: 8,
