@@ -73,7 +73,7 @@ class PasswordPopUp extends Component {
                 <View
                   style={{
                     position: 'absolute',
-                    bottom: 68,
+                    bottom: 61,
                     width: Dimensions.get('window').width / 1.2
                   }}
                 >
