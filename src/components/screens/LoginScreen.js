@@ -69,7 +69,7 @@ class HomeScreen extends Component {
                   password: this.state.password.text
                 }
               ).then((response) => {
-                if (response.data.success === true) {
+                if (response.data.success) {
                   this.props.navigation.navigate('MyPageNavbarScreen')
                 } else {
                   Alert.alert(
