@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Dimensions, Platform, Picker } from 'react-native';
+import { ScrollView, View, Text, Dimensions, Platform, Picker, Alert } from 'react-native';
 import Header from '../common/Header';
 import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
 import CustomButton from '../common/CustomButton';
+import axios from 'axios';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
+import BackgroundImage from '../common/BackgroundImage';
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
@@ -111,15 +113,34 @@ class RegistrationScreen extends Component {
 
   render() {
     const { flexHorizontal } = styles;
+    const {
+      firstName,
+      lastName,
+      email,
+      confirmedEmail,
+      address,
+      postcode,
+      city,
+      phoneNbr,
+      foodPreferences,
+      studentUnionInfo
+    } = this.state;
     return (
       <View>
-        <Header title="Create Profile" navigation={this.props.navigation} />
+        <BackgroundImage imagePath={require('../../../assets/images/background5.png')} />
+        <Header
+          title="Create Profile"
+          navigation={this.props.navigation}
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: '#FFFFFF' }}
+        />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
           <Input
             placeholder="First name"
             onChangeText={firstNameInput => {
               this.setState({ firstName: firstNameInput });
             }}
+            value={firstName}
             style={{ marginBottom: 8 }}
           />
           <Input
@@ -127,6 +148,7 @@ class RegistrationScreen extends Component {
             onChangeText={lastNameInput => {
               this.setState({ lastName: lastNameInput });
             }}
+            value={lastName}
             style={{ marginBottom: 8 }}
           />
           <Input
@@ -134,6 +156,7 @@ class RegistrationScreen extends Component {
             onChangeText={emailInput => {
               this.setState({ email: emailInput });
             }}
+            value={email}
             style={{ marginBottom: 8 }}
           />
           <Input
@@ -141,6 +164,7 @@ class RegistrationScreen extends Component {
             onChangeText={emailInput => {
               this.setState({ confirmedEmail: emailInput });
             }}
+            value={confirmedEmail}
             style={{ marginBottom: 8 }}
           />
           <Input
@@ -148,6 +172,7 @@ class RegistrationScreen extends Component {
             onChangeText={addressInput => {
               this.setState({ address: addressInput });
             }}
+            value={address}
             style={{ marginBottom: 8 }}
           />
           <View style={flexHorizontal}>
@@ -161,6 +186,7 @@ class RegistrationScreen extends Component {
                 marginBottom: 8,
                 marginRight: 8
               }}
+              value={postcode}
             />
             <Input
               placeholder="City"
@@ -169,6 +195,7 @@ class RegistrationScreen extends Component {
               }}
               width={width / 2 - 4}
               style={{ marginBottom: 8 }}
+              value={city}
             />
           </View>
           <Input
@@ -177,6 +204,7 @@ class RegistrationScreen extends Component {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
             style={{ marginBottom: 8 }}
+            value={phoneNbr}
           />
           <Input
             placeholder="Food preferences"
@@ -184,6 +212,7 @@ class RegistrationScreen extends Component {
               this.setState({ foodPreferences: foodPreferencesInput });
             }}
             style={{ marginBottom: 8 }}
+            value={foodPreferences}
           />
           <Text>Choose shirt size</Text>
           {this.renderPickerForPlatform(this.state.shirtSizeTitle, 'shirt')}
@@ -195,6 +224,7 @@ class RegistrationScreen extends Component {
             onChangeText={studentUnionInfoInput => {
               this.setState({ studentUnionInfo: studentUnionInfoInput });
             }}
+            value={studentUnionInfo}
           />
           <ButtonChoiceManager
             buttonInputVector={['I was engaged in the karneval 2014']}
@@ -204,7 +234,31 @@ class RegistrationScreen extends Component {
             text="Register"
             style="standardButton"
             width={width}
-            onPress={() => this.props.navigation.navigate('ConfirmationScreen')}
+            onPress={() => {
+              axios
+                .post('http://146.185.173.31:3000/register', {
+                  email: this.state.email,
+                  password: '123',
+                  postNumber: this.state.postcode,
+                  talent: 'saknas'
+                })
+                .then(() => {
+                  this.props.navigation.navigate('HomeScreen');
+                })
+                .catch(error => {
+                  let msg;
+                  if (error.message.includes('400')) {
+                    msg = 'Invalid email or password';
+                  } else if (error.message.includes('401')) {
+                    msg = 'Invalid email or password';
+                  } else if (error.message.includes('404')) {
+                    msg = 'Something went wrong...';
+                  } else {
+                    msg = 'Internal error, please try again later';
+                  }
+                  Alert.alert('Error', msg);
+                });
+            }}
           />
         </ScrollView>
         <DKPicker
@@ -227,10 +281,6 @@ class RegistrationScreen extends Component {
 }
 
 const styles = {
-  header: {
-    backgroundColor: 'pink',
-    alignItems: 'center'
-  },
   titelTextStyle: {
     fontSize: 40
   },

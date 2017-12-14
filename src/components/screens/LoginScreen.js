@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Image, Text, View, Dimensions } from 'react-native';
+import { Alert, Image, Text, View, Dimensions } from 'react-native';
+import axios from 'axios';
 import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
 
@@ -11,7 +12,7 @@ class HomeScreen extends Component {
     super(props)
     this.state = {
       alertVisible: false,
-      socSecNbr: '',
+      email: '',
       password: ''
     }
   }
@@ -26,8 +27,8 @@ class HomeScreen extends Component {
         <View style={opacityStyle} />
         <View style={styles.container1}>
           <Input
-            placeholder='Personnummer'
-            title='Personnummer'
+            placeholder='Email address'
+            title='Email address'
             width={WIDTH}
             viewStyle={{ marginBottom: 2 }}
             textInputStyle={styles.textInputStyle}
@@ -36,7 +37,7 @@ class HomeScreen extends Component {
             onChangeText={
               text => {
                 return this.setState(() => {
-                  return { socSecNbr: { text } }
+                  return { email: { text } }
                 });
               }
             }
@@ -61,7 +62,30 @@ class HomeScreen extends Component {
           <CustomButton
             text='Logga in'
             onPress={() => {
-              this.props.navigation.navigate('MyPageNavbarScreen')
+              axios.post(
+                'http://146.185.173.31:3000/login/email',
+                {
+                  email: this.state.email.text,
+                  password: this.state.password.text
+                }
+              ).then(() => {
+                this.props.navigation.navigate('MyPageNavbarScreen')
+              }).catch((error) => {
+                let msg;
+                if (error.message.includes('400')) {
+                  msg = 'Wrong email or password';
+                } else if (error.message.includes('401')) {
+                  msg = 'Wrong email or password';
+                } else if (error.message.includes('404')) {
+                  msg = 'Something went wrong...';
+                } else {
+                  msg = 'Internal error, please try again later';
+                }
+                Alert.alert(
+                  'Error',
+                  msg
+                );
+              })
             }}
             style='standardButton'
             width={WIDTH}
@@ -81,7 +105,9 @@ class HomeScreen extends Component {
           />
           <CustomButton
             text='Läs mer om registreringen'
-            width={WIDTH}
+            onPress={() => {
+              this.props.navigation.navigate('RegistrationInfo')
+            }}
             style='textButton'
           />
         </View>

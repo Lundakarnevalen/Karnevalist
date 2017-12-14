@@ -23,7 +23,7 @@ class CustomButton extends Component {
   getTextStyle() {
     switch (this.props.style) {
       case 'textButton':
-        return styles.blueText;
+        return styles.underlineText;
       case 'standardButton':
         return styles.whiteText;
       case 'acceptButton':
@@ -87,8 +87,8 @@ class CustomButton extends Component {
       color: '#f4376d',
       fontSize: 20
     },
-    blueText: {
-      color: 'blue',
+    underlineText: {
+      color: 'white',
       textDecorationLine: 'underline'
     },
     blackText: {
