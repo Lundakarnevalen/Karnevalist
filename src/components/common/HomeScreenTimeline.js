@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 
 class HomeScreenTimeLine extends Component {
 
-	getIconColor(nbr) {
+  getIconColor(nbr) {
 		if (nbr < this.props.timelineProgress) {
 			return 'black'
 		}
