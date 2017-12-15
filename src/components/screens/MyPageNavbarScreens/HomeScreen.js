@@ -4,10 +4,12 @@ import Header from '../../common/Header'
 import CustomButton from '../../common/CustomButton'
 import BackgroundImage from '../../common/BackgroundImage';
 import CountDown from '../../common/countDown/CountDown';
+import HomeScreenTimeLine from '../../common/HomeScreenTimeline'
 
 const WIDTH = Dimensions.get('window').width
 
 class HomeScreen extends Component {
+
   render() {
     const { container } = styles
     return (

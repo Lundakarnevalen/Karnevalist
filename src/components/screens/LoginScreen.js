@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Image, Text, View, Dimensions } from 'react-native';
+import { Alert, View, Dimensions, ScrollView } from 'react-native';
+import axios from 'axios';
 import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
+import PasswordPopUp from '../common/PasswordPopUp';
+import BackgroundImage from '../common/BackgroundImage';
 
 const WIDTH = Dimensions.get('window').width * 0.9;
+const HEIGHT = Dimensions.get('window').height;
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -16,82 +20,96 @@ class HomeScreen extends Component {
   }
 
   render() {
+    const { containerStyle } = styles;
+    const { email, password } = this.state;
     return (
-      <Image
-        style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }}
-        source={require('../../../res/Flicka_Tuba_Byggnader.png')}
-      >
-        <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            backgroundColor: '#8A4797',
-            height: Dimensions.get('window').height,
-            width: Dimensions.get('window').width,
-            opacity: 0.7
-          }}
-        />
-        <View style={styles.container1}>
-          <Image source={require('../../../res/LK2018logga.png')} />
-          <Input
-            placeholder="Personnummer"
-            title="Personnummer"
-            width={WIDTH}
-            viewStyle={{ marginBottom: 2 }}
-            textInputStyle={styles.textInputStyle}
-            headerTextStyle={styles.inputHeaderTextStyle}
-            underlineColorAndroid="transparent"
-            onChangeText={text => {
-              return this.setState(() => {
-                return { socSecNbr: { text } };
-              });
-            }}
-          />
-          <Input
-            placeholder="Lösenord"
-            title="Lösenord"
-            width={WIDTH}
-            secureText
-            viewStyle={{ marginBottom: 11 }}
-            textInputStyle={styles.textInputStyle}
-            headerTextStyle={styles.inputHeaderTextStyle}
-            underlineColorAndroid="transparent"
-            onChangeText={text => {
-              return this.setState(() => {
-                return { password: { text } };
-              });
-            }}
-          />
-          <CustomButton
-            text="Logga in"
-            onPress={() => {
-              this.props.navigation.navigate('MyPageNavbarScreen');
-            }}
-            style="standardButton"
-            width={WIDTH}
-          />
-          <Text style={{ color: 'white', fontSize: 12 }}>Har du ingen profil?</Text>
-          <CustomButton
-            text="Skapa profil"
-            width={WIDTH}
-            onPress={() => {
-              this.props.navigation.navigate('RegistrationScreen');
-            }}
-            style="standardButton"
-          />
-          <CustomButton text="Läs mer om registreringen" width={WIDTH} style="textButton" />
-        </View>
-      </Image>
+      <View style={containerStyle}>
+        <BackgroundImage imagePath={require('../../../assets/images/background4.png')} />
+        <ScrollView>
+          <View style={styles.container1}>
+            <Input
+              value={email}
+              placeholder="Email address"
+              width={WIDTH}
+              onChangeText={text => this.setState({ email: text })}
+            />
+            <Input
+              value={password}
+              placeholder="Lösenord"
+              width={WIDTH}
+              secureText
+              onChangeText={text => this.setState({ password: text })}
+            />
+            <CustomButton
+              text="Logga in"
+              onPress={() => {
+                axios
+                  .post('http://146.185.173.31:3000/login/email', {
+                    email,
+                    password
+                  })
+                  .then(() => {
+                    this.props.navigation.navigate('MyPageNavbarScreen');
+                  })
+                  .catch(error => {
+                    let msg;
+                    if (error.message.includes('400')) {
+                      msg = 'Wrong email or password';
+                    } else if (error.message.includes('401')) {
+                      msg = 'Wrong email or password';
+                    } else if (error.message.includes('404')) {
+                      msg = 'Something went wrong...';
+                    } else {
+                      msg = 'Internal error, please try again later';
+                    }
+                    Alert.alert('Error', msg);
+                  });
+              }}
+              style="standardButton"
+              width={WIDTH}
+            />
+            <CustomButton
+              text="Glömt lösenord?"
+              onPress={() => {
+                this.setState({ alertVisible: true });
+              }}
+              style="textButton"
+            />
+            <CustomButton
+              text="Skapa profil"
+              width={WIDTH}
+              onPress={() => {
+                this.props.navigation.navigate('RegistrationScreen');
+              }}
+              style="standardButton"
+            />
+            <CustomButton
+              text="Läs mer om registreringen"
+              onPress={() => {
+                this.props.navigation.navigate('RegistrationInfo');
+              }}
+              style="textButton"
+            />
+            <PasswordPopUp
+              alertVisible={this.state.alertVisible}
+              setAlertVisible={bool => this.setState({ alertVisible: bool })}
+              buttonsIn={[{ text: 'Cancel' }, { text: 'Reset password' }]}
+              header={'Forgot password?'}
+              info={'Please, fill in your email address below and you will receive a new password'}
+            />
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = {
   container1: {
-    flex: 1,
+    height: HEIGHT,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
   },
   container2: {
     flex: 0,
@@ -106,6 +124,10 @@ const styles = {
   inputHeaderTextStyle: {
     color: 'white',
     fontSize: 12
+  },
+  containerStyle: {
+    width: Dimensions.get('window').width,
+    height: HEIGHT
   }
 };
 

@@ -46,16 +46,19 @@ class PasswordPopUp extends Component {
     return 0;
   }
   getOnPress(index) {
-    const { email } = this.state.emailAddress;
-    if (email === '') {
-      Alert.alert('Error', 'Wrong fromat on email');
-    } else if (index === 1) {
+    const { emailAddress } = this.state;
+    console.log(emailAddress);
+    if (index === 1) {
       axios
         .post('http://146.185.173.31:3000/login/forgotpassword', {
           email: this.state.emailAddress
         })
-        .then(() => {
-          Alert.alert('tack så mycket');
+        .then(response => {
+          if (!response.data.success) {
+            Alert.alert('FUCK U');
+          } else {
+            Alert.alert('tack så mycket');
+          }
         })
         .catch(error => {
           let msg;
@@ -71,7 +74,7 @@ class PasswordPopUp extends Component {
           Alert.alert('Error', msg);
         });
     } else {
-      Alert.alert(this.state.emailAddress);
+      this.props.setAlertVisible(false);
     }
   }
 
