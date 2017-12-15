@@ -1,41 +1,34 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons';
 
-const WIDTH = Dimensions.get('window').width
+const WIDTH = Dimensions.get('window').width;
 
 class SectionListItem extends Component {
-
   getInfoText(sectionInfoText) {
-    let text = sectionInfoText
-    if (text && text.length > 50)
-      text = text.substring(0, 50) + '...'
-    return text
+    let text = sectionInfoText;
+    if (text && text.length > 50) text = text.substring(0, 50) + '...';
+    return text;
   }
 
   render() {
-    const { containerStyle, titleStyle, infoStyle, continueIconIndicatorStyle } = styles
-    const { sectionTitle = '', sectionInfoText = '', onPress, } = this.props
+    const { containerStyle, titleStyle, infoStyle, continueIconIndicatorStyle } = styles;
+    const { sectionTitle = '', sectionInfoText = '', onPress } = this.props;
     return (
-      <TouchableOpacity
-        onPress={() => onPress()}
-        style={containerStyle}
-      >
+      <TouchableOpacity onPress={() => onPress()} style={containerStyle}>
         <View style={{ flex: 6, margin: 3 }}>
-          <Text style={titleStyle}>
-            {sectionTitle}
-          </Text>
-          {sectionInfoText === '' ? null : <Text ellipsizeMode={'tail'} numberOfLines={1} style={infoStyle}>{this.getInfoText(sectionInfoText)}</Text>}
+          <Text style={titleStyle}>{sectionTitle}</Text>
+          {sectionInfoText === '' ? null : (
+            <Text ellipsizeMode={'tail'} numberOfLines={1} style={infoStyle}>
+              {this.getInfoText(sectionInfoText)}
+            </Text>
+          )}
         </View>
         <View style={{ flex: 1 }}>
-          <MaterialIcons
-            name='keyboard-arrow-right'
-            style={continueIconIndicatorStyle}
-            size={60}
-          />
+          <MaterialIcons name="keyboard-arrow-right" style={continueIconIndicatorStyle} size={50} />
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 }
 
@@ -56,7 +49,7 @@ const styles = {
     color: '#f4376d'
   },
   infoStyle: {
-    fontSize: 14,
+    fontSize: 14
   },
   continueIconIndicatorStyle: {
     marginRight: 0,
@@ -64,4 +57,4 @@ const styles = {
     backgroundColor: 'transparent'
   }
 };
-export default SectionListItem
+export default SectionListItem;
