@@ -55,9 +55,9 @@ class PasswordPopUp extends Component {
         })
         .then(response => {
           if (!response.data.success) {
-            Alert.alert('FUCK U');
+            Alert.alert('Please enter a valid email address');
           } else {
-            Alert.alert('tack så mycket');
+            Alert.alert('Thank you, check your inbox for your new password');
           }
         })
         .catch(error => {
