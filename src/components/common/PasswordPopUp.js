@@ -7,8 +7,10 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
+import axios from 'axios';
 import Input from '../common/Input';
 
 class PasswordPopUp extends Component {
@@ -43,6 +45,38 @@ class PasswordPopUp extends Component {
     }
     return 0;
   }
+  getOnPress(index) {
+    const { emailAddress } = this.state;
+    console.log(emailAddress);
+    if (index === 1) {
+      axios
+        .post('http://146.185.173.31:3000/login/forgotpassword', {
+          email: this.state.emailAddress
+        })
+        .then(response => {
+          if (!response.data.success) {
+            Alert.alert('FUCK U');
+          } else {
+            Alert.alert('tack så mycket');
+          }
+        })
+        .catch(error => {
+          let msg;
+          if (error.message.includes('400')) {
+            msg = 'Wrong email or password';
+          } else if (error.message.includes('401')) {
+            msg = 'Wrong email or password';
+          } else if (error.message.includes('404')) {
+            msg = 'Something went wrong...';
+          } else {
+            msg = 'Internal error, please try again later';
+          }
+          Alert.alert('Error', msg);
+        });
+    } else {
+      this.props.setAlertVisible(false);
+    }
+  }
 
   createButtons() {
     const { buttonsIn } = this.props;
@@ -50,7 +84,7 @@ class PasswordPopUp extends Component {
     for (let index = 0; index < 2; index++) {
       toReturn.push(
         <TouchableOpacity
-          onPress={buttonsIn[index].onPress}
+          onPress={() => this.getOnPress(index)}
           style={[
             styles.buttonStyle,
             {
@@ -90,11 +124,7 @@ class PasswordPopUp extends Component {
                     title="E-mail"
                     width={Dimensions.get('window').width / 1.2}
                     underlineColorAndroid="transparent"
-                    onChangeText={text => {
-                      return this.setState(() => {
-                        return { emailAddress: { text } };
-                      });
-                    }}
+                    onChangeText={text => this.setState({ emailAddress: text })}
                   />
                 </View>
                 <View style={styles.buttonViewStyle}>{this.createButtons()}</View>
@@ -118,7 +148,7 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'column',
     width: Dimensions.get('window').width / 1.1,
-    height: Dimensions.get('window').height / 2.5,
+    height: 220,
     borderRadius: 5,
     backgroundColor: '#d999fa'
   },
