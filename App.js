@@ -14,6 +14,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+    console.log(new Date().getHours());
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
     Font.loadAsync({
       'Avenir Next Bold': require('./assets/fonts/AvenirNext-Bold-01.ttf'),
