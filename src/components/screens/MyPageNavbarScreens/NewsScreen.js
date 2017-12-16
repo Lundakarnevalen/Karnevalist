@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, Dimensions } from 'react-native';
+import { View, ListView, Dimensions, Platform } from 'react-native';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
@@ -37,7 +37,7 @@ class NewsScreen extends Component {
           navigation={this.props.navigation}
         />
         <ListView
-          style={{ height: height - 64 }}
+          style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}
           dataSource={this.state.dataSource}
           contentContainerStyle={{ alignItems: 'center' }}
           renderRow={rowData => (
