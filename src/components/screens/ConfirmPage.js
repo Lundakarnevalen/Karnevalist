@@ -13,6 +13,7 @@ class ConfirmPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      moreThanFiveChoices: false,
       data: [{ key: '', id: '', text: '', infoText: '', image: '' }],
       editMode: false,
       alertVisible: false,
@@ -22,8 +23,10 @@ class ConfirmPage extends Component {
 
   componentWillMount() {
     const tempData = [];
+    let numberOfDatas = 0;
     getSections(sections => {
       sections.forEach((section, i) => {
+        numberOfDatas++;
         tempData.push({
           key: section.key,
           id: i,
@@ -33,9 +36,18 @@ class ConfirmPage extends Component {
         });
       });
       this.setState({ data: tempData });
+      this.setConfirmButtonStyle(numberOfDatas);
     });
   }
 
+  setConfirmButtonStyle(numberOfDatas) {
+    //somethin wrong here..
+    if (numberOfDatas >= 5) {
+      this.setState({ moreThanFiveChoices: true });
+    } else {
+      this.setState({ moreThanFiveChoices: false });
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -70,7 +82,7 @@ class ConfirmPage extends Component {
         />
         <View style={{ flexDirection: 'column' }}>
           <TouchableOpacity
-            style={styles.confimButtonStyle}
+            style={this.getConfimButtonStyle()}
             onPress={() => this.onPressConfirmButton()}
           >
             <Text style={styles.confimTextStyle}>Send</Text>
@@ -80,18 +92,54 @@ class ConfirmPage extends Component {
     );
   }
 
+  getConfimButtonStyle() {
+    if (this.state.moreThanFiveChoices) {
+      return {
+        height: window.height / 9,
+        backgroundColor: '#F4376D',
+        borderColor: '#ffffff',
+        borderRadius: 0,
+        margin: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        bottom: 0,
+        width: window.width
+      };
+    }
+    return {
+      height: window.height / 9,
+      backgroundColor: '#a9a9a9',
+      borderColor: '#ffffff',
+      borderRadius: 0,
+      margin: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      bottom: 0,
+      width: window.width
+    };
+  }
+
   deleteRow(id) {
+    const { rows } = this.state;
     const newData = this.state.data.filter(dataItem => dataItem.id !== id);
     const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
     removeItem(toRemove[0].key);
+    if (rows.length >= 5) {
+      this.setState({ moreThanFiveChoices: true });
+    } else if (rows.length < 5) {
+      this.setState({ moreThanFiveChoices: false });
+    }
     this.setState({ data: newData });
   }
 
   renderRow(item) {
-    if (this.state.rows.length > this.state.data.length) {
+    const { rows, data } = this.state;
+
+    console.log(data);
+    if (rows.length > data.length) {
       this.setState({ rows: [] });
     } else {
-      this.state.rows.push(item);
+      rows.push(item);
     }
     return (
       <Row
@@ -116,10 +164,6 @@ class ConfirmPage extends Component {
       return 'trash';
     }
     return 'navicon';
-  }
-
-  onPressTrash(key) {
-    Alert.alert('Navigera till ' + key + '-sektionen');
   }
 
   onPressConfirmButton() {
@@ -164,6 +208,17 @@ const styles = StyleSheet.create({
   confimButtonStyle: {
     height: window.height / 9,
     backgroundColor: '#F4376D',
+    borderColor: '#ffffff',
+    borderRadius: 0,
+    margin: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+    width: window.width
+  },
+  notOkConfirmButtonStyle: {
+    height: window.height / 9,
+    backgroundColor: '#a9a9a9',
     borderColor: '#ffffff',
     borderRadius: 0,
     margin: 0,
