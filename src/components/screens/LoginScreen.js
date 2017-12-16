@@ -145,7 +145,7 @@ class HomeScreen extends Component {
             loadingComplete={loadingComplete}
             redirect={() => {
               this.props.navigation.navigate('MyPageNavbarScreen');
-              this.setState({ loading: false, loadingComplete: false });
+              this.setState({ loading: false, loadingComplete: false, password: '' });
             }}
           />
         ) : null}

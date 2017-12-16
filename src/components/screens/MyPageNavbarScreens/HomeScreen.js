@@ -16,7 +16,11 @@ class HomeScreen extends Component {
         <Header title="Home" leftIcon={null} navigation={this.props.navigation} />
         <View style={container}>
           <CountDown />
-          <CustomButton style="standardButton" text="Checka in" />
+          <CustomButton
+            style="standardButton"
+            text="Confirm your sections"
+            onPress={() => this.props.screenProps.navigate('ConfirmPage')}
+          />
         </View>
       </View>
     );

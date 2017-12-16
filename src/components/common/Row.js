@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, Easing, Text, Image, Platform, Dimensions, View } from 'react-native';
+import { connect } from 'react-redux';
 import { EvilIcons } from '@expo/vector-icons';
 
 const window = Dimensions.get('window');
@@ -53,16 +54,21 @@ class Row extends Component {
     }
   }
 
+  getColor() {
+    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
+  }
+
   getInfoTextStyle() {
     return {
       fontSize: this.props.data.text.length < 10 ? 12 : 10,
       fontWeight: 'bold',
-      color: '#F4376D',
+      color: this.getColor(),
       left: 0
     };
   }
 
   createRows(data) {
+    const { iconStyle, indexStyle, image } = styles;
     return (
       <View
         style={{
@@ -72,8 +78,8 @@ class Row extends Component {
           width: window.width - 20
         }}
       >
-        <Text style={styles.indexStyle}>{this.props.index}</Text>
-        <Image source={{ uri: data.image }} style={styles.image} />
+        <Text style={[indexStyle, { color: this.getColor() }]}>{this.props.index}</Text>
+        <Image source={{ uri: data.image }} style={image} />
         <View
           style={{
             flex: 0.7,
@@ -84,7 +90,7 @@ class Row extends Component {
         </View>
         <EvilIcons
           name={this.props.iconName}
-          style={styles.iconStyle}
+          style={[iconStyle, { color: this.getColor() }]}
           onPress={() => this.getOnPress()}
           size={35}
         />
@@ -100,7 +106,7 @@ class Row extends Component {
   render() {
     const { data } = this.props;
     return (
-      <Animated.View style={[styles.row, this._style]}>
+      <Animated.View style={[styles.row, this._style, { borderColor: this.getColor() }]}>
         <View
           style={{
             flexDirection: 'column',
@@ -125,7 +131,6 @@ const styles = {
     marginTop: 7,
     marginBottom: 7,
     borderWidth: 1,
-    borderColor: '#F4376D',
     borderRadius: 1,
     alignSelf: 'center',
     width: window.width - 40,
@@ -142,14 +147,18 @@ const styles = {
   indexStyle: {
     alignSelf: 'center',
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#F4376D'
+    fontWeight: 'bold'
   },
   iconStyle: {
-    color: '#F4376D',
     alignSelf: 'center',
     position: 'absolute',
     right: 25
   }
 };
-export default Row;
+
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(Row);

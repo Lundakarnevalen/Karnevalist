@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, Dimensions, FlatList, Platform } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
@@ -20,6 +21,17 @@ class SectionScreen extends Component {
 
   componentWillMount() {
     this.getSectionInfo();
+  }
+
+  getColor() {
+    switch (this.props.theme) {
+      case 'morning':
+        return '#F7A021';
+      case 'day':
+        return '#f4376d';
+      default:
+        return 'white';
+    }
   }
 
   getImage(url, section) {
@@ -75,7 +87,7 @@ class SectionScreen extends Component {
           <Header
             rightIcon={
               <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage')}>
-                <FontAwesome name="list-alt" size={30} color={'#f4376d'} />
+                <FontAwesome name="list-alt" size={30} color={this.getColor()} />
               </TouchableOpacity>
             }
             title="Sections"
@@ -114,4 +126,9 @@ const styles = {
   }
 };
 
-export default SectionScreen;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(SectionScreen);

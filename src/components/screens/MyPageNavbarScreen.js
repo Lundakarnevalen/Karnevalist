@@ -7,6 +7,10 @@ import AmusementScreen from './MyPageNavbarScreens/AmusementScreen';
 import NewsScreen from './MyPageNavbarScreens/NewsScreen';
 import ProfileScreen from './MyPageNavbarScreens/ProfileScreen';
 
+//TODO: Ful lösning, kanske ska göra såhär överallt dock, flytta ut till separat "theme" klass istället för redux.
+const CURRENT_HOUR = new Date().getHours();
+const THEME_COLOR = CURRENT_HOUR > 8 && CURRENT_HOUR < 18 ? '#f4376d' : '#F7A021';
+
 class MyPageNavbarScreen extends Component {
   render() {
     return <TabNav screenProps={this.props.navigation} />;
@@ -71,7 +75,7 @@ const TabNav = TabNavigator(
     initialRouteName: 'Home',
     tabBarOptions: {
       showIcon: true,
-      activeTintColor: '#f4376d',
+      activeTintColor: THEME_COLOR,
       labelStyle: {
         fontSize: 10
       },

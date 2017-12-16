@@ -10,24 +10,6 @@ class CheckBox extends Component {
     };
   }
 
-  renderCheckbox() {
-    const { size, onPress, color } = this.props;
-    return (
-      <TouchableOpacity
-        style={[styles.multipleChoiceStyle, { height: size, width: size }]}
-        onPress={onPress}
-      >
-        <MaterialIcons
-          name={this.getIconName()}
-          size={size}
-          color={color}
-          style={{ backgroundColor: 'transparent' }}
-        />
-        <Text style={{ fontSize: 15 }}>{this.props.name}</Text>
-      </TouchableOpacity>
-    );
-  }
-
   getIconName() {
     if (this.props.isPressed) {
       return 'check-box';
@@ -61,7 +43,8 @@ const styles = {
   },
   textStyle: {
     fontSize: 16,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Bold'
   }
 };
 

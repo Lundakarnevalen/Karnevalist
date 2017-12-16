@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
 import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import BackgroundImage from '../common/BackgroundImage';
+import CustomButton from '../common/CustomButton';
 
 const window = Dimensions.get('window');
 
@@ -35,14 +37,28 @@ class ConfirmPage extends Component {
     });
   }
 
+  getColor() {
+    switch (this.props.theme) {
+      case 'morning':
+        return '#F7A021';
+      case 'day':
+        return '#f4376d';
+      default:
+        return 'white';
+    }
+  }
+
   renderSortableListOrMessage() {
-    const { contentContainer, list, confimButtonStyle, confimTextStyle, text } = styles;
+    const { contentContainer, list, confimButtonStyle, confimTextStyle, textStyle } = styles;
     if (this.state.data.length === 0) {
       return (
         <View
           style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text style={text}>No selected sections</Text>
+          <Text style={[textStyle, { color: this.props.theme === 'night' ? 'white' : 'black' }]}>
+            No selected sections
+          </Text>
+          <CustomButton style={'standardButton'} text={'To section selection'} />
         </View>
       );
     }
@@ -54,7 +70,13 @@ class ConfirmPage extends Component {
           data={this.state.data}
           renderRow={this.renderRow.bind(this)}
         />
-        <TouchableOpacity style={confimButtonStyle} onPress={() => this.onPressConfirmButton()}>
+        <TouchableOpacity
+          style={[
+            confimButtonStyle,
+            { backgroundColor: this.props.theme === 'day' ? '#F4376D' : '#F7A021' }
+          ]}
+          onPress={() => this.onPressConfirmButton()}
+        >
           <Text style={confimTextStyle}>Send</Text>
         </TouchableOpacity>
       </View>
@@ -117,8 +139,6 @@ class ConfirmPage extends Component {
       <View style={styles.container}>
         <BackgroundImage pictureNumber={2} />
         <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: '#ffffff' }}
           title="Confirmation page"
           navigation={this.props.navigation}
           rightIcon={
@@ -128,10 +148,7 @@ class ConfirmPage extends Component {
             >
               <MaterialIcons
                 name={this.getHeaderIconName()}
-                style={{
-                  color: '#f4376d',
-                  right: 0
-                }}
+                style={{ color: this.getColor(), right: 0 }}
                 size={35}
               />
             </TouchableOpacity>
@@ -158,7 +175,6 @@ const styles = {
   },
   confimButtonStyle: {
     height: window.height / 9,
-    backgroundColor: '#F4376D',
     borderColor: '#ffffff',
     borderRadius: 0,
     margin: 0,
@@ -179,10 +195,16 @@ const styles = {
     marginRight: 30,
     borderRadius: 25
   },
-  text: {
+  textStyle: {
     fontSize: 24,
-    color: '#222222'
+    fontFamily: 'Avenir Next Bold',
+    backgroundColor: 'transparent'
   }
 };
 
-export default ConfirmPage;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(ConfirmPage);

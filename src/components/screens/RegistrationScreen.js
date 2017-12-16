@@ -52,7 +52,7 @@ class RegistrationScreen extends Component {
   }
 
   getColor() {
-    return this.props.theme === 'day' ? 'rgb(138, 71, 151)' : '#F7A021';
+    return this.props.theme === 'day' ? 'rgb(138, 71, 151)' : 'white';
   }
 
   renderPickerForPlatform(defaultTitle, title, tag) {
