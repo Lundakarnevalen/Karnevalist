@@ -5,6 +5,7 @@ import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
 import PasswordPopUp from '../common/PasswordPopUp';
 import BackgroundImage from '../common/BackgroundImage';
+import Loading from '../common/Loading';
 
 const WIDTH = Dimensions.get('window').width * 0.9;
 const HEIGHT = Dimensions.get('window').height;
@@ -15,13 +16,15 @@ class HomeScreen extends Component {
     this.state = {
       alertVisible: false,
       socSecNbr: '',
-      password: ''
+      password: '',
+      loading: false,
+      loadingComplete: false
     };
   }
 
   render() {
     const { containerStyle } = styles;
-    const { email, password } = this.state;
+    const { email, password, loading, loadingComplete } = this.state;
     return (
       <View style={containerStyle}>
         <BackgroundImage imagePath={require('../../../assets/images/background4.png')} />
@@ -43,13 +46,14 @@ class HomeScreen extends Component {
             <CustomButton
               text="Logga in"
               onPress={() => {
+                this.setState({ loading: true, loadingComplete: false });
                 axios
                   .post('https://api.10av10.com/login/email', {
                     email,
                     password
                   })
                   .then(() => {
-                    this.props.navigation.navigate('MyPageNavbarScreen');
+                    this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
                     let msg;
@@ -62,6 +66,7 @@ class HomeScreen extends Component {
                     } else {
                       msg = 'Internal error, please try again later';
                     }
+                    this.setState({ loading: false, loadingComplete: false });
                     Alert.alert('Error', msg);
                   });
               }}
@@ -114,6 +119,15 @@ class HomeScreen extends Component {
             />
           </View>
         </ScrollView>
+        {loading ? (
+          <Loading
+            loadingComplete={loadingComplete}
+            redirect={() => {
+              this.props.navigation.navigate('MyPageNavbarScreen');
+              this.setState({ loading: false, loadingComplete: false });
+            }}
+          />
+        ) : null}
       </View>
     );
   }
