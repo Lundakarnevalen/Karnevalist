@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, ScrollView, View, Dimensions, Picker, Platform } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Header from '../common/Header';
 import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
@@ -48,6 +49,10 @@ class RegistrationScreen extends Component {
       loading: false,
       loadingComplete: false
     };
+  }
+
+  getColor() {
+    return this.props.theme === 'day' ? 'rgb(138, 71, 151)' : '#F7A021';
   }
 
   renderPickerForPlatform(defaultTitle, title, tag) {
@@ -231,13 +236,13 @@ class RegistrationScreen extends Component {
             buttonInputVector={['I was engaged in the karneval 2014']}
             multipleChoice
             size={30}
-            color={'rgb(138, 71, 151)'}
+            color={this.getColor()}
           />
           <ButtonChoiceManager
             buttonInputVector={['I have a drives license']}
             multipleChoice
             size={30}
-            color={'rgb(138, 71, 151)'}
+            color={this.getColor()}
           />
           <CustomButton
             text={'Register'}
@@ -351,4 +356,9 @@ const styles = {
   }
 };
 
-export default RegistrationScreen;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(RegistrationScreen);

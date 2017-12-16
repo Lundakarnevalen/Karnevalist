@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView } from 'react-native';
+import { Alert, View, Dimensions, ScrollView, StatusBar } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
@@ -29,10 +29,13 @@ class HomeScreen extends Component {
     const currentHour = new Date().getHours();
     if (currentHour < 9) {
       currentTheme = 'morning';
+      StatusBar.setBarStyle('dark-content', true);
     } else if (currentHour < 18) {
       currentTheme = 'day';
+      StatusBar.setBarStyle('dark-content', true);
     } else {
       currentTheme = 'night';
+      StatusBar.setBarStyle('light-content', true);
     }
     this.props.setTheme(currentTheme);
   }
