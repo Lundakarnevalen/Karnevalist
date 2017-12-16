@@ -56,12 +56,27 @@ class BackgroundImage extends Component {
     }
   }
 
+  getOpacityStyle() {
+    let backgroundColor;
+    if (this.props.theme === 'day') {
+      backgroundColor = 'rgba(255, 255, 255, 0.7)';
+    } else {
+      backgroundColor = 'rgba(255, 255, 255, 0.3)';
+    }
+    return {
+      backgroundColor,
+      width: WIDTH,
+      height: HEIGHT,
+      position: 'absolute'
+    };
+  }
+
   render() {
-    const { containerStyle, backgroundImageStyle, opacityStyle } = styles;
+    const { containerStyle, backgroundImageStyle } = styles;
     return (
       <View style={containerStyle}>
         <Image source={this.getPath()} style={backgroundImageStyle} />
-        <View style={opacityStyle} />
+        <View style={this.getOpacityStyle()} />
       </View>
     );
   }
@@ -74,12 +89,6 @@ const styles = {
     height: HEIGHT
   },
   backgroundImageStyle: {
-    width: WIDTH,
-    height: HEIGHT,
-    position: 'absolute'
-  },
-  opacityStyle: {
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: WIDTH,
     height: HEIGHT,
     position: 'absolute'

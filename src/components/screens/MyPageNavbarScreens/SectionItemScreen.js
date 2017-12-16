@@ -18,8 +18,6 @@ class SectionItemScreen extends Component {
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
           title={title}
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: 'white' }}
           navigation={navigation}
           rightIcon={
             <TouchableOpacity

@@ -25,13 +25,7 @@ class ProfileScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: 'white' }}
-          title="Min profil"
-          leftIcon={null}
-          navigation={this.props.navigation}
-        />
+        <Header title="Min profil" leftIcon={null} navigation={this.props.navigation} />
         <ListView
           style={{ height: height - 64 }}
           contentContainerStyle={{ alignItems: 'center' }}

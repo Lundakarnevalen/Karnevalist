@@ -78,8 +78,6 @@ class SectionScreen extends Component {
                 <FontAwesome name="list-alt" size={30} color={'#f4376d'} />
               </TouchableOpacity>
             }
-            textStyle={{ color: '#f4376d' }}
-            style={{ backgroundColor: 'white' }}
             title="Sections"
             leftIcon={null}
             navigation={navigation}

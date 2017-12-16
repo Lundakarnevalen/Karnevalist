@@ -13,13 +13,7 @@ class HomeScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={3} />
-        <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: 'white' }}
-          title="Home"
-          leftIcon={null}
-          navigation={this.props.navigation}
-        />
+        <Header title="Home" leftIcon={null} navigation={this.props.navigation} />
         <View style={container}>
           <CountDown />
           <CustomButton style="standardButton" text="Checka in" />

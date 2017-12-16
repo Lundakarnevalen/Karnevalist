@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, TextInput, Animated } from 'react-native';
+import { connect } from 'react-redux';
 
 class Input extends Component {
   constructor(props) {
@@ -11,12 +12,23 @@ class Input extends Component {
     };
   }
 
+  getThemeColor() {
+    switch (this.props.theme) {
+      case 'morning':
+        return '#F7A021';
+      case 'day':
+        return 'rgb(138, 71, 151)';
+      default:
+        return '#F7A021';
+    }
+  }
+
   inputSelected() {
     Animated.parallel([
       Animated.timing(this.state.fontSize, { toValue: 10, duration: 150 }),
       Animated.timing(this.state.position, { toValue: { x: 9, y: 0 }, duration: 150 })
     ]).start();
-    this.setState({ borderColor: 'rgb(138, 71, 151)' });
+    this.setState({ borderColor: this.getThemeColor() });
   }
 
   inputDeselected() {
@@ -39,7 +51,7 @@ class Input extends Component {
       position: 'absolute',
       top: position.y,
       left: position.x,
-      color: 'rgb(138, 71, 151)'
+      color: this.getThemeColor()
     };
   }
 
@@ -90,4 +102,9 @@ const styles = {
   }
 };
 
-export default Input;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(Input);

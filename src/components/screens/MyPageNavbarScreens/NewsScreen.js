@@ -29,13 +29,7 @@ class NewsScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: 'white' }}
-          title="Nyheter"
-          leftIcon={null}
-          navigation={this.props.navigation}
-        />
+        <Header title="Nyheter" leftIcon={null} navigation={this.props.navigation} />
         <ListView
           style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}
           dataSource={this.state.dataSource}

@@ -32,12 +32,7 @@ class RegistrationInfoScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: 'white' }}
-          title="Om registreringen"
-          navigation={this.props.navigation}
-        />
+        <Header title="Om registreringen" navigation={this.props.navigation} />
         <ScrollView style={{ height: HEIGHT - 64 }}>
           <View style={containerStyle}>
             <Text style={titelTextStyle}>3 enkla steg för att bli</Text>

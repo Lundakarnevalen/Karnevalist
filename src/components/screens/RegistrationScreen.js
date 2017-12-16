@@ -135,12 +135,7 @@ class RegistrationScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header
-          title="Create Profile"
-          navigation={this.props.navigation}
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: '#FFFFFF' }}
-        />
+        <Header title="Create Profile" navigation={this.props.navigation} />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
           <Input
             placeholder="First name"
