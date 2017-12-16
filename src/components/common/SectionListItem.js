@@ -20,13 +20,17 @@ const months = [
 ];
 
 class SectionListItem extends Component {
+  getColor() {
+    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
+  }
+
   renderDateView(sectionDate) {
     const { dateViewStyle, dateStyle } = styles;
     const sectionDateParts = sectionDate.split('T')[0].split('-');
     const sectionDateText = sectionDateParts[2] + '\n' + months[sectionDateParts[1] - 1];
     if (sectionDate) {
       return (
-        <View style={dateViewStyle}>
+        <View style={[dateViewStyle, { backgroundColor: this.getColor() }]}>
           <Text style={dateStyle}>{sectionDateText}</Text>
         </View>
       );
@@ -47,13 +51,19 @@ class SectionListItem extends Component {
     const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
     const { sectionTitle = '', sectionInfoText = '', sectionDate = '', onPress } = this.props;
     return (
-      <TouchableOpacity onPress={() => onPress()} style={containerStyle}>
+      <TouchableOpacity
+        onPress={() => onPress()}
+        style={[containerStyle, { borderColor: this.getColor() }]}
+      >
         <View style={{ flexDirection: 'row' }}>
           {this.renderDateView(sectionDate)}
           <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
             <Text
               numberOfLines={1}
-              style={[titleStyle, { width: sectionDate === '' ? WIDTH * 0.8 : WIDTH * 0.65 }]}
+              style={[
+                titleStyle,
+                { width: sectionDate === '' ? WIDTH * 0.8 : WIDTH * 0.65, color: this.getColor() }
+              ]}
             >
               {sectionTitle}
             </Text>
@@ -68,7 +78,12 @@ class SectionListItem extends Component {
           </View>
         </View>
         <View>
-          <MaterialIcons name="keyboard-arrow-right" style={continueIconIndicatorStyle} size={60} />
+          <MaterialIcons
+            name="keyboard-arrow-right"
+            style={continueIconIndicatorStyle}
+            color={this.getColor()}
+            size={60}
+          />
         </View>
       </TouchableOpacity>
     );
@@ -83,13 +98,11 @@ const styles = {
     alignItems: 'center',
     width: WIDTH,
     borderWidth: 1,
-    borderColor: '#f4376d',
     marginTop: 10
   },
   titleStyle: {
     fontSize: 20,
     marginLeft: 8,
-    color: '#f4376d',
     backgroundColor: 'transparent'
   },
   contentStyle: {
@@ -100,7 +113,6 @@ const styles = {
   dateViewStyle: {
     height: 60,
     width: WIDTH * 0.15,
-    backgroundColor: '#f4376d',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -111,7 +123,6 @@ const styles = {
   },
   continueIconIndicatorStyle: {
     marginRight: 8,
-    color: '#f4376d',
     backgroundColor: 'transparent'
   }
 };
