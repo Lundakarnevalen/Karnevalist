@@ -7,6 +7,7 @@ import ExpandeblePanel from '../common/ExpandeblePanel';
 import BackgroundImage from '../common/BackgroundImage';
 
 const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 class RegistrationInfoScreen extends Component {
   render() {
@@ -37,7 +38,7 @@ class RegistrationInfoScreen extends Component {
           title="Om registreringen"
           navigation={this.props.navigation}
         />
-        <ScrollView>
+        <ScrollView style={{ height: HEIGHT - 64 }}>
           <View style={containerStyle}>
             <Text style={titelTextStyle}>3 enkla steg för att bli</Text>
             <Text style={titelTextStyle}>Karnevalist</Text>
@@ -92,7 +93,7 @@ const styles = {
   },
   containerStyle: {
     alignItems: 'center',
-    marginTop: 15
+    paddingTop: 15
   },
   titelTextStyle: {
     fontSize: 25,

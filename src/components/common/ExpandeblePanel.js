@@ -21,15 +21,15 @@ class ExpandeblePanel extends Component {
   }
 
   setMaxHeight(event) {
-    this.setState({ maxHeight: event.nativeEvent.layout.height + 10 });
+    this.setState({ maxHeight: event.nativeEvent.layout.height + 20 });
   }
 
   setMinHeight(event) {
-    this.setState({ minHeight: event.nativeEvent.layout.height });
+    this.setState({ minHeight: event.nativeEvent.layout.height + 10 });
   }
 
   render() {
-    const { container, rows, textStyle, body } = styles;
+    const { container, rows, textStyle } = styles;
     return (
       <TouchableOpacity onPress={() => this.setState({ expanded: !this.state.expanded })}>
         <Animated.View style={[container, { height: this.state.animation }]}>
@@ -37,7 +37,7 @@ class ExpandeblePanel extends Component {
             {this.props.image}
             <Text style={textStyle}>{this.state.title}</Text>
           </View>
-          <View style={body} onLayout={event => this.setMaxHeight(event)}>
+          <View style={{ marginTop: 10 }} onLayout={event => this.setMaxHeight(event)}>
             {this.props.children}
           </View>
         </Animated.View>
@@ -50,18 +50,13 @@ const styles = {
     alignItems: 'center',
     marginTop: 5,
     backgroundColor: 'white',
-    height: 100,
     width: WIDTH - 50,
     borderWidth: 1,
-    borderColor: '#f4376d'
-  },
-  body: {
-    padding: 10,
-    paddingTop: 0
+    borderColor: '#f4376d',
+    padding: 10
   },
   rows: {
     flexDirection: 'row',
-    width: 280,
     alignItems: 'center',
     justifyContent: 'center'
   },
