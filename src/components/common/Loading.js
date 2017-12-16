@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Text } from 'react-native';
 import { BlurView } from 'expo';
+import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -38,7 +39,14 @@ class Loading extends Component {
     const { containerStyle, headerStyle } = styles;
     return (
       <BlurView style={containerStyle}>
-        <Text style={headerStyle}>LOADING {this.state.loadedPercent.toString()}%</Text>
+        <Text
+          style={[
+            headerStyle,
+            { color: this.props.theme === 'day' ? 'rgb(138, 71, 151)' : '#F7A021' }
+          ]}
+        >
+          LOADING {this.state.loadedPercent.toString()}%
+        </Text>
       </BlurView>
     );
   }
@@ -62,4 +70,9 @@ const styles = {
   }
 };
 
-export default Loading;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(Loading);

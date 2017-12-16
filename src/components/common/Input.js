@@ -67,7 +67,13 @@ class Input extends Component {
       extraContainerStyle
     } = this.props;
     return (
-      <View style={[containerStyle, extraContainerStyle, { width }]}>
+      <View
+        style={[
+          containerStyle,
+          extraContainerStyle,
+          { width, borderColor: this.state.borderColor }
+        ]}
+      >
         {placeholder === '' ? null : (
           <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>
         )}
@@ -77,7 +83,7 @@ class Input extends Component {
           onEndEditing={() => this.inputDeselected()}
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
-          style={[inputStyle, { width, borderColor: this.state.borderColor }, textInputStyle]}
+          style={[inputStyle, { width }, textInputStyle]}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
         />
