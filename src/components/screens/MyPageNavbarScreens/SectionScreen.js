@@ -80,8 +80,8 @@ class SectionScreen extends Component {
               </TouchableOpacity>
             }
             textStyle={{ color: '#f4376d' }}
-            style={{ backgroundColor: '#FFFFFF' }}
-            title="Sektioner"
+            style={{ backgroundColor: 'white' }}
+            title="Sections"
             leftIcon={null}
             navigation={navigation}
           />
