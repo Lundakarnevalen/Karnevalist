@@ -7,6 +7,7 @@ import DKPicker from '../common/DKPicker';
 import CustomButton from '../common/CustomButton';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
 import BackgroundImage from '../common/BackgroundImage';
+import Loading from '../common/Loading';
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
@@ -43,7 +44,9 @@ class RegistrationScreen extends Component {
       studentUnion: '',
       studentUnionTitle: '',
       showShirtPicker: false,
-      showStudentUnionPicker: false
+      showStudentUnionPicker: false,
+      loading: false,
+      loadingComplete: false
     };
   }
 
@@ -125,7 +128,9 @@ class RegistrationScreen extends Component {
       phoneNbr,
       foodPreferences,
       password,
-      confirmedPassword
+      confirmedPassword,
+      loading,
+      loadingComplete
     } = this.state;
     return (
       <View>
@@ -269,15 +274,16 @@ class RegistrationScreen extends Component {
               } else if (password !== confirmedPassword) {
                 Alert.alert('Error', "Your passwords doesn't match.");
               } else {
+                this.setState({ loadingComplete: false, loading: true });
                 axios
-                  .post('http://146.185.173.31:3000/register', {
+                  .post('https://api.10av10.com/register', {
                     email: this.state.email,
                     password: '123',
                     postNumber: this.state.postcode,
                     talent: 'saknas'
                   })
                   .then(() => {
-                    this.props.navigation.navigate('HomeScreen');
+                    this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
                     let msg;
@@ -290,6 +296,7 @@ class RegistrationScreen extends Component {
                     } else {
                       msg = 'Internal error, please try again later';
                     }
+                    this.setState({ loadingComplete: false, loading: false });
                     Alert.alert('Error', msg);
                   });
               }
@@ -310,6 +317,15 @@ class RegistrationScreen extends Component {
           isShowing={this.state.showStudentUnionPicker}
           close={() => this.setState({ showStudentUnionPicker: false })}
         />
+        {loading ? (
+          <Loading
+            loadingComplete={loadingComplete}
+            redirect={() => {
+              this.props.navigation.navigate('HomeScreen');
+              this.setState({ loading: false, loadingComplete: false });
+            }}
+          />
+        ) : null}
       </View>
     );
   }
