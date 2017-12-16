@@ -25,8 +25,15 @@ class HomeScreen extends Component {
   }
 
   componentWillMount() {
-    const currentTheme = 'day';
-
+    let currentTheme = 'day';
+    const currentHour = new Date().getHours();
+    if (currentHour < 9) {
+      currentTheme = 'morning';
+    } else if (currentHour < 18) {
+      currentTheme = 'day';
+    } else {
+      currentTheme = 'night';
+    }
     this.props.setTheme(currentTheme);
   }
 
