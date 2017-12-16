@@ -118,7 +118,7 @@ class PasswordPopUp extends Component {
       buttonViewStyle,
       alertBoxStyle
     } = styles;
-    const { alertVisible, header, info } = this.props;
+    const { alertVisible, header, info, inputValue } = this.props;
     return (
       <Modal transparent visible={alertVisible}>
         <BlurView tint="dark" intensity={70} style={StyleSheet.absoluteFill}>
@@ -141,7 +141,8 @@ class PasswordPopUp extends Component {
                     title="E-mail"
                     width={Dimensions.get('window').width / 1.2}
                     underlineColorAndroid="transparent"
-                    onChangeText={text => this.setState({ emailAddress: text })}
+                    onChangeText={text => this.props.onChangeText(text)}
+                    value={inputValue}
                   />
                 </View>
                 <View style={buttonViewStyle}>{this.createButtons()}</View>

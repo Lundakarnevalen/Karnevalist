@@ -20,7 +20,8 @@ class HomeScreen extends Component {
       email: '',
       password: '',
       loading: false,
-      loadingComplete: false
+      loadingComplete: false,
+      forgotPasswordEmail: ''
     };
   }
 
@@ -42,7 +43,7 @@ class HomeScreen extends Component {
 
   render() {
     const { containerStyle } = styles;
-    const { email, password, loading, loadingComplete } = this.state;
+    const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
@@ -134,6 +135,8 @@ class HomeScreen extends Component {
               ]}
               header={'Forgot password?'}
               info={'Please, fill in your email address below and you will receive a new password'}
+              onChangeText={text => this.setState({ forgotPasswordEmail: text })}
+              inputValue={forgotPasswordEmail}
             />
           </View>
         </ScrollView>
