@@ -28,7 +28,7 @@ class NewsScreen extends Component {
   render() {
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../../assets/images/day4.png')} />
+        <BackgroundImage pictureNumber={4} />
         <Header
           textStyle={{ color: '#f4376d' }}
           style={{ backgroundColor: 'white' }}

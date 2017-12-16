@@ -4,7 +4,6 @@ import Header from '../../common/Header';
 import CustomButton from '../../common/CustomButton';
 import BackgroundImage from '../../common/BackgroundImage';
 import CountDown from '../../common/countDown/CountDown';
-import HomeScreenTimeLine from '../../common/HomeScreenTimeline';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -13,7 +12,7 @@ class HomeScreen extends Component {
     const { container } = styles;
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../../assets/images/day3.png')} />
+        <BackgroundImage pictureNumber={3} />
         <Header
           textStyle={{ color: '#f4376d' }}
           style={{ backgroundColor: 'white' }}

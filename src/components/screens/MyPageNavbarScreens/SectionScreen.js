@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
+import { View, TouchableOpacity, Image, Dimensions, FlatList, Platform } from 'react-native';
 import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
 import Header from '../../common/Header';
@@ -7,7 +7,6 @@ import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
 
 class SectionScreen extends Component {
   constructor(props) {
@@ -71,7 +70,7 @@ class SectionScreen extends Component {
     const { navigation, screenProps } = this.props;
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../../assets/images/day1.png')} />
+        <BackgroundImage pictureNumber={1} />
         <View>
           <Header
             rightIcon={

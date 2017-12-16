@@ -7,7 +7,7 @@ class AmusementsScreen extends Component {
   render() {
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../../assets/images/day2.png')} />
+        <BackgroundImage pictureNumber={2} />
         <Header
           textStyle={{ color: '#f4376d' }}
           style={{ backgroundColor: 'white' }}
