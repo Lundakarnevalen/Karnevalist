@@ -115,7 +115,7 @@ class ConfirmPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <BackgroundImage imagePath={require('../../../assets/images/background2.png')} />
+        <BackgroundImage imagePath={require('../../../assets/images/day2.png')} />
         <Header
           textStyle={{ color: '#f4376d' }}
           style={{ backgroundColor: '#ffffff' }}

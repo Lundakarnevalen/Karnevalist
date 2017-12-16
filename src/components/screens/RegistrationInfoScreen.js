@@ -31,7 +31,7 @@ class RegistrationInfoScreen extends Component {
 
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../assets/images/background4.png')} />
+        <BackgroundImage imagePath={require('../../../assets/images/day4.png')} />
         <Header
           textStyle={{ color: '#f4376d' }}
           style={{ backgroundColor: 'white' }}

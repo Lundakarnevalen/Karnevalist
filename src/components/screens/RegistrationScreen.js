@@ -134,7 +134,7 @@ class RegistrationScreen extends Component {
     } = this.state;
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../assets/images/background5.png')} />
+        <BackgroundImage imagePath={require('../../../assets/images/day5.png')} />
         <Header
           title="Create Profile"
           navigation={this.props.navigation}

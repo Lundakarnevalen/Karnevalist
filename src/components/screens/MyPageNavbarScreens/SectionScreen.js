@@ -71,7 +71,7 @@ class SectionScreen extends Component {
     const { navigation, screenProps } = this.props;
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../../res/background1.png')} />
+        <BackgroundImage imagePath={require('../../../../assets/images/day1.png')} />
         <View>
           <Header
             rightIcon={

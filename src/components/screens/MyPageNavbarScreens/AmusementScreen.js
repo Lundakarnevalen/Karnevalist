@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import Header from '../../common/Header'
+import Header from '../../common/Header';
 import BackgroundImage from '../../common/BackgroundImage';
 
 class AmusementsScreen extends Component {
-
   render() {
     return (
       <View>
-        <BackgroundImage
-          imagePath={require('../../../../assets/images/background2.png')}
-        />
+        <BackgroundImage imagePath={require('../../../../assets/images/day2.png')} />
         <Header
           textStyle={{ color: '#f4376d' }}
           style={{ backgroundColor: 'white' }}
-          title='Amusement'
+          title="Amusement"
           leftIcon={null}
           navigation={this.props.navigation}
         />
@@ -23,4 +20,4 @@ class AmusementsScreen extends Component {
   }
 }
 
-export default AmusementsScreen
+export default AmusementsScreen;

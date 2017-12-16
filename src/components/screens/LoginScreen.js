@@ -42,7 +42,7 @@ class HomeScreen extends Component {
     const { email, password, loading, loadingComplete } = this.state;
     return (
       <View style={containerStyle}>
-        <BackgroundImage imagePath={require('../../../assets/images/background4.png')} />
+        <BackgroundImage imagePath={require('../../../assets/images/day4.png')} />
         <ScrollView>
           <View style={styles.container1}>
             <Input
