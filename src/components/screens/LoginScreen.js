@@ -17,7 +17,7 @@ class HomeScreen extends Component {
     super(props);
     this.state = {
       alertVisible: false,
-      socSecNbr: '',
+      email: '',
       password: '',
       loading: false,
       loadingComplete: false

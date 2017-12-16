@@ -11,6 +11,7 @@ import {
   Alert
 } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Input from '../common/Input';
 
 class PasswordPopUp extends Component {
@@ -26,6 +27,10 @@ class PasswordPopUp extends Component {
     this.setState({
       buttonWidth: Dimensions.get('window').width / this.props.buttonsIn.length
     });
+  }
+
+  getColor() {
+    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
   }
 
   getBorderLeftRadius(index) {
@@ -80,6 +85,7 @@ class PasswordPopUp extends Component {
 
   createButtons() {
     const { buttonsIn } = this.props;
+    const { buttonStyle, buttonTextStyle } = styles;
     const toReturn = [];
     for (let i = 0; i < 2; i++) {
       toReturn.push(
@@ -87,15 +93,16 @@ class PasswordPopUp extends Component {
           key={i}
           onPress={() => buttonsIn[i].onPress()}
           style={[
-            styles.buttonStyle,
+            buttonStyle,
             {
               borderBottomLeftRadius: this.getBorderLeftRadius(i),
               borderBottomRightRadius: this.getBorderRightRadius(i),
-              marginRight: this.getRightMargin(i)
+              marginRight: this.getRightMargin(i),
+              backgroundColor: this.getColor()
             }
           ]}
         >
-          <Text style={styles.buttonTextStyle}>{buttonsIn[i].text}</Text>
+          <Text style={buttonTextStyle}>{buttonsIn[i].text}</Text>
         </TouchableOpacity>
       );
     }
@@ -103,15 +110,24 @@ class PasswordPopUp extends Component {
   }
 
   render() {
+    const {
+      outerViewStyle,
+      innerViewStyle,
+      headerTextStyle,
+      infoTextStyle,
+      buttonViewStyle,
+      alertBoxStyle
+    } = styles;
+    const { alertVisible, header, info } = this.props;
     return (
-      <Modal transparent visible={this.props.alertVisible}>
+      <Modal transparent visible={alertVisible}>
         <BlurView tint="dark" intensity={70} style={StyleSheet.absoluteFill}>
-          <View style={styles.outerViewStyle} transparent={false}>
-            <View style={styles.alertBoxStyle}>
-              <View style={styles.innerViewStyle}>
-                <Text style={styles.headerTextStyle}>{this.props.header}</Text>
+          <View style={outerViewStyle} transparent={false}>
+            <View style={[alertBoxStyle, { borderColor: this.getColor() }]}>
+              <View style={innerViewStyle}>
+                <Text style={[headerTextStyle, { color: this.getColor() }]}>{header}</Text>
                 <View style={{ height: 15, top: 10, width: Dimensions.get('window').width / 1.2 }}>
-                  <Text style={styles.infoTextStyle}>{this.props.info}</Text>
+                  <Text style={[infoTextStyle, { color: this.getColor() }]}>{info}</Text>
                 </View>
                 <View
                   style={{
@@ -128,7 +144,7 @@ class PasswordPopUp extends Component {
                     onChangeText={text => this.setState({ emailAddress: text })}
                   />
                 </View>
-                <View style={styles.buttonViewStyle}>{this.createButtons()}</View>
+                <View style={buttonViewStyle}>{this.createButtons()}</View>
               </View>
             </View>
           </View>
@@ -151,7 +167,6 @@ const styles = {
     width: Dimensions.get('window').width / 1.1,
     height: 220,
     borderRadius: 5,
-    borderColor: 'rgb(138, 71, 151)',
     borderWidth: 1,
     backgroundColor: 'white'
   },
@@ -165,7 +180,6 @@ const styles = {
   buttonStyle: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgb(138, 71, 151)',
     height: 50,
     borderColor: 'white',
     width: Dimensions.get('window').width / (1.1 * 2)
@@ -177,13 +191,11 @@ const styles = {
   },
   headerTextStyle: {
     textAlign: 'center',
-    color: 'rgb(138, 71, 151)',
     fontFamily: 'Avenir Next Bold'
   },
   infoTextStyle: {
     justifyContent: 'center',
     textAlign: 'center',
-    color: 'rgb(138, 71, 151)',
     fontFamily: 'Avenir Next Medium'
   },
   buttonViewStyle: {
@@ -194,4 +206,9 @@ const styles = {
   }
 };
 
-export default PasswordPopUp;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(PasswordPopUp);
