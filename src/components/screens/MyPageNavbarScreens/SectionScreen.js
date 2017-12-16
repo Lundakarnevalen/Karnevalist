@@ -75,7 +75,7 @@ class SectionScreen extends Component {
         <View>
           <Header
             rightIcon={
-              <TouchableOpacity onPress={() => Alert.alert('Går till confirm..')}>
+              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage')}>
                 <FontAwesome name="list-alt" size={30} color={'#f4376d'} />
               </TouchableOpacity>
             }
