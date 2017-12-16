@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
@@ -13,10 +13,9 @@ class ConfirmPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [{ key: '', id: '', text: '', infoText: '', image: '' }],
+      data: [],
       editMode: false,
-      alertVisible: false,
-      rows: []
+      alertVisible: false
     };
   }
 
@@ -36,46 +35,28 @@ class ConfirmPage extends Component {
     });
   }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <BackgroundImage imagePath={require('../../../assets/images/background2.png')} />
-        <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: '#ffffff', marginBottom: 5 }}
-          title="Confirmation page"
-          navigation={this.props.navigation}
-          rightIcon={
-            <TouchableOpacity
-              style={{ width: 50, alignItems: 'center' }}
-              onPress={() => this.onPressHeaderButton()}
-            >
-              <MaterialIcons
-                name={this.getHeaderIconName()}
-                style={{
-                  color: '#f4376d',
-                  right: 0
-                }}
-                size={35}
-              />
-            </TouchableOpacity>
-          }
-          navigation={this.props.navigation}
-        />
-        <SortableList
-          style={styles.list}
-          contentContainerStyle={styles.contentContainer}
-          data={this.state.data}
-          renderRow={() => this.renderRow()}
-        />
-        <View style={{ flexDirection: 'column' }}>
-          <TouchableOpacity
-            style={styles.confimButtonStyle}
-            onPress={() => this.onPressConfirmButton()}
-          >
-            <Text style={styles.confimTextStyle}>Send</Text>
-          </TouchableOpacity>
+  renderSortableListOrMessage() {
+    const { contentContainer, list, confimButtonStyle, confimTextStyle, text } = styles;
+    if (this.state.data.length === 0) {
+      return (
+        <View
+          style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Text style={text}>No selected sections</Text>
         </View>
+      );
+    }
+    return (
+      <View style={{ height: window.height - 64 }}>
+        <SortableList
+          style={list}
+          contentContainerStyle={contentContainer}
+          data={this.state.data}
+          renderRow={this.renderRow.bind(this)}
+        />
+        <TouchableOpacity style={confimButtonStyle} onPress={() => this.onPressConfirmButton()}>
+          <Text style={confimTextStyle}>Send</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -88,20 +69,14 @@ class ConfirmPage extends Component {
   }
 
   renderRow(item) {
-    if (this.state.rows.length > this.state.data.length) {
-      this.setState({ rows: [] });
-    } else {
-      const { rows } = this.state
-      rows.push(item)
-      this.setState({ rows })
-    }
+    const { data, index, active } = item;
     return (
       <Row
-        data={item.data}
-        index={item.index + 1}
+        data={data}
+        index={index + 1}
         iconName={this.getRowIconName()}
-        active={item.active}
-        deleteRow={() => this.deleteRow(item.data.id)}
+        active={active}
+        deleteRow={() => this.deleteRow(data.id)}
       />
     );
   }
@@ -125,8 +100,8 @@ class ConfirmPage extends Component {
   }
 
   onPressConfirmButton() {
-    const { rows } = this.state;
-    if (rows.length < 5) {
+    const { data } = this.state;
+    if (data.length < 5) {
       Alert.alert('Vänligen välj minst 5 stycken sektioner');
     } else {
       Alert.alert('Tack för dina val');
@@ -134,29 +109,47 @@ class ConfirmPage extends Component {
   }
 
   onPressHeaderButton() {
-    if (this.state.editMode) {
-      this.setState({ editMode: false });
-    } else {
-      this.setState({ editMode: true });
-    }
+    this.setState({ editMode: !this.state.editMode });
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <BackgroundImage imagePath={require('../../../assets/images/background2.png')} />
+        <Header
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: '#ffffff' }}
+          title="Confirmation page"
+          navigation={this.props.navigation}
+          rightIcon={
+            <TouchableOpacity
+              style={{ width: 50, alignItems: 'center' }}
+              onPress={() => this.onPressHeaderButton()}
+            >
+              <MaterialIcons
+                name={this.getHeaderIconName()}
+                style={{
+                  color: '#f4376d',
+                  right: 0
+                }}
+                size={35}
+              />
+            </TouchableOpacity>
+          }
+          navigation={this.props.navigation}
+        />
+        {this.renderSortableListOrMessage()}
+      </View>
+    );
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     width: window.width,
     height: window.height,
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0)',
-    paddingTop: 0
-  },
-  innerView: {
-    width: window.width,
-    height: window.height - 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0)',
-    padding: 10,
     paddingTop: 0
   },
   confimTextStyle: {
@@ -190,5 +183,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#222222'
   }
-});
+};
+
 export default ConfirmPage;
