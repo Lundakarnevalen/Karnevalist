@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Animated,
-  Easing,
-  Text,
-  Image,
-  Platform,
-  Dimensions,
-  View
-} from 'react-native';
+import { Animated, Easing, Text, Image, Platform, Dimensions, View } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 
 const window = Dimensions.get('window');

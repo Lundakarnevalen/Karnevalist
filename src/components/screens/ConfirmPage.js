@@ -1,58 +1,13 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Alert
-} from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
-import SuperAgileAlert from '../common/SuperAgileAlert';
 import Header from '../common/Header';
+import { getSections, removeItem } from '../../helpers/LocalSave';
+import BackgroundImage from '../common/BackgroundImage';
 
 const window = Dimensions.get('window');
-
-const inputJSON = [
-  {
-    image: 'https://placekitten.com/200/201',
-    text: 'OMRÅDESSEKTIONOMRÅDESSEKTIONERNAOMRÅDESSEKTIONERNAERNA',
-    infoText: 'Hej jag heter OscarHej jag hlllter OscarHej jag he',
-    id: 0
-  },
-  {
-    image: 'https://placekitten.com/200/202',
-    text: 'Pepper',
-    infoText: 'testaoText2',
-    id: 1
-  },
-  {
-    image: 'https://placekitten.com/200/203',
-    text: 'Oscar',
-    infoText: 'testaInfoText3',
-    id: 2
-  },
-  {
-    image: 'https://placekitten.com/200/204',
-    text: 'Dusty1',
-    infoText: 'testaInfoText',
-    id: 3
-  },
-  {
-    image: 'https://placekitten.com/200/204',
-    text: 'Dusty2',
-    infoText: 'testaInfoText',
-    id: 4
-  },
-  {
-    image: 'https://placekitten.com/200/204',
-    text: 'Dusty3',
-    infoText: 'testaInfoText',
-    id: 5
-  }
-];
 
 class ConfirmPage extends Component {
   constructor(props) {
@@ -60,85 +15,68 @@ class ConfirmPage extends Component {
     this.state = {
       data: [],
       editMode: false,
-      alertVisible: false,
-      rows: []
+      alertVisible: false
     };
   }
 
   componentWillMount() {
-    this.setState({ data: inputJSON });
+    const tempData = [];
+    getSections(sections => {
+      sections.forEach((section, i) => {
+        tempData.push({
+          key: section.key,
+          id: i,
+          text: section.value,
+          infoText: 'PLACEHOLDER',
+          image: 'https://placekitten.com/200/204'
+        });
+      });
+      this.setState({ data: tempData });
+    });
   }
 
-  render() {
+  renderSortableListOrMessage() {
+    const { contentContainer, list, confimButtonStyle, confimTextStyle, text } = styles;
+    if (this.state.data.length === 0) {
+      return (
+        <View
+          style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Text style={text}>No selected sections</Text>
+        </View>
+      );
+    }
     return (
-      <View style={styles.container}>
-        <Header
-          textStyle={{ color: '#ffffff' }}
-          style={{ backgroundColor: '#8A4797', marginBottom: 5 }}
-          title="Confirmation page"
-          navigation={this.props.navigation}
-          rightIcon={
-            <TouchableOpacity
-              style={{ width: 50, alignItems: 'center' }}
-              onPress={() => this.onPressHeaderButton()}
-            >
-              <MaterialIcons
-                name={this.getHeaderIconName()}
-                style={{
-                  color: '#ffffff',
-                  right: 0
-                }}
-                size={35}
-              />
-            </TouchableOpacity>
-          }
-          navigation={this.props.navigation}
-        />
+      <View style={{ height: window.height - 64 }}>
         <SortableList
-          style={styles.list}
-          contentContainerStyle={styles.contentContainer}
+          style={list}
+          contentContainerStyle={contentContainer}
           data={this.state.data}
           renderRow={this.renderRow.bind(this)}
         />
-        <SuperAgileAlert
-          header={'Header'}
-          info={'Här skriver du in din info...'}
-          alertVisible={this.state.alertVisible}
-          buttonsIn={[
-            { text: 'Yes', onPress: () => console.log('Yes was pressed') },
-            { text: 'No', onPress: () => console.log('No was pressed') }
-          ]}
-        />
-        <View style={{ flexDirection: 'column' }}>
-          <TouchableOpacity
-            style={styles.confimButtonStyle}
-            onPress={() => this.onPressConfirmButton()}
-          >
-            <Text style={styles.confimTextStyle}>Send</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={confimButtonStyle} onPress={() => this.onPressConfirmButton()}>
+          <Text style={confimTextStyle}>Send</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
   deleteRow(id) {
     const newData = this.state.data.filter(dataItem => dataItem.id !== id);
+    const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
+    removeItem(toRemove[0].key);
     this.setState({ data: newData });
   }
 
   renderRow(item) {
-    if (this.state.rows.length > this.state.data.length) {
-      this.setState({ rows: [] });
-    } else {
-      this.state.rows.push(item);
-    }
+    const { data, index, active } = item;
     return (
       <Row
-        data={item.data}
-        index={item.index + 1}
+        data={data}
+        index={index + 1}
         iconName={this.getRowIconName()}
-        active={item.active}
-        deleteRow={() => this.deleteRow(item.data.id)}
+        active={active}
+        deleteRow={() => this.deleteRow(data.id)}
       />
     );
   }
@@ -158,43 +96,60 @@ class ConfirmPage extends Component {
   }
 
   onPressTrash(key) {
-    Alert.alert('Navigera till ' + key.text + '-sektionen');
+    Alert.alert('Navigera till ' + key + '-sektionen');
   }
 
   onPressConfirmButton() {
-    const { rows } = this.state;
-    if (rows.length < 5) {
-      Alert.alert('Vänligen väls minst 5 stycken sektioner');
+    const { data } = this.state;
+    if (data.length < 5) {
+      Alert.alert('Vänligen välj minst 5 stycken sektioner');
     } else {
       Alert.alert('Tack för dina val');
-      this.props.navigation.navigate('HomeScreen');
     }
   }
 
   onPressHeaderButton() {
-    if (this.state.editMode) {
-      this.setState({ editMode: false });
-    } else {
-      this.setState({ editMode: true });
-    }
+    this.setState({ editMode: !this.state.editMode });
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <BackgroundImage imagePath={require('../../../assets/images/background2.png')} />
+        <Header
+          textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: '#ffffff' }}
+          title="Confirmation page"
+          navigation={this.props.navigation}
+          rightIcon={
+            <TouchableOpacity
+              style={{ width: 50, alignItems: 'center' }}
+              onPress={() => this.onPressHeaderButton()}
+            >
+              <MaterialIcons
+                name={this.getHeaderIconName()}
+                style={{
+                  color: '#f4376d',
+                  right: 0
+                }}
+                size={35}
+              />
+            </TouchableOpacity>
+          }
+          navigation={this.props.navigation}
+        />
+        {this.renderSortableListOrMessage()}
+      </View>
+    );
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     width: window.width,
     height: window.height,
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0)',
-    paddingTop: 0
-  },
-  innerView: {
-    width: window.width,
-    height: window.height - 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0)',
-    padding: 10,
     paddingTop: 0
   },
   confimTextStyle: {
@@ -228,5 +183,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#222222'
   }
-});
+};
+
 export default ConfirmPage;
