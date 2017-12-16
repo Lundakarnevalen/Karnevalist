@@ -1,13 +1,16 @@
 import { SET_SECTIONS } from '../actions/Types.js';
 
 const INITIAL_STATE = {
-  sections: null
+  sections: []
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_SECTIONS:
-      return { ...state, sections: action.payload };
+    case SET_SECTIONS: {
+      const tempSections = state.sections.slice()
+      tempSections.push(action.payload)
+      return { ...state, sections: tempSections };
+    }
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux'
 import { FontAwesome } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
@@ -15,56 +16,11 @@ class SectionScreen extends Component {
     this.state = {
       isOpen: false,
       data: [],
-      images: {}
     };
   }
 
-  componentWillMount() {
-    this.getSectionInfo();
-  }
-
-  getImage(url, section) {
-    axios
-      .get(url)
-      .then(r => {
-        const data = this.state.data;
-        const image = (
-          <Image
-            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
-            source={{ uri: r.data.source_url }}
-            //defaultSource={require('../../../../res/LK2018logga.png')}
-          />
-        );
-        section.image = image;
-        data.push(section);
-        this.setState({ data });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
-  getSectionInfo() {
-    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
-    axios
-      .get(url)
-      .then(response => {
-        response.data.forEach(item => {
-          const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
-          const imgId = item.featured_media;
-          const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
-          const section = {
-            key: item.id,
-            id: item.id,
-            title: item.title.rendered,
-            info: strippedContent
-          };
-          this.getImage(imgUrl, section);
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  componentWillReceiveProps(nextProps) {
+    this.setState({ data: nextProps.sections })
   }
 
   render() {
@@ -110,11 +66,13 @@ class SectionScreen extends Component {
     );
   }
 }
+const mapStateToProps = ({ sections }) => {
+  return { sections: sections.sections }
+}
 
 const styles = {
   style: {
     paddingBottom: Platform.OS === 'ios' ? 132 : 148
   }
 };
-
-export default SectionScreen;
+export default connect(mapStateToProps, {})(SectionScreen);

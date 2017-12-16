@@ -9,8 +9,8 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
+
   render() {
-    getSections(sections => console.log('SECTIONS', sections));
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
     const { container, scrollStyle } = styles;
