@@ -270,7 +270,7 @@ class RegistrationScreen extends Component {
                 Alert.alert('Error', "Your passwords doesn't match.");
               } else {
                 axios
-                  .post('http://146.185.173.31:3000/register', {
+                  .post('https://api.10av10.com/register', {
                     email: this.state.email,
                     password: '123',
                     postNumber: this.state.postcode,

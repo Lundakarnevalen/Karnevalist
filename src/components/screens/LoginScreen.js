@@ -44,7 +44,7 @@ class HomeScreen extends Component {
               text="Logga in"
               onPress={() => {
                 axios
-                  .post('http://146.185.173.31:3000/login/email', {
+                  .post('https://api.10av10.com/login/email', {
                     email,
                     password
                   })
