@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { TabNavigator } from 'react-navigation';
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+// import setSections from '../../reducers'
+import setSections from '../../actions'
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import AmusementScreen from './MyPageNavbarScreens/AmusementScreen'
@@ -8,6 +11,13 @@ import NewsScreen from './MyPageNavbarScreens/NewsScreen'
 import ProfileScreen from './MyPageNavbarScreens/ProfileScreen'
 
 class MyPageNavbarScreen extends Component {
+
+  componentWillMount() {
+    console.log(this.props);
+    const a = []
+    this.props.setSections(a)
+  }
+
   render() {
     return (
       <TabNav
@@ -101,4 +111,4 @@ const TabNav = TabNavigator({
     }
   },
 })
-export default MyPageNavbarScreen
+export default connect(null, { setSections })(MyPageNavbarScreen)
