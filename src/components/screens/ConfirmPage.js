@@ -66,7 +66,7 @@ class ConfirmPage extends Component {
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
           data={this.state.data}
-          renderRow={this.renderRow.bind(this)}
+          renderRow={() => this.renderRow()}
         />
         <View style={{ flexDirection: 'column' }}>
           <TouchableOpacity
@@ -91,7 +91,9 @@ class ConfirmPage extends Component {
     if (this.state.rows.length > this.state.data.length) {
       this.setState({ rows: [] });
     } else {
-      this.state.rows.push(item);
+      const { rows } = this.state
+      rows.push(item)
+      this.setState({ rows })
     }
     return (
       <Row
