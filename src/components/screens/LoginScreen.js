@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView } from 'react-native';
+import { Alert, View, Dimensions, ScrollView, StatusBar } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
+import { setTheme } from '../../actions';
 import Input from '../common/Input';
 import PasswordPopUp from '../common/PasswordPopUp';
 import BackgroundImage from '../common/BackgroundImage';
@@ -15,19 +17,36 @@ class HomeScreen extends Component {
     super(props);
     this.state = {
       alertVisible: false,
-      socSecNbr: '',
+      email: '',
       password: '',
       loading: false,
-      loadingComplete: false
+      loadingComplete: false,
+      forgotPasswordEmail: ''
     };
+  }
+
+  componentWillMount() {
+    let currentTheme = 'day';
+    const currentHour = new Date().getHours();
+    if (currentHour < 9) {
+      currentTheme = 'morning';
+      StatusBar.setBarStyle('dark-content', true);
+    } else if (currentHour < 18) {
+      currentTheme = 'day';
+      StatusBar.setBarStyle('dark-content', true);
+    } else {
+      currentTheme = 'night';
+      StatusBar.setBarStyle('light-content', true);
+    }
+    this.props.setTheme(currentTheme);
   }
 
   render() {
     const { containerStyle } = styles;
-    const { email, password, loading, loadingComplete } = this.state;
+    const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
     return (
       <View style={containerStyle}>
-        <BackgroundImage imagePath={require('../../../assets/images/background4.png')} />
+        <BackgroundImage pictureNumber={4} />
         <ScrollView>
           <View style={styles.container1}>
             <Input
@@ -116,6 +135,8 @@ class HomeScreen extends Component {
               ]}
               header={'Forgot password?'}
               info={'Please, fill in your email address below and you will receive a new password'}
+              onChangeText={text => this.setState({ forgotPasswordEmail: text })}
+              inputValue={forgotPasswordEmail}
             />
           </View>
         </ScrollView>
@@ -124,7 +145,7 @@ class HomeScreen extends Component {
             loadingComplete={loadingComplete}
             redirect={() => {
               this.props.navigation.navigate('MyPageNavbarScreen');
-              this.setState({ loading: false, loadingComplete: false });
+              this.setState({ loading: false, loadingComplete: false, password: '' });
             }}
           />
         ) : null}
@@ -160,4 +181,4 @@ const styles = {
   }
 };
 
-export default HomeScreen;
+export default connect(null, { setTheme })(HomeScreen);

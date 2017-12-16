@@ -9,8 +9,6 @@ class NewsScreen extends Component {
         style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}
       >
         <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: '#FFFFFF' }}
           title={this.props.navigation.state.params.info.title}
           navigation={this.props.navigation}
         />

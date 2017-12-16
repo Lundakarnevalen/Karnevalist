@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import userInformationReducers from './userInformationReducers';
+import ThemeReducers from './ThemeReducers';
 
 export default combineReducers({
-  userInformation: userInformationReducers
+  userInformation: userInformationReducers,
+  currentTheme: ThemeReducers
 });

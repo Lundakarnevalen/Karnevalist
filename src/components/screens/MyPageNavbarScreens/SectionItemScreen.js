@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Dimensions, ScrollView, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 import { Constants } from 'expo';
 import Header from '../../common/Header';
 import { saveItem, getSections } from '../../../helpers/LocalSave';
@@ -9,6 +10,21 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
+  getColor() {
+    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
+  }
+
+  getIconColor() {
+    switch (this.props.theme) {
+      case 'morning':
+        return '#F7A021';
+      case 'day':
+        return '#f4376d';
+      default:
+        return 'white';
+    }
+  }
+
   render() {
     getSections(sections => console.log('SECTIONS', sections));
     const { navigation } = this.props;
@@ -18,22 +34,20 @@ class SectionItemScreen extends Component {
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
           title={title}
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: 'white' }}
           navigation={navigation}
           rightIcon={
             <TouchableOpacity
               style={{ padding: 1, backgroundColor: 'transparent' }}
               onPress={() => saveItem('sektion' + id, title)}
             >
-              <MaterialIcons name="playlist-add" size={30} color={'#f4376d'} />
+              <MaterialIcons name="playlist-add" size={30} color={this.getIconColor()} />
             </TouchableOpacity>
           }
         />
         <View style={container}>{image}</View>
         <View style={{ height: 10, backgroundColor: 'white' }} />
         <ScrollView style={scrollStyle}>
-          <Text style={headerStyle}>{title}</Text>
+          <Text style={[headerStyle, { color: this.getColor() }]}>{title}</Text>
           <Text style={textStyle}>{description}</Text>
         </ScrollView>
       </View>
@@ -56,7 +70,6 @@ const styles = {
     fontSize: 26,
     margin: 10,
     fontFamily: 'Avenir Next Bold',
-    color: '#f4376d',
     backgroundColor: 'transparent'
   },
   textStyle: {
@@ -67,4 +80,9 @@ const styles = {
   }
 };
 
-export default SectionItemScreen;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(SectionItemScreen);
