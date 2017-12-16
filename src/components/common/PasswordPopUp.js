@@ -47,20 +47,21 @@ class PasswordPopUp extends Component {
   createButtons() {
     const { buttonsIn } = this.props;
     const toReturn = [];
-    for (let index = 0; index < 2; index++) {
+    for (let i = 0; i < 2; i++) {
       toReturn.push(
         <TouchableOpacity
-          onPress={buttonsIn[index].onPress}
+          key={i}
+          onPress={buttonsIn[i].onPress}
           style={[
             styles.buttonStyle,
             {
-              borderBottomLeftRadius: this.getBorderLeftRadius(index),
-              borderBottomRightRadius: this.getBorderRightRadius(index),
-              marginRight: this.getRightMargin(index)
+              borderBottomLeftRadius: this.getBorderLeftRadius(i),
+              borderBottomRightRadius: this.getBorderRightRadius(i),
+              marginRight: this.getRightMargin(i)
             }
           ]}
         >
-          <Text style={styles.buttonTextStyle}>{buttonsIn[index].text}</Text>
+          <Text style={styles.buttonTextStyle}>{buttonsIn[i].text}</Text>
         </TouchableOpacity>
       );
     }
