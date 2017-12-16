@@ -76,15 +76,18 @@ const styles = {
   },
   whiteText: {
     color: '#f4376d',
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: 'Avenir Next Medium'
   },
   underlineText: {
     color: 'rgb(138, 71, 151)',
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    fontFamily: 'Avenir Next Medium'
   },
   blackText: {
     color: 'black',
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: 'Avenir Next Medium'
   }
 };
 

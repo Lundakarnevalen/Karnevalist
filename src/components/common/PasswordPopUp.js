@@ -81,20 +81,21 @@ class PasswordPopUp extends Component {
   createButtons() {
     const { buttonsIn } = this.props;
     const toReturn = [];
-    for (let index = 0; index < 2; index++) {
+    for (let i = 0; i < 2; i++) {
       toReturn.push(
         <TouchableOpacity
-          onPress={() => this.getOnPress(index)}
+          key={i}
+          onPress={() => buttonsIn[i].onPress()}
           style={[
             styles.buttonStyle,
             {
-              borderBottomLeftRadius: this.getBorderLeftRadius(index),
-              borderBottomRightRadius: this.getBorderRightRadius(index),
-              marginRight: this.getRightMargin(index)
+              borderBottomLeftRadius: this.getBorderLeftRadius(i),
+              borderBottomRightRadius: this.getBorderRightRadius(i),
+              marginRight: this.getRightMargin(i)
             }
           ]}
         >
-          <Text style={styles.buttonTextStyle}>{buttonsIn[index].text}</Text>
+          <Text style={styles.buttonTextStyle}>{buttonsIn[i].text}</Text>
         </TouchableOpacity>
       );
     }
@@ -150,7 +151,9 @@ const styles = {
     width: Dimensions.get('window').width / 1.1,
     height: 220,
     borderRadius: 5,
-    backgroundColor: '#d999fa'
+    borderColor: 'rgb(138, 71, 151)',
+    borderWidth: 1,
+    backgroundColor: 'white'
   },
   innerViewStyle: {
     flexDirection: 'column',
@@ -162,24 +165,26 @@ const styles = {
   buttonStyle: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f4376d',
+    backgroundColor: 'rgb(138, 71, 151)',
     height: 50,
     borderColor: 'white',
     width: Dimensions.get('window').width / (1.1 * 2)
   },
   buttonTextStyle: {
     color: 'white',
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: 'Avenir Next Medium'
   },
   headerTextStyle: {
     textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#ffffff'
+    color: 'rgb(138, 71, 151)',
+    fontFamily: 'Avenir Next Bold'
   },
   infoTextStyle: {
     justifyContent: 'center',
     textAlign: 'center',
-    color: '#ffffff'
+    color: 'rgb(138, 71, 151)',
+    fontFamily: 'Avenir Next Medium'
   },
   buttonViewStyle: {
     position: 'absolute',

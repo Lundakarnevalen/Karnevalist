@@ -13,17 +13,17 @@ class SectionItemScreen extends Component {
     getSections(sections => console.log('SECTIONS', sections));
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
-    const { container, scrollStyle } = styles;
+    const { container, scrollStyle, headerStyle, textStyle } = styles;
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
           title={title}
-          style={{ backgroundColor: '#8A4797' }}
           textStyle={{ color: '#f4376d' }}
+          style={{ backgroundColor: 'white' }}
           navigation={navigation}
           rightIcon={
             <TouchableOpacity
-              style={{ padding: 1, backgroundColor: '#8A4797' }}
+              style={{ padding: 1, backgroundColor: 'transparent' }}
               onPress={() => saveItem('sektion' + id, title)}
             >
               <MaterialIcons name="playlist-add" size={30} color={'#f4376d'} />
@@ -31,9 +31,10 @@ class SectionItemScreen extends Component {
           }
         />
         <View style={container}>{image}</View>
-        <View style={{ height: 10, backgroundColor: '#8A4797' }} />
+        <View style={{ height: 10, backgroundColor: 'white' }} />
         <ScrollView style={scrollStyle}>
-          <Text style={{ fontSize: 20, margin: 10 }}>{description}</Text>
+          <Text style={headerStyle}>{title}</Text>
+          <Text style={textStyle}>{description}</Text>
         </ScrollView>
       </View>
     );
@@ -50,6 +51,19 @@ const styles = {
   scrollStyle: {
     maxHeight:
       Platform.OS === 'ios' ? HEIGHT - WIDTH - 29 : HEIGHT - WIDTH - 5 - Constants.statusBarHeight
+  },
+  headerStyle: {
+    fontSize: 26,
+    margin: 10,
+    fontFamily: 'Avenir Next Bold',
+    color: '#f4376d',
+    backgroundColor: 'transparent'
+  },
+  textStyle: {
+    fontSize: 16,
+    margin: 10,
+    fontFamily: 'Avenir Next Medium',
+    backgroundColor: 'transparent'
   }
 };
 
