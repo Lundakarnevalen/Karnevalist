@@ -92,8 +92,23 @@ class HomeScreen extends Component {
             />
             <PasswordPopUp
               alertVisible={this.state.alertVisible}
-              setAlertVisible={bool => this.setState({ alertVisible: bool })}
-              buttonsIn={[{ text: 'Cancel' }, { text: 'Reset password' }]}
+              setAlertVisible={() => this.setState({ alertVisible: true })}
+              buttonsIn={[
+                {
+                  text: 'Cancel',
+                  onPress: () => {
+                    console.log('cancel');
+                    this.setState({ alertVisible: false });
+                  }
+                },
+                {
+                  text: 'Reset password',
+                  onPress: () => {
+                    console.log('reset');
+                    this.setState({ alertVisible: false });
+                  }
+                }
+              ]}
               header={'Forgot password?'}
               info={'Please, fill in your email address below and you will receive a new password'}
             />

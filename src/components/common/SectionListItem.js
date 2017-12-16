@@ -5,12 +5,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 const WIDTH = Dimensions.get('window').width;
 
 class SectionListItem extends Component {
-  getInfoText(sectionInfoText) {
-    let text = sectionInfoText;
-    if (text && text.length > 50) text = text.substring(0, 50) + '...';
-    return text;
-  }
-
   render() {
     const { containerStyle, titleStyle, infoStyle, continueIconIndicatorStyle } = styles;
     const { sectionTitle = '', sectionInfoText = '', onPress } = this.props;
@@ -20,12 +14,12 @@ class SectionListItem extends Component {
           <Text style={titleStyle}>{sectionTitle}</Text>
           {sectionInfoText === '' ? null : (
             <Text ellipsizeMode={'tail'} numberOfLines={1} style={infoStyle}>
-              {this.getInfoText(sectionInfoText)}
+              {sectionInfoText}
             </Text>
           )}
         </View>
         <View style={{ flex: 1 }}>
-          <MaterialIcons name="keyboard-arrow-right" style={continueIconIndicatorStyle} size={50} />
+          <MaterialIcons name="keyboard-arrow-right" style={continueIconIndicatorStyle} size={60} />
         </View>
       </TouchableOpacity>
     );
