@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  ScrollView,
-  Platform,
-  Alert
-} from 'react-native';
+import { View, TouchableOpacity, Text, Dimensions, ScrollView, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
@@ -15,16 +7,14 @@ import Header from '../../common/Header';
 import Toast from '../../common/Toast';
 import { saveItem } from '../../../helpers/LocalSave';
 
-const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       showToast: false
-    }
+    };
   }
   getColor() {
     return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
@@ -51,22 +41,26 @@ class SectionItemScreen extends Component {
         <Header
           title={title}
           navigation={navigation}
-          rightIcon={<TouchableOpacity
-             style={{ padding: 1, backgroundColor: 'transparent' }}
-             onPress={() => {
-               saveItem('sektion' + id, title)
-               this.setState({ showToast: true })
-             }
-           }
-          >
-             <MaterialIcons name="favorite" size={30} color={color} />
-           </TouchableOpacity>
+          rightIcon={
+            <TouchableOpacity
+              style={{ padding: 1, backgroundColor: 'transparent' }}
+              onPress={() => {
+                saveItem('sektion' + id, title);
+                this.setState({ showToast: true });
+              }}
+            >
+              <MaterialIcons name="favorite" size={30} color={color} />
+            </TouchableOpacity>
           }
         />
-        <Toast color={'#f4376d'} showToast={this.state.showToast} message={'Section ' + title + ' added'} />
-        <View style={container}>{image}</View>
-        <View style={{ height: 10, backgroundColor: 'white' }} />
+        <Toast
+          color={'#f4376d'}
+          showToast={this.state.showToast}
+          message={'Section ' + title + ' added'}
+        />
         <ScrollView style={scrollStyle}>
+          <View style={container}>{image}</View>
+          <View style={{ height: 10, backgroundColor: 'white' }} />
           <Text style={[headerStyle, { color: this.getColor() }]}>{title}</Text>
           <Text style={textStyle}>{description}</Text>
         </ScrollView>
@@ -83,8 +77,7 @@ const styles = {
     width: Dimensions.get('window').width
   },
   scrollStyle: {
-    maxHeight:
-      Platform.OS === 'ios' ? HEIGHT - WIDTH - 29 : HEIGHT - WIDTH - 5 - Constants.statusBarHeight
+    maxHeight: Platform.OS === 'ios' ? HEIGHT : HEIGHT - Constants.statusBarHeight
   },
   headerStyle: {
     fontSize: 26,
