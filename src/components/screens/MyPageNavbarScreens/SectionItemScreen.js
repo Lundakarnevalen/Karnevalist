@@ -15,7 +15,6 @@ import Header from '../../common/Header';
 import Toast from '../../common/Toast';
 import { saveItem } from '../../../helpers/LocalSave';
 
-const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
@@ -72,9 +71,9 @@ class SectionItemScreen extends Component {
           showToast={this.state.showToast}
           message={'Section ' + title + ' added'}
         />
-        <View style={container}>{image}</View>
-        <View style={{ height: 10, backgroundColor: 'white' }} />
         <ScrollView style={scrollStyle}>
+          <View style={container}>{image}</View>
+          <View style={{ height: 10, backgroundColor: 'white' }} />
           <Text style={[headerStyle, { color: this.getColor() }]}>{title}</Text>
           <Text style={textStyle}>{description}</Text>
         </ScrollView>
@@ -91,8 +90,7 @@ const styles = {
     width: Dimensions.get('window').width
   },
   scrollStyle: {
-    maxHeight:
-      Platform.OS === 'ios' ? HEIGHT - WIDTH - 29 : HEIGHT - WIDTH - 5 - Constants.statusBarHeight
+    maxHeight: Platform.OS === 'ios' ? HEIGHT : HEIGHT - Constants.statusBarHeight
   },
   headerStyle: {
     fontSize: 26,
