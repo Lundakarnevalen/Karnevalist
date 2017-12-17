@@ -55,7 +55,6 @@ class ConfirmPage extends Component {
   renderSortableListOrMessage() {
     const { contentContainer, list, confimTextStyle, textStyle } = styles;
     const { navigation } = this.props;
-    console.log(navigation);
     if (this.state.data.length === 0) {
       return (
         <View
