@@ -34,7 +34,6 @@ class SectionItemScreen extends Component {
   }
 
   render() {
-    getSections(sections => console.log('SECTIONS', sections));
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
     const { container, scrollStyle, headerStyle, textStyle } = styles;

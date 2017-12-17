@@ -33,6 +33,7 @@ class NewsScreen extends Component {
         <ListView
           style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}
           dataSource={this.state.dataSource}
+          enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}
           renderRow={rowData => (
             <SectionListItem

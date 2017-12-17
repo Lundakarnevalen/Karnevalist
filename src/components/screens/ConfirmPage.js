@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
 import Header from '../common/Header';
@@ -23,14 +23,18 @@ class ConfirmPage extends Component {
 
   componentWillMount() {
     const tempData = [];
+    const allSections = this.props.sections
     getSections(sections => {
       sections.forEach((section, i) => {
+        const key = section.key.substring(7)
+        const s = allSections.filter(item => item.key + '' === key)[0]
         tempData.push({
-          key: section.key,
+          key: key,
+          localKey: section.key,
           id: i,
-          text: section.value,
-          infoText: 'PLACEHOLDER',
-          image: 'https://placekitten.com/200/204'
+          text: s.title,
+          infoText: s.content,
+          imguri: s.imguri
         });
       });
       this.setState({ data: tempData });
@@ -109,7 +113,7 @@ class ConfirmPage extends Component {
   deleteRow(id) {
     const newData = this.state.data.filter(dataItem => dataItem.id !== id);
     const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
-    removeItem(toRemove[0].key);
+    removeItem(toRemove[0].localKey);
     this.setState({ data: newData });
   }
 
@@ -211,9 +215,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, sections }) => {
   const { theme } = currentTheme;
-  return { theme };
+  return { theme, sections: sections.sections };
 };
 
 export default connect(mapStateToProps, null)(ConfirmPage);
