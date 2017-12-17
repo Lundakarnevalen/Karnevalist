@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Dimensions, ScrollView, Platform } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Dimensions,
+  ScrollView,
+  Platform,
+  Alert
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
@@ -38,7 +46,10 @@ class SectionItemScreen extends Component {
           rightIcon={
             <TouchableOpacity
               style={{ padding: 1, backgroundColor: 'transparent' }}
-              onPress={() => saveItem('sektion' + id, title)}
+              onPress={() => {
+                saveItem('sektion' + id, title);
+                Alert.alert(title + ' have now been added to your list');
+              }}
             >
               <MaterialIcons name="playlist-add" size={30} color={this.getIconColor()} />
             </TouchableOpacity>

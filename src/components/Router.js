@@ -6,47 +6,49 @@ import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 import ConfirmPage from './screens/ConfirmPage';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
+import CameraScreen from './screens/CameraScreen';
 
-const LoggedIn = StackNavigator(
-  {
-    MyPageNavbarScreen: {
-      screen: MyPageNavbarScreen,
-      navigationOptions: {
-        header: null,
-      }
-    },
-    SingleNewsScreen: {
-      screen: SingleNewsScreen,
-      navigationOptions: {
-        header: null,
-      }
-    },
-    ConfirmPage: {
-      screen: ConfirmPage,
-      navigationOptions: {
-        header: null
-      }
-    },
-    SectionItemScreen: {
-      screen: SectionItemScreen,
-      navigationOptions: {
-        header: null,
-      }
-    },
-
-  }
-)
-
-const Register = StackNavigator(
-  {
-    RegistrationScreen: {
-      screen: RegistrationScreen,
-      navigationOptions: {
-        header: null
-      }
+const LoggedIn = StackNavigator({
+  MyPageNavbarScreen: {
+    screen: MyPageNavbarScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  SingleNewsScreen: {
+    screen: SingleNewsScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ConfirmPage: {
+    screen: ConfirmPage,
+    navigationOptions: {
+      header: null
+    }
+  },
+  SectionItemScreen: {
+    screen: SectionItemScreen,
+    navigationOptions: {
+      header: null
     }
   }
-)
+});
+
+const Register = StackNavigator({
+  RegistrationScreen: {
+    screen: RegistrationScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  CameraScreen: {
+    screen: CameraScreen,
+    navigationOptions: {
+      header: null
+    }
+  }
+});
 
 const Router = StackNavigator(
   {
@@ -71,7 +73,7 @@ const Router = StackNavigator(
     MyPageNavbarScreen: {
       screen: LoggedIn,
       navigationOptions: {
-        header: null,
+        header: null
       }
     }
   },
@@ -81,6 +83,6 @@ const Router = StackNavigator(
       gesturesEnabled: false
     }
   }
-)
+);
 
 export default Router;
