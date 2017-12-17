@@ -110,11 +110,6 @@ class ConfirmPage extends Component {
     const newData = this.state.data.filter(dataItem => dataItem.id !== id);
     const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
     removeItem(toRemove[0].key);
-    if (newData.length >= 5) {
-      this.setState({ moreThanFiveChoices: true });
-    } else if (newData.length < 5) {
-      this.setState({ moreThanFiveChoices: false });
-    }
     this.setState({ data: newData });
   }
 
