@@ -65,31 +65,37 @@ class HomeScreen extends Component {
             <CustomButton
               text="Logga in"
               onPress={() => {
-                this.setState({ loading: true, loadingComplete: false });
-                axios
-                  .post('https://api.10av10.com/login/email', {
-                    email,
-                    password
-                  })
-                  .then(() => {
-                    this.setState({ loadingComplete: true });
-                  })
-                  .catch(error => {
-                    let msg;
-                    if (error.message.includes('400')) {
-                      msg = 'Wrong email or password';
-                    } else if (error.message.includes('401')) {
-                      msg = 'Wrong email or password';
-                    } else if (error.message.includes('404')) {
-                      msg = 'Something went wrong...';
-                    } else {
-                      msg = 'Internal error, please try again later';
-                    }
-                    this.setState({ loading: false, loadingComplete: false });
-                    Alert.alert('Error', msg);
-                  });
+                if (email === '') {
+                  Alert.alert('Error', 'The email field is required');
+                } else if (password === '') {
+                  Alert.alert('Error', 'The password field is required');
+                } else {
+                  this.setState({ loading: true, loadingComplete: false });
+                  axios
+                    .post('https://api.10av10.com/login/email', {
+                      email,
+                      password
+                    })
+                    .then(() => {
+                      this.setState({ loadingComplete: true });
+                    })
+                    .catch(error => {
+                      let msg;
+                      if (error.message.includes('400')) {
+                        msg = 'Wrong email or password';
+                      } else if (error.message.includes('401')) {
+                        msg = 'Wrong email or password';
+                      } else if (error.message.includes('404')) {
+                        msg = 'Something went wrong...';
+                      } else {
+                        msg = 'Internal error, please try again later';
+                      }
+                      this.setState({ loading: false, loadingComplete: false });
+                      Alert.alert('Error', msg);
+                    });
+                }
               }}
-              style="standardButton"
+              style={'standardButton'}
               width={WIDTH}
             />
             <CustomButton
