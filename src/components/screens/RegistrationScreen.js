@@ -6,10 +6,12 @@ import {
   Dimensions,
   Picker,
   Platform,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TouchableOpacity
 } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from '../common/Header';
 import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
@@ -139,10 +141,17 @@ class RegistrationScreen extends Component {
       studentUnion,
       showStudentUnionPicker
     } = this.state;
+
+    const closeButton = (
+      <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
+        <MaterialCommunityIcons size={30} name="close" color={this.getColor()} />
+      </TouchableOpacity>
+    );
+
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header title="Create Profile" navigation={this.props.navigation} />
+        <Header title="Create Profile" rightIcon={closeButton} />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
           <CameraButton
             onPress={() => this.props.navigation.navigate('CameraScreen')}
