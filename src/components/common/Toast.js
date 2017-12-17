@@ -3,14 +3,9 @@ import {
   Text,
   View,
   Animated,
-  Dimensions,
   Platform
 } from 'react-native';
 import { Constants } from 'expo';
-import { MaterialIcons } from '@expo/vector-icons'
-
-let windowWidth = Dimensions.get('window').width
-let windowHeight = Dimensions.get('window').height
 
 const topMargin = Platform.OS === 'ios' ? 15 : Constants.statusBarHeight
 
@@ -34,7 +29,7 @@ class Toast extends Component {
     clearTimeout(this.timer)
   }
 
-  callToast(message, type) {
+  callToast(message) {
     if (this.state.modalShown) return
     this.setState({ modalShown: true })
     this.setState({ color: this.state.toastColor })
