@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { View, WebView, Dimensions } from 'react-native';
+import { View, WebView, Dimensions, BackHandler } from 'react-native';
 import Header from '../../common/Header';
 
 class NewsScreen extends Component {
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+  }
+
   render() {
     return (
       <View

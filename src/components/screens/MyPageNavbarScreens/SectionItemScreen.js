@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Dimensions, ScrollView, Platform } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Dimensions,
+  ScrollView,
+  Platform,
+  BackHandler
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
@@ -10,12 +18,17 @@ import { saveItem } from '../../../helpers/LocalSave';
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       showToast: false
     };
   }
+
   getColor() {
     return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
   }
