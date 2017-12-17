@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, View, ScrollView, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
 import Header from '../common/Header';
 import ExpandeblePanel from '../common/ExpandeblePanel';
@@ -10,38 +11,50 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class RegistrationInfoScreen extends Component {
+  getColor() {
+    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
+  }
+
   render() {
-    const {
-      titelTextStyle,
-      containerStyle,
-      imageStyle1,
-      imageStyle2,
-      imageStyle3,
-      textStyle
-    } = styles;
+    const { titelTextStyle, containerStyle, imageStyle, textStyle } = styles;
+    const { theme, navigation } = this.props;
     const image1 = (
-      <MaterialCommunityIcons name="numeric-1-box-outline" style={imageStyle1} size={90} />
+      <MaterialCommunityIcons
+        name="numeric-1-box-outline"
+        color={this.getColor()}
+        style={imageStyle}
+        size={90}
+      />
     );
     const image2 = (
-      <MaterialCommunityIcons name="numeric-2-box-outline" style={imageStyle2} size={90} />
+      <MaterialCommunityIcons
+        name="numeric-2-box-outline"
+        color={this.getColor()}
+        style={imageStyle}
+        size={90}
+      />
     );
     const image3 = (
-      <MaterialCommunityIcons name="numeric-3-box-outline" style={imageStyle3} size={90} />
+      <MaterialCommunityIcons
+        name="numeric-3-box-outline"
+        color={this.getColor()}
+        style={imageStyle}
+        size={90}
+      />
     );
 
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../assets/images/background4.png')} />
-        <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: 'white' }}
-          title="Om registreringen"
-          navigation={this.props.navigation}
-        />
+        <BackgroundImage pictureNumber={4} />
+        <Header title="Om registreringen" navigation={navigation} />
         <ScrollView style={{ height: HEIGHT - 64 }}>
           <View style={containerStyle}>
-            <Text style={titelTextStyle}>3 enkla steg för att bli</Text>
-            <Text style={titelTextStyle}>Karnevalist</Text>
+            <Text style={[titelTextStyle, { color: theme === 'night' ? 'white' : 'black' }]}>
+              3 enkla steg för att bli
+            </Text>
+            <Text style={[titelTextStyle, { color: theme === 'night' ? 'white' : 'black' }]}>
+              Karnevalist
+            </Text>
             <ScrollView>
               <ExpandeblePanel title="Skapa profil" image={image1}>
                 <Text style={textStyle}>
@@ -68,7 +81,7 @@ class RegistrationInfoScreen extends Component {
               text="Jag förstår"
               width={WIDTH - 50}
               onPress={() => {
-                this.props.navigation.goBack(null);
+                navigation.goBack(null);
               }}
             />
           </View>
@@ -79,16 +92,7 @@ class RegistrationInfoScreen extends Component {
 }
 
 const styles = {
-  imageStyle1: {
-    color: '#f4376d',
-    backgroundColor: 'transparent'
-  },
-  imageStyle2: {
-    color: '#f4376d',
-    backgroundColor: 'transparent'
-  },
-  imageStyle3: {
-    color: '#f4376d',
+  imageStyle: {
     backgroundColor: 'transparent'
   },
   containerStyle: {
@@ -109,4 +113,9 @@ const styles = {
   }
 };
 
-export default RegistrationInfoScreen;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(RegistrationInfoScreen);

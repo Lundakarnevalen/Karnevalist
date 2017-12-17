@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { View, Text, Dimensions } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 
 const SIZE = Dimensions.get('window').width / 6;
 
@@ -8,26 +9,21 @@ const SIZE = Dimensions.get('window').width / 6;
  *
  */
 class CountDownItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    }
-  }
-
   getText() {
     const { time } = this.props;
     if (time.toString().length === 1) {
       return '0' + time;
     }
-    return time
+    return time;
   }
 
   render() {
     const { containerStyle, textStyle } = styles;
     return (
       <View style={containerStyle}>
-        <Text style={textStyle}>{this.getText()}</Text>
+        <Text style={[textStyle, { color: this.props.theme === 'day' ? '#f4376d' : '#F7A021' }]}>
+          {this.getText()}
+        </Text>
       </View>
     );
   }
@@ -47,6 +43,11 @@ const styles = {
     fontWeight: 'bold',
     fontFamily: 'Avenir Next Medium'
   }
-}
+};
 
-export default CountDownItem;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(CountDownItem);

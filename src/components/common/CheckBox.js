@@ -1,32 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 class CheckBox extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       isPressed: true
     };
-  }
-
-  renderCheckbox() {
-    const { size, onPress, color } = this.props
-      return (
-        <TouchableOpacity
-          style={[styles.multipleChoiceStyle, { height: size, width: size }]}
-          onPress={onPress}
-        >
-          <MaterialIcons
-            name={this.getIconName()}
-            size={size}
-            color={color}
-            style={{ backgroundColor: 'transparent' }}
-          />
-          <Text style={{ fontSize: 15 }}>{this.props.name}</Text>
-        </TouchableOpacity>
-      );
   }
 
   getIconName() {
@@ -37,13 +18,10 @@ class CheckBox extends Component {
   }
 
   render() {
-    const { size, onPress, color } = this.props
+    const { size, onPress, color } = this.props;
     const { textStyle, multipleChoiceStyle } = styles;
     return (
-      <TouchableOpacity
-        style={multipleChoiceStyle}
-        onPress={onPress}
-      >
+      <TouchableOpacity style={multipleChoiceStyle} onPress={onPress}>
         <MaterialIcons
           name={this.getIconName()}
           size={size}
@@ -65,7 +43,8 @@ const styles = {
   },
   textStyle: {
     fontSize: 16,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Bold'
   }
 };
 

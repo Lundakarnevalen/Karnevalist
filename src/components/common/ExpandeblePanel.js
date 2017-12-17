@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Animated, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -20,6 +21,10 @@ class ExpandeblePanel extends Component {
     Animated.spring(this.state.animation, { toValue: animateTo }).start();
   }
 
+  getColor() {
+    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
+  }
+
   setMaxHeight(event) {
     this.setState({ maxHeight: event.nativeEvent.layout.height + 20 });
   }
@@ -29,13 +34,15 @@ class ExpandeblePanel extends Component {
   }
 
   render() {
-    const { container, rows, textStyle } = styles;
+    const { containerStyle, rows, textStyle } = styles;
     return (
       <TouchableOpacity onPress={() => this.setState({ expanded: !this.state.expanded })}>
-        <Animated.View style={[container, { height: this.state.animation }]}>
+        <Animated.View
+          style={[containerStyle, { height: this.state.animation, borderColor: this.getColor() }]}
+        >
           <View style={rows} onLayout={event => this.setMinHeight(event)}>
             {this.props.image}
-            <Text style={textStyle}>{this.state.title}</Text>
+            <Text style={[textStyle, { color: this.getColor() }]}>{this.state.title}</Text>
           </View>
           <View style={{ marginTop: 10 }} onLayout={event => this.setMaxHeight(event)}>
             {this.props.children}
@@ -46,13 +53,12 @@ class ExpandeblePanel extends Component {
   }
 }
 const styles = {
-  container: {
+  containerStyle: {
     alignItems: 'center',
     marginTop: 5,
     backgroundColor: 'white',
     width: WIDTH - 50,
     borderWidth: 1,
-    borderColor: '#f4376d',
     padding: 10
   },
   rows: {
@@ -61,7 +67,6 @@ const styles = {
     justifyContent: 'center'
   },
   textStyle: {
-    color: '#f4376d',
     fontSize: 20,
     textAlign: 'center',
     backgroundColor: 'transparent',
@@ -70,4 +75,9 @@ const styles = {
   }
 };
 
-export default ExpandeblePanel;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(ExpandeblePanel);
