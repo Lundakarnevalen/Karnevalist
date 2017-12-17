@@ -1,36 +1,34 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Dimensions, FlatList, Platform } from 'react-native';
+import { View, TouchableOpacity, FlatList, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 
-const WIDTH = Dimensions.get('window').width;
-
 class SectionScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
-      data: [],
+      data: []
     };
   }
 
   componentWillReceiveProps(nextProps) {
-   this.setState({ data: nextProps.sections })
+    this.setState({ data: nextProps.sections });
   }
 
   getColor() {
-   switch (this.props.theme) {
-     case 'morning':
-       return '#F7A021';
-     case 'day':
-       return '#f4376d';
-     default:
-       return 'white';
-   }
- }
+    switch (this.props.theme) {
+      case 'morning':
+        return '#F7A021';
+      case 'day':
+        return '#f4376d';
+      default:
+        return 'white';
+    }
+  }
 
   render() {
     const { navigation, screenProps } = this.props;
@@ -40,7 +38,7 @@ class SectionScreen extends Component {
         <View>
           <Header
             rightIcon={
-              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage')}>
+              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage', { navigation })}>
                 <FontAwesome name="list-alt" size={30} color={this.getColor()} />
               </TouchableOpacity>
             }
@@ -73,7 +71,6 @@ class SectionScreen extends Component {
     );
   }
 }
-
 
 const styles = {
   style: {
