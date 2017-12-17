@@ -282,10 +282,15 @@ class RegistrationScreen extends Component {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
                   .post('https://api.10av10.com/register', {
-                    email: this.state.email,
-                    password: '123',
-                    postNumber: this.state.postcode,
-                    talent: 'saknas'
+                    email,
+                    password,
+                    postNumber: postcode,
+                    firstName,
+                    lastName,
+                    phoneNumber: phoneNbr,
+                    address,
+                    city,
+                    foodPreferences
                   })
                   .then(() => {
                     this.setState({ loadingComplete: true });
