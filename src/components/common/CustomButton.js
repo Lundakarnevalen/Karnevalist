@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, Dimensions, View } from 'react-native';
+import { TouchableOpacity, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
