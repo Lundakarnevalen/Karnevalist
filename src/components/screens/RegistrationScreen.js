@@ -136,7 +136,11 @@ class RegistrationScreen extends Component {
       password,
       confirmedPassword,
       loading,
-      loadingComplete
+      loadingComplete,
+      shirtSize,
+      showShirtPicker,
+      studentUnion,
+      showStudentUnionPicker
     } = this.state;
     return (
       <View>
@@ -316,15 +320,15 @@ class RegistrationScreen extends Component {
         <DKPicker
           onValueChange={shirtSize => this.onValueChangeShirtSize(shirtSize)}
           items={shirtSizeArray}
-          value={this.state.shirtSize}
-          isShowing={this.state.showShirtPicker}
+          value={shirtSize}
+          isShowing={showShirtPicker}
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
           onValueChange={studentUnion => this.onValueChangeStudentUnion(studentUnion)}
           items={studentUnionArray}
-          value={this.state.studentUnion}
-          isShowing={this.state.showStudentUnionPicker}
+          value={studentUnion}
+          isShowing={showStudentUnionPicker}
           close={() => this.setState({ showStudentUnionPicker: false })}
         />
         {loading ? (
