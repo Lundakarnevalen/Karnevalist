@@ -9,13 +9,13 @@ class CustomButton extends Component {
     let color;
     switch (this.props.theme) {
       case 'morning':
-        color = '#F7A021';
+        color = '#ffffff';
         break;
       case 'day':
         color = 'rgb(138, 71, 151)';
         break;
       default:
-        color = 'white';
+        color = '#ffffff';
     }
     return {
       color,
@@ -44,20 +44,27 @@ class CustomButton extends Component {
   }
 
   getStandardButton() {
+    let borderWidth = 1;
     let backgroundColor;
+    let borderColor;
     switch (this.props.theme) {
       case 'morning':
         backgroundColor = 'white';
+        borderColor = '#F7A021';
         break;
       case 'day':
         backgroundColor = 'white';
+        borderColor = '#f4376d';
         break;
       default:
         backgroundColor = '#F7A021';
+        borderWidth = 0;
     }
     return {
       backgroundColor,
-      padding: 10
+      padding: 10,
+      borderWidth,
+      borderColor
     };
   }
 
@@ -106,7 +113,6 @@ const styles = {
   button: {
     marginTop: 10,
     marginBottom: 10,
-    borderColor: 'black',
     borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center'
