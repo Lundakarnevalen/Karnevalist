@@ -26,23 +26,17 @@ class ConfirmPage extends Component {
     const allSections = this.props.sections
     getSections(sections => {
       sections.forEach((section, i) => {
+        const key = section.key.substring(7)
+        const s = allSections.filter(item => item.key + '' === key)[0]
         tempData.push({
-          key: section.key.substring(7),
+          key: key,
+          localKey: section.key,
           id: i,
-          text: section.value,
-          infoText: 'PLACEHOLDER',
-          image: 'https://placekitten.com/200/204'
+          text: s.title,
+          infoText: s.content,
+          imguri: s.imguri
         });
       });
-      // console.log(this.props);
-      // console.log(allSections);
-      const a = allSections.filter(item => {
-        // item.key
-        console.log(tempData.findIndex(i => i.key === item.id));
-        if (tempData.findIndex(i => i.key === item.id) > -1)
-          return item
-      })
-      console.log("A",  a);
       this.setState({ data: tempData });
     });
   }
@@ -119,7 +113,7 @@ class ConfirmPage extends Component {
   deleteRow(id) {
     const newData = this.state.data.filter(dataItem => dataItem.id !== id);
     const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
-    removeItem(toRemove[0].key);
+    removeItem(toRemove[0].localKey);
     this.setState({ data: newData });
   }
 

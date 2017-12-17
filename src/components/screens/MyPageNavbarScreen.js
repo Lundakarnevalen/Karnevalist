@@ -33,6 +33,7 @@ class MyPageNavbarScreen extends Component {
             //defaultSource={require('../../../../res/LK2018logga.png')}
           />
         );
+        tempSection.imguri = r.data.source_url
         tempSection.image = image;
         this.props.setSections(tempSection)
         return tempSection
