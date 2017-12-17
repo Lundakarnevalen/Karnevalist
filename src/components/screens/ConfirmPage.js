@@ -167,6 +167,23 @@ class ConfirmPage extends Component {
     this.setState({ editMode: !this.state.editMode });
   }
 
+  getRightIcon() {
+    if (this.state.data.length > 0) {
+      return (
+        <TouchableOpacity
+          style={{ width: 50, alignItems: 'center' }}
+          onPress={() => this.onPressHeaderButton()}
+        >
+          <MaterialIcons
+            name={this.getHeaderIconName()}
+            style={{ color: this.getColor(), right: 0 }}
+            size={35}
+          />
+        </TouchableOpacity>
+      );
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -174,18 +191,7 @@ class ConfirmPage extends Component {
         <Header
           title="Confirmation page"
           navigation={this.props.navigation}
-          rightIcon={
-            <TouchableOpacity
-              style={{ width: 50, alignItems: 'center' }}
-              onPress={() => this.onPressHeaderButton()}
-            >
-              <MaterialIcons
-                name={this.getHeaderIconName()}
-                style={{ color: this.getColor(), right: 0 }}
-                size={35}
-              />
-            </TouchableOpacity>
-          }
+          rightIcon={this.getRightIcon()}
         />
         {this.renderSortableListOrMessage()}
       </View>
