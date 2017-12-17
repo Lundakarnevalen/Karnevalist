@@ -12,7 +12,7 @@ import Loading from '../common/Loading';
 const WIDTH = Dimensions.get('window').width * 0.9;
 const HEIGHT = Dimensions.get('window').height;
 
-class HomeScreen extends Component {
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -187,4 +187,4 @@ const styles = {
   }
 };
 
-export default connect(null, { setTheme })(HomeScreen);
+export default connect(null, { setTheme })(LoginScreen);
