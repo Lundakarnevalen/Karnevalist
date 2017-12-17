@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, Text, TouchableOpacity, View, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 const SIZE = Dimensions.get('window').width * 0.6;
@@ -19,13 +19,29 @@ class CameraButton extends Component {
     }
   }
 
+  renderPictureOrInfo() {
+    const { textStyle, imageStyle } = styles;
+    const { source } = this.props;
+    if (source === null) {
+      return (
+        <View>
+          <Text style={[textStyle, { color: this.getColor() }]}>Take</Text>
+          <Text style={[textStyle, { color: this.getColor() }]}>Your</Text>
+          <Text style={[textStyle, { color: this.getColor() }]}>Picture</Text>
+        </View>
+      );
+    }
+    return <Image source={{ uri: source }} style={imageStyle} />;
+  }
+
   render() {
-    const { containerStyle, textStyle } = styles;
+    const { containerStyle } = styles;
     return (
-      <TouchableOpacity style={[containerStyle, { borderColor: this.getColor() }]}>
-        <Text style={[textStyle, { color: this.getColor() }]}>Take</Text>
-        <Text style={[textStyle, { color: this.getColor() }]}>Your</Text>
-        <Text style={[textStyle, { color: this.getColor() }]}>Picture</Text>
+      <TouchableOpacity
+        onPress={() => this.props.onPress()}
+        style={[containerStyle, { borderColor: this.getColor() }]}
+      >
+        {this.renderPictureOrInfo()}
       </TouchableOpacity>
     );
   }
@@ -47,6 +63,12 @@ const styles = {
     fontFamily: 'Avenir Next Bold',
     textAlign: 'center',
     fontSize: 24
+  },
+  imageStyle: {
+    width: SIZE - 1,
+    height: SIZE - 1,
+    position: 'absolute',
+    resizeMode: 'cover'
   }
 };
 

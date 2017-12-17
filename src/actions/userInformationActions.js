@@ -1,4 +1,4 @@
-import { SET_TOKEN } from './Types.js';
+import { SET_TOKEN, SET_PICTURE } from './Types.js';
 
 export const setToken = token => {
   return {
@@ -6,3 +6,11 @@ export const setToken = token => {
     payload: token
   };
 };
+
+export const setPicture = uri => {
+  return {
+    type: SET_PICTURE,
+    payload: uri
+  };
+};
+
