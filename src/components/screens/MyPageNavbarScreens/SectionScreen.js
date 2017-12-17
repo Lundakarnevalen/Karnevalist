@@ -1,50 +1,48 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Dimensions, FlatList, Platform } from 'react-native';
+import { View, TouchableOpacity, FlatList, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 
-const WIDTH = Dimensions.get('window').width;
-
 class SectionScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
-      data: [],
+      data: []
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { sections } = nextProps
-    sections.sort(this.dynamicSort("title"));
-    this.setState({ data: nextProps.sections })
+    const { sections } = nextProps;
+    sections.sort(this.dynamicSort('title'));
+    this.setState({ data: nextProps.sections });
   }
 
- dynamicSort(property) {
-  let sortOrder = 1;
-  if (property[0] === '-') {
+  dynamicSort(property) {
+    let sortOrder = 1;
+    if (property[0] === '-') {
       sortOrder = -1;
       property = property.substr(1);
+    }
+    return function (a, b) {
+      const result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+      return result * sortOrder;
+    };
   }
-  return function (a, b) {
-    const result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-    return result * sortOrder;
-  }
-}
 
   getColor() {
-   switch (this.props.theme) {
-     case 'morning':
-       return '#F7A021';
-     case 'day':
-       return '#f4376d';
-     default:
-       return 'white';
-   }
- }
+    switch (this.props.theme) {
+      case 'morning':
+        return '#F7A021';
+      case 'day':
+        return '#f4376d';
+      default:
+        return 'white';
+    }
+  }
 
   render() {
     const { navigation, screenProps } = this.props;
@@ -54,8 +52,8 @@ class SectionScreen extends Component {
         <View>
           <Header
             rightIcon={
-              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage')}>
-                <MaterialIcons name="local-mall" size={30} color={this.getColor()} />
+              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage', { navigation })}>
+                <FontAwesome name="list-alt" size={30} color={this.getColor()} />
               </TouchableOpacity>
             }
             title="Sections"
@@ -87,7 +85,6 @@ class SectionScreen extends Component {
     );
   }
 }
-
 
 const styles = {
   style: {

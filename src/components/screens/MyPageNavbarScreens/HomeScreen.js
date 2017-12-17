@@ -19,8 +19,8 @@ class HomeScreen extends Component {
           <CustomButton
             style={'standardButton'}
             width={WIDTH - 50}
-            text="Confirm your sections"
-            onPress={() => this.props.screenProps.navigate('ConfirmPage')}
+            text="Begin your registration"
+            onPress={() => this.props.navigation.navigate('Sections')}
           />
         </View>
       </View>

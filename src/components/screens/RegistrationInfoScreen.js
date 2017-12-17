@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Text, View, ScrollView, Dimensions } from 'react-native';
+import { Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
 import Header from '../common/Header';
@@ -43,10 +43,16 @@ class RegistrationInfoScreen extends Component {
       />
     );
 
+    const closeButton = (
+      <TouchableOpacity onPress={() => navigation.goBack(null)}>
+        <MaterialCommunityIcons size={30} name="close" color={this.getColor()} />
+      </TouchableOpacity>
+    );
+
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header title="Om registreringen" navigation={navigation} />
+        <Header title="Om registreringen" rightIcon={closeButton} />
         <ScrollView style={{ height: HEIGHT - 64 }}>
           <View style={containerStyle}>
             <Text style={[titelTextStyle, { color: theme === 'night' ? 'white' : 'black' }]}>
