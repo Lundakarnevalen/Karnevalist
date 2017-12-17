@@ -42,7 +42,7 @@ class DKPicker extends Component {
             selectedValue={value}
           >
             {items.map(item => {
-              return <Picker.Item key={item.label} label={item.label} value={item.value} />;
+              return <Picker.Item key={item} label={item} value={item} />;
             })}
           </Picker>
         </View>

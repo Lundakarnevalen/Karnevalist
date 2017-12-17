@@ -22,17 +22,8 @@ import Loading from '../common/Loading';
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
 
-const shirtSizeArray = [
-  { label: 'Shirt size', value: '' },
-  { label: 'Small', value: 'small' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'Large', value: 'large' }
-];
-const studentUnionArray = [
-  { label: 'Student Union', value: '' },
-  { label: 'Lunds Nation', value: 'lundsNation' },
-  { label: 'Kalmar Nation', value: 'kalmarNation' }
-];
+const shirtSizeArray = ['Choose shirt size', 'Small', 'Medium', 'Large'];
+const studentUnionArray = ['Select a nation', 'Lunds Nation', 'Göteborgs Nation', 'Malmös Nation'];
 
 class RegistrationScreen extends Component {
   constructor(props) {
@@ -50,9 +41,7 @@ class RegistrationScreen extends Component {
       phoneNbr: '',
       foodPreferences: '',
       shirtSize: '',
-      shirtSizeTitle: '',
       studentUnion: '',
-      studentUnionTitle: '',
       showShirtPicker: false,
       showStudentUnionPicker: false,
       loading: false,
@@ -65,6 +54,7 @@ class RegistrationScreen extends Component {
   }
 
   renderPickerForPlatform(defaultTitle, title, tag) {
+    const { shirtSize, studentUnion } = this.state;
     if (Platform.OS === 'ios') {
       return (
         <CustomButton
@@ -84,10 +74,10 @@ class RegistrationScreen extends Component {
         <Picker
           onValueChange={itemValue => {
             return tag === 'shirt'
-              ? this.onValueChangeShirtSize(itemValue)
-              : this.onValueChangeStudentUnion(itemValue);
+              ? this.setState({ shirtSize: itemValue })
+              : this.setState({ studentUnion: itemValue });
           }}
-          selectedValue={tag === 'shirt' ? this.state.shirtSize : this.state.studentUnion}
+          selectedValue={tag === 'shirt' ? shirtSize : studentUnion}
           style={styles.androidPicker}
         >
           {this.renderPickerArray(tag)}
@@ -99,34 +89,12 @@ class RegistrationScreen extends Component {
   renderPickerArray(tag) {
     if (tag === 'shirt') {
       return shirtSizeArray.map(item => {
-        return <Picker.Item key={item.label} label={item.label} value={item.value} />;
+        return <Picker.Item key={item} label={item} value={item} />;
       });
     }
     return studentUnionArray.map(item => {
-      return <Picker.Item key={item.label} label={item.label} value={item.value} />;
+      return <Picker.Item key={item} label={item} value={item} />;
     });
-  }
-
-  onValueChangeShirtSize(shirtSize) {
-    this.setState({ shirtSize });
-    shirtSizeArray.map(item => {
-      if (shirtSize === item.value) {
-        return this.setState({ shirtSizeTitle: item.label });
-      }
-      return null;
-    });
-    return null;
-  }
-
-  onValueChangeStudentUnion(studentUnion) {
-    this.setState({ studentUnion });
-    shirtSizeArray.map(item => {
-      if (studentUnion === item.value) {
-        return this.setState({ studentUnionTitle: item.label });
-      }
-      return null;
-    });
-    return null;
   }
 
   renderDKBackgroundCloser() {
@@ -264,12 +232,8 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
           />
-          {this.renderPickerForPlatform('Choose shirt size', this.state.shirtSizeTitle, 'shirt')}
-          {this.renderPickerForPlatform(
-            'Choose student union',
-            this.state.studentUnionTitle,
-            'union'
-          )}
+          {this.renderPickerForPlatform('Choose shirt size', shirtSize, 'shirt')}
+          {this.renderPickerForPlatform('Choose student union', studentUnion, 'union')}
           <ButtonChoiceManager
             buttonInputVector={['I was engaged in the karneval 2014']}
             multipleChoice
@@ -348,14 +312,14 @@ class RegistrationScreen extends Component {
         </ScrollView>
         {this.renderDKBackgroundCloser()}
         <DKPicker
-          onValueChange={newValue => this.onValueChangeShirtSize(newValue)}
+          onValueChange={newValue => this.setState({ shirtSize: newValue })}
           items={shirtSizeArray}
           value={shirtSize}
           isShowing={showShirtPicker}
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
-          onValueChange={newValue => this.onValueChangeStudentUnion(newValue)}
+          onValueChange={newValue => this.setState({ studentUnion: newValue })}
           items={studentUnionArray}
           value={studentUnion}
           isShowing={showStudentUnionPicker}
@@ -389,14 +353,13 @@ const styles = {
     paddingLeft: 16
   },
   androidPicker: {
-    color: '#f4376d',
-    fontSize: 20,
+    color: 'white',
     marginTop: 10,
     marginBottom: 10,
     borderColor: 'black',
     borderRadius: 3,
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderWidth: 1
   }
 };
 
