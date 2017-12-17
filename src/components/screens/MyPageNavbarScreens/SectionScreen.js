@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, FlatList, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
@@ -16,7 +16,21 @@ class SectionScreen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { sections } = nextProps;
+    sections.sort(this.dynamicSort('title'));
     this.setState({ data: nextProps.sections });
+  }
+
+  dynamicSort(property) {
+    let sortOrder = 1;
+    if (property[0] === '-') {
+      sortOrder = -1;
+      property = property.substr(1);
+    }
+    return function (a, b) {
+      const result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+      return result * sortOrder;
+    };
   }
 
   getColor() {
