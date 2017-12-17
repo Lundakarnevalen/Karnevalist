@@ -28,11 +28,11 @@ class SectionListItem extends Component {
   renderDateView(sectionDate) {
     const { dateViewStyle, dateStyle } = styles;
     const sectionDateParts = sectionDate.split('T')[0].split('-');
-    const sectionDateText = sectionDateParts[2] + '\n' + months[sectionDateParts[1] - 1];
     if (sectionDate) {
       return (
         <View style={[dateViewStyle, { backgroundColor: this.getColor() }]}>
-          <Text style={dateStyle}>{sectionDateText}</Text>
+          <Text style={dateStyle}>{sectionDateParts[2]}</Text>
+          <Text style={dateStyle}>{months[sectionDateParts[1] - 1]}</Text>
         </View>
       );
     }
@@ -104,12 +104,14 @@ const styles = {
   titleStyle: {
     fontSize: 20,
     marginLeft: 8,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Medium'
   },
   contentStyle: {
     fontSize: 14,
     marginLeft: 8,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Medium'
   },
   dateViewStyle: {
     height: 60,
@@ -120,7 +122,8 @@ const styles = {
   dateStyle: {
     fontSize: 16,
     color: 'white',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Bold'
   },
   continueIconIndicatorStyle: {
     marginRight: 8,
