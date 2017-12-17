@@ -49,7 +49,7 @@ class ConfirmPage extends Component {
   }
 
   renderSortableListOrMessage() {
-    const { contentContainer, list, confimButtonStyle, confimTextStyle, textStyle } = styles;
+    const { contentContainer, list, confimTextStyle, textStyle } = styles;
     if (this.state.data.length === 0) {
       return (
         <View
@@ -71,16 +71,39 @@ class ConfirmPage extends Component {
           renderRow={this.renderRow.bind(this)}
         />
         <TouchableOpacity
-          style={[
-            confimButtonStyle,
-            { backgroundColor: this.props.theme === 'day' ? '#F4376D' : '#F7A021' }
-          ]}
+          style={this.getConfimButtonStyle()}
           onPress={() => this.onPressConfirmButton()}
         >
           <Text style={confimTextStyle}>Send</Text>
         </TouchableOpacity>
       </View>
     );
+  }
+
+  getBackgroundColor() {
+    const { data } = this.state;
+    const { theme } = this.props;
+    if (data.length >= 5) {
+      if (theme === 'day') {
+        return '#F4376D';
+      }
+      return '#F7A021';
+    }
+    return '#a9a9a9';
+  }
+
+  getConfimButtonStyle() {
+    return {
+      height: window.height / 9,
+      backgroundColor: this.getBackgroundColor(),
+      borderColor: '#ffffff',
+      borderRadius: 0,
+      margin: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      bottom: 0,
+      width: window.width
+    };
   }
 
   deleteRow(id) {
@@ -115,10 +138,6 @@ class ConfirmPage extends Component {
       return 'trash';
     }
     return 'navicon';
-  }
-
-  onPressTrash(key) {
-    Alert.alert('Navigera till ' + key + '-sektionen');
   }
 
   onPressConfirmButton() {
@@ -172,16 +191,6 @@ const styles = {
   confimTextStyle: {
     fontSize: 20,
     color: '#ffffff'
-  },
-  confimButtonStyle: {
-    height: window.height / 9,
-    borderColor: '#ffffff',
-    borderRadius: 0,
-    margin: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    bottom: 0,
-    width: window.width
   },
   list: {
     flex: 1
