@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, ListView, Dimensions, Platform } from 'react-native';
+import { connect } from 'react-redux';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 import { getNews } from '../../../helpers/ApiManager';
+import { NEWS_SCREEN_STRINGS } from '../../../helpers/LangStrings';
 
 const height = Dimensions.get('window').height;
 
@@ -26,10 +28,12 @@ class NewsScreen extends Component {
   }
 
   render() {
+    const { navigation, screenProps, lang } = this.props
+    const title = NEWS_SCREEN_STRINGS.title[lang]
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header title="Nyheter" leftIcon={null} navigation={this.props.navigation} />
+        <Header title={title} leftIcon={null} navigation={navigation} />
         <ListView
           enableEmptySections
           style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}
@@ -41,7 +45,7 @@ class NewsScreen extends Component {
               sectionTitle={rowData.title.rendered}
               sectionDate={rowData.date}
               onPress={() =>
-                this.props.screenProps.navigate('SingleNewsScreen', {
+                screenProps.navigation.navigate('SingleNewsScreen', {
                   info: { title: rowData.title.rendered, url: rowData.link }
                 })
               }
@@ -52,5 +56,10 @@ class NewsScreen extends Component {
     );
   }
 }
+const mapStateToProps = ({ currentTheme, currentLang }) => {
+  const { theme } = currentTheme;
+  const { lang } = currentLang;
+  return { theme, lang };
+};
 
-export default NewsScreen;
+export default connect(mapStateToProps, null)(NewsScreen);

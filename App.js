@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Font, ScreenOrientation } from 'expo';
+import { getItem, saveItem } from './src/helpers/LocalSave'
 import Router from './src/components/Router';
 import reducers from './src/reducers';
+
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +16,10 @@ class App extends Component {
   }
 
   componentWillMount() {
+    getItem('lang', lang => {
+      if (lang === null)
+        saveItem('lang', 'SE')
+    });
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
     Font.loadAsync({
       'Avenir Next Bold': require('./assets/fonts/AvenirNext-Bold-01.ttf'),

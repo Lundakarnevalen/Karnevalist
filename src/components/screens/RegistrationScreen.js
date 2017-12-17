@@ -374,10 +374,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, userInformation }) => {
+const mapStateToProps = ({ currentTheme, userInformation, currentLang }) => {
   const { theme } = currentTheme;
   const { picture } = userInformation;
-  return { theme, picture };
+  const { lang } = currentLang
+  return { theme, picture, lang };
 };
 
 export default connect(mapStateToProps, null)(RegistrationScreen);

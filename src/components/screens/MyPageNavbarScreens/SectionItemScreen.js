@@ -6,7 +6,6 @@ import {
   Dimensions,
   ScrollView,
   Platform,
-  Alert
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -100,9 +99,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, currentLang }) => {
   const { theme } = currentTheme;
-  return { theme };
+  const { lang } = currentLang;
+  return { theme, lang };
 };
 
 export default connect(mapStateToProps, null)(SectionItemScreen);
