@@ -244,7 +244,7 @@ class RegistrationScreen extends Component {
             color={this.getColor()}
           />
           <ButtonChoiceManager
-            buttonInputVector={['I have a drives license']}
+            buttonInputVector={['I have a drivers license']}
             multipleChoice
             size={30}
             color={this.getColor()}
