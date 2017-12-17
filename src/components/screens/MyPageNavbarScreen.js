@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Image, Dimensions } from 'react-native'
 import { TabNavigator } from 'react-navigation';
-import { Ionicons, FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { setSections } from '../../actions'
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
-import AmusementScreen from './MyPageNavbarScreens/AmusementScreen';
+import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
 import NewsScreen from './MyPageNavbarScreens/NewsScreen';
 import ProfileScreen from './MyPageNavbarScreens/ProfileScreen';
 
@@ -16,6 +16,7 @@ const CURRENT_HOUR = new Date().getHours();
 const THEME_COLOR = CURRENT_HOUR > 8 && CURRENT_HOUR < 18 ? '#f4376d' : '#F7A021';
 
 const WIDTH = Dimensions.get('window').width
+const SIZE = 30
 
 class MyPageNavbarScreen extends Component {
 
@@ -73,20 +74,20 @@ const TabNav = TabNavigator(
       navigationOptions: {
         tabBarLabel: 'Sektioner',
         tabBarIcon: ({ tintColor, focused }) => (
-          <Ionicons
-            size={30}
-            name="md-information-circle"
+          <MaterialIcons
+            name="star"
             color={focused ? tintColor : '#A9A9A9'}
+            size={SIZE}
           />
         )
       }
     },
-    Amusements: {
-      screen: AmusementScreen,
+    SongBook: {
+      screen: SongBookScreen,
       navigationOptions: {
-        tabBarLabel: 'Nöjen',
+        tabBarLabel: 'Sångbok',
         tabBarIcon: ({ tintColor, focused }) => (
-          <Ionicons size={30} name="md-happy" color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons size={SIZE} name="local-library" color={focused ? tintColor : '#A9A9A9'} />
         )
       }
     },
@@ -95,7 +96,7 @@ const TabNav = TabNavigator(
       navigationOptions: {
         tabBarLabel: 'Hem',
         tabBarIcon: ({ tintColor, focused }) => (
-          <Ionicons size={30} name="md-home" color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons size={SIZE} name="home" color={focused ? tintColor : '#A9A9A9'} />
         )
       }
     },
@@ -104,7 +105,7 @@ const TabNav = TabNavigator(
       navigationOptions: {
         tabBarLabel: 'Nyheter',
         tabBarIcon: ({ tintColor, focused }) => (
-          <FontAwesome size={30} name="newspaper-o" color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons size={SIZE} name="speaker-notes" color={focused ? tintColor : '#A9A9A9'} />
         )
       }
     },
@@ -113,7 +114,7 @@ const TabNav = TabNavigator(
       navigationOptions: {
         tabBarLabel: 'Min profil',
         tabBarIcon: ({ tintColor, focused }) => (
-          <FontAwesome size={30} name="user" color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons size={SIZE} name="account-circle" color={focused ? tintColor : '#A9A9A9'} />
         )
       }
     }
@@ -126,13 +127,19 @@ const TabNav = TabNavigator(
       showIcon: true,
       activeTintColor: THEME_COLOR,
       labelStyle: {
-        fontSize: 10
+        fontSize: 10,
+        margin: 0,
+      },
+      iconStyle: {
+        width: SIZE,
+        height: SIZE,
       },
       style: {
-        backgroundColor: '#ffffff'
+        height: 60,
+        backgroundColor: '#ffffff',
       },
       indicatorStyle: {
-        backgroundColor: '#8A4797'
+        backgroundColor: THEME_COLOR
       }
     }
   }
