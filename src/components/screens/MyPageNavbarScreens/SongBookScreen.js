@@ -20,8 +20,6 @@ class SongBookScreen extends Component {
     );
   }
 }
-<<<<<<< HEAD
-=======
 
 const styles = {
   textStyle: {
@@ -33,5 +31,4 @@ const styles = {
   }
 };
 
->>>>>>> 8b782b8423497a4d32a11d5bb96c3b98744e804c
 export default SongBookScreen;
