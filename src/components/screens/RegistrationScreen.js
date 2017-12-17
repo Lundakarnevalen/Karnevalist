@@ -7,6 +7,7 @@ import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
 import CustomButton from '../common/CustomButton';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
+import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 
@@ -142,6 +143,10 @@ class RegistrationScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title="Create Profile" navigation={this.props.navigation} />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
+          <CameraButton
+            onPress={() => this.props.navigation.navigate('CameraScreen')}
+            source={this.props.picture}
+          />
           <Input
             placeholder="First name"
             onChangeText={firstNameInput => {
@@ -356,9 +361,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, userInformation }) => {
   const { theme } = currentTheme;
-  return { theme };
+  const { picture } = userInformation;
+  return { theme, picture };
 };
 
 export default connect(mapStateToProps, null)(RegistrationScreen);
