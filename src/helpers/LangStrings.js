@@ -10,6 +10,18 @@ export const LOGIN_SCREEN_STRINGS = {
   loginButton: {
     SE: 'Logga in',
     EN: 'Log in'
+  },
+  forgotPassword: {
+    SE: 'Glömt lösenord?',
+    EN: 'Forgot your password?'
+  },
+  createProfile: {
+    SE: 'Skapa profil',
+    EN: 'Create profile'
+  },
+  readMore: {
+    SE: 'Läs mer om registreringen',
+    EN: 'Read more about the registration'
   }
 }
 

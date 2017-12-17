@@ -9,6 +9,7 @@ import PasswordPopUp from '../common/PasswordPopUp';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 import { getItem } from '../../helpers/LocalSave';
+import { LOGIN_SCREEN_STRINGS } from '../../helpers/LangStrings'
 
 const WIDTH = Dimensions.get('window').width * 0.9;
 const HEIGHT = Dimensions.get('window').height;
@@ -45,9 +46,20 @@ class LoginScreen extends Component {
     this.props.setTheme(currentTheme);
   }
 
+  getPlaceholders() {
+    const { lang } = this.props
+    const fields = ['email', 'password', 'loginButton', 'forgotPassword', 'createProfile', 'readMore']
+    const placeholders = {}
+    fields.forEach(field => placeholders[field] = LOGIN_SCREEN_STRINGS[field][lang])
+    return placeholders
+  }
+
   render() {
     const { containerStyle } = styles;
     const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
+
+    const placeholders = this.getPlaceholders()
+    console.log(placeholders);
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
@@ -55,19 +67,19 @@ class LoginScreen extends Component {
           <View style={styles.container1}>
             <Input
               value={email}
-              placeholder="Email address"
+              placeholder={placeholders.email}
               width={WIDTH}
               onChangeText={text => this.setState({ email: text })}
             />
             <Input
               value={password}
-              placeholder="Lösenord"
+              placeholder={placeholders.password}
               width={WIDTH}
               secureText
               onChangeText={text => this.setState({ password: text })}
             />
             <CustomButton
-              text="Logga in"
+              text={placeholders.loginButton}
               onPress={() => {
                 if (email === '') {
                   Alert.alert('Error', 'The email field is required');
@@ -103,14 +115,14 @@ class LoginScreen extends Component {
               width={WIDTH}
             />
             <CustomButton
-              text="Glömt lösenord?"
+              text={placeholders.forgotPassword}
               onPress={() => {
                 this.setState({ alertVisible: true });
               }}
               style="textButton"
             />
             <CustomButton
-              text="Skapa profil"
+              text={placeholders.createProfile}
               width={WIDTH}
               onPress={() => {
                 this.props.navigation.navigate('RegistrationScreen');
@@ -118,7 +130,7 @@ class LoginScreen extends Component {
               style="standardButton"
             />
             <CustomButton
-              text="Läs mer om registreringen"
+              text={placeholders.readMore}
               onPress={() => {
                 this.props.navigation.navigate('RegistrationInfo');
               }}
