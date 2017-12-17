@@ -7,6 +7,7 @@ import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
 import CustomButton from '../common/CustomButton';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
+import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 
@@ -142,6 +143,7 @@ class RegistrationScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title="Create Profile" navigation={this.props.navigation} />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
+          <CameraButton />
           <Input
             placeholder="First name"
             onChangeText={firstNameInput => {
