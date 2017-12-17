@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Dimensions, FlatList, Platform } from 'react-native';
-import axios from 'axios';
+import { View, TouchableOpacity, FlatList, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
-
-const WIDTH = Dimensions.get('window').width;
 
 class SectionScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
-      data: [],
-      images: {}
+      data: []
     };
   }
 
-  componentWillMount() {
-    this.getSectionInfo();
+  componentWillReceiveProps(nextProps) {
+    const { sections } = nextProps;
+    sections.sort(this.dynamicSort('title'));
+    this.setState({ data: nextProps.sections });
+  }
+
+  dynamicSort(property) {
+    let sortOrder = 1;
+    if (property[0] === '-') {
+      sortOrder = -1;
+      property = property.substr(1);
+    }
+    return function (a, b) {
+      const result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+      return result * sortOrder;
+    };
   }
 
   getColor() {
@@ -34,50 +44,6 @@ class SectionScreen extends Component {
     }
   }
 
-  getImage(url, section) {
-    axios
-      .get(url)
-      .then(r => {
-        const data = this.state.data;
-        const image = (
-          <Image
-            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
-            source={{ uri: r.data.source_url }}
-            //defaultSource={require('../../../../res/LK2018logga.png')}
-          />
-        );
-        section.image = image;
-        data.push(section);
-        this.setState({ data });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
-  getSectionInfo() {
-    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
-    axios
-      .get(url)
-      .then(response => {
-        response.data.forEach(item => {
-          const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
-          const imgId = item.featured_media;
-          const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
-          const section = {
-            key: item.id,
-            id: item.id,
-            title: item.title.rendered,
-            info: strippedContent
-          };
-          this.getImage(imgUrl, section);
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
   render() {
     const { navigation, screenProps } = this.props;
     return (
@@ -86,7 +52,7 @@ class SectionScreen extends Component {
         <View>
           <Header
             rightIcon={
-              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage')}>
+              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage', { navigation })}>
                 <FontAwesome name="list-alt" size={30} color={this.getColor()} />
               </TouchableOpacity>
             }
@@ -126,9 +92,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, sections }) => {
   const { theme } = currentTheme;
-  return { theme };
+  return { theme, sections: sections.sections };
 };
 
 export default connect(mapStateToProps, null)(SectionScreen);

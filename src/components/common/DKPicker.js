@@ -22,22 +22,27 @@ class DKPicker extends Component {
   }
 
   render() {
-    const { picker } = styles;
+    const { pickerStyle } = styles;
     const { items, value } = this.props;
     return (
-      <Animated.View style={[picker, { width, bottom: this.state.bottom }]}>
+      <Animated.View style={[pickerStyle, { width, bottom: this.state.bottom }]}>
         <View
           onLayout={event => {
             this.setState({ height: event.nativeEvent.layout.height });
           }}
         >
-          <CustomButton text="OK" style="acceptButton" onPress={() => this.props.close()} />
+          <CustomButton
+            text={'OK'}
+            style={'standardButton'}
+            width={width - 50}
+            onPress={() => this.props.close()}
+          />
           <Picker
             onValueChange={itemValue => this.props.onValueChange(itemValue)}
             selectedValue={value}
           >
             {items.map(item => {
-              return <Picker.Item key={item.label} label={item.label} value={item.value} />;
+              return <Picker.Item key={item} label={item} value={item} />;
             })}
           </Picker>
         </View>
@@ -47,9 +52,10 @@ class DKPicker extends Component {
 }
 
 const styles = {
-  picker: {
+  pickerStyle: {
     backgroundColor: 'white',
-    position: 'absolute'
+    position: 'absolute',
+    alignItems: 'center'
   }
 };
 

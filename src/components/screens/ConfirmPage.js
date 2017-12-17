@@ -23,14 +23,18 @@ class ConfirmPage extends Component {
 
   componentWillMount() {
     const tempData = [];
+    const allSections = this.props.sections;
     getSections(sections => {
       sections.forEach((section, i) => {
+        const key = section.key.substring(7);
+        const s = allSections.filter(item => item.key + '' === key)[0];
         tempData.push({
-          key: section.key,
+          key,
+          localKey: section.key,
           id: i,
-          text: section.value,
-          infoText: 'PLACEHOLDER',
-          image: 'https://placekitten.com/200/204'
+          text: s.title,
+          infoText: s.content,
+          imguri: s.imguri
         });
       });
       this.setState({ data: tempData });
@@ -49,16 +53,26 @@ class ConfirmPage extends Component {
   }
 
   renderSortableListOrMessage() {
-    const { contentContainer, list, confimButtonStyle, confimTextStyle, textStyle } = styles;
+    const { contentContainer, list, confimTextStyle, textStyle } = styles;
+    const { navigation } = this.props;
     if (this.state.data.length === 0) {
       return (
         <View
           style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text style={[textStyle, { color: this.props.theme === 'night' ? 'white' : 'black' }]}>
-            No selected sections
+          <Text
+            style={[
+              textStyle,
+              { color: this.props.theme === 'night' ? 'white' : 'black', textAlign: 'center' }
+            ]}
+          >
+            Please select at least 5 sections
           </Text>
-          <CustomButton style={'standardButton'} text={'To section selection'} />
+          <CustomButton
+            style={'standardButton'}
+            text={'To section selection'}
+            onPress={() => navigation.goBack()}
+          />
         </View>
       );
     }
@@ -71,10 +85,7 @@ class ConfirmPage extends Component {
           renderRow={this.renderRow.bind(this)}
         />
         <TouchableOpacity
-          style={[
-            confimButtonStyle,
-            { backgroundColor: this.props.theme === 'day' ? '#F4376D' : '#F7A021' }
-          ]}
+          style={this.getConfimButtonStyle()}
           onPress={() => this.onPressConfirmButton()}
         >
           <Text style={confimTextStyle}>Send</Text>
@@ -83,10 +94,36 @@ class ConfirmPage extends Component {
     );
   }
 
+  getBackgroundColor() {
+    const { data } = this.state;
+    const { theme } = this.props;
+    if (data.length >= 5) {
+      if (theme === 'day') {
+        return '#F4376D';
+      }
+      return '#F7A021';
+    }
+    return '#a9a9a9';
+  }
+
+  getConfimButtonStyle() {
+    return {
+      height: window.height / 9,
+      backgroundColor: this.getBackgroundColor(),
+      borderColor: '#ffffff',
+      borderRadius: 0,
+      margin: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      bottom: 0,
+      width: window.width
+    };
+  }
+
   deleteRow(id) {
     const newData = this.state.data.filter(dataItem => dataItem.id !== id);
     const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
-    removeItem(toRemove[0].key);
+    removeItem(toRemove[0].localKey);
     this.setState({ data: newData });
   }
 
@@ -117,10 +154,6 @@ class ConfirmPage extends Component {
     return 'navicon';
   }
 
-  onPressTrash(key) {
-    Alert.alert('Navigera till ' + key + '-sektionen');
-  }
-
   onPressConfirmButton() {
     const { data } = this.state;
     if (data.length < 5) {
@@ -134,6 +167,23 @@ class ConfirmPage extends Component {
     this.setState({ editMode: !this.state.editMode });
   }
 
+  getRightIcon() {
+    if (this.state.data.length > 0) {
+      return (
+        <TouchableOpacity
+          style={{ width: 50, alignItems: 'center' }}
+          onPress={() => this.onPressHeaderButton()}
+        >
+          <MaterialIcons
+            name={this.getHeaderIconName()}
+            style={{ color: this.getColor(), right: 0 }}
+            size={35}
+          />
+        </TouchableOpacity>
+      );
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -141,19 +191,7 @@ class ConfirmPage extends Component {
         <Header
           title="Confirmation page"
           navigation={this.props.navigation}
-          rightIcon={
-            <TouchableOpacity
-              style={{ width: 50, alignItems: 'center' }}
-              onPress={() => this.onPressHeaderButton()}
-            >
-              <MaterialIcons
-                name={this.getHeaderIconName()}
-                style={{ color: this.getColor(), right: 0 }}
-                size={35}
-              />
-            </TouchableOpacity>
-          }
-          navigation={this.props.navigation}
+          rightIcon={this.getRightIcon()}
         />
         {this.renderSortableListOrMessage()}
       </View>
@@ -172,16 +210,6 @@ const styles = {
   confimTextStyle: {
     fontSize: 20,
     color: '#ffffff'
-  },
-  confimButtonStyle: {
-    height: window.height / 9,
-    borderColor: '#ffffff',
-    borderRadius: 0,
-    margin: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    bottom: 0,
-    width: window.width
   },
   list: {
     flex: 1
@@ -202,9 +230,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, sections }) => {
   const { theme } = currentTheme;
-  return { theme };
+  return { theme, sections: sections.sections };
 };
 
 export default connect(mapStateToProps, null)(ConfirmPage);

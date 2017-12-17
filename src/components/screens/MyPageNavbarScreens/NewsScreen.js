@@ -31,8 +31,10 @@ class NewsScreen extends Component {
         <BackgroundImage pictureNumber={4} />
         <Header title="Nyheter" leftIcon={null} navigation={this.props.navigation} />
         <ListView
+          enableEmptySections
           style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}
           dataSource={this.state.dataSource}
+          enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}
           renderRow={rowData => (
             <SectionListItem

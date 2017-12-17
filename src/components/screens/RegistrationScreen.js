@@ -1,29 +1,31 @@
 import React, { Component } from 'react';
-import { Alert, ScrollView, View, Dimensions, Picker, Platform } from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  View,
+  Dimensions,
+  Picker,
+  Platform,
+  TouchableWithoutFeedback,
+  TouchableOpacity
+} from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from '../common/Header';
 import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
 import CustomButton from '../common/CustomButton';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
+import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
 
-const shirtSizeArray = [
-  { label: 'Shirt size', value: '' },
-  { label: 'Small', value: 'small' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'Large', value: 'large' }
-];
-const studentUnionArray = [
-  { label: 'Student Union', value: '' },
-  { label: 'Lunds Nation', value: 'lundsNation' },
-  { label: 'Kalmar Nation', value: 'kalmarNation' }
-];
+const shirtSizeArray = ['Choose shirt size', 'Small', 'Medium', 'Large'];
+const studentUnionArray = ['Select a nation', 'Lunds Nation', 'Göteborgs Nation', 'Malmös Nation'];
 
 class RegistrationScreen extends Component {
   constructor(props) {
@@ -41,9 +43,7 @@ class RegistrationScreen extends Component {
       phoneNbr: '',
       foodPreferences: '',
       shirtSize: '',
-      shirtSizeTitle: '',
       studentUnion: '',
-      studentUnionTitle: '',
       showShirtPicker: false,
       showStudentUnionPicker: false,
       loading: false,
@@ -56,11 +56,12 @@ class RegistrationScreen extends Component {
   }
 
   renderPickerForPlatform(defaultTitle, title, tag) {
+    const { shirtSize, studentUnion } = this.state;
     if (Platform.OS === 'ios') {
       return (
         <CustomButton
           text={title === '' ? defaultTitle : title}
-          style="standardButton"
+          style="dropDownButton"
           width={width}
           onPress={() => {
             return tag === 'shirt'
@@ -75,10 +76,10 @@ class RegistrationScreen extends Component {
         <Picker
           onValueChange={itemValue => {
             return tag === 'shirt'
-              ? this.onValueChangeShirtSize(itemValue)
-              : this.onValueChangeStudentUnion(itemValue);
+              ? this.setState({ shirtSize: itemValue })
+              : this.setState({ studentUnion: itemValue });
           }}
-          selectedValue={tag === 'shirt' ? this.state.shirtSize : this.state.studentUnion}
+          selectedValue={tag === 'shirt' ? shirtSize : studentUnion}
           style={styles.androidPicker}
         >
           {this.renderPickerArray(tag)}
@@ -90,34 +91,33 @@ class RegistrationScreen extends Component {
   renderPickerArray(tag) {
     if (tag === 'shirt') {
       return shirtSizeArray.map(item => {
-        return <Picker.Item key={item.label} label={item.label} value={item.value} />;
+        return <Picker.Item key={item} label={item} value={item} />;
       });
     }
     return studentUnionArray.map(item => {
-      return <Picker.Item key={item.label} label={item.label} value={item.value} />;
+      return <Picker.Item key={item} label={item} value={item} />;
     });
   }
 
-  onValueChangeShirtSize(shirtSize) {
-    this.setState({ shirtSize });
-    shirtSizeArray.map(item => {
-      if (shirtSize === item.value) {
-        return this.setState({ shirtSizeTitle: item.label });
-      }
-      return null;
-    });
-    return null;
-  }
-
-  onValueChangeStudentUnion(studentUnion) {
-    this.setState({ studentUnion });
-    shirtSizeArray.map(item => {
-      if (studentUnion === item.value) {
-        return this.setState({ studentUnionTitle: item.label });
-      }
-      return null;
-    });
-    return null;
+  renderDKBackgroundCloser() {
+    const { showShirtPicker, showStudentUnionPicker } = this.state;
+    if (showShirtPicker || showStudentUnionPicker) {
+      return (
+        <TouchableWithoutFeedback
+          style={{ position: 'absolute' }}
+          onPress={() => this.setState({ showShirtPicker: false, showStudentUnionPicker: false })}
+        >
+          <View
+            style={{
+              position: 'absolute',
+              width: width + 32,
+              height,
+              backgroundColor: 'rgba(0, 0, 0, 0.3)'
+            }}
+          />
+        </TouchableWithoutFeedback>
+      );
+    }
   }
 
   render() {
@@ -135,13 +135,28 @@ class RegistrationScreen extends Component {
       password,
       confirmedPassword,
       loading,
-      loadingComplete
+      loadingComplete,
+      shirtSize,
+      showShirtPicker,
+      studentUnion,
+      showStudentUnionPicker
     } = this.state;
+
+    const closeButton = (
+      <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
+        <MaterialCommunityIcons size={30} name="close" color={this.getColor()} />
+      </TouchableOpacity>
+    );
+
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header title="Create Profile" navigation={this.props.navigation} />
+        <Header title="Create Profile" rightIcon={closeButton} />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
+          <CameraButton
+            onPress={() => this.props.navigation.navigate('CameraScreen')}
+            source={this.props.picture}
+          />
           <Input
             placeholder="First name"
             onChangeText={firstNameInput => {
@@ -226,24 +241,22 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
           />
-          {this.renderPickerForPlatform('Choose shirt size', this.state.shirtSizeTitle, 'shirt')}
-          {this.renderPickerForPlatform(
-            'Choose student union',
-            this.state.studentUnionTitle,
-            'union'
-          )}
+          {this.renderPickerForPlatform('Choose shirt size', shirtSize, 'shirt')}
+          {this.renderPickerForPlatform('Choose student union', studentUnion, 'union')}
+          <View style={{ right: 3 }}>
           <ButtonChoiceManager
-            buttonInputVector={['I was engaged in the karneval 2014']}
+            buttonInputVector={['I was active in the karneval 2014']}
             multipleChoice
             size={30}
             color={this.getColor()}
           />
           <ButtonChoiceManager
-            buttonInputVector={['I have a drives license']}
+            buttonInputVector={['I have a drivers license']}
             multipleChoice
             size={30}
             color={this.getColor()}
           />
+          </View>
           <CustomButton
             text={'Register'}
             style={'standardButton'}
@@ -277,10 +290,15 @@ class RegistrationScreen extends Component {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
                   .post('https://api.10av10.com/register', {
-                    email: this.state.email,
-                    password: '123',
-                    postNumber: this.state.postcode,
-                    talent: 'saknas'
+                    email,
+                    password,
+                    postNumber: postcode,
+                    firstName,
+                    lastName,
+                    phoneNumber: phoneNbr,
+                    address,
+                    city,
+                    foodPreferences
                   })
                   .then(() => {
                     this.setState({ loadingComplete: true });
@@ -303,18 +321,19 @@ class RegistrationScreen extends Component {
             }}
           />
         </ScrollView>
+        {this.renderDKBackgroundCloser()}
         <DKPicker
-          onValueChange={shirtSize => this.onValueChangeShirtSize(shirtSize)}
+          onValueChange={newValue => this.setState({ shirtSize: newValue })}
           items={shirtSizeArray}
-          value={this.state.shirtSize}
-          isShowing={this.state.showShirtPicker}
+          value={shirtSize}
+          isShowing={showShirtPicker}
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
-          onValueChange={studentUnion => this.onValueChangeStudentUnion(studentUnion)}
+          onValueChange={newValue => this.setState({ studentUnion: newValue })}
           items={studentUnionArray}
-          value={this.state.studentUnion}
-          isShowing={this.state.showStudentUnionPicker}
+          value={studentUnion}
+          isShowing={showStudentUnionPicker}
           close={() => this.setState({ showStudentUnionPicker: false })}
         />
         {loading ? (
@@ -345,20 +364,20 @@ const styles = {
     paddingLeft: 16
   },
   androidPicker: {
-    color: '#f4376d',
-    fontSize: 20,
+    color: 'white',
     marginTop: 10,
     marginBottom: 10,
     borderColor: 'black',
     borderRadius: 3,
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderWidth: 1
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, userInformation }) => {
   const { theme } = currentTheme;
-  return { theme };
+  const { picture } = userInformation;
+  return { theme, picture };
 };
 
 export default connect(mapStateToProps, null)(RegistrationScreen);

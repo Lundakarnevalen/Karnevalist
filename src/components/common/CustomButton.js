@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -9,13 +10,13 @@ class CustomButton extends Component {
     let color;
     switch (this.props.theme) {
       case 'morning':
-        color = '#F7A021';
+        color = '#ffffff';
         break;
       case 'day':
         color = 'rgb(138, 71, 151)';
         break;
       default:
-        color = 'white';
+        color = '#ffffff';
     }
     return {
       color,
@@ -44,21 +45,41 @@ class CustomButton extends Component {
   }
 
   getStandardButton() {
+    let borderWidth = 1;
     let backgroundColor;
+    let borderColor;
     switch (this.props.theme) {
       case 'morning':
         backgroundColor = 'white';
+        borderColor = '#F7A021';
         break;
       case 'day':
         backgroundColor = 'white';
+        borderColor = '#f4376d';
         break;
       default:
         backgroundColor = '#F7A021';
+        borderWidth = 0;
     }
     return {
       backgroundColor,
-      padding: 10
+      padding: 10,
+      borderWidth,
+      borderColor
     };
+  }
+
+  isDropDownButton() {
+    if (this.props.style === 'dropDownButton') {
+      return (
+        <Ionicons
+          style={{ position: 'absolute', right: 10 }}
+          name={'ios-arrow-dropdown'}
+          size={25}
+          color={this.getStandardButtonText().color}
+        />
+      );
+    }
   }
 
   getStyle() {
@@ -71,6 +92,8 @@ class CustomButton extends Component {
         return styles.acceptButton;
       case 'alertButton':
         return styles.alertButton;
+      case 'dropDownButton':
+        return this.getStandardButton();
       default:
         return styles.button;
     }
@@ -86,6 +109,8 @@ class CustomButton extends Component {
         return styles.whiteText;
       case 'alertButton':
         return styles.whiteText;
+      case 'dropDownButton':
+        return this.getStandardButtonText();
       default:
         return styles.button;
     }
@@ -97,6 +122,7 @@ class CustomButton extends Component {
     return (
       <TouchableOpacity onPress={onPress} style={[this.getStyle(), button, { width }]}>
         <Text style={[this.getTextStyle()]}>{text}</Text>
+        {this.isDropDownButton()}
       </TouchableOpacity>
     );
   }
@@ -106,10 +132,10 @@ const styles = {
   button: {
     marginTop: 10,
     marginBottom: 10,
-    borderColor: 'black',
     borderRadius: 3,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   textButton: {
     backgroundColor: 'transparent',
@@ -126,6 +152,13 @@ const styles = {
     margin: 0,
     marginLeft: 0.4,
     marginRight: 0.4
+  },
+  dropDownButton: {
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   whiteText: {
     color: '#f4376d',

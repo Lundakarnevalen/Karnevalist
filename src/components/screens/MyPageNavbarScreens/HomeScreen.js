@@ -17,9 +17,10 @@ class HomeScreen extends Component {
         <View style={container}>
           <CountDown />
           <CustomButton
-            style="standardButton"
-            text="Confirm your sections"
-            onPress={() => this.props.screenProps.navigate('ConfirmPage')}
+            style={'standardButton'}
+            width={WIDTH - 50}
+            text="Begin your registration"
+            onPress={() => this.props.navigation.navigate('Sections')}
           />
         </View>
       </View>

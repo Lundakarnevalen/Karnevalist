@@ -60,15 +60,15 @@ class Row extends Component {
 
   getInfoTextStyle() {
     return {
-      fontSize: this.props.data.text.length < 10 ? 12 : 10,
-      fontWeight: 'bold',
+      fontSize: 14,
+      fontFamily: 'Avenir Next Bold',
       color: this.getColor(),
       left: 0
     };
   }
 
   createRows(data) {
-    const { iconStyle, indexStyle, image } = styles;
+    const { indexStyle, image } = styles;
     return (
       <View
         style={{
@@ -79,7 +79,7 @@ class Row extends Component {
         }}
       >
         <Text style={[indexStyle, { color: this.getColor() }]}>{this.props.index}</Text>
-        <Image source={{ uri: data.image }} style={image} />
+        {<Image source={{ uri: data.imguri }} style={image} />}
         <View
           style={{
             flex: 0.7,
@@ -88,21 +88,27 @@ class Row extends Component {
         >
           <Text style={this.getInfoTextStyle()}>{data.text}</Text>
         </View>
-        <EvilIcons
-          name={this.props.iconName}
-          style={[iconStyle, { color: this.getColor() }]}
-          onPress={() => this.getOnPress()}
-          size={35}
-        />
+        {this.getIcon()}
       </View>
     );
   }
 
-  getOnPress() {
-    if (this.props.iconName === 'trash') {
-      this.props.deleteRow();
+  getIcon() {
+    const { iconStyle } = styles;
+    const { iconName } = this.props;
+    if (iconName === 'trash') {
+      return (
+        <EvilIcons
+          name={iconName}
+          style={[iconStyle, { color: this.getColor() }]}
+          onPress={() => this.props.deleteRow()}
+          size={35}
+        />
+      );
     }
+    return <EvilIcons name={iconName} style={[iconStyle, { color: this.getColor() }]} size={35} />;
   }
+
   render() {
     const { data } = this.props;
     return (
@@ -126,7 +132,7 @@ const styles = {
     flexDirection: 'row',
     backgroundColor: '#ffffff',
     padding: 0,
-    height: size * 1.5,
+    height: size * 1.2,
     flex: 1,
     marginTop: 7,
     marginBottom: 7,
@@ -147,7 +153,7 @@ const styles = {
   indexStyle: {
     alignSelf: 'center',
     fontSize: 22,
-    fontWeight: 'bold'
+    fontFamily: 'Avenir Next Bold'
   },
   iconStyle: {
     alignSelf: 'center',
