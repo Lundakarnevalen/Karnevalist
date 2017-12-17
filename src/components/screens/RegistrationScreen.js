@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Alert, ScrollView, View, Dimensions, Picker, Platform } from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  View,
+  Dimensions,
+  Picker,
+  Platform,
+  TouchableWithoutFeedback
+} from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Header from '../common/Header';
@@ -119,6 +127,27 @@ class RegistrationScreen extends Component {
       return null;
     });
     return null;
+  }
+
+  renderDKBackgroundCloser() {
+    const { showShirtPicker, showStudentUnionPicker } = this.state;
+    if (showShirtPicker || showStudentUnionPicker) {
+      return (
+        <TouchableWithoutFeedback
+          style={{ position: 'absolute' }}
+          onPress={() => this.setState({ showShirtPicker: false, showStudentUnionPicker: false })}
+        >
+          <View
+            style={{
+              position: 'absolute',
+              width: width + 32,
+              height,
+              backgroundColor: 'rgba(0, 0, 0, 0.3)'
+            }}
+          />
+        </TouchableWithoutFeedback>
+      );
+    }
   }
 
   render() {
@@ -317,15 +346,16 @@ class RegistrationScreen extends Component {
             }}
           />
         </ScrollView>
+        {this.renderDKBackgroundCloser()}
         <DKPicker
-          onValueChange={shirtSize => this.onValueChangeShirtSize(shirtSize)}
+          onValueChange={newValue => this.onValueChangeShirtSize(newValue)}
           items={shirtSizeArray}
           value={shirtSize}
           isShowing={showShirtPicker}
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
-          onValueChange={studentUnion => this.onValueChangeStudentUnion(studentUnion)}
+          onValueChange={newValue => this.onValueChangeStudentUnion(newValue)}
           items={studentUnionArray}
           value={studentUnion}
           isShowing={showStudentUnionPicker}
