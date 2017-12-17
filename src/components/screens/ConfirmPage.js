@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
 import Header from '../common/Header';
@@ -23,13 +23,13 @@ class ConfirmPage extends Component {
 
   componentWillMount() {
     const tempData = [];
-    const allSections = this.props.sections
+    const allSections = this.props.sections;
     getSections(sections => {
       sections.forEach((section, i) => {
-        const key = section.key.substring(7)
-        const s = allSections.filter(item => item.key + '' === key)[0]
+        const key = section.key.substring(7);
+        const s = allSections.filter(item => item.key + '' === key)[0];
         tempData.push({
-          key: key,
+          key,
           localKey: section.key,
           id: i,
           text: s.title,
@@ -54,15 +54,25 @@ class ConfirmPage extends Component {
 
   renderSortableListOrMessage() {
     const { contentContainer, list, confimTextStyle, textStyle } = styles;
+    const { navigation } = this.props;
     if (this.state.data.length === 0) {
       return (
         <View
           style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text style={[textStyle, { color: this.props.theme === 'night' ? 'white' : 'black' }]}>
-            No selected sections
+          <Text
+            style={[
+              textStyle,
+              { color: this.props.theme === 'night' ? 'white' : 'black', textAlign: 'center' }
+            ]}
+          >
+            Please select at least 5 sections
           </Text>
-          <CustomButton style={'standardButton'} text={'To section selection'} />
+          <CustomButton
+            style={'standardButton'}
+            text={'To section selection'}
+            onPress={() => navigation.goBack()}
+          />
         </View>
       );
     }
@@ -176,7 +186,6 @@ class ConfirmPage extends Component {
               />
             </TouchableOpacity>
           }
-          navigation={this.props.navigation}
         />
         {this.renderSortableListOrMessage()}
       </View>
