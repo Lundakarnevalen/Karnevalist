@@ -34,7 +34,6 @@ class SectionItemScreen extends Component {
   }
 
   render() {
-    getSections(sections => console.log('SECTIONS', sections));
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
     const { container, scrollStyle, headerStyle, textStyle } = styles;
@@ -55,9 +54,10 @@ class SectionItemScreen extends Component {
             </TouchableOpacity>
           }
         />
-        <View style={container}>{image}</View>
-        <View style={{ height: 10, backgroundColor: 'white' }} />
         <ScrollView style={scrollStyle}>
+          <View style={container}>{image}</View>
+          <View style={{ height: 10, backgroundColor: 'white' }} />
+
           <Text style={[headerStyle, { color: this.getColor() }]}>{title}</Text>
           <Text style={textStyle}>{description}</Text>
         </ScrollView>
@@ -74,8 +74,7 @@ const styles = {
     width: Dimensions.get('window').width
   },
   scrollStyle: {
-    maxHeight:
-      Platform.OS === 'ios' ? HEIGHT - WIDTH - 29 : HEIGHT - WIDTH - 5 - Constants.statusBarHeight
+    maxHeight: Platform.OS === 'ios' ? HEIGHT : HEIGHT - Constants.statusBarHeight
   },
   headerStyle: {
     fontSize: 26,
