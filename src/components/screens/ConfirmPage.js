@@ -85,7 +85,7 @@ class ConfirmPage extends Component {
           renderRow={this.renderRow.bind(this)}
         />
         <TouchableOpacity
-          style={this.getConfimButtonStyle()}
+          style={this.getConfirmButtonStyle()}
           onPress={() => this.onPressConfirmButton()}
         >
           <Text style={confimTextStyle}>Send</Text>
@@ -106,7 +106,7 @@ class ConfirmPage extends Component {
     return '#a9a9a9';
   }
 
-  getConfimButtonStyle() {
+  getConfirmButtonStyle() {
     return {
       height: window.height / 9,
       backgroundColor: this.getBackgroundColor(),
