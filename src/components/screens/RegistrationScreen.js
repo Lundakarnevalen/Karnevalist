@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Alert, ScrollView, View, Dimensions, Picker, Platform } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Header from '../common/Header';
 import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
 import CustomButton from '../common/CustomButton';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
+import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
+import Loading from '../common/Loading';
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
@@ -43,8 +46,14 @@ class RegistrationScreen extends Component {
       studentUnion: '',
       studentUnionTitle: '',
       showShirtPicker: false,
-      showStudentUnionPicker: false
+      showStudentUnionPicker: false,
+      loading: false,
+      loadingComplete: false
     };
+  }
+
+  getColor() {
+    return this.props.theme === 'day' ? 'rgb(138, 71, 151)' : 'white';
   }
 
   renderPickerForPlatform(defaultTitle, title, tag) {
@@ -125,18 +134,19 @@ class RegistrationScreen extends Component {
       phoneNbr,
       foodPreferences,
       password,
-      confirmedPassword
+      confirmedPassword,
+      loading,
+      loadingComplete
     } = this.state;
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../assets/images/background5.png')} />
-        <Header
-          title="Create Profile"
-          navigation={this.props.navigation}
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: '#FFFFFF' }}
-        />
+        <BackgroundImage pictureNumber={5} />
+        <Header title="Create Profile" navigation={this.props.navigation} />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
+          <CameraButton
+            onPress={() => this.props.navigation.navigate('CameraScreen')}
+            source={this.props.picture}
+          />
           <Input
             placeholder="First name"
             onChangeText={firstNameInput => {
@@ -231,13 +241,13 @@ class RegistrationScreen extends Component {
             buttonInputVector={['I was engaged in the karneval 2014']}
             multipleChoice
             size={30}
-            color={'rgb(138, 71, 151)'}
+            color={this.getColor()}
           />
           <ButtonChoiceManager
             buttonInputVector={['I have a drives license']}
             multipleChoice
             size={30}
-            color={'rgb(138, 71, 151)'}
+            color={this.getColor()}
           />
           <CustomButton
             text={'Register'}
@@ -269,6 +279,7 @@ class RegistrationScreen extends Component {
               } else if (password !== confirmedPassword) {
                 Alert.alert('Error', "Your passwords doesn't match.");
               } else {
+                this.setState({ loadingComplete: false, loading: true });
                 axios
                   .post('https://api.10av10.com/register', {
                     email: this.state.email,
@@ -277,7 +288,7 @@ class RegistrationScreen extends Component {
                     talent: 'saknas'
                   })
                   .then(() => {
-                    this.props.navigation.navigate('HomeScreen');
+                    this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
                     let msg;
@@ -290,6 +301,7 @@ class RegistrationScreen extends Component {
                     } else {
                       msg = 'Internal error, please try again later';
                     }
+                    this.setState({ loadingComplete: false, loading: false });
                     Alert.alert('Error', msg);
                   });
               }
@@ -310,6 +322,15 @@ class RegistrationScreen extends Component {
           isShowing={this.state.showStudentUnionPicker}
           close={() => this.setState({ showStudentUnionPicker: false })}
         />
+        {loading ? (
+          <Loading
+            loadingComplete={loadingComplete}
+            redirect={() => {
+              this.props.navigation.navigate('HomeScreen');
+              this.setState({ loading: false, loadingComplete: false });
+            }}
+          />
+        ) : null}
       </View>
     );
   }
@@ -340,4 +361,10 @@ const styles = {
   }
 };
 
-export default RegistrationScreen;
+const mapStateToProps = ({ currentTheme, userInformation }) => {
+  const { theme } = currentTheme;
+  const { picture } = userInformation;
+  return { theme, picture };
+};
+
+export default connect(mapStateToProps, null)(RegistrationScreen);

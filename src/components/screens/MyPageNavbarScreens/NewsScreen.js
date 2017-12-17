@@ -1,63 +1,55 @@
 import React, { Component } from 'react';
-import { View, ListView, Dimensions } from 'react-native';
-import Header from '../../common/Header'
-import SectionListItem from '../../common/SectionListItem'
+import { View, ListView, Dimensions, Platform } from 'react-native';
+import Header from '../../common/Header';
+import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
+import { getNews } from '../../../helpers/ApiManager';
 
-const height = Dimensions.get('window').height
-
-const newsTitles = [
-  { title: 'Nyhet!', message: 'Karnevalen är igång!!!' },
-  { title: 'Varning!', message: 'John behöver uppmärksamhet!' },
-  { title: 'Lugna puckar', message: 'John har fått uppmärksamhet!' },
-  { title: 'Ajajaj', message: 'John är borta!' },
-  { title: 'Nyhet!', message: 'Karnevalen är slut!' }
-]
+const height = Dimensions.get('window').height;
 
 class NewsScreen extends Component {
   constructor(props) {
-    super(props)
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+    super(props);
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows(newsTitles)
-    }
+      dataSource: ds.cloneWithRows([])
+    };
+  }
+
+  componentWillMount() {
+    getNews().then(response => {
+      const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+      this.setState({
+        dataSource: ds.cloneWithRows(response)
+      });
+    });
   }
 
   render() {
     return (
       <View>
-        <BackgroundImage
-          imagePath={require('../../../../assets/images/background4.png')}
-        />
-        <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: 'white' }}
-          title='Nyheter'
-          leftIcon={null}
-          navigation={this.props.navigation}
-        />
+        <BackgroundImage pictureNumber={4} />
+        <Header title="Nyheter" leftIcon={null} navigation={this.props.navigation} />
         <ListView
-          style={{ height: (height - 64) }}
+          style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}
           dataSource={this.state.dataSource}
+          enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}
-          renderRow={(rowData) =>
+          renderRow={rowData => (
             <SectionListItem
-              sectionTitle={rowData.title}
-              sectionInfoText={rowData.message}
+              sectionTitle={rowData.title.rendered}
+              sectionDate={rowData.date}
               onPress={() =>
-                this.props.screenProps.navigate(
-                  'SingleNewsScreen',
-                  { info:
-                    { title: rowData.title, message: rowData.message }
-                  }
-                )
+                this.props.screenProps.navigate('SingleNewsScreen', {
+                  info: { title: rowData.title.rendered, url: rowData.link }
+                })
               }
             />
-          }
+          )}
         />
       </View>
     );
   }
 }
 
-export default NewsScreen
+export default NewsScreen;

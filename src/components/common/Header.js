@@ -2,10 +2,62 @@ import React, { Component } from 'react';
 import { View, Dimensions, Text, Platform, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
 class Header extends Component {
+  getTextColor() {
+    switch (this.props.theme) {
+      case 'morning':
+        return '#F7A021';
+      case 'day':
+        return '#f4376d';
+      default:
+        return 'white';
+    }
+  }
+
+  getBackgroundColor() {
+    switch (this.props.theme) {
+      case 'morning':
+        return 'white';
+      case 'day':
+        return 'white';
+      default:
+        return '#F7A021';
+    }
+  }
+
+  getContainerStyle() {
+    return {
+      width: WIDTH,
+      height: Platform.OS === 'ios' ? 64 : 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      backgroundColor: this.getBackgroundColor(),
+      zIndex: 999,
+      ...Platform.select({
+        ios: {
+          paddingTop: 15
+        },
+        android: {
+          marginTop: Constants.statusBarHeight
+        }
+      })
+    };
+  }
+
+  getTextStyle() {
+    return {
+      fontSize: 18,
+      color: this.getTextColor(),
+      backgroundColor: 'transparent',
+      fontFamily: 'Avenir Next Medium'
+    };
+  }
+
   renderRightIcon() {
     const { rightIcon } = this.props;
     if (rightIcon) {
@@ -23,20 +75,19 @@ class Header extends Component {
     }
     const backButton = navigation ? (
       <TouchableOpacity onPress={() => navigation.goBack(null)}>
-        <Ionicons size={30} name="md-arrow-back" color={'#f4376d'} />
+        <Ionicons size={30} name="md-arrow-back" color={this.getTextColor()} />
       </TouchableOpacity>
     ) : null;
     return <View style={{ flex: 1, alignItems: 'center' }}>{backButton}</View>;
   }
 
   render() {
-    const { containerStyle, headerStyle } = styles;
-    const { title, textStyle, style } = this.props;
+    const { title } = this.props;
     return (
-      <View style={[containerStyle, style]}>
+      <View style={this.getContainerStyle()}>
         {this.renderLeftIcon()}
         <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={[headerStyle, textStyle]}>{title || 'Placeholder'}</Text>
+          <Text style={this.getTextStyle()}>{title || 'Placeholder'}</Text>
         </View>
         {this.renderRightIcon()}
       </View>
@@ -44,30 +95,9 @@ class Header extends Component {
   }
 }
 
-const styles = {
-  containerStyle: {
-    width: WIDTH,
-    height: Platform.OS === 'ios' ? 64 : 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    zIndex: 999,
-    ...Platform.select({
-      ios: {
-        paddingTop: 15
-      },
-      android: {
-        marginTop: Constants.statusBarHeight
-      }
-    })
-  },
-  headerStyle: {
-    fontSize: 18,
-    color: 'black',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Medium'
-  }
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
 };
 
-export default Header;
+export default connect(mapStateToProps, null)(Header);

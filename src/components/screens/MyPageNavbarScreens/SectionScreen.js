@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Alert, Image, Dimensions, FlatList, Platform } from 'react-native';
-import axios from 'axios';
-import { connect } from 'react-redux'
+import { View, TouchableOpacity, Image, Dimensions, FlatList, Platform } from 'react-native';
+import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
 
 class SectionScreen extends Component {
   constructor(props) {
@@ -20,24 +18,33 @@ class SectionScreen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ data: nextProps.sections })
+   this.setState({ data: nextProps.sections })
   }
+
+  getColor() {
+   switch (this.props.theme) {
+     case 'morning':
+       return '#F7A021';
+     case 'day':
+       return '#f4376d';
+     default:
+       return 'white';
+   }
+ }
 
   render() {
     const { navigation, screenProps } = this.props;
     return (
       <View>
-        <BackgroundImage imagePath={require('../../../../res/background1.png')} />
+        <BackgroundImage pictureNumber={1} />
         <View>
           <Header
             rightIcon={
               <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage')}>
-                <FontAwesome name="list-alt" size={30} color={'#f4376d'} />
+                <FontAwesome name="list-alt" size={30} color={this.getColor()} />
               </TouchableOpacity>
             }
-            textStyle={{ color: '#f4376d' }}
-            style={{ backgroundColor: '#FFFFFF' }}
-            title="Sektioner"
+            title="Sections"
             leftIcon={null}
             navigation={navigation}
           />
@@ -66,13 +73,17 @@ class SectionScreen extends Component {
     );
   }
 }
-const mapStateToProps = ({ sections }) => {
-  return { sections: sections.sections }
-}
+
 
 const styles = {
   style: {
     paddingBottom: Platform.OS === 'ios' ? 132 : 148
   }
 };
-export default connect(mapStateToProps, {})(SectionScreen);
+
+const mapStateToProps = ({ currentTheme, sections }) => {
+  const { theme } = currentTheme;
+  return { theme, sections: sections.sections };
+};
+
+export default connect(mapStateToProps, null)(SectionScreen);

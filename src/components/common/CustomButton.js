@@ -1,15 +1,72 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
 class CustomButton extends Component {
+  getUnderlineButtonText() {
+    let color;
+    switch (this.props.theme) {
+      case 'morning':
+        color = '#F7A021';
+        break;
+      case 'day':
+        color = 'rgb(138, 71, 151)';
+        break;
+      default:
+        color = 'white';
+    }
+    return {
+      color,
+      textDecorationLine: 'underline',
+      fontFamily: 'Avenir Next Medium'
+    };
+  }
+
+  getStandardButtonText() {
+    let color;
+    switch (this.props.theme) {
+      case 'morning':
+        color = '#F7A021';
+        break;
+      case 'day':
+        color = '#f4376d';
+        break;
+      default:
+        color = 'white';
+    }
+    return {
+      color,
+      fontSize: 20,
+      fontFamily: 'Avenir Next Medium'
+    };
+  }
+
+  getStandardButton() {
+    let backgroundColor;
+    switch (this.props.theme) {
+      case 'morning':
+        backgroundColor = 'white';
+        break;
+      case 'day':
+        backgroundColor = 'white';
+        break;
+      default:
+        backgroundColor = '#F7A021';
+    }
+    return {
+      backgroundColor,
+      padding: 10
+    };
+  }
+
   getStyle() {
     switch (this.props.style) {
       case 'textButton':
         return styles.textButton;
       case 'standardButton':
-        return styles.standardButton;
+        return this.getStandardButton();
       case 'acceptButton':
         return styles.acceptButton;
       case 'alertButton':
@@ -22,9 +79,9 @@ class CustomButton extends Component {
   getTextStyle() {
     switch (this.props.style) {
       case 'textButton':
-        return styles.underlineText;
+        return this.getUnderlineButtonText();
       case 'standardButton':
-        return styles.whiteText;
+        return this.getStandardButtonText();
       case 'acceptButton':
         return styles.whiteText;
       case 'alertButton':
@@ -58,10 +115,6 @@ const styles = {
     backgroundColor: 'transparent',
     borderWidth: 0
   },
-  standardButton: {
-    backgroundColor: '#fff',
-    padding: 10
-  },
   acceptButton: {
     backgroundColor: 'green',
     height: 44
@@ -76,16 +129,19 @@ const styles = {
   },
   whiteText: {
     color: '#f4376d',
-    fontSize: 20
-  },
-  underlineText: {
-    color: 'rgb(138, 71, 151)',
-    textDecorationLine: 'underline'
+    fontSize: 20,
+    fontFamily: 'Avenir Next Medium'
   },
   blackText: {
     color: 'black',
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: 'Avenir Next Medium'
   }
 };
 
-export default CustomButton;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(CustomButton);

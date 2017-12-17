@@ -7,6 +7,7 @@ import Row from '../common/Row';
 import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import BackgroundImage from '../common/BackgroundImage';
+import CustomButton from '../common/CustomButton';
 
 const window = Dimensions.get('window');
 
@@ -46,14 +47,28 @@ class ConfirmPage extends Component {
     });
   }
 
+  getColor() {
+    switch (this.props.theme) {
+      case 'morning':
+        return '#F7A021';
+      case 'day':
+        return '#f4376d';
+      default:
+        return 'white';
+    }
+  }
+
   renderSortableListOrMessage() {
-    const { contentContainer, list, confimButtonStyle, confimTextStyle, text } = styles;
+    const { contentContainer, list, confimTextStyle, textStyle } = styles;
     if (this.state.data.length === 0) {
       return (
         <View
           style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text style={text}>No selected sections</Text>
+          <Text style={[textStyle, { color: this.props.theme === 'night' ? 'white' : 'black' }]}>
+            No selected sections
+          </Text>
+          <CustomButton style={'standardButton'} text={'To section selection'} />
         </View>
       );
     }
@@ -65,11 +80,40 @@ class ConfirmPage extends Component {
           data={this.state.data}
           renderRow={this.renderRow.bind(this)}
         />
-        <TouchableOpacity style={confimButtonStyle} onPress={() => this.onPressConfirmButton()}>
+        <TouchableOpacity
+          style={this.getConfimButtonStyle()}
+          onPress={() => this.onPressConfirmButton()}
+        >
           <Text style={confimTextStyle}>Send</Text>
         </TouchableOpacity>
       </View>
     );
+  }
+
+  getBackgroundColor() {
+    const { data } = this.state;
+    const { theme } = this.props;
+    if (data.length >= 5) {
+      if (theme === 'day') {
+        return '#F4376D';
+      }
+      return '#F7A021';
+    }
+    return '#a9a9a9';
+  }
+
+  getConfimButtonStyle() {
+    return {
+      height: window.height / 9,
+      backgroundColor: this.getBackgroundColor(),
+      borderColor: '#ffffff',
+      borderRadius: 0,
+      margin: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      bottom: 0,
+      width: window.width
+    };
   }
 
   deleteRow(id) {
@@ -106,10 +150,6 @@ class ConfirmPage extends Component {
     return 'navicon';
   }
 
-  onPressTrash(key) {
-    Alert.alert('Navigera till ' + key + '-sektionen');
-  }
-
   onPressConfirmButton() {
     const { data } = this.state;
     if (data.length < 5) {
@@ -126,10 +166,8 @@ class ConfirmPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <BackgroundImage imagePath={require('../../../assets/images/background2.png')} />
+        <BackgroundImage pictureNumber={2} />
         <Header
-          textStyle={{ color: '#f4376d' }}
-          style={{ backgroundColor: '#ffffff' }}
           title="Confirmation page"
           navigation={this.props.navigation}
           rightIcon={
@@ -139,10 +177,7 @@ class ConfirmPage extends Component {
             >
               <MaterialIcons
                 name={this.getHeaderIconName()}
-                style={{
-                  color: '#f4376d',
-                  right: 0
-                }}
+                style={{ color: this.getColor(), right: 0 }}
                 size={35}
               />
             </TouchableOpacity>
@@ -153,9 +188,6 @@ class ConfirmPage extends Component {
       </View>
     );
   }
-}
-const mapStateToProps = ({ sections }) => {
-  return { sections: sections.sections }
 }
 
 const styles = {
@@ -170,17 +202,6 @@ const styles = {
     fontSize: 20,
     color: '#ffffff'
   },
-  confimButtonStyle: {
-    height: window.height / 9,
-    backgroundColor: '#F4376D',
-    borderColor: '#ffffff',
-    borderRadius: 0,
-    margin: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    bottom: 0,
-    width: window.width
-  },
   list: {
     flex: 1
   },
@@ -193,10 +214,16 @@ const styles = {
     marginRight: 30,
     borderRadius: 25
   },
-  text: {
+  textStyle: {
     fontSize: 24,
-    color: '#222222'
+    fontFamily: 'Avenir Next Bold',
+    backgroundColor: 'transparent'
   }
 };
 
-export default connect(mapStateToProps, {})(ConfirmPage);
+const mapStateToProps = ({ currentTheme, sections }) => {
+  const { theme } = currentTheme;
+  return { theme, sections: sections.sections };
+};
+
+export default connect(mapStateToProps, null)(ConfirmPage);

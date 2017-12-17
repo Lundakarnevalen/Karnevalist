@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView } from 'react-native';
+import { Alert, View, Dimensions, ScrollView, StatusBar } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
+import { setTheme } from '../../actions';
 import Input from '../common/Input';
 import PasswordPopUp from '../common/PasswordPopUp';
 import BackgroundImage from '../common/BackgroundImage';
+import Loading from '../common/Loading';
 
 const WIDTH = Dimensions.get('window').width * 0.9;
 const HEIGHT = Dimensions.get('window').height;
@@ -14,17 +17,36 @@ class HomeScreen extends Component {
     super(props);
     this.state = {
       alertVisible: false,
-      socSecNbr: '',
-      password: ''
+      email: '',
+      password: '',
+      loading: false,
+      loadingComplete: false,
+      forgotPasswordEmail: ''
     };
+  }
+
+  componentWillMount() {
+    let currentTheme = 'day';
+    const currentHour = new Date().getHours();
+    if (currentHour < 9) {
+      currentTheme = 'morning';
+      StatusBar.setBarStyle('dark-content', true);
+    } else if (currentHour < 18) {
+      currentTheme = 'day';
+      StatusBar.setBarStyle('dark-content', true);
+    } else {
+      currentTheme = 'night';
+      StatusBar.setBarStyle('light-content', true);
+    }
+    this.props.setTheme(currentTheme);
   }
 
   render() {
     const { containerStyle } = styles;
-    const { email, password } = this.state;
+    const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
     return (
       <View style={containerStyle}>
-        <BackgroundImage imagePath={require('../../../assets/images/background4.png')} />
+        <BackgroundImage pictureNumber={4} />
         <ScrollView>
           <View style={styles.container1}>
             <Input
@@ -43,13 +65,14 @@ class HomeScreen extends Component {
             <CustomButton
               text="Logga in"
               onPress={() => {
+                this.setState({ loading: true, loadingComplete: false });
                 axios
                   .post('https://api.10av10.com/login/email', {
                     email,
                     password
                   })
                   .then(() => {
-                    this.props.navigation.navigate('MyPageNavbarScreen');
+                    this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
                     let msg;
@@ -62,6 +85,7 @@ class HomeScreen extends Component {
                     } else {
                       msg = 'Internal error, please try again later';
                     }
+                    this.setState({ loading: false, loadingComplete: false });
                     Alert.alert('Error', msg);
                   });
               }}
@@ -111,9 +135,20 @@ class HomeScreen extends Component {
               ]}
               header={'Forgot password?'}
               info={'Please, fill in your email address below and you will receive a new password'}
+              onChangeText={text => this.setState({ forgotPasswordEmail: text })}
+              inputValue={forgotPasswordEmail}
             />
           </View>
         </ScrollView>
+        {loading ? (
+          <Loading
+            loadingComplete={loadingComplete}
+            redirect={() => {
+              this.props.navigation.navigate('MyPageNavbarScreen');
+              this.setState({ loading: false, loadingComplete: false, password: '' });
+            }}
+          />
+        ) : null}
       </View>
     );
   }
@@ -146,4 +181,4 @@ const styles = {
   }
 };
 
-export default HomeScreen;
+export default connect(null, { setTheme })(HomeScreen);
