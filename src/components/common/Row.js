@@ -79,7 +79,7 @@ class Row extends Component {
         }}
       >
         <Text style={[indexStyle, { color: this.getColor() }]}>{this.props.index}</Text>
-        <Image source={{ uri: data.image }} style={image} />
+        {<Image source={{ uri: data.imguri }} style={image} />}
         <View
           style={{
             flex: 0.7,

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, Dimensions, FlatList, Platform } from 'react-native';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import Header from '../../common/Header';
@@ -15,68 +14,23 @@ class SectionScreen extends Component {
     this.state = {
       isOpen: false,
       data: [],
-      images: {}
     };
   }
 
-  componentWillMount() {
-    this.getSectionInfo();
+  componentWillReceiveProps(nextProps) {
+   this.setState({ data: nextProps.sections })
   }
 
   getColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return '#F7A021';
-      case 'day':
-        return '#f4376d';
-      default:
-        return 'white';
-    }
-  }
-
-  getImage(url, section) {
-    axios
-      .get(url)
-      .then(r => {
-        const data = this.state.data;
-        const image = (
-          <Image
-            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
-            source={{ uri: r.data.source_url }}
-            //defaultSource={require('../../../../res/LK2018logga.png')}
-          />
-        );
-        section.image = image;
-        data.push(section);
-        this.setState({ data });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
-  getSectionInfo() {
-    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
-    axios
-      .get(url)
-      .then(response => {
-        response.data.forEach(item => {
-          const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
-          const imgId = item.featured_media;
-          const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
-          const section = {
-            key: item.id,
-            id: item.id,
-            title: item.title.rendered,
-            info: strippedContent
-          };
-          this.getImage(imgUrl, section);
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
+   switch (this.props.theme) {
+     case 'morning':
+       return '#F7A021';
+     case 'day':
+       return '#f4376d';
+     default:
+       return 'white';
+   }
+ }
 
   render() {
     const { navigation, screenProps } = this.props;
@@ -120,15 +74,16 @@ class SectionScreen extends Component {
   }
 }
 
+
 const styles = {
   style: {
     paddingBottom: Platform.OS === 'ios' ? 132 : 148
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, sections }) => {
   const { theme } = currentTheme;
-  return { theme };
+  return { theme, sections: sections.sections };
 };
 
 export default connect(mapStateToProps, null)(SectionScreen);
