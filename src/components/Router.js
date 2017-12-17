@@ -52,24 +52,24 @@ const Register = StackNavigator({
 
 const Router = StackNavigator(
   {
-    // HomeScreen: {
-    //   screen: HomeScreen,
-    //   navigationOptions: {
-    //     header: null
-    //   }
-    // },
-    // RegistrationScreen: {
-    //   screen: Register,
-    //   navigationOptions: {
-    //     header: null
-    //   }
-    // },
-    // RegistrationInfo: {
-    //   screen: RegistrationInfoScreen,
-    //   navigationOptions: {
-    //     header: null
-    //   }
-    // },
+    HomeScreen: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    RegistrationScreen: {
+      screen: Register,
+      navigationOptions: {
+        header: null
+      }
+    },
+    RegistrationInfo: {
+      screen: RegistrationInfoScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
     MyPageNavbarScreen: {
       screen: LoggedIn,
       navigationOptions: {
