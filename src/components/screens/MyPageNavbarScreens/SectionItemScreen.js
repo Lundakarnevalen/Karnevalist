@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  ScrollView,
-  Platform,
-  Alert
-} from 'react-native';
+import { View, TouchableOpacity, Text, Dimensions, ScrollView, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
 import Header from '../../common/Header';
-import { saveItem, getSections } from '../../../helpers/LocalSave';
+import Toast from '../../common/Toast';
+import { saveItem } from '../../../helpers/LocalSave';
 
-const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showToast: false
+    };
+  }
   getColor() {
     return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
   }
@@ -34,9 +32,10 @@ class SectionItemScreen extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, color } = this.props;
     const { title, description, image, id } = navigation.state.params;
     const { container, scrollStyle, headerStyle, textStyle } = styles;
+
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
@@ -47,17 +46,21 @@ class SectionItemScreen extends Component {
               style={{ padding: 1, backgroundColor: 'transparent' }}
               onPress={() => {
                 saveItem('sektion' + id, title);
-                Alert.alert(title + ' have now been added to your list');
+                this.setState({ showToast: true });
               }}
             >
-              <MaterialIcons name="playlist-add" size={30} color={this.getIconColor()} />
+              <MaterialIcons name="favorite" size={30} color={color} />
             </TouchableOpacity>
           }
+        />
+        <Toast
+          color={'#f4376d'}
+          showToast={this.state.showToast}
+          message={'Section ' + title + ' added'}
         />
         <ScrollView style={scrollStyle}>
           <View style={container}>{image}</View>
           <View style={{ height: 10, backgroundColor: 'white' }} />
-
           <Text style={[headerStyle, { color: this.getColor() }]}>{title}</Text>
           <Text style={textStyle}>{description}</Text>
         </ScrollView>
