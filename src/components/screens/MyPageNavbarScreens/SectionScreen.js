@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, FlatList, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
+import { SECTION_SCREEN_STRINGS } from '../../../helpers/LangStrings'
 
 class SectionScreen extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -45,18 +47,22 @@ class SectionScreen extends Component {
   }
 
   render() {
-    const { navigation, screenProps } = this.props;
+    const { navigation, screenProps, lang } = this.props;
+    const title = SECTION_SCREEN_STRINGS.title[lang]
     return (
       <View>
         <BackgroundImage pictureNumber={1} />
         <View>
+
           <Header
             rightIcon={
-              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage', { navigation })}>
-                <FontAwesome name="list-alt" size={30} color={this.getColor()} />
+              <TouchableOpacity
+                onPress={() => screenProps.navigation.navigate('ConfirmPage', { navigation })}
+              >
+                <MaterialIcons name="local-mall" size={30} color={this.getColor()} />
               </TouchableOpacity>
             }
-            title="Sections"
+            title={title}
             leftIcon={null}
             navigation={navigation}
           />
@@ -70,7 +76,7 @@ class SectionScreen extends Component {
                 sectionTitle={item.title}
                 sectionInfoText={item.info}
                 onPress={() =>
-                  screenProps.navigate('SectionItemScreen', {
+                  screenProps.navigation.navigate('SectionItemScreen', {
                     id: item.id,
                     title: item.title,
                     description: item.info,
@@ -92,9 +98,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections }) => {
+const mapStateToProps = ({ currentTheme, sections, currentLang }) => {
   const { theme } = currentTheme;
-  return { theme, sections: sections.sections };
+  const { lang } = currentLang;
+  return { theme, sections: sections.sections, lang };
 };
 
 export default connect(mapStateToProps, null)(SectionScreen);

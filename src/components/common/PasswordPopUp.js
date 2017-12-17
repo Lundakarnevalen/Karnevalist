@@ -118,9 +118,9 @@ class PasswordPopUp extends Component {
       buttonViewStyle,
       alertBoxStyle
     } = styles;
-    const { alertVisible, header, info, inputValue } = this.props;
+    const { alertVisible, header, info, inputValue, setAlertVisible } = this.props;
     return (
-      <Modal transparent visible={alertVisible}>
+      <Modal transparent visible={alertVisible} onRequestClose={() => setAlertVisible(false)}>
         <BlurView tint="dark" intensity={70} style={StyleSheet.absoluteFill}>
           <View style={outerViewStyle} transparent={false}>
             <View style={[alertBoxStyle, { borderColor: this.getColor() }]}>

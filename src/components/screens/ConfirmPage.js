@@ -231,9 +231,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections }) => {
+const mapStateToProps = ({ currentTheme, sections, currentLang }) => {
   const { theme } = currentTheme;
-  return { theme, sections: sections.sections };
+  const { lang } = currentLang;
+  return { theme, sections: sections.sections, lang };
 };
 
 export default connect(mapStateToProps, null)(ConfirmPage);

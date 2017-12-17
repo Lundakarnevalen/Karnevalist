@@ -3,11 +3,12 @@ import { Alert, View, Dimensions, ScrollView, StatusBar } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
-import { setTheme } from '../../actions';
+import { setTheme, setLang } from '../../actions';
 import Input from '../common/Input';
 import PasswordPopUp from '../common/PasswordPopUp';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
+import { getItem } from '../../helpers/LocalSave';
 
 const WIDTH = Dimensions.get('window').width * 0.9;
 const HEIGHT = Dimensions.get('window').height;
@@ -26,6 +27,9 @@ class LoginScreen extends Component {
   }
 
   componentWillMount() {
+    getItem('lang', (lang) => {
+      this.props.setLang(lang)
+    });
     let currentTheme = 'day';
     const currentHour = new Date().getHours();
     if (currentHour < 9) {
@@ -122,7 +126,7 @@ class LoginScreen extends Component {
             />
             <PasswordPopUp
               alertVisible={this.state.alertVisible}
-              setAlertVisible={() => this.setState({ alertVisible: true })}
+              setAlertVisible={(visible) => this.setState({ alertVisible: visible })}
               buttonsIn={[
                 {
                   text: 'Cancel',
@@ -187,4 +191,9 @@ const styles = {
   }
 };
 
-export default connect(null, { setTheme })(LoginScreen);
+const mapStateToProps = ({ currentLang }) => {
+  const { lang } = currentLang
+  return { lang };
+};
+
+export default connect(mapStateToProps, { setTheme, setLang })(LoginScreen);
