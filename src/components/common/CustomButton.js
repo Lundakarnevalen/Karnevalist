@@ -46,12 +46,15 @@ class CustomButton extends Component {
   getStandardButton() {
     let borderWidth = 0.5;
     let backgroundColor;
+    let borderColor;
     switch (this.props.theme) {
       case 'morning':
         backgroundColor = 'white';
+        borderColor = '#F7A021';
         break;
       case 'day':
         backgroundColor = 'white';
+        borderColor = '#f4376d';
         break;
       default:
         backgroundColor = '#F7A021';
@@ -61,7 +64,7 @@ class CustomButton extends Component {
       backgroundColor,
       padding: 10,
       borderWidth,
-      borderColor: '#f4376d'
+      borderColor
     };
   }
 
