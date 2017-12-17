@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux'
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
 import Header from '../common/Header';
@@ -21,16 +22,26 @@ class ConfirmPage extends Component {
 
   componentWillMount() {
     const tempData = [];
+    const allSections = this.props.sections
     getSections(sections => {
       sections.forEach((section, i) => {
         tempData.push({
-          key: section.key,
+          key: section.key.substring(7),
           id: i,
           text: section.value,
           infoText: 'PLACEHOLDER',
           image: 'https://placekitten.com/200/204'
         });
       });
+      // console.log(this.props);
+      // console.log(allSections);
+      const a = allSections.filter(item => {
+        // item.key
+        console.log(tempData.findIndex(i => i.key === item.id));
+        if (tempData.findIndex(i => i.key === item.id) > -1)
+          return item
+      })
+      console.log("A",  a);
       this.setState({ data: tempData });
     });
   }
@@ -143,6 +154,9 @@ class ConfirmPage extends Component {
     );
   }
 }
+const mapStateToProps = ({ sections }) => {
+  return { sections: sections.sections }
+}
 
 const styles = {
   container: {
@@ -185,4 +199,4 @@ const styles = {
   }
 };
 
-export default ConfirmPage;
+export default connect(mapStateToProps, {})(ConfirmPage);
