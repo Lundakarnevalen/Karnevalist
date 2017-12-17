@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import SortableList from 'react-native-sortable-list';
@@ -22,6 +22,7 @@ class ConfirmPage extends Component {
   }
 
   componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     const tempData = [];
     const allSections = this.props.sections;
     getSections(sections => {

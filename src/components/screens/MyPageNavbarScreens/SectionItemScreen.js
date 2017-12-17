@@ -6,7 +6,8 @@ import {
   Dimensions,
   ScrollView,
   Platform,
-  Alert
+  Alert,
+  BackHandler
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -18,6 +19,10 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+  }
+
   getColor() {
     return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
   }
