@@ -103,6 +103,7 @@ const styles = {
     height: 44,
     paddingLeft: 8,
     paddingRight: 8,
+    paddingTop: 10,
     color: '#000',
     fontFamily: 'Avenir Next Medium'
   }
