@@ -61,7 +61,7 @@ class RegistrationScreen extends Component {
       return (
         <CustomButton
           text={title === '' ? defaultTitle : title}
-          style="standardButton"
+          style="dropDownButton"
           width={width}
           onPress={() => {
             return tag === 'shirt'

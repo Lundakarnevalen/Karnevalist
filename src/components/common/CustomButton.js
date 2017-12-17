@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, Dimensions } from 'react-native';
+import { TouchableOpacity, Text, Dimensions, View } from 'react-native';
 import { connect } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -68,6 +69,19 @@ class CustomButton extends Component {
     };
   }
 
+  isDropDownButton() {
+    if (this.props.style === 'dropDownButton') {
+      return (
+        <Ionicons
+          style={{ position: 'absolute', right: 10 }}
+          name={'ios-arrow-dropdown'}
+          size={25}
+          color={this.getStandardButtonText().color}
+        />
+      );
+    }
+  }
+
   getStyle() {
     switch (this.props.style) {
       case 'textButton':
@@ -78,6 +92,8 @@ class CustomButton extends Component {
         return styles.acceptButton;
       case 'alertButton':
         return styles.alertButton;
+      case 'dropDownButton':
+        return this.getStandardButton();
       default:
         return styles.button;
     }
@@ -93,6 +109,8 @@ class CustomButton extends Component {
         return styles.whiteText;
       case 'alertButton':
         return styles.whiteText;
+      case 'dropDownButton':
+        return this.getStandardButtonText();
       default:
         return styles.button;
     }
@@ -104,6 +122,7 @@ class CustomButton extends Component {
     return (
       <TouchableOpacity onPress={onPress} style={[this.getStyle(), button, { width }]}>
         <Text style={[this.getTextStyle()]}>{text}</Text>
+        {this.isDropDownButton()}
       </TouchableOpacity>
     );
   }
@@ -115,7 +134,8 @@ const styles = {
     marginBottom: 10,
     borderRadius: 3,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   textButton: {
     backgroundColor: 'transparent',
@@ -132,6 +152,13 @@ const styles = {
     margin: 0,
     marginLeft: 0.4,
     marginRight: 0.4
+  },
+  dropDownButton: {
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   whiteText: {
     color: '#f4376d',
