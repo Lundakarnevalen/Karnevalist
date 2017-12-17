@@ -59,7 +59,7 @@ class RegistrationScreen extends Component {
       return (
         <CustomButton
           text={title === '' ? defaultTitle : title}
-          style="standardButton"
+          style="dropDownButton"
           width={width}
           onPress={() => {
             return tag === 'shirt'
@@ -241,7 +241,7 @@ class RegistrationScreen extends Component {
             color={this.getColor()}
           />
           <ButtonChoiceManager
-            buttonInputVector={['I have a drives license']}
+            buttonInputVector={['I have a drivers license']}
             multipleChoice
             size={30}
             color={this.getColor()}
