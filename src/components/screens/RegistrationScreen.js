@@ -234,8 +234,9 @@ class RegistrationScreen extends Component {
           />
           {this.renderPickerForPlatform('Choose shirt size', shirtSize, 'shirt')}
           {this.renderPickerForPlatform('Choose student union', studentUnion, 'union')}
+          <View style={{ right: 3 }}>
           <ButtonChoiceManager
-            buttonInputVector={['I was engaged in the karneval 2014']}
+            buttonInputVector={['I was active in the karneval 2014']}
             multipleChoice
             size={30}
             color={this.getColor()}
@@ -246,6 +247,7 @@ class RegistrationScreen extends Component {
             size={30}
             color={this.getColor()}
           />
+          </View>
           <CustomButton
             text={'Register'}
             style={'standardButton'}
