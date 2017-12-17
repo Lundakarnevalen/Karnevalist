@@ -60,8 +60,8 @@ class Row extends Component {
 
   getInfoTextStyle() {
     return {
-      fontSize: this.props.data.text.length < 10 ? 12 : 10,
-      fontWeight: 'bold',
+      fontSize: 14,
+      fontFamily: 'Avenir Next Bold',
       color: this.getColor(),
       left: 0
     };
@@ -153,7 +153,7 @@ const styles = {
   indexStyle: {
     alignSelf: 'center',
     fontSize: 22,
-    fontWeight: 'bold'
+    fontFamily: 'Avenir Next Bold'
   },
   iconStyle: {
     alignSelf: 'center',
