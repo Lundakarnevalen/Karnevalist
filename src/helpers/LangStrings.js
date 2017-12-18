@@ -173,7 +173,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   password,
   confirmPassword: {
     SE: 'Bekräfta lösenord',
-    EN: 'Confirm password"'
+    EN: 'Confirm password'
   },
   address: {
     SE: 'Adress',
@@ -207,7 +207,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   activeKarneval: {
     SE: 'Jag var aktiv under karnevalen 2014',
-    EN: 'I was active in the karneval 2014'
+    EN: 'I was active during the karneval 2014'
   },
   driversLicense: {
     SE: 'Jag har körkort',

@@ -28,6 +28,9 @@ class LoginScreen extends Component {
   }
 
   componentWillMount() {
+    getItem('lang', (lang) => {
+      this.props.setLang(lang)
+    });
     let currentTheme = 'day';
     const currentHour = new Date().getHours();
     if (currentHour < 9) {
@@ -52,11 +55,10 @@ class LoginScreen extends Component {
   }
 
   changeLang() {
-    const { lang, setLang } = this.props
-    if (lang === 'SE') {
-      setLang('EN')
+    if (this.props.lang === 'SE') {
+       this.props.setLang('EN')
     } else {
-      setLang('SE')
+       this.props.setLang('SE')
     }
   }
 
