@@ -11,6 +11,14 @@ const studentUnion = {
   SE: 'Välj nation',
   EN: 'Choose student union'
 }
+const errorMsg400 = {
+  SE: 'Fel email eller lösenord',
+  EN: 'Wrong email or password'
+}
+const errorMsg401 = {
+  SE: 'Fel email eller lösenord',
+  EN: 'Wrong email or password'
+}
 
 const errorMsg404 = {
   SE: 'Något gick fel...',
@@ -31,6 +39,7 @@ export const LOGIN_SCREEN_STRINGS = {
     'email',
     'password',
     'loginButton',
+    'langButton',
     'forgotPassword',
     'createProfile',
     'readMore',
@@ -55,6 +64,10 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Logga in',
     EN: 'Log in'
   },
+  langButton: {
+    SE: 'Change to english',
+    EN: 'Ändra till svenska'
+  },
   forgotPassword: {
     SE: 'Glömt lösenord?',
     EN: 'Forgot your password?'
@@ -76,22 +89,16 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'The password field is required'
   },
   error,
-  errorMsg400: {
-    SE: 'Fel email eller lösenord',
-    EN: 'Wrong email or password'
-  },
-  errorMsg401: {
-    SE: 'Fel email eller lösenord',
-    EN: 'Wrong email or password'
-  },
+  errorMsg400,
+  errorMsg401,
   errorMsg404,
   errorMsgInternal,
   passwordPopupHeader: {
-    SE: 'Glömt ditt lösenord?',
+    SE: 'Glömt lösenord?',
     EN: 'Forgot password?'
   },
   passwordPopupInfo: {
-    SE: 'Var god fyll i din email adress och du kommer få ett nytt lösenord',
+    SE: 'Var god fyll i din email adress så skickas ett nytt lösenord till dig',
     EN: 'Please, fill in your email address below and you will receive a new password'
   },
   passwordPopupCancel: {
@@ -423,5 +430,46 @@ export const CAMERA_STRINGS = {
   picture: {
     SE: 'Bild',
     EN: 'Picture'
+  }
+}
+
+export const PASSWORD_POPUP_STRINGS = {
+  fields: [
+    'responeFail',
+    'responseSuccess',
+    'error',
+    'errorMsg400',
+    'errorMsg401',
+    'errorMsg404',
+    'errorMsgInternal'
+  ],
+  responeFail: {
+    SE: 'Var god ange en giltig email adress',
+    EN: 'Please enter a valid email address'
+  },
+  responseSuccess: {
+    SE: 'Tack, kolla din inbox för ditt nya lösenord',
+    EN: 'Thank you, check your inbox for your new password'
+  },
+  inputTitle: {
+    SE: 'Email',
+    EN: 'Email'
+  },
+  inputPlaceholder: {
+    SE: 'Ange din email adress',
+    EN: 'Enter your email address'
+  },
+  error,
+  errorMsg400,
+  errorMsg401,
+  errorMsg404,
+  errorMsgInternal,
+}
+
+export const LOADING_STRINGS = {
+  fields: ['loading'],
+  loading: {
+    SE: 'LADDAR ',
+    EN: 'LOADING '
   }
 }

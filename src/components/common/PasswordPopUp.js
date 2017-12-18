@@ -13,6 +13,7 @@ import {
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Input from '../common/Input';
+import { PASSWORD_POPUP_STRINGS } from '../../helpers/LangStrings'
 
 class PasswordPopUp extends Component {
   constructor(props) {
@@ -33,6 +34,14 @@ class PasswordPopUp extends Component {
     return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
   }
 
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = PASSWORD_POPUP_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = PASSWORD_POPUP_STRINGS[field][lang]))
+    return strings
+  }
+
   getBorderLeftRadius(index) {
     if (index === 0) {
       return 5;
@@ -51,8 +60,7 @@ class PasswordPopUp extends Component {
     return 0;
   }
   getOnPress(index) {
-    const { emailAddress } = this.state;
-    console.log(emailAddress);
+    const strings = this.getStrings()
     if (index === 1) {
       axios
         .post('http://146.185.173.31:3000/login/forgotpassword', {
@@ -60,23 +68,23 @@ class PasswordPopUp extends Component {
         })
         .then(response => {
           if (!response.data.success) {
-            Alert.alert('Please enter a valid email address');
+            Alert.alert(strings.responeFail);
           } else {
-            Alert.alert('Thank you, check your inbox for your new password');
+            Alert.alert(strings.responseSuccess);
           }
         })
         .catch(error => {
           let msg;
           if (error.message.includes('400')) {
-            msg = 'Wrong email or password';
+            msg = strings.errorMsg400;
           } else if (error.message.includes('401')) {
-            msg = 'Wrong email or password';
+            msg = strings.errorMsg401;
           } else if (error.message.includes('404')) {
-            msg = 'Something went wrong...';
+            msg = strings.errorMsg404;
           } else {
-            msg = 'Internal error, please try again later';
+            msg = strings.errorMsgInternal
           }
-          Alert.alert('Error', msg);
+          Alert.alert(strings.error, msg);
         });
     } else {
       this.props.setAlertVisible(false);
@@ -119,6 +127,7 @@ class PasswordPopUp extends Component {
       alertBoxStyle
     } = styles;
     const { alertVisible, header, info, inputValue, setAlertVisible } = this.props;
+    const strings = this.getStrings()
     return (
       <Modal transparent visible={alertVisible} onRequestClose={() => setAlertVisible(false)}>
         <BlurView tint="dark" intensity={70} style={StyleSheet.absoluteFill}>
@@ -137,8 +146,8 @@ class PasswordPopUp extends Component {
                   }}
                 >
                   <Input
-                    placeholder="Enter your email address"
-                    title="E-mail"
+                    placeholder={strings.inputPlaceholder}
+                    title={strings.inputTitle}
                     width={Dimensions.get('window').width / 1.2}
                     underlineColorAndroid="transparent"
                     onChangeText={text => this.props.onChangeText(text)}

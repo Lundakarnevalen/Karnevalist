@@ -28,9 +28,6 @@ class LoginScreen extends Component {
   }
 
   componentWillMount() {
-    getItem('lang', (lang) => {
-      this.props.setLang(lang)
-    });
     let currentTheme = 'day';
     const currentHour = new Date().getHours();
     if (currentHour < 9) {
@@ -54,6 +51,15 @@ class LoginScreen extends Component {
     return strings
   }
 
+  changeLang() {
+    const { lang, setLang } = this.props
+    if (lang === 'SE') {
+      setLang('EN')
+    } else {
+      setLang('SE')
+    }
+  }
+
   render() {
     const { containerStyle } = styles;
     const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
@@ -63,6 +69,14 @@ class LoginScreen extends Component {
         <BackgroundImage pictureNumber={4} />
         <ScrollView>
           <View style={styles.container1}>
+          <View style={{ alignSelf: 'flex-start' }}>
+          <CustomButton
+            width={170}
+            text={strings.langButton}
+            onPress={() => this.changeLang()}
+            style="textButton"
+          />
+          </View>
             <Input
               value={email}
               placeholder={strings.email}
