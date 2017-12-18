@@ -2,15 +2,25 @@ const password = {
   SE: 'Lösenord',
   EN: 'Password'
 }
-const shirtSize= {
+const shirtSize = {
   SE: 'Välj tröjstorlek',
   EN: 'Choose shirt size'
 }
 
-const studentUnion= {
+const studentUnion = {
   SE: 'Välj nation',
   EN: 'Choose student union'
 }
+
+const errorMsg404 = {
+  SE: 'Något gick fel...',
+  EN: 'Something went wrong...'
+}
+const errorMsgInternal = {
+  SE: 'Internt fel, var god försök igen senare',
+  EN: 'Internal error, please try again later'
+}
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -21,8 +31,10 @@ export const LOGIN_SCREEN_STRINGS = {
     'readMore',
     'emailError',
     'passwordError',
-    'errorMsg',
+    'errorMsg400',
+    'errorMsg401',
     'errorMsg404',
+    'errorMsgInternal',
     'passwordPopupHeader',
     'passwordPopupInfo',
     'passwordPopupCancel',
@@ -57,18 +69,16 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Lösenord fältet måste fyllas i',
     EN: 'The password field is required'
   },
-  errorMsg: {
+  errorMsg400: {
     SE: 'Fel email eller lösenord',
     EN: 'Wrong email or password'
   },
-  errorMsg404: {
-    SE: 'Något gick fel...',
-    EN: 'Something went wrong...'
+  errorMsg401: {
+    SE: 'Fel email eller lösenord',
+    EN: 'Wrong email or password'
   },
-  errorMsgInternal: {
-    SE: 'Internt fel, var god försök igen senare',
-    EN: 'Internal error, please try again later'
-  },
+  errorMsg404,
+  errorMsgInternal,
   passwordPopupHeader: {
     SE: 'Glömt ditt lösenord?',
     EN: 'Forgot password?'
@@ -84,7 +94,7 @@ export const LOGIN_SCREEN_STRINGS = {
   passwordPopupResetPassword: {
     SE: 'Återställ lösenord',
     EN: 'Reset password'
-  },
+  }
 }
 
 export const REGISTRATION_SCREEN_STRINGS = {
@@ -108,6 +118,22 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'activeKarneval',
     'driversLicense',
     'register',
+    'errorFirstName',
+    'errorLastName',
+    'errorEmail',
+    'errorConfirmEmail',
+    'errorAddress',
+    'errorPostcode',
+    'errorCity',
+    'errorPhoneNumber',
+    'errorPassword',
+    'errorConfirmPassword',
+    'errorEmailMatch',
+    'errorPasswordMatch',
+    'errorMsg400',
+    'errorMsg401',
+    'errorMsg404',
+    'errorMsgInternal'
   ],
   header: {
     SE: 'Skapa profil',
@@ -175,7 +201,65 @@ export const REGISTRATION_SCREEN_STRINGS = {
   register: {
     SE: 'Registrera',
     EN: 'Register'
-  }
+  },
+  errorFirstName: {
+    SE: 'Förnamn krävs',
+    EN: 'First name is required'
+  },
+  errorLastName: {
+    SE: 'Efternamn krävs',
+    EN: 'Last name is required'
+  },
+  errorEmail: {
+    SE: 'Email krävs',
+    EN: 'Email is required'
+  },
+  errorConfirmEmail: {
+    SE: 'Var god bekräfta din email',
+    EN: 'Please confirm your email'
+  },
+  errorAddress: {
+    SE: 'Adress krävs',
+    EN: 'Address is required'
+  },
+  errorPostcode: {
+    SE: 'Postnummer krävs',
+    EN: 'Postcode is required'
+  },
+  errorCity: {
+    SE: 'Stad krävs',
+    EN: 'City is required'
+  },
+  errorPhoneNumber: {
+    SE: 'Telefonnummer krävs',
+    EN: 'Phone number is required'
+  },
+  errorPassword: {
+    SE: 'Lösenord krävs',
+    EN: 'Password is required'
+  },
+  errorConfirmPassword: {
+    SE: 'Var god bekräfta ditt lösenord',
+    EN: 'Please confirm your password'
+  },
+  errorEmailMatch: {
+    SE: 'Email adresserna matchar inte',
+    EN: "The emails doesn't match"
+  },
+  errorPasswordMatch: {
+    SE: 'Lösenorden matchar inte',
+    EN: "The passwords doesn't match"
+  },
+  errorMsg400: {
+    SE: 'Ogiltig email eller lösenord',
+    EN: 'Invalid email or password'
+  },
+  errorMsg401: {
+    SE: 'Ogiltig email eller lösenord',
+    EN: 'Invalid email or password'
+  },
+  errorMsg404,
+  errorMsgInternal
 }
 
 export const SECTION_SCREEN_STRINGS = {
@@ -234,5 +318,21 @@ export const SONGBOOK_SCREEN_STRINGS = {
   title: {
     SE: 'Sångbok',
     EN: 'Song Book'
+  }
+}
+
+export const CAMERA_STRINGS = {
+  fields: ['take', 'your', 'picture'],
+  take: {
+    SE: 'Ta',
+    EN: 'Take'
+  },
+  your: {
+    SE: 'Din',
+    EN: 'Your'
+  },
+  picture: {
+    SE: 'Bild',
+    EN: 'Picture'
   }
 }

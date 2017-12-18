@@ -96,9 +96,9 @@ class LoginScreen extends Component {
                     .catch(error => {
                       let msg;
                       if (error.message.includes('400')) {
-                        msg = strings.errorMsg;
+                        msg = strings.errorMsg400;
                       } else if (error.message.includes('401')) {
-                        msg = strings.errorMsg;
+                        msg = strings.errorMsg401;
                       } else if (error.message.includes('404')) {
                         msg = strings.errorMsg404;
                       } else {

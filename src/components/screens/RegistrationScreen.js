@@ -25,9 +25,6 @@ import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LangStrings'
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
 
-const shirtSizeArray = ['Choose shirt size', 'Small', 'Medium', 'Large'];
-const studentUnionArray = ['Select a nation', 'Lunds Nation', 'Göteborgs Nation', 'Malmös Nation'];
-
 class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +61,7 @@ class RegistrationScreen extends Component {
     return strings
   }
 
-  renderPickerForPlatform(defaultTitle, title, tag) {
+  renderPickerForPlatform(defaultTitle, shirtSizeArray, studentUnionArray, title, tag) {
     const { shirtSize, studentUnion } = this.state;
     if (Platform.OS === 'ios') {
       return (
@@ -91,13 +88,13 @@ class RegistrationScreen extends Component {
           selectedValue={tag === 'shirt' ? shirtSize : studentUnion}
           style={styles.androidPicker}
         >
-          {this.renderPickerArray(tag)}
+          {this.renderPickerArray(tag, shirtSizeArray, studentUnionArray)}
         </Picker>
       </View>
     );
   }
 
-  renderPickerArray(tag) {
+  renderPickerArray(tag, shirtSizeArray, studentUnionArray) {
     if (tag === 'shirt') {
       return shirtSizeArray.map(item => {
         return <Picker.Item key={item} label={item} value={item} />;
@@ -251,8 +248,8 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
           />
-          {this.renderPickerForPlatform(strings.shirtSize, shirtSize, 'shirt')}
-          {this.renderPickerForPlatform(strings.studentUnion, studentUnion, 'union')}
+          {this.renderPickerForPlatform(strings.shirtSize, strings.shirtSizeArray, strings.studentUnionArray, shirtSize, 'shirt')}
+          {this.renderPickerForPlatform(strings.studentUnion, strings.shirtSizeArray, strings.studentUnionArray, studentUnion, 'union')}
           <View style={{ right: 3 }}>
           <ButtonChoiceManager
             buttonInputVector={[strings.activeKarneval]}
@@ -273,29 +270,29 @@ class RegistrationScreen extends Component {
             width={width}
             onPress={() => {
               if (firstName === '') {
-                Alert.alert('Error', 'First name is required.');
+                Alert.alert('Error', strings.errorFirstName);
               } else if (lastName === '') {
-                Alert.alert('Error', 'Last name is required.');
+                Alert.alert('Error', strings.errorLastName);
               } else if (email === '') {
-                Alert.alert('Error', 'Email is required.');
+                Alert.alert('Error', strings.errorEmail);
               } else if (confirmedEmail === '') {
-                Alert.alert('Error', 'Please confirm your email.');
+                Alert.alert('Error', strings.errorConfirmEmail);
               } else if (address === '') {
-                Alert.alert('Error', 'Address is required.');
+                Alert.alert('Error', strings.errorAddress);
               } else if (postcode === '') {
-                Alert.alert('Error', 'Postcode is required.');
+                Alert.alert('Error', strings.errorPostcode);
               } else if (city === '') {
-                Alert.alert('Error', 'City is required.');
+                Alert.alert('Error', strings.errorCity);
               } else if (phoneNbr === '') {
-                Alert.alert('Error', 'Phone number is required.');
+                Alert.alert('Error', strings.errorPhoneNumber);
               } else if (password === '') {
-                Alert.alert('Error', 'Password is required.');
+                Alert.alert('Error', strings.errorPassword);
               } else if (confirmedPassword === '') {
-                Alert.alert('Error', 'Please confirm your password.');
+                Alert.alert('Error', strings.errorConfirmPassword);
               } else if (email !== confirmedEmail) {
-                Alert.alert('Error', "Your emails doesn't match.");
+                Alert.alert('Error', strings.errorEmailMatch);
               } else if (password !== confirmedPassword) {
-                Alert.alert('Error', "Your passwords doesn't match.");
+                Alert.alert('Error', strings.errorPasswordMatch);
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
@@ -316,13 +313,13 @@ class RegistrationScreen extends Component {
                   .catch(error => {
                     let msg;
                     if (error.message.includes('400')) {
-                      msg = 'Invalid email or password';
+                      msg = strings.errorMsg400;
                     } else if (error.message.includes('401')) {
-                      msg = 'Invalid email or password';
+                      msg = strings.errorMsg401;
                     } else if (error.message.includes('404')) {
-                      msg = 'Something went wrong...';
+                      msg = strings.errorMsg404;
                     } else {
-                      msg = 'Internal error, please try again later';
+                      msg = strings.errorMsgInternal;
                     }
                     this.setState({ loadingComplete: false, loading: false });
                     Alert.alert('Error', msg);
@@ -334,14 +331,14 @@ class RegistrationScreen extends Component {
         {this.renderDKBackgroundCloser()}
         <DKPicker
           onValueChange={newValue => this.setState({ shirtSize: newValue })}
-          items={shirtSizeArray}
+          items={strings.shirtSizeArray}
           value={shirtSize}
           isShowing={showShirtPicker}
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
           onValueChange={newValue => this.setState({ studentUnion: newValue })}
-          items={studentUnionArray}
+          items={strings.studentUnionArray}
           value={studentUnion}
           isShowing={showStudentUnionPicker}
           close={() => this.setState({ showStudentUnionPicker: false })}
