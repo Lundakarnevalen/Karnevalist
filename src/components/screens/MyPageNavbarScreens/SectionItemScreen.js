@@ -14,11 +14,12 @@ import { Constants } from 'expo';
 import Header from '../../common/Header';
 import Toast from '../../common/Toast';
 import { saveItem } from '../../../helpers/LocalSave';
+import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
-  
+
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
   }
@@ -45,11 +46,19 @@ class SectionItemScreen extends Component {
     }
   }
 
+  getStrings() {
+    const { language } = this.props
+    const { fields } = SECTION_ITEM_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = SECTION_ITEM_SCREEN_STRINGS[field][language]))
+    return strings
+  }
+
   render() {
     const { navigation, color } = this.props;
     const { title, description, image, id } = navigation.state.params;
     const { container, scrollStyle, headerStyle, textStyle } = styles;
-
+    const strings = this.getStrings()
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
@@ -70,7 +79,7 @@ class SectionItemScreen extends Component {
         <Toast
           color={'#f4376d'}
           showToast={this.state.showToast}
-          message={'Section ' + title + ' added'}
+          message={strings.messageStart + title + strings.messageEnd}
         />
         <ScrollView style={scrollStyle}>
           <View style={container}>{image}</View>

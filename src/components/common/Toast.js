@@ -93,7 +93,8 @@ const styles = {
     marginLeft: 10,
     color: 'white',
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 };
 

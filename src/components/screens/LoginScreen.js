@@ -8,7 +8,7 @@ import Input from '../common/Input';
 import PasswordPopUp from '../common/PasswordPopUp';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
-import { getItem } from '../../helpers/LocalSave';
+import { getItem, saveItem } from '../../helpers/LocalSave';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
 
 const WIDTH = Dimensions.get('window').width * 0.9;
@@ -55,11 +55,9 @@ class LoginScreen extends Component {
   }
 
   changeLang() {
-    if (this.props.language === 'SE') {
-       this.props.setLanguage('EN')
-    } else {
-       this.props.setLanguage('SE')
-    }
+    const language = this.props.language === 'SE' ? 'EN' : 'SE'
+    this.props.setLanguage(language)
+    saveItem('language', language)
   }
 
   render() {

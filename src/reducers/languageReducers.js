@@ -1,7 +1,6 @@
 import { SET_LANGUAGE } from '../actions/Types.js';
 
 const INITIAL_STATE = {
-  language: 'SE'
 };
 
 export default (state = INITIAL_STATE, action) => {

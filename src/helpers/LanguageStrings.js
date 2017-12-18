@@ -378,10 +378,14 @@ export const PROFILE_SCREEN_STRINGS = {
 }
 
 export const SECTION_ITEM_SCREEN_STRINGS = {
-  fields: ['title'],
-  title: {
-    SE: 'Hem',
-    EN: 'Home'
+  fields: ['messageStart', 'messageEnd'],
+  messageStart: {
+    SE: 'Sektion: "',
+    EN: 'Section: "'
+  },
+  messageEnd: {
+    SE: '" tillagd',
+    EN: '" added'
   }
 }
 

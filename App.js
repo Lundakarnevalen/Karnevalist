@@ -16,9 +16,13 @@ class App extends Component {
   }
 
   componentWillMount() {
-    getItem('language', language => {
-      if (language === null)
+    getItem('language', (language) => {
+      if (language === null) {
+        this.setState({ language: 'SE' })
         saveItem('language', 'SE')
+      } else {
+        this.setState({ language })
+      }
     });
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
     Font.loadAsync({
@@ -38,9 +42,11 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.fontsLoaded) {
+    if (this.state.fontsLoaded && this.state.language) {
+      const { language } = this.state //, { currentLanguage: language }
+      const INITIAL_STATE = { currentLanguage: { language } }
       return (
-        <Provider store={createStore(reducers)}>
+        <Provider store={createStore(reducers, INITIAL_STATE)}>
           <Router />
         </Provider>
       );
