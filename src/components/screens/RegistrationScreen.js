@@ -20,7 +20,7 @@ import ButtonChoiceManager from '../common/ButtonChoiceManager';
 import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
-import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LangStrings'
+import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
@@ -54,10 +54,10 @@ class RegistrationScreen extends Component {
   }
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = REGISTRATION_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = REGISTRATION_SCREEN_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = REGISTRATION_SCREEN_STRINGS[field][language]))
     return strings
   }
 
@@ -381,11 +381,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, userInformation, currentLang }) => {
+const mapStateToProps = ({ currentTheme, userInformation, currentLanguage }) => {
   const { theme } = currentTheme;
   const { picture } = userInformation;
-  const { lang } = currentLang
-  return { theme, picture, lang };
+  const { language } = currentLanguage
+  return { theme, picture, language };
 };
 
 export default connect(mapStateToProps, null)(RegistrationScreen);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
-import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LangStrings'
+import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 const height = Dimensions.get('window').height;
 
@@ -29,10 +29,10 @@ class ProfileScreen extends Component {
   }
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = PROFILE_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = PROFILE_SCREEN_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = PROFILE_SCREEN_STRINGS[field][language]))
     return strings
   }
 
@@ -66,10 +66,10 @@ class ProfileScreen extends Component {
     );
   }
 }
-const mapStateToProps = ({ currentTheme, currentLang }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  const { lang } = currentLang;
-  return { theme, lang };
+  const { language } = currentLanguage;
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(ProfileScreen);

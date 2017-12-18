@@ -6,7 +6,7 @@ import CustomButton from '../common/CustomButton';
 import Header from '../common/Header';
 import ExpandeblePanel from '../common/ExpandeblePanel';
 import BackgroundImage from '../common/BackgroundImage';
-import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LangStrings'
+import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -18,10 +18,10 @@ class RegistrationInfoScreen extends Component {
   }
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = REGISTRATION_INFO_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = REGISTRATION_INFO_SCREEN_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = REGISTRATION_INFO_SCREEN_STRINGS[field][language]))
     return strings
   }
 
@@ -125,10 +125,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLang }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  const { lang } = currentLang;
-  return { theme, lang };
+  const { language } = currentLanguage;
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(RegistrationInfoScreen);

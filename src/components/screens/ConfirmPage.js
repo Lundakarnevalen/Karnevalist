@@ -8,7 +8,7 @@ import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import BackgroundImage from '../common/BackgroundImage';
 import CustomButton from '../common/CustomButton';
-import { CONFIRM_PAGE_STRINGS } from '../../helpers/LangStrings'
+import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings'
 
 const window = Dimensions.get('window');
 
@@ -56,10 +56,10 @@ class ConfirmPage extends Component {
   }
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = CONFIRM_PAGE_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = CONFIRM_PAGE_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language]))
     return strings
   }
 
@@ -243,10 +243,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLang }) => {
+const mapStateToProps = ({ currentTheme, sections, currentLanguage }) => {
   const { theme } = currentTheme;
-  const { lang } = currentLang;
-  return { theme, sections: sections.sections, lang };
+  const { language } = currentLanguage;
+  return { theme, sections: sections.sections, language };
 };
 
 export default connect(mapStateToProps, null)(ConfirmPage);

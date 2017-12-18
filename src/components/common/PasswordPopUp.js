@@ -13,7 +13,7 @@ import {
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Input from '../common/Input';
-import { PASSWORD_POPUP_STRINGS } from '../../helpers/LangStrings'
+import { PASSWORD_POPUP_STRINGS } from '../../helpers/LanguageStrings'
 
 class PasswordPopUp extends Component {
   constructor(props) {
@@ -35,10 +35,10 @@ class PasswordPopUp extends Component {
   }
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = PASSWORD_POPUP_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = PASSWORD_POPUP_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = PASSWORD_POPUP_STRINGS[field][language]))
     return strings
   }
 

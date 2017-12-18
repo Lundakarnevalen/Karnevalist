@@ -5,7 +5,7 @@ import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 import { getNews } from '../../../helpers/ApiManager';
-import { NEWS_SCREEN_STRINGS } from '../../../helpers/LangStrings';
+import { NEWS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const height = Dimensions.get('window').height;
 
@@ -28,10 +28,10 @@ class NewsScreen extends Component {
   }
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = NEWS_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = NEWS_SCREEN_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = NEWS_SCREEN_STRINGS[field][language]))
     return strings
   }
 
@@ -64,10 +64,10 @@ class NewsScreen extends Component {
     );
   }
 }
-const mapStateToProps = ({ currentTheme, currentLang }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  const { lang } = currentLang;
-  return { theme, lang };
+  const { language } = currentLanguage;
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(NewsScreen);

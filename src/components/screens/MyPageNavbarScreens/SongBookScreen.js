@@ -3,7 +3,7 @@ import { View, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import Header from '../../common/Header';
 import BackgroundImage from '../../common/BackgroundImage';
-import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LangStrings'
+import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 const HEIGHT = Dimensions.get('window').height;
 
@@ -14,10 +14,10 @@ class SongBookScreen extends Component {
   }
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = SONGBOOK_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = SONGBOOK_SCREEN_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = SONGBOOK_SCREEN_STRINGS[field][language]))
     return strings
   }
 
@@ -43,10 +43,10 @@ const styles = {
     marginTop: HEIGHT / 3
   }
 };
-const mapStateToProps = ({ currentTheme, currentLang }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  const { lang } = currentLang;
-  return { theme, lang };
+  const { language } = currentLanguage;
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(SongBookScreen);

@@ -16,7 +16,7 @@ import {
   HOME_SCREEN_STRINGS,
   PROFILE_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
- } from '../../helpers/LangStrings'
+ } from '../../helpers/LanguageStrings'
 
 //TODO: Ful lösning, kanske ska göra såhär överallt dock, flytta ut till separat "theme" klass istället för redux.
 const CURRENT_HOUR = new Date().getHours();
@@ -70,8 +70,8 @@ class MyPageNavbarScreen extends Component {
   }
 
   render() {
-    const { navigation, lang } = this.props
-    return <TabNav screenProps={{ navigation, lang }} />;
+    const { navigation, language } = this.props
+    return <TabNav screenProps={{ navigation, language }} />;
   }
 }
 
@@ -80,7 +80,7 @@ const TabNav = TabNavigator(
     Sections: {
       screen: SectionScreen,
       navigationOptions: props => ({
-        tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.lang],
+        tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons
             name="star"
@@ -93,7 +93,7 @@ const TabNav = TabNavigator(
     SongBook: {
       screen: SongBookScreen,
       navigationOptions: props => ({
-        tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.lang],
+        tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons
             name="local-library"
@@ -106,7 +106,7 @@ const TabNav = TabNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: props => ({
-        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.lang],
+        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons
             name="home"
@@ -119,7 +119,7 @@ const TabNav = TabNavigator(
     News: {
       screen: NewsScreen,
       navigationOptions: props => ({
-        tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.lang],
+        tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons
             name="speaker-notes"
@@ -132,7 +132,7 @@ const TabNav = TabNavigator(
     Profile: {
       screen: ProfileScreen,
       navigationOptions: props => ({
-        tabBarLabel: PROFILE_SCREEN_STRINGS.title[props.screenProps.lang],
+        tabBarLabel: PROFILE_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons
             name="account-circle"
@@ -169,8 +169,8 @@ const TabNav = TabNavigator(
   }
 );
 
-const mapStateToProps = ({ currentLang }) => {
-  const { lang } = currentLang
-  return { lang };
+const mapStateToProps = ({ currentLanguage }) => {
+  const { language } = currentLanguage
+  return { language };
 };
 export default connect(mapStateToProps, { setSections })(MyPageNavbarScreen)

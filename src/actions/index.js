@@ -1,4 +1,4 @@
 export * from './userInformationActions';
 export * from './sectionsActions'
 export * from './ThemeActions';
-export * from './langActions';
+export * from './languageActions';

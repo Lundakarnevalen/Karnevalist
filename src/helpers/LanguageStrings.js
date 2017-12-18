@@ -39,7 +39,7 @@ export const LOGIN_SCREEN_STRINGS = {
     'email',
     'password',
     'loginButton',
-    'langButton',
+    'languageButton',
     'forgotPassword',
     'createProfile',
     'readMore',
@@ -64,7 +64,7 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Logga in',
     EN: 'Log in'
   },
-  langButton: {
+  languageButton: {
     SE: 'Change to english',
     EN: 'Ändra till svenska'
   },

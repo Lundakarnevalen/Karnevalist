@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Text, TouchableOpacity, View, Image } from 'react-native';
 import { connect } from 'react-redux';
-import { CAMERA_STRINGS } from '../../helpers/LangStrings'
+import { CAMERA_STRINGS } from '../../helpers/LanguageStrings'
 
 const SIZE = Dimensions.get('window').width * 0.6;
 /**
@@ -20,10 +20,10 @@ class CameraButton extends Component {
     }
   }
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = CAMERA_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = CAMERA_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = CAMERA_STRINGS[field][language]))
     return strings
   }
 
@@ -81,10 +81,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLang }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  const { lang } = currentLang
-  return { theme, lang };
+  const { language } = currentLanguage
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(CameraButton);

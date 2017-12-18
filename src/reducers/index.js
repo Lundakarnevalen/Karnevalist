@@ -8,5 +8,5 @@ export default combineReducers({
   userInformation: userInformationReducers,
   sections: sectionsReducers,
   currentTheme: ThemeReducers,
-  currentLang: languageReducers
+  currentLanguage: languageReducers
 });

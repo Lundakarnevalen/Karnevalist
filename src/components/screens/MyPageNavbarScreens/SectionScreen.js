@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
-import { SECTION_SCREEN_STRINGS } from '../../../helpers/LangStrings'
+import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 import { dynamicSort } from '../../../helpers/functions'
 
 class SectionScreen extends Component {
@@ -35,10 +35,10 @@ class SectionScreen extends Component {
     }
   }
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = SECTION_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = SECTION_SCREEN_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = SECTION_SCREEN_STRINGS[field][language]))
     return strings
   }
 
@@ -94,10 +94,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLang }) => {
+const mapStateToProps = ({ currentTheme, sections, currentLanguage }) => {
   const { theme } = currentTheme;
-  const { lang } = currentLang;
-  return { theme, sections: sections.sections, lang };
+  const { language } = currentLanguage;
+  return { theme, sections: sections.sections, language };
 };
 
 export default connect(mapStateToProps, null)(SectionScreen);

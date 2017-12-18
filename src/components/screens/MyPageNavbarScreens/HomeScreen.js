@@ -5,17 +5,17 @@ import Header from '../../common/Header';
 import CustomButton from '../../common/CustomButton';
 import BackgroundImage from '../../common/BackgroundImage';
 import CountDown from '../../common/countDown/CountDown';
-import { HOME_SCREEN_STRINGS } from '../../../helpers/LangStrings';
+import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;
 
 class HomeScreen extends Component {
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = HOME_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = HOME_SCREEN_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = HOME_SCREEN_STRINGS[field][language]))
     return strings
   }
 
@@ -49,10 +49,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLang }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  const { lang } = currentLang;
-  return { theme, lang };
+  const { language } = currentLanguage;
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(HomeScreen);

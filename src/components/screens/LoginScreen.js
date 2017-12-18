@@ -3,13 +3,13 @@ import { Alert, View, Dimensions, ScrollView, StatusBar } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
-import { setTheme, setLang } from '../../actions';
+import { setTheme, setLanguage } from '../../actions';
 import Input from '../common/Input';
 import PasswordPopUp from '../common/PasswordPopUp';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 import { getItem } from '../../helpers/LocalSave';
-import { LOGIN_SCREEN_STRINGS } from '../../helpers/LangStrings'
+import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
 
 const WIDTH = Dimensions.get('window').width * 0.9;
 const HEIGHT = Dimensions.get('window').height;
@@ -28,8 +28,8 @@ class LoginScreen extends Component {
   }
 
   componentWillMount() {
-    getItem('lang', (lang) => {
-      this.props.setLang(lang)
+    getItem('language', (language) => {
+      this.props.setLanguage(language)
     });
     let currentTheme = 'day';
     const currentHour = new Date().getHours();
@@ -47,18 +47,18 @@ class LoginScreen extends Component {
   }
 
   getStrings() {
-    const { lang } = this.props
+    const { language } = this.props
     const { fields } = LOGIN_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => (strings[field] = LOGIN_SCREEN_STRINGS[field][lang]))
+    fields.forEach(field => (strings[field] = LOGIN_SCREEN_STRINGS[field][language]))
     return strings
   }
 
   changeLang() {
-    if (this.props.lang === 'SE') {
-       this.props.setLang('EN')
+    if (this.props.language === 'SE') {
+       this.props.setLanguage('EN')
     } else {
-       this.props.setLang('SE')
+       this.props.setLanguage('SE')
     }
   }
 
@@ -74,7 +74,7 @@ class LoginScreen extends Component {
           <View style={{ alignSelf: 'flex-start' }}>
           <CustomButton
             width={170}
-            text={strings.langButton}
+            text={strings.languageButton}
             onPress={() => this.changeLang()}
             style="textButton"
           />
@@ -215,9 +215,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentLang }) => {
-  const { lang } = currentLang
-  return { lang };
+const mapStateToProps = ({ currentLanguage }) => {
+  const { language } = currentLanguage
+  return { language };
 };
 
-export default connect(mapStateToProps, { setTheme, setLang })(LoginScreen);
+export default connect(mapStateToProps, { setTheme, setLanguage })(LoginScreen);

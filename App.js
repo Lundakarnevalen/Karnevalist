@@ -16,9 +16,9 @@ class App extends Component {
   }
 
   componentWillMount() {
-    getItem('lang', lang => {
-      if (lang === null)
-        saveItem('lang', 'SE')
+    getItem('language', language => {
+      if (language === null)
+        saveItem('language', 'SE')
     });
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
     Font.loadAsync({
