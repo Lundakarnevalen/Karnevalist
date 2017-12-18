@@ -10,21 +10,29 @@ import { HOME_SCREEN_STRINGS } from '../../../helpers/LangStrings';
 const WIDTH = Dimensions.get('window').width;
 
 class HomeScreen extends Component {
+
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = HOME_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = HOME_SCREEN_STRINGS[field][lang]))
+    return strings
+  }
+
   render() {
     const { container } = styles;
-    const { navigation, lang } = this.props
-    const title = HOME_SCREEN_STRINGS.title[lang]
-    const buttonText = HOME_SCREEN_STRINGS.buttonText[lang]
+    const { navigation } = this.props
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={3} />
-        <Header title={title} leftIcon={null} navigation={navigation} />
+        <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <View style={container}>
           <CountDown />
           <CustomButton
             style={'standardButton'}
             width={WIDTH - 50}
-            text={buttonText}
+            text={strings.buttonText}
             onPress={() => navigation.navigate('Sections')}
           />
         </View>

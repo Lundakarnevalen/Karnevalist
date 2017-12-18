@@ -6,6 +6,7 @@ import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LangStrings'
+import { dynamicSort } from '../../../helpers/functions'
 
 class SectionScreen extends Component {
 
@@ -19,20 +20,8 @@ class SectionScreen extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { sections } = nextProps;
-    sections.sort(this.dynamicSort('title'));
+    sections.sort(dynamicSort('title'));
     this.setState({ data: nextProps.sections });
-  }
-
-  dynamicSort(property) {
-    let sortOrder = 1;
-    if (property[0] === '-') {
-      sortOrder = -1;
-      property = property.substr(1);
-    }
-    return function (a, b) {
-      const result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-      return result * sortOrder;
-    };
   }
 
   getColor() {
@@ -45,10 +34,17 @@ class SectionScreen extends Component {
         return 'white';
     }
   }
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = SECTION_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = SECTION_SCREEN_STRINGS[field][lang]))
+    return strings
+  }
 
   render() {
-    const { navigation, screenProps, lang } = this.props;
-    const title = SECTION_SCREEN_STRINGS.title[lang]
+    const { navigation, screenProps } = this.props;
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={1} />
@@ -62,7 +58,7 @@ class SectionScreen extends Component {
                 <MaterialIcons name="local-mall" size={30} color={this.getColor()} />
               </TouchableOpacity>
             }
-            title={title}
+            title={strings.title}
             leftIcon={null}
             navigation={navigation}
           />

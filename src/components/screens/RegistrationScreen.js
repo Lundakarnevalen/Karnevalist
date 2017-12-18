@@ -57,7 +57,7 @@ class RegistrationScreen extends Component {
     const { lang } = this.props
     const { fields } = REGISTRATION_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => strings[field] = REGISTRATION_SCREEN_STRINGS[field][lang])
+    fields.forEach(field => (strings[field] = REGISTRATION_SCREEN_STRINGS[field][lang]))
     return strings
   }
 

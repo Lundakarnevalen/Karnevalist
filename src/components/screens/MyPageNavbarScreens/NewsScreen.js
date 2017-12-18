@@ -27,13 +27,21 @@ class NewsScreen extends Component {
     });
   }
 
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = NEWS_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = NEWS_SCREEN_STRINGS[field][lang]))
+    return strings
+  }
+
   render() {
-    const { navigation, screenProps, lang } = this.props
-    const title = NEWS_SCREEN_STRINGS.title[lang]
+    const { navigation, screenProps } = this.props
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header title={title} leftIcon={null} navigation={navigation} />
+        <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <ListView
           enableEmptySections
           style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}

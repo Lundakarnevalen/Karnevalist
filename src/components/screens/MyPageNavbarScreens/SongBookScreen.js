@@ -8,17 +8,26 @@ import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LangStrings'
 const HEIGHT = Dimensions.get('window').height;
 
 class SongBookScreen extends Component {
+
   getColor() {
     return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
   }
 
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = SONGBOOK_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = SONGBOOK_SCREEN_STRINGS[field][lang]))
+    return strings
+  }
+
   render() {
-    const { navigation, lang } = this.props;
-    const title = SONGBOOK_SCREEN_STRINGS.title[lang]
+    const { navigation } = this.props;
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={2} />
-        <Header title={title} leftIcon={null} navigation={navigation} />
+        <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <Text style={[styles.textStyle, { color: this.getColor() }]}>Coming soon!</Text>
       </View>
     );

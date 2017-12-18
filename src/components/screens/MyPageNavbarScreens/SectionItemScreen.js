@@ -18,6 +18,7 @@ import { saveItem } from '../../../helpers/LocalSave';
 const HEIGHT = Dimensions.get('window').height;
 
 class SectionItemScreen extends Component {
+  
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
   }

@@ -23,7 +23,7 @@ class CameraButton extends Component {
     const { lang } = this.props
     const { fields } = CAMERA_STRINGS
     const strings = {}
-    fields.forEach(field => strings[field] = CAMERA_STRINGS[field][lang])
+    fields.forEach(field => (strings[field] = CAMERA_STRINGS[field][lang]))
     return strings
   }
 

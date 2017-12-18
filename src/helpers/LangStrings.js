@@ -263,6 +263,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
 }
 
 export const SECTION_SCREEN_STRINGS = {
+  fields: ['title'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
@@ -270,6 +271,7 @@ export const SECTION_SCREEN_STRINGS = {
 }
 
 export const NEWS_SCREEN_STRINGS = {
+  fields: ['title'],
   title: {
     SE: 'Nyheter',
     EN: 'News'
@@ -277,6 +279,7 @@ export const NEWS_SCREEN_STRINGS = {
 }
 
 export const HOME_SCREEN_STRINGS = {
+  fields: ['title', 'buttonText'],
   title: {
     SE: 'Hem',
     EN: 'Home'
@@ -289,6 +292,7 @@ export const HOME_SCREEN_STRINGS = {
 }
 
 export const PROFILE_SCREEN_STRINGS = {
+  fields: ['title', 'profile', 'registration', 'logout'],
   title: {
     SE: 'Min profil',
     EN: 'My profile'
@@ -308,6 +312,7 @@ export const PROFILE_SCREEN_STRINGS = {
 }
 
 export const SECTION_ITEM_SCREEN_STRINGS = {
+  fields: ['title'],
   title: {
     SE: 'Hem',
     EN: 'Home'
@@ -315,6 +320,7 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
 }
 
 export const SONGBOOK_SCREEN_STRINGS = {
+  fields: ['title'],
   title: {
     SE: 'Sångbok',
     EN: 'Song Book'

@@ -15,11 +15,12 @@ const profileTitles = [
 ];
 
 class ProfileScreen extends Component {
+
   constructor(props) {
     super(props);
-    const { lang } = props
+    const strings = this.getStrings()
     const data = profileTitles.map(item => (
-       { key: item.key, title: PROFILE_SCREEN_STRINGS[item.key][lang] }
+       { key: item.key, title: strings[item.key] }
     ))
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
@@ -27,13 +28,21 @@ class ProfileScreen extends Component {
     };
   }
 
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = PROFILE_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = PROFILE_SCREEN_STRINGS[field][lang]))
+    return strings
+  }
+
   render() {
-    const { navigation, screenProps, lang } = this.props;
-    const title = PROFILE_SCREEN_STRINGS.title[lang]
+    const { navigation, screenProps } = this.props;
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header title={title} leftIcon={null} navigation={navigation} />
+        <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <ListView
           style={{ height: height - 64 }}
           contentContainerStyle={{ alignItems: 'center' }}

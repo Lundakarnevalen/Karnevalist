@@ -50,7 +50,7 @@ class LoginScreen extends Component {
     const { lang } = this.props
     const { fields } = LOGIN_SCREEN_STRINGS
     const strings = {}
-    fields.forEach(field => strings[field] = LOGIN_SCREEN_STRINGS[field][lang])
+    fields.forEach(field => (strings[field] = LOGIN_SCREEN_STRINGS[field][lang]))
     return strings
   }
 
