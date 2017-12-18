@@ -20,6 +20,7 @@ import ButtonChoiceManager from '../common/ButtonChoiceManager';
 import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
+import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LangStrings'
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
@@ -53,6 +54,14 @@ class RegistrationScreen extends Component {
 
   getColor() {
     return this.props.theme === 'day' ? 'rgb(138, 71, 151)' : 'white';
+  }
+
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = REGISTRATION_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => strings[field] = REGISTRATION_SCREEN_STRINGS[field][lang])
+    return strings
   }
 
   renderPickerForPlatform(defaultTitle, title, tag) {
@@ -121,6 +130,7 @@ class RegistrationScreen extends Component {
   }
 
   render() {
+    const strings = this.getStrings()
     const { flexHorizontal } = styles;
     const {
       firstName,
@@ -151,42 +161,42 @@ class RegistrationScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header title="Create Profile" rightIcon={closeButton} />
+        <Header title={strings.header} rightIcon={closeButton} />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
           <CameraButton
             onPress={() => this.props.navigation.navigate('CameraScreen')}
             source={this.props.picture}
           />
           <Input
-            placeholder="First name"
+            placeholder={strings.firstName}
             onChangeText={firstNameInput => {
               this.setState({ firstName: firstNameInput });
             }}
             value={firstName}
           />
           <Input
-            placeholder="Last name"
+            placeholder={strings.lastName}
             onChangeText={lastNameInput => {
               this.setState({ lastName: lastNameInput });
             }}
             value={lastName}
           />
           <Input
-            placeholder="Email"
+            placeholder={strings.email}
             onChangeText={emailInput => {
               this.setState({ email: emailInput });
             }}
             value={email}
           />
           <Input
-            placeholder="Confirm email"
+            placeholder={strings.confirmEmail}
             onChangeText={emailInput => {
               this.setState({ confirmedEmail: emailInput });
             }}
             value={confirmedEmail}
           />
           <Input
-            placeholder="Password"
+            placeholder={strings.password}
             onChangeText={text => {
               this.setState({ password: text });
             }}
@@ -194,7 +204,7 @@ class RegistrationScreen extends Component {
             secureText
           />
           <Input
-            placeholder="Confirm password"
+            placeholder={strings.confirmPassword}
             onChangeText={text => {
               this.setState({ confirmedPassword: text });
             }}
@@ -202,7 +212,7 @@ class RegistrationScreen extends Component {
             secureText
           />
           <Input
-            placeholder="Address"
+            placeholder={strings.address}
             onChangeText={addressInput => {
               this.setState({ address: addressInput });
             }}
@@ -210,7 +220,7 @@ class RegistrationScreen extends Component {
           />
           <View style={flexHorizontal}>
             <Input
-              placeholder="Postcode"
+              placeholder={strings.postcode}
               onChangeText={postcodeInput => {
                 this.setState({ postcode: postcodeInput });
               }}
@@ -219,7 +229,7 @@ class RegistrationScreen extends Component {
               value={postcode}
             />
             <Input
-              placeholder="City"
+              placeholder={strings.city}
               onChangeText={cityInput => {
                 this.setState({ city: cityInput });
               }}
@@ -228,37 +238,37 @@ class RegistrationScreen extends Component {
             />
           </View>
           <Input
-            placeholder="Phone number"
+            placeholder={strings.phoneNumber}
             onChangeText={phoneNbrInput => {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
             value={phoneNbr}
           />
           <Input
-            placeholder="Food preferences"
+            placeholder={strings.foodPreferences}
             onChangeText={foodPreferencesInput => {
               this.setState({ foodPreferences: foodPreferencesInput });
             }}
             value={foodPreferences}
           />
-          {this.renderPickerForPlatform('Choose shirt size', shirtSize, 'shirt')}
-          {this.renderPickerForPlatform('Choose student union', studentUnion, 'union')}
+          {this.renderPickerForPlatform(strings.shirtSize, shirtSize, 'shirt')}
+          {this.renderPickerForPlatform(strings.studentUnion, studentUnion, 'union')}
           <View style={{ right: 3 }}>
           <ButtonChoiceManager
-            buttonInputVector={['I was active in the karneval 2014']}
+            buttonInputVector={[strings.activeKarneval]}
             multipleChoice
             size={30}
             color={this.getColor()}
           />
           <ButtonChoiceManager
-            buttonInputVector={['I have a drivers license']}
+            buttonInputVector={[strings.driversLicense]}
             multipleChoice
             size={30}
             color={this.getColor()}
           />
           </View>
           <CustomButton
-            text={'Register'}
+            text={strings.register}
             style={'standardButton'}
             width={width}
             onPress={() => {

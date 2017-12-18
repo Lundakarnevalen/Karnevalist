@@ -1,3 +1,16 @@
+const password = {
+  SE: 'Lösenord',
+  EN: 'Password'
+}
+const shirtSize= {
+  SE: 'Välj tröjstorlek',
+  EN: 'Choose shirt size'
+}
+
+const studentUnion= {
+  SE: 'Välj nation',
+  EN: 'Choose student union'
+}
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -19,10 +32,7 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Email Adress',
     EN: 'Email Address'
   },
-  password: {
-    SE: 'Lösenord',
-    EN: 'Password'
-  },
+  password,
   loginButton: {
     SE: 'Logga in',
     EN: 'Log in'
@@ -75,6 +85,97 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Återställ lösenord',
     EN: 'Reset password'
   },
+}
+
+export const REGISTRATION_SCREEN_STRINGS = {
+  fields: [
+    'header',
+    'firstName',
+    'lastName',
+    'email',
+    'confirmEmail',
+    'password',
+    'confirmPassword',
+    'address',
+    'postcode',
+    'city',
+    'phoneNumber',
+    'foodPreferences',
+    'shirtSize',
+    'shirtSizeArray',
+    'studentUnion',
+    'studentUnionArray',
+    'activeKarneval',
+    'driversLicense',
+    'register',
+  ],
+  header: {
+    SE: 'Skapa profil',
+    EN: 'Create Profile'
+  },
+  firstName: {
+    SE: 'Förnamn',
+    EN: 'First name'
+  },
+  lastName: {
+    SE: 'Efternamn',
+    EN: 'Last name'
+  },
+  email: {
+    SE: 'Email',
+    EN: 'Email'
+  },
+  confirmEmail: {
+    SE: 'Bekräfta email',
+    EN: 'Confirm email'
+  },
+  password,
+  confirmPassword: {
+    SE: 'Bekräfta lösenord',
+    EN: 'Confirm password"'
+  },
+  address: {
+    SE: 'Adress',
+    EN: 'Address'
+  },
+  postcode: {
+    SE: 'Postnummer',
+    EN: 'Postcode'
+  },
+  city: {
+    SE: 'Stad',
+    EN: 'City'
+  },
+  phoneNumber: {
+    SE: 'Telefonnummer',
+    EN: 'Phone number'
+  },
+  foodPreferences: {
+    SE: 'Matpreferenser',
+    EN: 'Food preferences'
+  },
+  shirtSize,
+  shirtSizeArray: {
+    SE: [shirtSize.SE, 'Small', 'Medium', 'Large'],
+    EN: [shirtSize.EN, 'Small', 'Medium', 'Large']
+  },
+  studentUnion,
+  studentUnionArray: {
+    SE: [studentUnion.SE, 'Lunds Nation', 'Göteborgs Nation', 'Malmös Nation'],
+    EN: [studentUnion.EN, 'Lunds Nation', 'Göteborgs Nation', 'Malmös Nation']
+  },
+  activeKarneval: {
+    SE: 'Jag var aktiv under karnevalen 2014',
+    EN: 'I was active in the karneval 2014'
+  },
+  driversLicense: {
+    SE: 'Jag har körkort',
+    EN: 'I have a drivers license'
+  },
+  register: {
+    SE: 'Registrera',
+    EN: 'Register'
+  }
 }
 
 export const SECTION_SCREEN_STRINGS = {
