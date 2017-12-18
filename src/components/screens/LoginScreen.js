@@ -28,9 +28,6 @@ class LoginScreen extends Component {
   }
 
   componentWillMount() {
-    getItem('language', (language) => {
-      this.props.setLanguage(language)
-    });
     let currentTheme = 'day';
     const currentHour = new Date().getHours();
     if (currentHour < 9) {
