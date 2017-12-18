@@ -6,18 +6,29 @@ import CustomButton from '../common/CustomButton';
 import Header from '../common/Header';
 import ExpandeblePanel from '../common/ExpandeblePanel';
 import BackgroundImage from '../common/BackgroundImage';
+import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LangStrings'
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class RegistrationInfoScreen extends Component {
+
   getColor() {
     return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
+  }
+
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = REGISTRATION_INFO_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = REGISTRATION_INFO_SCREEN_STRINGS[field][lang]))
+    return strings
   }
 
   render() {
     const { titelTextStyle, containerStyle, imageStyle, textStyle } = styles;
     const { theme, navigation } = this.props;
+    const strings = this.getStrings()
     const image1 = (
       <MaterialCommunityIcons
         name="numeric-1-box-outline"
@@ -52,39 +63,34 @@ class RegistrationInfoScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header title="Om registreringen" rightIcon={closeButton} />
+        <Header title={strings.title} rightIcon={closeButton} />
         <ScrollView style={{ height: HEIGHT - 64 }}>
           <View style={containerStyle}>
-            <Text style={[titelTextStyle, { color: theme === 'night' ? 'white' : 'black' }]}>
-              3 enkla steg för att bli
-            </Text>
-            <Text style={[titelTextStyle, { color: theme === 'night' ? 'white' : 'black' }]}>
-              Karnevalist
+            <Text style={[titelTextStyle, {color: theme === 'night' ? 'white' : 'black' }]}>
+              {strings.header}
             </Text>
             <ScrollView>
-              <ExpandeblePanel title="Skapa profil" image={image1}>
+              <ExpandeblePanel title={strings.panelTitle1} image={image1}>
                 <Text style={textStyle}>
-                  Första steget är att skapa en profil, antingen här eller på Karnevalist.se. När du
-                  skapat en profil tilldelas du ett profil-ID som du använder vid incheckning under
-                  uppropsdagen.
+                  {strings.infoText1}
                 </Text>
               </ExpandeblePanel>
             </ScrollView>
             <ScrollView>
-              <ExpandeblePanel title="Kom på uppropet och välj sektion" image={image2}>
+              <ExpandeblePanel title={strings.panelTitle2} image={image2}>
                 <Text style={textStyle}>
-                  Välj vilken sektion du vill vara delaktig i under karnevalen.{' '}
+                  {strings.infoText2}
                 </Text>
               </ExpandeblePanel>
             </ScrollView>
             <ScrollView>
-              <ExpandeblePanel title="Skicka din ansökan" image={image3}>
-                <Text style={textStyle}> Skicka in din ansökan och vänta på svar. </Text>
+              <ExpandeblePanel title={strings.panelTitle3} image={image3}>
+                <Text style={textStyle}> {strings.infoText3} </Text>
               </ExpandeblePanel>
             </ScrollView>
             <CustomButton
               style="standardButton"
-              text="Jag förstår"
+              text={strings.buttonText}
               width={WIDTH - 50}
               onPress={() => {
                 navigation.goBack(null);

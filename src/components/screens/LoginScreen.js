@@ -80,9 +80,9 @@ class LoginScreen extends Component {
               text={strings.loginButton}
               onPress={() => {
                 if (email === '') {
-                  Alert.alert('Error', strings.emailError);
+                  Alert.alert(strings.error, strings.emailError);
                 } else if (password === '') {
-                  Alert.alert('Error', strings.passwordError);
+                  Alert.alert(strings.error, strings.passwordError);
                 } else {
                   this.setState({ loading: true, loadingComplete: false });
                   axios
@@ -105,7 +105,7 @@ class LoginScreen extends Component {
                         msg = strings.errorMsgInternal;
                       }
                       this.setState({ loading: false, loadingComplete: false });
-                      Alert.alert('Error', msg);
+                      Alert.alert(strings.error, msg);
                     });
                 }
               }}
@@ -141,14 +141,12 @@ class LoginScreen extends Component {
                 {
                   text: strings.passwordPopupCancel,
                   onPress: () => {
-                    console.log('cancel');
                     this.setState({ alertVisible: false });
                   }
                 },
                 {
                   text: strings.passwordPopupResetPassword,
                   onPress: () => {
-                    console.log('reset');
                     this.setState({ alertVisible: false });
                   }
                 }

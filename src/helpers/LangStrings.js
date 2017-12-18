@@ -21,6 +21,11 @@ const errorMsgInternal = {
   EN: 'Internal error, please try again later'
 }
 
+const error = {
+  SE: 'Fel',
+  EN: 'Error'
+}
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -31,6 +36,7 @@ export const LOGIN_SCREEN_STRINGS = {
     'readMore',
     'emailError',
     'passwordError',
+    'error',
     'errorMsg400',
     'errorMsg401',
     'errorMsg404',
@@ -69,6 +75,7 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Lösenord fältet måste fyllas i',
     EN: 'The password field is required'
   },
+  error,
   errorMsg400: {
     SE: 'Fel email eller lösenord',
     EN: 'Wrong email or password'
@@ -130,6 +137,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorConfirmPassword',
     'errorEmailMatch',
     'errorPasswordMatch',
+    'error',
     'errorMsg400',
     'errorMsg401',
     'errorMsg404',
@@ -250,6 +258,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Lösenorden matchar inte',
     EN: "The passwords doesn't match"
   },
+  error,
   errorMsg400: {
     SE: 'Ogiltig email eller lösenord',
     EN: 'Invalid email or password'
@@ -260,6 +269,56 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   errorMsg404,
   errorMsgInternal
+}
+
+export const REGISTRATION_INFO_SCREEN_STRINGS = {
+  fields: [
+    'title',
+    'header',
+    'panelTitle1',
+    'panelTitle2',
+    'panelTitle3',
+    'infoText1',
+    'infoText2',
+    'infoText3',
+    'buttonText'
+  ],
+  title: {
+    SE: 'Om registreringen',
+    EN: 'About the registration'
+  },
+  header: {
+    SE: '3 enkla steg för att bli Karnevalist',
+    EN: '3 simple steps to become a Karnevalist'
+  },
+  panelTitle1: {
+    SE: 'Skapa profil',
+    EN: 'Create profile'
+  },
+  panelTitle2: {
+    SE: 'Kom på uppropet och välj sektion',
+    EN: 'Come to the call and choose section'
+  },
+  panelTitle3: {
+    SE: 'Skicka din ansökan',
+    EN: 'Send your application'
+  },
+  infoText1: {
+    SE: 'Första steget är att skapa en profil, antingen här eller på Karnevalist.se. När du skapat en profil tilldelas du ett profil-ID som du använder vid incheckning under uppropsdagen.',
+    EN: "The first step is to create a profile, either here or at Karnevalist.se. When you've created a profile, you are assigned a profile ID that you use when checking in during the call day."
+  },
+  infoText2: {
+    SE: 'Välj vilken sektion du vill vara delaktig i under karnevalen.',
+    EN: 'Choose which section you want to participate in during the carnival.'
+  },
+  infoText3: {
+    SE: 'Skicka in din ansökan och vänta på svar.',
+    EN: 'Submit your application and wait for an answer.'
+  },
+  buttonText: {
+    SE: 'Jag förstår',
+    EN: 'I understand'
+  }
 }
 
 export const SECTION_SCREEN_STRINGS = {

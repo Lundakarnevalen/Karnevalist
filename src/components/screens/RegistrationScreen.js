@@ -270,29 +270,29 @@ class RegistrationScreen extends Component {
             width={width}
             onPress={() => {
               if (firstName === '') {
-                Alert.alert('Error', strings.errorFirstName);
+                Alert.alert(strings.error, strings.errorFirstName);
               } else if (lastName === '') {
-                Alert.alert('Error', strings.errorLastName);
+                Alert.alert(strings.error, strings.errorLastName);
               } else if (email === '') {
-                Alert.alert('Error', strings.errorEmail);
+                Alert.alert(strings.error, strings.errorEmail);
               } else if (confirmedEmail === '') {
-                Alert.alert('Error', strings.errorConfirmEmail);
+                Alert.alert(strings.error, strings.errorConfirmEmail);
               } else if (address === '') {
-                Alert.alert('Error', strings.errorAddress);
+                Alert.alert(strings.error, strings.errorAddress);
               } else if (postcode === '') {
-                Alert.alert('Error', strings.errorPostcode);
+                Alert.alert(strings.error, strings.errorPostcode);
               } else if (city === '') {
-                Alert.alert('Error', strings.errorCity);
+                Alert.alert(strings.error, strings.errorCity);
               } else if (phoneNbr === '') {
-                Alert.alert('Error', strings.errorPhoneNumber);
+                Alert.alert(strings.error, strings.errorPhoneNumber);
               } else if (password === '') {
-                Alert.alert('Error', strings.errorPassword);
+                Alert.alert(strings.error, strings.errorPassword);
               } else if (confirmedPassword === '') {
-                Alert.alert('Error', strings.errorConfirmPassword);
+                Alert.alert(strings.error, strings.errorConfirmPassword);
               } else if (email !== confirmedEmail) {
-                Alert.alert('Error', strings.errorEmailMatch);
+                Alert.alert(strings.error, strings.errorEmailMatch);
               } else if (password !== confirmedPassword) {
-                Alert.alert('Error', strings.errorPasswordMatch);
+                Alert.alert(strings.error, strings.errorPasswordMatch);
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
@@ -322,7 +322,7 @@ class RegistrationScreen extends Component {
                       msg = strings.errorMsgInternal;
                     }
                     this.setState({ loadingComplete: false, loading: false });
-                    Alert.alert('Error', msg);
+                    Alert.alert(strings.error, msg);
                   });
               }
             }}
