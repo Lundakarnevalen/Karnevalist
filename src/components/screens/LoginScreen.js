@@ -46,18 +46,18 @@ class LoginScreen extends Component {
     this.props.setTheme(currentTheme);
   }
 
-  getPlaceholders() {
+  getStrings() {
     const { lang } = this.props
-    const fields = ['email', 'password', 'loginButton', 'forgotPassword', 'createProfile', 'readMore']
-    const placeholders = {}
-    fields.forEach(field => placeholders[field] = LOGIN_SCREEN_STRINGS[field][lang])
-    return placeholders
+    const { fields } = LOGIN_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => strings[field] = LOGIN_SCREEN_STRINGS[field][lang])
+    return strings
   }
 
   render() {
     const { containerStyle } = styles;
     const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
-    const placeholders = this.getPlaceholders()
+    const strings = this.getStrings()
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
@@ -65,24 +65,24 @@ class LoginScreen extends Component {
           <View style={styles.container1}>
             <Input
               value={email}
-              placeholder={placeholders.email}
+              placeholder={strings.email}
               width={WIDTH}
               onChangeText={text => this.setState({ email: text })}
             />
             <Input
               value={password}
-              placeholder={placeholders.password}
+              placeholder={strings.password}
               width={WIDTH}
               secureText
               onChangeText={text => this.setState({ password: text })}
             />
             <CustomButton
-              text={placeholders.loginButton}
+              text={strings.loginButton}
               onPress={() => {
                 if (email === '') {
-                  Alert.alert('Error', 'The email field is required');
+                  Alert.alert('Error', strings.emailError);
                 } else if (password === '') {
-                  Alert.alert('Error', 'The password field is required');
+                  Alert.alert('Error', strings.passwordError);
                 } else {
                   this.setState({ loading: true, loadingComplete: false });
                   axios
@@ -96,13 +96,13 @@ class LoginScreen extends Component {
                     .catch(error => {
                       let msg;
                       if (error.message.includes('400')) {
-                        msg = 'Wrong email or password';
+                        msg = strings.errorMsg;
                       } else if (error.message.includes('401')) {
-                        msg = 'Wrong email or password';
+                        msg = strings.errorMsg;
                       } else if (error.message.includes('404')) {
-                        msg = 'Something went wrong...';
+                        msg = strings.errorMsg404;
                       } else {
-                        msg = 'Internal error, please try again later';
+                        msg = strings.errorMsgInternal;
                       }
                       this.setState({ loading: false, loadingComplete: false });
                       Alert.alert('Error', msg);
@@ -113,14 +113,14 @@ class LoginScreen extends Component {
               width={WIDTH}
             />
             <CustomButton
-              text={placeholders.forgotPassword}
+              text={strings.forgotPassword}
               onPress={() => {
                 this.setState({ alertVisible: true });
               }}
               style="textButton"
             />
             <CustomButton
-              text={placeholders.createProfile}
+              text={strings.createProfile}
               width={WIDTH}
               onPress={() => {
                 this.props.navigation.navigate('RegistrationScreen');
@@ -128,7 +128,7 @@ class LoginScreen extends Component {
               style="standardButton"
             />
             <CustomButton
-              text={placeholders.readMore}
+              text={strings.readMore}
               onPress={() => {
                 this.props.navigation.navigate('RegistrationInfo');
               }}
@@ -139,22 +139,22 @@ class LoginScreen extends Component {
               setAlertVisible={(visible) => this.setState({ alertVisible: visible })}
               buttonsIn={[
                 {
-                  text: 'Cancel',
+                  text: strings.passwordPopupCancel,
                   onPress: () => {
                     console.log('cancel');
                     this.setState({ alertVisible: false });
                   }
                 },
                 {
-                  text: 'Reset password',
+                  text: strings.passwordPopupResetPassword,
                   onPress: () => {
                     console.log('reset');
                     this.setState({ alertVisible: false });
                   }
                 }
               ]}
-              header={'Forgot password?'}
-              info={'Please, fill in your email address below and you will receive a new password'}
+              header={strings.passwordPopupHeader}
+              info={strings.passwordPopupInfo}
               onChangeText={text => this.setState({ forgotPasswordEmail: text })}
               inputValue={forgotPasswordEmail}
             />
