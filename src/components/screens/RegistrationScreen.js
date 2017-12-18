@@ -61,7 +61,7 @@ class RegistrationScreen extends Component {
     return strings
   }
 
-  renderPickerForPlatform(defaultTitle, shirtSizeArray, studentUnionArray, title, tag) {
+  renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
     const { shirtSize, studentUnion } = this.state;
     if (Platform.OS === 'ios') {
       return (
@@ -88,19 +88,19 @@ class RegistrationScreen extends Component {
           selectedValue={tag === 'shirt' ? shirtSize : studentUnion}
           style={styles.androidPicker}
         >
-          {this.renderPickerArray(tag, shirtSizeArray, studentUnionArray)}
+          {this.renderPickerArray(tag, tagArray)}
         </Picker>
       </View>
     );
   }
 
-  renderPickerArray(tag, shirtSizeArray, studentUnionArray) {
+  renderPickerArray(tag, tagArray) {
     if (tag === 'shirt') {
-      return shirtSizeArray.map(item => {
+      return tagArray.map(item => {
         return <Picker.Item key={item} label={item} value={item} />;
       });
     }
-    return studentUnionArray.map(item => {
+    return tagArray.map(item => {
       return <Picker.Item key={item} label={item} value={item} />;
     });
   }
@@ -248,8 +248,8 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
           />
-          {this.renderPickerForPlatform(strings.shirtSize, strings.shirtSizeArray, strings.studentUnionArray, shirtSize, 'shirt')}
-          {this.renderPickerForPlatform(strings.studentUnion, strings.shirtSizeArray, strings.studentUnionArray, studentUnion, 'union')}
+          {this.renderPickerForPlatform(strings.shirtSize, strings.shirtSizeArray, shirtSize, 'shirt')}
+          {this.renderPickerForPlatform(strings.studentUnion, strings.studentUnionArray, studentUnion, 'union')}
           <View style={{ right: 3 }}>
           <ButtonChoiceManager
             buttonInputVector={[strings.activeKarneval]}

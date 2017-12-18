@@ -8,6 +8,7 @@ import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import BackgroundImage from '../common/BackgroundImage';
 import CustomButton from '../common/CustomButton';
+import { CONFIRM_PAGE_STRINGS } from '../../helpers/LangStrings'
 
 const window = Dimensions.get('window');
 
@@ -17,7 +18,8 @@ class ConfirmPage extends Component {
     this.state = {
       data: [],
       editMode: false,
-      alertVisible: false
+      alertVisible: false,
+      strings: this.getStrings()
     };
   }
 
@@ -34,7 +36,7 @@ class ConfirmPage extends Component {
           localKey: section.key,
           id: i,
           text: s.title,
-          infoText: s.content,
+          infoText: s.info,
           imguri: s.imguri
         });
       });
@@ -53,9 +55,18 @@ class ConfirmPage extends Component {
     }
   }
 
+  getStrings() {
+    const { lang } = this.props
+    const { fields } = CONFIRM_PAGE_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = CONFIRM_PAGE_STRINGS[field][lang]))
+    return strings
+  }
+
   renderSortableListOrMessage() {
     const { contentContainer, list, confimTextStyle, textStyle } = styles;
     const { navigation } = this.props;
+    const { strings } = this.state
     if (this.state.data.length === 0) {
       return (
         <View
@@ -67,11 +78,11 @@ class ConfirmPage extends Component {
               { color: this.props.theme === 'night' ? 'white' : 'black', textAlign: 'center' }
             ]}
           >
-            Please select at least 5 sections
+            {strings.sectionSelection}
           </Text>
           <CustomButton
             style={'standardButton'}
-            text={'To section selection'}
+            text={strings.toSections}
             onPress={() => navigation.goBack()}
           />
         </View>
@@ -89,7 +100,7 @@ class ConfirmPage extends Component {
           style={this.getConfirmButtonStyle()}
           onPress={() => this.onPressConfirmButton()}
         >
-          <Text style={confimTextStyle}>Send</Text>
+          <Text style={confimTextStyle}>{strings.send}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -156,11 +167,11 @@ class ConfirmPage extends Component {
   }
 
   onPressConfirmButton() {
-    const { data } = this.state;
+    const { data, strings } = this.state;
     if (data.length < 5) {
-      Alert.alert('Vänligen välj minst 5 stycken sektioner');
+      Alert.alert(strings.sectionSelection);
     } else {
-      Alert.alert('Tack för dina val');
+      Alert.alert(strings.selectionOK);
     }
   }
 
@@ -186,11 +197,12 @@ class ConfirmPage extends Component {
   }
 
   render() {
+    const strings = this.getStrings()
     return (
       <View style={styles.container}>
         <BackgroundImage pictureNumber={2} />
         <Header
-          title="Confirmation page"
+          title={strings.title}
           navigation={this.props.navigation}
           rightIcon={this.getRightIcon()}
         />

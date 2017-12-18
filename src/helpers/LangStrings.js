@@ -327,6 +327,30 @@ export const SONGBOOK_SCREEN_STRINGS = {
   }
 }
 
+export const CONFIRM_PAGE_STRINGS = {
+  fields: ['title', 'sectionSelection', 'selectionOK', 'send', 'toSections'],
+  title: {
+    SE: 'Bekräfta dina val',
+    EN: 'Confirmation page'
+  },
+  sectionSelection: {
+    SE: 'Vänligen välj minst 5 stycken sektioner',
+    EN: 'Please choose at least 5 sections'
+  },
+  selectionOK: {
+    SE: 'Tack för dina val',
+    EN: 'Thanks for your choices'
+  },
+  send: {
+    SE: 'Skicka',
+    EN: 'Send'
+  },
+  toSections: {
+    SE: 'Till val av sektioner',
+    EN: 'To section selection'
+  },
+}
+
 export const CAMERA_STRINGS = {
   fields: ['take', 'your', 'picture'],
   take: {
