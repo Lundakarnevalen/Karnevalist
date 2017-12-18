@@ -57,9 +57,7 @@ class LoginScreen extends Component {
   render() {
     const { containerStyle } = styles;
     const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
-
     const placeholders = this.getPlaceholders()
-    console.log(placeholders);
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />

@@ -43,7 +43,12 @@ export const HOME_SCREEN_STRINGS = {
   title: {
     SE: 'Hem',
     EN: 'Home'
+  },
+  buttonText: {
+    SE: 'Påbörja din registrering',
+    EN: 'Begin your registration'
   }
+
 }
 
 export const PROFILE_SCREEN_STRINGS = {

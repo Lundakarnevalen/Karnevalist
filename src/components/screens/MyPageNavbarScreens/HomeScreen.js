@@ -14,6 +14,7 @@ class HomeScreen extends Component {
     const { container } = styles;
     const { navigation, lang } = this.props
     const title = HOME_SCREEN_STRINGS.title[lang]
+    const buttonText = HOME_SCREEN_STRINGS.buttonText[lang]
     return (
       <View>
         <BackgroundImage pictureNumber={3} />
@@ -23,7 +24,7 @@ class HomeScreen extends Component {
           <CustomButton
             style={'standardButton'}
             width={WIDTH - 50}
-            text="Begin your registration"
+            text={buttonText}
             onPress={() => navigation.navigate('Sections')}
           />
         </View>
