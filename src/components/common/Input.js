@@ -34,28 +34,34 @@ class Input extends Component {
   }
 
   inputDeselected() {
-    const { value, onlyLetters, onlyNumbers, warnIfFalse } = this.props;
+    const { value } = this.props;
     if (value === '') {
       Animated.parallel([
         Animated.timing(this.state.fontSize, { toValue: 18, duration: 150 }),
         Animated.timing(this.state.position, { toValue: { x: 9, y: 11 }, duration: 150 })
       ]).start();
       this.setState({ borderColor: 'black' });
-    } else if (onlyLetters) {
+    }
+    this.checkWarningConditions();
+  }
+
+  checkWarningConditions() {
+    const { value, onlyLetters, onlyDigits, warnIfFalse } = this.props;
+    if (onlyLetters) {
       if (!this.containsOnlyLetters(value)) {
         this.doWarn();
       } else {
         this.stopWarn();
       }
-    } else if (onlyNumbers) {
-      if (!this.containsOnlyNumbers(value)) {
+    } else if (onlyDigits) {
+      if (!this.containsOnlyDigits(value)) {
         this.doWarn();
       } else {
         this.stopWarn();
       }
     } else if (warnIfFalse !== undefined) {
-      const temp = warnIfFalse(value);
-      if (temp === false) this.doWarn();
+      const result = warnIfFalse(value);
+      if (result === false) this.doWarn();
     }
   }
 
@@ -71,19 +77,19 @@ class Input extends Component {
 
   addWarningText() {
     const { warningVisible } = this.state;
-    const { warningMessage, onlyLetters, onlyNumbers } = this.props;
-    let message = warningMessage;
-    if (onlyLetters) {
-      message = 'This section may only contain letters';
-    } else if (onlyNumbers) {
-      message = 'This section may only contain digits';
-    }
+    const { warningMessage, onlyLetters, onlyDigits } = this.props;
     if (warningVisible) {
+      let message = warningMessage;
+      if (onlyLetters) {
+        message = 'This field may only contain letters';
+      } else if (onlyDigits) {
+        message = 'This field may only contain digits';
+      }
       return <Text style={styles.warningTextStyle}>{message}</Text>;
     }
   }
 
-  containsOnlyNumbers(t) {
+  containsOnlyDigits(t) {
     return /^\d+$/.test(t);
   }
 
