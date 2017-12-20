@@ -41,8 +41,9 @@ class Input extends Component {
         Animated.timing(this.state.position, { toValue: { x: 9, y: 11 }, duration: 150 })
       ]).start();
       this.setState({ borderColor: 'black' });
+    } else {
+      this.checkWarningConditions();
     }
-    this.checkWarningConditions();
   }
 
   checkWarningConditions() {
