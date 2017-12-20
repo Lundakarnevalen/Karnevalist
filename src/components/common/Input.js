@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated } from 'react-native';
+import { View, TextInput, Animated, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 class Input extends Component {
@@ -8,7 +8,8 @@ class Input extends Component {
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
-      borderColor: '#000'
+      borderColor: '#000',
+      warningVisible: false
     };
   }
 
@@ -24,6 +25,7 @@ class Input extends Component {
   }
 
   inputSelected() {
+    this.setState({ warningVisible: false });
     Animated.parallel([
       Animated.timing(this.state.fontSize, { toValue: 10, duration: 150 }),
       Animated.timing(this.state.position, { toValue: { x: 9, y: 0 }, duration: 150 })
@@ -32,14 +34,61 @@ class Input extends Component {
   }
 
   inputDeselected() {
-    const { value } = this.props;
+    const { value, onlyLetters, onlyNumbers, warnIfFalse } = this.props;
     if (value === '') {
       Animated.parallel([
         Animated.timing(this.state.fontSize, { toValue: 18, duration: 150 }),
         Animated.timing(this.state.position, { toValue: { x: 9, y: 11 }, duration: 150 })
       ]).start();
+      this.setState({ borderColor: 'black' });
+    } else if (onlyLetters) {
+      if (!this.containsOnlyLetters(value)) {
+        this.doWarn();
+      } else {
+        this.stopWarn();
+      }
+    } else if (onlyNumbers) {
+      if (!this.containsOnlyNumbers(value)) {
+        this.doWarn();
+      } else {
+        this.stopWarn();
+      }
+    } else if (warnIfFalse !== undefined) {
+      const temp = warnIfFalse(value);
+      if (temp === false) this.doWarn();
     }
+  }
+
+  doWarn() {
+    this.setState({ warningVisible: true });
+    this.setState({ borderColor: 'red' });
+  }
+
+  stopWarn() {
     this.setState({ borderColor: 'black' });
+    this.setState({ warningVisible: false });
+  }
+
+  addWarningText() {
+    const { warningVisible } = this.state;
+    const { warningMessage, onlyLetters, onlyNumbers } = this.props;
+    let message = warningMessage;
+    if (onlyLetters) {
+      message = 'This section may only contain letters';
+    } else if (onlyNumbers) {
+      message = 'This section may only contain digits';
+    }
+    if (warningVisible) {
+      return <Text style={styles.warningTextStyle}>{message}</Text>;
+    }
+  }
+
+  containsOnlyNumbers(t) {
+    return /^\d+$/.test(t);
+  }
+
+  containsOnlyLetters(t) {
+    return /^[a-zåäöA-ZÅÄÖ]+$/.test(t);
   }
 
   getPlaceholderStyle() {
@@ -77,6 +126,7 @@ class Input extends Component {
         {placeholder === '' ? null : (
           <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>
         )}
+        {this.addWarningText()}
         <TextInput
           onFocus={() => this.inputSelected()}
           underlineColorAndroid={'transparent'}
@@ -105,6 +155,13 @@ const styles = {
     paddingRight: 8,
     paddingTop: 10,
     color: '#000',
+    fontFamily: 'Avenir Next Medium'
+  },
+  warningTextStyle: {
+    color: 'red',
+    fontSize: 10,
+    position: 'absolute',
+    right: 5,
     fontFamily: 'Avenir Next Medium'
   }
 };
