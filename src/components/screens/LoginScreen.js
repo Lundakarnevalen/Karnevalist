@@ -127,14 +127,12 @@ class LoginScreen extends Component {
                 {
                   text: 'Cancel',
                   onPress: () => {
-                    console.log('cancel');
                     this.setState({ alertVisible: false });
                   }
                 },
                 {
                   text: 'Reset password',
                   onPress: () => {
-                    console.log('reset');
                     this.setState({ alertVisible: false });
                   }
                 }
