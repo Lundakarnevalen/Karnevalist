@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, ListView, Dimensions } from 'react-native';
+import { NavigationActions } from 'react-navigation'
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
@@ -22,10 +23,12 @@ class ProfileScreen extends Component {
   }
 
   render() {
+    const { navigation, screenProps } = this.props
+    console.log(screenProps);
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header title="Min profil" leftIcon={null} navigation={this.props.navigation} />
+        <Header title="Min profil" leftIcon={null} navigation={navigation} />
         <ListView
           style={{ height: height - 64 }}
           contentContainerStyle={{ alignItems: 'center' }}
@@ -35,11 +38,18 @@ class ProfileScreen extends Component {
               sectionTitle={rowData.title}
               onPress={() => {
                 if (rowData.key === 'profile') {
-                  this.props.screenProps.navigate('', { info: rowData });
+                  screenProps.navigate('', { info: rowData });
                 } else if (rowData.key === 'registration') {
-                  this.props.screenProps.navigate('', { info: rowData });
+                  screenProps.navigate('', { info: rowData });
                 } else if (rowData.key === 'logout') {
-                  this.props.screenProps.goBack(null);
+                  const resetAction = NavigationActions.reset({
+                    index: 0,
+                    actions: [
+                      NavigationActions.navigate({ routeName: 'LoginScreen' }),
+                    ],
+                    key: null
+                  });
+                screenProps.dispatch(resetAction)
                 }
               }}
             />

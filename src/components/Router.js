@@ -1,5 +1,5 @@
 import { StackNavigator } from 'react-navigation';
-import HomeScreen from './screens/LoginScreen';
+import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
 import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
@@ -52,8 +52,8 @@ const Register = StackNavigator({
 
 const Router = StackNavigator(
   {
-    HomeScreen: {
-      screen: HomeScreen,
+    LoginScreen: {
+      screen: LoginScreen,
       navigationOptions: {
         header: null
       }
