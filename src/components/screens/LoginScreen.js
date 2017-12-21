@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, View, Dimensions, ScrollView, StatusBar } from 'react-native';
 import axios from 'axios';
+import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
 import { setTheme, setLanguage } from '../../actions';
@@ -173,8 +174,15 @@ class LoginScreen extends Component {
           <Loading
             loadingComplete={loadingComplete}
             redirect={() => {
-              this.props.navigation.navigate('MyPageNavbarScreen');
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' }),
+                ],
+                key: null
+              });
               this.setState({ loading: false, loadingComplete: false, password: '' });
+              this.props.navigation.dispatch(resetAction);
             }}
           />
         ) : null}

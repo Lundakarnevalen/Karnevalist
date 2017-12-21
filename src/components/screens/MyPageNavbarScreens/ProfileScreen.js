@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
@@ -56,7 +57,14 @@ class ProfileScreen extends Component {
                 } else if (rowData.key === 'registration') {
                   screenProps.navigation.navigate('', { info: rowData });
                 } else if (rowData.key === 'logout') {
-                  screenProps.navigation.goBack(null);
+                  const resetAction = NavigationActions.reset({
+                    index: 0,
+                    actions: [
+                      NavigationActions.navigate({ routeName: 'LoginScreen' }),
+                    ],
+                    key: null
+                  });
+                screenProps.navigation.dispatch(resetAction)
                 }
               }}
             />
