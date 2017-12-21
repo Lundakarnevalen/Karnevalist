@@ -36,7 +36,7 @@ class RegistrationScreen extends Component {
       password: '',
       confirmedPassword: '',
       address: '',
-      postcode: '',
+      postNumber: '',
       city: '',
       phoneNbr: '',
       foodPreferences: '',
@@ -135,7 +135,7 @@ class RegistrationScreen extends Component {
       email,
       confirmedEmail,
       address,
-      postcode,
+      postNumber,
       city,
       phoneNbr,
       foodPreferences,
@@ -217,13 +217,13 @@ class RegistrationScreen extends Component {
           />
           <View style={flexHorizontal}>
             <Input
-              placeholder={strings.postcode}
-              onChangeText={postcodeInput => {
-                this.setState({ postcode: postcodeInput });
+              placeholder={strings.postNumber}
+              onChangeText={postNumberInput => {
+                this.setState({ postNumber: postNumberInput });
               }}
               width={width / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
-              value={postcode}
+              value={postNumber}
             />
             <Input
               placeholder={strings.city}
@@ -279,8 +279,8 @@ class RegistrationScreen extends Component {
                 Alert.alert(strings.error, strings.errorConfirmEmail);
               } else if (address === '') {
                 Alert.alert(strings.error, strings.errorAddress);
-              } else if (postcode === '') {
-                Alert.alert(strings.error, strings.errorPostcode);
+              } else if (postNumber === '') {
+                Alert.alert(strings.error, strings.errorPostNumber);
               } else if (city === '') {
                 Alert.alert(strings.error, strings.errorCity);
               } else if (phoneNbr === '') {
@@ -299,7 +299,7 @@ class RegistrationScreen extends Component {
                   .post('https://api.10av10.com/register', {
                     email,
                     password,
-                    postNumber: postcode,
+                    postNumber: postNumber,
                     firstName,
                     lastName,
                     phoneNumber: phoneNbr,

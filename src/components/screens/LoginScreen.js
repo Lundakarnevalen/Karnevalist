@@ -4,12 +4,12 @@ import axios from 'axios';
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
-import { setTheme, setLanguage } from '../../actions';
+import { setTheme, setLanguage, setToken, setEmail } from '../../actions';
 import Input from '../common/Input';
 import PasswordPopUp from '../common/PasswordPopUp';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
-import { getItem, saveItem } from '../../helpers/LocalSave';
+import { saveItem } from '../../helpers/LocalSave';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
 
 const WIDTH = Dimensions.get('window').width * 0.9;
@@ -102,7 +102,11 @@ class LoginScreen extends Component {
                       email,
                       password
                     })
-                    .then(() => {
+                    .then((res) => {
+                      const { accessToken } = res.data
+                      this.props.setToken(accessToken)
+                      this.props.setEmail(this.state.email)
+                      saveItem('accessToken', accessToken)
                       this.setState({ loadingComplete: true });
                     })
                     .catch(error => {
@@ -223,4 +227,4 @@ const mapStateToProps = ({ currentLanguage }) => {
   return { language };
 };
 
-export default connect(mapStateToProps, { setTheme, setLanguage })(LoginScreen);
+export default connect(mapStateToProps, { setTheme, setLanguage, setToken, setEmail })(LoginScreen);

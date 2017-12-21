@@ -34,6 +34,50 @@ const error = {
   EN: 'Error'
 }
 
+const firstName = {
+  SE: 'Förnamn',
+  EN: 'First name'
+}
+const lastName = {
+  SE: 'Efternamn',
+  EN: 'Last name'
+}
+const email = {
+  SE: 'Email',
+  EN: 'Email'
+}
+
+const address = {
+  SE: 'Adress',
+  EN: 'Address'
+}
+const postNumber = {
+  SE: 'Postnummer',
+  EN: 'Post number'
+}
+const city = {
+  SE: 'Stad',
+  EN: 'City'
+}
+const phoneNumber = {
+  SE: 'Telefonnummer',
+  EN: 'Phone number'
+}
+const foodPreferences = {
+  SE: 'Matpreferenser',
+  EN: 'Food preferences'
+}
+
+const personalNumber = {
+  SE: 'Personnummer',
+  EN: 'Personal number'
+}
+
+const driversLicense = {
+    SE: 'Jag har körkort',
+    EN: 'I have a drivers license'
+}
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -121,7 +165,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'password',
     'confirmPassword',
     'address',
-    'postcode',
+    'postNumber',
     'city',
     'phoneNumber',
     'foodPreferences',
@@ -137,7 +181,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorEmail',
     'errorConfirmEmail',
     'errorAddress',
-    'errorPostcode',
+    'errorPostNumber',
     'errorCity',
     'errorPhoneNumber',
     'errorPassword',
@@ -154,18 +198,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Skapa profil',
     EN: 'Create Profile'
   },
-  firstName: {
-    SE: 'Förnamn',
-    EN: 'First name'
-  },
-  lastName: {
-    SE: 'Efternamn',
-    EN: 'Last name'
-  },
-  email: {
-    SE: 'Email',
-    EN: 'Email'
-  },
+  firstName,
+  lastName,
+  email,
   confirmEmail: {
     SE: 'Bekräfta email',
     EN: 'Confirm email'
@@ -175,26 +210,11 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Bekräfta lösenord',
     EN: 'Confirm password'
   },
-  address: {
-    SE: 'Adress',
-    EN: 'Address'
-  },
-  postcode: {
-    SE: 'Postnummer',
-    EN: 'Postcode'
-  },
-  city: {
-    SE: 'Stad',
-    EN: 'City'
-  },
-  phoneNumber: {
-    SE: 'Telefonnummer',
-    EN: 'Phone number'
-  },
-  foodPreferences: {
-    SE: 'Matpreferenser',
-    EN: 'Food preferences'
-  },
+  address,
+  postNumber,
+  city,
+  phoneNumber,
+  foodPreferences,
   shirtSize,
   shirtSizeArray: {
     SE: [shirtSize.SE, 'Small', 'Medium', 'Large'],
@@ -209,10 +229,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Jag var aktiv under karnevalen 2014',
     EN: 'I was active during the karneval 2014'
   },
-  driversLicense: {
-    SE: 'Jag har körkort',
-    EN: 'I have a drivers license'
-  },
+  driversLicense,
   register: {
     SE: 'Registrera',
     EN: 'Register'
@@ -237,9 +254,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Adress krävs',
     EN: 'Address is required'
   },
-  errorPostcode: {
+  errorPostNumber: {
     SE: 'Postnummer krävs',
-    EN: 'Postcode is required'
+    EN: 'Post number is required'
   },
   errorCity: {
     SE: 'Stad krävs',
@@ -419,6 +436,51 @@ export const CONFIRM_PAGE_STRINGS = {
     SE: 'Till val av sektioner',
     EN: 'To section selection'
   },
+}
+
+export const MY_REGISTRATION_SCREEN_STRINGS = {
+  fields: [
+    'title',
+    'firstName',
+    'lastName',
+    'email',
+    'address',
+    'postNumber',
+    'city',
+    'phoneNumber',
+    'foodPreferences',
+    'personalNumber',
+    'language',
+    'driversLicense',
+    'pastInvolvement',
+    'misc'
+   ],
+  title: {
+    SE: 'Min registrering',
+    EN: 'My registration'
+  },
+  firstName,
+  lastName,
+  email,
+  address,
+  postNumber,
+  city,
+  phoneNumber,
+  foodPreferences,
+  personalNumber,
+  driversLicense,
+  misc: {
+    SE: 'Allmänt',
+    EN: 'Misc'
+  },
+  pastInvolvement: {
+    SE: 'Tidigare engagemang',
+    EN: 'Past involvement'
+  },
+  language: {
+    SE: 'Språk',
+    EN: 'Language'
+  }
 }
 
 export const CAMERA_STRINGS = {

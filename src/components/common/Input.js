@@ -64,6 +64,7 @@ class Input extends Component {
       secureText,
       textInputStyle,
       autoCorrect = false,
+      editable = true,
       extraContainerStyle
     } = this.props;
     return (
@@ -78,6 +79,7 @@ class Input extends Component {
           <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>
         )}
         <TextInput
+          editable={editable}
           onFocus={() => this.inputSelected()}
           underlineColorAndroid={'transparent'}
           onEndEditing={() => this.inputDeselected()}

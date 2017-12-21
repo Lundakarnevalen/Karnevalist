@@ -55,7 +55,7 @@ class ProfileScreen extends Component {
                 if (rowData.key === 'profile') {
                   screenProps.navigation.navigate('', { info: rowData });
                 } else if (rowData.key === 'registration') {
-                  screenProps.navigation.navigate('', { info: rowData });
+                  screenProps.navigation.navigate('MyRegistration', { info: rowData });
                 } else if (rowData.key === 'logout') {
                   const resetAction = NavigationActions.reset({
                     index: 0,
