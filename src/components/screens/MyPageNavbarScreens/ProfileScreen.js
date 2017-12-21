@@ -24,7 +24,6 @@ class ProfileScreen extends Component {
 
   render() {
     const { navigation, screenProps } = this.props
-    console.log(screenProps);
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
