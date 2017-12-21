@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Text, TouchableOpacity, View, Image } from 'react-native';
 import { connect } from 'react-redux';
+import { CAMERA_STRINGS } from '../../helpers/LanguageStrings'
 
 const SIZE = Dimensions.get('window').width * 0.6;
 /**
@@ -18,16 +19,24 @@ class CameraButton extends Component {
         return 'white';
     }
   }
+  getStrings() {
+    const { language } = this.props
+    const { fields } = CAMERA_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = CAMERA_STRINGS[field][language]))
+    return strings
+  }
 
   renderPictureOrInfo() {
     const { textStyle, imageStyle } = styles;
     const { source } = this.props;
+    const strings = this.getStrings()
     if (source === null) {
       return (
         <View>
-          <Text style={[textStyle, { color: this.getColor() }]}>Take</Text>
-          <Text style={[textStyle, { color: this.getColor() }]}>Your</Text>
-          <Text style={[textStyle, { color: this.getColor() }]}>Picture</Text>
+          <Text style={[textStyle, { color: this.getColor() }]}>{strings.take}</Text>
+          <Text style={[textStyle, { color: this.getColor() }]}>{strings.your}</Text>
+          <Text style={[textStyle, { color: this.getColor() }]}>{strings.picture}</Text>
         </View>
       );
     }
@@ -72,9 +81,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  return { theme };
+  const { language } = currentLanguage
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(CameraButton);

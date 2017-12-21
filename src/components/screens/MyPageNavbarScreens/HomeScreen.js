@@ -1,26 +1,39 @@
 import React, { Component } from 'react';
 import { View, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 import Header from '../../common/Header';
 import CustomButton from '../../common/CustomButton';
 import BackgroundImage from '../../common/BackgroundImage';
 import CountDown from '../../common/countDown/CountDown';
+import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;
 
 class HomeScreen extends Component {
+
+  getStrings() {
+    const { language } = this.props
+    const { fields } = HOME_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = HOME_SCREEN_STRINGS[field][language]))
+    return strings
+  }
+
   render() {
     const { container } = styles;
+    const { navigation } = this.props
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={3} />
-        <Header title="Home" leftIcon={null} navigation={this.props.navigation} />
+        <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <View style={container}>
           <CountDown />
           <CustomButton
             style={'standardButton'}
             width={WIDTH - 50}
-            text="Begin your registration"
-            onPress={() => this.props.navigation.navigate('Sections')}
+            text={strings.buttonText}
+            onPress={() => navigation.navigate('Sections')}
           />
         </View>
       </View>
@@ -36,4 +49,10 @@ const styles = {
   }
 };
 
-export default HomeScreen;
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
+  const { theme } = currentTheme;
+  const { language } = currentLanguage;
+  return { theme, language };
+};
+
+export default connect(mapStateToProps, null)(HomeScreen);

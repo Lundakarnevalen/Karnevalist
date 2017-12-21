@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, ListView, Dimensions, Platform } from 'react-native';
+import { connect } from 'react-redux';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 import { getNews } from '../../../helpers/ApiManager';
+import { NEWS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const height = Dimensions.get('window').height;
 
@@ -25,11 +27,21 @@ class NewsScreen extends Component {
     });
   }
 
+  getStrings() {
+    const { language } = this.props
+    const { fields } = NEWS_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = NEWS_SCREEN_STRINGS[field][language]))
+    return strings
+  }
+
   render() {
+    const { navigation, screenProps } = this.props
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header title="Nyheter" leftIcon={null} navigation={this.props.navigation} />
+        <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <ListView
           enableEmptySections
           style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}
@@ -41,7 +53,7 @@ class NewsScreen extends Component {
               sectionTitle={rowData.title.rendered}
               sectionDate={rowData.date}
               onPress={() =>
-                this.props.screenProps.navigate('SingleNewsScreen', {
+                screenProps.navigation.navigate('SingleNewsScreen', {
                   info: { title: rowData.title.rendered, url: rowData.link }
                 })
               }
@@ -52,5 +64,10 @@ class NewsScreen extends Component {
     );
   }
 }
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
+  const { theme } = currentTheme;
+  const { language } = currentLanguage;
+  return { theme, language };
+};
 
-export default NewsScreen;
+export default connect(mapStateToProps, null)(NewsScreen);
