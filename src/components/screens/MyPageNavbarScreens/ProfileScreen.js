@@ -1,33 +1,49 @@
 import React, { Component } from 'react';
 import { View, ListView, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation'
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
+import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 const height = Dimensions.get('window').height;
 
 const profileTitles = [
-  { key: 'profile', title: 'My profile' },
-  { key: 'registration', title: 'My registration' },
-  { key: 'logout', title: 'Logout' }
+  { key: 'profile' },
+  { key: 'registration' },
+  { key: 'logout' }
 ];
 
 class ProfileScreen extends Component {
+
   constructor(props) {
     super(props);
+    const strings = this.getStrings()
+    const data = profileTitles.map(item => (
+       { key: item.key, title: strings[item.key] }
+    ))
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows(profileTitles)
+      dataSource: ds.cloneWithRows(data)
     };
   }
 
+  getStrings() {
+    const { language } = this.props
+    const { fields } = PROFILE_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = PROFILE_SCREEN_STRINGS[field][language]))
+    return strings
+  }
+
   render() {
-    const { navigation, screenProps } = this.props
+    const { navigation, screenProps } = this.props;
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header title="Min profil" leftIcon={null} navigation={navigation} />
+        <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <ListView
           style={{ height: height - 64 }}
           contentContainerStyle={{ alignItems: 'center' }}
@@ -37,9 +53,9 @@ class ProfileScreen extends Component {
               sectionTitle={rowData.title}
               onPress={() => {
                 if (rowData.key === 'profile') {
-                  screenProps.navigate('', { info: rowData });
+                  screenProps.navigation.navigate('', { info: rowData });
                 } else if (rowData.key === 'registration') {
-                  screenProps.navigate('', { info: rowData });
+                  screenProps.navigation.navigate('', { info: rowData });
                 } else if (rowData.key === 'logout') {
                   const resetAction = NavigationActions.reset({
                     index: 0,
@@ -48,7 +64,7 @@ class ProfileScreen extends Component {
                     ],
                     key: null
                   });
-                screenProps.dispatch(resetAction)
+                screenProps.navigation.dispatch(resetAction)
                 }
               }}
             />
@@ -58,5 +74,10 @@ class ProfileScreen extends Component {
     );
   }
 }
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
+  const { theme } = currentTheme;
+  const { language } = currentLanguage;
+  return { theme, language };
+};
 
-export default ProfileScreen;
+export default connect(mapStateToProps, null)(ProfileScreen);
