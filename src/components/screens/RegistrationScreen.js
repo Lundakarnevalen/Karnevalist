@@ -21,6 +21,7 @@ import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
+import { handleErrorMsg } from '../../helpers/ApiManager'
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
@@ -315,16 +316,7 @@ class RegistrationScreen extends Component {
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
-                    let msg;
-                    if (error.message.includes('400')) {
-                      msg = strings.errorMsg400;
-                    } else if (error.message.includes('401')) {
-                      msg = strings.errorMsg401;
-                    } else if (error.message.includes('404')) {
-                      msg = strings.errorMsg404;
-                    } else {
-                      msg = strings.errorMsgInternal;
-                    }
+                    const msg = handleErrorMsg(error.message, strings)
                     this.setState({ loadingComplete: false, loading: false });
                     Alert.alert(strings.error, msg);
                   });

@@ -58,37 +58,6 @@ class SuperAgileAlert extends Component {
     }
     return 0;
   }
-  getOnPress(index) {
-    const strings = this.getStrings()
-    if (index === 1) {
-      axios
-        .post('http://146.185.173.31:3000/login/forgotpassword', {
-          email: this.state.emailAddress
-        })
-        .then(response => {
-          if (!response.data.success) {
-            Alert.alert(strings.responeFail);
-          } else {
-            Alert.alert(strings.responseSuccess);
-          }
-        })
-        .catch(error => {
-          let msg;
-          if (error.message.includes('400')) {
-            msg = strings.errorMsg400;
-          } else if (error.message.includes('401')) {
-            msg = strings.errorMsg401;
-          } else if (error.message.includes('404')) {
-            msg = strings.errorMsg404;
-          } else {
-            msg = strings.errorMsgInternal
-          }
-          Alert.alert(strings.error, msg);
-        });
-    } else {
-      this.props.setAlertVisible(false);
-    }
-  }
 
   createButtons() {
     const { buttonsIn } = this.props;

@@ -10,6 +10,7 @@ import SuperAgileAlert from '../common/SuperAgileAlert';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 import { saveItem } from '../../helpers/LocalSave';
+import { handleErrorMsg } from '../../helpers/ApiManager';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
 
 const WIDTH = Dimensions.get('window').width * 0.9;
@@ -73,26 +74,18 @@ class LoginScreen extends Component {
         }
       })
       .catch(error => {
-        let msg;
-        if (error.message.includes('400')) {
-          msg = strings.errorMsg400;
-        } else if (error.message.includes('401')) {
-          msg = strings.errorMsg401;
-        } else if (error.message.includes('404')) {
-          msg = strings.errorMsg404;
-        } else {
-          msg = strings.errorMsgInternal
-        }
+        const msg = handleErrorMsg(error.message, strings)
         Alert.alert(strings.error, msg);
       });
       this.setState({ alertVisible: false, forgotPasswordEmail: '' })
   }
 
   handleLogin(email, password) {
+    const url = 'https://api.10av10.com/login/email'
     const strings = this.getStrings()
     this.setState({ loading: true, loadingComplete: false });
     axios
-      .post('https://api.10av10.com/login/email', {
+      .post(url, {
         email,
         password
       })
@@ -104,31 +97,21 @@ class LoginScreen extends Component {
         this.setState({ loadingComplete: true });
       })
       .catch(error => {
-        // TODO const msg = handleErrorMsg(error.message)
-        let msg;
-        if (error.message.includes('400')) {
-          msg = strings.errorMsg400;
-        } else if (error.message.includes('401')) {
-          msg = strings.errorMsg401;
-        } else if (error.message.includes('404')) {
-          msg = strings.errorMsg404;
-        } else {
-          msg = strings.errorMsgInternal;
-        }
+        const msg = handleErrorMsg(error.message, strings)
         this.setState({ loading: false, loadingComplete: false });
         Alert.alert(strings.error, msg);
       });
   }
 
   render() {
-    const { containerStyle } = styles;
-    const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
+    const { containerStyle, container1 } = styles;
+    const { email, password, loading, loadingComplete, forgotPasswordEmail, alertVisible } = this.state;
     const strings = this.getStrings()
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
         <ScrollView>
-          <View style={styles.container1}>
+          <View style={container1}>
           <View style={{ alignSelf: 'flex-start' }}>
           <CustomButton
             width={170}
@@ -148,7 +131,7 @@ class LoginScreen extends Component {
               value={password}
               placeholder={strings.password}
               width={WIDTH}
-              secureText={true}
+              secureText
               onChangeText={text => this.setState({ password: text })}
             />
             <CustomButton
@@ -188,7 +171,7 @@ class LoginScreen extends Component {
               style="textButton"
             />
             <SuperAgileAlert
-              alertVisible={this.state.alertVisible}
+              alertVisible={alertVisible}
               setAlertVisible={(visible) => this.setState({ alertVisible: visible })}
               buttonsIn={[
                 { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },

@@ -175,6 +175,10 @@ class MyProfileScreen extends Component {
             {
               text: strings.cancel,
               onPress: () => this.setState({ alertVisible: false })
+            },
+            {
+              text: strings.save,
+              onPress: () => this.saveChanges()
             }
           ]}
           header={strings.popUpHeader}
