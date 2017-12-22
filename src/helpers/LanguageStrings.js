@@ -105,7 +105,9 @@ export const LOGIN_SCREEN_STRINGS = {
     'passwordPopupHeader',
     'passwordPopupInfo',
     'cancel',
-    'passwordPopupResetPassword'
+    'resetPassword',
+    'responseFail',
+    'responseSuccess'
   ],
   email: {
     SE: 'Email Adress',
@@ -157,10 +159,18 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Avbryt',
     EN: 'Cancel'
   },
-  passwordPopupResetPassword: {
+  resetPassword: {
     SE: 'Återställ lösenord',
     EN: 'Reset password'
-  }
+  },
+  responseFail: {
+    SE: 'Var god ange en giltig email adress',
+    EN: 'Please enter a valid email address'
+  },
+  responseSuccess: {
+    SE: 'Tack, kolla din inbox för ditt nya lösenord',
+    EN: 'Thank you, check your inbox for your new password'
+  },
 }
 
 export const REGISTRATION_SCREEN_STRINGS = {
@@ -579,39 +589,6 @@ export const CAMERA_STRINGS = {
     SE: 'Bild',
     EN: 'Picture'
   }
-}
-
-export const PASSWORD_POPUP_STRINGS = {
-  fields: [
-    'responeFail',
-    'responseSuccess',
-    'error',
-    'errorMsg400',
-    'errorMsg401',
-    'errorMsg404',
-    'errorMsgInternal'
-  ],
-  responeFail: {
-    SE: 'Var god ange en giltig email adress',
-    EN: 'Please enter a valid email address'
-  },
-  responseSuccess: {
-    SE: 'Tack, kolla din inbox för ditt nya lösenord',
-    EN: 'Thank you, check your inbox for your new password'
-  },
-  inputTitle: {
-    SE: 'Email',
-    EN: 'Email'
-  },
-  inputPlaceholder: {
-    SE: 'Ange din email adress',
-    EN: 'Enter your email address'
-  },
-  error,
-  errorMsg400,
-  errorMsg401,
-  errorMsg404,
-  errorMsgInternal,
 }
 
 export const LOADING_STRINGS = {

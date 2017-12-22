@@ -92,10 +92,10 @@ class Input extends Component {
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
           style={[inputStyle, { width }, textInputStyle]}
+          autoCapitalize='words'
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
           editable={editable}
-          autoCapitalize='words'
           keyboardType={keyboardType}
         />
       </View>

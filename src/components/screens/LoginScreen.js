@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
 import { setTheme, setLanguage, setToken, setEmail } from '../../actions';
 import Input from '../common/Input';
-import PasswordPopUp from '../common/PasswordPopUp';
+import SuperAgileAlert from '../common/SuperAgileAlert';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 import { saveItem } from '../../helpers/LocalSave';
@@ -58,6 +58,68 @@ class LoginScreen extends Component {
     saveItem('language', language)
   }
 
+  handleResetPassword() {
+    const url = 'https://api.10av10.com/login/forgotpassword'
+    const strings = this.getStrings()
+    axios
+      .post(url, {
+        email: this.state.forgotPasswordEmail
+      })
+      .then(response => {
+        if (!response.data.success) {
+          Alert.alert(strings.responseFail);
+        } else {
+          Alert.alert(strings.responseSuccess);
+        }
+      })
+      .catch(error => {
+        let msg;
+        if (error.message.includes('400')) {
+          msg = strings.errorMsg400;
+        } else if (error.message.includes('401')) {
+          msg = strings.errorMsg401;
+        } else if (error.message.includes('404')) {
+          msg = strings.errorMsg404;
+        } else {
+          msg = strings.errorMsgInternal
+        }
+        Alert.alert(strings.error, msg);
+      });
+      this.setState({ alertVisible: false, forgotPasswordEmail: '' })
+  }
+
+  handleLogin(email, password) {
+    const strings = this.getStrings()
+    this.setState({ loading: true, loadingComplete: false });
+    axios
+      .post('https://api.10av10.com/login/email', {
+        email,
+        password
+      })
+      .then((res) => {
+        const { accessToken } = res.data
+        this.props.setToken(accessToken)
+        this.props.setEmail(this.state.email)
+        saveItem('accessToken', accessToken)
+        this.setState({ loadingComplete: true });
+      })
+      .catch(error => {
+        // TODO const msg = handleErrorMsg(error.message)
+        let msg;
+        if (error.message.includes('400')) {
+          msg = strings.errorMsg400;
+        } else if (error.message.includes('401')) {
+          msg = strings.errorMsg401;
+        } else if (error.message.includes('404')) {
+          msg = strings.errorMsg404;
+        } else {
+          msg = strings.errorMsgInternal;
+        }
+        this.setState({ loading: false, loadingComplete: false });
+        Alert.alert(strings.error, msg);
+      });
+  }
+
   render() {
     const { containerStyle } = styles;
     const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
@@ -77,6 +139,7 @@ class LoginScreen extends Component {
           </View>
             <Input
               value={email}
+              keyboardType='email-address'
               placeholder={strings.email}
               width={WIDTH}
               onChangeText={text => this.setState({ email: text })}
@@ -85,7 +148,7 @@ class LoginScreen extends Component {
               value={password}
               placeholder={strings.password}
               width={WIDTH}
-              secureText
+              secureText={true}
               onChangeText={text => this.setState({ password: text })}
             />
             <CustomButton
@@ -96,33 +159,7 @@ class LoginScreen extends Component {
                 } else if (password === '') {
                   Alert.alert(strings.error, strings.passwordError);
                 } else {
-                  this.setState({ loading: true, loadingComplete: false });
-                  axios
-                    .post('https://api.10av10.com/login/email', {
-                      email,
-                      password
-                    })
-                    .then((res) => {
-                      const { accessToken } = res.data
-                      this.props.setToken(accessToken)
-                      this.props.setEmail(this.state.email)
-                      saveItem('accessToken', accessToken)
-                      this.setState({ loadingComplete: true });
-                    })
-                    .catch(error => {
-                      let msg;
-                      if (error.message.includes('400')) {
-                        msg = strings.errorMsg400;
-                      } else if (error.message.includes('401')) {
-                        msg = strings.errorMsg401;
-                      } else if (error.message.includes('404')) {
-                        msg = strings.errorMsg404;
-                      } else {
-                        msg = strings.errorMsgInternal;
-                      }
-                      this.setState({ loading: false, loadingComplete: false });
-                      Alert.alert(strings.error, msg);
-                    });
+                  this.handleLogin(email, password)
                 }
               }}
               style={'standardButton'}
@@ -150,28 +187,25 @@ class LoginScreen extends Component {
               }}
               style="textButton"
             />
-            <PasswordPopUp
+            <SuperAgileAlert
               alertVisible={this.state.alertVisible}
               setAlertVisible={(visible) => this.setState({ alertVisible: visible })}
               buttonsIn={[
-                {
-                  text: strings.passwordPopupCancel,
-                  onPress: () => {
-                    this.setState({ alertVisible: false });
-                  }
-                },
-                {
-                  text: strings.passwordPopupResetPassword,
-                  onPress: () => {
-                    this.setState({ alertVisible: false });
-                  }
-                }
+                { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+                { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
               ]}
               header={strings.passwordPopupHeader}
               info={strings.passwordPopupInfo}
+            >
+            <Input
+              placeholder={strings.inputPlaceholder}
+              title={strings.inputTitle}
+              width={Dimensions.get('window').width / 1.2}
+              underlineColorAndroid="transparent"
               onChangeText={text => this.setState({ forgotPasswordEmail: text })}
-              inputValue={forgotPasswordEmail}
+              value={forgotPasswordEmail}
             />
+            </SuperAgileAlert>
           </View>
         </ScrollView>
         {loading ? (

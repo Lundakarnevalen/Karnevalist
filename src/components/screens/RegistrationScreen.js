@@ -180,6 +180,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             placeholder={strings.email}
+            keyboardType='email-address'
             onChangeText={emailInput => {
               this.setState({ email: emailInput });
             }}
@@ -187,6 +188,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             placeholder={strings.confirmEmail}
+            keyboardType='email-address'
             onChangeText={emailInput => {
               this.setState({ confirmedEmail: emailInput });
             }}
@@ -218,6 +220,7 @@ class RegistrationScreen extends Component {
           <View style={flexHorizontal}>
             <Input
               placeholder={strings.postNumber}
+              keyboardType='numeric'
               onChangeText={postNumberInput => {
                 this.setState({ postNumber: postNumberInput });
               }}
@@ -236,6 +239,7 @@ class RegistrationScreen extends Component {
           </View>
           <Input
             placeholder={strings.phoneNumber}
+            keyboardType='phone-pad'
             onChangeText={phoneNbrInput => {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
@@ -299,7 +303,7 @@ class RegistrationScreen extends Component {
                   .post('https://api.10av10.com/register', {
                     email,
                     password,
-                    postNumber: postNumber,
+                    postNumber,
                     firstName,
                     lastName,
                     phoneNumber: phoneNbr,
@@ -347,7 +351,7 @@ class RegistrationScreen extends Component {
           <Loading
             loadingComplete={loadingComplete}
             redirect={() => {
-              this.props.navigation.navigate('HomeScreen');
+              this.props.navigation.navigate('LoginScreen');
               this.setState({ loading: false, loadingComplete: false });
             }}
           />
