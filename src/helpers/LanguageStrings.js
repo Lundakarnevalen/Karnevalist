@@ -571,8 +571,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   updateInfoMessageFail: {
     SE: 'Något gick fel',
     EN: 'Something went wrong'
-  },
-  loading
+  }
 }
 
 export const CAMERA_STRINGS = {

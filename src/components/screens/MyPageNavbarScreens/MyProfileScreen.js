@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, View, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios'
 import { connect } from 'react-redux';
@@ -46,7 +46,7 @@ class MyProfileScreen extends Component {
     .catch((error) => {
       const msg = handleErrorMsg(error.message)
       console.log(msg);
-  });
+    });
   }
 
   getColor() {
@@ -68,18 +68,18 @@ class MyProfileScreen extends Component {
   getRightIcon() {
     return (
       <TouchableOpacity
-      style={{ width: 50, alignItems: 'center' }}
-      onPress={() => {
-        if (this.state.editMode && this.state.changesMade)
-          this.setState({ alertVisible: true })
-        this.setState({ editMode: !this.state.editMode })
-      }}
+        style={{ width: 50, alignItems: 'center' }}
+        onPress={() => {
+          if (this.state.editMode && this.state.changesMade)
+            this.setState({ alertVisible: true })
+          this.setState({ editMode: !this.state.editMode })
+        }}
       >
-      <MaterialIcons
-        name={this.state.editMode ? 'done' : 'edit'}
-        style={{ color: this.getColor(), right: 0 }}
-        size={35}
-      />
+        <MaterialIcons
+          name={this.state.editMode ? 'done' : 'edit'}
+          style={{ color: this.getColor(), right: 0 }}
+          size={35}
+        />
       </TouchableOpacity>
     );
   }
@@ -141,9 +141,13 @@ class MyProfileScreen extends Component {
     return textFields
   }
 
-  renderMainView(strings) {
+  renderMainView() {
     if (this.state.user === null)
-      return <View><Text style={styles.loadingText}>{strings.loading}</Text></View>
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color={this.getColor()} />
+        </View>
+      )
     return (
       <ScrollView style={styles.scrollStyle}>
         {this.renderFields()}
@@ -180,7 +184,7 @@ class MyProfileScreen extends Component {
           header={strings.popUpHeader}
           info={strings.popUpInfo}
         />
-        {this.renderMainView(strings)}
+        {this.renderMainView()}
       </View>
     );
   }
@@ -196,6 +200,8 @@ const styles = {
     backgroundColor: 'transparent',
     fontFamily: 'Avenir Next Bold',
     fontSize: 36,
+  },
+  loading: {
     marginTop: HEIGHT / 3
   }
 };
