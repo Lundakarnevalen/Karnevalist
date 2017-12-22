@@ -42,16 +42,16 @@ class Toast extends Component {
   }
 
   closeToast() {
-      this.timer = setTimeout(() => {
-        this.setState({ modalShown: false })
-        this.props.onClose()
-        Animated.timing(
-          this.state.animatedValue,
-          {
-            toValue: 0,
-            duration: 350
-          }).start()
-      }, 2000)
+    this.timer = setTimeout(() => {
+      this.setState({ modalShown: false })
+      this.props.onClose()
+      Animated.timing(
+        this.state.animatedValue,
+        {
+          toValue: 0,
+          duration: 350
+        }).start()
+    }, 2000)
   }
 
   render() {
