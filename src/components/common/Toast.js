@@ -71,7 +71,7 @@ class Toast extends Component {
         </Animated.View>
       </View>
     );
-      }
+  }
 }
 
 
