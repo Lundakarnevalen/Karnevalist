@@ -9,6 +9,7 @@ import SuperAgileAlert from '../../common/SuperAgileAlert'
 import Header from '../../common/Header';
 import Input from '../../common/Input';
 import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
+import { handleErrorMsg } from '../../../helpers/ApiManager'
 
 const HEIGHT = Dimensions.get('window').height;
 const baseURL = 'https://api.10av10.com/api/user/'
@@ -33,7 +34,6 @@ class MyProfileScreen extends Component {
 
   getUserInfo() {
     const url = baseURL + this.props.email
-    console.log(this.props.token);
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
@@ -44,7 +44,8 @@ class MyProfileScreen extends Component {
       this.setState({ oldUser: { ...user }, user })
     })
     .catch((error) => {
-      console.log(error);
+      const msg = handleErrorMsg(error.message)
+      console.log(msg);
   });
   }
 
@@ -70,7 +71,7 @@ class MyProfileScreen extends Component {
       style={{ width: 50, alignItems: 'center' }}
       onPress={() => {
         if (this.state.editMode && this.state.changesMade)
-          this.setState({ alertVisible: true, changesMade: false })
+          this.setState({ alertVisible: true })
         this.setState({ editMode: !this.state.editMode })
       }}
       >
@@ -106,10 +107,11 @@ class MyProfileScreen extends Component {
     axios.put(url, data, { headers })
     .then((response) => {
       const { success } = response.data
-      this.setState({ success, showToast: true })
+      this.setState({ success, showToast: true, changesMade: false })
     })
     .catch((error) => {
-      console.log(error);
+      const msg = handleErrorMsg(error.message)
+      console.log(msg);
     });
   }
 
@@ -172,14 +174,8 @@ class MyProfileScreen extends Component {
           boxStyle={{ height: 150 }}
           setAlertVisible={(visible) => this.setState({ alertVisible: visible })}
           buttonsIn={[
-            {
-              text: strings.cancel,
-              onPress: () => this.setState({ alertVisible: false })
-            },
-            {
-              text: strings.save,
-              onPress: () => this.saveChanges()
-            }
+            { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+            { text: strings.save, onPress: () => this.saveChanges() }
           ]}
           header={strings.popUpHeader}
           info={strings.popUpInfo}

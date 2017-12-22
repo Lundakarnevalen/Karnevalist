@@ -490,8 +490,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'loading'
    ],
   title: {
-    SE: 'Min registrering',
-    EN: 'My registration'
+    SE: 'Användarinfo',
+    EN: 'User info'
   },
   firstName,
   lastName,
