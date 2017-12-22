@@ -1,3 +1,7 @@
+const loading = {
+  SE: 'LADDAR ',
+  EN: 'LOADING '
+}
 const password = {
   SE: 'Lösenord',
   EN: 'Password'
@@ -77,6 +81,10 @@ const driversLicense = {
     SE: 'Jag har körkort',
     EN: 'I have a drivers license'
 }
+const cancel = {
+  SE: 'Avbryt',
+  EN: 'Cancel'
+}
 
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
@@ -96,7 +104,7 @@ export const LOGIN_SCREEN_STRINGS = {
     'errorMsgInternal',
     'passwordPopupHeader',
     'passwordPopupInfo',
-    'passwordPopupCancel',
+    'cancel',
     'passwordPopupResetPassword'
   ],
   email: {
@@ -145,7 +153,7 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Var god fyll i din email adress så skickas ett nytt lösenord till dig',
     EN: 'Please, fill in your email address below and you will receive a new password'
   },
-  passwordPopupCancel: {
+  cancel: {
     SE: 'Avbryt',
     EN: 'Cancel'
   },
@@ -438,7 +446,7 @@ export const CONFIRM_PAGE_STRINGS = {
   },
 }
 
-export const MY_REGISTRATION_SCREEN_STRINGS = {
+export const MY_PROFILE_SCREEN_STRINGS = {
   fields: [
     'title',
     'firstName',
@@ -451,9 +459,25 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
     'foodPreferences',
     'personalNumber',
     'language',
+    'careOf',
     'driversLicense',
+    'disability',
+    'audition',
+    'talent',
+    'entertainmentCategory',
+    'corps',
+    'startOfStudies',
     'pastInvolvement',
-    'misc'
+    'groupLeader',
+    'interests',
+    'misc',
+    'cancel',
+    'save',
+    'popUpHeader',
+    'popUpInfo',
+    'updateInfoMessageSuccess',
+    'updateInfoMessageFail',
+    'loading'
    ],
   title: {
     SE: 'Min registrering',
@@ -468,19 +492,77 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
   phoneNumber,
   foodPreferences,
   personalNumber,
+  careOf: { //TODO make accurate description
+    SE: 'BRY SIG OM??? VET INTE VAD DETTA ÄR SNÄLLA ERSÄTT',
+    EN: 'CARE OF??? DO NOT KNOW WHAT THIS IS PLS REPLACE'
+  },
+  language: {
+    SE: 'Språk',
+    EN: 'Language'
+  },
   driversLicense,
-  misc: {
-    SE: 'Allmänt',
-    EN: 'Misc'
+  disability: {
+    SE: 'Handikapp',
+    EN: 'disability'
+  },
+  audition: {
+    SE: 'Audition',
+    EN: 'Audition'
+  },
+  talent: {
+    SE: 'Talang',
+    EN: 'Talent'
+  },
+  entertainmentCategory: {
+    SE: 'Underhållningskategori',
+    EN: 'Entertainment category'
+  },
+  corps: {
+    SE: 'Kår',
+    EN: 'Corps'
+  },
+  startOfStudies: {
+    SE: 'Studiestart',
+    EN: 'Start of studies'
   },
   pastInvolvement: {
     SE: 'Tidigare engagemang',
     EN: 'Past involvement'
   },
-  language: {
-    SE: 'Språk',
-    EN: 'Language'
-  }
+  groupLeader: {
+    SE: 'Gruppledare',
+    EN: 'Group leader'
+  },
+  interests: {
+    SE: 'Intressen',
+    EN: 'Interests'
+  },
+  misc: {
+    SE: 'Allmänt',
+    EN: 'Misc'
+  },
+  cancel,
+  save: {
+    SE: 'Spara',
+    EN: 'Save'
+  },
+  popUpHeader: {
+    SE: 'Profilinfo',
+    EN: 'Profile info'
+  },
+  popUpInfo: {
+    SE: 'Spara ändringar?',
+    EN: 'Save changes?'
+  },
+  updateInfoMessageSuccess: {
+    SE: 'Användarinfo uppdaterad',
+    EN: 'Userinfo updated'
+  },
+  updateInfoMessageFail: {
+    SE: 'Något gick fel',
+    EN: 'Something went wrong'
+  },
+  loading
 }
 
 export const CAMERA_STRINGS = {
@@ -534,8 +616,5 @@ export const PASSWORD_POPUP_STRINGS = {
 
 export const LOADING_STRINGS = {
   fields: ['loading'],
-  loading: {
-    SE: 'LADDAR ',
-    EN: 'LOADING '
-  }
+  loading
 }
