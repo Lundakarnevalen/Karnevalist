@@ -108,7 +108,6 @@ class SuperAgileAlert extends Component {
             <View style={[alertBoxStyle, boxStyle, { borderColor: this.getColor() }]}>
               <View style={innerViewStyle}>
                 <Text style={[headerTextStyle, { color: this.getColor() }]}>{header}</Text>
-
                 {this.renderInfo(info, infoTextStyle)}
                 <View
                   style={{
