@@ -37,6 +37,8 @@ class Header extends Component {
       justifyContent: 'center',
       flexDirection: 'row',
       backgroundColor: this.getBackgroundColor(),
+      borderBottomWidth: 1,
+      borderColor: 'gray',
       zIndex: 999,
       ...Platform.select({
         ios: {

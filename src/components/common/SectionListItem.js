@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 
-const WIDTH = Dimensions.get('window').width - 48;
+const WIDTH = Dimensions.get('window').width - 16;
 
 const months = [
   'Jan',
@@ -63,7 +63,7 @@ class SectionListItem extends Component {
               numberOfLines={1}
               style={[
                 titleStyle,
-                { width: sectionDate === '' ? WIDTH * 0.8 : WIDTH * 0.65, color: this.getColor() }
+                { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
               ]}
             >
               {sectionTitle}
@@ -71,7 +71,7 @@ class SectionListItem extends Component {
             {sectionInfoText === '' ? null : (
               <Text
                 numberOfLines={1}
-                style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.8 : WIDTH * 0.65 }]}
+                style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
               >
                 {sectionInfoText}
               </Text>
@@ -83,7 +83,7 @@ class SectionListItem extends Component {
             name="keyboard-arrow-right"
             style={continueIconIndicatorStyle}
             color={this.getColor()}
-            size={60}
+            size={50}
           />
         </View>
       </TouchableOpacity>
@@ -99,7 +99,7 @@ const styles = {
     alignItems: 'center',
     width: WIDTH,
     borderWidth: 1,
-    marginTop: 10
+    marginTop: 8
   },
   titleStyle: {
     fontSize: 20,
@@ -126,7 +126,6 @@ const styles = {
     fontFamily: 'Avenir Next Bold'
   },
   continueIconIndicatorStyle: {
-    marginRight: 8,
     backgroundColor: 'transparent'
   }
 };
