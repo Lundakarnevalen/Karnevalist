@@ -8,11 +8,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
-  Alert
 } from 'react-native';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import { PASSWORD_POPUP_STRINGS } from '../../helpers/LanguageStrings'
 
 class SuperAgileAlert extends Component {
   constructor(props) {
@@ -31,14 +28,6 @@ class SuperAgileAlert extends Component {
 
   getColor() {
     return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
-  }
-
-  getStrings() {
-    const { language } = this.props
-    const { fields } = PASSWORD_POPUP_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = PASSWORD_POPUP_STRINGS[field][language]))
-    return strings
   }
 
   getBorderLeftRadius(index) {

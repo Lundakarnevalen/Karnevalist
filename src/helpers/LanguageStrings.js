@@ -389,7 +389,6 @@ export const HOME_SCREEN_STRINGS = {
     SE: 'Påbörja din registrering',
     EN: 'Begin your registration'
   }
-
 }
 
 export const PROFILE_SCREEN_STRINGS = {
@@ -487,7 +486,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'popUpInfo',
     'updateInfoMessageSuccess',
     'updateInfoMessageFail',
-    'loading'
    ],
   title: {
     SE: 'Användarinfo',

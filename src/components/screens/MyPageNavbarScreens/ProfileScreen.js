@@ -5,6 +5,7 @@ import { NavigationActions } from 'react-navigation'
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
+import { removeItem } from '../../../helpers/LocalSave'
 import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 const height = Dimensions.get('window').height;
@@ -57,6 +58,8 @@ class ProfileScreen extends Component {
                 } else if (rowData.key === 'registration') {
                   screenProps.navigation.navigate('', { info: rowData });
                 } else if (rowData.key === 'logout') {
+                  removeItem('email')
+                  removeItem('accessToken')
                   const resetAction = NavigationActions.reset({
                     index: 0,
                     actions: [
