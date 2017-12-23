@@ -487,7 +487,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'popUpInfo',
     'updateInfoMessageSuccess',
     'updateInfoMessageFail',
-    'loading'
    ],
   title: {
     SE: 'Användarinfo',

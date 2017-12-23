@@ -1,74 +1,123 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text } from 'react-native'
-// https://github.com/oblador/react-native-animatable
-// this is a library you REALLY should be using
-import * as Animatable from 'react-native-animatable'
-import { getItem, saveItem } from '../../helpers/LocalSave';
+import { Animated, Dimensions, StyleSheet, View, Image, Text, StatusBar, Easing } from 'react-native'
 import { connect } from 'react-redux'
-// import { initializeApp } from './login_actions'
+import axios from 'axios'
+import { getItem } from '../../helpers/LocalSave';
+import BackgroundImage from '../common/BackgroundImage';
+import { setTheme, setSections, setToken, setEmail } from '../../actions';
+
+const baseURL = 'https://api.10av10.com/api/user/'
 
 class SplashScreen extends Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+          spinValue: new Animated.Value(0)
+        }
     }
 
     componentWillMount() {
-        setTimeout(() => this.props.navigation.navigate('LoginScreen'), 2000)
+      this.setCurrenTheme()
+      this.spin()
+      this.authorize()
     }
 
-    componentWillReceiveProps(nextProps) {
-        // if (!nextProps.authenticated) this.props.navigation.navigate('Login')
-        if (nextProps.authenticated) this.props.navigation.navigate('WeLoggedIn')
+    authorize() {
+      setTimeout(() =>
+        getItem('email', (email) => {
+        if (email !== null) {
+          getItem('accessToken', (token) => {
+            const url = baseURL + email
+            const headers = {
+              Authorization: 'Bearer ' + token,
+              'content-type': 'application/json'
+            }
+            axios.get(url, { headers })
+            .then((response) => {
+              const { success } = response.data
+              if (success) {
+                this.props.navigation.navigate('MyPageNavbarScreen')
+                this.props.setToken(token)
+                this.props.setEmail(email)
+              } else
+                this.props.navigation.navigate('LoginScreen')
+            })
+            .catch((error) => {
+              // const msg = handleErrorMsg(error.message)
+              console.log(error.message);
+            });
+          })
+        } else {
+          this.props.navigation.navigate('LoginScreen')
+        }
+      }), 3000)
+    }
+    setCurrenTheme() {
+      let currentTheme = 'day';
+      const currentHour = new Date().getHours();
+      if (currentHour < 9) {
+        currentTheme = 'morning';
+        StatusBar.setBarStyle('dark-content', true);
+      } else if (currentHour < 18) {
+        currentTheme = 'day';
+        StatusBar.setBarStyle('dark-content', true);
+      } else {
+        currentTheme = 'night';
+        StatusBar.setBarStyle('light-content', true);
+      }
+      this.props.setTheme(currentTheme);
+    }
+
+    spin() {
+      this.state.spinValue.setValue(0)
+      Animated.timing(
+        this.state.spinValue,
+        {
+          toValue: 1,
+          duration: 4000,
+          easing: Easing.linear
+        }
+      ).start(() => this.spin())
     }
 
     render() {
-        const { container, image, text } = styles
-        return (
-            <View style={container}>
-                    <Image
-                        style={image}
-                        source={require('../../../res/Karneval.png')}
-                    />
-
-                    <Animatable.Text
-                        style={text}
-                        duration={1500}
-                        animation="rubberBand"
-                        easing="linear"
-                        iterationCount="infinite"
-                    >
-                        Loading...
-                    </Animatable.Text>
-                    <Text>{(this.props.authenticated) ? 'LOGGED IN' : 'NOT LOGGED IN'}</Text>
-            </View>
-        )
+      const { container, text, image } = styles
+      const spin = this.state.spinValue.interpolate({
+         inputRange: [0, 1],
+         outputRange: ['0deg', '360deg']
+       })
+      return (
+        <View style={container}>
+          <BackgroundImage picture={4} />
+          <Animated.View style={[container, { transform: [{ rotate: spin }] }]}>
+            <Text style={text}> LOADING </Text>
+            <Image
+              style={image}
+              source={require('../../../res/Monstergubbe.png')}
+            />
+          </Animated.View>
+        </View>
+      )
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F0F0F0'
-    },
-    image: {
-        height: 110,
-        resizeMode: 'contain'
-    },
-    text: {
-        marginTop: 50,
-        fontSize: 15,
-        color: '#1A1A1A'
-    }
-})
-
-// my LOGIN_SUCCESS action creator flips state.auth.isAuthenticated to true
-// so this splash screen just watches it
-const mapStateToProps = ({ auth }) => {
-    return {
-        authenticated: auth.isAuthenticated
-    }
+const styles = {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 227,
+    height: 200,
+    resizeMode: 'contain'
+  },
+  text: {
+    marginTop: 50,
+    fontSize: 30,
+    color: '#1A1A1A',
+    fontFamily: 'Avenir Next Medium'
+  }
 }
-export default SplashScreen
+
+export default connect(null, { setTheme, setSections, setToken, setEmail })(SplashScreen);
