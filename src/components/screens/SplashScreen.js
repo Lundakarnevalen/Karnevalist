@@ -25,9 +25,9 @@ class SplashScreen extends Component {
 
   authorize() {
     setTimeout(() =>
-      getItem('email', (email) => {
+      getItem('email', email => {
       if (email !== null) {
-        getItem('accessToken', (token) => {
+        getItem('accessToken', token => {
           const url = baseURL + email
           const headers = {
             Authorization: 'Bearer ' + token,
@@ -44,12 +44,11 @@ class SplashScreen extends Component {
               this.props.navigation.navigate('LoginScreen')
           })
           .catch((error) => {
-            // const msg = handleErrorMsg(error.message)
             console.log(error.message);
           });
         })
       } else {
-        // this.props.navigation.navigate('LoginScreen')
+        this.props.navigation.navigate('LoginScreen')
       }
     }), 3000)
   }
