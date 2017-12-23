@@ -46,7 +46,7 @@ class ProfileScreen extends Component {
               sectionTitle={rowData.title}
               onPress={() => {
                 if (rowData.key === 'profile') {
-                  screenProps.navigation.navigate('', { info: rowData });
+                  screenProps.navigation.navigate('MyProfile', { info: rowData });
                 } else if (rowData.key === 'registration') {
                   screenProps.navigation.navigate('', { info: rowData });
                 } else if (rowData.key === 'logout') {

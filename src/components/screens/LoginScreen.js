@@ -4,12 +4,13 @@ import axios from 'axios';
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
-import { setTheme, setLanguage } from '../../actions';
+import { setTheme, setLanguage, setToken, setEmail } from '../../actions';
 import Input from '../common/Input';
-import PasswordPopUp from '../common/PasswordPopUp';
+import SuperAgileAlert from '../common/SuperAgileAlert';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
-import { getItem, saveItem } from '../../helpers/LocalSave';
+import { saveItem } from '../../helpers/LocalSave';
+import { handleErrorMsg } from '../../helpers/ApiManager';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
 
 const WIDTH = Dimensions.get('window').width * 0.9;
@@ -58,15 +59,59 @@ class LoginScreen extends Component {
     saveItem('language', language)
   }
 
+  handleResetPassword() {
+    const url = 'https://api.10av10.com/login/forgotpassword'
+    const strings = this.getStrings()
+    axios
+      .post(url, {
+        email: this.state.forgotPasswordEmail
+      })
+      .then(response => {
+        if (!response.data.success) {
+          Alert.alert(strings.responseFail);
+        } else {
+          Alert.alert(strings.responseSuccess);
+        }
+      })
+      .catch(error => {
+        const msg = handleErrorMsg(error.message, strings)
+        Alert.alert(strings.error, msg);
+      });
+      this.setState({ alertVisible: false, forgotPasswordEmail: '' })
+  }
+
+  handleLogin(email, password) {
+    const url = 'https://api.10av10.com/login/email'
+    const strings = this.getStrings()
+    this.setState({ loading: true, loadingComplete: false });
+    axios
+      .post(url, {
+        email,
+        password
+      })
+      .then((res) => {
+        const { accessToken } = res.data
+        this.props.setToken(accessToken)
+        this.props.setEmail(this.state.email)
+        saveItem('accessToken', accessToken)
+        this.setState({ loadingComplete: true });
+      })
+      .catch(error => {
+        const msg = handleErrorMsg(error.message, strings)
+        this.setState({ loading: false, loadingComplete: false });
+        Alert.alert(strings.error, msg);
+      });
+  }
+
   render() {
-    const { containerStyle } = styles;
-    const { email, password, loading, loadingComplete, forgotPasswordEmail } = this.state;
+    const { containerStyle, container1 } = styles;
+    const { email, password, loading, loadingComplete, forgotPasswordEmail, alertVisible } = this.state;
     const strings = this.getStrings()
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
         <ScrollView>
-          <View style={styles.container1}>
+          <View style={container1}>
           <View style={{ alignSelf: 'flex-start' }}>
           <CustomButton
             width={170}
@@ -77,6 +122,7 @@ class LoginScreen extends Component {
           </View>
             <Input
               value={email}
+              keyboardType='email-address'
               placeholder={strings.email}
               width={WIDTH}
               onChangeText={text => this.setState({ email: text })}
@@ -96,29 +142,7 @@ class LoginScreen extends Component {
                 } else if (password === '') {
                   Alert.alert(strings.error, strings.passwordError);
                 } else {
-                  this.setState({ loading: true, loadingComplete: false });
-                  axios
-                    .post('https://api.10av10.com/login/email', {
-                      email,
-                      password
-                    })
-                    .then(() => {
-                      this.setState({ loadingComplete: true });
-                    })
-                    .catch(error => {
-                      let msg;
-                      if (error.message.includes('400')) {
-                        msg = strings.errorMsg400;
-                      } else if (error.message.includes('401')) {
-                        msg = strings.errorMsg401;
-                      } else if (error.message.includes('404')) {
-                        msg = strings.errorMsg404;
-                      } else {
-                        msg = strings.errorMsgInternal;
-                      }
-                      this.setState({ loading: false, loadingComplete: false });
-                      Alert.alert(strings.error, msg);
-                    });
+                  this.handleLogin(email, password)
                 }
               }}
               style={'standardButton'}
@@ -146,28 +170,25 @@ class LoginScreen extends Component {
               }}
               style="textButton"
             />
-            <PasswordPopUp
-              alertVisible={this.state.alertVisible}
+            <SuperAgileAlert
+              alertVisible={alertVisible}
               setAlertVisible={(visible) => this.setState({ alertVisible: visible })}
               buttonsIn={[
-                {
-                  text: strings.passwordPopupCancel,
-                  onPress: () => {
-                    this.setState({ alertVisible: false });
-                  }
-                },
-                {
-                  text: strings.passwordPopupResetPassword,
-                  onPress: () => {
-                    this.setState({ alertVisible: false });
-                  }
-                }
+                { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+                { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
               ]}
               header={strings.passwordPopupHeader}
               info={strings.passwordPopupInfo}
+            >
+            <Input
+              placeholder={strings.inputPlaceholder}
+              title={strings.inputTitle}
+              width={Dimensions.get('window').width / 1.2}
+              underlineColorAndroid="transparent"
               onChangeText={text => this.setState({ forgotPasswordEmail: text })}
-              inputValue={forgotPasswordEmail}
+              value={forgotPasswordEmail}
             />
+            </SuperAgileAlert>
           </View>
         </ScrollView>
         {loading ? (
@@ -223,4 +244,4 @@ const mapStateToProps = ({ currentLanguage }) => {
   return { language };
 };
 
-export default connect(mapStateToProps, { setTheme, setLanguage })(LoginScreen);
+export default connect(mapStateToProps, { setTheme, setLanguage, setToken, setEmail })(LoginScreen);
