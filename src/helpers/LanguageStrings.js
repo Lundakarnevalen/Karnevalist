@@ -1,3 +1,7 @@
+const loading = {
+  SE: 'LADDAR ',
+  EN: 'LOADING '
+}
 const password = {
   SE: 'Lösenord',
   EN: 'Password'
@@ -34,6 +38,54 @@ const error = {
   EN: 'Error'
 }
 
+const firstName = {
+  SE: 'Förnamn',
+  EN: 'First name'
+}
+const lastName = {
+  SE: 'Efternamn',
+  EN: 'Last name'
+}
+const email = {
+  SE: 'Email',
+  EN: 'Email'
+}
+
+const address = {
+  SE: 'Adress',
+  EN: 'Address'
+}
+const postNumber = {
+  SE: 'Postnummer',
+  EN: 'Post number'
+}
+const city = {
+  SE: 'Stad',
+  EN: 'City'
+}
+const phoneNumber = {
+  SE: 'Telefonnummer',
+  EN: 'Phone number'
+}
+const foodPreferences = {
+  SE: 'Matpreferenser',
+  EN: 'Food preferences'
+}
+
+const personalNumber = {
+  SE: 'Personnummer',
+  EN: 'Personal number'
+}
+
+const driversLicense = {
+    SE: 'Jag har körkort',
+    EN: 'I have a drivers license'
+}
+const cancel = {
+  SE: 'Avbryt',
+  EN: 'Cancel'
+}
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -52,8 +104,10 @@ export const LOGIN_SCREEN_STRINGS = {
     'errorMsgInternal',
     'passwordPopupHeader',
     'passwordPopupInfo',
-    'passwordPopupCancel',
-    'passwordPopupResetPassword'
+    'cancel',
+    'resetPassword',
+    'responseFail',
+    'responseSuccess'
   ],
   email: {
     SE: 'Email Adress',
@@ -101,14 +155,22 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Var god fyll i din email adress så skickas ett nytt lösenord till dig',
     EN: 'Please, fill in your email address below and you will receive a new password'
   },
-  passwordPopupCancel: {
+  cancel: {
     SE: 'Avbryt',
     EN: 'Cancel'
   },
-  passwordPopupResetPassword: {
+  resetPassword: {
     SE: 'Återställ lösenord',
     EN: 'Reset password'
-  }
+  },
+  responseFail: {
+    SE: 'Var god ange en giltig email adress',
+    EN: 'Please enter a valid email address'
+  },
+  responseSuccess: {
+    SE: 'Tack, kolla din inbox för ditt nya lösenord',
+    EN: 'Thank you, check your inbox for your new password'
+  },
 }
 
 export const REGISTRATION_SCREEN_STRINGS = {
@@ -121,7 +183,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'password',
     'confirmPassword',
     'address',
-    'postcode',
+    'postNumber',
     'city',
     'phoneNumber',
     'foodPreferences',
@@ -137,7 +199,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorEmail',
     'errorConfirmEmail',
     'errorAddress',
-    'errorPostcode',
+    'errorPostNumber',
     'errorCity',
     'errorPhoneNumber',
     'errorPassword',
@@ -154,18 +216,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Skapa profil',
     EN: 'Create Profile'
   },
-  firstName: {
-    SE: 'Förnamn',
-    EN: 'First name'
-  },
-  lastName: {
-    SE: 'Efternamn',
-    EN: 'Last name'
-  },
-  email: {
-    SE: 'Email',
-    EN: 'Email'
-  },
+  firstName,
+  lastName,
+  email,
   confirmEmail: {
     SE: 'Bekräfta email',
     EN: 'Confirm email'
@@ -175,26 +228,11 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Bekräfta lösenord',
     EN: 'Confirm password'
   },
-  address: {
-    SE: 'Adress',
-    EN: 'Address'
-  },
-  postcode: {
-    SE: 'Postnummer',
-    EN: 'Postcode'
-  },
-  city: {
-    SE: 'Stad',
-    EN: 'City'
-  },
-  phoneNumber: {
-    SE: 'Telefonnummer',
-    EN: 'Phone number'
-  },
-  foodPreferences: {
-    SE: 'Matpreferenser',
-    EN: 'Food preferences'
-  },
+  address,
+  postNumber,
+  city,
+  phoneNumber,
+  foodPreferences,
   shirtSize,
   shirtSizeArray: {
     SE: [shirtSize.SE, 'Small', 'Medium', 'Large'],
@@ -209,10 +247,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Jag var aktiv under karnevalen 2014',
     EN: 'I was active during the karneval 2014'
   },
-  driversLicense: {
-    SE: 'Jag har körkort',
-    EN: 'I have a drivers license'
-  },
+  driversLicense,
   register: {
     SE: 'Registrera',
     EN: 'Register'
@@ -237,9 +272,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Adress krävs',
     EN: 'Address is required'
   },
-  errorPostcode: {
+  errorPostNumber: {
     SE: 'Postnummer krävs',
-    EN: 'Postcode is required'
+    EN: 'Post number is required'
   },
   errorCity: {
     SE: 'Stad krävs',
@@ -421,6 +456,124 @@ export const CONFIRM_PAGE_STRINGS = {
   },
 }
 
+export const MY_PROFILE_SCREEN_STRINGS = {
+  fields: [
+    'title',
+    'firstName',
+    'lastName',
+    'email',
+    'address',
+    'postNumber',
+    'city',
+    'phoneNumber',
+    'foodPreferences',
+    'personalNumber',
+    'language',
+    'careOf',
+    'driversLicense',
+    'disability',
+    'audition',
+    'talent',
+    'entertainmentCategory',
+    'corps',
+    'startOfStudies',
+    'pastInvolvement',
+    'groupLeader',
+    'interests',
+    'misc',
+    'cancel',
+    'save',
+    'popUpHeader',
+    'popUpInfo',
+    'updateInfoMessageSuccess',
+    'updateInfoMessageFail',
+    'loading'
+   ],
+  title: {
+    SE: 'Användarinfo',
+    EN: 'User info'
+  },
+  firstName,
+  lastName,
+  email,
+  address,
+  postNumber,
+  city,
+  phoneNumber,
+  foodPreferences,
+  personalNumber,
+  careOf: { //TODO make accurate description
+    SE: 'BRY SIG OM??? VET INTE VAD DETTA ÄR SNÄLLA ERSÄTT',
+    EN: 'CARE OF??? DO NOT KNOW WHAT THIS IS PLS REPLACE'
+  },
+  language: {
+    SE: 'Språk',
+    EN: 'Language'
+  },
+  driversLicense,
+  disability: {
+    SE: 'Handikapp',
+    EN: 'disability'
+  },
+  audition: {
+    SE: 'Audition',
+    EN: 'Audition'
+  },
+  talent: {
+    SE: 'Talang',
+    EN: 'Talent'
+  },
+  entertainmentCategory: {
+    SE: 'Underhållningskategori',
+    EN: 'Entertainment category'
+  },
+  corps: {
+    SE: 'Kår',
+    EN: 'Corps'
+  },
+  startOfStudies: {
+    SE: 'Studiestart',
+    EN: 'Start of studies'
+  },
+  pastInvolvement: {
+    SE: 'Tidigare engagemang',
+    EN: 'Past involvement'
+  },
+  groupLeader: {
+    SE: 'Gruppledare',
+    EN: 'Group leader'
+  },
+  interests: {
+    SE: 'Intressen',
+    EN: 'Interests'
+  },
+  misc: {
+    SE: 'Allmänt',
+    EN: 'Misc'
+  },
+  cancel,
+  save: {
+    SE: 'Spara',
+    EN: 'Save'
+  },
+  popUpHeader: {
+    SE: 'Profilinfo',
+    EN: 'Profile info'
+  },
+  popUpInfo: {
+    SE: 'Spara ändringar?',
+    EN: 'Save changes?'
+  },
+  updateInfoMessageSuccess: {
+    SE: 'Användarinfo uppdaterad',
+    EN: 'Userinfo updated'
+  },
+  updateInfoMessageFail: {
+    SE: 'Något gick fel',
+    EN: 'Something went wrong'
+  }
+}
+
 export const CAMERA_STRINGS = {
   fields: ['take', 'your', 'picture'],
   take: {
@@ -437,43 +590,7 @@ export const CAMERA_STRINGS = {
   }
 }
 
-export const PASSWORD_POPUP_STRINGS = {
-  fields: [
-    'responeFail',
-    'responseSuccess',
-    'error',
-    'errorMsg400',
-    'errorMsg401',
-    'errorMsg404',
-    'errorMsgInternal'
-  ],
-  responeFail: {
-    SE: 'Var god ange en giltig email adress',
-    EN: 'Please enter a valid email address'
-  },
-  responseSuccess: {
-    SE: 'Tack, kolla din inbox för ditt nya lösenord',
-    EN: 'Thank you, check your inbox for your new password'
-  },
-  inputTitle: {
-    SE: 'Email',
-    EN: 'Email'
-  },
-  inputPlaceholder: {
-    SE: 'Ange din email adress',
-    EN: 'Enter your email address'
-  },
-  error,
-  errorMsg400,
-  errorMsg401,
-  errorMsg404,
-  errorMsgInternal,
-}
-
 export const LOADING_STRINGS = {
   fields: ['loading'],
-  loading: {
-    SE: 'LADDAR ',
-    EN: 'LOADING '
-  }
+  loading
 }

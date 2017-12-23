@@ -21,6 +21,7 @@ import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
+import { handleErrorMsg } from '../../helpers/ApiManager'
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
@@ -36,7 +37,7 @@ class RegistrationScreen extends Component {
       password: '',
       confirmedPassword: '',
       address: '',
-      postcode: '',
+      postNumber: '',
       city: '',
       phoneNbr: '',
       foodPreferences: '',
@@ -135,7 +136,7 @@ class RegistrationScreen extends Component {
       email,
       confirmedEmail,
       address,
-      postcode,
+      postNumber,
       city,
       phoneNbr,
       foodPreferences,
@@ -180,6 +181,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             placeholder={strings.email}
+            keyboardType='email-address'
             onChangeText={emailInput => {
               this.setState({ email: emailInput });
             }}
@@ -187,6 +189,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             placeholder={strings.confirmEmail}
+            keyboardType='email-address'
             onChangeText={emailInput => {
               this.setState({ confirmedEmail: emailInput });
             }}
@@ -217,13 +220,14 @@ class RegistrationScreen extends Component {
           />
           <View style={flexHorizontal}>
             <Input
-              placeholder={strings.postcode}
-              onChangeText={postcodeInput => {
-                this.setState({ postcode: postcodeInput });
+              placeholder={strings.postNumber}
+              keyboardType='numeric'
+              onChangeText={postNumberInput => {
+                this.setState({ postNumber: postNumberInput });
               }}
               width={width / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
-              value={postcode}
+              value={postNumber}
             />
             <Input
               placeholder={strings.city}
@@ -236,6 +240,7 @@ class RegistrationScreen extends Component {
           </View>
           <Input
             placeholder={strings.phoneNumber}
+            keyboardType='phone-pad'
             onChangeText={phoneNbrInput => {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
@@ -279,8 +284,8 @@ class RegistrationScreen extends Component {
                 Alert.alert(strings.error, strings.errorConfirmEmail);
               } else if (address === '') {
                 Alert.alert(strings.error, strings.errorAddress);
-              } else if (postcode === '') {
-                Alert.alert(strings.error, strings.errorPostcode);
+              } else if (postNumber === '') {
+                Alert.alert(strings.error, strings.errorPostNumber);
               } else if (city === '') {
                 Alert.alert(strings.error, strings.errorCity);
               } else if (phoneNbr === '') {
@@ -299,7 +304,7 @@ class RegistrationScreen extends Component {
                   .post('https://api.10av10.com/register', {
                     email,
                     password,
-                    postNumber: postcode,
+                    postNumber,
                     firstName,
                     lastName,
                     phoneNumber: phoneNbr,
@@ -311,16 +316,7 @@ class RegistrationScreen extends Component {
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
-                    let msg;
-                    if (error.message.includes('400')) {
-                      msg = strings.errorMsg400;
-                    } else if (error.message.includes('401')) {
-                      msg = strings.errorMsg401;
-                    } else if (error.message.includes('404')) {
-                      msg = strings.errorMsg404;
-                    } else {
-                      msg = strings.errorMsgInternal;
-                    }
+                    const msg = handleErrorMsg(error.message, strings)
                     this.setState({ loadingComplete: false, loading: false });
                     Alert.alert(strings.error, msg);
                   });
@@ -347,7 +343,7 @@ class RegistrationScreen extends Component {
           <Loading
             loadingComplete={loadingComplete}
             redirect={() => {
-              this.props.navigation.navigate('HomeScreen');
+              this.props.navigation.navigate('LoginScreen');
               this.setState({ loading: false, loadingComplete: false });
             }}
           />

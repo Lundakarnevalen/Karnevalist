@@ -22,7 +22,7 @@ class Toast extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.showToast)
-      this.callToast(this.props.message)
+      this.callToast(nextProps.message)
   }
 
   componentWillUnmount() {
@@ -31,7 +31,7 @@ class Toast extends Component {
 
   callToast(message) {
     if (this.state.modalShown) return
-    this.setState({ modalShown: true })
+    this.setState({ modalShown: true, message })
     this.setState({ color: this.state.toastColor })
     Animated.timing(
       this.state.animatedValue,
@@ -42,15 +42,16 @@ class Toast extends Component {
   }
 
   closeToast() {
-      this.timer = setTimeout(() => {
-        this.setState({ modalShown: false })
-        Animated.timing(
-          this.state.animatedValue,
-          {
-            toValue: 0,
-            duration: 350
-          }).start()
-      }, 2000)
+    this.timer = setTimeout(() => {
+      this.setState({ modalShown: false })
+      this.props.onClose()
+      Animated.timing(
+        this.state.animatedValue,
+        {
+          toValue: 0,
+          duration: 350
+        }).start()
+    }, 2000)
   }
 
   render() {
@@ -70,7 +71,7 @@ class Toast extends Component {
         </Animated.View>
       </View>
     );
-      }
+  }
 }
 
 

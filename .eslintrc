@@ -6,6 +6,7 @@
     "prefer-template": 0,
     "no-underscore-dangle": 0,
     "react/sort-comp": 0,
-    "semi": 0
+    "semi": 0,
+    "curly": 0
   }
 }
