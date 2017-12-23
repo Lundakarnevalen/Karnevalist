@@ -1,4 +1,5 @@
 import { StackNavigator } from 'react-navigation';
+import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
@@ -52,6 +53,12 @@ const Register = StackNavigator({
 
 const Router = StackNavigator(
   {
+    SplashScreen: {
+      screen: SplashScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
     LoginScreen: {
       screen: LoginScreen,
       navigationOptions: {
