@@ -79,6 +79,7 @@ class SectionItemScreen extends Component {
         <Toast
           color={'#f4376d'}
           showToast={this.state.showToast}
+          onClose={() => this.setState({ showToast: false })}
           message={strings.messageStart + title + strings.messageEnd}
         />
         <ScrollView style={scrollStyle}>
