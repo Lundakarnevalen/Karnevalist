@@ -47,44 +47,47 @@ class Input extends Component {
   }
 
   checkWarningConditions() {
-    const { value, onlyLetters, onlyDigits, warnIfFalse } = this.props;
-    if (onlyLetters) {
-      if (!this.containsOnlyLetters(value)) {
-        this.doWarn();
-      } else {
-        this.stopWarn();
-      }
-    } else if (onlyDigits) {
-      if (!this.containsOnlyDigits(value)) {
-        this.doWarn();
-      } else {
-        this.stopWarn();
-      }
-    } else if (warnIfFalse !== undefined) {
-      const result = warnIfFalse(value);
+    const { value, restriction } = this.props;
+    switch (restriction) {
+      case 'onlyLetters':
+        if (this.containsOnlyLetters(value)) this.stopWarn();
+        else this.doWarn();
+        break;
+      case 'onlyDigits':
+        if (this.containsOnlyDigits(value)) this.stopWarn();
+        else this.doWarn();
+        break;
+      default:
+        break;
+    }
+    if (typeof restriction === 'function') {
+      const result = restriction(value);
       if (result === false) this.doWarn();
     }
   }
 
   doWarn() {
-    this.setState({ warningVisible: true });
-    this.setState({ borderColor: 'red' });
+    this.setState({ warningVisible: true, borderColor: 'red' });
   }
 
   stopWarn() {
-    this.setState({ borderColor: 'black' });
-    this.setState({ warningVisible: false });
+    this.setState({ warningVisible: false, borderColor: 'black' });
   }
 
   addWarningText() {
     const { warningVisible } = this.state;
-    const { warningMessage, onlyLetters, onlyDigits } = this.props;
+    const { warningMessage, restriction } = this.props;
     if (warningVisible) {
       let message = warningMessage;
-      if (onlyLetters) {
-        message = 'This field may only contain letters';
-      } else if (onlyDigits) {
-        message = 'This field may only contain digits';
+      switch (restriction) {
+        case 'onlyLetters':
+          message = 'This field may only contain letters';
+          break;
+        case 'onlyDigits':
+          message = 'This field may only contain digits';
+          break;
+        default:
+          break;
       }
       return <Text style={styles.warningTextStyle}>{message}</Text>;
     }
