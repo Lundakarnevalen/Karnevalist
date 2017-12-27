@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, FlatList, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
+import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
+import { dynamicSort } from '../../../helpers/functions'
 
 class SectionScreen extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,20 +20,8 @@ class SectionScreen extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { sections } = nextProps;
-    sections.sort(this.dynamicSort('title'));
+    sections.sort(dynamicSort('title'));
     this.setState({ data: nextProps.sections });
-  }
-
-  dynamicSort(property) {
-    let sortOrder = 1;
-    if (property[0] === '-') {
-      sortOrder = -1;
-      property = property.substr(1);
-    }
-    return function (a, b) {
-      const result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-      return result * sortOrder;
-    };
   }
 
   getColor() {
@@ -43,20 +34,31 @@ class SectionScreen extends Component {
         return 'white';
     }
   }
+  getStrings() {
+    const { language } = this.props
+    const { fields } = SECTION_SCREEN_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = SECTION_SCREEN_STRINGS[field][language]))
+    return strings
+  }
 
   render() {
     const { navigation, screenProps } = this.props;
+    const strings = this.getStrings()
     return (
       <View>
         <BackgroundImage pictureNumber={1} />
         <View>
+
           <Header
             rightIcon={
-              <TouchableOpacity onPress={() => screenProps.navigate('ConfirmPage', { navigation })}>
-                <FontAwesome name="list-alt" size={30} color={this.getColor()} />
+              <TouchableOpacity
+                onPress={() => screenProps.navigation.navigate('ConfirmPage', { navigation })}
+              >
+                <MaterialIcons name="local-mall" size={30} color={this.getColor()} />
               </TouchableOpacity>
             }
-            title="Sections"
+            title={strings.title}
             leftIcon={null}
             navigation={navigation}
           />
@@ -70,7 +72,7 @@ class SectionScreen extends Component {
                 sectionTitle={item.title}
                 sectionInfoText={item.info}
                 onPress={() =>
-                  screenProps.navigate('SectionItemScreen', {
+                  screenProps.navigation.navigate('SectionItemScreen', {
                     id: item.id,
                     title: item.title,
                     description: item.info,
@@ -92,9 +94,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections }) => {
+const mapStateToProps = ({ currentTheme, sections, currentLanguage }) => {
   const { theme } = currentTheme;
-  return { theme, sections: sections.sections };
+  const { language } = currentLanguage;
+  return { theme, sections: sections.sections, language };
 };
 
 export default connect(mapStateToProps, null)(SectionScreen);

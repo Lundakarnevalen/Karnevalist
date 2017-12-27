@@ -5,12 +5,18 @@ import { connect } from 'react-redux';
 class Input extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
       borderColor: '#000',
       warningVisible: false
     };
+  }
+
+  componentWillMount() {
+    if (this.props.value !== '')
+      this.inputSelected()
   }
 
   getThemeColor() {
@@ -128,6 +134,8 @@ class Input extends Component {
       secureText,
       textInputStyle,
       autoCorrect = false,
+      editable = true,
+      keyboardType = 'default',
       extraContainerStyle
     } = this.props;
     return (
@@ -149,8 +157,11 @@ class Input extends Component {
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
           style={[inputStyle, { width }, textInputStyle]}
+          autoCapitalize='words'
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
+          editable={editable}
+          keyboardType={keyboardType}
         />
       </View>
     );

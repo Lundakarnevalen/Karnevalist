@@ -1,9 +1,11 @@
 import { StackNavigator } from 'react-navigation';
-import HomeScreen from './screens/LoginScreen';
+import SplashScreen from './screens/SplashScreen';
+import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
 import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
+import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
 import ConfirmPage from './screens/ConfirmPage';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
 import CameraScreen from './screens/CameraScreen';
@@ -32,6 +34,12 @@ const LoggedIn = StackNavigator({
     navigationOptions: {
       header: null
     }
+  },
+  MyProfile: {
+    screen: MyProfileScreen,
+    navigationOptions: {
+      header: null
+    }
   }
 });
 
@@ -52,8 +60,14 @@ const Register = StackNavigator({
 
 const Router = StackNavigator(
   {
-    HomeScreen: {
-      screen: HomeScreen,
+    SplashScreen: {
+      screen: SplashScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    LoginScreen: {
+      screen: LoginScreen,
       navigationOptions: {
         header: null
       }

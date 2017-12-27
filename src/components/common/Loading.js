@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, Text } from 'react-native';
 import { BlurView } from 'expo';
 import { connect } from 'react-redux';
+import { LOADING_STRINGS } from '../../helpers/LanguageStrings'
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -37,6 +38,14 @@ class Loading extends Component {
     }
   }
 
+  getStrings() {
+    const { language } = this.props
+    const { fields } = LOADING_STRINGS
+    const strings = {}
+    fields.forEach(field => (strings[field] = LOADING_STRINGS[field][language]))
+    return strings
+  }
+
   countTo99() {
     if (this.props.loadingComplete && this.state.loadedPercent === 99) {
       this.props.redirect();
@@ -48,10 +57,11 @@ class Loading extends Component {
 
   render() {
     const { containerStyle, headerStyle } = styles;
+    const strings = this.getStrings()
     return (
       <BlurView style={containerStyle}>
         <Text style={[headerStyle, { color: this.getColor() }]}>
-          LOADING {this.state.loadedPercent.toString()}%
+           {strings.loading + this.state.loadedPercent.toString()}%
         </Text>
       </BlurView>
     );
@@ -76,9 +86,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  return { theme };
+  const { language } = currentLanguage;
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(Loading);

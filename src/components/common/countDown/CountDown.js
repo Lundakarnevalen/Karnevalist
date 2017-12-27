@@ -10,6 +10,7 @@ const ONE_DAY = 86400000;
 const ONE_HOUR = 3600000;
 const ONE_MIN = 60000;
 const ONE_SECOND = 1000;
+let interval
 
 class CountDown extends Component {
   constructor(props) {
@@ -24,7 +25,10 @@ class CountDown extends Component {
 
   componentWillMount() {
     this.getTimeLeft();
-    setInterval(() => this.getTimeLeft(), 1000);
+    interval = setInterval(() => this.getTimeLeft(), 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(interval)
   }
 
   getTimeLeft() {

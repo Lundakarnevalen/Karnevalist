@@ -10,6 +10,13 @@ import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
 import NewsScreen from './MyPageNavbarScreens/NewsScreen';
 import ProfileScreen from './MyPageNavbarScreens/ProfileScreen';
+import {
+  SECTION_SCREEN_STRINGS,
+  NEWS_SCREEN_STRINGS,
+  HOME_SCREEN_STRINGS,
+  PROFILE_SCREEN_STRINGS,
+  SONGBOOK_SCREEN_STRINGS
+ } from '../../helpers/LanguageStrings'
 
 //TODO: Ful lösning, kanske ska göra såhär överallt dock, flytta ut till separat "theme" klass istället för redux.
 const CURRENT_HOUR = new Date().getHours();
@@ -63,7 +70,8 @@ class MyPageNavbarScreen extends Component {
   }
 
   render() {
-    return <TabNav screenProps={this.props.navigation} />;
+    const { navigation, language } = this.props
+    return <TabNav screenProps={{ navigation, language }} />;
   }
 }
 
@@ -71,52 +79,68 @@ const TabNav = TabNavigator(
   {
     Sections: {
       screen: SectionScreen,
-      navigationOptions: {
-        tabBarLabel: 'Sektioner',
+      navigationOptions: props => ({
+        tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons
             name="star"
-            color={focused ? tintColor : '#A9A9A9'}
             size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
           />
         )
-      }
+      })
     },
     SongBook: {
       screen: SongBookScreen,
-      navigationOptions: {
-        tabBarLabel: 'Sångbok',
+      navigationOptions: props => ({
+        tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons size={SIZE} name="local-library" color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons
+            name="local-library"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
+          />
         )
-      }
+      })
     },
     Home: {
       screen: HomeScreen,
-      navigationOptions: {
-        tabBarLabel: 'Hem',
+      navigationOptions: props => ({
+        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons size={SIZE} name="home" color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons
+            name="home"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
+          />
         )
-      }
+      })
     },
     News: {
       screen: NewsScreen,
-      navigationOptions: {
-        tabBarLabel: 'Nyheter',
+      navigationOptions: props => ({
+        tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons size={SIZE} name="speaker-notes" color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons
+            name="speaker-notes"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
+          />
         )
-      }
+      })
     },
     Profile: {
       screen: ProfileScreen,
-      navigationOptions: {
-        tabBarLabel: 'Min profil',
+      navigationOptions: props => ({
+        tabBarLabel: PROFILE_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons size={SIZE} name="account-circle" color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons
+            name="account-circle"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
+          />
         )
-      }
+      })
     }
   },
   {
@@ -144,4 +168,9 @@ const TabNav = TabNavigator(
     }
   }
 );
-export default connect(null, { setSections })(MyPageNavbarScreen)
+
+const mapStateToProps = ({ currentLanguage }) => {
+  const { language } = currentLanguage
+  return { language };
+};
+export default connect(mapStateToProps, { setSections })(MyPageNavbarScreen)
