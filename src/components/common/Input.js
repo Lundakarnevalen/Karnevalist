@@ -15,8 +15,7 @@ class Input extends Component {
   }
 
   componentWillMount() {
-    if (this.props.value !== '')
-      this.inputSelected()
+    if (this.props.value !== '') this.inputSelected();
   }
 
   getThemeColor() {
@@ -84,7 +83,6 @@ class Input extends Component {
     const { warningVisible } = this.state;
     const { warningMessage, restriction } = this.props;
     let message = warningMessage;
-    console.log(message);
     if (warningVisible) {
       if (warningMessage !== undefined) {
         message = warningMessage;
@@ -157,7 +155,7 @@ class Input extends Component {
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
           style={[inputStyle, { width }, textInputStyle]}
-          autoCapitalize='words'
+          autoCapitalize="words"
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
           editable={editable}
