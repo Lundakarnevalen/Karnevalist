@@ -77,17 +77,22 @@ class Input extends Component {
   addWarningText() {
     const { warningVisible } = this.state;
     const { warningMessage, restriction } = this.props;
+    let message = warningMessage;
+    console.log(message);
     if (warningVisible) {
-      let message = warningMessage;
-      switch (restriction) {
-        case 'onlyLetters':
-          message = 'This field may only contain letters';
-          break;
-        case 'onlyDigits':
-          message = 'This field may only contain digits';
-          break;
-        default:
-          break;
+      if (warningMessage !== undefined) {
+        message = warningMessage;
+      } else {
+        switch (restriction) {
+          case 'onlyLetters':
+            message = 'This field may only contain letters';
+            break;
+          case 'onlyDigits':
+            message = 'This field may only contain digits';
+            break;
+          default:
+            break;
+        }
       }
       return <Text style={styles.warningTextStyle}>{message}</Text>;
     }
