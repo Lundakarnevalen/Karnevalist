@@ -1,90 +1,83 @@
 const loading = {
   SE: 'LADDAR ',
   EN: 'LOADING '
-}
+};
 const password = {
   SE: 'Lösenord',
   EN: 'Password'
-}
+};
 const shirtSize = {
   SE: 'Välj tröjstorlek',
   EN: 'Choose shirt size'
-}
-
+};
 const studentUnion = {
   SE: 'Välj nation',
   EN: 'Choose student union'
-}
+};
 const errorMsg400 = {
   SE: 'Fel email eller lösenord',
   EN: 'Wrong email or password'
-}
+};
 const errorMsg401 = {
   SE: 'Fel email eller lösenord',
   EN: 'Wrong email or password'
-}
-
+};
 const errorMsg404 = {
   SE: 'Något gick fel...',
   EN: 'Something went wrong...'
-}
+};
 const errorMsgInternal = {
   SE: 'Internt fel, var god försök igen senare',
   EN: 'Internal error, please try again later'
-}
-
+};
 const error = {
   SE: 'Fel',
   EN: 'Error'
-}
-
+};
 const firstName = {
   SE: 'Förnamn',
   EN: 'First name'
-}
+};
 const lastName = {
   SE: 'Efternamn',
   EN: 'Last name'
-}
+};
 const email = {
   SE: 'Email',
   EN: 'Email'
-}
-
+};
 const address = {
   SE: 'Adress',
   EN: 'Address'
-}
+};
 const postNumber = {
   SE: 'Postnummer',
   EN: 'Post number'
-}
+};
 const city = {
   SE: 'Stad',
   EN: 'City'
-}
+};
 const phoneNumber = {
   SE: 'Telefonnummer',
   EN: 'Phone number'
-}
+};
 const foodPreferences = {
   SE: 'Matpreferenser',
   EN: 'Food preferences'
-}
-
+};
 const personalNumber = {
   SE: 'Personnummer',
   EN: 'Personal number'
-}
-
+};
 const driversLicense = {
-    SE: 'Jag har körkort',
-    EN: 'I have a drivers license'
-}
+  SE: 'Jag har körkort',
+  EN: 'I have a drivers license'
+};
 const cancel = {
   SE: 'Avbryt',
   EN: 'Cancel'
-}
+};
 
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
@@ -170,8 +163,8 @@ export const LOGIN_SCREEN_STRINGS = {
   responseSuccess: {
     SE: 'Tack, kolla din inbox för ditt nya lösenord',
     EN: 'Thank you, check your inbox for your new password'
-  },
-}
+  }
+};
 
 export const REGISTRATION_SCREEN_STRINGS = {
   fields: [
@@ -311,7 +304,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   errorMsg404,
   errorMsgInternal
-}
+};
 
 export const REGISTRATION_INFO_SCREEN_STRINGS = {
   fields: [
@@ -346,8 +339,14 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
     EN: 'Send your application'
   },
   infoText1: {
-    SE: 'Första steget är att skapa en profil, antingen här eller på Karnevalist.se. När du skapat en profil tilldelas du ett profil-ID som du använder vid incheckning under uppropsdagen.',
-    EN: "The first step is to create a profile, either here or at Karnevalist.se. When you've created a profile, you are assigned a profile ID that you use when checking in during the call day."
+    SE:
+      'Första steget är att skapa en profil, antingen här eller på Karnevalist.se.' +
+      'När du skapat en profil tilldelas du ett profil-ID som' +
+      'du använder vid incheckning under uppropsdagen.',
+    EN:
+      'The first step is to create a profile, either here or at Karnevalist.se.' +
+      'When you have created a profile, you are assigned a profile ID that you use' +
+      'when checking in during the call day.'
   },
   infoText2: {
     SE: 'Välj vilken sektion du vill vara delaktig i under karnevalen.',
@@ -361,7 +360,7 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
     SE: 'Jag förstår',
     EN: 'I understand'
   }
-}
+};
 
 export const SECTION_SCREEN_STRINGS = {
   fields: ['title'],
@@ -369,7 +368,7 @@ export const SECTION_SCREEN_STRINGS = {
     SE: 'Sektioner',
     EN: 'Sections'
   }
-}
+};
 
 export const NEWS_SCREEN_STRINGS = {
   fields: ['title'],
@@ -377,7 +376,7 @@ export const NEWS_SCREEN_STRINGS = {
     SE: 'Nyheter',
     EN: 'News'
   }
-}
+};
 
 export const HOME_SCREEN_STRINGS = {
   fields: ['title', 'buttonText'],
@@ -389,7 +388,7 @@ export const HOME_SCREEN_STRINGS = {
     SE: 'Påbörja din registrering',
     EN: 'Begin your registration'
   }
-}
+};
 
 export const PROFILE_SCREEN_STRINGS = {
   fields: ['title', 'profile', 'registration', 'logout'],
@@ -409,7 +408,7 @@ export const PROFILE_SCREEN_STRINGS = {
     SE: 'Logga ut',
     EN: 'Logout'
   }
-}
+};
 
 export const SECTION_ITEM_SCREEN_STRINGS = {
   fields: ['messageStart', 'messageEnd'],
@@ -421,7 +420,7 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
     SE: '" tillagd',
     EN: '" added'
   }
-}
+};
 
 export const SONGBOOK_SCREEN_STRINGS = {
   fields: ['title'],
@@ -429,7 +428,7 @@ export const SONGBOOK_SCREEN_STRINGS = {
     SE: 'Sångbok',
     EN: 'Song Book'
   }
-}
+};
 
 export const CONFIRM_PAGE_STRINGS = {
   fields: ['title', 'sectionSelection', 'selectionOK', 'send', 'toSections'],
@@ -452,8 +451,8 @@ export const CONFIRM_PAGE_STRINGS = {
   toSections: {
     SE: 'Till val av sektioner',
     EN: 'To section selection'
-  },
-}
+  }
+};
 
 export const MY_PROFILE_SCREEN_STRINGS = {
   fields: [
@@ -485,8 +484,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'popUpHeader',
     'popUpInfo',
     'updateInfoMessageSuccess',
-    'updateInfoMessageFail',
-   ],
+    'updateInfoMessageFail'
+  ],
   title: {
     SE: 'Användarinfo',
     EN: 'User info'
@@ -500,7 +499,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   phoneNumber,
   foodPreferences,
   personalNumber,
-  careOf: { //TODO make accurate description
+  careOf: {
+    //TODO make accurate description
     SE: 'BRY SIG OM??? VET INTE VAD DETTA ÄR SNÄLLA ERSÄTT',
     EN: 'CARE OF??? DO NOT KNOW WHAT THIS IS PLS REPLACE'
   },
@@ -570,7 +570,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     SE: 'Något gick fel',
     EN: 'Something went wrong'
   }
-}
+};
 
 export const CAMERA_STRINGS = {
   fields: ['take', 'your', 'picture'],
@@ -586,9 +586,21 @@ export const CAMERA_STRINGS = {
     SE: 'Bild',
     EN: 'Picture'
   }
-}
+};
 
 export const LOADING_STRINGS = {
   fields: ['loading'],
   loading
-}
+};
+
+export const ERROR_MSG_INPUT_FIELD = {
+  fields: ['errorMsgOnlyDigits', 'errorMsgOnlyLetters'],
+  errorMsgOnlyDigits: {
+    SE: 'Detta fält får endast innehålla siffror',
+    EN: 'This field may only contain digits'
+  },
+  errorMsgOnlyLetters: {
+    SE: 'Detta fält får endast innehålla bokstäver',
+    EN: 'This field may only contain letters'
+  }
+};
