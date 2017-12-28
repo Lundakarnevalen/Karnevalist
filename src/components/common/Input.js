@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, Animated, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 
 class Input extends Component {
   constructor(props) {
@@ -29,13 +30,20 @@ class Input extends Component {
     }
   }
 
+  getStrings() {
+    const { language } = this.props;
+    const { fields } = ERROR_MSG_INPUT_FIELD;
+    const strings = {};
+    fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
+    return strings;
+  }
+
   inputSelected() {
-    this.setState({ warningVisible: false });
+    this.setState({ warningVisible: false, borderColor: this.getThemeColor() });
     Animated.parallel([
       Animated.timing(this.state.fontSize, { toValue: 10, duration: 150 }),
       Animated.timing(this.state.position, { toValue: { x: 9, y: 0 }, duration: 150 })
     ]).start();
-    this.setState({ borderColor: this.getThemeColor() });
   }
 
   inputDeselected() {
@@ -81,25 +89,33 @@ class Input extends Component {
 
   addWarningText() {
     const { warningVisible } = this.state;
-    const { warningMessage, restriction } = this.props;
-    let message = warningMessage;
-    if (warningVisible) {
-      if (warningMessage !== undefined) {
-        message = warningMessage;
-      } else {
-        switch (restriction) {
-          case 'onlyLetters':
-            message = 'This field may only contain letters';
-            break;
-          case 'onlyDigits':
-            message = 'This field may only contain digits';
-            break;
-          default:
-            break;
-        }
+    const { warningMessage, restriction, language } = this.props;
+    const strings = this.getStrings();
+    let message = '';
+    if (warningMessage !== undefined && warningVisible) {
+      switch (language) {
+        case 'SE':
+          message = warningMessage[0];
+          break;
+        case 'EN':
+          message = warningMessage[1];
+          break;
+        default:
+          break;
       }
-      return <Text style={styles.warningTextStyle}>{message}</Text>;
+    } else if (warningVisible) {
+      switch (restriction) {
+        case 'onlyLetters':
+          message = strings.errorMsgOnlyLetters;
+          break;
+        case 'onlyDigits':
+          message = strings.errorMsgOnlyDigits;
+          break;
+        default:
+          break;
+      }
     }
+    return <Text style={styles.warningTextStyle}>{message}</Text>;
   }
 
   containsOnlyDigits(t) {
