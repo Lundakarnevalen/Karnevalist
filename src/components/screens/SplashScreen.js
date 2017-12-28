@@ -44,13 +44,14 @@ class SplashScreen extends Component {
               this.props.navigation.navigate('LoginScreen')
           })
           .catch((error) => {
+            this.props.navigation.navigate('LoginScreen')
             console.log(error.message);
           });
         })
       } else {
         this.props.navigation.navigate('LoginScreen')
       }
-    }), 3000)
+    }), 2000)
   }
 
   setCurrenTheme() {

@@ -40,7 +40,8 @@ class ConfirmPage extends Component {
           imguri: s.imguri
         });
       });
-      this.setState({ data: tempData });
+      const order = tempData.map(x => x.id)
+      this.setState({ data: tempData, order });
     });
   }
 
@@ -95,6 +96,7 @@ class ConfirmPage extends Component {
           contentContainerStyle={contentContainer}
           data={this.state.data}
           renderRow={this.renderRow.bind(this)}
+          onChangeOrder={(nextOrder) => this.setState({ order: nextOrder })}
         />
         <TouchableOpacity
           style={this.getConfirmButtonStyle()}
@@ -167,10 +169,15 @@ class ConfirmPage extends Component {
   }
 
   onPressConfirmButton() {
-    const { data, strings } = this.state;
+    const { data, strings, order } = this.state;
     if (data.length < 5) {
       Alert.alert(strings.sectionSelection);
     } else {
+      const sectionPriority = order.map(i => {
+        const index = data.findIndex(d => d.id + '' === i + '')
+        return data[index].text
+      })
+      console.log(sectionPriority);
       Alert.alert(strings.selectionOK);
     }
   }
