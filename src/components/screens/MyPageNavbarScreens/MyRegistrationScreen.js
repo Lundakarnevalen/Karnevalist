@@ -55,7 +55,8 @@ class MyRegistrationScreen extends Component {
           id: section.key,
           image: section.image,
           info: section.info,
-          title: i + 1 + ' ' + section.title
+          titleAndRank: i + 1 + ' ' + section.title,
+          title: section.title
         })
     })
     this.setState({ data })
@@ -69,7 +70,7 @@ class MyRegistrationScreen extends Component {
           contentContainerStyle={{ alignItems: 'center' }}
           renderItem={({ item }) => (
             <SectionListItem
-              sectionTitle={item.title}
+              sectionTitle={item.titleAndRank}
               sectionInfoText={item.info}
               onPress={() =>
                 this.props.navigation.navigate('SectionItemScreen', {
