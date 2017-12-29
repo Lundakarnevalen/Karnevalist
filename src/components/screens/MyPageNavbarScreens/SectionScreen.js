@@ -12,17 +12,15 @@ class SectionScreen extends Component {
 
   constructor(props) {
     super(props);
+     const { sections } = props
+     if (sections)
+      sections.sort(dynamicSort('title'))
     this.state = {
       isOpen: false,
-      data: []
+      data: sections || []
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { sections } = nextProps;
-    sections.sort(dynamicSort('title'));
-    this.setState({ data: nextProps.sections });
-  }
 
   getColor() {
     switch (this.props.theme) {

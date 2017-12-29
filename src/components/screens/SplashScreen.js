@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, View, Image, Text, StatusBar, Easing } from 'react-native'
+import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { getItem } from '../../helpers/LocalSave';
@@ -7,7 +7,7 @@ import BackgroundImage from '../common/BackgroundImage';
 import { setTheme, setSections, setToken, setEmail } from '../../actions';
 
 const baseURL = 'https://api.10av10.com/api/user/'
-
+const WIDTH = Dimensions.get('window').width
 class SplashScreen extends Component {
 
   constructor(props) {
@@ -21,6 +21,45 @@ class SplashScreen extends Component {
     this.setCurrenTheme()
     this.spin()
     this.authorize()
+    this.getSectionInfo()
+  }
+
+  getImage(url, section) {
+    const tempSection = section
+    axios.get(url).then(r => {
+        const image = (
+          <Image
+            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+            source={{ uri: r.data.source_url }}
+            //defaultSource={require('../../../../res/LK2018logga.png')}
+          />
+        );
+        tempSection.imguri = r.data.source_url
+        tempSection.image = image;
+        this.props.setSections(tempSection)
+        return tempSection
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  getSectionInfo() {
+    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
+    axios.get(url).then(response => {
+      response.data.forEach(item => {
+        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
+        const imgId = item.featured_media;
+        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
+        const section = {
+          key: item.id,
+          id: item.id,
+          title: item.title.rendered,
+          info: strippedContent,
+        };
+        this.getImage(imgUrl, section)
+      });
+    })
   }
 
   authorize() {
