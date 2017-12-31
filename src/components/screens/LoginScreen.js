@@ -77,7 +77,6 @@ class LoginScreen extends Component {
         const { accessToken } = res.data
         this.props.setToken(accessToken)
         this.props.setEmail(email)
-        console.log(accessToken);
         saveItem('email', email)
         saveItem('accessToken', accessToken)
         this.setState({ loadingComplete: true });
