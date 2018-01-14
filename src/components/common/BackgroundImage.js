@@ -57,12 +57,7 @@ class BackgroundImage extends Component {
   }
 
   getOpacityStyle() {
-    let backgroundColor;
-    if (this.props.theme === 'day') {
-      backgroundColor = 'rgba(255, 255, 255, 0.7)';
-    } else {
-      backgroundColor = 'rgba(255, 255, 255, 0.3)';
-    }
+    const backgroundColor = 'rgba(255, 255, 255, 0.3)';
     return {
       backgroundColor,
       width: WIDTH,

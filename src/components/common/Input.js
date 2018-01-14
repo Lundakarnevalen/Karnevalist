@@ -19,14 +19,7 @@ class Input extends Component {
   }
 
   getThemeColor() {
-    switch (this.props.theme) {
-      case 'morning':
         return '#F7A021';
-      case 'day':
-        return 'rgb(138, 71, 151)';
-      default:
-        return '#F7A021';
-    }
   }
 
   inputSelected() {
