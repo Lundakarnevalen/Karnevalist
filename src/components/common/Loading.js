@@ -27,17 +27,6 @@ class Loading extends Component {
     clearInterval(interval);
   }
 
-  getColor() {
-    switch (this.props.theme) {
-      case 'day':
-        return 'rgb(138, 71, 151)';
-      case 'morning':
-        return '#F7A021';
-      default:
-        return 'white';
-    }
-  }
-
   getStrings() {
     const { language } = this.props
     const { fields } = LOADING_STRINGS
@@ -60,7 +49,7 @@ class Loading extends Component {
     const strings = this.getStrings()
     return (
       <BlurView style={containerStyle}>
-        <Text style={[headerStyle, { color: this.getColor() }]}>
+        <Text style={[headerStyle, { color: 'white' }]}>
            {strings.loading + this.state.loadedPercent.toString()}%
         </Text>
       </BlurView>

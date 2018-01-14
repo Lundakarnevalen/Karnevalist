@@ -47,17 +47,6 @@ class ConfirmPage extends Component {
     });
   }
 
-  getColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return '#F7A021';
-      case 'day':
-        return '#f4376d';
-      default:
-        return 'white';
-    }
-  }
-
   getStrings() {
     const { language } = this.props
     const { fields } = CONFIRM_PAGE_STRINGS
@@ -78,7 +67,7 @@ class ConfirmPage extends Component {
           <Text
             style={[
               textStyle,
-              { color: this.props.theme === 'night' ? 'white' : 'black', textAlign: 'center' }
+              { color: 'white' }
             ]}
           >
             {strings.sectionSelection}
@@ -112,11 +101,7 @@ class ConfirmPage extends Component {
 
   getBackgroundColor() {
     const { data } = this.state;
-    const { theme } = this.props;
     if (data.length >= 5) {
-      if (theme === 'day') {
-        return '#F4376D';
-      }
       return '#F7A021';
     }
     return '#a9a9a9';
@@ -215,7 +200,7 @@ class ConfirmPage extends Component {
         >
           <MaterialIcons
             name={this.getHeaderIconName()}
-            style={{ color: this.getColor(), right: 0 }}
+            style={{ color: 'white', right: 0 }}
             size={35}
           />
         </TouchableOpacity>

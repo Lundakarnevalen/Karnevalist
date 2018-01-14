@@ -98,19 +98,8 @@ class SplashScreen extends Component {
   }
 
   setCurrenTheme() {
-    let currentTheme = 'day';
-    const currentHour = new Date().getHours();
-    if (currentHour < 9) {
-      currentTheme = 'morning';
-      StatusBar.setBarStyle('dark-content', true);
-    } else if (currentHour < 18) {
-      currentTheme = 'day';
-      StatusBar.setBarStyle('dark-content', true);
-    } else {
-      currentTheme = 'night';
-      StatusBar.setBarStyle('light-content', true);
-    }
-    this.props.setTheme(currentTheme);
+    StatusBar.setBarStyle('light-content', true);
+    this.props.setTheme('night');
   }
 
   spin() {

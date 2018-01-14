@@ -31,20 +31,6 @@ class SectionItemScreen extends Component {
     };
   }
 
-  getColor() {
-    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
-  }
-
-  getIconColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return '#F7A021';
-      case 'day':
-        return '#f4376d';
-      default:
-        return 'white';
-    }
-  }
 
   getStrings() {
     const { language } = this.props
@@ -85,7 +71,7 @@ class SectionItemScreen extends Component {
         <ScrollView style={scrollStyle}>
           <View style={container}>{image}</View>
           <View style={{ height: 10, backgroundColor: 'white' }} />
-          <Text style={[headerStyle, { color: this.getColor() }]}>{title}</Text>
+          <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
           <Text style={textStyle}>{description}</Text>
         </ScrollView>
       </View>

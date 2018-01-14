@@ -7,17 +7,7 @@ const WIDTH = Dimensions.get('window').width;
 
 class CustomButton extends Component {
   getUnderlineButtonText() {
-    let color;
-    switch (this.props.theme) {
-      case 'morning':
-        color = '#ffffff';
-        break;
-      case 'day':
-        color = 'rgb(138, 71, 151)';
-        break;
-      default:
-        color = '#ffffff';
-    }
+    const color = '#ffffff';
     return {
       color,
       textDecorationLine: 'underline',
@@ -26,17 +16,7 @@ class CustomButton extends Component {
   }
 
   getStandardButtonText() {
-    let color;
-    switch (this.props.theme) {
-      case 'morning':
-        color = '#F7A021';
-        break;
-      case 'day':
-        color = '#f4376d';
-        break;
-      default:
-        color = 'white';
-    }
+    const color = 'white';
     return {
       color,
       fontSize: 20,
@@ -45,27 +25,12 @@ class CustomButton extends Component {
   }
 
   getStandardButton() {
-    let borderWidth = 1;
-    let backgroundColor;
-    let borderColor;
-    switch (this.props.theme) {
-      case 'morning':
-        backgroundColor = 'white';
-        borderColor = '#F7A021';
-        break;
-      case 'day':
-        backgroundColor = 'white';
-        borderColor = '#f4376d';
-        break;
-      default:
-        backgroundColor = '#F7A021';
-        borderWidth = 0;
-    }
+    const borderWidth = 0;
+    const backgroundColor = '#F7A021';
     return {
       backgroundColor,
       padding: 10,
       borderWidth,
-      borderColor
     };
   }
 
