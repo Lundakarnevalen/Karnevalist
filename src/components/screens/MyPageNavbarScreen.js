@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Dimensions } from 'react-native';
+import { Image, Dimensions, Platform } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -144,7 +144,7 @@ const TabNav = TabNavigator(
         height: SIZE
       },
       style: {
-        height: 49,
+        height: Platform.OS === 'ios' ? 49 : 60,
         backgroundColor: '#ffffff'
       },
       indicatorStyle: {

@@ -44,7 +44,7 @@ class NewsScreen extends Component {
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <ListView
           enableEmptySections
-          style={{ height: height - (Platform.OS === 'ios' ? 113 : 99) }}
+          style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
           dataSource={this.state.dataSource}
           enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}

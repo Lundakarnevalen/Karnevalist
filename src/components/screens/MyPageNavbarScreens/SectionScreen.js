@@ -64,7 +64,7 @@ class SectionScreen extends Component {
           />
         </View>
         <FlatList
-          style={{ height: height - (Platform.OS === 'ios' ? 113 : 99) }}
+          style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
           data={this.state.data}
           contentContainerStyle={{ alignItems: 'center' }}
           renderItem={({ item }) => (

@@ -38,7 +38,7 @@ class ProfileScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <ListView
-          style={{ height: height - (Platform.OS === 'ios' ? 113 : 99) }}
+          style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
           contentContainerStyle={{ alignItems: 'center' }}
           dataSource={this.state.dataSource}
           renderRow={rowData => (
