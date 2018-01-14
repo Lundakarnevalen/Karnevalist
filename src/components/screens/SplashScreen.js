@@ -143,7 +143,7 @@ const styles = {
   text: {
     marginTop: 50,
     fontSize: 30,
-    color: '#1A1A1A',
+    color: 'white',
     fontFamily: 'Avenir Next Medium',
     backgroundColor: 'transparent'
   }
