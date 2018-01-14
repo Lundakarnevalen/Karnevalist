@@ -582,22 +582,6 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
     SE: 'Du har inte valt några sektioner',
     EN: 'You have not chosen any sections'
   }
-}
-
-export const CAMERA_STRINGS = {
-  fields: ['take', 'your', 'picture'],
-  take: {
-    SE: 'Ta',
-    EN: 'Take'
-  },
-  your: {
-    SE: 'Din',
-    EN: 'Your'
-  },
-  picture: {
-    SE: 'Bild',
-    EN: 'Picture'
-  }
 };
 
 export const LOADING_STRINGS = {

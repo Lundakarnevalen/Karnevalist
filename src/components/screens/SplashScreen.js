@@ -1,32 +1,33 @@
-import React, { Component } from 'react'
-import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native'
-import { connect } from 'react-redux'
-import axios from 'axios'
+import React, { Component } from 'react';
+import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native';
+import { connect } from 'react-redux';
+import axios from 'axios';
 import { getItem } from '../../helpers/LocalSave';
 import BackgroundImage from '../common/BackgroundImage';
 import { setTheme, setSections, setToken, setEmail } from '../../actions';
 
-const baseURL = 'https://api.10av10.com/api/user/'
-const WIDTH = Dimensions.get('window').width
+const baseURL = 'https://api.10av10.com/api/user/';
+const WIDTH = Dimensions.get('window').width;
 class SplashScreen extends Component {
-
   constructor(props) {
-      super(props)
-      this.state = {
-        spinValue: new Animated.Value(0)
-      }
+    super(props);
+    this.state = {
+      spinValue: new Animated.Value(0)
+    };
   }
 
   componentWillMount() {
-    this.setCurrenTheme()
-    this.spin()
-    this.authorize()
-    this.getSectionInfo()
+    this.setCurrenTheme();
+    this.spin();
+    this.authorize();
+    this.getSectionInfo();
   }
 
   getImage(url, section) {
-    const tempSection = section
-    axios.get(url).then(r => {
+    const tempSection = section;
+    axios
+      .get(url)
+      .then(r => {
         const image = (
           <Image
             style={{ width: WIDTH - 10, height: WIDTH - 50 }}
@@ -34,10 +35,10 @@ class SplashScreen extends Component {
             defaultSource={require('../../../res/Monstergubbe.png')}
           />
         );
-        tempSection.imguri = r.data.source_url
+        tempSection.imguri = r.data.source_url;
         tempSection.image = image;
-        this.props.setSections(tempSection)
-        return tempSection
+        this.props.setSections(tempSection);
+        return tempSection;
       })
       .catch(error => {
         console.error(error);
@@ -55,42 +56,45 @@ class SplashScreen extends Component {
           key: item.id,
           id: item.id,
           title: item.title.rendered,
-          info: strippedContent,
+          info: strippedContent
         };
-        this.getImage(imgUrl, section)
+        this.getImage(imgUrl, section);
       });
-    })
+    });
   }
 
   authorize() {
-    setTimeout(() =>
-      getItem('email', email => {
-      if (email !== null) {
-        getItem('accessToken', token => {
-          const url = baseURL + email
-          const headers = {
-            Authorization: 'Bearer ' + token,
-            'content-type': 'application/json'
+    setTimeout(
+      () =>
+        getItem('email', email => {
+          if (email !== null) {
+            getItem('accessToken', token => {
+              const url = baseURL + email;
+              const headers = {
+                Authorization: 'Bearer ' + token,
+                'content-type': 'application/json'
+              };
+              axios
+                .get(url, { headers })
+                .then(response => {
+                  const { success } = response.data;
+                  if (success) {
+                    this.props.navigation.navigate('MyPageNavbarScreen');
+                    this.props.setToken(token);
+                    this.props.setEmail(email);
+                  } else this.props.navigation.navigate('LoginScreen');
+                })
+                .catch(error => {
+                  this.props.navigation.navigate('LoginScreen');
+                  console.log(error.message);
+                });
+            });
+          } else {
+            this.props.navigation.navigate('LoginScreen');
           }
-          axios.get(url, { headers })
-          .then((response) => {
-            const { success } = response.data
-            if (success) {
-              this.props.navigation.navigate('MyPageNavbarScreen')
-              this.props.setToken(token)
-              this.props.setEmail(email)
-            } else
-              this.props.navigation.navigate('LoginScreen')
-          })
-          .catch((error) => {
-            this.props.navigation.navigate('LoginScreen')
-            console.log(error.message);
-          });
-        })
-      } else {
-        this.props.navigation.navigate('LoginScreen')
-      }
-    }), 2000)
+        }),
+      2000
+    );
   }
 
   setCurrenTheme() {
@@ -110,35 +114,29 @@ class SplashScreen extends Component {
   }
 
   spin() {
-    this.state.spinValue.setValue(0)
-    Animated.timing(
-      this.state.spinValue,
-      {
-        toValue: 1,
-        duration: 2000,
-        easing: Easing.linear
-      }
-    ).start(() => this.spin())
+    this.state.spinValue.setValue(0);
+    Animated.timing(this.state.spinValue, {
+      toValue: 1,
+      duration: 2000,
+      easing: Easing.linear
+    }).start(() => this.spin());
   }
 
   render() {
-    const { container, text, image } = styles
+    const { container, text, image } = styles;
     const spin = this.state.spinValue.interpolate({
-       inputRange: [0, 1],
-       outputRange: ['0deg', '360deg']
-     })
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+    });
     return (
       <View style={container}>
         <BackgroundImage picture={4} />
         <Animated.View style={[container, { transform: [{ rotate: spin }] }]}>
           <Text style={text}> LOADING </Text>
-          <Image
-            style={image}
-            source={require('../../../res/Monstergubbe.png')}
-          />
+          <Image style={image} source={require('../../../res/Monstergubbe.png')} />
         </Animated.View>
       </View>
-    )
+    );
   }
 }
 
@@ -146,7 +144,7 @@ const styles = {
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   image: {
     width: 227,
@@ -157,8 +155,9 @@ const styles = {
     marginTop: 50,
     fontSize: 30,
     color: '#1A1A1A',
-    fontFamily: 'Avenir Next Medium'
+    fontFamily: 'Avenir Next Medium',
+    backgroundColor: 'transparent'
   }
-}
+};
 
 export default connect(null, { setTheme, setSections, setToken, setEmail })(SplashScreen);
