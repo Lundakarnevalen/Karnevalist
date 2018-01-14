@@ -64,15 +64,16 @@ class LoginScreen extends Component {
     this.setState({ alertVisible: false, forgotPasswordEmail: '' });
   }
 
-  handleLogin(email, password) {
+  handleLogin() {
     const url = 'https://api.10av10.com/login/email';
     const strings = this.getStrings();
-    this.setState({ loading: true, loadingComplete: false });
+    const { email, password } = this.state;
     if (email === '') {
       Alert.alert(strings.error, strings.emailError);
     } else if (password === '') {
       Alert.alert(strings.error, strings.passwordError);
     } else {
+      this.setState({ loading: true, loadingComplete: false });
       axios
         .post(url, {
           email,
