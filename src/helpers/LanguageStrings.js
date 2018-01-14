@@ -414,14 +414,18 @@ export const PROFILE_SCREEN_STRINGS = {
 };
 
 export const SECTION_ITEM_SCREEN_STRINGS = {
-  fields: ['messageStart', 'messageEnd'],
+  fields: ['messageStart', 'messageEndAdd', 'messageEndRemove'],
   messageStart: {
     SE: 'Sektion: "',
     EN: 'Section: "'
   },
-  messageEnd: {
+  messageEndAdd: {
     SE: '" tillagd',
     EN: '" added'
+  },
+  messageEndRemove: {
+    SE: '" bortagen',
+    EN: '" removed'
   }
 };
 
