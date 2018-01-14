@@ -8,6 +8,7 @@ import BackgroundImage from '../../common/BackgroundImage'
 import SuperAgileAlert from '../../common/SuperAgileAlert'
 import Header from '../../common/Header';
 import Input from '../../common/Input';
+import { logout } from '../../../helpers/functions'
 import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 import { handleErrorMsg } from '../../../helpers/ApiManager'
 
@@ -34,9 +35,10 @@ class MyProfileScreen extends Component {
   }
 
   getUserInfo() {
+    const strings = this.getStrings()
     const url = baseURL + this.props.email
     const headers = {
-      Authorization: 'Bearer ' + this.props.token,
+      Authorization: 'Beareras ' + this.props.token,
       'content-type': 'application/json'
     }
     axios.get(url, { headers })
@@ -45,6 +47,8 @@ class MyProfileScreen extends Component {
       this.setState({ oldUser: { ...user }, user })
     })
     .catch((error) => {
+      if (error.response.status === 401)
+       logout(this.props.navigation, true, strings.expiredTokenTitle, strings.expiredTokenMessage)
       const msg = handleErrorMsg(error.message)
       console.log(msg);
     });

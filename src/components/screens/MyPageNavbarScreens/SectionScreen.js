@@ -21,7 +21,9 @@ class SectionScreen extends Component {
     };
   }
 
-
+  componentWillReceiveProps(props) {
+    console.log("HI");
+  }
   getColor() {
     switch (this.props.theme) {
       case 'morning':

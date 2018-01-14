@@ -11,6 +11,16 @@ const shirtSize = {
   EN: 'Choose shirt size'
 };
 
+const expiredTokenTitle = {
+  SE: 'Session Slut',
+  EN: 'Session Expired'
+};
+
+const expiredTokenMessage = {
+  SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
+  EN: 'Your sessions has expired please login again to continue '
+};
+
 const studentUnion = {
   SE: 'Välj nation',
   EN: 'Choose student union'
@@ -434,7 +444,15 @@ export const SONGBOOK_SCREEN_STRINGS = {
 };
 
 export const CONFIRM_PAGE_STRINGS = {
-  fields: ['title', 'sectionSelection', 'selectionOK', 'send', 'toSections'],
+  fields: [
+    'title',
+    'sectionSelection',
+    'selectionOK',
+    'send',
+    'toSections',
+    'expiredTokenTitle',
+    'expiredTokenMessage'
+  ],
   title: {
     SE: 'Bekräfta dina val',
     EN: 'Confirmation page'
@@ -454,7 +472,9 @@ export const CONFIRM_PAGE_STRINGS = {
   toSections: {
     SE: 'Till val av sektioner',
     EN: 'To section selection'
-  }
+  },
+  expiredTokenTitle,
+  expiredTokenMessage
 };
 
 export const MY_PROFILE_SCREEN_STRINGS = {
@@ -487,7 +507,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'popUpHeader',
     'popUpInfo',
     'updateInfoMessageSuccess',
-    'updateInfoMessageFail'
+    'updateInfoMessageFail',
+    'expiredTokenTitle',
+    'expiredTokenMessage'
   ],
   title: {
     SE: 'Användarinfo',
@@ -572,7 +594,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   updateInfoMessageFail: {
     SE: 'Något gick fel',
     EN: 'Something went wrong'
-  }
+  },
+  expiredTokenTitle,
+  expiredTokenMessage
 };
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {

@@ -7,8 +7,9 @@ import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
 import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
+import { logout } from '../../helpers/functions';
 import BackgroundImage from '../common/BackgroundImage';
-import {  setSectionPriorities } from '../../actions'
+import { setSectionPriorities } from '../../actions'
 import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings'
 
@@ -181,12 +182,12 @@ class ConfirmPage extends Component {
         return data[index].key
       })
       this.postSectionPriorities(sectionPriorities)
-      this.props.setSectionPriorities(sectionPriorities)
-      Alert.alert(strings.selectionOK);
+
     }
   }
 
   postSectionPriorities(sectionPriorities) {
+    const strings = this.getStrings()
     const url = 'https://api.10av10.com/api/section/'
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
@@ -194,9 +195,15 @@ class ConfirmPage extends Component {
     }
     axios.post(url, { sectionPriorities }, { headers })
     .then((response) => {
+      if (response.success) {
+        this.props.setSectionPriorities(sectionPriorities)
+        Alert.alert(strings.selectionOK);
+      }
       //TODO TOAST??
     })
     .catch((error) => {
+      if (error.response.status === 401)
+       logout(this.props.navigation, true, strings.expiredTokenTitle, strings.expiredTokenMessage)
       // const msg = handleErrorMsg(error.message)
       console.log(error);
     });
