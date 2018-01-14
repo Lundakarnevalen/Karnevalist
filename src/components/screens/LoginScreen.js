@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView, StatusBar } from 'react-native';
+import { Alert, View, Dimensions, ScrollView } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
-import { setTheme, setLanguage, setToken, setEmail } from '../../actions';
+import { setLanguage, setToken, setEmail } from '../../actions';
 import Input from '../common/Input';
 import SuperAgileAlert from '../common/SuperAgileAlert';
 import BackgroundImage from '../common/BackgroundImage';
@@ -27,22 +27,6 @@ class LoginScreen extends Component {
       loadingComplete: false,
       forgotPasswordEmail: ''
     };
-  }
-
-  componentWillMount() {
-    let currentTheme = 'day';
-    const currentHour = new Date().getHours();
-    if (currentHour < 9) {
-      currentTheme = 'morning';
-      StatusBar.setBarStyle('dark-content', true);
-    } else if (currentHour < 18) {
-      currentTheme = 'day';
-      StatusBar.setBarStyle('dark-content', true);
-    } else {
-      currentTheme = 'night';
-      StatusBar.setBarStyle('light-content', true);
-    }
-    this.props.setTheme(currentTheme);
   }
 
   getStrings() {
@@ -92,7 +76,8 @@ class LoginScreen extends Component {
       .then((res) => {
         const { accessToken } = res.data
         this.props.setToken(accessToken)
-        this.props.setEmail(this.state.email)
+        this.props.setEmail(email)
+        saveItem('email', email)
         saveItem('accessToken', accessToken)
         this.setState({ loadingComplete: true });
       })
@@ -244,4 +229,4 @@ const mapStateToProps = ({ currentLanguage }) => {
   return { language };
 };
 
-export default connect(mapStateToProps, { setTheme, setLanguage, setToken, setEmail })(LoginScreen);
+export default connect(mapStateToProps, { setLanguage, setToken, setEmail })(LoginScreen);

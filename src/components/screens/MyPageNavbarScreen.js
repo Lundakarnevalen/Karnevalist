@@ -4,7 +4,7 @@ import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setSections } from '../../actions';
+import { setSections, setSectionPriorities } from '../../actions';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
@@ -154,8 +154,9 @@ const TabNav = TabNavigator(
   }
 );
 
-const mapStateToProps = ({ currentLanguage }) => {
+const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { language } = currentLanguage;
-  return { language };
+  const { token } = userInformation;
+  return { language, token, sections: sections.sections };
 };
-export default connect(mapStateToProps, { setSections })(MyPageNavbarScreen);
+export default connect(mapStateToProps, { setSections, setSectionPriorities })(MyPageNavbarScreen);

@@ -17,11 +17,10 @@ import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
 import CustomButton from '../common/CustomButton';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
-import CameraButton from '../common/CameraButton';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
-import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
-import { handleErrorMsg } from '../../helpers/ApiManager'
+import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
+import { handleErrorMsg } from '../../helpers/ApiManager';
 
 const width = Dimensions.get('window').width - 32;
 const height = Dimensions.get('window').height;
@@ -55,11 +54,11 @@ class RegistrationScreen extends Component {
   }
 
   getStrings() {
-    const { language } = this.props
-    const { fields } = REGISTRATION_SCREEN_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = REGISTRATION_SCREEN_STRINGS[field][language]))
-    return strings
+    const { language } = this.props;
+    const { fields } = REGISTRATION_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = REGISTRATION_SCREEN_STRINGS[field][language]));
+    return strings;
   }
 
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
@@ -128,7 +127,7 @@ class RegistrationScreen extends Component {
   }
 
   render() {
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     const { flexHorizontal } = styles;
     const {
       firstName,
@@ -161,10 +160,6 @@ class RegistrationScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
         <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
-          <CameraButton
-            onPress={() => this.props.navigation.navigate('CameraScreen')}
-            source={this.props.picture}
-          />
           <Input
             placeholder={strings.firstName}
             onChangeText={firstNameInput => {
@@ -181,7 +176,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             placeholder={strings.email}
-            keyboardType='email-address'
+            keyboardType="email-address"
             onChangeText={emailInput => {
               this.setState({ email: emailInput });
             }}
@@ -189,7 +184,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             placeholder={strings.confirmEmail}
-            keyboardType='email-address'
+            keyboardType="email-address"
             onChangeText={emailInput => {
               this.setState({ confirmedEmail: emailInput });
             }}
@@ -221,7 +216,7 @@ class RegistrationScreen extends Component {
           <View style={flexHorizontal}>
             <Input
               placeholder={strings.postNumber}
-              keyboardType='numeric'
+              keyboardType="numeric"
               onChangeText={postNumberInput => {
                 this.setState({ postNumber: postNumberInput });
               }}
@@ -240,7 +235,7 @@ class RegistrationScreen extends Component {
           </View>
           <Input
             placeholder={strings.phoneNumber}
-            keyboardType='phone-pad'
+            keyboardType="phone-pad"
             onChangeText={phoneNbrInput => {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
@@ -253,21 +248,31 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
           />
-          {this.renderPickerForPlatform(strings.shirtSize, strings.shirtSizeArray, shirtSize, 'shirt')}
-          {this.renderPickerForPlatform(strings.studentUnion, strings.studentUnionArray, studentUnion, 'union')}
+          {this.renderPickerForPlatform(
+            strings.shirtSize,
+            strings.shirtSizeArray,
+            shirtSize,
+            'shirt'
+          )}
+          {this.renderPickerForPlatform(
+            strings.studentUnion,
+            strings.studentUnionArray,
+            studentUnion,
+            'union'
+          )}
           <View style={{ right: 3 }}>
-          <ButtonChoiceManager
-            buttonInputVector={[strings.activeKarneval]}
-            multipleChoice
-            size={30}
-            color={this.getColor()}
-          />
-          <ButtonChoiceManager
-            buttonInputVector={[strings.driversLicense]}
-            multipleChoice
-            size={30}
-            color={this.getColor()}
-          />
+            <ButtonChoiceManager
+              buttonInputVector={[strings.activeKarneval]}
+              multipleChoice
+              size={30}
+              color={this.getColor()}
+            />
+            <ButtonChoiceManager
+              buttonInputVector={[strings.driversLicense]}
+              multipleChoice
+              size={30}
+              color={this.getColor()}
+            />
           </View>
           <CustomButton
             text={strings.register}
@@ -316,7 +321,7 @@ class RegistrationScreen extends Component {
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
-                    const msg = handleErrorMsg(error.message, strings)
+                    const msg = handleErrorMsg(error.message, strings);
                     this.setState({ loadingComplete: false, loading: false });
                     Alert.alert(strings.error, msg);
                   });
@@ -380,7 +385,7 @@ const styles = {
 const mapStateToProps = ({ currentTheme, userInformation, currentLanguage }) => {
   const { theme } = currentTheme;
   const { picture } = userInformation;
-  const { language } = currentLanguage
+  const { language } = currentLanguage;
   return { theme, picture, language };
 };
 

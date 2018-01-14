@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, BackHandler, View, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios'
 import { connect } from 'react-redux';
@@ -29,6 +29,7 @@ class MyProfileScreen extends Component {
   }
 
   componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     this.getUserInfo()
   }
 

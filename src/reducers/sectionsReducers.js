@@ -1,7 +1,8 @@
-import { SET_SECTIONS } from '../actions/Types.js';
+import { SET_SECTIONS, SET_SECTION_PRIORITIES } from '../actions/Types.js';
 
 const INITIAL_STATE = {
-  sections: []
+  sections: [],
+  sectionPriorities: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -11,6 +12,9 @@ export default (state = INITIAL_STATE, action) => {
       if (tempSections.findIndex(i => i.key === action.payload.key) === -1)
         tempSections.push(action.payload)
       return { ...state, sections: tempSections };
+    }
+    case SET_SECTION_PRIORITIES: {
+      return { ...state, sectionPriorities: action.payload };
     }
     default:
       return state;

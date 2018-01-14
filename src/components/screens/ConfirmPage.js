@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Text, View, Dimensions, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import axios from 'axios'
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
 import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import BackgroundImage from '../common/BackgroundImage';
+import {  setSectionPriorities } from '../../actions'
 import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings'
 
@@ -40,7 +42,8 @@ class ConfirmPage extends Component {
           imguri: s.imguri
         });
       });
-      this.setState({ data: tempData });
+      const order = tempData.map(x => x.id)
+      this.setState({ data: tempData, order });
     });
   }
 
@@ -95,6 +98,7 @@ class ConfirmPage extends Component {
           contentContainerStyle={contentContainer}
           data={this.state.data}
           renderRow={this.renderRow.bind(this)}
+          onChangeOrder={(nextOrder) => this.setState({ order: nextOrder })}
         />
         <TouchableOpacity
           style={this.getConfirmButtonStyle()}
@@ -135,8 +139,9 @@ class ConfirmPage extends Component {
   deleteRow(id) {
     const newData = this.state.data.filter(dataItem => dataItem.id !== id);
     const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
+    const newOrder = this.state.order.filter(i => i !== id);
     removeItem(toRemove[0].localKey);
-    this.setState({ data: newData });
+    this.setState({ data: newData, order: newOrder });
   }
 
   renderRow(item) {
@@ -167,12 +172,34 @@ class ConfirmPage extends Component {
   }
 
   onPressConfirmButton() {
-    const { data, strings } = this.state;
+    const { data, strings, order } = this.state;
     if (data.length < 5) {
       Alert.alert(strings.sectionSelection);
     } else {
+      const sectionPriorities = order.map(i => {
+        const index = data.findIndex(d => d.id + '' === i + '')
+        return data[index].key
+      })
+      this.postSectionPriorities(sectionPriorities)
+      this.props.setSectionPriorities(sectionPriorities)
       Alert.alert(strings.selectionOK);
     }
+  }
+
+  postSectionPriorities(sectionPriorities) {
+    const url = 'https://api.10av10.com/api/section/'
+    const headers = {
+      Authorization: 'Bearer ' + this.props.token,
+      'content-type': 'application/json'
+    }
+    axios.post(url, { sectionPriorities }, { headers })
+    .then((response) => {
+      //TODO TOAST??
+    })
+    .catch((error) => {
+      // const msg = handleErrorMsg(error.message)
+      console.log(error);
+    });
   }
 
   onPressHeaderButton() {
@@ -243,10 +270,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLanguage }) => {
+const mapStateToProps = ({ currentTheme, sections, currentLanguage, userInformation }) => {
   const { theme } = currentTheme;
   const { language } = currentLanguage;
-  return { theme, sections: sections.sections, language };
+  const { token } = userInformation
+  return { theme, sections: sections.sections, language, token };
 };
 
-export default connect(mapStateToProps, null)(ConfirmPage);
+export default connect(mapStateToProps, { setSectionPriorities })(ConfirmPage);
