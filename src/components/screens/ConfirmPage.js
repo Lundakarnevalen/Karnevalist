@@ -101,11 +101,7 @@ class ConfirmPage extends Component {
 
   getBackgroundColor() {
     const { data } = this.state;
-    const { theme } = this.props;
     if (data.length >= 5) {
-      if (theme === 'day') {
-        return '#F4376D';
-      }
       return '#F7A021';
     }
     return '#a9a9a9';
