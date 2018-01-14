@@ -526,8 +526,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   personalNumber,
   careOf: {
     //TODO make accurate description
-    SE: 'BRY SIG OM??? VET INTE VAD DETTA ÄR SNÄLLA ERSÄTT',
-    EN: 'CARE OF??? DO NOT KNOW WHAT THIS IS PLS REPLACE'
+    SE: 'C/O',
+    EN: 'C/O'
   },
   language: {
     SE: 'Språk',

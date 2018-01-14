@@ -38,7 +38,7 @@ class MyProfileScreen extends Component {
     const strings = this.getStrings()
     const url = baseURL + this.props.email
     const headers = {
-      Authorization: 'Beareras ' + this.props.token,
+      Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
     }
     axios.get(url, { headers })
