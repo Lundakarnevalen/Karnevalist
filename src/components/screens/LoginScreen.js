@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, View, Dimensions, ScrollView } from 'react-native';
 import axios from 'axios';
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
 import { setLanguage, setToken, setEmail } from '../../actions';
@@ -11,7 +11,7 @@ import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 import { saveItem } from '../../helpers/LocalSave';
 import { handleErrorMsg } from '../../helpers/ApiManager';
-import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
+import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width * 0.9;
 const HEIGHT = Dimensions.get('window').height;
@@ -30,22 +30,22 @@ class LoginScreen extends Component {
   }
 
   getStrings() {
-    const { language } = this.props
-    const { fields } = LOGIN_SCREEN_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = LOGIN_SCREEN_STRINGS[field][language]))
-    return strings
+    const { language } = this.props;
+    const { fields } = LOGIN_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = LOGIN_SCREEN_STRINGS[field][language]));
+    return strings;
   }
 
   changeLang() {
-    const language = this.props.language === 'SE' ? 'EN' : 'SE'
-    this.props.setLanguage(language)
-    saveItem('language', language)
+    const language = this.props.language === 'SE' ? 'EN' : 'SE';
+    this.props.setLanguage(language);
+    saveItem('language', language);
   }
 
   handleResetPassword() {
-    const url = 'https://api.10av10.com/login/forgotpassword'
-    const strings = this.getStrings()
+    const url = 'https://api.10av10.com/login/forgotpassword';
+    const strings = this.getStrings();
     axios
       .post(url, {
         email: this.state.forgotPasswordEmail
@@ -58,78 +58,89 @@ class LoginScreen extends Component {
         }
       })
       .catch(error => {
-        const msg = handleErrorMsg(error.message, strings)
+        const msg = handleErrorMsg(error.message, strings);
         Alert.alert(strings.error, msg);
       });
-      this.setState({ alertVisible: false, forgotPasswordEmail: '' })
+    this.setState({ alertVisible: false, forgotPasswordEmail: '' });
   }
 
-  handleLogin(email, password) {
-    const url = 'https://api.10av10.com/login/email'
-    const strings = this.getStrings()
-    this.setState({ loading: true, loadingComplete: false });
-    axios
-      .post(url, {
-        email,
-        password
-      })
-      .then((res) => {
-        const { accessToken } = res.data
-        this.props.setToken(accessToken)
-        this.props.setEmail(email)
-        saveItem('email', email)
-        saveItem('accessToken', accessToken)
-        this.setState({ loadingComplete: true });
-      })
-      .catch(error => {
-        const msg = handleErrorMsg(error.message, strings)
-        this.setState({ loading: false, loadingComplete: false });
-        Alert.alert(strings.error, msg);
-      });
+  handleLogin() {
+    const url = 'https://api.10av10.com/login/email';
+    const strings = this.getStrings();
+    const { email, password } = this.state;
+    if (email === '') {
+      Alert.alert(strings.error, strings.emailError);
+    } else if (password === '') {
+      Alert.alert(strings.error, strings.passwordError);
+    } else {
+      this.setState({ loading: true, loadingComplete: false });
+      axios
+        .post(url, {
+          email,
+          password
+        })
+        .then(res => {
+          const { accessToken } = res.data;
+          this.props.setToken(accessToken);
+          this.props.setEmail(email);
+          saveItem('email', email);
+          saveItem('accessToken', accessToken);
+          this.setState({ loadingComplete: true });
+        })
+        .catch(error => {
+          const msg = handleErrorMsg(error.message, strings);
+          this.setState({ loading: false, loadingComplete: false });
+          Alert.alert(strings.error, msg);
+        });
+    }
   }
 
   render() {
     const { containerStyle, container1 } = styles;
-    const { email, password, loading, loadingComplete, forgotPasswordEmail, alertVisible } = this.state;
-    const strings = this.getStrings()
+    const {
+      email,
+      password,
+      loading,
+      loadingComplete,
+      forgotPasswordEmail,
+      alertVisible
+    } = this.state;
+    const strings = this.getStrings();
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
         <ScrollView>
           <View style={container1}>
-          <View style={{ alignSelf: 'flex-start' }}>
-          <CustomButton
-            width={170}
-            text={strings.languageButton}
-            onPress={() => this.changeLang()}
-            style="textButton"
-          />
-          </View>
+            <View style={{ alignSelf: 'flex-start' }}>
+              <CustomButton
+                width={170}
+                text={strings.languageButton}
+                onPress={() => this.changeLang()}
+                style="textButton"
+              />
+            </View>
             <Input
               value={email}
-              keyboardType='email-address'
+              keyboardType={'email-address'}
               placeholder={strings.email}
               width={WIDTH}
               onChangeText={text => this.setState({ email: text })}
+              returnKeyType={'next'}
+              onSubmitEditing={() => this.refs.secondInput.focus()}
             />
             <Input
+              ref={'secondInput'}
               value={password}
               placeholder={strings.password}
               width={WIDTH}
               secureText
               onChangeText={text => this.setState({ password: text })}
+              returnKeyType={'done'}
+              onSubmitEditing={() => this.handleLogin()}
             />
             <CustomButton
               text={strings.loginButton}
-              onPress={() => {
-                if (email === '') {
-                  Alert.alert(strings.error, strings.emailError);
-                } else if (password === '') {
-                  Alert.alert(strings.error, strings.passwordError);
-                } else {
-                  this.handleLogin(email, password)
-                }
-              }}
+              onPress={() => this.handleLogin()}
               style={'standardButton'}
               width={WIDTH}
             />
@@ -157,7 +168,7 @@ class LoginScreen extends Component {
             />
             <SuperAgileAlert
               alertVisible={alertVisible}
-              setAlertVisible={(visible) => this.setState({ alertVisible: visible })}
+              setAlertVisible={visible => this.setState({ alertVisible: visible })}
               buttonsIn={[
                 { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
                 { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
@@ -165,14 +176,14 @@ class LoginScreen extends Component {
               header={strings.passwordPopupHeader}
               info={strings.passwordPopupInfo}
             >
-            <Input
-              placeholder={strings.inputPlaceholder}
-              title={strings.inputTitle}
-              width={Dimensions.get('window').width / 1.2}
-              underlineColorAndroid="transparent"
-              onChangeText={text => this.setState({ forgotPasswordEmail: text })}
-              value={forgotPasswordEmail}
-            />
+              <Input
+                placeholder={strings.inputPlaceholder}
+                title={strings.inputTitle}
+                width={Dimensions.get('window').width / 1.2}
+                underlineColorAndroid="transparent"
+                onChangeText={text => this.setState({ forgotPasswordEmail: text })}
+                value={forgotPasswordEmail}
+              />
             </SuperAgileAlert>
           </View>
         </ScrollView>
@@ -182,9 +193,7 @@ class LoginScreen extends Component {
             redirect={() => {
               const resetAction = NavigationActions.reset({
                 index: 0,
-                actions: [
-                  NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' }),
-                ],
+                actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
                 key: null
               });
               this.setState({ loading: false, loadingComplete: false, password: '' });
@@ -225,7 +234,7 @@ const styles = {
 };
 
 const mapStateToProps = ({ currentLanguage }) => {
-  const { language } = currentLanguage
+  const { language } = currentLanguage;
   return { language };
 };
 

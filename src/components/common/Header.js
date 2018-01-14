@@ -8,25 +8,11 @@ const WIDTH = Dimensions.get('window').width;
 
 class Header extends Component {
   getTextColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return '#F7A021';
-      case 'day':
-        return '#f4376d';
-      default:
         return 'white';
-    }
   }
 
   getBackgroundColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return 'white';
-      case 'day':
-        return 'white';
-      default:
         return '#F7A021';
-    }
   }
 
   getContainerStyle() {
@@ -37,6 +23,8 @@ class Header extends Component {
       justifyContent: 'center',
       flexDirection: 'row',
       backgroundColor: this.getBackgroundColor(),
+      borderBottomWidth: 1,
+      borderColor: 'gray',
       zIndex: 999,
       ...Platform.select({
         ios: {

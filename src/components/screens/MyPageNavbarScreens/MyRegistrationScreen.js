@@ -28,14 +28,7 @@ class MyRegistrationScreen extends Component {
   }
 
   getColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return '#F7A021';
-      case 'day':
-        return '#f4376d';
-      default:
         return 'white';
-    }
   }
   getStrings() {
     const { language } = this.props

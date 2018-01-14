@@ -9,9 +9,6 @@ const HEIGHT = Dimensions.get('window').height;
 
 class SongBookScreen extends Component {
 
-  getColor() {
-    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
-  }
 
   getStrings() {
     const { language } = this.props
@@ -28,7 +25,7 @@ class SongBookScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={2} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
-        <Text style={[styles.textStyle, { color: this.getColor() }]}>Coming soon!</Text>
+        <Text style={[styles.textStyle, { color: '#F7A021' }]}>Coming soon!</Text>
       </View>
     );
   }
