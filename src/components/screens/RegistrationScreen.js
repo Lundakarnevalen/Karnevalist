@@ -77,7 +77,6 @@ class RegistrationScreen extends Component {
   };
 
   scrollToInput(inputPosition) {
-    console.log(inputPosition);
     const dy = HEIGHT - this.state.keyboardHeight - 64;
     const scrollTo = dy - inputPosition;
     if (scrollTo < 0) {
@@ -207,7 +206,7 @@ class RegistrationScreen extends Component {
             value={firstName}
             onSubmitEditing={() => this.refs.secondInput.focus()}
             returnKeyType={'next'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
             autoFocus
           />
           <Input
@@ -219,7 +218,7 @@ class RegistrationScreen extends Component {
             }}
             value={lastName}
             returnKeyType={'next'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'thirdInput'}
@@ -231,7 +230,7 @@ class RegistrationScreen extends Component {
             }}
             value={email}
             returnKeyType={'next'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'fourthInput'}
@@ -243,7 +242,7 @@ class RegistrationScreen extends Component {
             }}
             value={confirmedEmail}
             returnKeyType={'next'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'fifthInput'}
@@ -254,7 +253,7 @@ class RegistrationScreen extends Component {
             }}
             value={password}
             returnKeyType={'next'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
             secureText
           />
           <Input
@@ -266,7 +265,7 @@ class RegistrationScreen extends Component {
             }}
             value={confirmedPassword}
             returnKeyType={'next'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
             secureText
           />
           <Input
@@ -278,7 +277,7 @@ class RegistrationScreen extends Component {
             }}
             value={address}
             returnKeyType={'next'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <View
             style={flexHorizontal}
@@ -299,7 +298,7 @@ class RegistrationScreen extends Component {
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
               returnKeyType={'next'}
-              setCurrentPosition={() => this.scrollToInput(100 + zipCodePosition)}
+              scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
             />
             <Input
               ref={'ninthInput'}
@@ -311,7 +310,7 @@ class RegistrationScreen extends Component {
               width={WIDTH / 2 - 4}
               value={city}
               returnKeyType={'next'}
-              setCurrentPosition={() => this.scrollToInput(100 + zipCodePosition)}
+              scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
             />
           </View>
           <Input
@@ -324,7 +323,7 @@ class RegistrationScreen extends Component {
             }}
             value={phoneNbr}
             returnKeyType={'next'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'eleventhInput'}
@@ -334,7 +333,7 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
             returnKeyType={'done'}
-            setCurrentPosition={y => this.scrollToInput(y)}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,

@@ -52,10 +52,6 @@ class Input extends Component {
     this.refs.input.focus();
   }
 
-  getPosition() {
-    console.log(this.state.screenPosition);
-  }
-
   render() {
     const { inputStyle, containerStyle } = styles;
     const {
@@ -74,11 +70,7 @@ class Input extends Component {
     } = this.props;
     return (
       <View
-        onLayout={event =>
-          this.setState({
-            screenPosition: 100 + event.nativeEvent.layout.y
-          })
-        }
+        onLayout={event => this.setState({ screenPosition: 100 + event.nativeEvent.layout.y })}
         style={[
           containerStyle,
           extraContainerStyle,
@@ -91,8 +83,8 @@ class Input extends Component {
         <TextInput
           ref={'input'}
           onFocus={() => {
-            if (typeof this.props.setCurrentPosition !== 'undefined') {
-              this.props.setCurrentPosition(this.state.screenPosition);
+            if (typeof this.props.scrollToInput !== 'undefined') {
+              this.props.scrollToInput(this.state.screenPosition);
             }
             this.inputSelected();
           }}
