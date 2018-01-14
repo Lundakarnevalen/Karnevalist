@@ -590,7 +590,7 @@ export const LOADING_STRINGS = {
 };
 
 export const ERROR_MSG_INPUT_FIELD = {
-  fields: ['errorMsgOnlyDigits', 'errorMsgOnlyLetters'],
+  fields: ['errorMsgOnlyDigits', 'errorMsgOnlyLetters', 'errorMsgEmail'],
   errorMsgOnlyDigits: {
     SE: 'Detta fält får endast innehålla siffror',
     EN: 'This field may only contain digits'
@@ -598,5 +598,9 @@ export const ERROR_MSG_INPUT_FIELD = {
   errorMsgOnlyLetters: {
     SE: 'Detta fält får endast innehålla bokstäver',
     EN: 'This field may only contain letters'
+  },
+  errorMsgEmail: {
+    SE: 'Ej giltig email adress',
+    EN: 'Not valid email address'
   }
 };

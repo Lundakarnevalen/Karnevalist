@@ -166,6 +166,7 @@ class RegistrationScreen extends Component {
               this.setState({ firstName: firstNameInput });
             }}
             value={firstName}
+            restriction={'onlyLetters'}
           />
           <Input
             placeholder={strings.lastName}
@@ -173,6 +174,7 @@ class RegistrationScreen extends Component {
               this.setState({ lastName: lastNameInput });
             }}
             value={lastName}
+            restriction={'onlyLetters'}
           />
           <Input
             placeholder={strings.email}
@@ -181,6 +183,7 @@ class RegistrationScreen extends Component {
               this.setState({ email: emailInput });
             }}
             value={email}
+            restriction={'isEmail'}
           />
           <Input
             placeholder={strings.confirmEmail}
@@ -189,6 +192,7 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedEmail: emailInput });
             }}
             value={confirmedEmail}
+            restriction={'isEmail'}
           />
           <Input
             placeholder={strings.password}
@@ -212,6 +216,7 @@ class RegistrationScreen extends Component {
               this.setState({ address: addressInput });
             }}
             value={address}
+            restriction={(adress) => adress.length < 40}
           />
           <View style={flexHorizontal}>
             <Input
@@ -223,6 +228,7 @@ class RegistrationScreen extends Component {
               width={width / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
+              restriction={'onlyDigits'}
             />
             <Input
               placeholder={strings.city}
@@ -231,6 +237,7 @@ class RegistrationScreen extends Component {
               }}
               width={width / 2 - 4}
               value={city}
+              restriction={'onlyLetters'}
             />
           </View>
           <Input
@@ -240,6 +247,7 @@ class RegistrationScreen extends Component {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
             value={phoneNbr}
+            restriction={'onlyDigits'}
           />
           <Input
             placeholder={strings.foodPreferences}

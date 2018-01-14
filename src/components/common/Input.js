@@ -70,6 +70,10 @@ class Input extends Component {
         if (this.containsOnlyDigits(value)) this.stopWarn();
         else this.doWarn();
         break;
+      case 'isEmail':
+        if (this.isEmail(value)) this.stopWarn();
+        else this.doWarn();
+        break;
       default:
         break;
     }
@@ -111,6 +115,9 @@ class Input extends Component {
         case 'onlyDigits':
           message = strings.errorMsgOnlyDigits;
           break;
+        case 'isEmail':
+          message = strings.errorMsgEmail;
+          break;
         default:
           break;
       }
@@ -124,6 +131,9 @@ class Input extends Component {
 
   containsOnlyLetters(t) {
     return /^[a-zåäöA-ZÅÄÖ]+$/.test(t);
+  }
+  isEmail(t) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(t);
   }
 
   getPlaceholderStyle() {
@@ -176,6 +186,7 @@ class Input extends Component {
           autoCorrect={autoCorrect}
           editable={editable}
           keyboardType={keyboardType}
+          maxLength={50}
         />
       </View>
     );
@@ -206,9 +217,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
+const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   const { theme } = currentTheme;
-  return { theme };
+  const { language } = currentLanguage;
+  return { theme, language };
 };
 
 export default connect(mapStateToProps, null)(Input);
