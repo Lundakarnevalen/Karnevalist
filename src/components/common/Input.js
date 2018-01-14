@@ -7,7 +7,8 @@ class Input extends Component {
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
-      borderColor: '#000'
+      borderColor: '#000',
+      screenPosition: null
     };
   }
 
@@ -15,16 +16,12 @@ class Input extends Component {
     if (this.props.value !== '') this.inputSelected();
   }
 
-  getThemeColor() {
-    return '#F7A021';
-  }
-
   inputSelected() {
     Animated.parallel([
       Animated.timing(this.state.fontSize, { toValue: 10, duration: 150 }),
       Animated.timing(this.state.position, { toValue: { x: 9, y: 0 }, duration: 150 })
     ]).start();
-    this.setState({ borderColor: this.getThemeColor() });
+    this.setState({ borderColor: '#F7A021' });
   }
 
   inputDeselected() {
@@ -47,12 +44,16 @@ class Input extends Component {
       position: 'absolute',
       top: position.y,
       left: position.x,
-      color: this.getThemeColor()
+      color: '#F7A021'
     };
   }
 
   focus() {
     this.refs.input.focus();
+  }
+
+  getPosition() {
+    console.log(this.state.screenPosition);
   }
 
   render() {
@@ -68,10 +69,16 @@ class Input extends Component {
       keyboardType = 'default',
       extraContainerStyle,
       returnKeyType,
-      onSubmitEditing = () => console.log('On submit missing')
+      onSubmitEditing = () => console.log('On submit missing'),
+      autoFocus = false
     } = this.props;
     return (
       <View
+        onLayout={event =>
+          this.setState({
+            screenPosition: 100 + event.nativeEvent.layout.y
+          })
+        }
         style={[
           containerStyle,
           extraContainerStyle,
@@ -83,7 +90,12 @@ class Input extends Component {
         )}
         <TextInput
           ref={'input'}
-          onFocus={() => this.inputSelected()}
+          onFocus={() => {
+            if (typeof this.props.setCurrentPosition !== 'undefined') {
+              this.props.setCurrentPosition(this.state.screenPosition);
+            }
+            this.inputSelected();
+          }}
           underlineColorAndroid={'transparent'}
           onEndEditing={() => this.inputDeselected()}
           onChangeText={text => this.props.onChangeText(text)}
@@ -97,6 +109,7 @@ class Input extends Component {
           returnKeyType={returnKeyType}
           blurOnSubmit
           onSubmitEditing={() => onSubmitEditing()}
+          autoFocus={autoFocus}
         />
       </View>
     );
