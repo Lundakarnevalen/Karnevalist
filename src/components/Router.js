@@ -9,7 +9,6 @@ import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
 import MyRegistrationScreen from './screens/MyPageNavbarScreens/MyRegistrationScreen';
 import ConfirmPage from './screens/ConfirmPage';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
-import CameraScreen from './screens/CameraScreen';
 
 const LoggedIn = StackNavigator({
   MyPageNavbarScreen: {
@@ -40,7 +39,7 @@ const LoggedIn = StackNavigator({
     screen: MyProfileScreen,
     navigationOptions: {
       header: null
-    }  
+    }
   },
   MyRegistration: {
     screen: MyRegistrationScreen,
@@ -53,12 +52,6 @@ const LoggedIn = StackNavigator({
 const Register = StackNavigator({
   RegistrationScreen: {
     screen: RegistrationScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  CameraScreen: {
-    screen: CameraScreen,
     navigationOptions: {
       header: null
     }
