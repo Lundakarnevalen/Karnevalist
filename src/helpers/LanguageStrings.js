@@ -572,6 +572,18 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   }
 };
 
+export const MY_REGISTRATION_SCREEN_STRINGS = {
+  fields: ['title', 'emptyListMessage'],
+  title: {
+    SE: 'Mina val',
+    EN: 'My choices'
+  },
+  emptyListMessage: {
+    SE: 'Du har inte valt några sektioner',
+    EN: 'You have not chosen any sections'
+  }
+}
+
 export const CAMERA_STRINGS = {
   fields: ['take', 'your', 'picture'],
   take: {

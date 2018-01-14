@@ -6,6 +6,7 @@ import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
 import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
+import MyRegistrationScreen from './screens/MyPageNavbarScreens/MyRegistrationScreen';
 import ConfirmPage from './screens/ConfirmPage';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
 import CameraScreen from './screens/CameraScreen';
@@ -37,6 +38,12 @@ const LoggedIn = StackNavigator({
   },
   MyProfile: {
     screen: MyProfileScreen,
+    navigationOptions: {
+      header: null
+    }  
+  },
+  MyRegistration: {
+    screen: MyRegistrationScreen,
     navigationOptions: {
       header: null
     }
