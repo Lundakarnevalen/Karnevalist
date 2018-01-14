@@ -50,7 +50,7 @@ class RegistrationScreen extends Component {
   }
 
   getColor() {
-    return this.props.theme === 'day' ? 'rgb(138, 71, 151)' : 'white';
+    return 'white';
   }
 
   getStrings() {

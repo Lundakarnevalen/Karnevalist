@@ -18,9 +18,7 @@ import {
   SONGBOOK_SCREEN_STRINGS
  } from '../../helpers/LanguageStrings'
 
-//TODO: Ful lösning, kanske ska göra såhär överallt dock, flytta ut till separat "theme" klass istället för redux.
-const CURRENT_HOUR = new Date().getHours();
-const THEME_COLOR = CURRENT_HOUR > 8 && CURRENT_HOUR < 18 ? '#f4376d' : '#F7A021';
+const THEME_COLOR = '#F7A021';
 const SIZE = 30
 
 class MyPageNavbarScreen extends Component {
