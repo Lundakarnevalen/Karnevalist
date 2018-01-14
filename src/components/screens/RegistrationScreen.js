@@ -200,6 +200,7 @@ class RegistrationScreen extends Component {
               this.setState({ password: text });
             }}
             value={password}
+            restriction={'isValidPwd'}
             secureText
           />
           <Input
@@ -208,6 +209,7 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedPassword: text });
             }}
             value={confirmedPassword}
+            restriction={'isValidPwd'}
             secureText
           />
           <Input
@@ -247,7 +249,6 @@ class RegistrationScreen extends Component {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
             value={phoneNbr}
-            restriction={'onlyDigits'}
           />
           <Input
             placeholder={strings.foodPreferences}
@@ -255,6 +256,7 @@ class RegistrationScreen extends Component {
               this.setState({ foodPreferences: foodPreferencesInput });
             }}
             value={foodPreferences}
+            restriction={'onlyLetters'}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,

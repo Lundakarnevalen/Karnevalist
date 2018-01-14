@@ -74,6 +74,10 @@ class Input extends Component {
         if (this.isEmail(value)) this.stopWarn();
         else this.doWarn();
         break;
+      case 'isValidPwd':
+      if (this.isValidPwd(value)) this.stopWarn();
+      else this.doWarn();
+      break;
       default:
         break;
     }
@@ -118,6 +122,9 @@ class Input extends Component {
         case 'isEmail':
           message = strings.errorMsgEmail;
           break;
+        case 'isValidPwd':
+        message = strings.errorMsgPwd;
+        break;
         default:
           break;
       }
@@ -134,6 +141,9 @@ class Input extends Component {
   }
   isEmail(t) {
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(t);
+  }
+  isValidPwd(t) {
+    return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(t);
   }
 
   getPlaceholderStyle() {
