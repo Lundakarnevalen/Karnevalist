@@ -37,7 +37,6 @@ class SectionItemScreen extends Component {
     };
   }
 
-
   getStrings() {
     const { language } = this.props;
     const { fields } = SECTION_ITEM_SCREEN_STRINGS;
@@ -46,7 +45,7 @@ class SectionItemScreen extends Component {
     return strings;
   }
 
-  renderRightIcon(id, title, color) {
+  renderRightIcon(id, title) {
     if (!this.state.added) {
       return (
         <TouchableOpacity
@@ -56,7 +55,7 @@ class SectionItemScreen extends Component {
             this.setState({ showToast: true, added: true });
           }}
         >
-          <MaterialIcons name="favorite" size={30} color={color} />
+          <MaterialIcons name="favorite" size={30} color={'white'} />
         </TouchableOpacity>
       );
     }
@@ -68,7 +67,7 @@ class SectionItemScreen extends Component {
           this.setState({ showToast: true, added: false });
         }}
       >
-        <MaterialIcons name="delete" size={30} color={color} />
+        <MaterialIcons name="delete" size={30} color={'white'} />
       </TouchableOpacity>
     );
   }
@@ -82,28 +81,25 @@ class SectionItemScreen extends Component {
   }
 
   render() {
-    const { navigation, color } = this.props;
+    const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
     const { container, scrollStyle, headerStyle, textStyle } = styles;
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <Header
-          title={title}
-          navigation={navigation}
-          rightIcon={this.renderRightIcon(id, title, color)}
-        />
-        <Toast
-          color={'#f4376d'}
-          showToast={this.state.showToast}
-          onClose={() => this.setState({ showToast: false })}
-          message={this.renderToastMessage(title)}
-        />
-        <ScrollView style={scrollStyle}>
-          <View style={container}>{image}</View>
-          <View style={{ height: 10, backgroundColor: 'white' }} />
-          <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
-          <Text style={textStyle}>{description}</Text>
-        </ScrollView>
+        <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id, title)} />
+        <View>
+          <ScrollView style={scrollStyle}>
+            <View style={container}>{image}</View>
+            <View style={{ height: 10, backgroundColor: 'white' }} />
+            <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
+            <Text style={textStyle}>{description}</Text>
+          </ScrollView>
+          <Toast
+            showToast={this.state.showToast}
+            onClose={() => this.setState({ showToast: false })}
+            message={this.renderToastMessage(title)}
+          />
+        </View>
       </View>
     );
   }
