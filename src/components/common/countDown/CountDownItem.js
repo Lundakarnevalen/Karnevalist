@@ -21,7 +21,7 @@ class CountDownItem extends Component {
     const { containerStyle, textStyle } = styles;
     return (
       <View style={containerStyle}>
-        <Text style={[textStyle, { color: this.props.theme === 'day' ? '#f4376d' : '#F7A021' }]}>
+        <Text style={[textStyle, { color: '#F7A021' }]}>
           {this.getText()}
         </Text>
       </View>

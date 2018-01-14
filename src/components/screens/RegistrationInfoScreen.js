@@ -14,7 +14,7 @@ const HEIGHT = Dimensions.get('window').height;
 class RegistrationInfoScreen extends Component {
 
   getColor() {
-    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
+    return '#F7A021';
   }
 
   getStrings() {
@@ -66,7 +66,7 @@ class RegistrationInfoScreen extends Component {
         <Header title={strings.title} rightIcon={closeButton} />
         <ScrollView style={{ height: HEIGHT - 64 }}>
           <View style={containerStyle}>
-            <Text style={[titelTextStyle, { color: theme === 'night' ? 'white' : 'black' }]}>
+            <Text style={[titelTextStyle, { color: 'white' }]}>
               {strings.header}
             </Text>
             <ScrollView>

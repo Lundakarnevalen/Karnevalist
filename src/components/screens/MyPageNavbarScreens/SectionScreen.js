@@ -23,16 +23,6 @@ class SectionScreen extends Component {
   }
 
 
-  getColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return '#F7A021';
-      case 'day':
-        return '#f4376d';
-      default:
-        return 'white';
-    }
-  }
   getStrings() {
     const { language } = this.props;
     const { fields } = SECTION_SCREEN_STRINGS;
@@ -53,7 +43,7 @@ class SectionScreen extends Component {
               <TouchableOpacity
                 onPress={() => screenProps.navigation.navigate('ConfirmPage', { navigation })}
               >
-                <MaterialIcons name="local-mall" size={30} color={this.getColor()} />
+                <MaterialIcons name="local-mall" size={30} color={'white'} />
               </TouchableOpacity>
             }
             title={strings.title}
