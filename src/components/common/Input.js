@@ -60,7 +60,7 @@ class Input extends Component {
   }
 
   checkWarningConditions() {
-    const { value, restriction } = this.props;
+    const { value, restriction, value2 } = this.props;
     switch (restriction) {
       case 'onlyLetters':
         if (this.containsOnlyLetters(value)) this.stopWarn();
@@ -71,7 +71,7 @@ class Input extends Component {
         else this.doWarn();
         break;
       case 'isEmail':
-        if (this.isEmail(value)) this.stopWarn();
+        if (this.isEmail(value, value2)) this.stopWarn();
         else this.doWarn();
         break;
       case 'isValidPwd':
@@ -82,7 +82,7 @@ class Input extends Component {
         break;
     }
     if (typeof restriction === 'function') {
-      const result = restriction(value);
+      const result = restriction(value, value2);
       if (result === false) this.doWarn();
     }
   }
@@ -139,9 +139,13 @@ class Input extends Component {
   containsOnlyLetters(t) {
     return /^[a-zåäöA-ZÅÄÖ]+$/.test(t);
   }
-  isEmail(t) {
-    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(t);
+  //isEmail(t) {
+    //return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(t);
+  //}
+  isEmail(t, s) {
+      return t === s && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(t);
   }
+
   isValidPwd(t) {
     return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(t);
   }

@@ -183,6 +183,7 @@ class RegistrationScreen extends Component {
               this.setState({ email: emailInput });
             }}
             value={email}
+            value2={email}
             restriction={'isEmail'}
           />
           <Input
@@ -192,7 +193,8 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedEmail: emailInput });
             }}
             value={confirmedEmail}
-            restriction={'isEmail'}
+            value2={email}
+            restriction={('isEmail')}
           />
           <Input
             placeholder={strings.password}
@@ -218,7 +220,6 @@ class RegistrationScreen extends Component {
               this.setState({ address: addressInput });
             }}
             value={address}
-            restriction={(adress) => adress.length < 40}
           />
           <View style={flexHorizontal}>
             <Input
