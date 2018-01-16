@@ -28,23 +28,23 @@ class NewsScreen extends Component {
   }
 
   getStrings() {
-    const { language } = this.props
-    const { fields } = NEWS_SCREEN_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = NEWS_SCREEN_STRINGS[field][language]))
-    return strings
+    const { language } = this.props;
+    const { fields } = NEWS_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = NEWS_SCREEN_STRINGS[field][language]));
+    return strings;
   }
 
   render() {
-    const { navigation, screenProps } = this.props
-    const strings = this.getStrings()
+    const { navigation, screenProps } = this.props;
+    const strings = this.getStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <ListView
           enableEmptySections
-          style={{ height: height - (Platform.OS === 'ios' ? 120 : 148) }}
+          style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
           dataSource={this.state.dataSource}
           enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}

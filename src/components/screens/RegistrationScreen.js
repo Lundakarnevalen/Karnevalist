@@ -166,55 +166,77 @@ class RegistrationScreen extends Component {
               this.setState({ firstName: firstNameInput });
             }}
             value={firstName}
+            onSubmitEditing={() => this.refs.secondInput.focus()}
+            returnKeyType={'next'}
           />
           <Input
+            ref={'secondInput'}
+            onSubmitEditing={() => this.refs.thirdInput.focus()}
             placeholder={strings.lastName}
             onChangeText={lastNameInput => {
               this.setState({ lastName: lastNameInput });
             }}
             value={lastName}
+            returnKeyType={'next'}
           />
           <Input
+            ref={'thirdInput'}
+            onSubmitEditing={() => this.refs.fourthInput.focus()}
             placeholder={strings.email}
             keyboardType="email-address"
             onChangeText={emailInput => {
               this.setState({ email: emailInput });
             }}
             value={email}
+            returnKeyType={'next'}
           />
           <Input
+            ref={'fourthInput'}
+            onSubmitEditing={() => this.refs.fifthInput.focus()}
             placeholder={strings.confirmEmail}
             keyboardType="email-address"
             onChangeText={emailInput => {
               this.setState({ confirmedEmail: emailInput });
             }}
             value={confirmedEmail}
+            returnKeyType={'next'}
           />
           <Input
+            ref={'fifthInput'}
+            onSubmitEditing={() => this.refs.sixthInput.focus()}
             placeholder={strings.password}
             onChangeText={text => {
               this.setState({ password: text });
             }}
             value={password}
+            returnKeyType={'next'}
             secureText
           />
           <Input
+            ref={'sixthInput'}
+            onSubmitEditing={() => this.refs.seventhInput.focus()}
             placeholder={strings.confirmPassword}
             onChangeText={text => {
               this.setState({ confirmedPassword: text });
             }}
             value={confirmedPassword}
+            returnKeyType={'next'}
             secureText
           />
           <Input
+            ref={'seventhInput'}
+            onSubmitEditing={() => this.refs.eigthInput.focus()}
             placeholder={strings.address}
             onChangeText={addressInput => {
               this.setState({ address: addressInput });
             }}
             value={address}
+            returnKeyType={'next'}
           />
           <View style={flexHorizontal}>
             <Input
+              ref={'eigthInput'}
+              onSubmitEditing={() => this.refs.ninthInput.focus()}
               placeholder={strings.postNumber}
               keyboardType="numeric"
               onChangeText={postNumberInput => {
@@ -223,30 +245,39 @@ class RegistrationScreen extends Component {
               width={width / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
+              returnKeyType={'next'}
             />
             <Input
+              ref={'ninthInput'}
+              onSubmitEditing={() => this.refs.tenthInput.focus()}
               placeholder={strings.city}
               onChangeText={cityInput => {
                 this.setState({ city: cityInput });
               }}
               width={width / 2 - 4}
               value={city}
+              returnKeyType={'next'}
             />
           </View>
           <Input
+            ref={'tenthInput'}
+            onSubmitEditing={() => this.refs.eleventhInput.focus()}
             placeholder={strings.phoneNumber}
             keyboardType="phone-pad"
             onChangeText={phoneNbrInput => {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
             value={phoneNbr}
+            returnKeyType={'next'}
           />
           <Input
+            ref={'eleventhInput'}
             placeholder={strings.foodPreferences}
             onChangeText={foodPreferencesInput => {
               this.setState({ foodPreferences: foodPreferencesInput });
             }}
             value={foodPreferences}
+            returnKeyType={'done'}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,

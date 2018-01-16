@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { View, TextInput, Animated } from 'react-native';
-import { connect } from 'react-redux';
 
 class Input extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
@@ -14,12 +12,11 @@ class Input extends Component {
   }
 
   componentWillMount() {
-    if (this.props.value !== '')
-      this.inputSelected()
+    if (this.props.value !== '') this.inputSelected();
   }
 
   getThemeColor() {
-        return '#F7A021';
+    return '#F7A021';
   }
 
   inputSelected() {
@@ -54,6 +51,10 @@ class Input extends Component {
     };
   }
 
+  focus() {
+    this.refs.input.focus();
+  }
+
   render() {
     const { inputStyle, containerStyle } = styles;
     const {
@@ -65,7 +66,9 @@ class Input extends Component {
       autoCorrect = false,
       editable = true,
       keyboardType = 'default',
-      extraContainerStyle
+      extraContainerStyle,
+      returnKeyType,
+      onSubmitEditing = () => console.log('On submit missing')
     } = this.props;
     return (
       <View
@@ -79,17 +82,21 @@ class Input extends Component {
           <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>
         )}
         <TextInput
+          ref={'input'}
           onFocus={() => this.inputSelected()}
           underlineColorAndroid={'transparent'}
           onEndEditing={() => this.inputDeselected()}
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
           style={[inputStyle, { width }, textInputStyle]}
-          autoCapitalize='words'
+          autoCapitalize={'words'}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
           editable={editable}
           keyboardType={keyboardType}
+          returnKeyType={returnKeyType}
+          blurOnSubmit
+          onSubmitEditing={() => onSubmitEditing()}
         />
       </View>
     );
@@ -113,9 +120,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(Input);
+export default Input;
