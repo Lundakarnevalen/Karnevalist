@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, TouchableOpacity, Alert, BackHandler } from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+  BackHandler
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -9,7 +16,7 @@ import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
 import BackgroundImage from '../common/BackgroundImage';
-import { setSectionPriorities } from '../../actions';
+import { setSectionPriorities, setProgress } from '../../actions';
 import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
@@ -28,7 +35,9 @@ class ConfirmPage extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
     const tempData = [];
     const allSections = this.props.sections;
     getSections(sections => {
@@ -53,7 +62,9 @@ class ConfirmPage extends Component {
     const { language } = this.props;
     const { fields } = CONFIRM_PAGE_STRINGS;
     const strings = {};
-    fields.forEach(field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language]));
+    fields.forEach(
+      field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language])
+    );
     return strings;
   }
 
@@ -64,9 +75,15 @@ class ConfirmPage extends Component {
     if (this.state.data.length === 0) {
       return (
         <View
-          style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
+          style={{
+            height: window.height - 64,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
         >
-          <Text style={[textStyle, { color: 'white' }]}>{strings.sectionSelection}</Text>
+          <Text style={[textStyle, { color: 'white' }]}>
+            {strings.sectionSelection}
+          </Text>
           <CustomButton
             style={'standardButton'}
             text={strings.toSections}
@@ -75,23 +92,33 @@ class ConfirmPage extends Component {
         </View>
       );
     }
-      return (
-        <View style={{ height: window.height - 64, justifyContent: 'center', alignItems: 'center' }}>
-          <SortableList
-            style={list}
-            contentContainerStyle={contentContainer}
-            data={this.state.data}
-            renderRow={this.renderRow.bind(this)}
-            onChangeOrder={(nextOrder) => this.setState({ order: nextOrder })}
-          />
-            <CustomButton
-              style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
-              text={strings.send}
-              width={WIDTH - 15}
-              onPress={() => this.onPressConfirmButton()}
-            />
-        </View>
-      );
+    return (
+      <View
+        style={{
+          height: window.height - 64,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <SortableList
+          style={list}
+          contentContainerStyle={contentContainer}
+          data={this.state.data}
+          renderRow={this.renderRow.bind(this)}
+          onChangeOrder={nextOrder => this.setState({ order: nextOrder })}
+        />
+        <CustomButton
+          style={
+            this.state.data.length >= 5
+              ? 'standardButton'
+              : 'tintStandardButton'
+          }
+          text={strings.send}
+          width={WIDTH - 15}
+          onPress={() => this.onPressConfirmButton()}
+        />
+      </View>
+    );
   }
 
   deleteRow(id) {
@@ -154,7 +181,9 @@ class ConfirmPage extends Component {
       .then(response => {
         if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
+          this.props.setProgress(4);
           Alert.alert(strings.selectionOK);
+          this.props.navigation.goBack(null);
         }
         //TODO TOAST??
       })
@@ -221,7 +250,7 @@ const styles = {
     color: '#ffffff'
   },
   list: {
-    flex: 1,
+    flex: 1
   },
   contentContainer: {
     width: window.width
@@ -239,11 +268,18 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLanguage, userInformation }) => {
+const mapStateToProps = ({
+  currentTheme,
+  sections,
+  currentLanguage,
+  userInformation
+}) => {
   const { theme } = currentTheme;
   const { language } = currentLanguage;
   const { token } = userInformation;
   return { theme, sections: sections.sections, language, token };
 };
 
-export default connect(mapStateToProps, { setSectionPriorities })(ConfirmPage);
+export default connect(mapStateToProps, { setSectionPriorities, setProgress })(
+  ConfirmPage
+);
