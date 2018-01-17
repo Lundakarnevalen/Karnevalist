@@ -183,6 +183,7 @@ class ConfirmPage extends Component {
           this.props.setSectionPriorities(sectionPriorities);
           this.props.setProgress(4);
           Alert.alert(strings.selectionOK);
+          this.props.navigation.goBack(null);
         }
         //TODO TOAST??
       })

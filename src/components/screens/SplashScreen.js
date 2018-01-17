@@ -88,7 +88,6 @@ class SplashScreen extends Component {
               axios
                 .post(baseURL, {}, { headers })
                 .then(response => {
-                  console.log(response);
                   const { success } = response.data;
                   if (success) {
                     this.props.navigation.navigate('MyPageNavbarScreen');
