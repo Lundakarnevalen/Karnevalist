@@ -56,6 +56,11 @@ const lastName = {
   SE: 'Efternamn',
   EN: 'Last name'
 };
+
+const socialSecurityNumber = {
+  SE: 'Personnummer',
+  EN: 'Social security number'
+};
 const email = {
   SE: 'Email',
   EN: 'Email'
@@ -188,6 +193,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'header',
     'firstName',
     'lastName',
+    'socialSecurityNumber',
     'email',
     'confirmEmail',
     'password',
@@ -206,6 +212,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'register',
     'errorFirstName',
     'errorLastName',
+    'errorSocialSecurityNumber',
     'errorEmail',
     'errorConfirmEmail',
     'errorAddress',
@@ -228,6 +235,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   firstName,
   lastName,
+  socialSecurityNumber,
   email,
   confirmEmail: {
     SE: 'Bekräfta email',
@@ -295,6 +303,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
   errorLastName: {
     SE: 'Efternamn krävs',
     EN: 'Last name is required'
+  },
+  errorSocialSecurityNumber: {
+    SE: 'Personnummer krävs',
+    EN: 'Social security number is required'
   },
   errorEmail: {
     SE: 'Email krävs',

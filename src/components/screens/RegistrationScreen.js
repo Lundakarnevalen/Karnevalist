@@ -44,6 +44,7 @@ class RegistrationScreen extends Component {
       foodPreferences: '',
       shirtSize: '',
       studentUnion: '',
+      socialSecurityNumberInput: '',
       showShirtPicker: false,
       showStudentUnionPicker: false,
       loading: false,
@@ -180,7 +181,8 @@ class RegistrationScreen extends Component {
       shirtSize,
       showShirtPicker,
       studentUnion,
-      showStudentUnionPicker
+      showStudentUnionPicker,
+      socialSecurityNumberInput
     } = this.state;
 
     const closeButton = (
@@ -223,6 +225,17 @@ class RegistrationScreen extends Component {
           <Input
             ref={'thirdInput'}
             onSubmitEditing={() => this.refs.fourthInput.focus()}
+            placeholder={strings.socialSecurityNumber}
+            onChangeText={text => {
+              this.setState({ socialSecurityNumberInput: text });
+            }}
+            value={socialSecurityNumberInput}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
+          <Input
+            ref={'fourthInput'}
+            onSubmitEditing={() => this.refs.fifthInput.focus()}
             placeholder={strings.email}
             keyboardType="email-address"
             onChangeText={emailInput => {
@@ -233,8 +246,8 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
-            ref={'fourthInput'}
-            onSubmitEditing={() => this.refs.fifthInput.focus()}
+            ref={'fifthInput'}
+            onSubmitEditing={() => this.refs.sixthInput.focus()}
             placeholder={strings.confirmEmail}
             keyboardType="email-address"
             onChangeText={emailInput => {
@@ -245,8 +258,8 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
-            ref={'fifthInput'}
-            onSubmitEditing={() => this.refs.sixthInput.focus()}
+            ref={'sixthInput'}
+            onSubmitEditing={() => this.refs.seventhInput.focus()}
             placeholder={strings.password}
             onChangeText={text => {
               this.setState({ password: text });
@@ -257,8 +270,8 @@ class RegistrationScreen extends Component {
             secureText
           />
           <Input
-            ref={'sixthInput'}
-            onSubmitEditing={() => this.refs.seventhInput.focus()}
+            ref={'seventhInput'}
+            onSubmitEditing={() => this.refs.eigthInput.focus()}
             placeholder={strings.confirmPassword}
             onChangeText={text => {
               this.setState({ confirmedPassword: text });
@@ -269,8 +282,8 @@ class RegistrationScreen extends Component {
             secureText
           />
           <Input
-            ref={'seventhInput'}
-            onSubmitEditing={() => this.refs.eigthInput.focus()}
+            ref={'eigthInput'}
+            onSubmitEditing={() => this.refs.ninthInput.focus()}
             placeholder={strings.address}
             onChangeText={addressInput => {
               this.setState({ address: addressInput });
@@ -287,8 +300,8 @@ class RegistrationScreen extends Component {
             }}
           >
             <Input
-              ref={'eigthInput'}
-              onSubmitEditing={() => this.refs.ninthInput.focus()}
+              ref={'ninthInput'}
+              onSubmitEditing={() => this.refs.tenthInput.focus()}
               placeholder={strings.postNumber}
               keyboardType="numeric"
               onChangeText={postNumberInput => {
@@ -301,8 +314,8 @@ class RegistrationScreen extends Component {
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
             />
             <Input
-              ref={'ninthInput'}
-              onSubmitEditing={() => this.refs.tenthInput.focus()}
+              ref={'tenthInput'}
+              onSubmitEditing={() => this.refs.eleventhInput.focus()}
               placeholder={strings.city}
               onChangeText={cityInput => {
                 this.setState({ city: cityInput });
@@ -314,8 +327,8 @@ class RegistrationScreen extends Component {
             />
           </View>
           <Input
-            ref={'tenthInput'}
-            onSubmitEditing={() => this.refs.eleventhInput.focus()}
+            ref={'eleventhInput'}
+            onSubmitEditing={() => this.refs.twelthInput.focus()}
             placeholder={strings.phoneNumber}
             keyboardType="phone-pad"
             onChangeText={phoneNbrInput => {
@@ -326,7 +339,7 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
-            ref={'eleventhInput'}
+            ref={'twelthInput'}
             placeholder={strings.foodPreferences}
             onChangeText={foodPreferencesInput => {
               this.setState({ foodPreferences: foodPreferencesInput });
@@ -370,6 +383,8 @@ class RegistrationScreen extends Component {
                 Alert.alert(strings.error, strings.errorFirstName);
               } else if (lastName === '') {
                 Alert.alert(strings.error, strings.errorLastName);
+              } else if (socialSecurityNumberInput === '') {
+                Alert.alert(strings.error, strings.errorSocialSecurityNumber);
               } else if (email === '') {
                 Alert.alert(strings.error, strings.errorEmail);
               } else if (confirmedEmail === '') {
@@ -402,7 +417,8 @@ class RegistrationScreen extends Component {
                     phoneNumber: phoneNbr,
                     address,
                     city,
-                    foodPreferences
+                    foodPreferences,
+                    personalNumber: socialSecurityNumberInput
                   })
                   .then(() => {
                     this.setState({ loadingComplete: true });
