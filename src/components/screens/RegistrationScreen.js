@@ -11,8 +11,10 @@ import {
   Keyboard
 } from 'react-native';
 import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { setToken, setEmail } from '../../actions';
 import Header from '../common/Header';
 import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
@@ -22,6 +24,7 @@ import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
+import { saveItem } from '../../helpers/LocalSave';
 
 const WIDTH = Dimensions.get('window').width - 32;
 const HEIGHT = Dimensions.get('window').height;
@@ -504,7 +507,12 @@ class RegistrationScreen extends Component {
                     foodPreferences,
                     personalNumber: socialSecurityNumberInput
                   })
-                  .then(() => {
+                  .then(response => {
+                    const { accessToken } = response.data;
+                    this.props.setToken(accessToken);
+                    this.props.setEmail(email);
+                    saveItem('email', email);
+                    saveItem('accessToken', accessToken);
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
@@ -535,8 +543,13 @@ class RegistrationScreen extends Component {
           <Loading
             loadingComplete={loadingComplete}
             redirect={() => {
-              this.props.navigation.navigate('LoginScreen');
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
+                key: null
+              });
               this.setState({ loading: false, loadingComplete: false });
+              this.props.navigation.dispatch(resetAction);
             }}
           />
         ) : null}
@@ -576,4 +589,4 @@ const mapStateToProps = ({ currentTheme, userInformation, currentLanguage }) => 
   return { theme, picture, language };
 };
 
-export default connect(mapStateToProps, null)(RegistrationScreen);
+export default connect(mapStateToProps, { setToken, setEmail })(RegistrationScreen);

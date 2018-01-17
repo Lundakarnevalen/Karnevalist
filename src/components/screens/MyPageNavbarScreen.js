@@ -4,7 +4,7 @@ import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setSections, setSectionPriorities } from '../../actions';
+import { setSections, setSectionPriorities, setProgress } from '../../actions';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
@@ -42,6 +42,7 @@ class MyPageNavbarScreen extends Component {
         const { success, sectionPriorities } = response.data;
         if (success) {
           this.props.setSectionPriorities(sectionPriorities);
+          if (sectionPriorities.length > 0) this.props.setProgress(4);
         }
       })
       .catch(error => {
@@ -64,7 +65,11 @@ const TabNav = TabNavigator(
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="star" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons
+            name="star"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
+          />
         )
       })
     },
@@ -73,7 +78,11 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="local-library" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons
+            name="local-library"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
+          />
         )
       })
     },
@@ -82,7 +91,11 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="home" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons
+            name="home"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
+          />
         )
       })
     },
@@ -91,7 +104,11 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialIcons
+            name="speaker-notes"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}
+          />
         )
       })
     },
@@ -141,4 +158,8 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { token } = userInformation;
   return { language, token, sections: sections.sections };
 };
-export default connect(mapStateToProps, { setSections, setSectionPriorities })(MyPageNavbarScreen);
+export default connect(mapStateToProps, {
+  setSections,
+  setSectionPriorities,
+  setProgress
+})(MyPageNavbarScreen);
