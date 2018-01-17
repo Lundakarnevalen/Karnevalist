@@ -58,7 +58,7 @@ class ConfirmPage extends Component {
   }
 
   renderSortableListOrMessage() {
-    const { contentContainer, list, confimTextStyle, textStyle } = styles;
+    const { contentContainer, list, textStyle } = styles;
     const { navigation } = this.props;
     const { strings } = this.state
     if (this.state.data.length === 0) {
@@ -99,29 +99,6 @@ class ConfirmPage extends Component {
             />
         </View>
       );
-  }
-
-  getBackgroundColor() {
-    const { data } = this.state;
-    if (data.length >= 5) {
-      return '#F7A021';
-    }
-    return '#a9a9a9';
-  }
-
-  getConfirmButtonStyle() {
-    return {
-      height: window.height / 9,
-      backgroundColor: this.getBackgroundColor(),
-      tintColor: this.getBackgroundColor(),
-      borderColor: '#ffffff',
-      borderRadius: 3,
-      margin: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      bottom: 0,
-      width: window.width - 15
-    };
   }
 
   deleteRow(id) {
