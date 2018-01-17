@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
 
 class HomeScreenTimeLine extends Component {
-
   getIconColor(nbr) {
     if (nbr < this.props.timelineProgress) {
-      return 'black'
+      return 'black';
     }
-    return 'transparent'
+    return 'transparent';
   }
 
   render() {
@@ -21,7 +20,7 @@ class HomeScreenTimeLine extends Component {
         }}
       >
         <View
-          style={{ 
+          style={{
             backgroundColor: 'transparent',
             flexDirection: 'row',
             justifyContent: 'center',
@@ -30,7 +29,7 @@ class HomeScreenTimeLine extends Component {
         >
           <View style={[styles.roundView, { marginRight: -5 }]}>
             <Ionicons
-              name='md-checkmark'
+              name="md-checkmark"
               size={Dimensions.get('window').width / 7}
               color={this.getIconColor(0)}
             />
@@ -38,7 +37,7 @@ class HomeScreenTimeLine extends Component {
           <View style={styles.barView} />
           <View style={[styles.roundView, { marginRight: -5, marginLeft: -5 }]}>
             <Ionicons
-              name='md-checkmark'
+              name="md-checkmark"
               size={Dimensions.get('window').width / 7}
               color={this.getIconColor(1)}
             />
@@ -46,7 +45,7 @@ class HomeScreenTimeLine extends Component {
           <View style={styles.barView} />
           <View style={[styles.roundView, { marginRight: -5, marginLeft: -5 }]}>
             <Ionicons
-              name='md-checkmark'
+              name="md-checkmark"
               size={Dimensions.get('window').width / 7}
               color={this.getIconColor(2)}
             />
@@ -54,13 +53,13 @@ class HomeScreenTimeLine extends Component {
           <View style={styles.barView} />
           <View style={[styles.roundView, { marginLeft: -5 }]}>
             <Ionicons
-              name='md-checkmark'
+              name="md-checkmark"
               size={Dimensions.get('window').width / 7}
               color={this.getIconColor(3)}
             />
           </View>
         </View>
-        <View 
+        <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -112,12 +111,12 @@ const styles = {
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    width: (Dimensions.get('window').width / 7) + 10
+    width: Dimensions.get('window').width / 7 + 10
   },
   textStyle: {
     textAlign: 'center',
     fontSize: 11
   }
-}
+};
 
 export default HomeScreenTimeLine;

@@ -6,29 +6,28 @@ import CustomButton from '../common/CustomButton';
 import Header from '../common/Header';
 import ExpandeblePanel from '../common/ExpandeblePanel';
 import BackgroundImage from '../common/BackgroundImage';
-import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LanguageStrings'
+import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 class RegistrationInfoScreen extends Component {
-
   getColor() {
     return '#F7A021';
   }
 
   getStrings() {
-    const { language } = this.props
-    const { fields } = REGISTRATION_INFO_SCREEN_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = REGISTRATION_INFO_SCREEN_STRINGS[field][language]))
-    return strings
+    const { language } = this.props;
+    const { fields } = REGISTRATION_INFO_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = REGISTRATION_INFO_SCREEN_STRINGS[field][language]));
+    return strings;
   }
 
   render() {
     const { titelTextStyle, containerStyle, imageStyle, textStyle } = styles;
     const { theme, navigation } = this.props;
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     const image1 = (
       <MaterialCommunityIcons
         name="numeric-1-box-outline"
@@ -66,21 +65,15 @@ class RegistrationInfoScreen extends Component {
         <Header title={strings.title} rightIcon={closeButton} />
         <ScrollView style={{ height: HEIGHT - 64 }}>
           <View style={containerStyle}>
-            <Text style={[titelTextStyle, { color: 'white' }]}>
-              {strings.header}
-            </Text>
+            <Text style={[titelTextStyle, { color: 'white' }]}>{strings.header}</Text>
             <ScrollView>
               <ExpandeblePanel title={strings.panelTitle1} image={image1}>
-                <Text style={textStyle}>
-                  {strings.infoText1}
-                </Text>
+                <Text style={textStyle}>{strings.infoText1}</Text>
               </ExpandeblePanel>
             </ScrollView>
             <ScrollView>
               <ExpandeblePanel title={strings.panelTitle2} image={image2}>
-                <Text style={textStyle}>
-                  {strings.infoText2}
-                </Text>
+                <Text style={textStyle}>{strings.infoText2}</Text>
               </ExpandeblePanel>
             </ScrollView>
             <ScrollView>
