@@ -19,15 +19,13 @@ const height = Dimensions.get('window').height;
 class SectionScreen extends Component {
   constructor(props) {
     super(props);
-     const { sections } = props
-     if (sections)
-      sections.sort(dynamicSort('title'))
+    const { sections } = props;
+    if (sections) sections.sort(dynamicSort('title'));
     this.state = {
       isOpen: false,
       data: sections || []
     };
   }
-
 
   getStrings() {
     const { language } = this.props;

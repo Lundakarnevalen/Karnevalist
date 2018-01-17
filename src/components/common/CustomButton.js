@@ -23,10 +23,28 @@ class CustomButton extends Component {
       fontFamily: 'Avenir Next Medium'
     };
   }
+  getTintStandardButtonText() {
+    const color = 'rgba(255, 255, 255, 0.5)';
+    return {
+      color,
+      fontSize: 20,
+      fontFamily: 'Avenir Next Medium'
+    };
+  }
 
   getStandardButton() {
     const borderWidth = 0;
     const backgroundColor = '#F7A021';
+    return {
+      backgroundColor,
+      padding: 10,
+      borderWidth
+    };
+  }
+
+  getTintStandardButton() {
+    const borderWidth = 0;
+    const backgroundColor = 'rgba(247, 160, 33, 0.8)';
     return {
       backgroundColor,
       padding: 10,
@@ -53,6 +71,8 @@ class CustomButton extends Component {
         return styles.textButton;
       case 'standardButton':
         return this.getStandardButton();
+      case 'tintStandardButton':
+        return this.getTintStandardButton();
       case 'acceptButton':
         return styles.acceptButton;
       case 'alertButton':
@@ -70,6 +90,8 @@ class CustomButton extends Component {
         return this.getUnderlineButtonText();
       case 'standardButton':
         return this.getStandardButtonText();
+      case 'tintStandardButton':
+        return this.getTintStandardButtonText();
       case 'acceptButton':
         return styles.whiteText;
       case 'alertButton':
