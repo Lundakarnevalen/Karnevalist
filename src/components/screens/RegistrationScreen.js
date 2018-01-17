@@ -380,7 +380,7 @@ class RegistrationScreen extends Component {
                   postNumberError: text.length !== 5 || !this.containsOnlyDigits(text)
                 });
               }}
-              width={WIDTH / 2 - 4}
+              width={(WIDTH / 2) - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
               returnKeyType={'next'}
@@ -395,7 +395,7 @@ class RegistrationScreen extends Component {
               onChangeText={text => {
                 this.setState({ city: text, cityError: !this.containsOnlyLetters(text) });
               }}
-              width={WIDTH / 2 - 4}
+              width={(WIDTH / 2) - 4}
               value={city}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
