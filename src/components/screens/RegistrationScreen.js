@@ -20,7 +20,7 @@ import CustomButton from '../common/CustomButton';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
-import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
+import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 
 const WIDTH = Dimensions.get('window').width - 32;
@@ -45,6 +45,17 @@ class RegistrationScreen extends Component {
       shirtSize: '',
       studentUnion: '',
       socialSecurityNumberInput: '',
+      firstNameError: false,
+      lastNameError: false,
+      emailError: false,
+      confirmedEmailError: false,
+      passwordError: false,
+      confirmedPasswordError: false,
+      socialSecurityNbrError: false,
+      postNumberError: false,
+      cityError: false,
+      phoneNbrError: false,
+      foodPreferencesError: false,
       showShirtPicker: false,
       showStudentUnionPicker: false,
       loading: false,
@@ -88,11 +99,38 @@ class RegistrationScreen extends Component {
     }
   }
 
+  isEmail(toTest) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      toTest
+    );
+  }
+
+  containsOnlyLetters(toTest) {
+    return /^[a-zåäöA-ZÅÄÖ]+$/.test(toTest);
+  }
+
+  isValidPhoneNbr(toTest) {
+    return /^\+?\d+$/.test(toTest) && toTest.length >= 7 && toTest.length <= 20;
+  }
+
+  containsOnlyDigits(text) {
+    return /^\d+$/.test(text);
+  }
+
   getStrings() {
     const { language } = this.props;
     const { fields } = REGISTRATION_SCREEN_STRINGS;
     const strings = {};
     fields.forEach(field => (strings[field] = REGISTRATION_SCREEN_STRINGS[field][language]));
+    return strings;
+  }
+
+  getErrorStrings() {
+    const { language } = this.props;
+    const { fields } = ERROR_MSG_INPUT_FIELD;
+    const strings = {};
+    console.log(fields);
+    fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
     return strings;
   }
 
@@ -163,6 +201,7 @@ class RegistrationScreen extends Component {
 
   render() {
     const strings = this.getStrings();
+    const errorStrings = this.getErrorStrings();
     const { flexHorizontal } = styles;
     const {
       firstName,
@@ -179,6 +218,17 @@ class RegistrationScreen extends Component {
       loading,
       loadingComplete,
       shirtSize,
+      firstNameError,
+      lastNameError,
+      emailError,
+      confirmedEmailError,
+      passwordError,
+      confirmedPasswordError,
+      socialSecurityNbrError,
+      postNumberError,
+      cityError,
+      phoneNbrError,
+      foodPreferencesError,
       showShirtPicker,
       studentUnion,
       showStudentUnionPicker,
@@ -202,92 +252,101 @@ class RegistrationScreen extends Component {
         >
           <Input
             placeholder={strings.firstName}
-            onChangeText={firstNameInput => {
-              this.setState({ firstName: firstNameInput });
+            onChangeText={text => {
+              this.setState({ firstName: text, firstNameError: !this.containsOnlyLetters(text) });
             }}
             value={firstName}
             onSubmitEditing={() => this.refs.secondInput.focus()}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             autoFocus
-            restriction={'onlyLetters'}
+            hasError={firstNameError}
+            warningMessage={[errorStrings.errorMsgOnlyLetters]}
           />
           <Input
             ref={'secondInput'}
             onSubmitEditing={() => this.refs.thirdInput.focus()}
             placeholder={strings.lastName}
-            onChangeText={lastNameInput => {
-              this.setState({ lastName: lastNameInput });
+            onChangeText={text => {
+              this.setState({ lastName: text, lastNameError: !this.containsOnlyLetters(text) });
             }}
             value={lastName}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            restriction={'onlyLetters'}
+            hasError={lastNameError}
+            warningMessage={[errorStrings.errorMsgOnlyLetters]}
           />
           <Input
             ref={'thirdInput'}
             onSubmitEditing={() => this.refs.fourthInput.focus()}
             placeholder={strings.socialSecurityNumber}
             onChangeText={text => {
-              this.setState({ socialSecurityNumberInput: text });
+              this.setState({
+                socialSecurityNumberInput: text,
+                socialSecurityNbrError: !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text))
+              });
             }}
             value={socialSecurityNumberInput}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
+            hasError={socialSecurityNbrError}
+            warningMessage={[errorStrings.errorMsgSocialSecurity]}
           />
           <Input
             ref={'fourthInput'}
             onSubmitEditing={() => this.refs.fifthInput.focus()}
             placeholder={strings.email}
             keyboardType="email-address"
-            onChangeText={emailInput => {
-              this.setState({ email: emailInput });
+            onChangeText={text => {
+              this.setState({ email: text, emailError: !this.isEmail(text) });
             }}
             value={email}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            restriction={'isEmail'}
+            hasError={emailError}
+            warningMessage={[errorStrings.errorMsgInvalidEmail]}
           />
           <Input
             ref={'fifthInput'}
             onSubmitEditing={() => this.refs.sixthInput.focus()}
             placeholder={strings.confirmEmail}
             keyboardType="email-address"
-            onChangeText={emailInput => {
-              this.setState({ confirmedEmail: emailInput });
+            onChangeText={text => {
+              this.setState({ confirmedEmail: text, confirmedEmailError: text !== email });
             }}
             value={confirmedEmail}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            restriction={toTest => toTest === email}
-            warningMessage={['Emailadresserna matchar inte', 'The email addresses do not match']}
+            hasError={confirmedEmailError}
+            warningMessage={[errorStrings.errorMsgNoMatchEmail]}
           />
           <Input
             ref={'sixthInput'}
             onSubmitEditing={() => this.refs.seventhInput.focus()}
             placeholder={strings.password}
             onChangeText={text => {
-              this.setState({ password: text });
+              this.setState({ password: text, passwordError: text.length < 5 });
             }}
             value={password}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             secureText
-            restriction={'isValidPwd'}
+            hasError={passwordError}
+            warningMessage={[errorStrings.errorMsgPwd]}
           />
           <Input
             ref={'seventhInput'}
             onSubmitEditing={() => this.refs.eigthInput.focus()}
             placeholder={strings.confirmPassword}
             onChangeText={text => {
-              this.setState({ confirmedPassword: text });
+              this.setState({ confirmedPassword: text, confirmedPasswordError: text !== password });
             }}
             value={confirmedPassword}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             secureText
-            restriction={toTest => toTest === password}
-            warningMessage={['Lösenorden matchar inte', 'The passwords do not match']}
+            hasError={confirmedPasswordError}
+            warningMessage={[errorStrings.errorMsgNoMatchPassword]}
           />
           <Input
             ref={'eigthInput'}
@@ -312,28 +371,33 @@ class RegistrationScreen extends Component {
               onSubmitEditing={() => this.refs.tenthInput.focus()}
               placeholder={strings.postNumber}
               keyboardType="numeric"
-              onChangeText={postNumberInput => {
-                this.setState({ postNumber: postNumberInput });
+              onChangeText={text => {
+                this.setState({
+                  postNumber: text,
+                  postNumberError: text.length !== 5 || !this.containsOnlyDigits(text)
+                });
               }}
               width={WIDTH / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
-              restriction={'onlyDigits'}
+              hasError={postNumberError}
+              warningMessage={[errorStrings.errorMsgZipCode]}
             />
             <Input
               ref={'tenthInput'}
               onSubmitEditing={() => this.refs.eleventhInput.focus()}
               placeholder={strings.city}
-              onChangeText={cityInput => {
-                this.setState({ city: cityInput });
+              onChangeText={text => {
+                this.setState({ city: text, cityError: !this.containsOnlyLetters(text) });
               }}
               width={WIDTH / 2 - 4}
               value={city}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
-              restriction={'onlyLetters'}
+              hasError={cityError}
+              warningMessage={['Endast bokstäver', 'Only letters']}
             />
           </View>
           <Input
@@ -341,24 +405,32 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.twelthInput.focus()}
             placeholder={strings.phoneNumber}
             keyboardType="phone-pad"
-            onChangeText={phoneNbrInput => {
-              this.setState({ phoneNbr: phoneNbrInput });
+            onChangeText={text => {
+              this.setState({
+                phoneNbr: text,
+                phoneNbrError: !this.isValidPhoneNbr(text)
+              });
             }}
             value={phoneNbr}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            restriction={'isPhoneNumber'}
+            hasError={phoneNbrError}
+            warningMessage={[errorStrings.errorMsgPhoneNbr]}
           />
           <Input
             ref={'twelthInput'}
             placeholder={strings.foodPreferences}
-            onChangeText={foodPreferencesInput => {
-              this.setState({ foodPreferences: foodPreferencesInput });
+            onChangeText={text => {
+              this.setState({
+                foodPreferences: text,
+                foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
+              });
             }}
             value={foodPreferences}
             returnKeyType={'done'}
             scrollToInput={y => this.scrollToInput(y)}
-            restriction={'onlyLetters'}
+            hasError={foodPreferencesError}
+            warningMessage={[errorStrings.errorMsgFoodPreference]}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,

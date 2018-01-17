@@ -44,114 +44,25 @@ class Input extends Component {
         Animated.timing(this.state.position, { toValue: { x: 9, y: 11 }, duration: 150 })
       ]).start();
       this.setState({ borderColor: 'black' });
-    } else {
-      this.checkWarningConditions();
     }
-  }
-
-  checkWarningConditions() {
-    const { value, restriction } = this.props;
-    switch (restriction) {
-      case 'onlyLetters':
-        if (this.containsOnlyLetters(value)) this.stopWarn();
-        else this.doWarn();
-        break;
-      case 'onlyDigits':
-        if (this.containsOnlyDigits(value)) this.stopWarn();
-        else this.doWarn();
-        break;
-      case 'isEmail':
-        if (this.emailCheck(value)) this.stopWarn();
-        else this.doWarn();
-        break;
-      case 'isValidPwd':
-        if (this.isValidPwd(value)) this.stopWarn();
-        else this.doWarn();
-        break;
-      case 'isPhoneNumber':
-        if (this.isValidPhoneNbr(value)) this.stopWarn();
-        else this.doWarn();
-        break;
-      default:
-        break;
-    }
-    if (typeof restriction === 'function') {
-      const result = restriction(value);
-      if (result === false) this.doWarn();
-    }
-  }
-
-  doWarn() {
-    this.setState({ warningVisible: true, borderColor: 'red' });
-  }
-
-  stopWarn() {
-    this.setState({ warningVisible: false, borderColor: 'black' });
   }
 
   addWarningText() {
-    const { warningVisible } = this.state;
-    const { warningMessage, restriction, language } = this.props;
-    const strings = this.getStrings();
-    let message = '';
-    if (warningMessage !== undefined && warningVisible) {
+    const { warningMessage = '', language, hasError = false } = this.props;
+    let errorMsg = '';
+    if (hasError) {
       switch (language) {
         case 'SE':
-          message = warningMessage[0];
+          errorMsg = warningMessage[0];
           break;
         case 'EN':
-          message = warningMessage[1];
-          break;
-        default:
-          break;
-      }
-    } else if (warningVisible) {
-      switch (restriction) {
-        case 'onlyLetters':
-          message = strings.errorMsgOnlyLetters;
-          break;
-        case 'onlyDigits':
-          message = strings.errorMsgOnlyDigits;
-          break;
-        case 'isEmail':
-          message = strings.errorMsgInvalidEmail;
-          break;
-        case 'isValidPwd':
-          message = strings.errorMsgPwd;
-          break;
-        case 'isPhoneNumber':
-          message = strings.errorMsgPhoneNbr;
-          break;
-        case 'isVaidSocalSecurity':
-          message = strings.errorMsgSocialSecurity;
+          errorMsg = warningMessage[1];
           break;
         default:
           break;
       }
     }
-    return <Text style={styles.warningTextStyle}>{message}</Text>;
-  }
-
-  containsOnlyDigits(toTest) {
-    return /^\d+$/.test(toTest);
-  }
-
-  containsOnlyLetters(toTest) {
-    return /^[a-zåäöA-ZÅÄÖ]+$/.test(toTest);
-  }
-  emailCheck(toTest) {
-    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      toTest
-    );
-  }
-
-  isValidPwd(toTest) {
-    if (toTest.length >= 5) return true;
-    return false;
-  }
-
-  isValidPhoneNbr(toTest) {
-    return /^\+?\d+$/.test(toTest) && toTest.length >= 8;
+    return <Text style={styles.warningTextStyle}>{errorMsg}</Text>;
   }
 
   getPlaceholderStyle() {
@@ -185,7 +96,8 @@ class Input extends Component {
       extraContainerStyle,
       returnKeyType,
       onSubmitEditing = () => {},
-      autoFocus = false
+      autoFocus = false,
+      hasError = false
     } = this.props;
     return (
       <View
@@ -193,11 +105,15 @@ class Input extends Component {
         style={[
           containerStyle,
           extraContainerStyle,
-          { width, borderColor: this.state.borderColor }
+          { width, borderColor: hasError ? 'red' : this.state.borderColor }
         ]}
       >
         {placeholder === '' ? null : (
-          <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>
+          <Animated.Text
+            style={[this.getPlaceholderStyle(), { color: hasError ? 'red' : '#F7A021' }]}
+          >
+            {placeholder}
+          </Animated.Text>
         )}
         {this.addWarningText()}
         <TextInput

@@ -664,7 +664,10 @@ export const ERROR_MSG_INPUT_FIELD = {
     'errorMsgNoMatchEmail',
     'errorMsgPwd',
     'errorMsgPhoneNbr',
-    'errorMsgSocialSecurity'
+    'errorMsgSocialSecurity',
+    'errorMsgNoMatchPassword',
+    'errorMsgZipCode',
+    'errorMsgFoodPreference'
   ],
   errorMsgOnlyDigits: {
     SE: 'Detta fält får endast innehålla siffror',
@@ -682,16 +685,28 @@ export const ERROR_MSG_INPUT_FIELD = {
     SE: 'Email adresserna matchar inte',
     EN: 'The email addresses do not match'
   },
+  errorMsgNoMatchPassword: {
+    SE: 'Lösenorden matchar inte',
+    EN: 'The passwords do not match'
+  },
   errorMsgPwd: {
     SE: 'Lösenordet måste bestå av minst 5 tecken',
     EN: 'The password must consist ot at least 5 characters'
   },
   errorMsgPhoneNbr: {
-    SE: 'Format: 070XXXXXXX',
-    EN: 'Format: 070XXXXXXX'
+    SE: 'Format: XXXXXXXXXX',
+    EN: 'Format: XXXXXXXXXX'
   },
   errorMsgSocialSecurity: {
     SE: 'Format: YYMMDDXXXX',
     EN: 'Format: YYMMDDXXXX'
+  },
+  errorMsgZipCode: {
+    SE: 'ddddd',
+    EN: 'ddddd'
+  },
+  errorMsgFoodPreference: {
+    SE: 'Ex: gluten, laktos...',
+    EN: 'Ex: gluten, lactose intolerant... '
   }
 };
