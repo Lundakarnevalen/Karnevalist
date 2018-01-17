@@ -34,6 +34,7 @@ class Input extends Component {
     const { language } = this.props;
     const { fields } = ERROR_MSG_INPUT_FIELD;
     const strings = {};
+    console.log(fields)
     fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
     return strings;
   }
@@ -60,7 +61,7 @@ class Input extends Component {
   }
 
   checkWarningConditions() {
-    const { value, restriction, value2 } = this.props;
+    const { value, restriction } = this.props;
     switch (restriction) {
       case 'onlyLetters':
         if (this.containsOnlyLetters(value)) this.stopWarn();
@@ -71,18 +72,22 @@ class Input extends Component {
         else this.doWarn();
         break;
       case 'isEmail':
-        if (this.isEmail(value, value2)) this.stopWarn();
+        if (this.emailCheck(value)) this.stopWarn();
         else this.doWarn();
         break;
       case 'isValidPwd':
-      if (this.isValidPwd(value)) this.stopWarn();
-      else this.doWarn();
+        if (this.isValidPwd(value)) this.stopWarn();
+        else this.doWarn();
+      break;
+      case 'isPhoneNumber':
+        if (this.isValidPhoneNbr(value)) this.stopWarn();
+        else this.doWarn();
       break;
       default:
         break;
     }
     if (typeof restriction === 'function') {
-      const result = restriction(value, value2);
+      const result = restriction(value);
       if (result === false) this.doWarn();
     }
   }
@@ -120,10 +125,13 @@ class Input extends Component {
           message = strings.errorMsgOnlyDigits;
           break;
         case 'isEmail':
-          message = strings.errorMsgEmail;
+          message = strings.errorMsgInvalidEmail;
           break;
         case 'isValidPwd':
         message = strings.errorMsgPwd;
+        break;
+        case 'isPhoneNumber':
+        message = strings.errorMsgPhoneNbr;
         break;
         default:
           break;
@@ -132,22 +140,24 @@ class Input extends Component {
     return <Text style={styles.warningTextStyle}>{message}</Text>;
   }
 
-  containsOnlyDigits(t) {
-    return /^\d+$/.test(t);
+  containsOnlyDigits(toTest) {
+    return /^\d+$/.test(toTest);
   }
 
-  containsOnlyLetters(t) {
-    return /^[a-zåäöA-ZÅÄÖ]+$/.test(t);
+  containsOnlyLetters(toTest) {
+    return /^[a-zåäöA-ZÅÄÖ]+$/.test(toTest);
   }
-  //isEmail(t) {
-    //return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(t);
-  //}
-  isEmail(t, s) {
-      return t === s && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(t);
+  emailCheck(toTest) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(toTest);
   }
 
-  isValidPwd(t) {
-    return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(t);
+  isValidPwd(toTest) {
+    if (toTest.length >= 5) return true
+      return false
+  }
+
+  isValidPhoneNbr(toTest) {
+    return (/^\+?\d+$/.test(toTest) && toTest.length >= 8)
   }
 
   getPlaceholderStyle() {

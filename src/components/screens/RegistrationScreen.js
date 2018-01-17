@@ -183,7 +183,7 @@ class RegistrationScreen extends Component {
               this.setState({ email: emailInput });
             }}
             value={email}
-            value2={email}
+            emailToMatch={''}
             restriction={'isEmail'}
           />
           <Input
@@ -193,8 +193,8 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedEmail: emailInput });
             }}
             value={confirmedEmail}
-            value2={email}
-            restriction={('isEmail')}
+            restriction={toTest => toTest === email}
+            warningMessage={['Emailadresserna matchar inte', 'The email addresses do not match']}
           />
           <Input
             placeholder={strings.password}
@@ -211,7 +211,8 @@ class RegistrationScreen extends Component {
               this.setState({ confirmedPassword: text });
             }}
             value={confirmedPassword}
-            restriction={'isValidPwd'}
+            restriction={toTest => toTest === password}
+            warningMessage={['Lösenorden matchar inte', 'The passwords do not match']}
             secureText
           />
           <Input
@@ -250,6 +251,7 @@ class RegistrationScreen extends Component {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
             value={phoneNbr}
+            restriction={'isPhoneNumber'}
           />
           <Input
             placeholder={strings.foodPreferences}
