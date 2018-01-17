@@ -108,7 +108,7 @@ class Input extends Component {
       extraContainerStyle,
       returnKeyType,
       onSubmitEditing = () => {},
-      autoFocus = false,
+      autoFocus = false
     } = this.props;
     return (
       <View
