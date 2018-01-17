@@ -14,6 +14,7 @@ import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings'
 
 const window = Dimensions.get('window');
+const WIDTH = Dimensions.get('window').width;
 
 class ConfirmPage extends Component {
   constructor(props) {
@@ -81,23 +82,23 @@ class ConfirmPage extends Component {
         </View>
       );
     }
-    return (
-      <View style={{ height: window.height - 64 }}>
-        <SortableList
-          style={list}
-          contentContainerStyle={contentContainer}
-          data={this.state.data}
-          renderRow={this.renderRow.bind(this)}
-          onChangeOrder={(nextOrder) => this.setState({ order: nextOrder })}
-        />
-        <TouchableOpacity
-          style={this.getConfirmButtonStyle()}
-          onPress={() => this.onPressConfirmButton()}
-        >
-          <Text style={confimTextStyle}>{strings.send}</Text>
-        </TouchableOpacity>
-      </View>
-    );
+      return (
+        <View style={{ height: window.height - 64, justifyContent: 'center', alignItems: 'center' }}>
+          <SortableList
+            style={list}
+            contentContainerStyle={contentContainer}
+            data={this.state.data}
+            renderRow={this.renderRow.bind(this)}
+            onChangeOrder={(nextOrder) => this.setState({ order: nextOrder })}
+          />
+            <CustomButton
+              style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
+              text={strings.send}
+              width={WIDTH - 15}
+              onPress={() => this.onPressConfirmButton()}
+            />
+        </View>
+      );
   }
 
   getBackgroundColor() {
@@ -112,13 +113,14 @@ class ConfirmPage extends Component {
     return {
       height: window.height / 9,
       backgroundColor: this.getBackgroundColor(),
+      tintColor: this.getBackgroundColor(),
       borderColor: '#ffffff',
-      borderRadius: 0,
-      margin: 0,
+      borderRadius: 3,
+      margin: 10,
       justifyContent: 'center',
       alignItems: 'center',
       bottom: 0,
-      width: window.width
+      width: window.width - 15
     };
   }
 
@@ -167,7 +169,6 @@ class ConfirmPage extends Component {
         return data[index].key
       })
       this.postSectionPriorities(sectionPriorities)
-
     }
   }
 
@@ -244,7 +245,7 @@ const styles = {
     color: '#ffffff'
   },
   list: {
-    flex: 1
+    flex: 1,
   },
   contentContainer: {
     width: window.width
