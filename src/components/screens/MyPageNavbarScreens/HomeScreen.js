@@ -10,19 +10,18 @@ import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 const WIDTH = Dimensions.get('window').width;
 
 class HomeScreen extends Component {
-
   getStrings() {
-    const { language } = this.props
-    const { fields } = HOME_SCREEN_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = HOME_SCREEN_STRINGS[field][language]))
-    return strings
+    const { language } = this.props;
+    const { fields } = HOME_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = HOME_SCREEN_STRINGS[field][language]));
+    return strings;
   }
 
   render() {
     const { container } = styles;
-    const { navigation } = this.props
-    const strings = this.getStrings()
+    const { navigation } = this.props;
+    const strings = this.getStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={3} />

@@ -64,28 +64,35 @@ class LoginScreen extends Component {
     this.setState({ alertVisible: false, forgotPasswordEmail: '' });
   }
 
-  handleLogin(email, password) {
+  handleLogin() {
     const url = 'https://api.10av10.com/login/email';
     const strings = this.getStrings();
-    this.setState({ loading: true, loadingComplete: false });
-    axios
-      .post(url, {
-        email,
-        password
-      })
-      .then(res => {
-        const { accessToken } = res.data;
-        this.props.setToken(accessToken);
-        this.props.setEmail(email);
-        saveItem('email', email);
-        saveItem('accessToken', accessToken);
-        this.setState({ loadingComplete: true });
-      })
-      .catch(error => {
-        const msg = handleErrorMsg(error.message, strings);
-        this.setState({ loading: false, loadingComplete: false });
-        Alert.alert(strings.error, msg);
-      });
+    const { email, password } = this.state;
+    if (email === '') {
+      Alert.alert(strings.error, strings.emailError);
+    } else if (password === '') {
+      Alert.alert(strings.error, strings.passwordError);
+    } else {
+      this.setState({ loading: true, loadingComplete: false });
+      axios
+        .post(url, {
+          email,
+          password
+        })
+        .then(res => {
+          const { accessToken } = res.data;
+          this.props.setToken(accessToken);
+          this.props.setEmail(email);
+          saveItem('email', email);
+          saveItem('accessToken', accessToken);
+          this.setState({ loadingComplete: true });
+        })
+        .catch(error => {
+          const msg = handleErrorMsg(error.message, strings);
+          this.setState({ loading: false, loadingComplete: false });
+          Alert.alert(strings.error, msg);
+        });
+    }
   }
 
   render() {
@@ -114,29 +121,26 @@ class LoginScreen extends Component {
             </View>
             <Input
               value={email}
-              keyboardType="email-address"
+              keyboardType={'email-address'}
               placeholder={strings.email}
               width={WIDTH}
               onChangeText={text => this.setState({ email: text })}
+              returnKeyType={'next'}
+              onSubmitEditing={() => this.refs.secondInput.focus()}
             />
             <Input
+              ref={'secondInput'}
               value={password}
               placeholder={strings.password}
               width={WIDTH}
               secureText
               onChangeText={text => this.setState({ password: text })}
+              returnKeyType={'done'}
+              onSubmitEditing={() => this.handleLogin()}
             />
             <CustomButton
               text={strings.loginButton}
-              onPress={() => {
-                if (email === '') {
-                  Alert.alert(strings.error, strings.emailError);
-                } else if (password === '') {
-                  Alert.alert(strings.error, strings.passwordError);
-                } else {
-                  this.handleLogin(email, password);
-                }
-              }}
+              onPress={() => this.handleLogin()}
               style={'standardButton'}
               width={WIDTH}
             />

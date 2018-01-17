@@ -7,8 +7,9 @@ import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
 import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
+import { logout } from '../../helpers/functions';
 import BackgroundImage from '../common/BackgroundImage';
-import {  setSectionPriorities } from '../../actions'
+import { setSectionPriorities } from '../../actions'
 import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings'
 
@@ -47,17 +48,6 @@ class ConfirmPage extends Component {
     });
   }
 
-  getColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return '#F7A021';
-      case 'day':
-        return '#f4376d';
-      default:
-        return 'white';
-    }
-  }
-
   getStrings() {
     const { language } = this.props
     const { fields } = CONFIRM_PAGE_STRINGS
@@ -78,7 +68,7 @@ class ConfirmPage extends Component {
           <Text
             style={[
               textStyle,
-              { color: this.props.theme === 'night' ? 'white' : 'black', textAlign: 'center' }
+              { color: 'white' }
             ]}
           >
             {strings.sectionSelection}
@@ -112,11 +102,7 @@ class ConfirmPage extends Component {
 
   getBackgroundColor() {
     const { data } = this.state;
-    const { theme } = this.props;
     if (data.length >= 5) {
-      if (theme === 'day') {
-        return '#F4376D';
-      }
       return '#F7A021';
     }
     return '#a9a9a9';
@@ -181,12 +167,12 @@ class ConfirmPage extends Component {
         return data[index].key
       })
       this.postSectionPriorities(sectionPriorities)
-      this.props.setSectionPriorities(sectionPriorities)
-      Alert.alert(strings.selectionOK);
+
     }
   }
 
   postSectionPriorities(sectionPriorities) {
+    const strings = this.getStrings()
     const url = 'https://api.10av10.com/api/section/'
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
@@ -194,9 +180,15 @@ class ConfirmPage extends Component {
     }
     axios.post(url, { sectionPriorities }, { headers })
     .then((response) => {
+      if (response.success) {
+        this.props.setSectionPriorities(sectionPriorities)
+        Alert.alert(strings.selectionOK);
+      }
       //TODO TOAST??
     })
     .catch((error) => {
+      if (error.response.status === 401)
+       logout(this.props.navigation, true, strings.expiredTokenTitle, strings.expiredTokenMessage)
       // const msg = handleErrorMsg(error.message)
       console.log(error);
     });
@@ -215,7 +207,7 @@ class ConfirmPage extends Component {
         >
           <MaterialIcons
             name={this.getHeaderIconName()}
-            style={{ color: this.getColor(), right: 0 }}
+            style={{ color: 'white', right: 0 }}
             size={35}
           />
         </TouchableOpacity>

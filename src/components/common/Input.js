@@ -6,7 +6,6 @@ import { ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 class Input extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
@@ -19,32 +18,22 @@ class Input extends Component {
     if (this.props.value !== '') this.inputSelected();
   }
 
-  getThemeColor() {
-    switch (this.props.theme) {
-      case 'morning':
-        return '#F7A021';
-      case 'day':
-        return 'rgb(138, 71, 151)';
-      default:
-        return '#F7A021';
-    }
-  }
-
   getStrings() {
     const { language } = this.props;
     const { fields } = ERROR_MSG_INPUT_FIELD;
     const strings = {};
-    console.log(fields)
+    console.log(fields);
     fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
     return strings;
   }
 
   inputSelected() {
-    this.setState({ warningVisible: false, borderColor: this.getThemeColor() });
+    this.setState({ warningVisible: false });
     Animated.parallel([
       Animated.timing(this.state.fontSize, { toValue: 10, duration: 150 }),
       Animated.timing(this.state.position, { toValue: { x: 9, y: 0 }, duration: 150 })
     ]).start();
+    this.setState({ borderColor: '#F7A021' });
   }
 
   inputDeselected() {
@@ -78,11 +67,11 @@ class Input extends Component {
       case 'isValidPwd':
         if (this.isValidPwd(value)) this.stopWarn();
         else this.doWarn();
-      break;
+        break;
       case 'isPhoneNumber':
         if (this.isValidPhoneNbr(value)) this.stopWarn();
         else this.doWarn();
-      break;
+        break;
       default:
         break;
     }
@@ -128,11 +117,14 @@ class Input extends Component {
           message = strings.errorMsgInvalidEmail;
           break;
         case 'isValidPwd':
-        message = strings.errorMsgPwd;
-        break;
+          message = strings.errorMsgPwd;
+          break;
         case 'isPhoneNumber':
-        message = strings.errorMsgPhoneNbr;
-        break;
+          message = strings.errorMsgPhoneNbr;
+          break;
+        case 'isVaidSocalSecurity':
+          message = strings.errorMsgSocialSecurity;
+          break;
         default:
           break;
       }
@@ -148,16 +140,18 @@ class Input extends Component {
     return /^[a-zåäöA-ZÅÄÖ]+$/.test(toTest);
   }
   emailCheck(toTest) {
-    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(toTest);
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      toTest
+    );
   }
 
   isValidPwd(toTest) {
-    if (toTest.length >= 5) return true
-      return false
+    if (toTest.length >= 5) return true;
+    return false;
   }
 
   isValidPhoneNbr(toTest) {
-    return (/^\+?\d+$/.test(toTest) && toTest.length >= 8)
+    return /^\+?\d+$/.test(toTest) && toTest.length >= 8;
   }
 
   getPlaceholderStyle() {
@@ -169,8 +163,12 @@ class Input extends Component {
       position: 'absolute',
       top: position.y,
       left: position.x,
-      color: this.getThemeColor()
+      color: '#F7A021'
     };
+  }
+
+  focus() {
+    this.refs.input.focus();
   }
 
   render() {
@@ -184,10 +182,14 @@ class Input extends Component {
       autoCorrect = false,
       editable = true,
       keyboardType = 'default',
-      extraContainerStyle
+      extraContainerStyle,
+      returnKeyType,
+      onSubmitEditing = () => {},
+      autoFocus = false
     } = this.props;
     return (
       <View
+        onLayout={event => this.setState({ screenPosition: 100 + event.nativeEvent.layout.y })}
         style={[
           containerStyle,
           extraContainerStyle,
@@ -199,17 +201,27 @@ class Input extends Component {
         )}
         {this.addWarningText()}
         <TextInput
-          onFocus={() => this.inputSelected()}
+          ref={'input'}
+          onFocus={() => {
+            if (typeof this.props.scrollToInput !== 'undefined') {
+              this.props.scrollToInput(this.state.screenPosition);
+            }
+            this.inputSelected();
+          }}
           underlineColorAndroid={'transparent'}
           onEndEditing={() => this.inputDeselected()}
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
           style={[inputStyle, { width }, textInputStyle]}
-          autoCapitalize="words"
+          autoCapitalize={'words'}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
           editable={editable}
           keyboardType={keyboardType}
+          returnKeyType={returnKeyType}
+          blurOnSubmit
+          onSubmitEditing={() => onSubmitEditing()}
+          autoFocus={autoFocus}
           maxLength={50}
         />
       </View>

@@ -22,7 +22,7 @@ class ExpandeblePanel extends Component {
   }
 
   getColor() {
-    return this.props.theme === 'day' ? '#f4376d' : '#F7A021';
+    return '#F7A021';
   }
 
   setMaxHeight(event) {
