@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, Text } from 'react-native';
 import { BlurView } from 'expo';
 import { connect } from 'react-redux';
-import { LOADING_STRINGS } from '../../helpers/LanguageStrings'
+import { LOADING_STRINGS } from '../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -28,11 +28,11 @@ class Loading extends Component {
   }
 
   getStrings() {
-    const { language } = this.props
-    const { fields } = LOADING_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = LOADING_STRINGS[field][language]))
-    return strings
+    const { language } = this.props;
+    const { fields } = LOADING_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = LOADING_STRINGS[field][language]));
+    return strings;
   }
 
   countTo99() {
@@ -46,11 +46,11 @@ class Loading extends Component {
 
   render() {
     const { containerStyle, headerStyle } = styles;
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     return (
       <BlurView style={containerStyle}>
         <Text style={[headerStyle, { color: 'white' }]}>
-           {strings.loading + this.state.loadedPercent.toString()}%
+          {strings.loading + this.state.loadedPercent.toString()}%
         </Text>
       </BlurView>
     );

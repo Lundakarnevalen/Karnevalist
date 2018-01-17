@@ -3,24 +3,22 @@ import { View, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import Header from '../../common/Header';
 import BackgroundImage from '../../common/BackgroundImage';
-import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
+import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
 
 class SongBookScreen extends Component {
-
-
   getStrings() {
-    const { language } = this.props
-    const { fields } = SONGBOOK_SCREEN_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = SONGBOOK_SCREEN_STRINGS[field][language]))
-    return strings
+    const { language } = this.props;
+    const { fields } = SONGBOOK_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = SONGBOOK_SCREEN_STRINGS[field][language]));
+    return strings;
   }
 
   render() {
     const { navigation } = this.props;
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={2} />

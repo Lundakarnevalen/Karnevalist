@@ -7,7 +7,7 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  Platform,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -75,10 +75,12 @@ class SuperAgileAlert extends Component {
   }
   renderInfo(info, infoTextStyle) {
     if (info)
-      return (<View style={{ height: 15, top: 10, width: Dimensions.get('window').width / 1.2 }}>
+      return (
+        <View style={{ height: 15, top: 10, width: Dimensions.get('window').width / 1.2 }}>
           <Text style={[infoTextStyle, { color: this.getColor() }]}>{info}</Text>
-        </View>)
-    return <View />
+        </View>
+      );
+    return <View />;
   }
   render() {
     const {
