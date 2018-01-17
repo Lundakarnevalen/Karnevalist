@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
+import { Image, Dimensions } from 'react-native';
+=======
 import { Platform } from 'react-native';
+>>>>>>> edaa212a1cc18707983ecbcba5dde573a2401856
 import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -23,32 +27,31 @@ const SIZE = 30;
 
 class MyPageNavbarScreen extends Component {
   componentWillMount() {
-    if (this.props.token)
-      this.getSectionPriorities(this.props.token)
+    if (this.props.token) this.getSectionPriorities(this.props.token);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.token)
-        this.getSectionPriorities(nextProps.token)
+    if (nextProps.token) this.getSectionPriorities(nextProps.token);
   }
 
   getSectionPriorities(token) {
-    const url = 'https://api.10av10.com/api/section/'
+    const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + token,
       'content-type': 'application/json'
-    }
-    axios.get(url, { headers })
-    .then((response) => {
-      const { success, sectionPriorities } = response.data
-      if (success) {
-        this.props.setSectionPriorities(sectionPriorities)
-      }
-    })
-    .catch((error) => {
-      // const msg = handleErrorMsg(error.message)
-      console.log(error);
-    });
+    };
+    axios
+      .get(url, { headers })
+      .then(response => {
+        const { success, sectionPriorities } = response.data;
+        if (success) {
+          this.props.setSectionPriorities(sectionPriorities);
+        }
+      })
+      .catch(error => {
+        // const msg = handleErrorMsg(error.message)
+        console.log(error);
+      });
   }
 
   render() {
@@ -63,6 +66,7 @@ const TabNav = TabNavigator(
       screen: SectionScreen,
       navigationOptions: props => ({
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarInactiveTintColor: '#A9A9A9',
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons name="star" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
@@ -116,6 +120,7 @@ const TabNav = TabNavigator(
     tabBarOptions: {
       showIcon: true,
       activeTintColor: THEME_COLOR,
+      inactiveTintColor: '#A9A9A9',
       labelStyle: {
         fontSize: 10,
         margin: 0
