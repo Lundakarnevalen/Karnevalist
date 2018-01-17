@@ -20,7 +20,6 @@ import {
 
 const THEME_COLOR = '#F7A021';
 const SIZE = 30;
-const WIDTH = Dimensions.get('window').width;
 
 class MyPageNavbarScreen extends Component {
   componentWillMount() {

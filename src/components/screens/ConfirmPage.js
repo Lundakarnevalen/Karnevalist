@@ -81,14 +81,10 @@ class ConfirmPage extends Component {
           contentContainerStyle={contentContainer}
           data={this.state.data}
           renderRow={this.renderRow.bind(this)}
-<<<<<<< HEAD
           onChangeOrder={nextOrder => {
             this.setState({ order: nextOrder });
             console.log(nextOrder);
           }}
-=======
-          onChangeOrder={nextOrder => this.setState({ order: nextOrder })}
->>>>>>> 4f6bc6c62c6e8dff12ae2811f215f64218ac9a12
         />
         <TouchableOpacity
           style={this.getConfirmButtonStyle()}
@@ -166,20 +162,13 @@ class ConfirmPage extends Component {
         const index = data.findIndex(d => d.id + '' === i + '');
         return data[index].key;
       });
-      this.postSectionPriorities(sectionPriorities);
-<<<<<<< HEAD
       this.props.setSectionPriorities(sectionPriorities);
       Alert.alert(strings.selectionOK);
-=======
->>>>>>> 4f6bc6c62c6e8dff12ae2811f215f64218ac9a12
     }
   }
 
   postSectionPriorities(sectionPriorities) {
-<<<<<<< HEAD
-=======
     const strings = this.getStrings();
->>>>>>> 4f6bc6c62c6e8dff12ae2811f215f64218ac9a12
     const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
@@ -188,11 +177,6 @@ class ConfirmPage extends Component {
     axios
       .post(url, { sectionPriorities }, { headers })
       .then(response => {
-<<<<<<< HEAD
-        //TODO TOAST??
-      })
-      .catch(error => {
-=======
         if (response.success) {
           this.props.setSectionPriorities(sectionPriorities);
           Alert.alert(strings.selectionOK);
@@ -207,7 +191,6 @@ class ConfirmPage extends Component {
             strings.expiredTokenTitle,
             strings.expiredTokenMessage
           );
->>>>>>> 4f6bc6c62c6e8dff12ae2811f215f64218ac9a12
         // const msg = handleErrorMsg(error.message)
         console.log(error);
       });
