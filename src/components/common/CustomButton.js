@@ -38,7 +38,7 @@ class CustomButton extends Component {
     return {
       backgroundColor,
       padding: 10,
-      borderWidth,
+      borderWidth
     };
   }
 

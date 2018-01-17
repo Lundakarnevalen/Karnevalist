@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
-import { logout } from '../../../helpers/functions'
-import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
+import { logout } from '../../../helpers/functions';
+import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const height = Dimensions.get('window').height;
 
@@ -50,7 +50,7 @@ class ProfileScreen extends Component {
                 } else if (rowData.key === 'registration') {
                   screenProps.navigation.navigate('MyRegistration', { info: rowData });
                 } else if (rowData.key === 'logout') {
-                  logout(screenProps.navigation)
+                  logout(screenProps.navigation);
                 }
               }}
             />
