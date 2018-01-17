@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, TouchableOpacity } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import Header from '../../common/Header';
 import CustomButton from '../../common/CustomButton';
+import Timeline from '../../common/Timeline';
+import HomeScreenTimeline from '../../common/HomeScreenTimeline';
 import BackgroundImage from '../../common/BackgroundImage';
 import CountDown from '../../common/countDown/CountDown';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
@@ -28,12 +31,7 @@ class HomeScreen extends Component {
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <View style={container}>
           <CountDown />
-          <CustomButton
-            style={'standardButton'}
-            width={WIDTH - 50}
-            text={strings.buttonText}
-            onPress={() => navigation.navigate('Sections')}
-          />
+          <Timeline />
         </View>
       </View>
     );

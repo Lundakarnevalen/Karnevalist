@@ -16,54 +16,61 @@ class HomeScreenTimeLine extends Component {
         style={{
           backgroundColor: 'transparent',
           justifyContent: 'center',
+          flexDirection: 'row',
           alignItems: 'center'
         }}
       >
         <View
           style={{
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
+            // backgroundColor: 'transparent',
+            backgroundColor: '#F7A021',
+            flexDirection: 'column',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginLeft: 20,
           }}
         >
-          <View style={[styles.roundView, { marginRight: -5 }]}>
+          <View style={[styles.roundView, { marginBottom: -5 }]}>
             <Ionicons
               name="md-checkmark"
               size={Dimensions.get('window').width / 7}
               color={this.getIconColor(0)}
+              style={{ backgroundColor: 'transparent' }}
             />
           </View>
           <View style={styles.barView} />
-          <View style={[styles.roundView, { marginRight: -5, marginLeft: -5 }]}>
+          <View style={[styles.roundView, { marginBottom: -5, marginTop: -5 }]}>
             <Ionicons
               name="md-checkmark"
               size={Dimensions.get('window').width / 7}
               color={this.getIconColor(1)}
+              style={{ backgroundColor: 'transparent' }}
             />
           </View>
           <View style={styles.barView} />
-          <View style={[styles.roundView, { marginRight: -5, marginLeft: -5 }]}>
+          <View style={[styles.roundView, { marginBottom: -5, marginTop: -5 }]}>
             <Ionicons
               name="md-checkmark"
               size={Dimensions.get('window').width / 7}
               color={this.getIconColor(2)}
+              style={{ backgroundColor: 'transparent' }}
             />
           </View>
           <View style={styles.barView} />
-          <View style={[styles.roundView, { marginLeft: -5 }]}>
+          <View style={[styles.roundView, { marginTop: -5 }]}>
             <Ionicons
               name="md-checkmark"
               size={Dimensions.get('window').width / 7}
               color={this.getIconColor(3)}
+              style={{ backgroundColor: 'transparent' }}
             />
           </View>
         </View>
         <View
           style={{
-            flexDirection: 'row',
+            flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           <View style={styles.textView}>
@@ -97,8 +104,8 @@ const styles = {
     alignItems: 'center'
   },
   barView: {
-    height: Dimensions.get('window').width / 9 / 4,
-    width: Dimensions.get('window').width / 8,
+    width: Dimensions.get('window').width / 9 / 4,
+    height: Dimensions.get('window').width / 8,
     backgroundColor: '#F7A021'
   },
   bufferView: {
@@ -108,10 +115,11 @@ const styles = {
     margin: -10
   },
   textView: {
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: Dimensions.get('window').width / 7 + 10
+    backgroundColor: 'white',
+    justifyContent: 'left',
+    alignItems: 'left',
+    margin: Dimensions.get('window').width / 7 - 10,
+    width: Dimensions.get('window').width / 2
   },
   textStyle: {
     textAlign: 'center',
