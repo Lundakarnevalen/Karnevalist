@@ -55,7 +55,7 @@ class SectionItemScreen extends Component {
             this.setState({ showToast: true, added: true });
           }}
         >
-          <MaterialIcons name="favorite" size={30} color={'white'} />
+          <MaterialIcons name="favorite-border" size={30} color={'white'} />
         </TouchableOpacity>
       );
     }
@@ -67,7 +67,7 @@ class SectionItemScreen extends Component {
           this.setState({ showToast: true, added: false });
         }}
       >
-        <MaterialIcons name="delete" size={30} color={'white'} />
+        <MaterialIcons name="favorite" size={30} color={'white'} />
       </TouchableOpacity>
     );
   }
