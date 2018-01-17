@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import { Image, Dimensions } from 'react-native';
-=======
 import { Platform } from 'react-native';
->>>>>>> edaa212a1cc18707983ecbcba5dde573a2401856
 import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
