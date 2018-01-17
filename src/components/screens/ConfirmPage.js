@@ -152,7 +152,7 @@ class ConfirmPage extends Component {
     axios
       .post(url, { sectionPriorities }, { headers })
       .then(response => {
-        if (response.success) {
+        if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
           Alert.alert(strings.selectionOK);
         }
