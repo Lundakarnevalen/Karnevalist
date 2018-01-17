@@ -14,6 +14,7 @@ import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
 const window = Dimensions.get('window');
+const WIDTH = Dimensions.get('window').width;
 
 class ConfirmPage extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class ConfirmPage extends Component {
   }
 
   renderSortableListOrMessage() {
-    const { contentContainer, list, confimTextStyle, textStyle } = styles;
+    const { contentContainer, list, textStyle } = styles;
     const { navigation } = this.props;
     const { strings } = this.state;
     if (this.state.data.length === 0) {
@@ -74,45 +75,23 @@ class ConfirmPage extends Component {
         </View>
       );
     }
-    return (
-      <View style={{ height: window.height - 64 }}>
-        <SortableList
-          style={list}
-          contentContainerStyle={contentContainer}
-          data={this.state.data}
-          renderRow={this.renderRow.bind(this)}
-          onChangeOrder={nextOrder => this.setState({ order: nextOrder })}
-        />
-        <TouchableOpacity
-          style={this.getConfirmButtonStyle()}
-          onPress={() => this.onPressConfirmButton()}
-        >
-          <Text style={confimTextStyle}>{strings.send}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  getBackgroundColor() {
-    const { data } = this.state;
-    if (data.length >= 5) {
-      return '#F7A021';
-    }
-    return '#a9a9a9';
-  }
-
-  getConfirmButtonStyle() {
-    return {
-      height: window.height / 9,
-      backgroundColor: this.getBackgroundColor(),
-      borderColor: '#ffffff',
-      borderRadius: 0,
-      margin: 0,
-      justifyContent: 'center',
-      alignItems: 'center',
-      bottom: 0,
-      width: window.width
-    };
+      return (
+        <View style={{ height: window.height - 64, justifyContent: 'center', alignItems: 'center' }}>
+          <SortableList
+            style={list}
+            contentContainerStyle={contentContainer}
+            data={this.state.data}
+            renderRow={this.renderRow.bind(this)}
+            onChangeOrder={(nextOrder) => this.setState({ order: nextOrder })}
+          />
+            <CustomButton
+              style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
+              text={strings.send}
+              width={WIDTH - 15}
+              onPress={() => this.onPressConfirmButton()}
+            />
+        </View>
+      );
   }
 
   deleteRow(id) {
@@ -242,7 +221,7 @@ const styles = {
     color: '#ffffff'
   },
   list: {
-    flex: 1
+    flex: 1,
   },
   contentContainer: {
     width: window.width
