@@ -36,7 +36,9 @@ class MyProfileScreen extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
     this.getUserInfo();
   }
 
@@ -66,19 +68,19 @@ class MyProfileScreen extends Component {
       });
   }
 
-  getColor() {
-    return '#F7A021';
-  }
-
   getMsg(success, strings) {
-    return success ? strings.updateInfoMessageSuccess : strings.updateInfoMessageFail;
+    return success
+      ? strings.updateInfoMessageSuccess
+      : strings.updateInfoMessageFail;
   }
 
   getStrings() {
     const { language } = this.props;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const strings = {};
-    fields.forEach(field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language]));
+    fields.forEach(
+      field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language])
+    );
     return strings;
   }
 
@@ -87,13 +89,14 @@ class MyProfileScreen extends Component {
       <TouchableOpacity
         style={{ width: 50, alignItems: 'center' }}
         onPress={() => {
-          if (this.state.editMode && this.state.changesMade) this.setState({ alertVisible: true });
+          if (this.state.editMode && this.state.changesMade)
+            this.setState({ alertVisible: true });
           this.setState({ editMode: !this.state.editMode });
         }}
       >
         <MaterialIcons
           name={this.state.editMode ? 'done' : 'edit'}
-          style={{ color: this.getColor(), right: 0 }}
+          style={{ color: 'white', right: 0 }}
           size={35}
         />
       </TouchableOpacity>
@@ -160,10 +163,12 @@ class MyProfileScreen extends Component {
     if (this.state.user === null)
       return (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" color={this.getColor()} />
+          <ActivityIndicator size="large" color={'white'} />
         </View>
       );
-    return <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>;
+    return (
+      <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>
+    );
   }
 
   render() {
@@ -173,7 +178,11 @@ class MyProfileScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header title={strings.title} navigation={navigation} rightIcon={this.getRightIcon()} />
+        <Header
+          title={strings.title}
+          navigation={navigation}
+          rightIcon={this.getRightIcon()}
+        />
         <Toast
           color={'#f4376d'}
           showToast={showToast}
@@ -184,7 +193,10 @@ class MyProfileScreen extends Component {
           alertVisible={alertVisible}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
           buttonsIn={[
-            { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+            {
+              text: strings.cancel,
+              onPress: () => this.setState({ alertVisible: false })
+            },
             { text: strings.save, onPress: () => this.saveChanges() }
           ]}
           header={strings.popUpHeader}
@@ -211,7 +223,11 @@ const styles = {
     marginTop: HEIGHT / 3
   }
 };
-const mapStateToProps = ({ currentTheme, currentLanguage, userInformation }) => {
+const mapStateToProps = ({
+  currentTheme,
+  currentLanguage,
+  userInformation
+}) => {
   const { theme } = currentTheme;
   const { language } = currentLanguage;
   const { token, email } = userInformation;

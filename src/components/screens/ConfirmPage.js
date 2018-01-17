@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, TouchableOpacity, Alert, BackHandler } from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+  BackHandler
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -9,11 +16,12 @@ import Header from '../common/Header';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
 import BackgroundImage from '../common/BackgroundImage';
-import { setSectionPriorities } from '../../actions';
+import { setSectionPriorities, setProgress } from '../../actions';
 import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
 const window = Dimensions.get('window');
+const WIDTH = Dimensions.get('window').width;
 
 class ConfirmPage extends Component {
   constructor(props) {
@@ -27,7 +35,9 @@ class ConfirmPage extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
     const tempData = [];
     const allSections = this.props.sections;
     getSections(sections => {
@@ -52,20 +62,28 @@ class ConfirmPage extends Component {
     const { language } = this.props;
     const { fields } = CONFIRM_PAGE_STRINGS;
     const strings = {};
-    fields.forEach(field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language]));
+    fields.forEach(
+      field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language])
+    );
     return strings;
   }
 
   renderSortableListOrMessage() {
-    const { contentContainer, list, confimTextStyle, textStyle } = styles;
+    const { contentContainer, list, textStyle } = styles;
     const { navigation } = this.props;
     const { strings } = this.state;
     if (this.state.data.length === 0) {
       return (
         <View
-          style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
+          style={{
+            height: window.height - 64,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
         >
-          <Text style={[textStyle, { color: 'white' }]}>{strings.sectionSelection}</Text>
+          <Text style={[textStyle, { color: 'white' }]}>
+            {strings.sectionSelection}
+          </Text>
           <CustomButton
             style={'standardButton'}
             text={strings.toSections}
@@ -75,7 +93,13 @@ class ConfirmPage extends Component {
       );
     }
     return (
-      <View style={{ height: window.height - 64 }}>
+      <View
+        style={{
+          height: window.height - 64,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         <SortableList
           style={list}
           contentContainerStyle={contentContainer}
@@ -83,36 +107,18 @@ class ConfirmPage extends Component {
           renderRow={this.renderRow.bind(this)}
           onChangeOrder={nextOrder => this.setState({ order: nextOrder })}
         />
-        <TouchableOpacity
-          style={this.getConfirmButtonStyle()}
+        <CustomButton
+          style={
+            this.state.data.length >= 5
+              ? 'standardButton'
+              : 'tintStandardButton'
+          }
+          text={strings.send}
+          width={WIDTH - 15}
           onPress={() => this.onPressConfirmButton()}
-        >
-          <Text style={confimTextStyle}>{strings.send}</Text>
-        </TouchableOpacity>
+        />
       </View>
     );
-  }
-
-  getBackgroundColor() {
-    const { data } = this.state;
-    if (data.length >= 5) {
-      return '#F7A021';
-    }
-    return '#a9a9a9';
-  }
-
-  getConfirmButtonStyle() {
-    return {
-      height: window.height / 9,
-      backgroundColor: this.getBackgroundColor(),
-      borderColor: '#ffffff',
-      borderRadius: 0,
-      margin: 0,
-      justifyContent: 'center',
-      alignItems: 'center',
-      bottom: 0,
-      width: window.width
-    };
   }
 
   deleteRow(id) {
@@ -173,9 +179,11 @@ class ConfirmPage extends Component {
     axios
       .post(url, { sectionPriorities }, { headers })
       .then(response => {
-        if (response.success) {
+        if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
+          this.props.setProgress(4);
           Alert.alert(strings.selectionOK);
+          this.props.navigation.goBack(null);
         }
         //TODO TOAST??
       })
@@ -260,11 +268,18 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLanguage, userInformation }) => {
+const mapStateToProps = ({
+  currentTheme,
+  sections,
+  currentLanguage,
+  userInformation
+}) => {
   const { theme } = currentTheme;
   const { language } = currentLanguage;
   const { token } = userInformation;
   return { theme, sections: sections.sections, language, token };
 };
 
-export default connect(mapStateToProps, { setSectionPriorities })(ConfirmPage);
+export default connect(mapStateToProps, { setSectionPriorities, setProgress })(
+  ConfirmPage
+);
