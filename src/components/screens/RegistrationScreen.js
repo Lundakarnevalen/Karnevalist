@@ -47,7 +47,7 @@ class RegistrationScreen extends Component {
       foodPreferences: '',
       shirtSize: '',
       studentUnion: '',
-      socialSecurityNumberInput: '',
+      socialSecurityNumber: '',
       firstNameError: false,
       lastNameError: false,
       emailError: false,
@@ -109,7 +109,9 @@ class RegistrationScreen extends Component {
   }
 
   containsOnlyLetters(toTest) {
-    return /^[a-zåäöA-ZÅÄÖ]+$/.test(toTest);
+    return /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(
+      toTest
+    );
   }
 
   isValidPhoneNbr(toTest) {
@@ -132,9 +134,43 @@ class RegistrationScreen extends Component {
     const { language } = this.props;
     const { fields } = ERROR_MSG_INPUT_FIELD;
     const strings = {};
-    console.log(fields);
     fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
     return strings;
+  }
+
+  anyEmpty() {
+    const {
+      firstName,
+      lastName,
+      email,
+      confirmedEmail,
+      address,
+      postNumber,
+      city,
+      phoneNbr,
+      password,
+      confirmedPassword,
+      socialSecurityNumber,
+      studentUnion,
+      shirtSize
+    } = this.state;
+    return (
+      firstName === '' ||
+      lastName === '' ||
+      email === '' ||
+      confirmedEmail === '' ||
+      address === '' ||
+      postNumber === '' ||
+      city === '' ||
+      phoneNbr === '' ||
+      password === '' ||
+      confirmedPassword === '' ||
+      socialSecurityNumber === '' ||
+      shirtSize === '' ||
+      studentUnion === '' ||
+      shirtSize === 'Välj tröjstorlek' ||
+      studentUnion === 'Välj nation'
+    );
   }
 
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
@@ -235,7 +271,7 @@ class RegistrationScreen extends Component {
       showShirtPicker,
       studentUnion,
       showStudentUnionPicker,
-      socialSecurityNumberInput
+      socialSecurityNumber
     } = this.state;
 
     const closeButton = (
@@ -285,11 +321,11 @@ class RegistrationScreen extends Component {
             placeholder={strings.socialSecurityNumber}
             onChangeText={text => {
               this.setState({
-                socialSecurityNumberInput: text,
+                socialSecurityNumber: text,
                 socialSecurityNbrError: !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text))
               });
             }}
-            value={socialSecurityNumberInput}
+            value={socialSecurityNumber}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={socialSecurityNbrError}
@@ -380,7 +416,7 @@ class RegistrationScreen extends Component {
                   postNumberError: text.length !== 5 || !this.containsOnlyDigits(text)
                 });
               }}
-              width={(WIDTH / 2) - 4}
+              width={WIDTH / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
               returnKeyType={'next'}
@@ -395,7 +431,7 @@ class RegistrationScreen extends Component {
               onChangeText={text => {
                 this.setState({ city: text, cityError: !this.containsOnlyLetters(text) });
               }}
-              width={(WIDTH / 2) - 4}
+              width={WIDTH / 2 - 4}
               value={city}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
@@ -466,32 +502,21 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
-              if (firstName === '') {
-                Alert.alert(strings.error, strings.errorFirstName);
-              } else if (lastName === '') {
-                Alert.alert(strings.error, strings.errorLastName);
-              } else if (socialSecurityNumberInput === '') {
-                Alert.alert(strings.error, strings.errorSocialSecurityNumber);
-              } else if (email === '') {
-                Alert.alert(strings.error, strings.errorEmail);
-              } else if (confirmedEmail === '') {
-                Alert.alert(strings.error, strings.errorConfirmEmail);
-              } else if (address === '') {
-                Alert.alert(strings.error, strings.errorAddress);
-              } else if (postNumber === '') {
-                Alert.alert(strings.error, strings.errorPostNumber);
-              } else if (city === '') {
-                Alert.alert(strings.error, strings.errorCity);
-              } else if (phoneNbr === '') {
-                Alert.alert(strings.error, strings.errorPhoneNumber);
-              } else if (password === '') {
-                Alert.alert(strings.error, strings.errorPassword);
-              } else if (confirmedPassword === '') {
-                Alert.alert(strings.error, strings.errorConfirmPassword);
-              } else if (email !== confirmedEmail) {
-                Alert.alert(strings.error, strings.errorEmailMatch);
-              } else if (password !== confirmedPassword) {
-                Alert.alert(strings.error, strings.errorPasswordMatch);
+              if (
+                firstNameError ||
+                lastNameError ||
+                emailError ||
+                confirmedEmailError ||
+                passwordError ||
+                confirmedPasswordError ||
+                socialSecurityNbrError ||
+                postNumberError ||
+                cityError ||
+                phoneNbrError ||
+                foodPreferencesError ||
+                this.anyEmpty()
+              ) {
+                Alert.alert(errorStrings.errorMsgWrongInput);
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
@@ -505,7 +530,7 @@ class RegistrationScreen extends Component {
                     address,
                     city,
                     foodPreferences,
-                    personalNumber: socialSecurityNumberInput
+                    personalNumber: socialSecurityNumber
                   })
                   .then(response => {
                     const { accessToken } = response.data;
