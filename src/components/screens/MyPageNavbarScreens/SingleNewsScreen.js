@@ -9,16 +9,13 @@ class NewsScreen extends Component {
   }
 
   render() {
-    const { navigation } = this.props
-    const { title, url } = navigation.state.params.info
+    const { navigation } = this.props;
+    const { title, url } = navigation.state.params.info;
     return (
       <View
         style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}
       >
-        <Header
-          title={title}
-          navigation={navigation}
-        />
+        <Header title={title} navigation={navigation} />
         <WebView source={{ uri: url }} />
       </View>
     );

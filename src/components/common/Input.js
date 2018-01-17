@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 import { View, TextInput, Animated } from 'react-native';
-import { connect } from 'react-redux';
 
 class Input extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
-      borderColor: '#000'
+      borderColor: '#000',
+      screenPosition: null
     };
   }
 
   componentWillMount() {
-    if (this.props.value !== '')
-      this.inputSelected()
-  }
-
-  getThemeColor() {
-        return '#F7A021';
+    if (this.props.value !== '') this.inputSelected();
   }
 
   inputSelected() {
@@ -27,7 +21,7 @@ class Input extends Component {
       Animated.timing(this.state.fontSize, { toValue: 10, duration: 150 }),
       Animated.timing(this.state.position, { toValue: { x: 9, y: 0 }, duration: 150 })
     ]).start();
-    this.setState({ borderColor: this.getThemeColor() });
+    this.setState({ borderColor: '#F7A021' });
   }
 
   inputDeselected() {
@@ -50,8 +44,12 @@ class Input extends Component {
       position: 'absolute',
       top: position.y,
       left: position.x,
-      color: this.getThemeColor()
+      color: '#F7A021'
     };
+  }
+
+  focus() {
+    this.refs.input.focus();
   }
 
   render() {
@@ -65,10 +63,14 @@ class Input extends Component {
       autoCorrect = false,
       editable = true,
       keyboardType = 'default',
-      extraContainerStyle
+      extraContainerStyle,
+      returnKeyType,
+      onSubmitEditing = () => {},
+      autoFocus = false
     } = this.props;
     return (
       <View
+        onLayout={event => this.setState({ screenPosition: 100 + event.nativeEvent.layout.y })}
         style={[
           containerStyle,
           extraContainerStyle,
@@ -79,17 +81,27 @@ class Input extends Component {
           <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>
         )}
         <TextInput
-          onFocus={() => this.inputSelected()}
+          ref={'input'}
+          onFocus={() => {
+            if (typeof this.props.scrollToInput !== 'undefined') {
+              this.props.scrollToInput(this.state.screenPosition);
+            }
+            this.inputSelected();
+          }}
           underlineColorAndroid={'transparent'}
           onEndEditing={() => this.inputDeselected()}
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
           style={[inputStyle, { width }, textInputStyle]}
-          autoCapitalize='words'
+          autoCapitalize={'words'}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
           editable={editable}
           keyboardType={keyboardType}
+          returnKeyType={returnKeyType}
+          blurOnSubmit
+          onSubmitEditing={() => onSubmitEditing()}
+          autoFocus={autoFocus}
         />
       </View>
     );
@@ -113,9 +125,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(Input);
+export default Input;

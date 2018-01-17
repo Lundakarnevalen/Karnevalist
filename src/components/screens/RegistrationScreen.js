@@ -7,7 +7,8 @@ import {
   Picker,
   Platform,
   TouchableWithoutFeedback,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard
 } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -22,8 +23,9 @@ import Loading from '../common/Loading';
 import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 
-const width = Dimensions.get('window').width - 32;
-const height = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width - 32;
+const HEIGHT = Dimensions.get('window').height;
+let zipCodePosition = 0;
 
 class RegistrationScreen extends Component {
   constructor(props) {
@@ -42,15 +44,48 @@ class RegistrationScreen extends Component {
       foodPreferences: '',
       shirtSize: '',
       studentUnion: '',
+      socialSecurityNumberInput: '',
       showShirtPicker: false,
       showStudentUnionPicker: false,
       loading: false,
-      loadingComplete: false
+      loadingComplete: false,
+      keyboardHeight: 0
     };
   }
 
-  getColor() {
-    return 'white';
+  componentWillMount() {
+    if (Platform.OS === 'ios') {
+      this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+    } else {
+      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+    }
+  }
+
+  componentWillUnmount() {
+    if (Platform.OS === 'ios') {
+      this.keyboardWillShowSub.remove();
+    } else {
+      this.keyboardDidShowListener.remove();
+    }
+  }
+
+  keyboardWillShow = event => {
+    this.setState({ keyboardHeight: event.endCoordinates.height });
+  };
+
+  keyboardDidShow = event => {
+    this.setState({ keyboardHeight: event.endCoordinates.height });
+  };
+
+  scrollToInput(inputPosition) {
+    const dy = HEIGHT - this.state.keyboardHeight - 64;
+    const scrollTo = dy - inputPosition;
+    if (scrollTo < 0) {
+      this.refs.scrollView.scrollTo({
+        y: inputPosition - dy,
+        animated: true
+      });
+    }
   }
 
   getStrings() {
@@ -68,7 +103,7 @@ class RegistrationScreen extends Component {
         <CustomButton
           text={title === '' ? defaultTitle : title}
           style="dropDownButton"
-          width={width}
+          width={WIDTH}
           onPress={() => {
             return tag === 'shirt'
               ? this.setState({ showShirtPicker: true })
@@ -116,8 +151,8 @@ class RegistrationScreen extends Component {
           <View
             style={{
               position: 'absolute',
-              width: width + 32,
-              height,
+              width: WIDTH + 32,
+              height: HEIGHT,
               backgroundColor: 'rgba(0, 0, 0, 0.3)'
             }}
           />
@@ -146,12 +181,13 @@ class RegistrationScreen extends Component {
       shirtSize,
       showShirtPicker,
       studentUnion,
-      showStudentUnionPicker
+      showStudentUnionPicker,
+      socialSecurityNumberInput
     } = this.state;
 
     const closeButton = (
       <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
-        <MaterialCommunityIcons size={30} name="close" color={this.getColor()} />
+        <MaterialCommunityIcons size={30} name="close" color={'white'} />
       </TouchableOpacity>
     );
 
@@ -159,94 +195,158 @@ class RegistrationScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
-        <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
+        <ScrollView
+          contentContainerStyle={styles.contentContainer}
+          style={{ height: HEIGHT - 64 }}
+          ref={'scrollView'}
+        >
           <Input
             placeholder={strings.firstName}
             onChangeText={firstNameInput => {
               this.setState({ firstName: firstNameInput });
             }}
             value={firstName}
+            onSubmitEditing={() => this.refs.secondInput.focus()}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            autoFocus
           />
           <Input
+            ref={'secondInput'}
+            onSubmitEditing={() => this.refs.thirdInput.focus()}
             placeholder={strings.lastName}
             onChangeText={lastNameInput => {
               this.setState({ lastName: lastNameInput });
             }}
             value={lastName}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
+            ref={'thirdInput'}
+            onSubmitEditing={() => this.refs.fourthInput.focus()}
+            placeholder={strings.socialSecurityNumber}
+            onChangeText={text => {
+              this.setState({ socialSecurityNumberInput: text });
+            }}
+            value={socialSecurityNumberInput}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
+          <Input
+            ref={'fourthInput'}
+            onSubmitEditing={() => this.refs.fifthInput.focus()}
             placeholder={strings.email}
             keyboardType="email-address"
             onChangeText={emailInput => {
               this.setState({ email: emailInput });
             }}
             value={email}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
+            ref={'fifthInput'}
+            onSubmitEditing={() => this.refs.sixthInput.focus()}
             placeholder={strings.confirmEmail}
             keyboardType="email-address"
             onChangeText={emailInput => {
               this.setState({ confirmedEmail: emailInput });
             }}
             value={confirmedEmail}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
+            ref={'sixthInput'}
+            onSubmitEditing={() => this.refs.seventhInput.focus()}
             placeholder={strings.password}
             onChangeText={text => {
               this.setState({ password: text });
             }}
             value={password}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
             secureText
           />
           <Input
+            ref={'seventhInput'}
+            onSubmitEditing={() => this.refs.eigthInput.focus()}
             placeholder={strings.confirmPassword}
             onChangeText={text => {
               this.setState({ confirmedPassword: text });
             }}
             value={confirmedPassword}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
             secureText
           />
           <Input
+            ref={'eigthInput'}
+            onSubmitEditing={() => this.refs.ninthInput.focus()}
             placeholder={strings.address}
             onChangeText={addressInput => {
               this.setState({ address: addressInput });
             }}
             value={address}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
-          <View style={flexHorizontal}>
+          <View
+            style={flexHorizontal}
+            ref={'horizontalInputView'}
+            onLayout={event => {
+              zipCodePosition = event.nativeEvent.layout.y;
+            }}
+          >
             <Input
+              ref={'ninthInput'}
+              onSubmitEditing={() => this.refs.tenthInput.focus()}
               placeholder={strings.postNumber}
               keyboardType="numeric"
               onChangeText={postNumberInput => {
                 this.setState({ postNumber: postNumberInput });
               }}
-              width={width / 2 - 4}
+              width={WIDTH / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
+              returnKeyType={'next'}
+              scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
             />
             <Input
+              ref={'tenthInput'}
+              onSubmitEditing={() => this.refs.eleventhInput.focus()}
               placeholder={strings.city}
               onChangeText={cityInput => {
                 this.setState({ city: cityInput });
               }}
-              width={width / 2 - 4}
+              width={WIDTH / 2 - 4}
               value={city}
+              returnKeyType={'next'}
+              scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
             />
           </View>
           <Input
+            ref={'eleventhInput'}
+            onSubmitEditing={() => this.refs.twelthInput.focus()}
             placeholder={strings.phoneNumber}
             keyboardType="phone-pad"
             onChangeText={phoneNbrInput => {
               this.setState({ phoneNbr: phoneNbrInput });
             }}
             value={phoneNbr}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
+            ref={'twelthInput'}
             placeholder={strings.foodPreferences}
             onChangeText={foodPreferencesInput => {
               this.setState({ foodPreferences: foodPreferencesInput });
             }}
             value={foodPreferences}
+            returnKeyType={'done'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,
@@ -265,24 +365,26 @@ class RegistrationScreen extends Component {
               buttonInputVector={[strings.activeKarneval]}
               multipleChoice
               size={30}
-              color={this.getColor()}
+              color={'white'}
             />
             <ButtonChoiceManager
               buttonInputVector={[strings.driversLicense]}
               multipleChoice
               size={30}
-              color={this.getColor()}
+              color={'white'}
             />
           </View>
           <CustomButton
             text={strings.register}
             style={'standardButton'}
-            width={width}
+            width={WIDTH}
             onPress={() => {
               if (firstName === '') {
                 Alert.alert(strings.error, strings.errorFirstName);
               } else if (lastName === '') {
                 Alert.alert(strings.error, strings.errorLastName);
+              } else if (socialSecurityNumberInput === '') {
+                Alert.alert(strings.error, strings.errorSocialSecurityNumber);
               } else if (email === '') {
                 Alert.alert(strings.error, strings.errorEmail);
               } else if (confirmedEmail === '') {
@@ -315,7 +417,8 @@ class RegistrationScreen extends Component {
                     phoneNumber: phoneNbr,
                     address,
                     city,
-                    foodPreferences
+                    foodPreferences,
+                    personalNumber: socialSecurityNumberInput
                   })
                   .then(() => {
                     this.setState({ loadingComplete: true });
