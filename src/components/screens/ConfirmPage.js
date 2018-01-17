@@ -191,7 +191,6 @@ class ConfirmPage extends Component {
             strings.expiredTokenTitle,
             strings.expiredTokenMessage
           );
-        // const msg = handleErrorMsg(error.message)
         console.log(error);
       });
   }
@@ -210,7 +209,7 @@ class ConfirmPage extends Component {
           <MaterialIcons
             name={this.getHeaderIconName()}
             style={{ color: 'white', right: 0 }}
-            size={35}
+            size={30}
           />
         </TouchableOpacity>
       );
@@ -250,12 +249,6 @@ const styles = {
   },
   contentContainer: {
     width: window.width
-  },
-  image: {
-    width: 50,
-    height: 50,
-    marginRight: 30,
-    borderRadius: 25
   },
   textStyle: {
     fontSize: 24,

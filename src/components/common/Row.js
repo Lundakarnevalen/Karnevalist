@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { EvilIcons } from '@expo/vector-icons';
 
 const window = Dimensions.get('window');
-const size = 60;
 
 class Row extends Component {
   constructor(props) {
@@ -74,8 +73,8 @@ class Row extends Component {
         style={{
           flexDirection: 'row',
           flex: 1,
-          padding: 10,
-          width: window.width - 20
+          padding: 8,
+          width: window.width - 16
         }}
       >
         <Text style={[indexStyle, { color: this.getColor() }]}>{this.props.index}</Text>
@@ -130,25 +129,21 @@ class Row extends Component {
 const styles = {
   row: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
-    padding: 0,
-    height: size * 1.2,
-    flex: 1,
-    marginTop: 7,
-    marginBottom: 7,
+    backgroundColor: 'white',
+    height: 60,
+    marginTop: 8,
     borderWidth: 1,
-    borderRadius: 1,
     alignSelf: 'center',
-    width: window.width - 40,
+    width: window.width - 16,
     elevation: 0
   },
   image: {
-    width: size,
-    height: size,
+    width: 40,
+    height: 40,
     alignSelf: 'center',
     marginLeft: 10,
     marginRight: 10,
-    borderRadius: size / 2
+    borderRadius: 8
   },
   indexStyle: {
     alignSelf: 'center',
@@ -158,7 +153,7 @@ const styles = {
   iconStyle: {
     alignSelf: 'center',
     position: 'absolute',
-    right: 25
+    right: 8
   }
 };
 
