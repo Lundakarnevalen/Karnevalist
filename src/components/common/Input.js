@@ -48,9 +48,9 @@ class Input extends Component {
   }
 
   addWarningText() {
-    const { warningMessage = '', language, hasError = false } = this.props;
+    const { warningMessage = '', language, hasError = false, value } = this.props;
     let errorMsg = '';
-    if (hasError) {
+    if (hasError && value !== '') {
       switch (language) {
         case 'SE':
           errorMsg = warningMessage[0];
@@ -82,6 +82,18 @@ class Input extends Component {
     this.refs.input.focus();
   }
 
+  getBorderColor() {
+    const { hasError, value } = this.props;
+    if (value !== '' && hasError) return 'red';
+    return this.state.borderColor;
+  }
+
+  getTextColor() {
+    const { hasError, value } = this.props;
+    if (value !== '' && hasError) return 'red';
+    return '#F7A021';
+  }
+
   render() {
     const { inputStyle, containerStyle } = styles;
     const {
@@ -97,21 +109,14 @@ class Input extends Component {
       returnKeyType,
       onSubmitEditing = () => {},
       autoFocus = false,
-      hasError = false
     } = this.props;
     return (
       <View
         onLayout={event => this.setState({ screenPosition: 100 + event.nativeEvent.layout.y })}
-        style={[
-          containerStyle,
-          extraContainerStyle,
-          { width, borderColor: hasError ? 'red' : this.state.borderColor }
-        ]}
+        style={[containerStyle, extraContainerStyle, { width, borderColor: this.getBorderColor() }]}
       >
         {placeholder === '' ? null : (
-          <Animated.Text
-            style={[this.getPlaceholderStyle(), { color: hasError ? 'red' : '#F7A021' }]}
-          >
+          <Animated.Text style={[this.getPlaceholderStyle(), { color: this.getTextColor() }]}>
             {placeholder}
           </Animated.Text>
         )}
