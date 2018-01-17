@@ -1,58 +1,66 @@
 import React, { Component } from 'react';
-import { BackHandler, View, TouchableOpacity, FlatList, Platform, Text, Dimensions } from 'react-native';
+import {
+  BackHandler,
+  View,
+  TouchableOpacity,
+  FlatList,
+  Platform,
+  Text,
+  Dimensions
+} from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
-import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
+import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
-const HEIGHT = Dimensions.get('window').height
+const HEIGHT = Dimensions.get('window').height;
 class MyRegistrationScreen extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
-      data: []
+      data: this.getSectionPriority(props.sectionPriorities)
     };
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
-    this.getSectionPriority(this.props.sectionPriorities)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.getSectionPriority(nextProps.sectionPriorities)
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
   }
 
   getColor() {
-        return 'white';
+    return 'white';
   }
+
   getStrings() {
-    const { language } = this.props
-    const { fields } = MY_REGISTRATION_SCREEN_STRINGS
-    const strings = {}
-    fields.forEach(field => (strings[field] = MY_REGISTRATION_SCREEN_STRINGS[field][language]))
-    return strings
+    const { language } = this.props;
+    const { fields } = MY_REGISTRATION_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(
+      field =>
+        (strings[field] = MY_REGISTRATION_SCREEN_STRINGS[field][language])
+    );
+    return strings;
   }
 
   getSectionPriority(sectionPriorities) {
-    const { sections } = this.props
+    const { sections } = this.props;
     const data = sectionPriorities.map((key, i) => {
-      const index = sections.findIndex(s => s.key + '' === key + '')
-      const section = sections[index]
-        return ({
-          key: section.key,
-          id: section.key,
-          image: section.image,
-          info: section.info,
-          titleAndRank: i + 1 + ' ' + section.title,
-          title: section.title
-        })
-    })
-    this.setState({ data })
+      const index = sections.findIndex(s => s.key + '' === key + '');
+      const section = sections[index];
+      return {
+        key: section.key,
+        id: section.key,
+        image: section.image,
+        info: section.info,
+        titleAndRank: i + 1 + ' ' + section.title,
+        title: section.title
+      };
+    });
+    return data;
   }
 
   renderListOrMessage(strings) {
@@ -76,35 +84,24 @@ class MyRegistrationScreen extends Component {
             />
           )}
         />
-      )
+      );
     return (
       <Text style={[styles.textStyle, { color: this.getColor() }]}>
         {strings.emptyListMessage}
-      </Text>)
+      </Text>
+    );
   }
 
   render() {
     const { navigation } = this.props;
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={1} />
         <View>
-          <Header
-            rightIcon={
-              <TouchableOpacity
-                onPress={() => navigation.navigate('ConfirmPage', { navigation })}
-              >
-                <MaterialIcons name="local-mall" size={30} color={this.getColor()} />
-              </TouchableOpacity>
-            }
-            title={strings.title}
-            navigation={navigation}
-          />
+          <Header title={strings.title} navigation={navigation} />
         </View>
-        <View style={styles.style}>
-          {this.renderListOrMessage(strings)}
-        </View>
+        <View style={styles.style}>{this.renderListOrMessage(strings)}</View>
       </View>
     );
   }
@@ -123,12 +120,23 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLanguage, userInformation }) => {
+const mapStateToProps = ({
+  currentTheme,
+  sections,
+  currentLanguage,
+  userInformation
+}) => {
   const { theme } = currentTheme;
   const { language } = currentLanguage;
-  const { token } = userInformation
-  const { sectionPriorities } = sections
-  return { theme, sections: sections.sections, sectionPriorities, language, token };
+  const { token } = userInformation;
+  const { sectionPriorities } = sections;
+  return {
+    theme,
+    sections: sections.sections,
+    sectionPriorities,
+    language,
+    token
+  };
 };
 
 export default connect(mapStateToProps, null)(MyRegistrationScreen);
