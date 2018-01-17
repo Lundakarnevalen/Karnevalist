@@ -7,7 +7,8 @@ import {
   Picker,
   Platform,
   TouchableWithoutFeedback,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard
 } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -22,8 +23,9 @@ import Loading from '../common/Loading';
 import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 
-const width = Dimensions.get('window').width - 32;
-const height = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width - 32;
+const HEIGHT = Dimensions.get('window').height;
+let zipCodePosition = 0;
 
 class RegistrationScreen extends Component {
   constructor(props) {
@@ -45,12 +47,44 @@ class RegistrationScreen extends Component {
       showShirtPicker: false,
       showStudentUnionPicker: false,
       loading: false,
-      loadingComplete: false
+      loadingComplete: false,
+      keyboardHeight: 0
     };
   }
 
-  getColor() {
-    return 'white';
+  componentWillMount() {
+    if (Platform.OS === 'ios') {
+      this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+    } else {
+      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+    }
+  }
+
+  componentWillUnmount() {
+    if (Platform.OS === 'ios') {
+      this.keyboardWillShowSub.remove();
+    } else {
+      this.keyboardDidShowListener.remove();
+    }
+  }
+
+  keyboardWillShow = event => {
+    this.setState({ keyboardHeight: event.endCoordinates.height });
+  };
+
+  keyboardDidShow = event => {
+    this.setState({ keyboardHeight: event.endCoordinates.height });
+  };
+
+  scrollToInput(inputPosition) {
+    const dy = HEIGHT - this.state.keyboardHeight - 64;
+    const scrollTo = dy - inputPosition;
+    if (scrollTo < 0) {
+      this.refs.scrollView.scrollTo({
+        y: inputPosition - dy,
+        animated: true
+      });
+    }
   }
 
   getStrings() {
@@ -68,7 +102,7 @@ class RegistrationScreen extends Component {
         <CustomButton
           text={title === '' ? defaultTitle : title}
           style="dropDownButton"
-          width={width}
+          width={WIDTH}
           onPress={() => {
             return tag === 'shirt'
               ? this.setState({ showShirtPicker: true })
@@ -116,8 +150,8 @@ class RegistrationScreen extends Component {
           <View
             style={{
               position: 'absolute',
-              width: width + 32,
-              height,
+              width: WIDTH + 32,
+              height: HEIGHT,
               backgroundColor: 'rgba(0, 0, 0, 0.3)'
             }}
           />
@@ -151,7 +185,7 @@ class RegistrationScreen extends Component {
 
     const closeButton = (
       <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
-        <MaterialCommunityIcons size={30} name="close" color={this.getColor()} />
+        <MaterialCommunityIcons size={30} name="close" color={'white'} />
       </TouchableOpacity>
     );
 
@@ -159,7 +193,11 @@ class RegistrationScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
-        <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
+        <ScrollView
+          contentContainerStyle={styles.contentContainer}
+          style={{ height: HEIGHT - 64 }}
+          ref={'scrollView'}
+        >
           <Input
             placeholder={strings.firstName}
             onChangeText={firstNameInput => {
@@ -168,6 +206,8 @@ class RegistrationScreen extends Component {
             value={firstName}
             onSubmitEditing={() => this.refs.secondInput.focus()}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            autoFocus
           />
           <Input
             ref={'secondInput'}
@@ -178,6 +218,7 @@ class RegistrationScreen extends Component {
             }}
             value={lastName}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'thirdInput'}
@@ -189,6 +230,7 @@ class RegistrationScreen extends Component {
             }}
             value={email}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'fourthInput'}
@@ -200,6 +242,7 @@ class RegistrationScreen extends Component {
             }}
             value={confirmedEmail}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'fifthInput'}
@@ -210,6 +253,7 @@ class RegistrationScreen extends Component {
             }}
             value={password}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
             secureText
           />
           <Input
@@ -221,6 +265,7 @@ class RegistrationScreen extends Component {
             }}
             value={confirmedPassword}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
             secureText
           />
           <Input
@@ -232,8 +277,15 @@ class RegistrationScreen extends Component {
             }}
             value={address}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
-          <View style={flexHorizontal}>
+          <View
+            style={flexHorizontal}
+            ref={'horizontalInputView'}
+            onLayout={event => {
+              zipCodePosition = event.nativeEvent.layout.y;
+            }}
+          >
             <Input
               ref={'eigthInput'}
               onSubmitEditing={() => this.refs.ninthInput.focus()}
@@ -242,10 +294,11 @@ class RegistrationScreen extends Component {
               onChangeText={postNumberInput => {
                 this.setState({ postNumber: postNumberInput });
               }}
-              width={width / 2 - 4}
+              width={WIDTH / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
               returnKeyType={'next'}
+              scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
             />
             <Input
               ref={'ninthInput'}
@@ -254,9 +307,10 @@ class RegistrationScreen extends Component {
               onChangeText={cityInput => {
                 this.setState({ city: cityInput });
               }}
-              width={width / 2 - 4}
+              width={WIDTH / 2 - 4}
               value={city}
               returnKeyType={'next'}
+              scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
             />
           </View>
           <Input
@@ -269,6 +323,7 @@ class RegistrationScreen extends Component {
             }}
             value={phoneNbr}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'eleventhInput'}
@@ -278,6 +333,7 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
             returnKeyType={'done'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,
@@ -296,19 +352,19 @@ class RegistrationScreen extends Component {
               buttonInputVector={[strings.activeKarneval]}
               multipleChoice
               size={30}
-              color={this.getColor()}
+              color={'white'}
             />
             <ButtonChoiceManager
               buttonInputVector={[strings.driversLicense]}
               multipleChoice
               size={30}
-              color={this.getColor()}
+              color={'white'}
             />
           </View>
           <CustomButton
             text={strings.register}
             style={'standardButton'}
-            width={width}
+            width={WIDTH}
             onPress={() => {
               if (firstName === '') {
                 Alert.alert(strings.error, strings.errorFirstName);
