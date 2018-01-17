@@ -65,7 +65,7 @@ class Input extends Component {
       keyboardType = 'default',
       extraContainerStyle,
       returnKeyType,
-      onSubmitEditing = () => console.log('On submit missing'),
+      onSubmitEditing = () => {},
       autoFocus = false
     } = this.props;
     return (
