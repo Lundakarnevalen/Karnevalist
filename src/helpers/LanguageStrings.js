@@ -250,8 +250,34 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   studentUnion,
   studentUnionArray: {
-    SE: [studentUnion.SE, 'Lunds Nation', 'Göteborgs Nation', 'Malmös Nation'],
-    EN: [studentUnion.EN, 'Lunds Nation', 'Göteborgs Nation', 'Malmös Nation']
+    SE: [
+      studentUnion.SE,
+      'Blekingska Nation',
+      'Göteborgs Nation',
+      'Hallands Nation',
+      'Helsingkrona Nation',
+      'Kalmar Nation',
+      'Kristianstads Nation',
+      'Malmö Nation',
+      'Sydskånska Nation',
+      'Västgöta Nation',
+      'Wermlands Nation',
+      'Östgöta Nation'
+    ],
+    EN: [
+      studentUnion.EN,
+      'Blekingska Nation',
+      'Göteborgs Nation',
+      'Hallands Nation',
+      'Helsingkrona Nation',
+      'Kalmar Nation',
+      'Kristianstads Nation',
+      'Malmö Nation',
+      'Sydskånska Nation',
+      'Västgöta Nation',
+      'Wermlands Nation',
+      'Östgöta Nation'
+    ]
   },
   activeKarneval: {
     SE: 'Jag var aktiv under karnevalen 2014',
