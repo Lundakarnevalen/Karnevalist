@@ -204,19 +204,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'activeKarneval',
     'driversLicense',
     'register',
-    'errorFirstName',
-    'errorLastName',
-    'errorSocialSecurityNumber',
-    'errorEmail',
-    'errorConfirmEmail',
-    'errorAddress',
-    'errorPostNumber',
-    'errorCity',
-    'errorPhoneNumber',
-    'errorPassword',
-    'errorConfirmPassword',
-    'errorEmailMatch',
-    'errorPasswordMatch',
     'error',
     'errorMsg400',
     'errorMsg401',
@@ -289,58 +276,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
   register: {
     SE: 'Registrera',
     EN: 'Register'
-  },
-  errorFirstName: {
-    SE: 'Förnamn krävs',
-    EN: 'First name is required'
-  },
-  errorLastName: {
-    SE: 'Efternamn krävs',
-    EN: 'Last name is required'
-  },
-  errorSocialSecurityNumber: {
-    SE: 'Personnummer krävs',
-    EN: 'Social security number is required'
-  },
-  errorEmail: {
-    SE: 'Email krävs',
-    EN: 'Email is required'
-  },
-  errorConfirmEmail: {
-    SE: 'Var god bekräfta din email',
-    EN: 'Please confirm your email'
-  },
-  errorAddress: {
-    SE: 'Adress krävs',
-    EN: 'Address is required'
-  },
-  errorPostNumber: {
-    SE: 'Postnummer krävs',
-    EN: 'Post number is required'
-  },
-  errorCity: {
-    SE: 'Stad krävs',
-    EN: 'City is required'
-  },
-  errorPhoneNumber: {
-    SE: 'Telefonnummer krävs',
-    EN: 'Phone number is required'
-  },
-  errorPassword: {
-    SE: 'Lösenord krävs',
-    EN: 'Password is required'
-  },
-  errorConfirmPassword: {
-    SE: 'Var god bekräfta ditt lösenord',
-    EN: 'Please confirm your password'
-  },
-  errorEmailMatch: {
-    SE: 'Email adresserna matchar inte',
-    EN: "The emails doesn't match"
-  },
-  errorPasswordMatch: {
-    SE: 'Lösenorden matchar inte',
-    EN: "The passwords doesn't match"
   },
   error,
   errorMsg400: {
@@ -691,12 +626,12 @@ export const ERROR_MSG_INPUT_FIELD = {
     EN: 'The passwords do not match'
   },
   errorMsgPwd: {
-    SE: 'Lösenordet måste bestå av minst 5 tecken',
-    EN: 'The password must consist ot at least 5 characters'
+    SE: 'Måste bestå av minst 5 tecken',
+    EN: 'Must consist of at least 5 characters'
   },
   errorMsgPhoneNbr: {
-    SE: 'Format: XXXXXXXXXX',
-    EN: 'Format: XXXXXXXXXX'
+    SE: 'Format: (+)XXXXXXXXXX',
+    EN: 'Format: (+)XXXXXXXXXX'
   },
   errorMsgSocialSecurity: {
     SE: 'Format: YYMMDDXXXX',
