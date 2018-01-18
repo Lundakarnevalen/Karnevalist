@@ -29,6 +29,7 @@ class HomeScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={3} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
+        <View style={{ height: 20 }} />
         <View style={container}>
           <CountDown />
           <Timeline />

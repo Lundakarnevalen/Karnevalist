@@ -430,7 +430,7 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: ['title', 'buttonText'],
+  fields: ['title', 'buttonText', 'CheckIn', 'ChooseSections', 'Rank', 'SendIn'],
   title: {
     SE: 'Hem',
     EN: 'Home'
@@ -438,6 +438,22 @@ export const HOME_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Påbörja din registrering',
     EN: 'Begin your registration'
+  },
+  CheckIn: {
+    SE: 'Påbörja din registrering',
+    EN: 'Begin your registration'
+  },
+  ChooseSections: {
+    SE: 'Välja vilka sektioner du vill jobba med, minst 5 stycken.',
+    EN: 'Choose which section you want to work with, at least 5.'
+  },
+  Rank: {
+    SE: 'Rangordna sektionerna efter vilken du helst vill jobba med.',
+    EN: 'Rank the sections after which one you most want to work with.'
+  },
+  SendIn: {
+    SE: 'Checka ut.',
+    EN: 'Check out.'
   }
 };
 

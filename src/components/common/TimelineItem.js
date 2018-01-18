@@ -17,7 +17,7 @@ class TimelineItem extends Component {
     };
   }
   getNotDone() {
-    const borderWidth = 2;
+    const borderWidth = 3;
     const backgroundColor = 'rgba(247, 160, 33, 0.5)';
     const borderColor = 'rgba(247, 160, 33, 1)';
     return {
@@ -75,7 +75,9 @@ class TimelineItem extends Component {
     return (
       <TouchableOpacity onPress={onPress} style={[button]}>
         <View style={[this.getStyle(), roundView]} />
-        <Text style={[this.getTextStyle()]}>{text}</Text>
+        <View style={[textView]}>
+        <Text style={[this.getTextStyle(), textButton]}>{text}</Text>
+        </View>
       </TouchableOpacity>
     );
   }
@@ -83,8 +85,8 @@ class TimelineItem extends Component {
 
 const styles = {
   button: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 20,
     borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center',
@@ -92,7 +94,12 @@ const styles = {
   },
   textButton: {
     backgroundColor: 'transparent',
-    borderWidth: 0
+    borderWidth: 0,
+    width: Dimensions.get('window').width / 2,
+  },
+  textView: {
+    backgroundColor: 'rgba(247, 160, 33, 0.7)',
+    borderRadius: 15,
   },
   roundView: {
     height: Dimensions.get('window').width / 7,
@@ -105,13 +112,6 @@ const styles = {
     width: Dimensions.get('window').width / 9 / 4,
     height: Dimensions.get('window').width / 8,
     backgroundColor: '#F7A021'
-  },
-  textView: {
-    backgroundColor: 'white',
-    justifyContent: 'left',
-    alignItems: 'left',
-    margin: Dimensions.get('window').width / 7 - 10,
-    width: Dimensions.get('window').width / 2
   }
 };
 
