@@ -603,7 +603,8 @@ export const ERROR_MSG_INPUT_FIELD = {
     'errorMsgNoMatchPassword',
     'errorMsgZipCode',
     'errorMsgFoodPreference',
-    'errorMsgWrongInput'
+    'errorMsgWrongInput',
+    'errorMsgCity'
   ],
   errorMsgOnlyDigits: {
     SE: 'Detta fält får endast innehålla siffror',
@@ -640,6 +641,10 @@ export const ERROR_MSG_INPUT_FIELD = {
   errorMsgZipCode: {
     SE: 'ddddd',
     EN: 'ddddd'
+  },
+  errorMsgCity: {
+    SE: 'Endast bokstäver',
+    EN: 'Only letters'
   },
   errorMsgFoodPreference: {
     SE: 'Ex: gluten, laktos...',

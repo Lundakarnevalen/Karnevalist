@@ -436,7 +436,7 @@ class RegistrationScreen extends Component {
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
               hasError={cityError}
-              warningMessage={['Endast bokstäver', 'Only letters']}
+              warningMessage={errorStrings.errorMsgCity}
             />
           </View>
           <Input
