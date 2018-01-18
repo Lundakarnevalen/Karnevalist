@@ -14,18 +14,18 @@ class BackgroundImage extends Component {
     const imagePath = '../../../assets/images/' + theme + pictureNumber + '1.png';
     */
 
-      switch (pictureNumber) {
-        case 1:
-          return require('../../../assets/images/night1.png');
-        case 2:
-          return require('../../../assets/images/night2.png');
-        case 3:
-          return require('../../../assets/images/night3.png');
-        case 4:
-          return require('../../../assets/images/night4.png');
-        default:
-          return require('../../../assets/images/night5.png');
-      }
+    switch (pictureNumber) {
+      case 1:
+        return require('../../../assets/images/night1.png');
+      case 2:
+        return require('../../../assets/images/night2.png');
+      case 3:
+        return require('../../../assets/images/night3.png');
+      case 4:
+        return require('../../../assets/images/night4.png');
+      default:
+        return require('../../../assets/images/night5.png');
+    }
   }
 
   getOpacityStyle() {
@@ -42,7 +42,11 @@ class BackgroundImage extends Component {
     const { containerStyle, backgroundImageStyle } = styles;
     return (
       <View style={containerStyle}>
-        <Image source={this.getPath()} style={backgroundImageStyle} />
+        <Image
+          defaultSource={this.getPath()}
+          source={this.getPath()}
+          style={backgroundImageStyle}
+        />
         <View style={this.getOpacityStyle()} />
       </View>
     );

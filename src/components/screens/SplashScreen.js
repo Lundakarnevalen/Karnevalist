@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
-import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  View,
+  Image,
+  Text,
+  StatusBar,
+  Easing
+} from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { getItem } from '../../helpers/LocalSave';
 import BackgroundImage from '../common/BackgroundImage';
 import { setTheme, setSections, setToken, setEmail } from '../../actions';
 
-const baseURL = 'https://api.10av10.com/api/user/';
+const baseURL = 'https://api.10av10.com/api/hello/';
 const WIDTH = Dimensions.get('window').width;
+
 class SplashScreen extends Component {
   constructor(props) {
     super(props);
@@ -35,6 +44,7 @@ class SplashScreen extends Component {
             defaultSource={require('../../../res/Monstergubbe.png')}
           />
         );
+        
         tempSection.imguri = r.data.source_url;
         tempSection.image = image;
         this.props.setSections(tempSection);
@@ -49,7 +59,10 @@ class SplashScreen extends Component {
     const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
     axios.get(url).then(response => {
       response.data.forEach(item => {
-        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
+        const strippedContent = item.content.rendered.replace(
+          /(<([^>]+)>)/gi,
+          ''
+        );
         const imgId = item.featured_media;
         const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
         const section = {
@@ -69,13 +82,12 @@ class SplashScreen extends Component {
         getItem('email', email => {
           if (email !== null) {
             getItem('accessToken', token => {
-              const url = baseURL + email;
               const headers = {
                 Authorization: 'Bearer ' + token,
                 'content-type': 'application/json'
               };
               axios
-                .get(url, { headers })
+                .post(baseURL, {}, { headers })
                 .then(response => {
                   const { success } = response.data;
                   if (success) {
@@ -122,7 +134,10 @@ class SplashScreen extends Component {
         <BackgroundImage picture={4} />
         <Animated.View style={[container, { transform: [{ rotate: spin }] }]}>
           <Text style={text}> LOADING </Text>
-          <Image style={image} source={require('../../../res/Monstergubbe.png')} />
+          <Image
+            style={image}
+            source={require('../../../res/Monstergubbe.png')}
+          />
         </Animated.View>
       </View>
     );
@@ -143,10 +158,12 @@ const styles = {
   text: {
     marginTop: 50,
     fontSize: 30,
-    color: '#1A1A1A',
+    color: 'white',
     fontFamily: 'Avenir Next Medium',
     backgroundColor: 'transparent'
   }
 };
 
-export default connect(null, { setTheme, setSections, setToken, setEmail })(SplashScreen);
+export default connect(null, { setTheme, setSections, setToken, setEmail })(
+  SplashScreen
+);

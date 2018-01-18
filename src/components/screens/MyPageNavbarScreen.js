@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Platform } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setSections, setSectionPriorities } from '../../actions';
+import { setSections, setSectionPriorities, setProgress } from '../../actions';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
@@ -42,6 +42,7 @@ class MyPageNavbarScreen extends Component {
         const { success, sectionPriorities } = response.data;
         if (success) {
           this.props.setSectionPriorities(sectionPriorities);
+          if (sectionPriorities.length > 0) this.props.setProgress(4);
         }
       })
       .catch(error => {
@@ -62,6 +63,7 @@ const TabNav = TabNavigator(
       screen: SectionScreen,
       navigationOptions: props => ({
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarInactiveTintColor: '#A9A9A9',
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons name="star" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
@@ -115,6 +117,7 @@ const TabNav = TabNavigator(
     tabBarOptions: {
       showIcon: true,
       activeTintColor: THEME_COLOR,
+      inactiveTintColor: '#A9A9A9',
       labelStyle: {
         fontSize: 10,
         margin: 0
@@ -124,7 +127,7 @@ const TabNav = TabNavigator(
         height: SIZE
       },
       style: {
-        height: 60,
+        height: Platform.OS === 'ios' ? 49 : 60,
         backgroundColor: '#ffffff'
       },
       indicatorStyle: {
@@ -139,4 +142,8 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { token } = userInformation;
   return { language, token, sections: sections.sections };
 };
-export default connect(mapStateToProps, { setSections, setSectionPriorities })(MyPageNavbarScreen);
+export default connect(mapStateToProps, {
+  setSections,
+  setSectionPriorities,
+  setProgress
+})(MyPageNavbarScreen);

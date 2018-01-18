@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated } from 'react-native';
-import { connect } from 'react-redux';
+import { View, TextInput, Animated, Text } from 'react-native';
 
 class Input extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
-      borderColor: '#000'
+      borderColor: '#000',
     };
   }
 
   componentWillMount() {
-    if (this.props.value !== '')
-      this.inputSelected()
-  }
-
-  getThemeColor() {
-        return '#F7A021';
+    if (this.props.value !== '') this.inputSelected();
   }
 
   inputSelected() {
@@ -27,7 +20,7 @@ class Input extends Component {
       Animated.timing(this.state.fontSize, { toValue: 10, duration: 150 }),
       Animated.timing(this.state.position, { toValue: { x: 9, y: 0 }, duration: 150 })
     ]).start();
-    this.setState({ borderColor: this.getThemeColor() });
+    this.setState({ borderColor: '#F7A021' });
   }
 
   inputDeselected() {
@@ -37,8 +30,15 @@ class Input extends Component {
         Animated.timing(this.state.fontSize, { toValue: 18, duration: 150 }),
         Animated.timing(this.state.position, { toValue: { x: 9, y: 11 }, duration: 150 })
       ]).start();
+      this.setState({ borderColor: 'black' });
     }
-    this.setState({ borderColor: 'black' });
+  }
+
+  addWarningText() {
+    const { warningMessage, hasError = false, value } = this.props;
+    if (hasError && value !== '') {
+      return <Text style={styles.warningTextStyle}>{warningMessage}</Text>;
+    }
   }
 
   getPlaceholderStyle() {
@@ -50,8 +50,24 @@ class Input extends Component {
       position: 'absolute',
       top: position.y,
       left: position.x,
-      color: this.getThemeColor()
+      color: '#F7A021'
     };
+  }
+
+  focus() {
+    this.refs.input.focus();
+  }
+
+  getBorderColor() {
+    const { hasError, value } = this.props;
+    if (value !== '' && hasError) return 'red';
+    return this.state.borderColor;
+  }
+
+  getTextColor() {
+    const { hasError, value } = this.props;
+    if (value !== '' && hasError) return 'red';
+    return '#F7A021';
   }
 
   render() {
@@ -65,31 +81,45 @@ class Input extends Component {
       autoCorrect = false,
       editable = true,
       keyboardType = 'default',
-      extraContainerStyle
+      extraContainerStyle,
+      returnKeyType,
+      onSubmitEditing = () => {},
+      autoFocus = false
     } = this.props;
     return (
       <View
-        style={[
-          containerStyle,
-          extraContainerStyle,
-          { width, borderColor: this.state.borderColor }
-        ]}
+        onLayout={event => this.setState({ screenPosition: 100 + event.nativeEvent.layout.y })}
+        style={[containerStyle, extraContainerStyle, { width, borderColor: this.getBorderColor() }]}
       >
         {placeholder === '' ? null : (
-          <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>
+          <Animated.Text style={[this.getPlaceholderStyle(), { color: this.getTextColor() }]}>
+            {placeholder}
+          </Animated.Text>
         )}
+        {this.addWarningText()}
         <TextInput
-          onFocus={() => this.inputSelected()}
+          ref={'input'}
+          onFocus={() => {
+            if (typeof this.props.scrollToInput !== 'undefined') {
+              this.props.scrollToInput(this.state.screenPosition);
+            }
+            this.inputSelected();
+          }}
           underlineColorAndroid={'transparent'}
           onEndEditing={() => this.inputDeselected()}
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
           style={[inputStyle, { width }, textInputStyle]}
-          autoCapitalize='words'
+          autoCapitalize={'words'}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
           editable={editable}
           keyboardType={keyboardType}
+          returnKeyType={returnKeyType}
+          blurOnSubmit
+          onSubmitEditing={() => onSubmitEditing()}
+          autoFocus={autoFocus}
+          maxLength={50}
         />
       </View>
     );
@@ -110,12 +140,14 @@ const styles = {
     paddingTop: 10,
     color: '#000',
     fontFamily: 'Avenir Next Medium'
+  },
+  warningTextStyle: {
+    color: 'red',
+    fontSize: 10,
+    position: 'absolute',
+    right: 5,
+    fontFamily: 'Avenir Next Medium'
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(Input);
+export default Input;

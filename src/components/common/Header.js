@@ -7,43 +7,6 @@ import { connect } from 'react-redux';
 const WIDTH = Dimensions.get('window').width;
 
 class Header extends Component {
-  getTextColor() {
-        return 'white';
-  }
-
-  getBackgroundColor() {
-        return '#F7A021';
-  }
-
-  getContainerStyle() {
-    return {
-      width: WIDTH,
-      height: Platform.OS === 'ios' ? 64 : 50,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row',
-      backgroundColor: this.getBackgroundColor(),
-      zIndex: 999,
-      ...Platform.select({
-        ios: {
-          paddingTop: 15
-        },
-        android: {
-          marginTop: Constants.statusBarHeight
-        }
-      })
-    };
-  }
-
-  getTextStyle() {
-    return {
-      fontSize: 18,
-      color: this.getTextColor(),
-      backgroundColor: 'transparent',
-      fontFamily: 'Avenir Next Medium'
-    };
-  }
-
   renderRightIcon() {
     const { rightIcon } = this.props;
     if (rightIcon) {
@@ -61,7 +24,7 @@ class Header extends Component {
     }
     const backButton = navigation ? (
       <TouchableOpacity onPress={() => navigation.goBack(null)}>
-        <Ionicons size={30} name="md-arrow-back" color={this.getTextColor()} />
+        <Ionicons size={30} name="md-arrow-back" color={'white'} />
       </TouchableOpacity>
     ) : null;
     return <View style={{ flex: 1, alignItems: 'center' }}>{backButton}</View>;
@@ -69,17 +32,47 @@ class Header extends Component {
 
   render() {
     const { title } = this.props;
+    const { containerStyle, textStyle } = styles;
     return (
-      <View style={this.getContainerStyle()}>
-        {this.renderLeftIcon()}
-        <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={this.getTextStyle()}>{title || 'Placeholder'}</Text>
+      <View style={{ backgroundColor: '#F7A021', zIndex: 999 }}>
+        <View style={containerStyle}>
+          {this.renderLeftIcon()}
+          <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={textStyle}>{title || 'Placeholder'}</Text>
+          </View>
+          {this.renderRightIcon()}
         </View>
-        {this.renderRightIcon()}
       </View>
     );
   }
 }
+
+const styles = {
+  containerStyle: {
+    width: WIDTH,
+    height: Platform.OS === 'ios' ? 64 : 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#F7A021',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    ...Platform.select({
+      ios: {
+        paddingTop: 15
+      },
+      android: {
+        marginTop: Constants.statusBarHeight
+      }
+    })
+  },
+  textStyle: {
+    fontSize: 18,
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Medium'
+  }
+};
 
 const mapStateToProps = ({ currentTheme }) => {
   const { theme } = currentTheme;

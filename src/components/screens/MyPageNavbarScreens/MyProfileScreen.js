@@ -15,6 +15,7 @@ import BackgroundImage from '../../common/BackgroundImage';
 import SuperAgileAlert from '../../common/SuperAgileAlert';
 import Header from '../../common/Header';
 import Input from '../../common/Input';
+import { logout } from '../../../helpers/functions';
 import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../../helpers/ApiManager';
 
@@ -40,6 +41,7 @@ class MyProfileScreen extends Component {
   }
 
   getUserInfo() {
+    const strings = this.getStrings();
     const url = baseURL + this.props.email;
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
@@ -52,13 +54,16 @@ class MyProfileScreen extends Component {
         this.setState({ oldUser: { ...user }, user });
       })
       .catch(error => {
+        if (error.response.status === 401)
+          logout(
+            this.props.navigation,
+            true,
+            strings.expiredTokenTitle,
+            strings.expiredTokenMessage
+          );
         const msg = handleErrorMsg(error.message);
         console.log(msg);
       });
-  }
-
-  getColor() {
-    return '#F7A021';
   }
 
   getMsg(success, strings) {
@@ -84,7 +89,7 @@ class MyProfileScreen extends Component {
       >
         <MaterialIcons
           name={this.state.editMode ? 'done' : 'edit'}
-          style={{ color: this.getColor(), right: 0 }}
+          style={{ color: 'white', right: 0 }}
           size={35}
         />
       </TouchableOpacity>
@@ -151,7 +156,7 @@ class MyProfileScreen extends Component {
     if (this.state.user === null)
       return (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" color={this.getColor()} />
+          <ActivityIndicator size="large" color={'white'} />
         </View>
       );
     return <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>;
@@ -164,7 +169,6 @@ class MyProfileScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-
         <Header title={strings.title} navigation={navigation} rightIcon={this.getRightIcon()} />
         <Toast
           color={'#f4376d'}
@@ -177,7 +181,10 @@ class MyProfileScreen extends Component {
           boxStyle={{ height: 150 }}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
           buttonsIn={[
-            { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+            {
+              text: strings.cancel,
+              onPress: () => this.setState({ alertVisible: false })
+            },
             { text: strings.save, onPress: () => this.saveChanges() }
           ]}
           header={strings.popUpHeader}

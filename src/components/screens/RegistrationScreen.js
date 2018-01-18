@@ -7,11 +7,14 @@ import {
   Picker,
   Platform,
   TouchableWithoutFeedback,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard
 } from 'react-native';
 import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { setToken, setEmail } from '../../actions';
 import Header from '../common/Header';
 import Input from '../common/Input';
 import DKPicker from '../common/DKPicker';
@@ -19,11 +22,13 @@ import CustomButton from '../common/CustomButton';
 import ButtonChoiceManager from '../common/ButtonChoiceManager';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
-import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
+import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
+import { saveItem } from '../../helpers/LocalSave';
 
-const width = Dimensions.get('window').width - 32;
-const height = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width - 32;
+const HEIGHT = Dimensions.get('window').height;
+let zipCodePosition = 0;
 
 class RegistrationScreen extends Component {
   constructor(props) {
@@ -42,15 +47,79 @@ class RegistrationScreen extends Component {
       foodPreferences: '',
       shirtSize: '',
       studentUnion: '',
+      socialSecurityNumber: '',
+      firstNameError: false,
+      lastNameError: false,
+      emailError: false,
+      confirmedEmailError: false,
+      passwordError: false,
+      confirmedPasswordError: false,
+      socialSecurityNbrError: false,
+      postNumberError: false,
+      cityError: false,
+      phoneNbrError: false,
+      foodPreferencesError: false,
       showShirtPicker: false,
       showStudentUnionPicker: false,
       loading: false,
-      loadingComplete: false
+      loadingComplete: false,
+      keyboardHeight: 0
     };
   }
 
-  getColor() {
-    return 'white';
+  componentWillMount() {
+    if (Platform.OS === 'ios') {
+      this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+    } else {
+      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+    }
+  }
+
+  componentWillUnmount() {
+    if (Platform.OS === 'ios') {
+      this.keyboardWillShowSub.remove();
+    } else {
+      this.keyboardDidShowListener.remove();
+    }
+  }
+
+  keyboardWillShow = event => {
+    this.setState({ keyboardHeight: event.endCoordinates.height });
+  };
+
+  keyboardDidShow = event => {
+    this.setState({ keyboardHeight: event.endCoordinates.height });
+  };
+
+  scrollToInput(inputPosition) {
+    const dy = HEIGHT - this.state.keyboardHeight - 64;
+    const scrollTo = dy - inputPosition;
+    if (scrollTo < 0) {
+      this.refs.scrollView.scrollTo({
+        y: inputPosition - dy,
+        animated: true
+      });
+    }
+  }
+
+  isEmail(toTest) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      toTest
+    );
+  }
+
+  containsOnlyLetters(toTest) {
+    return /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(
+      toTest
+    );
+  }
+
+  isValidPhoneNbr(toTest) {
+    return /^\+?\d+$/.test(toTest) && toTest.length >= 7 && toTest.length <= 20;
+  }
+
+  containsOnlyDigits(text) {
+    return /^\d+$/.test(text);
   }
 
   getStrings() {
@@ -61,6 +130,49 @@ class RegistrationScreen extends Component {
     return strings;
   }
 
+  getErrorStrings() {
+    const { language } = this.props;
+    const { fields } = ERROR_MSG_INPUT_FIELD;
+    const strings = {};
+    fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
+    return strings;
+  }
+
+  anyEmpty() {
+    const {
+      firstName,
+      lastName,
+      email,
+      confirmedEmail,
+      address,
+      postNumber,
+      city,
+      phoneNbr,
+      password,
+      confirmedPassword,
+      socialSecurityNumber,
+      studentUnion,
+      shirtSize
+    } = this.state;
+    return (
+      firstName === '' ||
+      lastName === '' ||
+      email === '' ||
+      confirmedEmail === '' ||
+      address === '' ||
+      postNumber === '' ||
+      city === '' ||
+      phoneNbr === '' ||
+      password === '' ||
+      confirmedPassword === '' ||
+      socialSecurityNumber === '' ||
+      shirtSize === '' ||
+      studentUnion === '' ||
+      shirtSize === 'Välj tröjstorlek' ||
+      studentUnion === 'Välj nation'
+    );
+  }
+
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
     const { shirtSize, studentUnion } = this.state;
     if (Platform.OS === 'ios') {
@@ -68,7 +180,7 @@ class RegistrationScreen extends Component {
         <CustomButton
           text={title === '' ? defaultTitle : title}
           style="dropDownButton"
-          width={width}
+          width={WIDTH}
           onPress={() => {
             return tag === 'shirt'
               ? this.setState({ showShirtPicker: true })
@@ -116,8 +228,8 @@ class RegistrationScreen extends Component {
           <View
             style={{
               position: 'absolute',
-              width: width + 32,
-              height,
+              width: WIDTH + 32,
+              height: HEIGHT,
               backgroundColor: 'rgba(0, 0, 0, 0.3)'
             }}
           />
@@ -128,6 +240,7 @@ class RegistrationScreen extends Component {
 
   render() {
     const strings = this.getStrings();
+    const errorStrings = this.getErrorStrings();
     const { flexHorizontal } = styles;
     const {
       firstName,
@@ -144,14 +257,26 @@ class RegistrationScreen extends Component {
       loading,
       loadingComplete,
       shirtSize,
+      firstNameError,
+      lastNameError,
+      emailError,
+      confirmedEmailError,
+      passwordError,
+      confirmedPasswordError,
+      socialSecurityNbrError,
+      postNumberError,
+      cityError,
+      phoneNbrError,
+      foodPreferencesError,
       showShirtPicker,
       studentUnion,
-      showStudentUnionPicker
+      showStudentUnionPicker,
+      socialSecurityNumber
     } = this.state;
 
     const closeButton = (
       <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
-        <MaterialCommunityIcons size={30} name="close" color={this.getColor()} />
+        <MaterialCommunityIcons size={30} name="close" color={'white'} />
       </TouchableOpacity>
     );
 
@@ -159,94 +284,192 @@ class RegistrationScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
-        <ScrollView contentContainerStyle={styles.contentContainer} style={{ height: height - 64 }}>
+        <ScrollView
+          contentContainerStyle={styles.contentContainer}
+          style={{ height: HEIGHT - 64 }}
+          ref={'scrollView'}
+        >
           <Input
             placeholder={strings.firstName}
-            onChangeText={firstNameInput => {
-              this.setState({ firstName: firstNameInput });
+            onChangeText={text => {
+              this.setState({ firstName: text, firstNameError: !this.containsOnlyLetters(text) });
             }}
             value={firstName}
+            onSubmitEditing={() => this.refs.secondInput.focus()}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            autoFocus
+            hasError={firstNameError}
+            warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
+            ref={'secondInput'}
+            onSubmitEditing={() => this.refs.thirdInput.focus()}
             placeholder={strings.lastName}
-            onChangeText={lastNameInput => {
-              this.setState({ lastName: lastNameInput });
+            onChangeText={text => {
+              this.setState({ lastName: text, lastNameError: !this.containsOnlyLetters(text) });
             }}
             value={lastName}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            hasError={lastNameError}
+            warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
+            ref={'thirdInput'}
+            onSubmitEditing={() => this.refs.fourthInput.focus()}
+            placeholder={strings.socialSecurityNumber}
+            onChangeText={text => {
+              this.setState({
+                socialSecurityNumber: text,
+                socialSecurityNbrError: !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text))
+              });
+            }}
+            value={socialSecurityNumber}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            hasError={socialSecurityNbrError}
+            warningMessage={errorStrings.errorMsgSocialSecurity}
+          />
+          <Input
+            ref={'fourthInput'}
+            onSubmitEditing={() => this.refs.fifthInput.focus()}
             placeholder={strings.email}
             keyboardType="email-address"
-            onChangeText={emailInput => {
-              this.setState({ email: emailInput });
+            onChangeText={text => {
+              this.setState({ email: text, emailError: !this.isEmail(text) });
             }}
             value={email}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            hasError={emailError}
+            warningMessage={errorStrings.errorMsgInvalidEmail}
           />
           <Input
+            ref={'fifthInput'}
+            onSubmitEditing={() => this.refs.sixthInput.focus()}
             placeholder={strings.confirmEmail}
             keyboardType="email-address"
-            onChangeText={emailInput => {
-              this.setState({ confirmedEmail: emailInput });
+            onChangeText={text => {
+              this.setState({ confirmedEmail: text, confirmedEmailError: text !== email });
             }}
             value={confirmedEmail}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            hasError={confirmedEmailError}
+            warningMessage={errorStrings.errorMsgNoMatchEmail}
           />
           <Input
+            ref={'sixthInput'}
+            onSubmitEditing={() => this.refs.seventhInput.focus()}
             placeholder={strings.password}
             onChangeText={text => {
-              this.setState({ password: text });
+              this.setState({ password: text, passwordError: text.length < 5 });
             }}
             value={password}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
             secureText
+            hasError={passwordError}
+            warningMessage={errorStrings.errorMsgPwd}
           />
           <Input
+            ref={'seventhInput'}
+            onSubmitEditing={() => this.refs.eigthInput.focus()}
             placeholder={strings.confirmPassword}
             onChangeText={text => {
-              this.setState({ confirmedPassword: text });
+              this.setState({ confirmedPassword: text, confirmedPasswordError: text !== password });
             }}
             value={confirmedPassword}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
             secureText
+            hasError={confirmedPasswordError}
+            warningMessage={errorStrings.errorMsgNoMatchPassword}
           />
           <Input
+            ref={'eigthInput'}
+            onSubmitEditing={() => this.refs.ninthInput.focus()}
             placeholder={strings.address}
             onChangeText={addressInput => {
               this.setState({ address: addressInput });
             }}
             value={address}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
-          <View style={flexHorizontal}>
+          <View
+            style={flexHorizontal}
+            ref={'horizontalInputView'}
+            onLayout={event => {
+              zipCodePosition = event.nativeEvent.layout.y;
+            }}
+          >
             <Input
+              ref={'ninthInput'}
+              onSubmitEditing={() => this.refs.tenthInput.focus()}
               placeholder={strings.postNumber}
               keyboardType="numeric"
-              onChangeText={postNumberInput => {
-                this.setState({ postNumber: postNumberInput });
+              onChangeText={text => {
+                this.setState({
+                  postNumber: text,
+                  postNumberError: text.length !== 5 || !this.containsOnlyDigits(text)
+                });
               }}
-              width={width / 2 - 4}
+              width={WIDTH / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={postNumber}
+              returnKeyType={'next'}
+              scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
+              hasError={postNumberError}
+              warningMessage={errorStrings.errorMsgZipCode}
             />
             <Input
+              ref={'tenthInput'}
+              onSubmitEditing={() => this.refs.eleventhInput.focus()}
               placeholder={strings.city}
-              onChangeText={cityInput => {
-                this.setState({ city: cityInput });
+              onChangeText={text => {
+                this.setState({ city: text, cityError: !this.containsOnlyLetters(text) });
               }}
-              width={width / 2 - 4}
+              width={WIDTH / 2 - 4}
               value={city}
+              returnKeyType={'next'}
+              scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
+              hasError={cityError}
+              warningMessage={errorStrings.errorMsgCity}
             />
           </View>
           <Input
+            ref={'eleventhInput'}
+            onSubmitEditing={() => this.refs.twelthInput.focus()}
             placeholder={strings.phoneNumber}
             keyboardType="phone-pad"
-            onChangeText={phoneNbrInput => {
-              this.setState({ phoneNbr: phoneNbrInput });
+            onChangeText={text => {
+              this.setState({
+                phoneNbr: text,
+                phoneNbrError: !this.isValidPhoneNbr(text)
+              });
             }}
             value={phoneNbr}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            hasError={phoneNbrError}
+            warningMessage={errorStrings.errorMsgPhoneNbr}
           />
           <Input
+            ref={'twelthInput'}
             placeholder={strings.foodPreferences}
-            onChangeText={foodPreferencesInput => {
-              this.setState({ foodPreferences: foodPreferencesInput });
+            onChangeText={text => {
+              this.setState({
+                foodPreferences: text,
+                foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
+              });
             }}
             value={foodPreferences}
+            returnKeyType={'done'}
+            scrollToInput={y => this.scrollToInput(y)}
+            hasError={foodPreferencesError}
+            warningMessage={[errorStrings.errorMsgFoodPreference]}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,
@@ -265,44 +488,35 @@ class RegistrationScreen extends Component {
               buttonInputVector={[strings.activeKarneval]}
               multipleChoice
               size={30}
-              color={this.getColor()}
+              color={'white'}
             />
             <ButtonChoiceManager
               buttonInputVector={[strings.driversLicense]}
               multipleChoice
               size={30}
-              color={this.getColor()}
+              color={'white'}
             />
           </View>
           <CustomButton
             text={strings.register}
             style={'standardButton'}
-            width={width}
+            width={WIDTH}
             onPress={() => {
-              if (firstName === '') {
-                Alert.alert(strings.error, strings.errorFirstName);
-              } else if (lastName === '') {
-                Alert.alert(strings.error, strings.errorLastName);
-              } else if (email === '') {
-                Alert.alert(strings.error, strings.errorEmail);
-              } else if (confirmedEmail === '') {
-                Alert.alert(strings.error, strings.errorConfirmEmail);
-              } else if (address === '') {
-                Alert.alert(strings.error, strings.errorAddress);
-              } else if (postNumber === '') {
-                Alert.alert(strings.error, strings.errorPostNumber);
-              } else if (city === '') {
-                Alert.alert(strings.error, strings.errorCity);
-              } else if (phoneNbr === '') {
-                Alert.alert(strings.error, strings.errorPhoneNumber);
-              } else if (password === '') {
-                Alert.alert(strings.error, strings.errorPassword);
-              } else if (confirmedPassword === '') {
-                Alert.alert(strings.error, strings.errorConfirmPassword);
-              } else if (email !== confirmedEmail) {
-                Alert.alert(strings.error, strings.errorEmailMatch);
-              } else if (password !== confirmedPassword) {
-                Alert.alert(strings.error, strings.errorPasswordMatch);
+              if (
+                firstNameError ||
+                lastNameError ||
+                emailError ||
+                confirmedEmailError ||
+                passwordError ||
+                confirmedPasswordError ||
+                socialSecurityNbrError ||
+                postNumberError ||
+                cityError ||
+                phoneNbrError ||
+                foodPreferencesError ||
+                this.anyEmpty()
+              ) {
+                Alert.alert(errorStrings.errorMsgWrongInput);
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
@@ -315,9 +529,15 @@ class RegistrationScreen extends Component {
                     phoneNumber: phoneNbr,
                     address,
                     city,
-                    foodPreferences
+                    foodPreferences,
+                    personalNumber: socialSecurityNumber
                   })
-                  .then(() => {
+                  .then(response => {
+                    const { accessToken } = response.data;
+                    this.props.setToken(accessToken);
+                    this.props.setEmail(email);
+                    saveItem('email', email);
+                    saveItem('accessToken', accessToken);
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
@@ -348,8 +568,13 @@ class RegistrationScreen extends Component {
           <Loading
             loadingComplete={loadingComplete}
             redirect={() => {
-              this.props.navigation.navigate('LoginScreen');
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
+                key: null
+              });
               this.setState({ loading: false, loadingComplete: false });
+              this.props.navigation.dispatch(resetAction);
             }}
           />
         ) : null}
@@ -389,4 +614,4 @@ const mapStateToProps = ({ currentTheme, userInformation, currentLanguage }) => 
   return { theme, picture, language };
 };
 
-export default connect(mapStateToProps, null)(RegistrationScreen);
+export default connect(mapStateToProps, { setToken, setEmail })(RegistrationScreen);

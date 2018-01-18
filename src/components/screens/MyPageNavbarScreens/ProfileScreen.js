@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, ListView, Dimensions } from 'react-native';
+import { View, ListView, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
-import { removeItem } from '../../../helpers/LocalSave';
+import { logout } from '../../../helpers/functions';
 import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const height = Dimensions.get('window').height;
@@ -39,7 +38,7 @@ class ProfileScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <ListView
-          style={{ height: height - 64 }}
+          style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
           contentContainerStyle={{ alignItems: 'center' }}
           dataSource={this.state.dataSource}
           renderRow={rowData => (
@@ -51,14 +50,7 @@ class ProfileScreen extends Component {
                 } else if (rowData.key === 'registration') {
                   screenProps.navigation.navigate('MyRegistration', { info: rowData });
                 } else if (rowData.key === 'logout') {
-                  removeItem('email');
-                  removeItem('accessToken');
-                  const resetAction = NavigationActions.reset({
-                    index: 0,
-                    actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
-                    key: null
-                  });
-                  screenProps.navigation.dispatch(resetAction);
+                  logout(screenProps.navigation);
                 }
               }}
             />

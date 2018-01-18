@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 import CountDownItem from './CountDownItem';
 /**
  * Uppropet är den 4:e februari
@@ -10,7 +10,7 @@ const ONE_DAY = 86400000;
 const ONE_HOUR = 3600000;
 const ONE_MIN = 60000;
 const ONE_SECOND = 1000;
-let interval
+let interval;
 
 class CountDown extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class CountDown extends Component {
       hoursLeft: 0,
       minutesLeft: 0,
       secondsLeft: 0
-    }
+    };
   }
 
   componentWillMount() {
@@ -28,7 +28,7 @@ class CountDown extends Component {
     interval = setInterval(() => this.getTimeLeft(), 1000);
   }
   componentWillUnmount() {
-    clearInterval(interval)
+    clearInterval(interval);
   }
 
   getTimeLeft() {
@@ -46,21 +46,13 @@ class CountDown extends Component {
     const { containerStyle, textStyle } = styles;
     return (
       <View style={containerStyle}>
-        <CountDownItem
-          time={daysLeft}
-        />
+        <CountDownItem time={daysLeft} />
         <Text style={textStyle}> : </Text>
-        <CountDownItem
-          time={hoursLeft}
-        />
+        <CountDownItem time={hoursLeft} />
         <Text style={textStyle}> : </Text>
-        <CountDownItem
-          time={minutesLeft}
-        />
+        <CountDownItem time={minutesLeft} />
         <Text style={textStyle}> : </Text>
-        <CountDownItem
-          time={secondsLeft}
-        />
+        <CountDownItem time={secondsLeft} />
       </View>
     );
   }
@@ -78,6 +70,6 @@ const styles = {
     color: 'white',
     fontFamily: 'Avenir Next Medium'
   }
-}
+};
 
 export default CountDown;

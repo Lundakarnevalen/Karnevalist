@@ -11,11 +11,9 @@ export function getNews() {
     });
 }
 
-
 export function handleErrorMsg(message, strings = null) {
-  if (strings === null)
-    return message
-  let msg
+  if (strings === null) return message;
+  let msg;
   if (message.includes('400')) {
     msg = strings.errorMsg400;
   } else if (message.includes('401')) {
@@ -25,5 +23,5 @@ export function handleErrorMsg(message, strings = null) {
   } else {
     msg = strings.errorMsgInternal;
   }
-  return msg
+  return msg;
 }
