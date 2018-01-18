@@ -639,8 +639,8 @@ export const ERROR_MSG_INPUT_FIELD = {
     EN: 'Format: YYMMDDXXXX'
   },
   errorMsgZipCode: {
-    SE: 'ddddd',
-    EN: 'ddddd'
+    SE: '5 siffror',
+    EN: '5 digits'
   },
   errorMsgCity: {
     SE: 'Endast bokstäver',
