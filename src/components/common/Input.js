@@ -8,7 +8,6 @@ class Input extends Component {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
       borderColor: '#000',
-      warningVisible: false
     };
   }
 
@@ -17,7 +16,6 @@ class Input extends Component {
   }
 
   inputSelected() {
-    this.setState({ warningVisible: false });
     Animated.parallel([
       Animated.timing(this.state.fontSize, { toValue: 10, duration: 150 }),
       Animated.timing(this.state.position, { toValue: { x: 9, y: 0 }, duration: 150 })
