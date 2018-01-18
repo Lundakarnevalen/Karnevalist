@@ -300,7 +300,7 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             autoFocus
             hasError={firstNameError}
-            warningMessage={[errorStrings.errorMsgOnlyLetters]}
+            warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
             ref={'secondInput'}
@@ -313,7 +313,7 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={lastNameError}
-            warningMessage={[errorStrings.errorMsgOnlyLetters]}
+            warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
             ref={'thirdInput'}
@@ -329,7 +329,7 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={socialSecurityNbrError}
-            warningMessage={[errorStrings.errorMsgSocialSecurity]}
+            warningMessage={errorStrings.errorMsgSocialSecurity}
           />
           <Input
             ref={'fourthInput'}
@@ -343,7 +343,7 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={emailError}
-            warningMessage={[errorStrings.errorMsgInvalidEmail]}
+            warningMessage={errorStrings.errorMsgInvalidEmail}
           />
           <Input
             ref={'fifthInput'}
@@ -357,7 +357,7 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={confirmedEmailError}
-            warningMessage={[errorStrings.errorMsgNoMatchEmail]}
+            warningMessage={errorStrings.errorMsgNoMatchEmail}
           />
           <Input
             ref={'sixthInput'}
@@ -371,7 +371,7 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             secureText
             hasError={passwordError}
-            warningMessage={[errorStrings.errorMsgPwd]}
+            warningMessage={errorStrings.errorMsgPwd}
           />
           <Input
             ref={'seventhInput'}
@@ -385,7 +385,7 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             secureText
             hasError={confirmedPasswordError}
-            warningMessage={[errorStrings.errorMsgNoMatchPassword]}
+            warningMessage={errorStrings.errorMsgNoMatchPassword}
           />
           <Input
             ref={'eigthInput'}
@@ -422,7 +422,7 @@ class RegistrationScreen extends Component {
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
               hasError={postNumberError}
-              warningMessage={[errorStrings.errorMsgZipCode]}
+              warningMessage={errorStrings.errorMsgZipCode}
             />
             <Input
               ref={'tenthInput'}
@@ -454,7 +454,7 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={phoneNbrError}
-            warningMessage={[errorStrings.errorMsgPhoneNbr]}
+            warningMessage={errorStrings.errorMsgPhoneNbr}
           />
           <Input
             ref={'twelthInput'}
