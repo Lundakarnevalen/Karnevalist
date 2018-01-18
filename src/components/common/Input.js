@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { View, TextInput, Animated, Text } from 'react-native';
-import { connect } from 'react-redux';
-import { ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 
 class Input extends Component {
   constructor(props) {
@@ -16,15 +14,6 @@ class Input extends Component {
 
   componentWillMount() {
     if (this.props.value !== '') this.inputSelected();
-  }
-
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = ERROR_MSG_INPUT_FIELD;
-    const strings = {};
-    console.log(fields);
-    fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
-    return strings;
   }
 
   inputSelected() {
@@ -48,21 +37,10 @@ class Input extends Component {
   }
 
   addWarningText() {
-    const { warningMessage = '', language, hasError = false, value } = this.props;
-    let errorMsg = '';
+    const { warningMessage = [','], hasError = false, value } = this.props;
     if (hasError && value !== '') {
-      switch (language) {
-        case 'SE':
-          errorMsg = warningMessage[0];
-          break;
-        case 'EN':
-          errorMsg = warningMessage[1];
-          break;
-        default:
-          break;
-      }
+      return <Text style={styles.warningTextStyle}>{warningMessage}</Text>;
     }
-    return <Text style={styles.warningTextStyle}>{errorMsg}</Text>;
   }
 
   getPlaceholderStyle() {
@@ -174,10 +152,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
-  const { language } = currentLanguage;
-  return { theme, language };
-};
-
-export default connect(mapStateToProps, null)(Input);
+export default Input;
