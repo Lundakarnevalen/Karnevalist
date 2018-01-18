@@ -44,6 +44,7 @@ class SplashScreen extends Component {
             defaultSource={require('../../../res/Monstergubbe.png')}
           />
         );
+        
         tempSection.imguri = r.data.source_url;
         tempSection.image = image;
         this.props.setSections(tempSection);
