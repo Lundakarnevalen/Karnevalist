@@ -37,7 +37,7 @@ class Input extends Component {
   }
 
   addWarningText() {
-    const { warningMessage = [','], hasError = false, value } = this.props;
+    const { warningMessage, hasError = false, value } = this.props;
     if (hasError && value !== '') {
       return <Text style={styles.warningTextStyle}>{warningMessage}</Text>;
     }
