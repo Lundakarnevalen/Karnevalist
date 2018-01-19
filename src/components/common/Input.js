@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated } from 'react-native';
+import { View, TextInput, Animated, Text } from 'react-native';
 
 class Input extends Component {
   constructor(props) {
@@ -8,7 +8,6 @@ class Input extends Component {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
       borderColor: '#000',
-      screenPosition: null
     };
   }
 
@@ -31,8 +30,15 @@ class Input extends Component {
         Animated.timing(this.state.fontSize, { toValue: 18, duration: 150 }),
         Animated.timing(this.state.position, { toValue: { x: 9, y: 11 }, duration: 150 })
       ]).start();
+      this.setState({ borderColor: 'black' });
     }
-    this.setState({ borderColor: 'black' });
+  }
+
+  addWarningText() {
+    const { warningMessage, hasError = false, value } = this.props;
+    if (hasError && value !== '') {
+      return <Text style={styles.warningTextStyle}>{warningMessage}</Text>;
+    }
   }
 
   getPlaceholderStyle() {
@@ -50,6 +56,18 @@ class Input extends Component {
 
   focus() {
     this.refs.input.focus();
+  }
+
+  getBorderColor() {
+    const { hasError, value } = this.props;
+    if (value !== '' && hasError) return 'red';
+    return this.state.borderColor;
+  }
+
+  getTextColor() {
+    const { hasError, value } = this.props;
+    if (value !== '' && hasError) return 'red';
+    return '#F7A021';
   }
 
   render() {
@@ -71,15 +89,14 @@ class Input extends Component {
     return (
       <View
         onLayout={event => this.setState({ screenPosition: 100 + event.nativeEvent.layout.y })}
-        style={[
-          containerStyle,
-          extraContainerStyle,
-          { width, borderColor: this.state.borderColor }
-        ]}
+        style={[containerStyle, extraContainerStyle, { width, borderColor: this.getBorderColor() }]}
       >
         {placeholder === '' ? null : (
-          <Animated.Text style={this.getPlaceholderStyle()}>{placeholder}</Animated.Text>
+          <Animated.Text style={[this.getPlaceholderStyle(), { color: this.getTextColor() }]}>
+            {placeholder}
+          </Animated.Text>
         )}
+        {this.addWarningText()}
         <TextInput
           ref={'input'}
           onFocus={() => {
@@ -102,6 +119,7 @@ class Input extends Component {
           blurOnSubmit
           onSubmitEditing={() => onSubmitEditing()}
           autoFocus={autoFocus}
+          maxLength={50}
         />
       </View>
     );
@@ -121,6 +139,13 @@ const styles = {
     paddingRight: 8,
     paddingTop: 10,
     color: '#000',
+    fontFamily: 'Avenir Next Medium'
+  },
+  warningTextStyle: {
+    color: 'red',
+    fontSize: 10,
+    position: 'absolute',
+    right: 5,
     fontFamily: 'Avenir Next Medium'
   }
 };

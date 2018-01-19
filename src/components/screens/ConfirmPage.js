@@ -14,11 +14,12 @@ import {
 } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
 import BackgroundImage from '../common/BackgroundImage';
-import { setSectionPriorities } from '../../actions';
+import { setSectionPriorities, setProgress } from '../../actions';
 import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
 const window = Dimensions.get('window');
+const WIDTH = Dimensions.get('window').width;
 
 class ConfirmPage extends Component {
   constructor(props) {
@@ -46,13 +47,17 @@ class ConfirmPage extends Component {
   }
 
   renderSortableListOrMessage() {
-    const { contentContainer, list, confimTextStyle, textStyle } = styles;
+    const { contentContainer, list, textStyle } = styles;
     const { navigation } = this.props;
     const { strings } = this.state;
     if (Object.keys(this.state.data).length === 0) {
       return (
         <View
-          style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
+          style={{
+            height: window.height - 64,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
         >
           <Text style={[textStyle, { color: 'white' }]}>{strings.sectionSelection}</Text>
           <CustomButton
@@ -64,7 +69,13 @@ class ConfirmPage extends Component {
       );
     }
     return (
-      <View style={{ height: window.height - 64 }}>
+      <View
+        style={{
+          height: window.height - 64,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         <SortableList
           style={list}
           contentContainerStyle={contentContainer}
@@ -75,12 +86,12 @@ class ConfirmPage extends Component {
             this.setState({ order: nextOrder });
           }}
         />
-        <TouchableOpacity
-          style={this.getConfirmButtonStyle()}
+        <CustomButton
+          style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
+          text={strings.send}
+          width={WIDTH - 15}
           onPress={() => this.onPressConfirmButton()}
-        >
-          <Text style={confimTextStyle}>{strings.send}</Text>
-        </TouchableOpacity>
+        />
       </View>
     );
   }
@@ -163,9 +174,11 @@ class ConfirmPage extends Component {
     axios
       .post(url, { sectionPriorities }, { headers })
       .then(response => {
-        if (response.success) {
+        if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
+          this.props.setProgress(4);
           Alert.alert(strings.selectionOK);
+          this.props.navigation.goBack(null);
         }
         //TODO TOAST??
       })
@@ -279,4 +292,4 @@ const mapStateToProps = ({ currentTheme, sections, currentLanguage, userInformat
   return { theme, sections: sections.sections, language, token };
 };
 
-export default connect(mapStateToProps, { setSectionPriorities })(ConfirmPage);
+export default connect(mapStateToProps, { setSectionPriorities, setProgress })(ConfirmPage);
