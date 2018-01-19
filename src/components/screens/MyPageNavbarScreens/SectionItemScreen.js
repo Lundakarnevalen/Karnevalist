@@ -13,7 +13,11 @@ import { connect } from 'react-redux';
 import { Constants } from 'expo';
 import Header from '../../common/Header';
 import Toast from '../../common/Toast';
-import { saveItem, removeItem, getItem } from '../../../helpers/LocalSave';
+import {
+  getFavoriteSection,
+  saveFavoriteSection,
+  removeFavoriteSection
+} from '../../../helpers/LocalSave';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -22,9 +26,9 @@ class SectionItemScreen extends Component {
   componentWillMount() {
     const { id } = this.props.navigation.state.params;
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
-    getItem('sektion' + id, result => {
+    getFavoriteSection(id, result => {
       if (result) {
-        this.setState({ added: true });
+        this.setState({ favorite: true });
       }
     });
   }
@@ -33,7 +37,7 @@ class SectionItemScreen extends Component {
     super(props);
     this.state = {
       showToast: false,
-      added: false
+      favorite: false
     };
   }
 
@@ -45,14 +49,14 @@ class SectionItemScreen extends Component {
     return strings;
   }
 
-  renderRightIcon(id, title) {
-    if (!this.state.added) {
+  renderRightIcon(id) {
+    if (!this.state.favorite) {
       return (
         <TouchableOpacity
           style={{ padding: 1, backgroundColor: 'transparent' }}
           onPress={() => {
-            saveItem('sektion' + id, title);
-            this.setState({ showToast: true, added: true });
+            saveFavoriteSection(id);
+            this.setState({ showToast: true, favorite: true });
           }}
         >
           <MaterialIcons name="favorite-border" size={30} color={'white'} />
@@ -63,8 +67,8 @@ class SectionItemScreen extends Component {
       <TouchableOpacity
         style={{ padding: 1, backgroundColor: 'transparent' }}
         onPress={() => {
-          removeItem('sektion' + id);
-          this.setState({ showToast: true, added: false });
+          removeFavoriteSection(id);
+          this.setState({ showToast: true, favorite: false });
         }}
       >
         <MaterialIcons name="favorite" size={30} color={'white'} />
@@ -74,7 +78,7 @@ class SectionItemScreen extends Component {
 
   renderToastMessage(title) {
     const strings = this.getStrings();
-    if (!this.state.added) {
+    if (!this.state.favorite) {
       return strings.messageStart + title + strings.messageEndRemove;
     }
     return strings.messageStart + title + strings.messageEndAdd;
@@ -86,7 +90,7 @@ class SectionItemScreen extends Component {
     const { container, scrollStyle, headerStyle, textStyle } = styles;
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id, title)} />
+        <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id)} />
         <View>
           <ScrollView style={scrollStyle}>
             <View style={container}>{image}</View>

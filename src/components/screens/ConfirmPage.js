@@ -6,7 +6,12 @@ import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
 import Row from '../common/Row';
 import Header from '../common/Header';
-import { getSections, removeItem, reorderItem } from '../../helpers/LocalSave';
+import {
+  getFavoriteSections,
+  getFavoritesOrder,
+  saveFavoritesOrder,
+  removeFavoriteSection
+} from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
 import BackgroundImage from '../common/BackgroundImage';
 import { setSectionPriorities } from '../../actions';
@@ -19,7 +24,8 @@ class ConfirmPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: {},
+      order: [],
       editMode: false,
       alertVisible: false,
       strings: this.getStrings()
@@ -28,24 +34,7 @@ class ConfirmPage extends Component {
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
-    const tempData = [];
-    const allSections = this.props.sections;
-    getSections(sections => {
-      sections.forEach((section, i) => {
-        const key = section.key.substring(7);
-        const s = allSections.filter(item => item.key + '' === key)[0];
-        tempData.push({
-          key,
-          localKey: section.key,
-          id: i,
-          text: s.title,
-          infoText: s.info,
-          imguri: s.imguri
-        });
-      });
-      const order = tempData.map(x => x.id);
-      this.setState({ data: tempData, order });
-    });
+    this.updateDataAndOrder();
   }
 
   getStrings() {
@@ -60,7 +49,7 @@ class ConfirmPage extends Component {
     const { contentContainer, list, confimTextStyle, textStyle } = styles;
     const { navigation } = this.props;
     const { strings } = this.state;
-    if (this.state.data.length === 0) {
+    if (Object.keys(this.state.data).length === 0) {
       return (
         <View
           style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
@@ -82,8 +71,8 @@ class ConfirmPage extends Component {
           data={this.state.data}
           renderRow={this.renderRow.bind(this)}
           onChangeOrder={nextOrder => {
+            saveFavoritesOrder(nextOrder);
             this.setState({ order: nextOrder });
-            console.log(nextOrder);
           }}
         />
         <TouchableOpacity
@@ -98,7 +87,7 @@ class ConfirmPage extends Component {
 
   getBackgroundColor() {
     const { data } = this.state;
-    if (data.length >= 5) {
+    if (Object.keys(data).length >= 5) {
       return '#F7A021';
     }
     return '#a9a9a9';
@@ -118,12 +107,9 @@ class ConfirmPage extends Component {
     };
   }
 
-  deleteRow(id) {
-    const newData = this.state.data.filter(dataItem => dataItem.id !== id);
-    const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
-    const newOrder = this.state.order.filter(i => i !== id);
-    removeItem(toRemove[0].localKey);
-    this.setState({ data: newData, order: newOrder });
+  deleteRow(key) {
+    removeFavoriteSection(key);
+    this.updateDataAndOrder();
   }
 
   renderRow(item) {
@@ -155,7 +141,7 @@ class ConfirmPage extends Component {
 
   onPressConfirmButton() {
     const { data, strings, order } = this.state;
-    if (data.length < 5) {
+    if (Object.keys(data).length < 5) {
       Alert.alert(strings.sectionSelection);
     } else {
       const sectionPriorities = order.map(i => {
@@ -200,7 +186,7 @@ class ConfirmPage extends Component {
   }
 
   getRightIcon() {
-    if (this.state.data.length > 0) {
+    if (Object.keys(this.state.data).length > 0) {
       return (
         <TouchableOpacity
           style={{ width: 50, alignItems: 'center' }}
@@ -214,6 +200,35 @@ class ConfirmPage extends Component {
         </TouchableOpacity>
       );
     }
+  }
+
+  updateDataAndOrder() {
+    const data = {};
+    const allSections = this.props.sections;
+    getFavoriteSections(result => {
+      if (result) {
+        result.forEach(section => {
+          const key = section.key;
+          const s = allSections.filter(item => item.key === key)[0];
+          data[key] = {
+            id: key,
+            text: s.title,
+            infoText: s.info,
+            imguri: s.imguri
+          };
+        });
+        this.setState({ data });
+      } else {
+        this.setState({ data: {} });
+      }
+    });
+    getFavoritesOrder(result => {
+      if (result) {
+        this.setState({ order: result });
+      } else {
+        this.setState({ order: [] });
+      }
+    });
   }
 
   render() {
