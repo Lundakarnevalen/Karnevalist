@@ -15,13 +15,16 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setToken, setEmail } from '../../actions';
-import Header from '../common/Header';
-import Input from '../common/Input';
-import DKPicker from '../common/DKPicker';
-import CustomButton from '../common/CustomButton';
-import ButtonChoiceManager from '../common/ButtonChoiceManager';
-import BackgroundImage from '../common/BackgroundImage';
+import {
+  Header,
+  Input,
+  DKPicker,
+  CustomButton,
+  ButtonChoiceManager,
+  BackgroundImage
+} from '../common';
 import Loading from '../common/Loading';
+import { REGISTER_URL } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { saveItem } from '../../helpers/LocalSave';
@@ -285,6 +288,7 @@ class RegistrationScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.contentContainer}
           style={{ height: HEIGHT - 64 }}
           ref={'scrollView'}
@@ -336,6 +340,7 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.fifthInput.focus()}
             placeholder={strings.email}
             keyboardType="email-address"
+            autoCapitalize="none"
             onChangeText={text => {
               this.setState({ email: text, emailError: !this.isEmail(text) });
             }}
@@ -350,6 +355,7 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.sixthInput.focus()}
             placeholder={strings.confirmEmail}
             keyboardType="email-address"
+            autoCapitalize="none"
             onChangeText={text => {
               this.setState({ confirmedEmail: text, confirmedEmailError: text !== email });
             }}
@@ -467,6 +473,7 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
             returnKeyType={'done'}
+            autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={foodPreferencesError}
             warningMessage={[errorStrings.errorMsgFoodPreference]}
@@ -520,7 +527,7 @@ class RegistrationScreen extends Component {
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
-                  .post('https://api.10av10.com/register', {
+                  .post(REGISTER_URL, {
                     email,
                     password,
                     postNumber,
@@ -607,11 +614,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, userInformation, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { picture } = userInformation;
   const { language } = currentLanguage;
-  return { theme, picture, language };
+  return { picture, language };
 };
 
 export default connect(mapStateToProps, { setToken, setEmail })(RegistrationScreen);

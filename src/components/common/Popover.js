@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import PulsatingView from './PulsatingView';
+import { setPopoverStatus, getPopoverStatus } from '../../helpers/LocalSave';
 
 class Popover extends Component {
   constructor(props) {
@@ -10,6 +11,12 @@ class Popover extends Component {
     };
   }
 
+  componentWillMount() {
+    getPopoverStatus(this.props.name, bool => this.setState({ isVisible: bool }));
+    //console.log(getPopoverStatus(this.props.name));
+    //this.setState({ isVisible: getPopoverStatus(this.props.name) });
+  }
+
   zIndexWorkaround = val => {
     return Platform.select({
       ios: { zIndex: val },
@@ -17,7 +24,17 @@ class Popover extends Component {
     });
   };
 
+  renderOnPress() {
+    setPopoverStatus(this.props.name, this.props.name);
+    this.setState({ isVisible: false });
+  }
+
   renderBubble() {
+    getPopoverStatus(this.props.name, bool => this.renderBubbleCallback(bool));
+  }
+
+  renderBubbleCallback(bool) {
+    this.setState({ isVisible: bool });
     const {
       talkBubbleSquareBig,
       talkBubbleSquareSmall,
@@ -33,7 +50,7 @@ class Popover extends Component {
     if (this.props.type === 'bottomLeft')
       return (
         <TouchableOpacity
-          onPress={() => this.setState({ isVisible: false })}
+          onPress={() => this.renderOnPress()}
           style={[talkBubbleBottomLeft, this.zIndexWorkaround(1000)]}
         >
           <PulsatingView animate>
@@ -47,7 +64,7 @@ class Popover extends Component {
     if (this.props.type === 'topRight')
       return (
         <TouchableOpacity
-          onPress={() => this.setState({ isVisible: false })}
+          onPress={() => this.renderOnPress()}
           style={[talkBubbleTopRight, this.zIndexWorkaround(1000)]}
         >
           <PulsatingView animate>
@@ -129,4 +146,4 @@ const styles = {
   }
 };
 
-export default Popover;
+export { Popover };

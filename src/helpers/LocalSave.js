@@ -44,3 +44,18 @@ export function removeItems(keys) {
     if (err) console.error(err);
   });
 }
+
+export function getPopoverStatus(key, callback) {
+  AsyncStorage.getItem(key, (err, value) => {
+    if (err) {
+      return;
+    }
+    if (value != null) callback(false);
+  });
+}
+
+export function setPopoverStatus(key, value) {
+  AsyncStorage.setItem(key, value, err => {
+    if (err) console.error(err);
+  });
+}

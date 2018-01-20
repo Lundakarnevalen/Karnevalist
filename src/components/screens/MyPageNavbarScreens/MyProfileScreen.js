@@ -10,17 +10,13 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Toast from '../../common/Toast';
-import BackgroundImage from '../../common/BackgroundImage';
-import SuperAgileAlert from '../../common/SuperAgileAlert';
-import Header from '../../common/Header';
-import Input from '../../common/Input';
+import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
+import { USER_URL } from '../../../helpers/Constants';
 import { logout } from '../../../helpers/functions';
 import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../../helpers/ApiManager';
 
 const HEIGHT = Dimensions.get('window').height;
-const baseURL = 'https://api.10av10.com/api/user/';
 
 class MyProfileScreen extends Component {
   constructor(props) {
@@ -42,7 +38,7 @@ class MyProfileScreen extends Component {
 
   getUserInfo() {
     const strings = this.getStrings();
-    const url = baseURL + this.props.email;
+    const url = USER_URL + this.props.email;
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
@@ -109,7 +105,7 @@ class MyProfileScreen extends Component {
   }
 
   putData(data) {
-    const url = baseURL + this.props.email;
+    const url = USER_URL + this.props.email;
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
@@ -136,17 +132,16 @@ class MyProfileScreen extends Component {
     });
     const textFields = Object.keys(labels).map(key => {
       return (
-        <View key={key}>
-          <Input
-            placeholder={labels[key]}
-            value={user[key]}
-            editable={editMode}
-            onChangeText={text => {
-              user[key] = text;
-              this.setState({ user, changesMade: true });
-            }}
-          />
-        </View>
+        <Input
+          key={key}
+          placeholder={labels[key]}
+          value={user[key]}
+          editable={editMode}
+          onChangeText={text => {
+            user[key] = text;
+            this.setState({ user, changesMade: true });
+          }}
+        />
       );
     });
     return textFields;
@@ -178,7 +173,6 @@ class MyProfileScreen extends Component {
         />
         <SuperAgileAlert
           alertVisible={alertVisible}
-          boxStyle={{ height: 150 }}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
           buttonsIn={[
             {
@@ -199,7 +193,11 @@ class MyProfileScreen extends Component {
 const styles = {
   scrollStyle: {
     marginTop: 20,
-    height: HEIGHT - 80
+    height: HEIGHT - 64,
+    paddingTop: 4,
+    paddingRight: 16,
+    paddingBottom: 64,
+    paddingLeft: 16
   },
   loadingText: {
     textAlign: 'center',
@@ -211,11 +209,10 @@ const styles = {
     marginTop: HEIGHT / 3
   }
 };
-const mapStateToProps = ({ currentTheme, currentLanguage, userInformation }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token, email } = userInformation;
-  return { theme, language, token, email };
+  return { language, token, email };
 };
 
 export default connect(mapStateToProps, null)(MyProfileScreen);
