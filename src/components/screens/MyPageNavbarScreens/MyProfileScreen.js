@@ -5,7 +5,9 @@ import {
   View,
   Dimensions,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard,
+  Platform
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -114,8 +116,6 @@ class MyProfileScreen extends Component {
     axios
       .put(url, data, { headers })
       .then(response => {
-        console.log(data);
-        console.log(response);
         const { success } = response.data;
         this.setState({ success, showToast: true, changesMade: false });
       })
@@ -134,9 +134,6 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      if (key === 'personalNumber') {
-        return null;
-      }
       const color = (editMode && (key !== 'email')) ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
       return (
         <Input
