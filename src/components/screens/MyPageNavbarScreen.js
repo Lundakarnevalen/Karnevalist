@@ -58,6 +58,25 @@ class MyPageNavbarScreen extends Component {
 
 const TabNav = TabNavigator(
   {
+
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: props => ({
+        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarIcon: ({ tintColor, focused }) => (
+          <MaterialIcons name="home" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+        )
+      })
+    },
+    News: {
+      screen: NewsScreen,
+      navigationOptions: props => ({
+        tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarIcon: ({ tintColor, focused }) => (
+          <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+        )
+      })
+    },
     Sections: {
       screen: SectionScreen,
       navigationOptions: props => ({
@@ -74,24 +93,6 @@ const TabNav = TabNavigator(
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons name="local-library" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
-        )
-      })
-    },
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: props => ({
-        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="home" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
-        )
-      })
-    },
-    News: {
-      screen: NewsScreen,
-      navigationOptions: props => ({
-        tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     },
