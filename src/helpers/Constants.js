@@ -8,6 +8,6 @@ export const LOGIN_URL = 'https://api.10av10.com/login/email';
 export const USER_URL = 'https://api.10av10.com/api/user/';
 export const PROGRESS = Object.freeze({
   CHECK_IN: 1,
-  CHOOSE_SECCTIONS: 2,
+  CHOOSE_SECTIONS: 2,
   SENT_SECTIONS: 3
 })
