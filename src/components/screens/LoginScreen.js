@@ -117,7 +117,9 @@ class LoginScreen extends Component {
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
-        <ScrollView>
+        <ScrollView
+          keyboardShouldPersistTaps='handled'
+        >
           <View style={container1}>
             <View style={{ alignSelf: 'flex-start' }}>
               <CustomButton

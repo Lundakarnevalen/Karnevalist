@@ -285,6 +285,7 @@ class RegistrationScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
         <ScrollView
+          keyboardShouldPersistTaps='handled'
           contentContainerStyle={styles.contentContainer}
           style={{ height: HEIGHT - 64 }}
           ref={'scrollView'}
