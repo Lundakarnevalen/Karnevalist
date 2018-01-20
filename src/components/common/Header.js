@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Dimensions, Text, Platform, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -74,9 +73,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(Header);
+export default Header;

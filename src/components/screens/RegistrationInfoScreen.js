@@ -26,7 +26,7 @@ class RegistrationInfoScreen extends Component {
 
   render() {
     const { titelTextStyle, containerStyle, imageStyle, textStyle } = styles;
-    const { theme, navigation } = this.props;
+    const { navigation } = this.props;
     const strings = this.getStrings();
     const image1 = (
       <MaterialCommunityIcons
@@ -118,10 +118,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  return { language };
 };
 
 export default connect(mapStateToProps, null)(RegistrationInfoScreen);

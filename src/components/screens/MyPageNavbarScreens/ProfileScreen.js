@@ -62,10 +62,9 @@ class ProfileScreen extends Component {
     );
   }
 }
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  return { language };
 };
 
 export default connect(mapStateToProps, { setProgress })(ProfileScreen);
