@@ -125,7 +125,11 @@ class LoginScreen extends Component {
         .catch(error => {
           const msg = handleErrorMsg(error.message, strings);
           this.setState({ loading: false, loadingComplete: false });
-          Alert.alert(strings.error, msg);
+          this.setState({
+            alertVisible: true,
+            message: msg,
+            alertHeader: strings.error
+           })
         });
     }
   }
