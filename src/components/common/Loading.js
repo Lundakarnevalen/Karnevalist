@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Dimensions, Text, Animated, Image, Easing, View } from 'react-native';
-import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -36,14 +35,14 @@ class Loading extends Component {
   }
 
   render() {
-    const { container, containerrr, text, image } = styles;
+    const { container, containerAnimated, text, image } = styles;
     const spin = this.state.spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
     });
     return (
       <View style={container}>
-        <Animated.View style={[containerrr, { transform: [{ rotate: spin }] }]}>
+        <Animated.View style={[containerAnimated, { transform: [{ rotate: spin }] }]}>
           <Text style={text}> LOADING </Text>
           <Image style={image} source={require('../../../res/Monstergubbe.png')} />
         </Animated.View>
@@ -62,14 +61,7 @@ const styles = {
     padding: 20,
     height: HEIGHT
   },
-  headerStyle: {
-    fontFamily: 'Avenir Next Medium',
-    fontSize: 36,
-    color: 'rgb(138, 71, 151)',
-    backgroundColor: 'transparent'
-  },
-  containerrr: {
-    flex: 1,
+  containerAnimated: {
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -87,9 +79,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentLanguage }) => {
-  const { language } = currentLanguage;
-  return { language };
-};
-
-export default connect(mapStateToProps, null)(Loading);
+export default Loading;
