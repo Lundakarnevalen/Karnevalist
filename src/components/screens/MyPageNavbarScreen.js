@@ -5,6 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { setSections, setSectionPriorities, setProgress } from '../../actions';
+import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
@@ -31,18 +32,17 @@ class MyPageNavbarScreen extends Component {
   }
 
   getSectionPriorities(token) {
-    const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + token,
       'content-type': 'application/json'
     };
     axios
-      .get(url, { headers })
+      .get(SECTION_PRIORITY_URL, { headers })
       .then(response => {
         const { success, sectionPriorities } = response.data;
         if (success) {
           this.props.setSectionPriorities(sectionPriorities);
-          if (sectionPriorities.length > 0) this.props.setProgress(4);
+          if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
         }
       })
       .catch(error => {
