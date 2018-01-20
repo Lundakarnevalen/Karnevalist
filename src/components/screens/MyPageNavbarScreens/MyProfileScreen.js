@@ -10,17 +10,13 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Toast from '../../common/Toast';
-import BackgroundImage from '../../common/BackgroundImage';
-import SuperAgileAlert from '../../common/SuperAgileAlert';
-import Header from '../../common/Header';
-import Input from '../../common/Input';
+import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
+import { USER_URL } from '../../../helpers/Constants';
 import { logout } from '../../../helpers/functions';
 import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../../helpers/ApiManager';
 
 const HEIGHT = Dimensions.get('window').height;
-const baseURL = 'https://api.10av10.com/api/user/';
 
 class MyProfileScreen extends Component {
   constructor(props) {
@@ -42,7 +38,7 @@ class MyProfileScreen extends Component {
 
   getUserInfo() {
     const strings = this.getStrings();
-    const url = baseURL + this.props.email;
+    const url = USER_URL + this.props.email;
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
@@ -109,7 +105,7 @@ class MyProfileScreen extends Component {
   }
 
   putData(data) {
-    const url = baseURL + this.props.email;
+    const url = USER_URL + this.props.email;
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'

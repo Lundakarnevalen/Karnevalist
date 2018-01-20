@@ -80,4 +80,4 @@ const styles = {
   }
 };
 
-export default Toast;
+export { Toast };

@@ -59,4 +59,4 @@ const styles = {
   }
 };
 
-export default BackgroundImage;
+export { BackgroundImage };

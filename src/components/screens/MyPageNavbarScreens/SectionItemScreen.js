@@ -11,8 +11,8 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
-import Header from '../../common/Header';
-import Toast from '../../common/Toast';
+import { Header, Toast } from '../../common';
+import { PROGRESS } from '../../../helpers/Constants';
 import { saveItem, removeItem, getItem } from '../../../helpers/LocalSave';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
@@ -46,7 +46,7 @@ class SectionItemScreen extends Component {
   }
 
   renderRightIcon(id, title) {
-    if (this.props.progress === 4) return;
+    if (this.props.progress === PROGRESS.SENT_SECTIONS) return;
     if (!this.state.added) {
       return (
         <TouchableOpacity

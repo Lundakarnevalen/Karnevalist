@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import CountDownItem from './CountDownItem';
+import { CountDownItem } from '..';
 /**
  * Uppropet är den 4:e februari
  *
@@ -72,4 +72,4 @@ const styles = {
   }
 };
 
-export default CountDown;
+export { CountDown };
