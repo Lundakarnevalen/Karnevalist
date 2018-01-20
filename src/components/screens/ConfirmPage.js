@@ -46,8 +46,8 @@ class ConfirmPage extends Component {
   renderSortableListOrMessage() {
     const { contentContainer, list, textStyle } = styles;
     const { navigation } = this.props;
-    const { strings } = this.state;
-    if (Object.keys(this.state.data).length === 0) {
+    const { strings, data, order } = this.state;
+    if (Object.keys(data).length === 0) {
       return (
         <View
           style={{
@@ -76,8 +76,8 @@ class ConfirmPage extends Component {
         <SortableList
           style={list}
           contentContainerStyle={contentContainer}
-          data={this.state.data}
-          order={this.state.order}
+          data={data}
+          order={order}
           renderRow={this.renderRow.bind(this)}
           onChangeOrder={nextOrder => {
             saveFavoriteSections(nextOrder);
@@ -90,9 +90,7 @@ class ConfirmPage extends Component {
           }}
         >
           <CustomButton
-            style={
-              Object.keys(this.state.data).length >= 5 ? 'standardButton' : 'tintStandardButton'
-            }
+            style={Object.keys(data).length >= 5 ? 'standardButton' : 'tintStandardButton'}
             text={strings.send}
             width={WIDTH - 16}
             onPress={() => this.onPressConfirmButton()}

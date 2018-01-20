@@ -101,7 +101,7 @@ class SectionScreen extends Component {
                     if (favorite) {
                       tmpItem.favorite = 'favorite';
                     } else {
-                      tmpItem.favorite = null;
+                      delete tmpItem.favorite;
                     }
                     tmpData.push(tmpItem);
                     this.setState({ data: tmpData });
@@ -129,6 +129,6 @@ const styles = {
     backgroundColor: 'transparent',
     width: 60
   }
-}
+};
 
 export default connect(mapStateToProps, null)(SectionScreen);
