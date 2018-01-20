@@ -126,7 +126,8 @@ const styles = {
     fontSize: 16,
     margin: 10,
     fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    paddingBottom: 40
   }
 };
 

@@ -32,7 +32,7 @@ class SplashScreen extends Component {
       .then(r => {
         const image = (
           <Image
-            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+            style={{ width: WIDTH - 10, height: WIDTH - 50, resizeMode:'contain' }}
             source={{ uri: r.data.source_url }}
             defaultSource={require('../../../res/Monstergubbe.png')}
           />
@@ -47,21 +47,30 @@ class SplashScreen extends Component {
         console.error(error);
       });
   }
+  stripHtmlString(string) {
+    return string
+    .replace(/(<([^>]+)>)/gi, '').replace(/(&#8211;)/gi, '-')
+    .replace(/(&nbsp;)/gi, '').replace(/(&#8230;)/gi, '...')
+  }
 
   getSectionInfo() {
     axios.get(SECTION_URL).then(response => {
       response.data.forEach(item => {
-        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
+        const strippedContent = this.stripHtmlString(item.content.rendered);
+        const strippedTitle = this.stripHtmlString(item.title.rendered);
         const imgId = item.featured_media;
         const imgUrl = IMAGE_URL + imgId;
         const section = {
           key: item.id,
           id: item.id,
-          title: item.title.rendered,
+          title: strippedTitle,
           info: strippedContent
         };
         this.getImage(imgUrl, section);
       });
+    })
+    .catch(error => {
+      console.error(error);
     });
   }
 
