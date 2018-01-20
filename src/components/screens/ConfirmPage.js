@@ -85,15 +85,14 @@ class ConfirmPage extends Component {
         />
         <View
           style={{
-            backgroundColor: 'white',
             width: WIDTH,
-            paddingLeft: 8,
-            borderTopWidth: 1,
-            borderColor: 'gray'
+            paddingLeft: 8
           }}
         >
           <CustomButton
-            style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
+            style={
+              Object.keys(this.state.data).length >= 5 ? 'standardButton' : 'tintStandardButton'
+            }
             text={strings.send}
             width={WIDTH - 16}
             onPress={() => this.onPressConfirmButton()}

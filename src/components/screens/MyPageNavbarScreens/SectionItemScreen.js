@@ -57,6 +57,7 @@ class SectionItemScreen extends Component {
           style={{ padding: 1, backgroundColor: 'transparent' }}
           onPress={() => {
             saveFavoriteSection(id);
+            this.props.navigation.state.params.setSectionStatus(true);
             this.setState({ showToast: true, favorite: true });
           }}
         >
@@ -69,6 +70,7 @@ class SectionItemScreen extends Component {
         style={{ padding: 1, backgroundColor: 'transparent' }}
         onPress={() => {
           removeFavoriteSection(id);
+          this.props.navigation.state.params.setSectionStatus(false);
           this.setState({ showToast: true, favorite: false });
         }}
       >

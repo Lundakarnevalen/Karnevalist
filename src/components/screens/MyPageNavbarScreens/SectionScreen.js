@@ -5,6 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { dynamicSort } from '../../../helpers/functions';
 
 const height = Dimensions.get('window').height;
@@ -13,11 +14,29 @@ class SectionScreen extends Component {
   constructor(props) {
     super(props);
     const { sections } = props;
-    if (sections) sections.sort(dynamicSort('title'));
     this.state = {
       isOpen: false,
       data: sections || []
     };
+  }
+
+  componentWillMount() {
+    const { sections } = this.props;
+    if (sections) {
+      sections.sort(dynamicSort('title'));
+    }
+    getFavoriteSections(result => {
+      if (result) {
+        for (let i = 0; i < sections.length; i++) {
+          result.forEach(id => {
+            if (sections[i].id + '' === id + '') {
+              sections[i].favorite = 'favorite';
+            }
+          });
+        }
+      }
+      this.setState({ data: sections });
+    });
   }
 
   getStrings() {
@@ -66,12 +85,25 @@ class SectionScreen extends Component {
             <SectionListItem
               sectionTitle={item.title}
               sectionInfoText={item.info}
+              sectionIcon={item.favorite}
               onPress={() =>
                 screenProps.navigation.navigate('SectionItemScreen', {
                   id: item.id,
                   title: item.title,
                   description: item.info,
-                  image: item.image
+                  image: item.image,
+                  setSectionStatus: favorite => {
+                    const tmpData = this.state.data;
+                    const tmpItem = item;
+                    tmpData.filter(section => section.id + '' !== item.id + '');
+                    if (favorite) {
+                      tmpItem.favorite = 'favorite';
+                    } else {
+                      tmpItem.favorite = null;
+                    }
+                    tmpData.push(tmpItem);
+                    this.setState({ data: tmpData });
+                  }
                 })
               }
             />
