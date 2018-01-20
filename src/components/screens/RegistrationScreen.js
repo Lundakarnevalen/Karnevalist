@@ -15,14 +15,7 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setToken, setEmail } from '../../actions';
-import {
-  Header,
-  Input,
-  DKPicker,
-  CustomButton,
-  ButtonChoiceManager,
-  BackgroundImage
-} from '../common';
+import { Header, Input, DKPicker, CustomButton, CheckBox, BackgroundImage } from '../common';
 import Loading from '../common/Loading';
 import { REGISTER_URL } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
@@ -40,6 +33,8 @@ class RegistrationScreen extends Component {
       inputs: ['', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
+      activeCarneval2014: false,
+      driversLicense: false,
       errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showStudentUnionPicker: false,
@@ -130,7 +125,8 @@ class RegistrationScreen extends Component {
       studentUnion === 'Välj nation' ||
       studentUnion === 'Choose student union' ||
       studentUnion === ''
-    ) return true
+    )
+      return true;
     return false;
   }
 
@@ -227,7 +223,9 @@ class RegistrationScreen extends Component {
       shirtSize,
       showShirtPicker,
       studentUnion,
-      showStudentUnionPicker
+      showStudentUnionPicker,
+      activeCarneval2014,
+      driversLicense
     } = this.state;
 
     const closeButton = (
@@ -469,16 +467,18 @@ class RegistrationScreen extends Component {
             'union'
           )}
           <View style={{ right: 3 }}>
-            <ButtonChoiceManager
-              buttonInputVector={[strings.activeKarneval]}
-              multipleChoice
+            <CheckBox
+              name={strings.activeKarneval}
               size={30}
+              onPress={() => this.setState({ activeCarneval2014: !activeCarneval2014 })}
+              value={activeCarneval2014}
               color={'white'}
             />
-            <ButtonChoiceManager
-              buttonInputVector={[strings.driversLicense]}
-              multipleChoice
+            <CheckBox
+              name={strings.driversLicense}
               size={30}
+              onPress={() => this.setState({ driversLicense: !driversLicense })}
+              value={driversLicense}
               color={'white'}
             />
           </View>
@@ -505,7 +505,9 @@ class RegistrationScreen extends Component {
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],
-                    foodPreferences: inputs[11]
+                    foodPreferences: inputs[11],
+                    driversLicense,
+                    pastInvolvement: activeCarneval2014
                   })
                   .then(response => {
                     const { accessToken } = response.data;
