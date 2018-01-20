@@ -439,8 +439,11 @@ export const CONFIRM_PAGE_STRINGS = {
     'expiredTokenMessage',
     'alertErrorHeader',
     'alertSuccessHeader',
-    'ok'
-
+    'ok',
+    'confirmMessage',
+    'confirmHeader',
+    'yes',
+    'cancel'
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -452,7 +455,7 @@ export const CONFIRM_PAGE_STRINGS = {
   },
   selectionOK: {
     SE: 'Tack för dina val',
-    EN: 'Thanks for your choices'
+    EN: 'Thank you for your choices'
   },
   send: {
     SE: 'Skicka',
@@ -475,7 +478,20 @@ export const CONFIRM_PAGE_STRINGS = {
   ok: {
     SE: 'OK',
     EN: 'OK'
-  }
+  },
+  yes: {
+    SE: 'JA',
+    EN: 'YES'
+  },
+  confirmMessage: {
+    SE: "Är du säker på dina val? Efter att ha trycka 'Ja' går det inte att ångra sig",
+    EN: "Are you sure about your choices? After pressing 'Yes' you can't change your mind"
+  },
+  confirmHeader: {
+    SE: 'Bekräfta',
+    EN: 'Confirm'
+  },
+  cancel
 };
 
 export const MY_PROFILE_SCREEN_STRINGS = {

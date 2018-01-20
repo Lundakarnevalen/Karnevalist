@@ -138,7 +138,7 @@ class ConfirmPage extends Component {
   }
 
   onPressConfirmButton() {
-    const { data, strings, order } = this.state;
+    const { data, strings } = this.state;
     if (data.length < 5) {
       this.setState({
         alertVisible: true,
@@ -146,15 +146,20 @@ class ConfirmPage extends Component {
         alertHeader: strings.alertErrorHeader
        })
     } else {
-      const sectionPriorities = order.map(i => {
-        const index = data.findIndex(d => d.id + '' === i + '');
-        return data[index].key;
-      });
-      this.postSectionPriorities(sectionPriorities);
+      this.setState({
+        alertVisible: true,
+        message: strings.confirmMessage,
+        alertHeader: strings.confirmHeader
+       })
     }
   }
 
-  postSectionPriorities(sectionPriorities) {
+  postSectionPriorities() {
+    const { data, order } = this.state;
+    const sectionPriorities = order.map(i => {
+      const index = data.findIndex(d => d.id + '' === i + '');
+      return data[index].key;
+    });
     const strings = this.getStrings();
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
@@ -167,7 +172,6 @@ class ConfirmPage extends Component {
           this.props.setSectionPriorities(sectionPriorities);
           this.props.setProgress(PROGRESS.SENT_SECTIONS);
           this.setState({
-            alertVisible: true,
             message: strings.selectionOK,
             alertHeader: strings.alertSuccessHeader
            })
@@ -207,6 +211,35 @@ class ConfirmPage extends Component {
     }
   }
 
+  renderAlertButtons(message) {
+    const strings = this.getStrings()
+    switch (message) {
+      case strings.selectionOK:
+        return ([
+          {
+            text: strings.ok,
+            onPress: () => {
+              this.setState({ alertVisible: false })
+              this.props.navigation.goBack(null);
+            }
+          }
+        ])
+      case strings.confirmMessage:
+        return (
+          [{
+            text: strings.cancel,
+            onPress: () =>
+              this.setState({
+                alertVisible: false,
+              })
+          },
+          { text: strings.yes, onPress: () => this.postSectionPriorities() }
+        ])
+      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+
+    }
+  }
+
   render() {
     const strings = this.getStrings();
     return (
@@ -221,14 +254,7 @@ class ConfirmPage extends Component {
         <SuperAgileAlert
           alertVisible={this.state.alertVisible}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
-          buttonsIn={[
-            { text: strings.ok,
-              onPress: () => {
-              this.setState({ alertVisible: false })
-              this.props.navigation.goBack(null);
-            }
-           }
-          ]}
+          buttonsIn={this.renderAlertButtons(this.state.message)}
           header={this.state.alertHeader || ''}
           info={this.state.message || ''}
         />
