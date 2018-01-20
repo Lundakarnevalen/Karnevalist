@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import Header from '../../common/Header';
-import CustomButton from '../../common/CustomButton';
-import BackgroundImage from '../../common/BackgroundImage';
-import CountDown from '../../common/countDown/CountDown';
+import { Header, CustomButton, BackgroundImage, CountDown } from '../../common';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;
@@ -48,10 +45,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  return { language };
 };
 
 export default connect(mapStateToProps, null)(HomeScreen);

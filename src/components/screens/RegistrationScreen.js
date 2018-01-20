@@ -15,13 +15,16 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setToken, setEmail } from '../../actions';
-import Header from '../common/Header';
-import Input from '../common/Input';
-import DKPicker from '../common/DKPicker';
-import CustomButton from '../common/CustomButton';
-import ButtonChoiceManager from '../common/ButtonChoiceManager';
-import BackgroundImage from '../common/BackgroundImage';
+import {
+  Header,
+  Input,
+  DKPicker,
+  CustomButton,
+  ButtonChoiceManager,
+  BackgroundImage
+} from '../common';
 import Loading from '../common/Loading';
+import { REGISTER_URL } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { saveItem } from '../../helpers/LocalSave';
@@ -166,7 +169,11 @@ class RegistrationScreen extends Component {
   trimValues() {
     const { inputs } = this.state;
     const trimmedList = inputs;
-    trimmedList.forEach(input => input.trim());
+    for (let i = 0; i < trimmedList.length; i++) {
+      if (!(i === 5 || i === 6)) {
+        trimmedList[i] = inputs[i].trim();
+      }
+    }
     this.setState({ inputs: trimmedList });
   }
 
@@ -271,6 +278,7 @@ class RegistrationScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.contentContainer}
           style={{ height: HEIGHT - 64 }}
           ref={'scrollView'}
@@ -328,7 +336,11 @@ class RegistrationScreen extends Component {
             autoCapitalize="none"
             onChangeText={text => {
               inputs[3] = text;
-              this.setState({ inputs, emailError: !this.isEmail(text), confirmedEmailError: text !== inputs[4] });
+              this.setState({
+                inputs,
+                emailError: !this.isEmail(text),
+                confirmedEmailError: text !== inputs[4]
+              });
             }}
             value={inputs[3]}
             returnKeyType={'next'}
@@ -413,7 +425,7 @@ class RegistrationScreen extends Component {
                   postNumberError: text.length !== 5 || !this.containsOnlyDigits(text)
                 });
               }}
-              width={(WIDTH / 2) - 4}
+              width={WIDTH / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={inputs[8]}
               returnKeyType={'next'}
@@ -429,7 +441,7 @@ class RegistrationScreen extends Component {
                 inputs[9] = text;
                 this.setState({ inputs, cityError: !this.containsOnlyLetters(text) });
               }}
-              width={(WIDTH / 2) - 4}
+              width={WIDTH / 2 - 4}
               value={inputs[9]}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
@@ -522,7 +534,7 @@ class RegistrationScreen extends Component {
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
-                  .post('https://api.10av10.com/register', {
+                  .post(REGISTER_URL, {
                     firstName: inputs[0],
                     lastName: inputs[1],
                     personalNumber: inputs[2],
@@ -532,7 +544,7 @@ class RegistrationScreen extends Component {
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],
-                    foodPreferences: inputs[11],
+                    foodPreferences: inputs[11]
                   })
                   .then(response => {
                     const { accessToken } = response.data;
@@ -609,11 +621,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, userInformation, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { picture } = userInformation;
   const { language } = currentLanguage;
-  return { theme, picture, language };
+  return { picture, language };
 };
 
 export default connect(mapStateToProps, { setToken, setEmail })(RegistrationScreen);

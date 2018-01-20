@@ -7,7 +7,7 @@ class Input extends Component {
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
-      borderColor: '#000',
+      borderColor: '#000'
     };
   }
 
@@ -79,7 +79,7 @@ class Input extends Component {
       secureText,
       textInputStyle,
       autoCorrect = false,
-      autoCapitalize = 'words',
+      autoCapitalize = 'sentences',
       editable = true,
       keyboardType = 'default',
       extraContainerStyle,
@@ -151,4 +151,4 @@ const styles = {
   }
 };
 
-export default Input;
+export { Input };

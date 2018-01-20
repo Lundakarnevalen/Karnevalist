@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions } from 'react-native';
-import { connect } from 'react-redux';
 
 const SIZE = Dimensions.get('window').width / 6;
 
@@ -43,9 +42,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(CountDownItem);
+export { CountDownItem };

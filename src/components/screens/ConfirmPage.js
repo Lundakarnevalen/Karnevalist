@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Alert,
-  BackHandler
-} from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
-import Row from '../common/Row';
-import Header from '../common/Header';
+import { Row, Header, BackgroundImage, CustomButton } from '../common';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
-import BackgroundImage from '../common/BackgroundImage';
+import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import { setSectionPriorities, setProgress } from '../../actions';
-import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
 const window = Dimensions.get('window');
@@ -35,9 +26,7 @@ class ConfirmPage extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () =>
-      this.props.navigation.goBack()
-    );
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     const tempData = [];
     const allSections = this.props.sections;
     getSections(sections => {
@@ -62,9 +51,7 @@ class ConfirmPage extends Component {
     const { language } = this.props;
     const { fields } = CONFIRM_PAGE_STRINGS;
     const strings = {};
-    fields.forEach(
-      field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language])
-    );
+    fields.forEach(field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language]));
     return strings;
   }
 
@@ -81,9 +68,7 @@ class ConfirmPage extends Component {
             justifyContent: 'center'
           }}
         >
-          <Text style={[textStyle, { color: 'white' }]}>
-            {strings.sectionSelection}
-          </Text>
+          <Text style={[textStyle, { color: 'white' }]}>{strings.sectionSelection}</Text>
           <CustomButton
             style={'standardButton'}
             text={strings.toSections}
@@ -108,11 +93,7 @@ class ConfirmPage extends Component {
           onChangeOrder={nextOrder => this.setState({ order: nextOrder })}
         />
         <CustomButton
-          style={
-            this.state.data.length >= 5
-              ? 'standardButton'
-              : 'tintStandardButton'
-          }
+          style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
           text={strings.send}
           width={WIDTH - 15}
           onPress={() => this.onPressConfirmButton()}
@@ -171,17 +152,16 @@ class ConfirmPage extends Component {
 
   postSectionPriorities(sectionPriorities) {
     const strings = this.getStrings();
-    const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
     };
     axios
-      .post(url, { sectionPriorities }, { headers })
+      .post(SECTION_PRIORITY_URL, { sectionPriorities }, { headers })
       .then(response => {
         if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
-          this.props.setProgress(4);
+          this.props.setProgress(PROGRESS.SENT_SECTIONS);
           Alert.alert(strings.selectionOK);
           this.props.navigation.goBack(null);
         }
@@ -268,18 +248,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({
-  currentTheme,
-  sections,
-  currentLanguage,
-  userInformation
-}) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token } = userInformation;
-  return { theme, sections: sections.sections, language, token };
+  return { sections: sections.sections, language, token };
 };
 
-export default connect(mapStateToProps, { setSectionPriorities, setProgress })(
-  ConfirmPage
-);
+export default connect(mapStateToProps, { setSectionPriorities, setProgress })(ConfirmPage);

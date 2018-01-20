@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import {
-  BackHandler,
-  View,
-  FlatList,
-  Platform,
-  Text,
-  Dimensions
-} from 'react-native';
+import { BackHandler, View, FlatList, Platform, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import Header from '../../common/Header';
-import SectionListItem from '../../common/SectionListItem';
-import BackgroundImage from '../../common/BackgroundImage';
+import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -24,9 +15,7 @@ class MyRegistrationScreen extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () =>
-      this.props.navigation.goBack()
-    );
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
   }
 
   getColor() {
@@ -37,10 +26,7 @@ class MyRegistrationScreen extends Component {
     const { language } = this.props;
     const { fields } = MY_REGISTRATION_SCREEN_STRINGS;
     const strings = {};
-    fields.forEach(
-      field =>
-        (strings[field] = MY_REGISTRATION_SCREEN_STRINGS[field][language])
-    );
+    fields.forEach(field => (strings[field] = MY_REGISTRATION_SCREEN_STRINGS[field][language]));
     return strings;
   }
 
@@ -84,9 +70,7 @@ class MyRegistrationScreen extends Component {
         />
       );
     return (
-      <Text style={[styles.textStyle, { color: this.getColor() }]}>
-        {strings.emptyListMessage}
-      </Text>
+      <Text style={[styles.textStyle, { color: this.getColor() }]}>{strings.emptyListMessage}</Text>
     );
   }
 
@@ -118,18 +102,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({
-  currentTheme,
-  sections,
-  currentLanguage,
-  userInformation
-}) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token } = userInformation;
   const { sectionPriorities } = sections;
   return {
-    theme,
     sections: sections.sections,
     sectionPriorities,
     language,

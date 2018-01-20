@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width - 16;
 
@@ -130,9 +129,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(SectionListItem);
+export { SectionListItem };

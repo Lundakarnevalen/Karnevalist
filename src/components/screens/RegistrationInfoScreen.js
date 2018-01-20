@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import CustomButton from '../common/CustomButton';
-import Header from '../common/Header';
-import ExpandeblePanel from '../common/ExpandeblePanel';
-import BackgroundImage from '../common/BackgroundImage';
+import { CustomButton, Header, ExpandeblePanel, BackgroundImage } from '../common';
 import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;
@@ -26,7 +23,7 @@ class RegistrationInfoScreen extends Component {
 
   render() {
     const { titelTextStyle, containerStyle, imageStyle, textStyle } = styles;
-    const { theme, navigation } = this.props;
+    const { navigation } = this.props;
     const strings = this.getStrings();
     const image1 = (
       <MaterialCommunityIcons
@@ -118,10 +115,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  return { language };
 };
 
 export default connect(mapStateToProps, null)(RegistrationInfoScreen);

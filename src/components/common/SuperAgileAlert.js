@@ -1,35 +1,8 @@
 import React, { Component } from 'react';
 import { BlurView } from 'expo';
-import {
-  View,
-  Text,
-  Modal,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  Platform
-} from 'react-native';
-import { connect } from 'react-redux';
+import { View, Text, Modal, Dimensions, TouchableOpacity } from 'react-native';
 
 class SuperAgileAlert extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      buttonWidth: 0,
-      emailAddress: ''
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      buttonWidth: Dimensions.get('window').width / this.props.buttonsIn.length
-    });
-  }
-
-  getColor() {
-    return '#F7A021';
-  }
-
   getBorderLeftRadius(index) {
     if (index === 0) {
       return 5;
@@ -63,7 +36,7 @@ class SuperAgileAlert extends Component {
               borderBottomLeftRadius: this.getBorderLeftRadius(i),
               borderBottomRightRadius: this.getBorderRightRadius(i),
               marginRight: this.getRightMargin(i),
-              backgroundColor: this.getColor()
+              backgroundColor: '#F7A021'
             }
           ]}
         >
@@ -73,45 +46,24 @@ class SuperAgileAlert extends Component {
     }
     return toReturn;
   }
-  renderInfo(info, infoTextStyle) {
-    if (info)
-      return (
-        <View style={{ height: 15, top: 10, width: Dimensions.get('window').width / 1.2 }}>
-          <Text style={[infoTextStyle, { color: this.getColor() }]}>{info}</Text>
-        </View>
-      );
-    return <View />;
-  }
+
   render() {
     const {
       outerViewStyle,
-      innerViewStyle,
       headerTextStyle,
       infoTextStyle,
-      buttonViewStyle,
-      alertBoxStyle
+      alertBoxStyle,
+      buttonContainerStyle
     } = styles;
-    const { alertVisible, header, info, setAlertVisible, children, boxStyle } = this.props;
+    const { alertVisible, header = '', info = '', setAlertVisible, children = null } = this.props;
     return (
       <Modal transparent visible={alertVisible} onRequestClose={() => setAlertVisible(false)}>
-        <BlurView tint="dark" intensity={70} style={StyleSheet.absoluteFill}>
-          <View style={outerViewStyle} transparent={false}>
-            <View style={[alertBoxStyle, boxStyle, { borderColor: this.getColor() }]}>
-              <View style={innerViewStyle}>
-                <Text style={[headerTextStyle, { color: this.getColor() }]}>{header}</Text>
-                {this.renderInfo(info, infoTextStyle)}
-                <View
-                  style={{
-                    position: 'absolute',
-                    bottom: Platform.OS === 'ios' ? 68 : 73,
-                    width: Dimensions.get('window').width / 1.2
-                  }}
-                >
-                  {children}
-                </View>
-                <View style={buttonViewStyle}>{this.createButtons()}</View>
-              </View>
-            </View>
+        <BlurView tint={'dark'} intensity={70} style={outerViewStyle}>
+          <View style={alertBoxStyle}>
+            <Text style={headerTextStyle}>{header}</Text>
+            <Text style={infoTextStyle}>{info}</Text>
+            {children}
+            <View style={buttonContainerStyle}>{this.createButtons()}</View>
           </View>
         </BlurView>
       </Modal>
@@ -122,7 +74,6 @@ class SuperAgileAlert extends Component {
 const styles = {
   outerViewStyle: {
     flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -130,17 +81,11 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'column',
     width: Dimensions.get('window').width / 1.1,
-    height: 220,
     borderRadius: 5,
     borderWidth: 1,
-    backgroundColor: 'white'
-  },
-  innerViewStyle: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    flex: 1,
-    marginTop: 17,
-    marginBottom: 0
+    backgroundColor: 'white',
+    borderColor: '#F7A021',
+    overflow: 'hidden'
   },
   buttonStyle: {
     alignItems: 'center',
@@ -156,24 +101,22 @@ const styles = {
   },
   headerTextStyle: {
     textAlign: 'center',
-    fontFamily: 'Avenir Next Bold'
+    fontFamily: 'Avenir Next Bold',
+    color: '#F7A021',
+    marginTop: 10
   },
   infoTextStyle: {
     justifyContent: 'center',
     textAlign: 'center',
-    fontFamily: 'Avenir Next Medium'
+    fontFamily: 'Avenir Next Medium',
+    color: '#F7A021',
+    marginTop: 10,
+    marginBottom: 10
   },
-  buttonViewStyle: {
-    position: 'absolute',
-    bottom: 0,
+  buttonContainerStyle: {
     flexDirection: 'row',
-    height: 50
+    marginTop: 10
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(SuperAgileAlert);
+export { SuperAgileAlert };

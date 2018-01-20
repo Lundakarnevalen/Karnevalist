@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import RadioButton from './RadioButton';
-import CheckBox from './CheckBox';
+import { RadioButton, CheckBox } from './';
 
 class ButtonChoiceManager extends Component {
   constructor(props) {
@@ -94,4 +93,4 @@ class ButtonChoiceManager extends Component {
   }
 }
 
-export default ButtonChoiceManager;
+export { ButtonChoiceManager };
