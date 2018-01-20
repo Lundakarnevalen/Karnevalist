@@ -508,7 +508,7 @@ class RegistrationScreen extends Component {
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],
-                    foodPreferences: inputs[11]
+                    foodPreferences
                   })
                   .then(response => {
                     const { accessToken } = response.data;
