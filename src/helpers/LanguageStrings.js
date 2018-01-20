@@ -113,6 +113,7 @@ export const LOGIN_SCREEN_STRINGS = {
     'errorMsgInternal',
     'passwordPopupHeader',
     'passwordPopupInfo',
+    'ok',
     'cancel',
     'resetPassword',
     'responseFail',
@@ -172,6 +173,10 @@ export const LOGIN_SCREEN_STRINGS = {
   cancel: {
     SE: 'Avbryt',
     EN: 'Cancel'
+  },
+  ok: {
+    SE: 'OK',
+    EN: 'OK'
   },
   resetPassword: {
     SE: 'Återställ lösenord',
