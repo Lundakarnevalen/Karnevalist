@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { getItem } from '../../helpers/LocalSave';
+import { TOKEN_URL, SECTION_URL, IMAGE_URL } from '../../helpers/Constants';
 import BackgroundImage from '../common/BackgroundImage';
 import { setSections, setToken, setEmail } from '../../actions';
 
-const baseURL = 'https://api.10av10.com/api/hello/';
 const WIDTH = Dimensions.get('window').width;
 
 class SplashScreen extends Component {
@@ -49,12 +49,11 @@ class SplashScreen extends Component {
   }
 
   getSectionInfo() {
-    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
-    axios.get(url).then(response => {
+    axios.get(SECTION_URL).then(response => {
       response.data.forEach(item => {
         const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
         const imgId = item.featured_media;
-        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
+        const imgUrl = IMAGE_URL + imgId;
         const section = {
           key: item.id,
           id: item.id,
@@ -82,7 +81,7 @@ class SplashScreen extends Component {
                 'content-type': 'application/json'
               };
               axios
-                .post(baseURL, {}, { headers })
+                .post(TOKEN_URL, {}, { headers })
                 .then(response => {
                   const { success } = response.data;
                   if (success) {

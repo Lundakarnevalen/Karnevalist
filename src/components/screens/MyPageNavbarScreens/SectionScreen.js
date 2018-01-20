@@ -5,6 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
+import { PROGRESS } from '../../../helpers/Constants';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { dynamicSort } from '../../../helpers/functions';
 
@@ -30,7 +31,7 @@ class SectionScreen extends Component {
   }
 
   renderRightIcon() {
-    if (this.props.progress === 4) return null;
+    if (this.props.progress === PROGRESS.SENT_SECTIONS) return null;
     const { screenProps, navigation } = this.props;
     return (
       <TouchableOpacity
