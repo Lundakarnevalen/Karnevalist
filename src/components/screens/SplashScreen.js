@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
 import { getItem } from '../../helpers/LocalSave';
-import BackgroundImage from '../common/BackgroundImage';
-import { setTheme, setSections, setToken, setEmail } from '../../actions';
+import { BackgroundImage } from '../common';
+import { TOKEN_URL, SECTION_URL, IMAGE_URL } from '../../helpers/Constants';
+import { setSections, setToken, setEmail } from '../../actions';
 
-const baseURL = 'https://api.10av10.com/api/hello/';
 const WIDTH = Dimensions.get('window').width;
 
 class SplashScreen extends Component {
@@ -18,7 +19,7 @@ class SplashScreen extends Component {
   }
 
   componentWillMount() {
-    this.setCurrenTheme();
+    StatusBar.setBarStyle('light-content', true);
     this.spin();
     this.authorize();
     this.getSectionInfo();
@@ -48,12 +49,11 @@ class SplashScreen extends Component {
   }
 
   getSectionInfo() {
-    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
-    axios.get(url).then(response => {
+    axios.get(SECTION_URL).then(response => {
       response.data.forEach(item => {
         const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
         const imgId = item.featured_media;
-        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
+        const imgUrl = IMAGE_URL + imgId;
         const section = {
           key: item.id,
           id: item.id,
@@ -66,6 +66,11 @@ class SplashScreen extends Component {
   }
 
   authorize() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
+      key: null
+    });
     setTimeout(
       () =>
         getItem('email', email => {
@@ -76,31 +81,29 @@ class SplashScreen extends Component {
                 'content-type': 'application/json'
               };
               axios
-                .post(baseURL, {}, { headers })
+                .post(TOKEN_URL, {}, { headers })
                 .then(response => {
                   const { success } = response.data;
                   if (success) {
-                    this.props.navigation.navigate('MyPageNavbarScreen');
+                    resetAction.actions = [
+                      NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
+                    ];
                     this.props.setToken(token);
                     this.props.setEmail(email);
-                  } else this.props.navigation.navigate('LoginScreen');
+                    this.props.navigation.dispatch(resetAction);
+                  } else this.props.navigation.dispatch(resetAction);
                 })
                 .catch(error => {
-                  this.props.navigation.navigate('LoginScreen');
                   console.log(error.message);
+                  this.props.navigation.dispatch(resetAction);
                 });
             });
           } else {
-            this.props.navigation.navigate('LoginScreen');
+            this.props.navigation.dispatch(resetAction);
           }
         }),
       2000
     );
-  }
-
-  setCurrenTheme() {
-    StatusBar.setBarStyle('light-content', true);
-    this.props.setTheme('night');
   }
 
   spin() {
@@ -150,4 +153,8 @@ const styles = {
   }
 };
 
+<<<<<<< HEAD
 export default connect(null, { setTheme, setSections, setToken, setEmail })(SplashScreen);
+=======
+export default connect(null, { setSections, setToken, setEmail })(SplashScreen);
+>>>>>>> 3219536e4dc1c1b13e51f04c07da2601328f06c3

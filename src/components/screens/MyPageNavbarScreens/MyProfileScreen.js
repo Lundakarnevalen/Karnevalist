@@ -10,17 +10,13 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Toast from '../../common/Toast';
-import BackgroundImage from '../../common/BackgroundImage';
-import SuperAgileAlert from '../../common/SuperAgileAlert';
-import Header from '../../common/Header';
-import Input from '../../common/Input';
+import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
+import { USER_URL } from '../../../helpers/Constants';
 import { logout } from '../../../helpers/functions';
 import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../../helpers/ApiManager';
 
 const HEIGHT = Dimensions.get('window').height;
-const baseURL = 'https://api.10av10.com/api/user/';
 
 class MyProfileScreen extends Component {
   constructor(props) {
@@ -36,15 +32,13 @@ class MyProfileScreen extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () =>
-      this.props.navigation.goBack()
-    );
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     this.getUserInfo();
   }
 
   getUserInfo() {
     const strings = this.getStrings();
-    const url = baseURL + this.props.email;
+    const url = USER_URL + this.props.email;
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
@@ -69,18 +63,14 @@ class MyProfileScreen extends Component {
   }
 
   getMsg(success, strings) {
-    return success
-      ? strings.updateInfoMessageSuccess
-      : strings.updateInfoMessageFail;
+    return success ? strings.updateInfoMessageSuccess : strings.updateInfoMessageFail;
   }
 
   getStrings() {
     const { language } = this.props;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const strings = {};
-    fields.forEach(
-      field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language])
-    );
+    fields.forEach(field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language]));
     return strings;
   }
 
@@ -89,8 +79,7 @@ class MyProfileScreen extends Component {
       <TouchableOpacity
         style={{ width: 50, alignItems: 'center' }}
         onPress={() => {
-          if (this.state.editMode && this.state.changesMade)
-            this.setState({ alertVisible: true });
+          if (this.state.editMode && this.state.changesMade) this.setState({ alertVisible: true });
           this.setState({ editMode: !this.state.editMode });
         }}
       >
@@ -116,7 +105,7 @@ class MyProfileScreen extends Component {
   }
 
   putData(data) {
-    const url = baseURL + this.props.email;
+    const url = USER_URL + this.props.email;
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
@@ -143,17 +132,16 @@ class MyProfileScreen extends Component {
     });
     const textFields = Object.keys(labels).map(key => {
       return (
-        <View key={key}>
-          <Input
-            placeholder={labels[key]}
-            value={user[key]}
-            editable={editMode}
-            onChangeText={text => {
-              user[key] = text;
-              this.setState({ user, changesMade: true });
-            }}
-          />
-        </View>
+        <Input
+          key={key}
+          placeholder={labels[key]}
+          value={user[key]}
+          editable={editMode}
+          onChangeText={text => {
+            user[key] = text;
+            this.setState({ user, changesMade: true });
+          }}
+        />
       );
     });
     return textFields;
@@ -166,9 +154,7 @@ class MyProfileScreen extends Component {
           <ActivityIndicator size="large" color={'white'} />
         </View>
       );
-    return (
-      <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>
-    );
+    return <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>;
   }
 
   render() {
@@ -178,11 +164,7 @@ class MyProfileScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header
-          title={strings.title}
-          navigation={navigation}
-          rightIcon={this.getRightIcon()}
-        />
+        <Header title={strings.title} navigation={navigation} rightIcon={this.getRightIcon()} />
         <Toast
           color={'#f4376d'}
           showToast={showToast}
@@ -191,7 +173,6 @@ class MyProfileScreen extends Component {
         />
         <SuperAgileAlert
           alertVisible={alertVisible}
-          boxStyle={{ height: 150 }}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
           buttonsIn={[
             {
@@ -212,7 +193,11 @@ class MyProfileScreen extends Component {
 const styles = {
   scrollStyle: {
     marginTop: 20,
-    height: HEIGHT - 80
+    height: HEIGHT - 64,
+    paddingTop: 4,
+    paddingRight: 16,
+    paddingBottom: 64,
+    paddingLeft: 16
   },
   loadingText: {
     textAlign: 'center',
@@ -224,15 +209,10 @@ const styles = {
     marginTop: HEIGHT / 3
   }
 };
-const mapStateToProps = ({
-  currentTheme,
-  currentLanguage,
-  userInformation
-}) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token, email } = userInformation;
-  return { theme, language, token, email };
+  return { language, token, email };
 };
 
 export default connect(mapStateToProps, null)(MyProfileScreen);

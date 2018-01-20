@@ -4,17 +4,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
-import Row from '../common/Row';
-import Header from '../common/Header';
+import { Row, Header, BackgroundImage, CustomButton } from '../common';
 import {
   getFavoriteSections,
   saveFavoriteSections,
   removeFavoriteSection
 } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
-import BackgroundImage from '../common/BackgroundImage';
+import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import { setSectionPriorities, setProgress } from '../../actions';
-import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
 const window = Dimensions.get('window');
@@ -175,17 +173,16 @@ class ConfirmPage extends Component {
 
   postSectionPriorities(sectionPriorities) {
     const strings = this.getStrings();
-    const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
     };
     axios
-      .post(url, { sectionPriorities }, { headers })
+      .post(SECTION_PRIORITY_URL, { sectionPriorities }, { headers })
       .then(response => {
         if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
-          this.props.setProgress(4);
+          this.props.setProgress(PROGRESS.SENT_SECTIONS);
           Alert.alert(strings.selectionOK);
           this.props.navigation.goBack(null);
         }
@@ -285,11 +282,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLanguage, userInformation }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token } = userInformation;
-  return { theme, sections: sections.sections, language, token };
+  return { sections: sections.sections, language, token };
 };
 
 export default connect(mapStateToProps, { setSectionPriorities, setProgress })(ConfirmPage);
