@@ -75,9 +75,10 @@ class MyProfileScreen extends Component {
   }
 
   getRightIcon() {
+    const { rightIconStyle } = styles;
     return (
       <TouchableOpacity
-        style={{ width: 50, alignItems: 'center' }}
+        style={rightIconStyle}
         onPress={() => {
           if (this.state.editMode && this.state.changesMade) this.setState({ alertVisible: true });
           this.setState({ editMode: !this.state.editMode });
@@ -207,6 +208,11 @@ const styles = {
   },
   loading: {
     marginTop: HEIGHT / 3
+  },
+  rightIconStyle: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    width: 60
   }
 };
 const mapStateToProps = ({ currentLanguage, userInformation }) => {

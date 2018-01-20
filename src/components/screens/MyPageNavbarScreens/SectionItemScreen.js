@@ -46,11 +46,12 @@ class SectionItemScreen extends Component {
   }
 
   renderRightIcon(id, title) {
+    const { rightIconStyle } = styles;
     if (this.props.progress === PROGRESS.SENT_SECTIONS) return;
     if (!this.state.added) {
       return (
         <TouchableOpacity
-          style={{ padding: 1, backgroundColor: 'transparent' }}
+          style={rightIconStyle}
           onPress={() => {
             saveItem('sektion' + id, title);
             this.setState({ showToast: true, added: true });
@@ -62,7 +63,7 @@ class SectionItemScreen extends Component {
     }
     return (
       <TouchableOpacity
-        style={{ padding: 1, backgroundColor: 'transparent' }}
+        style={rightIconStyle}
         onPress={() => {
           removeItem('sektion' + id);
           this.setState({ showToast: true, added: false });
@@ -130,6 +131,12 @@ const styles = {
     fontFamily: 'Avenir Next Medium',
     backgroundColor: 'transparent',
     color: '#333'
+  },
+  rightIconStyle: {
+    alignItems: 'center',
+    padding: 1,
+    backgroundColor: 'transparent',
+    width: 60
   }
 };
 

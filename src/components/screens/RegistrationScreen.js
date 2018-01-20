@@ -221,7 +221,7 @@ class RegistrationScreen extends Component {
   render() {
     const strings = this.getStrings();
     const errorStrings = this.getErrorStrings();
-    const { flexHorizontal } = styles;
+    const { flexHorizontal, rightIconStyle } = styles;
     const {
       inputs,
       errors,
@@ -236,7 +236,7 @@ class RegistrationScreen extends Component {
     } = this.state;
 
     const closeButton = (
-      <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
+      <TouchableOpacity style={rightIconStyle} onPress={() => this.props.navigation.goBack(null)}>
         <MaterialCommunityIcons size={30} name="close" color={'white'} />
       </TouchableOpacity>
     );
@@ -582,6 +582,12 @@ const styles = {
     borderRadius: 3,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     borderWidth: 1
+  },
+  rightIconStyle: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    width: 60,
+    paddingRight: 0
   }
 };
 
