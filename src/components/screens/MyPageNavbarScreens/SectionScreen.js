@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  FlatList,
-  Dimensions,
-  Platform
-} from 'react-native';
+import { View, TouchableOpacity, FlatList, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import Header from '../../common/Header';
@@ -13,6 +7,7 @@ import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { dynamicSort } from '../../../helpers/functions';
+import Popover from '../../common/Popover';
 
 const height = Dimensions.get('window').height;
 
@@ -31,9 +26,7 @@ class SectionScreen extends Component {
     const { language } = this.props;
     const { fields } = SECTION_SCREEN_STRINGS;
     const strings = {};
-    fields.forEach(
-      field => (strings[field] = SECTION_SCREEN_STRINGS[field][language])
-    );
+    fields.forEach(field => (strings[field] = SECTION_SCREEN_STRINGS[field][language]));
     return strings;
   }
 
@@ -86,17 +79,13 @@ class SectionScreen extends Component {
             />
           )}
         />
+        <Popover type={'topRight'} text={strings.popoverText} />
       </View>
     );
   }
 }
 
-const mapStateToProps = ({
-  userInformation,
-  currentTheme,
-  sections,
-  currentLanguage
-}) => {
+const mapStateToProps = ({ userInformation, currentTheme, sections, currentLanguage }) => {
   const { theme } = currentTheme;
   const { language } = currentLanguage;
   const { progress } = userInformation;

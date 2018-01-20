@@ -9,7 +9,6 @@ import CountDown from '../../common/countDown/CountDown';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -35,6 +34,7 @@ class HomeScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={3} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
+        <Popover type={'bottomLeft'} text={strings.popoverText} big />
         <View style={container}>
           <CountDown />
           <CustomButton
@@ -43,7 +43,6 @@ class HomeScreen extends Component {
             text={strings.buttonText}
             onPress={() => navigation.navigate('Sections')}
           />
-          <Popover />
         </View>
       </View>
     );
@@ -51,15 +50,6 @@ class HomeScreen extends Component {
 }
 
 const styles = {
-  overlay: {
-    flex: 1,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    opacity: 0.85,
-    backgroundColor: 'black',
-    width: WIDTH
-  },
   container: {
     alignItems: 'center',
     width: WIDTH,

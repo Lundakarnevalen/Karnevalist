@@ -347,10 +347,14 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title'],
+  fields: ['title', 'popoverText'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
+  },
+  popoverText: {
+    SE: 'Här skickar du in dina val',
+    EN: 'Here you submit your choices'
   }
 };
 
@@ -363,7 +367,7 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: ['title', 'buttonText'],
+  fields: ['title', 'buttonText', 'popoverText'],
   title: {
     SE: 'Hem',
     EN: 'Home'
@@ -371,6 +375,10 @@ export const HOME_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Påbörja din registrering',
     EN: 'Begin your registration'
+  },
+  popoverText: {
+    SE: 'Här väljer du dina sektioner',
+    EN: 'Here you choose your sections'
   }
 };
 
