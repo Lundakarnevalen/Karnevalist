@@ -85,12 +85,22 @@ class ConfirmPage extends Component {
             saveFavoriteSections(nextOrder);
           }}
         />
-        <CustomButton
-          style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
-          text={strings.send}
-          width={WIDTH - 15}
-          onPress={() => this.onPressConfirmButton()}
-        />
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: WIDTH,
+            paddingLeft: 8,
+            borderTopWidth: 1,
+            borderColor: 'gray'
+          }}
+        >
+          <CustomButton
+            style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
+            text={strings.send}
+            width={WIDTH - 16}
+            onPress={() => this.onPressConfirmButton()}
+          />
+        </View>
       </View>
     );
   }
@@ -216,6 +226,7 @@ class ConfirmPage extends Component {
 
   updateData() {
     const data = {};
+    let order = [];
     const allSections = this.props.sections;
     getFavoriteSections(sections => {
       if (sections) {
@@ -224,14 +235,12 @@ class ConfirmPage extends Component {
           data[key] = {
             id: key,
             text: s.title,
-            infoText: s.info,
             imguri: s.imguri
           };
         });
-        this.setState({ data, order: sections });
-      } else {
-        this.setState({ data: {}, order: [] });
+        order = sections;
       }
+      this.setState({ data, order });
     });
   }
 
