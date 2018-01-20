@@ -337,6 +337,7 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.fifthInput.focus()}
             placeholder={strings.email}
             keyboardType="email-address"
+            autoCapitalize="none"
             onChangeText={text => {
               this.setState({ email: text, emailError: !this.isEmail(text) });
             }}
@@ -351,6 +352,7 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.sixthInput.focus()}
             placeholder={strings.confirmEmail}
             keyboardType="email-address"
+            autoCapitalize="none"
             onChangeText={text => {
               this.setState({ confirmedEmail: text, confirmedEmailError: text !== email });
             }}
@@ -468,6 +470,7 @@ class RegistrationScreen extends Component {
             }}
             value={foodPreferences}
             returnKeyType={'done'}
+            autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={foodPreferencesError}
             warningMessage={[errorStrings.errorMsgFoodPreference]}

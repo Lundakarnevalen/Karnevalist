@@ -133,6 +133,7 @@ class LoginScreen extends Component {
               value={email}
               keyboardType={'email-address'}
               placeholder={strings.email}
+              autoCapitalize="none"
               width={WIDTH}
               onChangeText={text => this.setState({ email: text })}
               returnKeyType={'next'}
