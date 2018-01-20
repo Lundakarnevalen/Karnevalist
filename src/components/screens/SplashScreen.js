@@ -153,8 +153,4 @@ const styles = {
   }
 };
 
-<<<<<<< HEAD
-export default connect(null, { setTheme, setSections, setToken, setEmail })(SplashScreen);
-=======
 export default connect(null, { setSections, setToken, setEmail })(SplashScreen);
->>>>>>> 3219536e4dc1c1b13e51f04c07da2601328f06c3
