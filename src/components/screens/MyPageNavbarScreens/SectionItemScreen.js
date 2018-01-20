@@ -61,7 +61,7 @@ class SectionItemScreen extends Component {
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
-          removeFavoriteSection(id);
+          removeFavoriteSection(id, () => {});
           this.props.navigation.state.params.setSectionStatus(false);
           this.setState({ showToast: true, favorite: false });
         }}

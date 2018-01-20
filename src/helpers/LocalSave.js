@@ -49,7 +49,7 @@ export function saveFavoriteSection(sectionId) {
   getFavoriteSections(sections => {
     if (sections) {
       sections.push(sectionId);
-      saveFavoriteSections(sections);
+      saveFavoriteSections(sections, () => {});
     }
   });
 }
