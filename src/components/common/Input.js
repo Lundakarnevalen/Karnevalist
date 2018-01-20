@@ -79,7 +79,7 @@ class Input extends Component {
       secureText,
       textInputStyle,
       autoCorrect = false,
-      autoCapitalize = 'words',
+      autoCapitalize = 'sentences',
       editable = true,
       keyboardType = 'default',
       extraContainerStyle,
