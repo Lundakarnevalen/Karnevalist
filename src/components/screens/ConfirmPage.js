@@ -178,7 +178,6 @@ class ConfirmPage extends Component {
 
   postSectionPriorities() {
     getFavoriteSections(sections => {
-      console.log(sections);
         const strings = this.getStrings();
         const headers = {
           Authorization: 'Bearer ' + this.props.token,
