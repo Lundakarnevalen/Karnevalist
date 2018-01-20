@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView, Text } from 'react-native';
+import { Alert, View, Dimensions, ScrollView, Text, Keyboard } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -68,6 +68,7 @@ class LoginScreen extends Component {
   }
 
   handleLogin() {
+    Keyboard.dismiss();
     const strings = this.getStrings();
     const { email, password } = this.state;
     if (email === '') {
