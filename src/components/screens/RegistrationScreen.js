@@ -130,8 +130,7 @@ class RegistrationScreen extends Component {
       studentUnion === 'Välj nation' ||
       studentUnion === 'Choose student union' ||
       studentUnion === ''
-    )
-      return true;
+    ) return true
     return false;
   }
 
