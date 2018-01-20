@@ -123,9 +123,12 @@ class ConfirmPage extends Component {
   }
 
   deleteRow(key) {
-    removeFavoriteSection(key);
+    removeFavoriteSection(key, result => {
+      if (result) {
+        this.updateData();
+      }
+    });
     this.props.navigation.state.params.setSectionStatus(key);
-    this.updateData();
   }
 
   renderRow(item) {

@@ -35,9 +35,13 @@ export function getItem(item, callback) {
   });
 }
 
-export function saveFavoriteSections(sections) {
+export function saveFavoriteSections(sections, callback) {
   AsyncStorage.setItem('sections', JSON.stringify(sections), error => {
-    if (error) console.error(error);
+    if (error) {
+      console.error(error);
+      return;
+    }
+    callback(true);
   });
 }
 
@@ -56,13 +60,17 @@ export function saveItem(item, value) {
   });
 }
 
-export function removeFavoriteSection(sectionId) {
+export function removeFavoriteSection(sectionId, callback) {
   getFavoriteSections(sections => {
     if (sections) {
       const index = getIndex(sections, sectionId);
       if (index !== -1) {
         sections.splice(index, 1);
-        saveFavoriteSections(sections);
+        saveFavoriteSections(sections, result => {
+          if (result) {
+            callback(true);
+          }
+        });
       }
     }
   });
