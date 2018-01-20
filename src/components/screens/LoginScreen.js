@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { setLanguage, setToken, setEmail } from '../../actions';
 import { Input, SuperAgileAlert, BackgroundImage, Toast, CustomButton } from '../common';
 import Loading from '../common/Loading';
+import { LOGIN_URL, FORGOT_PASSWORD_URL } from '../../helpers/Constants';
 import { saveItem } from '../../helpers/LocalSave';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
@@ -43,10 +44,9 @@ class LoginScreen extends Component {
   }
 
   handleResetPassword() {
-    const url = 'https://api.10av10.com/login/forgotpassword';
     const strings = this.getStrings();
     axios
-      .post(url, {
+      .post(FORGOT_PASSWORD_URL, {
         email: this.state.forgotPasswordEmail
       })
       .then(response => {
@@ -68,7 +68,6 @@ class LoginScreen extends Component {
   }
 
   handleLogin() {
-    const url = 'https://api.10av10.com/login/email';
     const strings = this.getStrings();
     const { email, password } = this.state;
     if (email === '') {
@@ -78,7 +77,7 @@ class LoginScreen extends Component {
     } else {
       this.setState({ loading: true, loadingComplete: false });
       axios
-        .post(url, {
+        .post(LOGIN_URL, {
           email,
           password
         })

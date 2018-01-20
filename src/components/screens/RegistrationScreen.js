@@ -24,6 +24,7 @@ import {
   BackgroundImage
 } from '../common';
 import Loading from '../common/Loading';
+import { REGISTER_URL } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { saveItem } from '../../helpers/LocalSave';
@@ -526,7 +527,7 @@ class RegistrationScreen extends Component {
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
-                  .post('https://api.10av10.com/register', {
+                  .post(REGISTER_URL, {
                     email,
                     password,
                     postNumber,

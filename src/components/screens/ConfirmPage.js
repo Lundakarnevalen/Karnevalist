@@ -7,6 +7,7 @@ import SortableList from 'react-native-sortable-list';
 import { Row, Header, BackgroundImage, CustomButton } from '../common';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
+import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import { setSectionPriorities, setProgress } from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
@@ -151,17 +152,16 @@ class ConfirmPage extends Component {
 
   postSectionPriorities(sectionPriorities) {
     const strings = this.getStrings();
-    const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
     };
     axios
-      .post(url, { sectionPriorities }, { headers })
+      .post(SECTION_PRIORITY_URL, { sectionPriorities }, { headers })
       .then(response => {
         if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
-          this.props.setProgress(4);
+          this.props.setProgress(PROGRESS.SENT_SECTIONS);
           Alert.alert(strings.selectionOK);
           this.props.navigation.goBack(null);
         }
