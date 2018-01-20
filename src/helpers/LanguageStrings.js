@@ -116,11 +116,16 @@ export const LOGIN_SCREEN_STRINGS = {
     'cancel',
     'resetPassword',
     'responseFail',
-    'responseSuccess'
+    'responseSuccess',
+    'resetPasswordComplete'
   ],
   email: {
     SE: 'Email Adress',
     EN: 'Email Address'
+  },
+  resetPasswordComplete: {
+    SE: 'Ett email har skickats med information om hur du byter lösenord.',
+    EN: 'An email has been send with information about how to reset your password.'
   },
   password,
   loginButton: {

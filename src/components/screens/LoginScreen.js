@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView } from 'react-native';
+import { Alert, View, Dimensions, ScrollView, Text } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -9,6 +9,7 @@ import Input from '../common/Input';
 import SuperAgileAlert from '../common/SuperAgileAlert';
 import BackgroundImage from '../common/BackgroundImage';
 import Loading from '../common/Loading';
+import Toast from '../common/Toast';
 import { saveItem } from '../../helpers/LocalSave';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
@@ -25,7 +26,9 @@ class LoginScreen extends Component {
       password: '',
       loading: false,
       loadingComplete: false,
-      forgotPasswordEmail: ''
+      forgotPasswordEmail: '',
+      resetPasswordError: ' ',
+      showToast: false
     };
   }
 
@@ -52,16 +55,20 @@ class LoginScreen extends Component {
       })
       .then(response => {
         if (!response.data.success) {
-          Alert.alert(strings.responseFail);
+          this.setState({ resetPasswordError: strings.responseFail });
         } else {
-          Alert.alert(strings.responseSuccess);
+          this.setState({
+            alertVisible: false,
+            forgotPasswordEmail: '',
+            resetPasswordError: ' ',
+            showToast: true
+          });
         }
       })
       .catch(error => {
         const msg = handleErrorMsg(error.message, strings);
-        Alert.alert(strings.error, msg);
+        this.setState({ resetPasswordError: msg });
       });
-    this.setState({ alertVisible: false, forgotPasswordEmail: '' });
   }
 
   handleLogin() {
@@ -96,14 +103,15 @@ class LoginScreen extends Component {
   }
 
   render() {
-    const { containerStyle, container1 } = styles;
+    const { containerStyle, container1, errorTextStyle } = styles;
     const {
       email,
       password,
       loading,
       loadingComplete,
       forgotPasswordEmail,
-      alertVisible
+      alertVisible,
+      resetPasswordError
     } = this.state;
     const strings = this.getStrings();
     return (
@@ -170,23 +178,40 @@ class LoginScreen extends Component {
               alertVisible={alertVisible}
               setAlertVisible={visible => this.setState({ alertVisible: visible })}
               buttonsIn={[
-                { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+                {
+                  text: strings.cancel,
+                  onPress: () =>
+                    this.setState({
+                      alertVisible: false,
+                      resetPasswordError: ' ',
+                      forgotPasswordEmail: ''
+                    })
+                },
                 { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
               ]}
               header={strings.passwordPopupHeader}
               info={strings.passwordPopupInfo}
             >
               <Input
-                placeholder={strings.inputPlaceholder}
-                title={strings.inputTitle}
+                placeholder={strings.email}
                 width={Dimensions.get('window').width / 1.2}
-                underlineColorAndroid="transparent"
-                onChangeText={text => this.setState({ forgotPasswordEmail: text })}
+                underlineColorAndroid={'transparent'}
+                onChangeText={text =>
+                  this.setState({ forgotPasswordEmail: text, resetPasswordError: ' ' })
+                }
                 value={forgotPasswordEmail}
+                returnKeyType={'done'}
+                onSubmitEditing={() => this.handleResetPassword()}
               />
+              <Text style={errorTextStyle}>{resetPasswordError}</Text>
             </SuperAgileAlert>
           </View>
         </ScrollView>
+        <Toast
+          showToast={this.state.showToast}
+          onClose={() => this.setState({ showToast: false })}
+          message={strings.resetPasswordComplete}
+        />
         {loading ? (
           <Loading
             loadingComplete={loadingComplete}
@@ -230,6 +255,11 @@ const styles = {
   containerStyle: {
     width: Dimensions.get('window').width,
     height: HEIGHT
+  },
+  errorTextStyle: {
+    textAlign: 'center',
+    fontFamily: 'Avenir Next Medium',
+    color: 'red'
   }
 };
 

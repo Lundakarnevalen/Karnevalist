@@ -191,7 +191,6 @@ class MyProfileScreen extends Component {
         />
         <SuperAgileAlert
           alertVisible={alertVisible}
-          boxStyle={{ height: 150 }}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
           buttonsIn={[
             {
