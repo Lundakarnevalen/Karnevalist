@@ -178,33 +178,33 @@ class ConfirmPage extends Component {
 
   postSectionPriorities() {
     getFavoriteSections(sections => {
-        const strings = this.getStrings();
-        const headers = {
-          Authorization: 'Bearer ' + this.props.token,
-          'content-type': 'application/json'
-        };
-        axios
-          .post(SECTION_PRIORITY_URL, { sectionPriorities: sections }, { headers })
-          .then(response => {
-            if (response.data.success) {
-              this.props.setProgress(PROGRESS.SENT_SECTIONS);
-              this.props.setSectionPriorities(sections)
-              this.setState({
-                message: strings.selectionOK,
-                alertHeader: strings.alertSuccessHeader
-               })
-            }
-          })
-          .catch(error => {
-            if (error.response.status === 401)
-              logout(
-                this.props.navigation,
-                true,
-                strings.expiredTokenTitle,
-                strings.expiredTokenMessage
-              );
-            console.log(error);
-        });
+      const strings = this.getStrings();
+      const headers = {
+        Authorization: 'Bearer ' + this.props.token,
+        'content-type': 'application/json'
+      };
+      axios
+        .post(SECTION_PRIORITY_URL, { sectionPriorities: sections }, { headers })
+        .then(response => {
+          if (response.data.success) {
+            this.props.setProgress(PROGRESS.SENT_SECTIONS);
+            this.props.setSectionPriorities(sections)
+            this.setState({
+              message: strings.selectionOK,
+              alertHeader: strings.alertSuccessHeader
+             })
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 401)
+            logout(
+              this.props.navigation,
+              true,
+              strings.expiredTokenTitle,
+              strings.expiredTokenMessage
+            );
+          console.log(error);
+      });
     })
   }
 
