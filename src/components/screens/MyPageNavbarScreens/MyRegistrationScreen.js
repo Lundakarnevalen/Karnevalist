@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { BackHandler, View, FlatList, Platform, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import Header from '../../common/Header';
-import SectionListItem from '../../common/SectionListItem';
-import BackgroundImage from '../../common/BackgroundImage';
+import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;

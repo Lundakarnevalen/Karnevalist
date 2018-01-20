@@ -11,8 +11,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Constants } from 'expo';
-import Header from '../../common/Header';
-import Toast from '../../common/Toast';
+import { Header, Toast } from '../../common';
 import { saveItem, removeItem, getItem } from '../../../helpers/LocalSave';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 

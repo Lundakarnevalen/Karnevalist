@@ -158,4 +158,4 @@ const styles = {
   }
 };
 
-export default CustomButton;
+export { CustomButton };

@@ -15,12 +15,14 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setToken, setEmail } from '../../actions';
-import Header from '../common/Header';
-import Input from '../common/Input';
-import DKPicker from '../common/DKPicker';
-import CustomButton from '../common/CustomButton';
-import ButtonChoiceManager from '../common/ButtonChoiceManager';
-import BackgroundImage from '../common/BackgroundImage';
+import {
+  Header,
+  Input,
+  DKPicker,
+  CustomButton,
+  ButtonChoiceManager,
+  BackgroundImage
+} from '../common';
 import Loading from '../common/Loading';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';

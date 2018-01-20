@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Picker, Dimensions, Animated } from 'react-native';
-import CustomButton from '../common/CustomButton';
+import { CustomButton } from '../common';
 
 const width = Dimensions.get('window').width;
 
@@ -59,4 +59,4 @@ const styles = {
   }
 };
 
-export default DKPicker;
+export { DKPicker };

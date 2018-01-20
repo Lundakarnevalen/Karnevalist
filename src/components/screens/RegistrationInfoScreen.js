@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import CustomButton from '../common/CustomButton';
-import Header from '../common/Header';
-import ExpandeblePanel from '../common/ExpandeblePanel';
-import BackgroundImage from '../common/BackgroundImage';
+import { CustomButton, Header, ExpandeblePanel, BackgroundImage } from '../common';
 import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;

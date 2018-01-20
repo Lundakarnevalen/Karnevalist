@@ -4,13 +4,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
-import Row from '../common/Row';
-import Header from '../common/Header';
+import { Row, Header, BackgroundImage, CustomButton } from '../common';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
-import BackgroundImage from '../common/BackgroundImage';
 import { setSectionPriorities, setProgress } from '../../actions';
-import CustomButton from '../common/CustomButton';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
 const window = Dimensions.get('window');

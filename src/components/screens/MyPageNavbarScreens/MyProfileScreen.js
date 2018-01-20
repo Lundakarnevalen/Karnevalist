@@ -10,11 +10,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import Toast from '../../common/Toast';
-import BackgroundImage from '../../common/BackgroundImage';
-import SuperAgileAlert from '../../common/SuperAgileAlert';
-import Header from '../../common/Header';
-import Input from '../../common/Input';
+import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
 import { logout } from '../../../helpers/functions';
 import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../../helpers/ApiManager';

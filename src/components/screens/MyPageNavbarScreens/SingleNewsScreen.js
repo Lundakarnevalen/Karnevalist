@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, WebView, Dimensions, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
-import Header from '../../common/Header';
+import { Header } from '../../common';
 
 class NewsScreen extends Component {
   componentWillMount() {

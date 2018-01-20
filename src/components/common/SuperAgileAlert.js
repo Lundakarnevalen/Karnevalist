@@ -119,4 +119,4 @@ const styles = {
   }
 };
 
-export default SuperAgileAlert;
+export { SuperAgileAlert };

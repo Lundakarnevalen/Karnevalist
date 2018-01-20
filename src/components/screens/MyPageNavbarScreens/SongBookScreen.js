@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import Header from '../../common/Header';
-import BackgroundImage from '../../common/BackgroundImage';
+import { Header, BackgroundImage } from '../../common';
 import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;

@@ -3,13 +3,9 @@ import { Alert, View, Dimensions, ScrollView, Text } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import CustomButton from '../common/CustomButton';
 import { setLanguage, setToken, setEmail } from '../../actions';
-import Input from '../common/Input';
-import SuperAgileAlert from '../common/SuperAgileAlert';
-import BackgroundImage from '../common/BackgroundImage';
+import { Input, SuperAgileAlert, BackgroundImage, Toast, CustomButton } from '../common';
 import Loading from '../common/Loading';
-import Toast from '../common/Toast';
 import { saveItem } from '../../helpers/LocalSave';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
@@ -117,9 +113,7 @@ class LoginScreen extends Component {
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
-        <ScrollView
-          keyboardShouldPersistTaps='handled'
-        >
+        <ScrollView keyboardShouldPersistTaps="handled">
           <View style={container1}>
             <View style={{ alignSelf: 'flex-start' }}>
               <CustomButton

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-class HomeScreenTimeLine extends Component {
+class HomeScreenTimeline extends Component {
   getIconColor(nbr) {
     if (nbr < this.props.timelineProgress) {
       return 'black';
@@ -119,4 +119,4 @@ const styles = {
   }
 };
 
-export default HomeScreenTimeLine;
+export { HomeScreenTimeline };

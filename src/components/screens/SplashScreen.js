@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { getItem } from '../../helpers/LocalSave';
-import BackgroundImage from '../common/BackgroundImage';
+import { BackgroundImage } from '../common';
 import { setSections, setToken, setEmail } from '../../actions';
 
 const baseURL = 'https://api.10av10.com/api/hello/';
