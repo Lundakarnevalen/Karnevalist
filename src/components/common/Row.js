@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Animated, Easing, Text, Image, Platform, Dimensions, View } from 'react-native';
+import {
+  Animated,
+  Easing,
+  Text,
+  Image,
+  Platform,
+  Dimensions,
+  View,
+  TouchableOpacity
+} from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 
 const window = Dimensions.get('window');
@@ -52,15 +61,11 @@ class Row extends Component {
     }
   }
 
-  getColor() {
-    return '#F7A021';
-  }
-
   getInfoTextStyle() {
     return {
       fontSize: 14,
       fontFamily: 'Avenir Next Bold',
-      color: this.getColor(),
+      color: '#F7A021',
       left: 0
     };
   }
@@ -76,7 +81,7 @@ class Row extends Component {
           width: window.width - 16
         }}
       >
-        <Text style={[indexStyle, { color: this.getColor() }]}>{this.props.index}</Text>
+        <Text style={[indexStyle, { color: '#F7A021' }]}>{this.props.index}</Text>
         {<Image source={{ uri: data.imguri }} style={image} />}
         <View
           style={{
@@ -96,21 +101,18 @@ class Row extends Component {
     const { iconName } = this.props;
     if (iconName === 'trash') {
       return (
-        <EvilIcons
-          name={iconName}
-          style={[iconStyle, { color: this.getColor() }]}
-          onPress={() => this.props.deleteRow()}
-          size={35}
-        />
+        <TouchableOpacity style={iconStyle} onPress={() => this.props.deleteRow()}>
+          <EvilIcons name={iconName} style={{ color: '#F7A021' }} size={35} />
+        </TouchableOpacity>
       );
     }
-    return <EvilIcons name={iconName} style={[iconStyle, { color: this.getColor() }]} size={35} />;
+    return <EvilIcons name={iconName} style={[iconStyle, { color: '#F7A021' }]} size={35} />;
   }
 
   render() {
     const { data } = this.props;
     return (
-      <Animated.View style={[styles.row, this._style, { borderColor: this.getColor() }]}>
+      <Animated.View style={[styles.row, this._style, { borderColor: '#F7A021' }]}>
         <View
           style={{
             flexDirection: 'column',
