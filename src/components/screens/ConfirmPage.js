@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
-import { Row, Header, BackgroundImage, CustomButton } from '../common';
+import { Row, Header, BackgroundImage, CustomButton, SuperAgileAlert } from '../common';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
 import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
@@ -140,7 +140,11 @@ class ConfirmPage extends Component {
   onPressConfirmButton() {
     const { data, strings, order } = this.state;
     if (data.length < 5) {
-      Alert.alert(strings.sectionSelection);
+      this.setState({
+        alertVisible: true,
+        message: strings.sectionSelection,
+        alertHeader: strings.alertErrorHeader
+       })
     } else {
       const sectionPriorities = order.map(i => {
         const index = data.findIndex(d => d.id + '' === i + '');
@@ -162,10 +166,12 @@ class ConfirmPage extends Component {
         if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
           this.props.setProgress(PROGRESS.SENT_SECTIONS);
-          Alert.alert(strings.selectionOK);
-          this.props.navigation.goBack(null);
+          this.setState({
+            alertVisible: true,
+            message: strings.selectionOK,
+            alertHeader: strings.alertSuccessHeader
+           })
         }
-        //TODO TOAST??
       })
       .catch(error => {
         if (error.response.status === 401)
@@ -212,6 +218,20 @@ class ConfirmPage extends Component {
           rightIcon={this.getRightIcon()}
         />
         {this.renderSortableListOrMessage()}
+        <SuperAgileAlert
+          alertVisible={this.state.alertVisible}
+          setAlertVisible={visible => this.setState({ alertVisible: visible })}
+          buttonsIn={[
+            { text: strings.ok,
+              onPress: () => {
+              this.setState({ alertVisible: false })
+              this.props.navigation.goBack(null);
+            }
+           }
+          ]}
+          header={this.state.alertHeader || ''}
+          info={this.state.message || ''}
+        />
       </View>
     );
   }

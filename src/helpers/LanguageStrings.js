@@ -431,7 +431,11 @@ export const CONFIRM_PAGE_STRINGS = {
     'send',
     'toSections',
     'expiredTokenTitle',
-    'expiredTokenMessage'
+    'expiredTokenMessage',
+    'alertErrorHeader',
+    'alertSuccessHeader',
+    'ok'
+
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -454,7 +458,19 @@ export const CONFIRM_PAGE_STRINGS = {
     EN: 'To section selection'
   },
   expiredTokenTitle,
-  expiredTokenMessage
+  expiredTokenMessage,
+  alertErrorHeader: {
+    SE: 'Fel',
+    EN: 'Error'
+  },
+  alertSuccessHeader: {
+    SE: 'WEHEJ',
+    EN: 'WEHEJ'
+  },
+  ok: {
+    SE: 'OK',
+    EN: 'OK'
+  }
 };
 
 export const MY_PROFILE_SCREEN_STRINGS = {
