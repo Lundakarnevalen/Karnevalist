@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
 import { getItem } from '../../helpers/LocalSave';
 import { TOKEN_URL, SECTION_URL, IMAGE_URL } from '../../helpers/Constants';
 import BackgroundImage from '../common/BackgroundImage';
@@ -76,6 +77,11 @@ class SplashScreen extends Component {
   }
 
   authorize() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
+      key: null
+    });
     setTimeout(
       () =>
         getItem('email', email => {
@@ -90,18 +96,21 @@ class SplashScreen extends Component {
                 .then(response => {
                   const { success } = response.data;
                   if (success) {
-                    this.props.navigation.navigate('MyPageNavbarScreen');
+                    resetAction.actions = [
+                      NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
+                    ];
                     this.props.setToken(token);
                     this.props.setEmail(email);
-                  } else this.props.navigation.navigate('LoginScreen');
+                    this.props.navigation.dispatch(resetAction);
+                  } else this.props.navigation.dispatch(resetAction);
                 })
                 .catch(error => {
-                  this.props.navigation.navigate('LoginScreen');
                   console.log(error.message);
+                  this.props.navigation.dispatch(resetAction);
                 });
             });
           } else {
-            this.props.navigation.navigate('LoginScreen');
+            this.props.navigation.dispatch(resetAction);
           }
         }),
       2000
