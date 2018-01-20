@@ -37,26 +37,17 @@ class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputs: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
+      inputs: ['', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
-      firstNameError: false,
-      lastNameError: false,
-      emailError: false,
-      confirmedEmailError: false,
-      passwordError: false,
-      confirmedPasswordError: false,
-      socialSecurityNbrError: false,
-      postNumberError: false,
-      cityError: false,
-      phoneNbrError: false,
-      foodPreferencesError: false,
+      foodPreferences: '',
+      errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showStudentUnionPicker: false,
+      foodPreferencesError: false,
       loading: false,
       loadingComplete: false,
-      keyboardHeight: 0,
-      listToTrim: []
+      keyboardHeight: 0
     };
   }
 
@@ -132,38 +123,23 @@ class RegistrationScreen extends Component {
   }
 
   anyEmpty() {
-    const {
-      firstName,
-      lastName,
-      email,
-      confirmedEmail,
-      address,
-      postNumber,
-      city,
-      phoneNbr,
-      password,
-      confirmedPassword,
-      socialSecurityNumber,
-      studentUnion,
-      shirtSize
-    } = this.state;
-    return (
-      firstName === '' ||
-      lastName === '' ||
-      email === '' ||
-      confirmedEmail === '' ||
-      address === '' ||
-      postNumber === '' ||
-      city === '' ||
-      phoneNbr === '' ||
-      password === '' ||
-      confirmedPassword === '' ||
-      socialSecurityNumber === '' ||
-      shirtSize === '' ||
-      studentUnion === '' ||
+    const { inputs, studentUnion, shirtSize } = this.state;
+    if (
+      inputs.indexOf('') !== -1 ||
       shirtSize === 'Välj tröjstorlek' ||
-      studentUnion === 'Välj nation'
-    );
+      shirtSize === 'Choose shirt size' ||
+      shirtSize === '' ||
+      studentUnion === 'Välj nation' ||
+      studentUnion === 'Choose student union' ||
+      studentUnion === ''
+    ) return true
+    return false;
+  }
+
+  anyErrors() {
+    const { errors, foodPreferencesError, foodPreferences } = this.state;
+    return (errors.indexOf(true) !== -1 ||
+    (foodPreferencesError && foodPreferences !== ''))
   }
 
   trimValues() {
@@ -248,20 +224,12 @@ class RegistrationScreen extends Component {
     const { flexHorizontal, rightIconStyle } = styles;
     const {
       inputs,
+      errors,
+      foodPreferences,
+      foodPreferencesError,
       loading,
       loadingComplete,
       shirtSize,
-      firstNameError,
-      lastNameError,
-      emailError,
-      confirmedEmailError,
-      passwordError,
-      confirmedPasswordError,
-      socialSecurityNbrError,
-      postNumberError,
-      cityError,
-      phoneNbrError,
-      foodPreferencesError,
       showShirtPicker,
       studentUnion,
       showStudentUnionPicker
@@ -287,14 +255,15 @@ class RegistrationScreen extends Component {
             placeholder={strings.firstName}
             onChangeText={text => {
               inputs[0] = text;
-              this.setState({ inputs, firstNameError: !this.containsOnlyLetters(text) });
+              errors[0] = !this.containsOnlyLetters(text);
+              this.setState({ inputs, errors });
             }}
             value={inputs[0]}
             onSubmitEditing={() => this.refs.secondInput.focus()}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             autoFocus
-            hasError={firstNameError}
+            hasError={errors[0]}
             warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
@@ -303,12 +272,13 @@ class RegistrationScreen extends Component {
             placeholder={strings.lastName}
             onChangeText={text => {
               inputs[1] = text;
-              this.setState({ inputs, lastNameError: !this.containsOnlyLetters(text) });
+              errors[1] = !this.containsOnlyLetters(text);
+              this.setState({ inputs, errors });
             }}
             value={inputs[1]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={lastNameError}
+            hasError={errors[1]}
             warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
@@ -317,15 +287,13 @@ class RegistrationScreen extends Component {
             placeholder={strings.socialSecurityNumber}
             onChangeText={text => {
               inputs[2] = text;
-              this.setState({
-                inputs,
-                socialSecurityNbrError: !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text))
-              });
+              errors[2] = !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text));
+              this.setState({ inputs, errors });
             }}
             value={inputs[2]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={socialSecurityNbrError}
+            hasError={errors[2]}
             warningMessage={errorStrings.errorMsgSocialSecurity}
           />
           <Input
@@ -336,16 +304,17 @@ class RegistrationScreen extends Component {
             autoCapitalize="none"
             onChangeText={text => {
               inputs[3] = text;
+              errors[3] = !this.isEmail(text);
+              errors[4] = text !== inputs[4];
               this.setState({
                 inputs,
-                emailError: !this.isEmail(text),
-                confirmedEmailError: text !== inputs[4]
+                errors
               });
             }}
             value={inputs[3]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={emailError}
+            hasError={errors[3]}
             warningMessage={errorStrings.errorMsgInvalidEmail}
           />
           <Input
@@ -356,12 +325,13 @@ class RegistrationScreen extends Component {
             autoCapitalize="none"
             onChangeText={text => {
               inputs[4] = text;
-              this.setState({ inputs, confirmedEmailError: text !== inputs[3] });
+              errors[4] = text !== inputs[3];
+              this.setState({ inputs, errors });
             }}
             value={inputs[4]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={confirmedEmailError}
+            hasError={errors[4]}
             warningMessage={errorStrings.errorMsgNoMatchEmail}
           />
           <Input
@@ -370,13 +340,15 @@ class RegistrationScreen extends Component {
             placeholder={strings.password}
             onChangeText={text => {
               inputs[5] = text;
-              this.setState({ inputs, passwordError: text.length < 5 });
+              errors[5] = text.length < 5;
+              errors[6] = text !== inputs[6];
+              this.setState({ inputs, errors });
             }}
             value={inputs[5]}
+            hasError={errors[5]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             secureText
-            hasError={passwordError}
             warningMessage={errorStrings.errorMsgPwd}
           />
           <Input
@@ -385,13 +357,14 @@ class RegistrationScreen extends Component {
             placeholder={strings.confirmPassword}
             onChangeText={text => {
               inputs[6] = text;
-              this.setState({ inputs, confirmedPasswordError: text !== inputs[5] });
+              errors[6] = text !== inputs[5];
+              this.setState({ inputs, errors });
             }}
             value={inputs[6]}
+            hasError={errors[6]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             secureText
-            hasError={confirmedPasswordError}
             warningMessage={errorStrings.errorMsgNoMatchPassword}
           />
           <Input
@@ -420,9 +393,10 @@ class RegistrationScreen extends Component {
               keyboardType="numeric"
               onChangeText={text => {
                 inputs[8] = text;
+                errors[8] = text.length !== 5 || !this.containsOnlyDigits(text);
                 this.setState({
                   inputs,
-                  postNumberError: text.length !== 5 || !this.containsOnlyDigits(text)
+                  errors
                 });
               }}
               width={WIDTH / 2 - 4}
@@ -430,7 +404,7 @@ class RegistrationScreen extends Component {
               value={inputs[8]}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
-              hasError={postNumberError}
+              hasError={errors[8]}
               warningMessage={errorStrings.errorMsgZipCode}
             />
             <Input
@@ -439,13 +413,14 @@ class RegistrationScreen extends Component {
               placeholder={strings.city}
               onChangeText={text => {
                 inputs[9] = text;
-                this.setState({ inputs, cityError: !this.containsOnlyLetters(text) });
+                errors[9] = !this.containsOnlyLetters(text);
+                this.setState({ inputs, errors });
               }}
               width={WIDTH / 2 - 4}
               value={inputs[9]}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
-              hasError={cityError}
+              hasError={errors[9]}
               warningMessage={errorStrings.errorMsgCity}
             />
           </View>
@@ -456,28 +431,28 @@ class RegistrationScreen extends Component {
             keyboardType="phone-pad"
             onChangeText={text => {
               inputs[10] = text;
+              errors[10] = !this.isValidPhoneNbr(text);
               this.setState({
                 inputs,
-                phoneNbrError: !this.isValidPhoneNbr(text)
+                errors
               });
             }}
             value={inputs[10]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={phoneNbrError}
+            hasError={errors[10]}
             warningMessage={errorStrings.errorMsgPhoneNbr}
           />
           <Input
             ref={'twelthInput'}
             placeholder={strings.foodPreferences}
             onChangeText={text => {
-              inputs[11] = text;
               this.setState({
-                inputs,
+                foodPreferences: text,
                 foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
               });
             }}
-            value={inputs[11]}
+            value={foodPreferences}
             returnKeyType={'done'}
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
@@ -516,20 +491,9 @@ class RegistrationScreen extends Component {
             width={WIDTH}
             onPress={() => {
               this.trimValues();
-              if (
-                firstNameError ||
-                lastNameError ||
-                emailError ||
-                confirmedEmailError ||
-                passwordError ||
-                confirmedPasswordError ||
-                socialSecurityNbrError ||
-                postNumberError ||
-                cityError ||
-                phoneNbrError ||
-                foodPreferencesError ||
-                this.anyEmpty()
-              ) {
+              if (this.anyEmpty()) {
+                Alert.alert(errorStrings.errorMsgAnyEmpty);
+              } else if (this.anyErrors()) {
                 Alert.alert(errorStrings.errorMsgWrongInput);
               } else {
                 this.setState({ loadingComplete: false, loading: true });
@@ -544,7 +508,7 @@ class RegistrationScreen extends Component {
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],
-                    foodPreferences: inputs[11]
+                    foodPreferences
                   })
                   .then(response => {
                     const { accessToken } = response.data;
