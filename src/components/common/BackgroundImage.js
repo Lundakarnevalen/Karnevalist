@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, View } from 'react-native';
-import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -8,12 +7,6 @@ const HEIGHT = Dimensions.get('window').height;
 class BackgroundImage extends Component {
   getPath() {
     const { pictureNumber = 0 } = this.props;
-    /*
-    TODO: Bug in current version of react native doesn't allow us to do this solution atm.
-          When we update, we should do this solution instead of the long ugly one beneath.
-    const imagePath = '../../../assets/images/' + theme + pictureNumber + '1.png';
-    */
-
     switch (pictureNumber) {
       case 1:
         return require('../../../assets/images/night1.png');
@@ -66,9 +59,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(BackgroundImage);
+export default BackgroundImage;

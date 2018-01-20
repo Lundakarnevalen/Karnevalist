@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Animated, Easing, Text, Image, Platform, Dimensions, View } from 'react-native';
-import { connect } from 'react-redux';
 import { EvilIcons } from '@expo/vector-icons';
 
 const window = Dimensions.get('window');
@@ -162,9 +161,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(Row);
+export default Row;

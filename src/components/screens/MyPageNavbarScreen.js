@@ -18,7 +18,6 @@ import {
   SONGBOOK_SCREEN_STRINGS
 } from '../../helpers/LanguageStrings';
 
-const THEME_COLOR = '#F7A021';
 const SIZE = 30;
 
 class MyPageNavbarScreen extends Component {
@@ -65,11 +64,7 @@ const TabNav = TabNavigator(
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="star"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
+          <MaterialIcons name="star" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     },
@@ -78,11 +73,7 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="local-library"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
+          <MaterialIcons name="local-library" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     },
@@ -91,11 +82,7 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="home"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
+          <MaterialIcons name="home" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     },
@@ -104,11 +91,7 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="speaker-notes"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
+          <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     },
@@ -132,7 +115,7 @@ const TabNav = TabNavigator(
     initialRouteName: 'Home',
     tabBarOptions: {
       showIcon: true,
-      activeTintColor: THEME_COLOR,
+      activeTintColor: '#F7A021',
       inactiveTintColor: '#A9A9A9',
       labelStyle: {
         fontSize: 10,
@@ -147,7 +130,7 @@ const TabNav = TabNavigator(
         backgroundColor: '#ffffff'
       },
       indicatorStyle: {
-        backgroundColor: THEME_COLOR
+        backgroundColor: '#F7A021'
       }
     }
   }

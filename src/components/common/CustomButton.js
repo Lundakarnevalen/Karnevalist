@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
-import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width;
@@ -159,9 +158,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(CustomButton);
+export default CustomButton;

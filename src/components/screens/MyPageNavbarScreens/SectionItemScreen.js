@@ -130,11 +130,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ userInformation, currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { language } = currentLanguage;
   const { progress } = userInformation;
-  return { theme, language, progress };
+  return { language, progress };
 };
 
 export default connect(mapStateToProps, null)(SectionItemScreen);

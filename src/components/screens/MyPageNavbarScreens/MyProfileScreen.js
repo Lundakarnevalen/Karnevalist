@@ -213,11 +213,10 @@ const styles = {
     marginTop: HEIGHT / 3
   }
 };
-const mapStateToProps = ({ currentTheme, currentLanguage, userInformation }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token, email } = userInformation;
-  return { theme, language, token, email };
+  return { language, token, email };
 };
 
 export default connect(mapStateToProps, null)(MyProfileScreen);
