@@ -17,7 +17,7 @@ import { saveItem, removeItem, getItem } from '../../../helpers/LocalSave';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
-
+const WIDTH = Dimensions.get('window').width;
 class SectionItemScreen extends Component {
   componentWillMount() {
     const { id } = this.props.navigation.state.params;
@@ -84,37 +84,39 @@ class SectionItemScreen extends Component {
   render() {
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
-    const { container, scrollStyle, headerStyle, textStyle } = styles;
+    const { containerStyle, headerStyle, textStyle } = styles;
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={containerStyle}>
         <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id, title)} />
-        <View>
-          <ScrollView style={scrollStyle}>
-            <View style={container}>{image}</View>
-            <View style={{ height: 10, backgroundColor: 'white' }} />
-            <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
-            <Text style={textStyle}>{description}</Text>
-          </ScrollView>
+        <ScrollView>
+          {image}
+          <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
+          <Text style={textStyle}>{description}</Text>
           <Toast
             showToast={this.state.showToast}
             onClose={() => this.setState({ showToast: false })}
             message={this.renderToastMessage(title)}
           />
-        </View>
+        </ScrollView>
       </View>
     );
   }
 }
 
 const styles = {
-  container: {
+  containerStyle: {
+    height: HEIGHT,
+    width: WIDTH,
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  imageStyle: {
     marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    width: Dimensions.get('window').width
-  },
-  scrollStyle: {
-    maxHeight: Platform.OS === 'ios' ? HEIGHT : HEIGHT - Constants.statusBarHeight
+    width: WIDTH - 5,
+    height: WIDTH - 5,
+    resizeMode: 'contain'
   },
   headerStyle: {
     fontSize: 26,
@@ -127,7 +129,7 @@ const styles = {
     margin: 10,
     fontFamily: 'Avenir Next Medium',
     backgroundColor: 'transparent',
-    paddingBottom: 40
+    color: '#333'
   }
 };
 
