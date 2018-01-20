@@ -5,6 +5,7 @@ import Header from '../../common/Header';
 import SectionListItem from '../../common/SectionListItem';
 import BackgroundImage from '../../common/BackgroundImage';
 import { logout } from '../../../helpers/functions';
+import { setProgress } from '../../../actions';
 import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const height = Dimensions.get('window').height;
@@ -50,6 +51,7 @@ class ProfileScreen extends Component {
                 } else if (rowData.key === 'registration') {
                   screenProps.navigation.navigate('MyRegistration', { info: rowData });
                 } else if (rowData.key === 'logout') {
+                  this.props.setProgress(0);
                   logout(screenProps.navigation);
                 }
               }}
@@ -66,4 +68,4 @@ const mapStateToProps = ({ currentTheme, currentLanguage }) => {
   return { theme, language };
 };
 
-export default connect(mapStateToProps, null)(ProfileScreen);
+export default connect(mapStateToProps, { setProgress })(ProfileScreen);
