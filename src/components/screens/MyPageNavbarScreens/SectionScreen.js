@@ -56,7 +56,16 @@ class SectionScreen extends Component {
         style={rightIconStyle}
         onPress={() =>
           screenProps.navigation.navigate('ConfirmPage', {
-            navigation
+            navigation,
+            setSectionStatus: id => {
+              let tmpData = this.state.data;
+              const tmpItem = tmpData.filter(section => section.id + '' === id + '')[0];
+              tmpData = tmpData.filter(section => section.id + '' !== id + '');
+              delete tmpItem.favorite;
+              tmpData.push(tmpItem);
+              tmpData.sort(dynamicSort('title'));
+              this.setState({ data: tmpData });
+            }
           })
         }
       >
