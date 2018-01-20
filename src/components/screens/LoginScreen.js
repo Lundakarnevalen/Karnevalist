@@ -1,112 +1,217 @@
 import React, { Component } from 'react';
-import { Image, Text, View, Dimensions } from 'react-native';
+import { Alert, View, Dimensions, ScrollView } from 'react-native';
+import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
+import { setLanguage, setToken, setEmail } from '../../actions';
 import Input from '../common/Input';
+import SuperAgileAlert from '../common/SuperAgileAlert';
+import BackgroundImage from '../common/BackgroundImage';
+import Loading from '../common/Loading';
+import { saveItem } from '../../helpers/LocalSave';
+import { handleErrorMsg } from '../../helpers/ApiManager';
+import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width * 0.9;
+const HEIGHT = Dimensions.get('window').height;
 
-class HomeScreen extends Component {
-
+class LoginScreen extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       alertVisible: false,
-      socSecNbr: '',
-      password: ''
+      email: '',
+      password: '',
+      loading: false,
+      loadingComplete: false,
+      forgotPasswordEmail: ''
+    };
+  }
+
+  getStrings() {
+    const { language } = this.props;
+    const { fields } = LOGIN_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = LOGIN_SCREEN_STRINGS[field][language]));
+    return strings;
+  }
+
+  changeLang() {
+    const language = this.props.language === 'SE' ? 'EN' : 'SE';
+    this.props.setLanguage(language);
+    saveItem('language', language);
+  }
+
+  handleResetPassword() {
+    const url = 'https://api.10av10.com/login/forgotpassword';
+    const strings = this.getStrings();
+    axios
+      .post(url, {
+        email: this.state.forgotPasswordEmail
+      })
+      .then(response => {
+        if (!response.data.success) {
+          Alert.alert(strings.responseFail);
+        } else {
+          Alert.alert(strings.responseSuccess);
+        }
+      })
+      .catch(error => {
+        const msg = handleErrorMsg(error.message, strings);
+        Alert.alert(strings.error, msg);
+      });
+    this.setState({ alertVisible: false, forgotPasswordEmail: '' });
+  }
+
+  handleLogin() {
+    const url = 'https://api.10av10.com/login/email';
+    const strings = this.getStrings();
+    const { email, password } = this.state;
+    if (email === '') {
+      Alert.alert(strings.error, strings.emailError);
+    } else if (password === '') {
+      Alert.alert(strings.error, strings.passwordError);
+    } else {
+      this.setState({ loading: true, loadingComplete: false });
+      axios
+        .post(url, {
+          email,
+          password
+        })
+        .then(res => {
+          const { accessToken } = res.data;
+          this.props.setToken(accessToken);
+          this.props.setEmail(email);
+          saveItem('email', email);
+          saveItem('accessToken', accessToken);
+          this.setState({ loadingComplete: true });
+        })
+        .catch(error => {
+          const msg = handleErrorMsg(error.message, strings);
+          this.setState({ loading: false, loadingComplete: false });
+          Alert.alert(strings.error, msg);
+        });
     }
   }
 
   render() {
+    const { containerStyle, container1 } = styles;
+    const {
+      email,
+      password,
+      loading,
+      loadingComplete,
+      forgotPasswordEmail,
+      alertVisible
+    } = this.state;
+    const strings = this.getStrings();
     return (
-      <Image
-        style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }}
-        source={require('../../../res/Flicka_Tuba_Byggnader.png')}
-      >
-        <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            backgroundColor: '#8A4797',
-            height: Dimensions.get('window').height,
-            width: Dimensions.get('window').width,
-            opacity: 0.7
-          }}
-        />
-        <View style={styles.container1}>
-          <Image
-            source={require('../../../res/LK2018logga.png')}
-          />
-          <Input
-            placeholder='Personnummer'
-            title='Personnummer'
-            width={WIDTH}
-            viewStyle={{ marginBottom: 2 }}
-            textInputStyle={styles.textInputStyle}
-            headerTextStyle={styles.inputHeaderTextStyle}
-            underlineColorAndroid='transparent'
-            onChangeText={
-              text => {
-                return this.setState(() => {
-                  return { socSecNbr: { text } }
-                });
-              }
-            }
-          />
-          <Input
-            placeholder='Lösenord'
-            title='Lösenord'
-            width={WIDTH}
-            secureText
-            viewStyle={{ marginBottom: 11 }}
-            textInputStyle={styles.textInputStyle}
-            headerTextStyle={styles.inputHeaderTextStyle}
-            underlineColorAndroid='transparent'
-            onChangeText={
-              text => {
-                return this.setState(() => {
-                  return { password: { text } }
-                });
-              }
-            }
-          />
-          <CustomButton
-            text='Logga in'
-            onPress={() => {
-              this.props.navigation.navigate('MyPageNavbarScreen')
+      <View style={containerStyle}>
+        <BackgroundImage pictureNumber={4} />
+        <ScrollView>
+          <View style={container1}>
+            <View style={{ alignSelf: 'flex-start' }}>
+              <CustomButton
+                width={170}
+                text={strings.languageButton}
+                onPress={() => this.changeLang()}
+                style="textButton"
+              />
+            </View>
+            <Input
+              value={email}
+              keyboardType={'email-address'}
+              placeholder={strings.email}
+              width={WIDTH}
+              onChangeText={text => this.setState({ email: text })}
+              returnKeyType={'next'}
+              onSubmitEditing={() => this.refs.secondInput.focus()}
+            />
+            <Input
+              ref={'secondInput'}
+              value={password}
+              placeholder={strings.password}
+              width={WIDTH}
+              secureText
+              onChangeText={text => this.setState({ password: text })}
+              returnKeyType={'done'}
+              onSubmitEditing={() => this.handleLogin()}
+            />
+            <CustomButton
+              text={strings.loginButton}
+              onPress={() => this.handleLogin()}
+              style={'standardButton'}
+              width={WIDTH}
+            />
+            <CustomButton
+              text={strings.forgotPassword}
+              onPress={() => {
+                this.setState({ alertVisible: true });
+              }}
+              style="textButton"
+            />
+            <CustomButton
+              text={strings.createProfile}
+              width={WIDTH}
+              onPress={() => {
+                this.props.navigation.navigate('RegistrationScreen');
+              }}
+              style="standardButton"
+            />
+            <CustomButton
+              text={strings.readMore}
+              onPress={() => {
+                this.props.navigation.navigate('RegistrationInfo');
+              }}
+              style="textButton"
+            />
+            <SuperAgileAlert
+              alertVisible={alertVisible}
+              setAlertVisible={visible => this.setState({ alertVisible: visible })}
+              buttonsIn={[
+                { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+                { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
+              ]}
+              header={strings.passwordPopupHeader}
+              info={strings.passwordPopupInfo}
+            >
+              <Input
+                placeholder={strings.inputPlaceholder}
+                title={strings.inputTitle}
+                width={Dimensions.get('window').width / 1.2}
+                underlineColorAndroid="transparent"
+                onChangeText={text => this.setState({ forgotPasswordEmail: text })}
+                value={forgotPasswordEmail}
+              />
+            </SuperAgileAlert>
+          </View>
+        </ScrollView>
+        {loading ? (
+          <Loading
+            loadingComplete={loadingComplete}
+            redirect={() => {
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
+                key: null
+              });
+              this.setState({ loading: false, loadingComplete: false, password: '' });
+              this.props.navigation.dispatch(resetAction);
             }}
-            style='standardButton'
-            width={WIDTH}
           />
-          <Text
-            style={{ color: 'white', fontSize: 12 }}
-          >
-            Har du ingen profil?
-          </Text>
-          <CustomButton
-            text='Skapa profil'
-            width={WIDTH}
-            onPress={() => {
-              this.props.navigation.navigate('RegistrationScreen')
-            }}
-            style='standardButton'
-          />
-          <CustomButton
-            text='Läs mer om registreringen'
-            width={WIDTH}
-            style='textButton'
-          />
-        </View>
-      </Image>
+        ) : null}
+      </View>
     );
   }
 }
 
 const styles = {
   container1: {
-    flex: 1,
+    height: HEIGHT,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
   },
   container2: {
     flex: 0,
@@ -121,7 +226,16 @@ const styles = {
   inputHeaderTextStyle: {
     color: 'white',
     fontSize: 12
+  },
+  containerStyle: {
+    width: Dimensions.get('window').width,
+    height: HEIGHT
   }
 };
 
-export default HomeScreen;
+const mapStateToProps = ({ currentLanguage }) => {
+  const { language } = currentLanguage;
+  return { language };
+};
+
+export default connect(mapStateToProps, { setLanguage, setToken, setEmail })(LoginScreen);

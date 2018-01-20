@@ -1,50 +1,138 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'
+import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+
+const WIDTH = Dimensions.get('window').width - 16;
+
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'June',
+  'July',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+];
 
 class SectionListItem extends Component {
+  getColor() {
+    return '#F7A021';
+  }
+
+  renderDateView(sectionDate) {
+    const { dateViewStyle, dateStyle } = styles;
+    const sectionDateParts = sectionDate.split('T')[0].split('-');
+    if (sectionDate) {
+      return (
+        <View style={[dateViewStyle, { backgroundColor: this.getColor() }]}>
+          <Text style={dateStyle}>{sectionDateParts[2]}</Text>
+          <Text style={dateStyle}>{months[sectionDateParts[1] - 1]}</Text>
+        </View>
+      );
+    }
+  }
+  renderContentText(sectionContent) {
+    const { contentStyle } = styles;
+    if (sectionContent) {
+      return (
+        <Text numberOfLines={1} style={contentStyle}>
+          {sectionContent}
+        </Text>
+      );
+    }
+  }
 
   render() {
-    const { containerStyle, titleStyle, infoStyle } = styles
-    const { sectionTitle, sectionInfoText, onPress, } = this.props
+    const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
+    const { sectionTitle = '', sectionInfoText = '', sectionDate = '', onPress } = this.props;
     return (
       <TouchableOpacity
-        onPress={() => onPress(sectionTitle)}
-        style={containerStyle}
+        onPress={() => onPress()}
+        style={[containerStyle, { borderColor: this.getColor() }]}
       >
-        <View style={{ flex: 8 }}>
-          <Text style={titleStyle}>
-            {sectionTitle}
-          </Text>
-          <Text style={infoStyle}>
-            {sectionInfoText}
-          </Text>
+        <View style={{ flexDirection: 'row' }}>
+          {this.renderDateView(sectionDate)}
+          <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+            <Text
+              numberOfLines={1}
+              style={[
+                titleStyle,
+                { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
+              ]}
+            >
+              {sectionTitle}
+            </Text>
+            {sectionInfoText === '' ? null : (
+              <Text
+                numberOfLines={1}
+                style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+              >
+                {sectionInfoText}
+              </Text>
+            )}
+          </View>
         </View>
-        <View style={{ flex: 1 }}>
+        <View>
           <MaterialIcons
-            name='keyboard-arrow-right'
-            style={{ marginRight: 0, color: '#8A4797' }}
-            size={40}
+            name="keyboard-arrow-right"
+            style={continueIconIndicatorStyle}
+            color={this.getColor()}
+            size={50}
           />
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 }
 
 const styles = {
   containerStyle: {
     height: 60,
-    borderBottomWidth: 1,
-    borderBottomColor: '#8A4797',
+    backgroundColor: 'white',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: WIDTH,
+    borderWidth: 1,
+    marginTop: 8
   },
   titleStyle: {
-    fontSize: 20
+    fontSize: 20,
+    marginLeft: 8,
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Medium'
   },
-  infoStyle: {
+  contentStyle: {
     fontSize: 14,
+    marginLeft: 8,
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Medium'
+  },
+  dateViewStyle: {
+    height: 60,
+    width: WIDTH * 0.15,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  dateStyle: {
+    fontSize: 16,
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Bold'
+  },
+  continueIconIndicatorStyle: {
+    backgroundColor: 'transparent'
   }
 };
-export default SectionListItem
+
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(SectionListItem);

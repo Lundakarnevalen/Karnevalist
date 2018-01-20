@@ -1,69 +1,47 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Dimensions,
-  Text,
-  Platform,
-  TouchableOpacity
-} from 'react-native';
+import { View, Dimensions, Text, Platform, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
 class Header extends Component {
-
   renderRightIcon() {
-    const { rightIcon } = this.props
+    const { rightIcon } = this.props;
     if (rightIcon) {
-      return (
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          {rightIcon}
-        </View>
-      )
+      return <View style={{ flex: 1, alignItems: 'center' }}>{rightIcon}</View>;
     }
-    return (
-      <View style={{ flex: 1, alignItems: 'center' }} />
-    )
+    return <View style={{ flex: 1, alignItems: 'center' }} />;
   }
 
   renderLeftIcon() {
-    const { leftIcon, navigation } = this.props
+    const { leftIcon, navigation } = this.props;
     if (leftIcon === null) {
-      return <View style={{ flex: 1, alignItems: 'center' }} />
+      return <View style={{ flex: 1, alignItems: 'center' }} />;
     } else if (leftIcon) {
-      return (
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          {leftIcon}
-        </View>
-      )
+      return <View style={{ flex: 1, alignItems: 'center' }}>{leftIcon}</View>;
     }
-    const backButton = navigation ?
-      (
+    const backButton = navigation ? (
       <TouchableOpacity onPress={() => navigation.goBack(null)}>
-          <Ionicons
-          size={30}
-          name="md-arrow-back"
-          />
+        <Ionicons size={30} name="md-arrow-back" color={'white'} />
       </TouchableOpacity>
-      ) : null
-    return (
-      <View style={{ flex: 1, alignItems: 'center' }}>
-      {backButton}
-      </View>
-  )
+    ) : null;
+    return <View style={{ flex: 1, alignItems: 'center' }}>{backButton}</View>;
   }
 
   render() {
-    const { containerStyle, headerStyle } = styles;
-    const { title, textStyle, style } = this.props;
+    const { title } = this.props;
+    const { containerStyle, textStyle } = styles;
     return (
-      <View style={[containerStyle, style]}>
-        {this.renderLeftIcon()}
-        <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }} >
-          <Text style={[headerStyle, textStyle]}>{title || 'Placeholder'}</Text>
+      <View style={{ backgroundColor: '#F7A021', zIndex: 999 }}>
+        <View style={containerStyle}>
+          {this.renderLeftIcon()}
+          <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={textStyle}>{title || 'Placeholder'}</Text>
+          </View>
+          {this.renderRightIcon()}
         </View>
-        {this.renderRightIcon()}
       </View>
     );
   }
@@ -76,8 +54,9 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    backgroundColor: 'white',
-    zIndex: 999,
+    backgroundColor: '#F7A021',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
     ...Platform.select({
       ios: {
         paddingTop: 15
@@ -87,11 +66,17 @@ const styles = {
       }
     })
   },
-  headerStyle: {
+  textStyle: {
     fontSize: 18,
-    color: 'black',
-    backgroundColor: 'transparent'
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Medium'
   }
 };
 
-export default Header;
+const mapStateToProps = ({ currentTheme }) => {
+  const { theme } = currentTheme;
+  return { theme };
+};
+
+export default connect(mapStateToProps, null)(Header);
