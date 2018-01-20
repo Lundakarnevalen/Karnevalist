@@ -79,6 +79,7 @@ class Input extends Component {
       secureText,
       textInputStyle,
       autoCorrect = false,
+      autoCapitalize = 'words',
       editable = true,
       keyboardType = 'default',
       extraContainerStyle,
@@ -110,7 +111,7 @@ class Input extends Component {
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
           style={[inputStyle, { width }, textInputStyle]}
-          autoCapitalize={'words'}
+          autoCapitalize={autoCapitalize}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
           editable={editable}
