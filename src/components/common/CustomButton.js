@@ -19,7 +19,7 @@ class CustomButton extends Component {
     const color = 'white';
     return {
       color,
-      fontSize: 20,
+      fontSize: 16,
       fontFamily: 'Avenir Next Medium'
     };
   }
@@ -27,7 +27,7 @@ class CustomButton extends Component {
     const color = 'rgba(255, 255, 255, 0.5)';
     return {
       color,
-      fontSize: 20,
+      fontSize: 16,
       fontFamily: 'Avenir Next Medium'
     };
   }
@@ -48,7 +48,7 @@ class CustomButton extends Component {
     return {
       backgroundColor,
       padding: 10,
-      borderWidth,
+      borderWidth
     };
   }
 
@@ -149,12 +149,12 @@ const styles = {
   },
   whiteText: {
     color: '#f4376d',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: 'Avenir Next Medium'
   },
   blackText: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: 'Avenir Next Medium'
   }
 };
