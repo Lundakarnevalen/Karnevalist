@@ -84,12 +84,12 @@ class SectionItemScreen extends Component {
   render() {
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
-    const { containerStyle, imageStyle, headerStyle, textStyle } = styles;
+    const { containerStyle, headerStyle, textStyle } = styles;
     return (
       <View style={containerStyle}>
         <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id, title)} />
         <ScrollView>
-          <View style={imageStyle}>{image}</View>
+          {image}
           <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
           <Text style={textStyle}>{description}</Text>
         </ScrollView>
@@ -107,7 +107,8 @@ const styles = {
   containerStyle: {
     height: HEIGHT,
     width: WIDTH,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   imageStyle: {
     marginTop: 5,
@@ -127,7 +128,8 @@ const styles = {
     fontSize: 16,
     margin: 10,
     fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    color: '#333'
   }
 };
 

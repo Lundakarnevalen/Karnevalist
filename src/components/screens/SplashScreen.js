@@ -32,7 +32,7 @@ class SplashScreen extends Component {
       .then(r => {
         const image = (
           <Image
-            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+            style={{ width: WIDTH, height: WIDTH, resizeMode: 'contain' }}
             source={{ uri: r.data.source_url }}
             defaultSource={require('../../../res/Monstergubbe.png')}
           />
