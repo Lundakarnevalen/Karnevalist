@@ -180,7 +180,12 @@ class LoginScreen extends Component {
               buttonsIn={[
                 {
                   text: strings.cancel,
-                  onPress: () => this.setState({ alertVisible: false, resetPasswordError: ' ' })
+                  onPress: () =>
+                    this.setState({
+                      alertVisible: false,
+                      resetPasswordError: ' ',
+                      forgotPasswordEmail: ''
+                    })
                 },
                 { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
               ]}
