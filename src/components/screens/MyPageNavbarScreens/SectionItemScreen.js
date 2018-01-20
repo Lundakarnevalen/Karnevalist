@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  ScrollView,
-  Platform,
-  BackHandler
-} from 'react-native';
+import { View, TouchableOpacity, Text, Dimensions, ScrollView, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { Constants } from 'expo';
 import { Header, Toast } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
 import { saveItem, removeItem, getItem } from '../../../helpers/LocalSave';
@@ -89,16 +80,18 @@ class SectionItemScreen extends Component {
     return (
       <View style={containerStyle}>
         <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id, title)} />
-        <ScrollView>
-          {image}
-          <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
-          <Text style={textStyle}>{description}</Text>
+        <View>
+          <ScrollView>
+            {image}
+            <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
+            <Text style={textStyle}>{description}</Text>
+          </ScrollView>
           <Toast
             showToast={this.state.showToast}
             onClose={() => this.setState({ showToast: false })}
             message={this.renderToastMessage(title)}
           />
-        </ScrollView>
+        </View>
       </View>
     );
   }
