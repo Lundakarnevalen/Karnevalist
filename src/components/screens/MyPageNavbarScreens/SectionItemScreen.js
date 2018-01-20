@@ -92,12 +92,12 @@ class SectionItemScreen extends Component {
           {image}
           <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
           <Text style={textStyle}>{description}</Text>
+          <Toast
+            showToast={this.state.showToast}
+            onClose={() => this.setState({ showToast: false })}
+            message={this.renderToastMessage(title)}
+          />
         </ScrollView>
-        <Toast
-          showToast={this.state.showToast}
-          onClose={() => this.setState({ showToast: false })}
-          message={this.renderToastMessage(title)}
-        />
       </View>
     );
   }
