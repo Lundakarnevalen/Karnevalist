@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView, Text, Image, Animated, Easing } from 'react-native';
+import { Alert, View, Dimensions, ScrollView } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import CustomButton from '../common/CustomButton';
 import { setLanguage, setToken, setEmail } from '../../actions';
 import Input from '../common/Input';
+import Loading from '../common/Loading';
 import SuperAgileAlert from '../common/SuperAgileAlert';
 import BackgroundImage from '../common/BackgroundImage';
 import { saveItem } from '../../helpers/LocalSave';
@@ -24,18 +25,8 @@ class LoginScreen extends Component {
       password: '',
       loading: false,
       loadingComplete: false,
-      forgotPasswordEmail: '',
-      spinValue: new Animated.Value(0)
+      forgotPasswordEmail: ''
     };
-  }
-
-  spin() {
-    this.state.spinValue.setValue(0);
-    Animated.timing(this.state.spinValue, {
-      toValue: 1,
-      duration: 2000,
-      easing: Easing.linear
-    }).start(() => this.spin());
   }
 
   getStrings() {
@@ -83,7 +74,6 @@ class LoginScreen extends Component {
       Alert.alert(strings.error, strings.passwordError);
     } else {
       this.setState({ loading: true, loadingComplete: false });
-      this.spin();
       axios
         .post(url, {
           email,
@@ -114,31 +104,6 @@ class LoginScreen extends Component {
       forgotPasswordEmail,
       alertVisible
     } = this.state;
-    if (loadingComplete) {
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
-        key: null
-      });
-      this.setState({ loading: false, loadingComplete: false, password: '' });
-      this.props.navigation.dispatch(resetAction);
-    }
-    if (loading) {
-      const { container, text, image } = styles;
-      const spin = this.state.spinValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg']
-      });
-      return (
-        <View style={container}>
-          <BackgroundImage picture={4} />
-          <Animated.View style={[container, { transform: [{ rotate: spin }] }]}>
-            <Text style={text}> LOADING </Text>
-            <Image style={image} source={require('../../../res/Monstergubbe.png')} />
-          </Animated.View>
-        </View>
-      );
-    }
     const { containerStyle, container1 } = styles;
     const strings = this.getStrings();
     return (
@@ -222,6 +187,20 @@ class LoginScreen extends Component {
             </SuperAgileAlert>
           </View>
         </ScrollView>
+        {loading ? (
+          <Loading
+            loadingComplete={loadingComplete}
+            redirect={() => {
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
+                key: null
+              });
+              this.setState({ loading: false, loadingComplete: false, password: '' });
+              this.props.navigation.dispatch(resetAction);
+            }}
+          />
+        ) : null}
       </View>
     );
   }
@@ -251,23 +230,6 @@ const styles = {
   containerStyle: {
     width: Dimensions.get('window').width,
     height: HEIGHT
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  image: {
-    width: 227,
-    height: 200,
-    resizeMode: 'contain'
-  },
-  text: {
-    marginTop: 50,
-    fontSize: 30,
-    color: 'white',
-    fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
   }
 };
 

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { Dimensions, Text } from 'react-native';
-import { BlurView } from 'expo';
+import { Dimensions, Text, Animated, Image, Easing, View } from 'react-native';
 import { connect } from 'react-redux';
-import { LOADING_STRINGS } from '../../helpers/LanguageStrings';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
-let interval;
 /**
  * Loading class with redirect.
  * If redirect isn't needed redirect should be set to null.
@@ -15,54 +12,52 @@ class Loading extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadedPercent: 0
+      spinValue: new Animated.Value(0)
     };
   }
 
   componentWillMount() {
-    interval = setInterval(() => this.countTo99(), 15);
+    this.spin();
   }
 
-  componentWillUnmount() {
-    clearInterval(interval);
-  }
-
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = LOADING_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = LOADING_STRINGS[field][language]));
-    return strings;
-  }
-
-  countTo99() {
-    if (this.props.loadingComplete && this.state.loadedPercent === 99) {
-      this.props.redirect();
-      clearInterval(interval);
-    } else if (this.state.loadedPercent < 99) {
-      this.setState({ loadedPercent: ++this.state.loadedPercent });
-    }
+  spin() {
+    this.state.spinValue.setValue(0);
+    Animated.timing(this.state.spinValue, {
+      toValue: 1,
+      duration: 2000,
+      easing: Easing.linear
+    }).start(() => {
+      if (this.props.loadingComplete) {
+        this.props.redirect();
+      } else {
+        this.spin()
+      }
+    });
   }
 
   render() {
-    const { containerStyle, headerStyle } = styles;
-    const strings = this.getStrings();
+    const { container, containerrr, text, image } = styles;
+    const spin = this.state.spinValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+    });
     return (
-      <BlurView style={containerStyle}>
-        <Text style={[headerStyle, { color: 'white' }]}>
-          {strings.loading + this.state.loadedPercent.toString()}%
-        </Text>
-      </BlurView>
+      <View style={container}>
+        <Animated.View style={[containerrr, { transform: [{ rotate: spin }] }]}>
+          <Text style={text}> LOADING </Text>
+          <Image style={image} source={require('../../../res/Monstergubbe.png')} />
+        </Animated.View>
+      </View>
     );
   }
 }
 
 const styles = {
-  containerStyle: {
+  container: {
     width: WIDTH,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     position: 'absolute',
     padding: 20,
     height: HEIGHT
@@ -71,6 +66,23 @@ const styles = {
     fontFamily: 'Avenir Next Medium',
     fontSize: 36,
     color: 'rgb(138, 71, 151)',
+    backgroundColor: 'transparent'
+  },
+  containerrr: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  image: {
+    width: 227,
+    height: 200,
+    resizeMode: 'contain'
+  },
+  text: {
+    marginTop: 50,
+    fontSize: 30,
+    color: 'white',
+    fontFamily: 'Avenir Next Medium',
     backgroundColor: 'transparent'
   }
 };
