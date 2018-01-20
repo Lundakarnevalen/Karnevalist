@@ -36,9 +36,7 @@ class MyProfileScreen extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () =>
-      this.props.navigation.goBack()
-    );
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     this.getUserInfo();
   }
 
@@ -69,18 +67,14 @@ class MyProfileScreen extends Component {
   }
 
   getMsg(success, strings) {
-    return success
-      ? strings.updateInfoMessageSuccess
-      : strings.updateInfoMessageFail;
+    return success ? strings.updateInfoMessageSuccess : strings.updateInfoMessageFail;
   }
 
   getStrings() {
     const { language } = this.props;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const strings = {};
-    fields.forEach(
-      field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language])
-    );
+    fields.forEach(field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language]));
     return strings;
   }
 
@@ -89,8 +83,7 @@ class MyProfileScreen extends Component {
       <TouchableOpacity
         style={{ width: 50, alignItems: 'center' }}
         onPress={() => {
-          if (this.state.editMode && this.state.changesMade)
-            this.setState({ alertVisible: true });
+          if (this.state.editMode && this.state.changesMade) this.setState({ alertVisible: true });
           this.setState({ editMode: !this.state.editMode });
         }}
       >
@@ -143,17 +136,16 @@ class MyProfileScreen extends Component {
     });
     const textFields = Object.keys(labels).map(key => {
       return (
-        <View key={key}>
-          <Input
-            placeholder={labels[key]}
-            value={user[key]}
-            editable={editMode}
-            onChangeText={text => {
-              user[key] = text;
-              this.setState({ user, changesMade: true });
-            }}
-          />
-        </View>
+        <Input
+          key={key}
+          placeholder={labels[key]}
+          value={user[key]}
+          editable={editMode}
+          onChangeText={text => {
+            user[key] = text;
+            this.setState({ user, changesMade: true });
+          }}
+        />
       );
     });
     return textFields;
@@ -166,9 +158,7 @@ class MyProfileScreen extends Component {
           <ActivityIndicator size="large" color={'white'} />
         </View>
       );
-    return (
-      <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>
-    );
+    return <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>;
   }
 
   render() {
@@ -178,11 +168,7 @@ class MyProfileScreen extends Component {
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
-        <Header
-          title={strings.title}
-          navigation={navigation}
-          rightIcon={this.getRightIcon()}
-        />
+        <Header title={strings.title} navigation={navigation} rightIcon={this.getRightIcon()} />
         <Toast
           color={'#f4376d'}
           showToast={showToast}
@@ -211,7 +197,11 @@ class MyProfileScreen extends Component {
 const styles = {
   scrollStyle: {
     marginTop: 20,
-    height: HEIGHT - 80
+    height: HEIGHT - 64,
+    paddingTop: 4,
+    paddingRight: 16,
+    paddingBottom: 64,
+    paddingLeft: 16
   },
   loadingText: {
     textAlign: 'center',
@@ -223,11 +213,7 @@ const styles = {
     marginTop: HEIGHT / 3
   }
 };
-const mapStateToProps = ({
-  currentTheme,
-  currentLanguage,
-  userInformation
-}) => {
+const mapStateToProps = ({ currentTheme, currentLanguage, userInformation }) => {
   const { theme } = currentTheme;
   const { language } = currentLanguage;
   const { token, email } = userInformation;
