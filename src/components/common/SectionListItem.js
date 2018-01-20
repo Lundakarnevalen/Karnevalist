@@ -129,4 +129,4 @@ const styles = {
   }
 };
 
-export default SectionListItem;
+export { SectionListItem };

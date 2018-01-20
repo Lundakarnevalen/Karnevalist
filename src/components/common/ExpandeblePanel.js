@@ -74,4 +74,4 @@ const styles = {
   }
 };
 
-export default ExpandeblePanel;
+export { ExpandeblePanel };

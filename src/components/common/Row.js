@@ -161,4 +161,4 @@ const styles = {
   }
 };
 
-export default Row;
+export { Row };

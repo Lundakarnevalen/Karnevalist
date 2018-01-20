@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { getItem } from '../../helpers/LocalSave';
+import { BackgroundImage } from '../common';
 import { TOKEN_URL, SECTION_URL, IMAGE_URL } from '../../helpers/Constants';
-import BackgroundImage from '../common/BackgroundImage';
 import { setSections, setToken, setEmail } from '../../actions';
 
 const WIDTH = Dimensions.get('window').width;
