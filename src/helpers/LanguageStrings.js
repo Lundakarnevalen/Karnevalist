@@ -468,7 +468,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'city',
     'phoneNumber',
     'foodPreferences',
-    'personalNumber',
     'language',
     'careOf',
     'driversLicense',
@@ -503,7 +502,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   city,
   phoneNumber,
   foodPreferences,
-  personalNumber,
   careOf: {
     //TODO make accurate description
     SE: 'C/O',

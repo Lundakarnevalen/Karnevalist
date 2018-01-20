@@ -35,9 +35,11 @@ class RegistrationScreen extends Component {
       studentUnion: '',
       activeCarneval2014: false,
       driversLicense: false,
+      foodPreferences: '',
       errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showStudentUnionPicker: false,
+      foodPreferencesError: false,
       loading: false,
       loadingComplete: false,
       keyboardHeight: 0
@@ -131,8 +133,9 @@ class RegistrationScreen extends Component {
   }
 
   anyErrors() {
-    const { errors } = this.state;
-    return errors.indexOf(true) !== -1;
+    const { errors, foodPreferencesError, foodPreferences } = this.state;
+    return (errors.indexOf(true) !== -1 ||
+    (foodPreferencesError && foodPreferences !== ''))
   }
 
   trimValues() {
@@ -214,10 +217,12 @@ class RegistrationScreen extends Component {
   render() {
     const strings = this.getStrings();
     const errorStrings = this.getErrorStrings();
-    const { flexHorizontal } = styles;
+    const { flexHorizontal, rightIconStyle } = styles;
     const {
       inputs,
       errors,
+      foodPreferences,
+      foodPreferencesError,
       loading,
       loadingComplete,
       shirtSize,
@@ -229,7 +234,7 @@ class RegistrationScreen extends Component {
     } = this.state;
 
     const closeButton = (
-      <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
+      <TouchableOpacity style={rightIconStyle} onPress={() => this.props.navigation.goBack(null)}>
         <MaterialCommunityIcons size={30} name="close" color={'white'} />
       </TouchableOpacity>
     );
@@ -440,18 +445,16 @@ class RegistrationScreen extends Component {
             ref={'twelthInput'}
             placeholder={strings.foodPreferences}
             onChangeText={text => {
-              inputs[11] = text;
-              errors[11] = !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text);
               this.setState({
-                inputs,
-                errors
+                foodPreferences: text,
+                foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
               });
             }}
-            value={inputs[11]}
+            value={foodPreferences}
             returnKeyType={'done'}
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={errors[11]}
+            hasError={foodPreferencesError}
             warningMessage={[errorStrings.errorMsgFoodPreference]}
           />
           {this.renderPickerForPlatform(
@@ -505,7 +508,7 @@ class RegistrationScreen extends Component {
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],
-                    foodPreferences: inputs[11],
+                    foodPreferences,
                     driversLicense,
                     pastInvolvement: activeCarneval2014
                   })
@@ -581,6 +584,12 @@ const styles = {
     borderRadius: 3,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     borderWidth: 1
+  },
+  rightIconStyle: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    width: 60,
+    paddingRight: 0
   }
 };
 
