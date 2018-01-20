@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
-import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width;
@@ -19,7 +18,7 @@ class CustomButton extends Component {
     const color = 'white';
     return {
       color,
-      fontSize: 20,
+      fontSize: 16,
       fontFamily: 'Avenir Next Medium'
     };
   }
@@ -27,7 +26,7 @@ class CustomButton extends Component {
     const color = 'rgba(255, 255, 255, 0.5)';
     return {
       color,
-      fontSize: 20,
+      fontSize: 16,
       fontFamily: 'Avenir Next Medium'
     };
   }
@@ -48,7 +47,7 @@ class CustomButton extends Component {
     return {
       backgroundColor,
       padding: 10,
-      borderWidth,
+      borderWidth
     };
   }
 
@@ -149,19 +148,14 @@ const styles = {
   },
   whiteText: {
     color: '#f4376d',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: 'Avenir Next Medium'
   },
   blackText: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: 'Avenir Next Medium'
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(CustomButton);
+export default CustomButton;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Animated, Dimensions } from 'react-native';
-import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -75,9 +74,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(ExpandeblePanel);
+export default ExpandeblePanel;

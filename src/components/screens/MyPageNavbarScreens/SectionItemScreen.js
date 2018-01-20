@@ -46,6 +46,7 @@ class SectionItemScreen extends Component {
   }
 
   renderRightIcon(id, title) {
+    if (this.props.progress === 4) return;
     if (!this.state.added) {
       return (
         <TouchableOpacity
@@ -129,10 +130,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  const { progress } = userInformation;
+  return { language, progress };
 };
 
 export default connect(mapStateToProps, null)(SectionItemScreen);

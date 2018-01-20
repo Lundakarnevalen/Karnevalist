@@ -285,7 +285,7 @@ class RegistrationScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
         <ScrollView
-          keyboardShouldPersistTaps='handled'
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.contentContainer}
           style={{ height: HEIGHT - 64 }}
           ref={'scrollView'}
@@ -611,11 +611,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, userInformation, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { picture } = userInformation;
   const { language } = currentLanguage;
-  return { theme, picture, language };
+  return { picture, language };
 };
 
 export default connect(mapStateToProps, { setToken, setEmail })(RegistrationScreen);

@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Alert,
-  BackHandler
-} from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -35,9 +28,7 @@ class ConfirmPage extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () =>
-      this.props.navigation.goBack()
-    );
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     const tempData = [];
     const allSections = this.props.sections;
     getSections(sections => {
@@ -62,9 +53,7 @@ class ConfirmPage extends Component {
     const { language } = this.props;
     const { fields } = CONFIRM_PAGE_STRINGS;
     const strings = {};
-    fields.forEach(
-      field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language])
-    );
+    fields.forEach(field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language]));
     return strings;
   }
 
@@ -81,9 +70,7 @@ class ConfirmPage extends Component {
             justifyContent: 'center'
           }}
         >
-          <Text style={[textStyle, { color: 'white' }]}>
-            {strings.sectionSelection}
-          </Text>
+          <Text style={[textStyle, { color: 'white' }]}>{strings.sectionSelection}</Text>
           <CustomButton
             style={'standardButton'}
             text={strings.toSections}
@@ -108,11 +95,7 @@ class ConfirmPage extends Component {
           onChangeOrder={nextOrder => this.setState({ order: nextOrder })}
         />
         <CustomButton
-          style={
-            this.state.data.length >= 5
-              ? 'standardButton'
-              : 'tintStandardButton'
-          }
+          style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
           text={strings.send}
           width={WIDTH - 15}
           onPress={() => this.onPressConfirmButton()}
@@ -268,18 +251,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({
-  currentTheme,
-  sections,
-  currentLanguage,
-  userInformation
-}) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token } = userInformation;
-  return { theme, sections: sections.sections, language, token };
+  return { sections: sections.sections, language, token };
 };
 
-export default connect(mapStateToProps, { setSectionPriorities, setProgress })(
-  ConfirmPage
-);
+export default connect(mapStateToProps, { setSectionPriorities, setProgress })(ConfirmPage);
