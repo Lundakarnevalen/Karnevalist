@@ -95,15 +95,16 @@ class SectionScreen extends Component {
                   description: item.info,
                   image: item.image,
                   setSectionStatus: favorite => {
-                    const tmpData = this.state.data;
+                    let tmpData = this.state.data;
                     const tmpItem = item;
-                    tmpData.filter(section => section.id + '' !== item.id + '');
+                    tmpData = tmpData.filter(section => section.id + '' !== item.id + '');
                     if (favorite) {
                       tmpItem.favorite = 'favorite';
                     } else {
                       delete tmpItem.favorite;
                     }
                     tmpData.push(tmpItem);
+                    tmpData.sort(dynamicSort('title'));
                     this.setState({ data: tmpData });
                   }
                 })
