@@ -119,7 +119,8 @@ const styles = {
     fontSize: 14,
     marginLeft: 8,
     backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Medium'
+    fontFamily: 'Avenir Next Medium',
+    color: '#333'
   },
   dateViewStyle: {
     height: 60,

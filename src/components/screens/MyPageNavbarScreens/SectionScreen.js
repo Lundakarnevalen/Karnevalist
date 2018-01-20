@@ -50,8 +50,10 @@ class SectionScreen extends Component {
   renderRightIcon() {
     if (this.props.progress === PROGRESS.SENT_SECTIONS) return null;
     const { screenProps, navigation } = this.props;
+    const { rightIconStyle } = styles;
     return (
       <TouchableOpacity
+        style={rightIconStyle}
         onPress={() =>
           screenProps.navigation.navigate('ConfirmPage', {
             navigation
@@ -119,5 +121,14 @@ const mapStateToProps = ({ userInformation, sections, currentLanguage }) => {
   const { progress } = userInformation;
   return { sections: sections.sections, language, progress };
 };
+
+const styles = {
+  rightIconStyle: {
+    alignItems: 'center',
+    padding: 1,
+    backgroundColor: 'transparent',
+    width: 60
+  }
+}
 
 export default connect(mapStateToProps, null)(SectionScreen);

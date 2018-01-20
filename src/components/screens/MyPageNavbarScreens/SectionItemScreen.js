@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  ScrollView,
-  Platform,
-  BackHandler
-} from 'react-native';
+import { View, TouchableOpacity, Text, Dimensions, ScrollView, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { Constants } from 'expo';
 import { Header, Toast } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
 import {
@@ -21,7 +12,7 @@ import {
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
-
+const WIDTH = Dimensions.get('window').width;
 class SectionItemScreen extends Component {
   componentWillMount() {
     const { id } = this.props.navigation.state.params;
@@ -50,11 +41,12 @@ class SectionItemScreen extends Component {
   }
 
   renderRightIcon(id) {
+    const { rightIconStyle } = styles;
     if (this.props.progress === PROGRESS.SENT_SECTIONS) return;
     if (!this.state.favorite) {
       return (
         <TouchableOpacity
-          style={{ padding: 1, backgroundColor: 'transparent' }}
+          style={rightIconStyle}
           onPress={() => {
             saveFavoriteSection(id);
             this.props.navigation.state.params.setSectionStatus(true);
@@ -67,7 +59,7 @@ class SectionItemScreen extends Component {
     }
     return (
       <TouchableOpacity
-        style={{ padding: 1, backgroundColor: 'transparent' }}
+        style={rightIconStyle}
         onPress={() => {
           removeFavoriteSection(id);
           this.props.navigation.state.params.setSectionStatus(false);
@@ -90,37 +82,39 @@ class SectionItemScreen extends Component {
   render() {
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
-    const { container, scrollStyle, headerStyle, textStyle } = styles;
+    const { containerStyle, headerStyle, textStyle } = styles;
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={containerStyle}>
         <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id)} />
-        <View>
-          <ScrollView style={scrollStyle}>
-            <View style={container}>{image}</View>
-            <View style={{ height: 10, backgroundColor: 'white' }} />
-            <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
-            <Text style={textStyle}>{description}</Text>
-          </ScrollView>
+        <ScrollView>
+          {image}
+          <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
+          <Text style={textStyle}>{description}</Text>
           <Toast
             showToast={this.state.showToast}
             onClose={() => this.setState({ showToast: false })}
             message={this.renderToastMessage(title)}
           />
-        </View>
+        </ScrollView>
       </View>
     );
   }
 }
 
 const styles = {
-  container: {
+  containerStyle: {
+    height: HEIGHT,
+    width: WIDTH,
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  imageStyle: {
     marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    width: Dimensions.get('window').width
-  },
-  scrollStyle: {
-    maxHeight: Platform.OS === 'ios' ? HEIGHT : HEIGHT - Constants.statusBarHeight
+    width: WIDTH - 5,
+    height: WIDTH - 5,
+    resizeMode: 'contain'
   },
   headerStyle: {
     fontSize: 26,
@@ -132,7 +126,14 @@ const styles = {
     fontSize: 16,
     margin: 10,
     fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    color: '#333'
+  },
+  rightIconStyle: {
+    alignItems: 'center',
+    padding: 1,
+    backgroundColor: 'transparent',
+    width: 60
   }
 };
 
