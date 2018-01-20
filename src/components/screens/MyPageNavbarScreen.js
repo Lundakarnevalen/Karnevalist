@@ -58,7 +58,6 @@ class MyPageNavbarScreen extends Component {
 
 const TabNav = TabNavigator(
   {
-
     Home: {
       screen: HomeScreen,
       navigationOptions: props => ({
@@ -68,6 +67,8 @@ const TabNav = TabNavigator(
         )
       })
     },
+    /*
+    //TODO: When we got better suppoert for showing one news this should be uncommented
     News: {
       screen: NewsScreen,
       navigationOptions: props => ({
@@ -76,7 +77,7 @@ const TabNav = TabNavigator(
           <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
-    },
+    },*/
     Sections: {
       screen: SectionScreen,
       navigationOptions: props => ({
