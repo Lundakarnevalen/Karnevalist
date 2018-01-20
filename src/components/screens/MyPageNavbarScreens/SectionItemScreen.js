@@ -86,16 +86,18 @@ class SectionItemScreen extends Component {
     return (
       <View style={containerStyle}>
         <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id)} />
-        <ScrollView>
-          {image}
-          <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
-          <Text style={textStyle}>{description}</Text>
+        <View>
+          <ScrollView>
+            {image}
+            <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
+            <Text style={textStyle}>{description}</Text>
+          </ScrollView>
           <Toast
             showToast={this.state.showToast}
             onClose={() => this.setState({ showToast: false })}
             message={this.renderToastMessage(title)}
           />
-        </ScrollView>
+        </View>
       </View>
     );
   }
