@@ -40,9 +40,11 @@ class RegistrationScreen extends Component {
       inputs: ['', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
+      foodPreferences: '',
       errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showStudentUnionPicker: false,
+      foodPreferencesError: false,
       loading: false,
       loadingComplete: false,
       keyboardHeight: 0
@@ -135,8 +137,9 @@ class RegistrationScreen extends Component {
   }
 
   anyErrors() {
-    const { errors } = this.state;
-    return errors.indexOf(true) !== -1;
+    const { errors, foodPreferencesError, foodPreferences } = this.state;
+    return (errors.indexOf(true) !== -1 ||
+    (foodPreferencesError && foodPreferences !== ''))
   }
 
   trimValues() {
@@ -222,6 +225,8 @@ class RegistrationScreen extends Component {
     const {
       inputs,
       errors,
+      foodPreferences,
+      foodPreferencesError,
       loading,
       loadingComplete,
       shirtSize,
@@ -442,18 +447,16 @@ class RegistrationScreen extends Component {
             ref={'twelthInput'}
             placeholder={strings.foodPreferences}
             onChangeText={text => {
-              inputs[11] = text;
-              errors[11] = !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text);
               this.setState({
-                inputs,
-                errors
+                foodPreferences: text,
+                foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
               });
             }}
-            value={inputs[11]}
+            value={foodPreferences}
             returnKeyType={'done'}
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={errors[11]}
+            hasError={foodPreferencesError}
             warningMessage={[errorStrings.errorMsgFoodPreference]}
           />
           {this.renderPickerForPlatform(
