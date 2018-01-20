@@ -80,7 +80,7 @@ class ConfirmPage extends Component {
           order={order}
           renderRow={this.renderRow.bind(this)}
           onChangeOrder={nextOrder => {
-            saveFavoriteSections(nextOrder);
+            saveFavoriteSections(nextOrder, () => {});
           }}
         />
         <View
