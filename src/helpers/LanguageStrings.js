@@ -33,7 +33,6 @@ const errorMsg401 = {
   SE: 'Fel email eller lösenord',
   EN: 'Wrong email or password'
 };
-
 const errorMsg404 = {
   SE: 'Något gick fel...',
   EN: 'Something went wrong...'
@@ -42,12 +41,10 @@ const errorMsgInternal = {
   SE: 'Internt fel, var god försök igen senare',
   EN: 'Internal error, please try again later'
 };
-
 const error = {
   SE: 'Fel',
   EN: 'Error'
 };
-
 const firstName = {
   SE: 'Förnamn',
   EN: 'First name'
@@ -65,7 +62,6 @@ const email = {
   SE: 'Email',
   EN: 'Email'
 };
-
 const address = {
   SE: 'Adress',
   EN: 'Address'
@@ -86,12 +82,10 @@ const foodPreferences = {
   SE: 'Matpreferenser',
   EN: 'Food preferences'
 };
-
 const personalNumber = {
   SE: 'Personnummer',
   EN: 'Personal number'
 };
-
 const driversLicense = {
   SE: 'Jag har körkort',
   EN: 'I have a drivers license'
@@ -122,11 +116,16 @@ export const LOGIN_SCREEN_STRINGS = {
     'cancel',
     'resetPassword',
     'responseFail',
-    'responseSuccess'
+    'responseSuccess',
+    'resetPasswordComplete'
   ],
   email: {
     SE: 'Email Adress',
     EN: 'Email Address'
+  },
+  resetPasswordComplete: {
+    SE: 'Ett email har skickats med information om hur du byter lösenord.',
+    EN: 'An email has been send with information about how to reset your password.'
   },
   password,
   loginButton: {
@@ -210,19 +209,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'activeKarneval',
     'driversLicense',
     'register',
-    'errorFirstName',
-    'errorLastName',
-    'errorSocialSecurityNumber',
-    'errorEmail',
-    'errorConfirmEmail',
-    'errorAddress',
-    'errorPostNumber',
-    'errorCity',
-    'errorPhoneNumber',
-    'errorPassword',
-    'errorConfirmPassword',
-    'errorEmailMatch',
-    'errorPasswordMatch',
     'error',
     'errorMsg400',
     'errorMsg401',
@@ -296,58 +282,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Registrera',
     EN: 'Register'
   },
-  errorFirstName: {
-    SE: 'Förnamn krävs',
-    EN: 'First name is required'
-  },
-  errorLastName: {
-    SE: 'Efternamn krävs',
-    EN: 'Last name is required'
-  },
-  errorSocialSecurityNumber: {
-    SE: 'Personnummer krävs',
-    EN: 'Social security number is required'
-  },
-  errorEmail: {
-    SE: 'Email krävs',
-    EN: 'Email is required'
-  },
-  errorConfirmEmail: {
-    SE: 'Var god bekräfta din email',
-    EN: 'Please confirm your email'
-  },
-  errorAddress: {
-    SE: 'Adress krävs',
-    EN: 'Address is required'
-  },
-  errorPostNumber: {
-    SE: 'Postnummer krävs',
-    EN: 'Post number is required'
-  },
-  errorCity: {
-    SE: 'Stad krävs',
-    EN: 'City is required'
-  },
-  errorPhoneNumber: {
-    SE: 'Telefonnummer krävs',
-    EN: 'Phone number is required'
-  },
-  errorPassword: {
-    SE: 'Lösenord krävs',
-    EN: 'Password is required'
-  },
-  errorConfirmPassword: {
-    SE: 'Var god bekräfta ditt lösenord',
-    EN: 'Please confirm your password'
-  },
-  errorEmailMatch: {
-    SE: 'Email adresserna matchar inte',
-    EN: "The emails doesn't match"
-  },
-  errorPasswordMatch: {
-    SE: 'Lösenorden matchar inte',
-    EN: "The passwords doesn't match"
-  },
   error,
   errorMsg400: {
     SE: 'Ogiltig email eller lösenord',
@@ -395,9 +329,13 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   },
   infoText1: {
     SE:
-      'Första steget är att skapa en profil, antingen här eller på Karnevalist.se. När du skapat en profil tilldelas du ett profil-ID som du använder vid incheckning under uppropsdagen.',
+      'Första steget är att skapa en profil, antingen här eller på Karnevalist.se.' +
+      'När du skapat en profil tilldelas du ett profil-ID som' +
+      'du använder vid incheckning under uppropsdagen.',
     EN:
-      "The first step is to create a profile, either here or at Karnevalist.se. When you've created a profile, you are assigned a profile ID that you use when checking in during the call day."
+      'The first step is to create a profile, either here or at Karnevalist.se.' +
+      'When you have created a profile, you are assigned a profile ID that you use' +
+      'when checking in during the call day.'
   },
   infoText2: {
     SE: 'Välj vilken sektion du vill vara delaktig i under karnevalen.',
@@ -656,4 +594,69 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
 export const LOADING_STRINGS = {
   fields: ['loading'],
   loading
+};
+
+export const ERROR_MSG_INPUT_FIELD = {
+  fields: [
+    'errorMsgOnlyDigits',
+    'errorMsgOnlyLetters',
+    'errorMsgInvalidEmail',
+    'errorMsgNoMatchEmail',
+    'errorMsgPwd',
+    'errorMsgPhoneNbr',
+    'errorMsgSocialSecurity',
+    'errorMsgNoMatchPassword',
+    'errorMsgZipCode',
+    'errorMsgFoodPreference',
+    'errorMsgWrongInput',
+    'errorMsgCity'
+  ],
+  errorMsgOnlyDigits: {
+    SE: 'Detta fält får endast innehålla siffror',
+    EN: 'This field may only contain digits'
+  },
+  errorMsgOnlyLetters: {
+    SE: 'Detta fält får endast innehålla bokstäver',
+    EN: 'This field may only contain letters'
+  },
+  errorMsgInvalidEmail: {
+    SE: 'Ej giltig email adress',
+    EN: 'Not valid email address'
+  },
+  errorMsgNoMatchEmail: {
+    SE: 'Email adresserna matchar inte',
+    EN: 'The email addresses do not match'
+  },
+  errorMsgNoMatchPassword: {
+    SE: 'Lösenorden matchar inte',
+    EN: 'The passwords do not match'
+  },
+  errorMsgPwd: {
+    SE: 'Måste bestå av minst 5 tecken',
+    EN: 'Must consist of at least 5 characters'
+  },
+  errorMsgPhoneNbr: {
+    SE: 'Format: (+)XXXXXXXXXX',
+    EN: 'Format: (+)XXXXXXXXXX'
+  },
+  errorMsgSocialSecurity: {
+    SE: 'Format: YYMMDDXXXX',
+    EN: 'Format: YYMMDDXXXX'
+  },
+  errorMsgZipCode: {
+    SE: '5 siffror',
+    EN: '5 digits'
+  },
+  errorMsgCity: {
+    SE: 'Endast bokstäver',
+    EN: 'Only letters'
+  },
+  errorMsgFoodPreference: {
+    SE: 'Ex: gluten, laktos...',
+    EN: 'Ex: gluten, lactose intolerant... '
+  },
+  errorMsgWrongInput: {
+    SE: 'Vänligen se till att alla fält är korrekt ifyllda',
+    EN: 'Please make sure the fields are filled in correctly'
+  }
 };

@@ -4,7 +4,8 @@ import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setSections, setSectionPriorities } from '../../actions';
+import { setSections, setSectionPriorities, setProgress } from '../../actions';
+import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
@@ -18,7 +19,6 @@ import {
   SONGBOOK_SCREEN_STRINGS
 } from '../../helpers/LanguageStrings';
 
-const THEME_COLOR = '#F7A021';
 const SIZE = 30;
 
 class MyPageNavbarScreen extends Component {
@@ -31,17 +31,17 @@ class MyPageNavbarScreen extends Component {
   }
 
   getSectionPriorities(token) {
-    const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + token,
       'content-type': 'application/json'
     };
     axios
-      .get(url, { headers })
+      .get(SECTION_PRIORITY_URL, { headers })
       .then(response => {
         const { success, sectionPriorities } = response.data;
         if (success) {
           this.props.setSectionPriorities(sectionPriorities);
+          if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
         }
       })
       .catch(error => {
@@ -115,7 +115,7 @@ const TabNav = TabNavigator(
     initialRouteName: 'Home',
     tabBarOptions: {
       showIcon: true,
-      activeTintColor: THEME_COLOR,
+      activeTintColor: '#F7A021',
       inactiveTintColor: '#A9A9A9',
       labelStyle: {
         fontSize: 10,
@@ -130,7 +130,7 @@ const TabNav = TabNavigator(
         backgroundColor: '#ffffff'
       },
       indicatorStyle: {
-        backgroundColor: THEME_COLOR
+        backgroundColor: '#F7A021'
       }
     }
   }
@@ -141,4 +141,8 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { token } = userInformation;
   return { language, token, sections: sections.sections };
 };
-export default connect(mapStateToProps, { setSections, setSectionPriorities })(MyPageNavbarScreen);
+export default connect(mapStateToProps, {
+  setSections,
+  setSectionPriorities,
+  setProgress
+})(MyPageNavbarScreen);

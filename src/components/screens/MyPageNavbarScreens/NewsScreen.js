@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import Header from '../../common/Header';
-import SectionListItem from '../../common/SectionListItem';
-import BackgroundImage from '../../common/BackgroundImage';
+import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { getNews } from '../../../helpers/ApiManager';
 import { NEWS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
@@ -64,10 +62,9 @@ class NewsScreen extends Component {
     );
   }
 }
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  return { language };
 };
 
 export default connect(mapStateToProps, null)(NewsScreen);

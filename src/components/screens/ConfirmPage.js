@@ -4,13 +4,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
-import Row from '../common/Row';
-import Header from '../common/Header';
+import { Row, Header, BackgroundImage, CustomButton } from '../common';
 import { getSections, removeItem } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
-import BackgroundImage from '../common/BackgroundImage';
-import { setSectionPriorities } from '../../actions';
-import CustomButton from '../common/CustomButton';
+import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
+import { setSectionPriorities, setProgress } from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
 const window = Dimensions.get('window');
@@ -64,7 +62,11 @@ class ConfirmPage extends Component {
     if (this.state.data.length === 0) {
       return (
         <View
-          style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
+          style={{
+            height: window.height - 64,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
         >
           <Text style={[textStyle, { color: 'white' }]}>{strings.sectionSelection}</Text>
           <CustomButton
@@ -75,23 +77,29 @@ class ConfirmPage extends Component {
         </View>
       );
     }
-      return (
-        <View style={{ height: window.height - 64, justifyContent: 'center', alignItems: 'center' }}>
-          <SortableList
-            style={list}
-            contentContainerStyle={contentContainer}
-            data={this.state.data}
-            renderRow={this.renderRow.bind(this)}
-            onChangeOrder={(nextOrder) => this.setState({ order: nextOrder })}
-          />
-            <CustomButton
-              style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
-              text={strings.send}
-              width={WIDTH - 15}
-              onPress={() => this.onPressConfirmButton()}
-            />
-        </View>
-      );
+    return (
+      <View
+        style={{
+          height: window.height - 64,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <SortableList
+          style={list}
+          contentContainerStyle={contentContainer}
+          data={this.state.data}
+          renderRow={this.renderRow.bind(this)}
+          onChangeOrder={nextOrder => this.setState({ order: nextOrder })}
+        />
+        <CustomButton
+          style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
+          text={strings.send}
+          width={WIDTH - 15}
+          onPress={() => this.onPressConfirmButton()}
+        />
+      </View>
+    );
   }
 
   deleteRow(id) {
@@ -144,17 +152,18 @@ class ConfirmPage extends Component {
 
   postSectionPriorities(sectionPriorities) {
     const strings = this.getStrings();
-    const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
     };
     axios
-      .post(url, { sectionPriorities }, { headers })
+      .post(SECTION_PRIORITY_URL, { sectionPriorities }, { headers })
       .then(response => {
         if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
+          this.props.setProgress(PROGRESS.SENT_SECTIONS);
           Alert.alert(strings.selectionOK);
+          this.props.navigation.goBack(null);
         }
         //TODO TOAST??
       })
@@ -221,7 +230,7 @@ const styles = {
     color: '#ffffff'
   },
   list: {
-    flex: 1,
+    flex: 1
   },
   contentContainer: {
     width: window.width
@@ -239,11 +248,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLanguage, userInformation }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token } = userInformation;
-  return { theme, sections: sections.sections, language, token };
+  return { sections: sections.sections, language, token };
 };
 
-export default connect(mapStateToProps, { setSectionPriorities })(ConfirmPage);
+export default connect(mapStateToProps, { setSectionPriorities, setProgress })(ConfirmPage);
