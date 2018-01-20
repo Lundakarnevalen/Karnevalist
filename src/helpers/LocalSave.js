@@ -6,32 +6,21 @@ export function getFavoriteSections(callback) {
       console.error(error);
       return;
     }
+    let sections = [];
     if (result) {
-      callback(JSON.parse(result));
-    } else {
-      callback({});
+      sections = JSON.parse(result);
     }
-  });
-}
-
-export function getFavoritesOrder(callback) {
-  AsyncStorage.getItem('sectionsOrder', (error, result) => {
-    if (error) {
-      console.error(error);
-      return;
-    }
-    if (result) {
-      callback(JSON.parse(result));
-    } else {
-      callback([]);
-    }
+    callback(sections);
   });
 }
 
 export function getFavoriteSection(sectionId, callback) {
-  getFavoriteSections(result => {
-    if (result) {
-      callback(result[sectionId]);
+  getFavoriteSections(sections => {
+    if (sections) {
+      const index = getIndex(sections, sectionId);
+      if (index !== -1) {
+        callback(sections[index]);
+      }
     }
   });
 }
@@ -42,9 +31,7 @@ export function getItem(item, callback) {
       console.error(error);
       return;
     }
-    if (result) {
-      callback(result);
-    }
+    callback(result);
   });
 }
 
@@ -54,25 +41,11 @@ export function saveFavoriteSections(sections) {
   });
 }
 
-export function saveFavoritesOrder(order) {
-  AsyncStorage.setItem('sectionsOrder', JSON.stringify(order), error => {
-    if (error) console.error(error);
-  });
-}
-
 export function saveFavoriteSection(sectionId) {
-  getFavoriteSections(result => {
-    if (result) {
-      const sections = result;
-      sections[sectionId] = '';
+  getFavoriteSections(sections => {
+    if (sections) {
+      sections.push(sectionId);
       saveFavoriteSections(sections);
-    }
-  });
-  getFavoritesOrder(result => {
-    if (result) {
-      const order = result;
-      order[order.length] = sectionId;
-      saveFavoritesOrder(order);
     }
   });
 }
@@ -84,20 +57,13 @@ export function saveItem(item, value) {
 }
 
 export function removeFavoriteSection(sectionId) {
-  getFavoriteSections(result => {
-    if (result) {
-      const sections = {};
-      const filteredResult = Object.keys(result).filter(key => key !== sectionId);
-      for (let i = 0; i < filteredResult.length; i++) {
-        sections[filteredResult[i]] = '';
+  getFavoriteSections(sections => {
+    if (sections) {
+      const index = getIndex(sections, sectionId);
+      if (index !== -1) {
+        sections.splice(index, 1);
+        saveFavoriteSections(sections);
       }
-      saveFavoriteSections(sections);
-    }
-  });
-  getFavoritesOrder(result => {
-    if (result) {
-      const filteredResult = Object.keys(result).filter(key => key !== sectionId);
-      saveFavoritesOrder(filteredResult);
     }
   });
 }
@@ -109,4 +75,13 @@ export function removeItem(item) {
       return;
     }
   });
+}
+
+function getIndex(array, value) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] + '' === value + '') {
+      return i;
+    }
+  }
+  return -1;
 }

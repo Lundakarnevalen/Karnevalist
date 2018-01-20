@@ -8,8 +8,7 @@ import Row from '../common/Row';
 import Header from '../common/Header';
 import {
   getFavoriteSections,
-  getFavoritesOrder,
-  saveFavoritesOrder,
+  saveFavoriteSections,
   removeFavoriteSection
 } from '../../helpers/LocalSave';
 import { logout } from '../../helpers/functions';
@@ -35,7 +34,7 @@ class ConfirmPage extends Component {
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
-    this.updateDataAndOrder();
+    this.updateData();
   }
 
   getStrings() {
@@ -80,10 +79,10 @@ class ConfirmPage extends Component {
           style={list}
           contentContainerStyle={contentContainer}
           data={this.state.data}
+          order={this.state.order}
           renderRow={this.renderRow.bind(this)}
           onChangeOrder={nextOrder => {
-            saveFavoritesOrder(nextOrder);
-            this.setState({ order: nextOrder });
+            saveFavoriteSections(nextOrder);
           }}
         />
         <CustomButton
@@ -120,7 +119,7 @@ class ConfirmPage extends Component {
 
   deleteRow(key) {
     removeFavoriteSection(key);
-    this.updateDataAndOrder();
+    this.updateData();
   }
 
   renderRow(item) {
@@ -151,16 +150,16 @@ class ConfirmPage extends Component {
   }
 
   onPressConfirmButton() {
-    const { data, strings, order } = this.state;
+    const { data, strings } = this.state;
     if (Object.keys(data).length < 5) {
       Alert.alert(strings.sectionSelection);
     } else {
-      const sectionPriorities = order.map(i => {
-        const index = data.findIndex(d => d.id + '' === i + '');
-        return data[index].key;
+      getFavoriteSections(sections => {
+        if (sections) {
+          this.props.setSectionPriorities(sections);
+          Alert.alert(strings.selectionOK);
+        }
       });
-      this.props.setSectionPriorities(sectionPriorities);
-      Alert.alert(strings.selectionOK);
     }
   }
 
@@ -215,14 +214,13 @@ class ConfirmPage extends Component {
     }
   }
 
-  updateDataAndOrder() {
+  updateData() {
     const data = {};
     const allSections = this.props.sections;
-    getFavoriteSections(result => {
-      if (result) {
-        result.forEach(section => {
-          const key = section.key;
-          const s = allSections.filter(item => item.key === key)[0];
+    getFavoriteSections(sections => {
+      if (sections) {
+        sections.forEach(key => {
+          const s = allSections.filter(item => item.key + '' === key + '')[0];
           data[key] = {
             id: key,
             text: s.title,
@@ -230,16 +228,9 @@ class ConfirmPage extends Component {
             imguri: s.imguri
           };
         });
-        this.setState({ data });
+        this.setState({ data, order: sections });
       } else {
-        this.setState({ data: {} });
-      }
-    });
-    getFavoritesOrder(result => {
-      if (result) {
-        this.setState({ order: result });
-      } else {
-        this.setState({ order: [] });
+        this.setState({ data: {}, order: [] });
       }
     });
   }
