@@ -34,20 +34,9 @@ class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      confirmedEmail: '',
-      password: '',
-      confirmedPassword: '',
-      address: '',
-      postNumber: '',
-      city: '',
-      phoneNbr: '',
-      foodPreferences: '',
+      inputs: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
-      socialSecurityNumber: '',
       firstNameError: false,
       lastNameError: false,
       emailError: false,
@@ -63,7 +52,8 @@ class RegistrationScreen extends Component {
       showStudentUnionPicker: false,
       loading: false,
       loadingComplete: false,
-      keyboardHeight: 0
+      keyboardHeight: 0,
+      listToTrim: []
     };
   }
 
@@ -173,6 +163,13 @@ class RegistrationScreen extends Component {
     );
   }
 
+  trimValues() {
+    const { inputs } = this.state;
+    const trimmedList = inputs;
+    trimmedList.forEach(input => input.trim());
+    this.setState({ inputs: trimmedList });
+  }
+
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
     const { shirtSize, studentUnion } = this.state;
     if (Platform.OS === 'ios') {
@@ -243,17 +240,7 @@ class RegistrationScreen extends Component {
     const errorStrings = this.getErrorStrings();
     const { flexHorizontal } = styles;
     const {
-      firstName,
-      lastName,
-      email,
-      confirmedEmail,
-      address,
-      postNumber,
-      city,
-      phoneNbr,
-      foodPreferences,
-      password,
-      confirmedPassword,
+      inputs,
       loading,
       loadingComplete,
       shirtSize,
@@ -270,8 +257,7 @@ class RegistrationScreen extends Component {
       foodPreferencesError,
       showShirtPicker,
       studentUnion,
-      showStudentUnionPicker,
-      socialSecurityNumber
+      showStudentUnionPicker
     } = this.state;
 
     const closeButton = (
@@ -292,9 +278,10 @@ class RegistrationScreen extends Component {
           <Input
             placeholder={strings.firstName}
             onChangeText={text => {
-              this.setState({ firstName: text, firstNameError: !this.containsOnlyLetters(text) });
+              inputs[0] = text;
+              this.setState({ inputs, firstNameError: !this.containsOnlyLetters(text) });
             }}
-            value={firstName}
+            value={inputs[0]}
             onSubmitEditing={() => this.refs.secondInput.focus()}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
@@ -307,9 +294,10 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.thirdInput.focus()}
             placeholder={strings.lastName}
             onChangeText={text => {
-              this.setState({ lastName: text, lastNameError: !this.containsOnlyLetters(text) });
+              inputs[1] = text;
+              this.setState({ inputs, lastNameError: !this.containsOnlyLetters(text) });
             }}
-            value={lastName}
+            value={inputs[1]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={lastNameError}
@@ -320,12 +308,13 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.fourthInput.focus()}
             placeholder={strings.socialSecurityNumber}
             onChangeText={text => {
+              inputs[2] = text;
               this.setState({
-                socialSecurityNumber: text,
+                inputs,
                 socialSecurityNbrError: !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text))
               });
             }}
-            value={socialSecurityNumber}
+            value={inputs[2]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={socialSecurityNbrError}
@@ -338,9 +327,10 @@ class RegistrationScreen extends Component {
             keyboardType="email-address"
             autoCapitalize="none"
             onChangeText={text => {
-              this.setState({ email: text, emailError: !this.isEmail(text) });
+              inputs[3] = text;
+              this.setState({ inputs, emailError: !this.isEmail(text), confirmedEmailError: text !== inputs[4] });
             }}
-            value={email}
+            value={inputs[3]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={emailError}
@@ -353,9 +343,10 @@ class RegistrationScreen extends Component {
             keyboardType="email-address"
             autoCapitalize="none"
             onChangeText={text => {
-              this.setState({ confirmedEmail: text, confirmedEmailError: text !== email });
+              inputs[4] = text;
+              this.setState({ inputs, confirmedEmailError: text !== inputs[3] });
             }}
-            value={confirmedEmail}
+            value={inputs[4]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={confirmedEmailError}
@@ -366,9 +357,10 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.seventhInput.focus()}
             placeholder={strings.password}
             onChangeText={text => {
-              this.setState({ password: text, passwordError: text.length < 5 });
+              inputs[5] = text;
+              this.setState({ inputs, passwordError: text.length < 5 });
             }}
-            value={password}
+            value={inputs[5]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             secureText
@@ -380,9 +372,10 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.eigthInput.focus()}
             placeholder={strings.confirmPassword}
             onChangeText={text => {
-              this.setState({ confirmedPassword: text, confirmedPasswordError: text !== password });
+              inputs[6] = text;
+              this.setState({ inputs, confirmedPasswordError: text !== inputs[5] });
             }}
-            value={confirmedPassword}
+            value={inputs[6]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             secureText
@@ -393,10 +386,11 @@ class RegistrationScreen extends Component {
             ref={'eigthInput'}
             onSubmitEditing={() => this.refs.ninthInput.focus()}
             placeholder={strings.address}
-            onChangeText={addressInput => {
-              this.setState({ address: addressInput });
+            onChangeText={text => {
+              inputs[7] = text;
+              this.setState({ inputs });
             }}
-            value={address}
+            value={inputs[7]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
           />
@@ -413,14 +407,15 @@ class RegistrationScreen extends Component {
               placeholder={strings.postNumber}
               keyboardType="numeric"
               onChangeText={text => {
+                inputs[8] = text;
                 this.setState({
-                  postNumber: text,
+                  inputs,
                   postNumberError: text.length !== 5 || !this.containsOnlyDigits(text)
                 });
               }}
-              width={WIDTH / 2 - 4}
+              width={(WIDTH / 2) - 4}
               extraContainerStyle={{ marginRight: 8 }}
-              value={postNumber}
+              value={inputs[8]}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
               hasError={postNumberError}
@@ -431,10 +426,11 @@ class RegistrationScreen extends Component {
               onSubmitEditing={() => this.refs.eleventhInput.focus()}
               placeholder={strings.city}
               onChangeText={text => {
-                this.setState({ city: text, cityError: !this.containsOnlyLetters(text) });
+                inputs[9] = text;
+                this.setState({ inputs, cityError: !this.containsOnlyLetters(text) });
               }}
-              width={WIDTH / 2 - 4}
-              value={city}
+              width={(WIDTH / 2) - 4}
+              value={inputs[9]}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
               hasError={cityError}
@@ -447,12 +443,13 @@ class RegistrationScreen extends Component {
             placeholder={strings.phoneNumber}
             keyboardType="phone-pad"
             onChangeText={text => {
+              inputs[10] = text;
               this.setState({
-                phoneNbr: text,
+                inputs,
                 phoneNbrError: !this.isValidPhoneNbr(text)
               });
             }}
-            value={phoneNbr}
+            value={inputs[10]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={phoneNbrError}
@@ -462,12 +459,13 @@ class RegistrationScreen extends Component {
             ref={'twelthInput'}
             placeholder={strings.foodPreferences}
             onChangeText={text => {
+              inputs[11] = text;
               this.setState({
-                foodPreferences: text,
+                inputs,
                 foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
               });
             }}
-            value={foodPreferences}
+            value={inputs[11]}
             returnKeyType={'done'}
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
@@ -505,6 +503,7 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
+              this.trimValues();
               if (
                 firstNameError ||
                 lastNameError ||
@@ -524,22 +523,22 @@ class RegistrationScreen extends Component {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
                   .post('https://api.10av10.com/register', {
-                    email,
-                    password,
-                    postNumber,
-                    firstName,
-                    lastName,
-                    phoneNumber: phoneNbr,
-                    address,
-                    city,
-                    foodPreferences,
-                    personalNumber: socialSecurityNumber
+                    firstName: inputs[0],
+                    lastName: inputs[1],
+                    personalNumber: inputs[2],
+                    email: inputs[3],
+                    password: inputs[5],
+                    address: inputs[7],
+                    postNumber: inputs[8],
+                    city: inputs[9],
+                    phoneNumber: inputs[10],
+                    foodPreferences: inputs[11],
                   })
                   .then(response => {
                     const { accessToken } = response.data;
                     this.props.setToken(accessToken);
-                    this.props.setEmail(email);
-                    saveItem('email', email);
+                    this.props.setEmail(inputs[3]);
+                    saveItem('email', inputs[3]);
                     saveItem('accessToken', accessToken);
                     this.setState({ loadingComplete: true });
                   })
