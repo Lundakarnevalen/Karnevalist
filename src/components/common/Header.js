@@ -8,11 +8,11 @@ const WIDTH = Dimensions.get('window').width;
 class Header extends Component {
   renderRightIcon() {
     const { rightIcon } = this.props;
-    const { iconStyle } = styles;
+    const { rightIconStyle } = styles;
     if (rightIcon) {
-      return <View style={iconStyle}>{rightIcon}</View>;
+      return <View style={rightIconStyle}>{rightIcon}</View>;
     }
-    return <View style={iconStyle} />;
+    return <View style={rightIconStyle} />;
   }
 
   renderLeftIcon() {
@@ -84,6 +84,10 @@ const styles = {
   iconStyle: {
     flex: 1,
     alignItems: 'center'
+  },
+  rightIconStyle: {
+    flex: 1,
+    alignItems: 'flex-end'
   }
 };
 
