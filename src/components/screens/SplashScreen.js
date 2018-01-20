@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
 import { getItem } from '../../helpers/LocalSave';
 import BackgroundImage from '../common/BackgroundImage';
 import { setTheme, setSections, setToken, setEmail } from '../../actions';
@@ -44,7 +45,7 @@ class SplashScreen extends Component {
             defaultSource={require('../../../res/Monstergubbe.png')}
           />
         );
-        
+
         tempSection.imguri = r.data.source_url;
         tempSection.image = image;
         this.props.setSections(tempSection);
@@ -77,6 +78,11 @@ class SplashScreen extends Component {
   }
 
   authorize() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
+      key: null
+    });
     setTimeout(
       () =>
         getItem('email', email => {
@@ -91,18 +97,21 @@ class SplashScreen extends Component {
                 .then(response => {
                   const { success } = response.data;
                   if (success) {
-                    this.props.navigation.navigate('MyPageNavbarScreen');
+                    resetAction.actions = [
+                      NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
+                    ];
                     this.props.setToken(token);
                     this.props.setEmail(email);
-                  } else this.props.navigation.navigate('LoginScreen');
+                    this.props.navigation.dispatch(resetAction);
+                  } else this.props.navigation.dispatch(resetAction);
                 })
                 .catch(error => {
-                  this.props.navigation.navigate('LoginScreen');
                   console.log(error.message);
+                  this.props.navigation.dispatch(resetAction);
                 });
             });
           } else {
-            this.props.navigation.navigate('LoginScreen');
+            this.props.navigation.dispatch(resetAction);
           }
         }),
       2000
