@@ -481,8 +481,8 @@ export const CONFIRM_PAGE_STRINGS = {
     EN: 'YES'
   },
   confirmMessage: {
-    SE: "Är du säker på dina val? Efter att ha trycka 'Ja' går det inte att ångra sig",
-    EN: "Are you sure about your choices? After pressing 'Yes' you can't change your mind"
+    SE: 'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
+    EN: 'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
   },
   confirmHeader: {
     SE: 'Bekräfta',

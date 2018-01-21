@@ -44,7 +44,8 @@ class RegistrationScreen extends Component {
       loadingComplete: false,
       keyboardHeight: 0,
       listToTrim: [],
-      alertVisible: false
+      alertVisible: false,
+      message: ''
     };
   }
 

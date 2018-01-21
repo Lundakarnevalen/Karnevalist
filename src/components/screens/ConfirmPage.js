@@ -26,6 +26,8 @@ class ConfirmPage extends Component {
       order: [],
       editMode: false,
       alertVisible: false,
+      message: '',
+      alertHeader: '',
       strings: this.getStrings()
     };
   }
