@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, SectionListItem, BackgroundImage } from '../../common';
+import { Header, SectionListItem, BackgroundImage, SuperAgileAlert } from '../../common';
 import { removeItem } from '../../../helpers/LocalSave';
 import { setProgress } from '../../../actions';
 import { LOGOUT_RESET_ACTION } from '../../../helpers/Constants';
@@ -18,7 +18,8 @@ class SettingsScreen extends Component {
     const data = settingsTitles.map(item => ({ key: item.key, title: strings[item.key] }));
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows(data)
+      dataSource: ds.cloneWithRows(data),
+      alertVisible: false
     };
   }
 
@@ -33,7 +34,16 @@ class SettingsScreen extends Component {
   handleLogout() {
     removeItem('email');
     removeItem('accessToken');
+    this.props.setProgress(0);
     this.props.screenProps.navigation.dispatch(LOGOUT_RESET_ACTION);
+  }
+
+  renderAlertButtons() {
+    const strings = this.getStrings()
+    return ([
+      { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+      { text: strings.ok, onPress: () => this.handleLogout() }
+    ])
   }
 
   render() {
@@ -56,12 +66,18 @@ class SettingsScreen extends Component {
                 } else if (rowData.key === 'registration') {
                   screenProps.navigation.navigate('MyRegistration', { info: rowData });
                 } else if (rowData.key === 'logout') {
-                  this.props.setProgress(0);
-                  this.handleLogout()
+                  this.setState({ alertVisible: true })
                 }
               }}
             />
           )}
+        />
+        <SuperAgileAlert
+          alertVisible={this.state.alertVisible}
+          setAlertVisible={visible => this.setState({ alertVisible: visible })}
+          buttonsIn={this.renderAlertButtons()}
+          header={strings.alertHeader}
+          info={strings.alertMessage}
         />
       </View>
     );

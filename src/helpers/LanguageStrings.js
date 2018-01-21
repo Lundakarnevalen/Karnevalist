@@ -389,7 +389,7 @@ export const HOME_SCREEN_STRINGS = {
 };
 
 export const SETTINGS_SCREEN_STRINGS = {
-  fields: ['title', 'profile', 'registration', 'logout'],
+  fields: ['title', 'profile', 'registration', 'logout', 'cancel', 'ok', 'alertHeader', 'alertMessage'],
   title: {
     SE: 'Inställningar',
     EN: 'Settings'
@@ -405,6 +405,16 @@ export const SETTINGS_SCREEN_STRINGS = {
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
+  },
+  cancel,
+  ok,
+  alertHeader: {
+    SE: 'Bekräfta',
+    EN: 'Confirm'
+  },
+  alertMessage: {
+    SE: 'Du loggas nu ut',
+    EN: 'You will now be logged out'
   }
 };
 
