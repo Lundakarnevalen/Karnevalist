@@ -305,7 +305,7 @@ class MyProfileScreen extends Component {
     const strings = this.getStrings();
     return (
       <View>
-        <BackgroundImage pictureNumber={5} />
+        <BackgroundImage pictureNumber={4} />
         <Header title={strings.title} navigation={navigation} rightIcon={this.getRightIcon()} />
         <Toast
           color={'#f4376d'}

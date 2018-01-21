@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Dimensions, Platform, RefreshControl, Text } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+  Platform,
+  RefreshControl,
+  Text
+} from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Header, SectionListItem, BackgroundImage } from '../../common';
+import { Header, SectionListItem, BackgroundImage, Popover } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
-import { setSections } from '../../../actions';
+import { setSections, setSectionScreenPopover } from '../../../actions';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { dynamicSort } from '../../../helpers/functions';
@@ -18,7 +26,7 @@ class SectionScreen extends Component {
     const { sections } = props;
     this.state = {
       isOpen: false,
-      data: sections,
+      data: sections
     };
   }
 
@@ -64,7 +72,8 @@ class SectionScreen extends Component {
     return (
       <TouchableOpacity
         style={rightIconStyle}
-        onPress={() =>
+        onPress={() => {
+          this.props.setSectionScreenPopover(false);
           screenProps.navigation.navigate('ConfirmPage', {
             navigation,
             setSectionStatus: id => {
@@ -76,8 +85,8 @@ class SectionScreen extends Component {
               tmpData.sort(dynamicSort('title'));
               this.setState({ data: tmpData });
             }
-          })
-        }
+          });
+        }}
       >
         <MaterialIcons name="local-mall" size={30} color={'white'} />
       </TouchableOpacity>
@@ -85,7 +94,7 @@ class SectionScreen extends Component {
   }
   _onRefresh() {
     fetchSections(sections => {
-     this.props.setSections(sections)
+      this.props.setSections(sections);
     });
   }
 
@@ -103,12 +112,25 @@ class SectionScreen extends Component {
     this.setState({ data: tmpData });
   }
 
+  renderPopover(text) {
+    const { popover } = this.props;
+    if (popover)
+      return (
+        <Popover
+          onPress={() => this.props.setSectionScreenPopover(false)}
+          type={'topRight'}
+          text={text}
+          name={'sectionScreenPopover'}
+        />
+      );
+  }
+
   render() {
     const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
     return (
       <View>
-        <BackgroundImage pictureNumber={1} />
+        <BackgroundImage pictureNumber={2} />
         <View>
           <Header
             rightIcon={this.renderRightIcon()}
@@ -119,43 +141,49 @@ class SectionScreen extends Component {
         </View>
 
         <FlatList
-        refreshControl={
-          <RefreshControl
-            refreshing={false}
-            onRefresh={this._onRefresh.bind(this)}
-          />
-        }
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={this._onRefresh.bind(this)} />
+          }
           style={{ height: HEIGHT - (Platform.OS === 'ios' ? 113 : 135) }}
           data={this.state.data}
           contentContainerStyle={{ alignItems: 'center', paddingBottom: 60 }}
           renderItem={({ item }) => {
-            return (<SectionListItem
-              sectionTitle={item.title}
-              sectionInfoText={item.info}
-              sectionIcon={item.favorite}
-              onPress={() =>
-                screenProps.navigation.navigate('SectionItemScreen', {
-                  id: item.id,
-                  title: item.title,
-                  description: item.info,
-                  image: item.image,
-                  setSectionStatus: favorite => this.handleSetSectionStatus(favorite, item)
-                })
-              }
-            />)
+            return (
+              <SectionListItem
+                sectionTitle={item.title}
+                sectionInfoText={item.info}
+                sectionIcon={item.favorite}
+                onPress={() =>
+                  screenProps.navigation.navigate('SectionItemScreen', {
+                    id: item.id,
+                    title: item.title,
+                    description: item.info,
+                    image: item.image,
+                    setSectionStatus: favorite => this.handleSetSectionStatus(favorite, item)
+                  })
+                }
+              />
+            );
           }}
         />
-        {this.state.data.length === 0 ?
-        <Text style={styles.textStyle}>{strings.refresh}</Text> : null}
+        {this.renderPopover(strings.popoverText)}
+        {this.state.data.length === 0 ? (
+          <Text style={styles.textStyle}>{strings.refresh}</Text>
+        ) : null}
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ userInformation, sections, currentLanguage }) => {
+const mapStateToProps = ({ userInformation, sections, currentLanguage, popoverStatus }) => {
   const { language } = currentLanguage;
   const { progress } = userInformation;
-  return { sections: sections.sections, language, progress };
+  return {
+    sections: sections.sections,
+    language,
+    progress,
+    popover: popoverStatus.sectionScreenPopover
+  };
 };
 
 const styles = {
@@ -175,4 +203,4 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps, { setSections })(SectionScreen);
+export default connect(mapStateToProps, { setSections, setSectionScreenPopover })(SectionScreen);

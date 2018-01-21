@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, CustomButton, BackgroundImage, CountDown } from '../../common';
+import { Header, CustomButton, BackgroundImage, CountDown, Popover } from '../../common';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { setHomeScreenPopover } from '../../../actions';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -15,13 +16,27 @@ class HomeScreen extends Component {
     return strings;
   }
 
+  renderPopover(text) {
+    const { popover } = this.props;
+    if (popover)
+      return (
+        <Popover
+          onPress={() => setHomeScreenPopover(false)}
+          type={'bottomLeft'}
+          text={text}
+          big
+          name={'homeScreenPopover'}
+        />
+      );
+  }
+
   render() {
     const { container } = styles;
     const { navigation, language } = this.props;
     const strings = this.getStrings();
     return (
-      <View>
-        <BackgroundImage pictureNumber={3} />
+      <View style={{ flex: 1 }}>
+        <BackgroundImage pictureNumber={1} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <View style={container}>
           <CountDown language={language} />
@@ -32,6 +47,7 @@ class HomeScreen extends Component {
             onPress={() => navigation.navigate('Sections')}
           />
         </View>
+        {this.renderPopover(strings.popoverText)}
       </View>
     );
   }
@@ -42,12 +58,33 @@ const styles = {
     alignItems: 'center',
     width: WIDTH,
     marginTop: 15
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10
+  },
+  buttons: {
+    position: 'absolute',
+    flexDirection: 'row',
+    flex: 1,
+    top: 0,
+    left: 0,
+    marginTop: 20
+  },
+  popoverContainer: {
+    backgroundColor: '#114B5F',
+    padding: 8,
+    borderRadius: 5
+  },
+  popoverText: {
+    color: '#E4FDE1'
   }
 };
 
-const mapStateToProps = ({ currentLanguage }) => {
+const mapStateToProps = ({ currentLanguage, popoverStatus }) => {
   const { language } = currentLanguage;
-  return { language };
+  return { language, popover: popoverStatus.homeScreenPopover };
 };
 
 export default connect(mapStateToProps, null)(HomeScreen);
