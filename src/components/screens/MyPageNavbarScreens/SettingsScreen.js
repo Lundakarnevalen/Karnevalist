@@ -4,18 +4,18 @@ import { connect } from 'react-redux';
 import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { removeItem } from '../../../helpers/LocalSave';
 import { setProgress } from '../../../actions';
-import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { LOGOUT_RESET_ACTION } from '../../../helpers/Constants';
+import { SETTINGS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const height = Dimensions.get('window').height;
 
-const profileTitles = [{ key: 'profile' }, { key: 'registration' }, { key: 'logout' }];
+const settingsTitles = [{ key: 'profile' }, { key: 'registration' }, { key: 'logout' }];
 
-class ProfileScreen extends Component {
+class SettingsScreen extends Component {
   constructor(props) {
     super(props);
     const strings = this.getStrings();
-    const data = profileTitles.map(item => ({ key: item.key, title: strings[item.key] }));
+    const data = settingsTitles.map(item => ({ key: item.key, title: strings[item.key] }));
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource: ds.cloneWithRows(data)
@@ -24,9 +24,9 @@ class ProfileScreen extends Component {
 
   getStrings() {
     const { language } = this.props;
-    const { fields } = PROFILE_SCREEN_STRINGS;
+    const { fields } = SETTINGS_SCREEN_STRINGS;
     const strings = {};
-    fields.forEach(field => (strings[field] = PROFILE_SCREEN_STRINGS[field][language]));
+    fields.forEach(field => (strings[field] = SETTINGS_SCREEN_STRINGS[field][language]));
     return strings;
   }
 
@@ -72,4 +72,4 @@ const mapStateToProps = ({ currentLanguage }) => {
   return { language };
 };
 
-export default connect(mapStateToProps, { setProgress })(ProfileScreen);
+export default connect(mapStateToProps, { setProgress })(SettingsScreen);
