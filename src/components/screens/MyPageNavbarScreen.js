@@ -15,12 +15,12 @@ import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
 import NewsScreen from './MyPageNavbarScreens/NewsScreen';
-import ProfileScreen from './MyPageNavbarScreens/ProfileScreen';
+import SettingsScreen from './MyPageNavbarScreens/SettingsScreen';
 import {
   SECTION_SCREEN_STRINGS,
   NEWS_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
-  PROFILE_SCREEN_STRINGS,
+  SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
 } from '../../helpers/LanguageStrings';
 
@@ -110,8 +110,8 @@ const TabNav = TabNavigator(
         )
       })
     },
-    Profile: {
-      screen: ProfileScreen,
+    Settings: {
+      screen: SettingsScreen,
       navigationOptions: props => ({
         tabBarOnPress: ({ scene, jumpToIndex }) => {
           jumpToIndex(scene.index);
@@ -119,11 +119,7 @@ const TabNav = TabNavigator(
         },
         tabBarLabel: PROFILE_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="account-circle"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
+          <MaterialIcons name="settings" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     }

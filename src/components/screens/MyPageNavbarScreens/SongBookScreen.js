@@ -1,12 +1,34 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, FlatList, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, BackgroundImage } from '../../common';
+import { Header, BackgroundImage, SectionListItem } from '../../common';
 import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { dynamicSort } from '../../../helpers/functions';
+import songs2014 from '../../../../assets/songbook/songs2014.json';
 
 const HEIGHT = Dimensions.get('window').height;
 
 class SongBookScreen extends Component {
+  constructor(props) {
+    super(props);
+    const data = [];
+    songs2014.dict.array.forEach(song => {
+      const item = {};
+      item.name = song.string[1];
+      item.melody = song.string[2];
+      item.text = song.string[3];
+      data.push(item);
+    });
+    data.sort(dynamicSort('name'));
+    this.state = {
+      data
+    };
+  }
+
+  componentWillMount() {
+    console.log(this.state.data);
+  }
+
   getStrings() {
     const { language } = this.props;
     const { fields } = SONGBOOK_SCREEN_STRINGS;
@@ -16,27 +38,36 @@ class SongBookScreen extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={2} />
-        <Header title={strings.title} leftIcon={null} navigation={navigation} />
-        <Text style={[styles.textStyle, { color: '#F7A021' }]}>Coming soon!</Text>
+        <View>
+          <Header title={strings.title} leftIcon={null} navigation={navigation} />
+        </View>
+        <FlatList
+          style={{ height: HEIGHT - (Platform.OS === 'ios' ? 113 : 135) }}
+          data={this.state.data}
+          contentContainerStyle={{ alignItems: 'center' }}
+          renderItem={({ item }) => (
+            <SectionListItem
+              sectionTitle={item.name}
+              onPress={() =>
+                screenProps.navigation.navigate('SongScreen', {
+                  name: item.name,
+                  melody: item.melody,
+                  text: item.text
+                })
+              }
+            />
+          )}
+        />
       </View>
     );
   }
 }
 
-const styles = {
-  textStyle: {
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold',
-    fontSize: 36,
-    marginTop: HEIGHT / 3
-  }
-};
 const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
   return { language };

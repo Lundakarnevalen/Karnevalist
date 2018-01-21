@@ -81,7 +81,7 @@ const styles = {
   talkBubbleBottomLeft: {
     backgroundColor: 'transparent',
     position: 'absolute',
-    top: 477,
+    bottom: 60,
     left: 116
   },
   talkBubbleSquareSmall: {

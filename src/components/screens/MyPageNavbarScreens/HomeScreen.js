@@ -32,7 +32,7 @@ class HomeScreen extends Component {
 
   render() {
     const { container } = styles;
-    const { navigation } = this.props;
+    const { navigation, language } = this.props;
     const strings = this.getStrings();
     return (
       <View>
@@ -40,7 +40,7 @@ class HomeScreen extends Component {
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         {this.renderPopover(strings.popoverText)}
         <View style={container}>
-          <CountDown />
+          <CountDown language={language} />
           <CustomButton
             style={'standardButton'}
             width={WIDTH - 50}
