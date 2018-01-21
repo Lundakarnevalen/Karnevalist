@@ -162,7 +162,7 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Forgotten your password?'
   },
   passwordPopupInfo: {
-    SE: 'Var god fyll i din mailadress så skickas ett nytt lösenord till dig',
+    SE: 'Var god fyll i din mejladress så skickas ett nytt lösenord till dig',
     EN: 'Please fill in your email address below to receive a new password'
   },
   cancel: {
@@ -242,7 +242,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   studentUnionArray: {
     SE: [
       studentUnion.SE,
-      'Blekinge Nation',
+      'Blekingska Nation',
       'Göteborgs Nation',
       'Hallands Nation',
       'Helsingkrona Nation',
@@ -256,7 +256,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     ],
     EN: [
       studentUnion.EN,
-      'Blekinge Nation',
+      'Blekingska Nation',
       'Göteborgs Nation',
       'Hallands Nation',
       'Helsingkrona Nation',
