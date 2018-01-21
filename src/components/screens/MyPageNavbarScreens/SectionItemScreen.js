@@ -98,7 +98,7 @@ class SectionItemScreen extends Component {
       <View style={containerStyle}>
         <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id)} />
         <View>
-          <ScrollView>
+          <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
             {image}
             <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
             <Text style={textStyle}>{description}</Text>

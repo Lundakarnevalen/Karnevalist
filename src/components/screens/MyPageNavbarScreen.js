@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -18,7 +18,7 @@ import {
   SONGBOOK_SCREEN_STRINGS
 } from '../../helpers/LanguageStrings';
 
-const SIZE = 30;
+const SIZE = Dimensions.get('window').width / 11;
 
 class MyPageNavbarScreen extends Component {
   componentWillMount() {
@@ -81,6 +81,11 @@ const TabNav = TabNavigator(
       screen: NewsScreen,
       navigationOptions: props => ({
         tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarOptions: {
+          labelStyle: {
+            fontSize: 10
+          }
+        },
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
@@ -128,7 +133,7 @@ const TabNav = TabNavigator(
       activeTintColor: '#F7A021',
       inactiveTintColor: '#A9A9A9',
       labelStyle: {
-        fontSize: 10,
+        fontSize: 8,
         margin: 0
       },
       iconStyle: {

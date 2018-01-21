@@ -15,7 +15,15 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setToken, setEmail } from '../../actions';
-import { Header, Input, DKPicker, CustomButton, CheckBox, BackgroundImage } from '../common';
+import {
+  Header,
+  Input,
+  DKPicker,
+  CustomButton,
+  CheckBox,
+  BackgroundImage,
+  SuperAgileAlert
+} from '../common';
 import Loading from '../common/Loading';
 import { REGISTER_URL } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
@@ -42,7 +50,10 @@ class RegistrationScreen extends Component {
       foodPreferenceError: false,
       loading: false,
       loadingComplete: false,
-      keyboardHeight: 0
+      keyboardHeight: 0,
+      listToTrim: [],
+      alertVisible: false,
+      message: ''
     };
   }
 
@@ -134,8 +145,7 @@ class RegistrationScreen extends Component {
 
   anyErrors() {
     const { errors, foodPreferenceError, foodPreference } = this.state;
-    return (errors.indexOf(true) !== -1 ||
-    (foodPreferenceError && foodPreference !== ''))
+    return errors.indexOf(true) !== -1 || (foodPreferenceError && foodPreference !== '');
   }
 
   trimValues() {
@@ -158,6 +168,7 @@ class RegistrationScreen extends Component {
           style="dropDownButton"
           width={WIDTH}
           onPress={() => {
+            Keyboard.dismiss();
             return tag === 'shirt'
               ? this.setState({ showShirtPicker: true })
               : this.setState({ showStudentUnionPicker: true });
@@ -229,6 +240,8 @@ class RegistrationScreen extends Component {
       showShirtPicker,
       studentUnion,
       showStudentUnionPicker,
+      alertVisible,
+      message,
       activeCarneval2014,
       driversLicense
     } = this.state;
@@ -492,9 +505,15 @@ class RegistrationScreen extends Component {
             onPress={() => {
               this.trimValues();
               if (this.anyEmpty()) {
-                Alert.alert(errorStrings.errorMsgAnyEmpty);
+                this.setState({
+                  alertVisible: true,
+                  message: errorStrings.errorMsgAnyEmpty
+                });
               } else if (this.anyErrors()) {
-                Alert.alert(errorStrings.errorMsgWrongInput);
+                this.setState({
+                  alertVisible: true,
+                  message: errorStrings.errorMsgWrongInput
+                });
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
@@ -524,8 +543,12 @@ class RegistrationScreen extends Component {
                   })
                   .catch(error => {
                     const msg = handleErrorMsg(error.message, strings);
-                    this.setState({ loadingComplete: false, loading: false });
-                    Alert.alert(strings.error, msg);
+                    this.setState({
+                      loadingComplete: false,
+                      loading: false,
+                      alertVisible: true,
+                      message: msg
+                    });
                   });
               }
             }}
@@ -560,6 +583,13 @@ class RegistrationScreen extends Component {
             }}
           />
         ) : null}
+        <SuperAgileAlert
+          alertVisible={alertVisible}
+          setAlertVisible={visible => this.setState({ alertVisible: visible })}
+          buttonsIn={[{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]}
+          header={strings.error}
+          info={message || ''}
+        />
       </View>
     );
   }

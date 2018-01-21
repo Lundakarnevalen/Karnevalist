@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Dimensions, Platform } from 'react-native';
+import { View, TouchableOpacity, FlatList, Dimensions, Platform, RefreshControl, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
+import { setSections } from '../../../actions';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { dynamicSort } from '../../../helpers/functions';
+<<<<<<< HEAD
 import { setProgress } from '../../../actions';
+=======
+import { fetchSections } from '../../../helpers/ApiManager';
+>>>>>>> 3cd44cef6f4c175b6f9249477b7118b1d78a17a6
 
-const height = Dimensions.get('window').height;
+const HEIGHT = Dimensions.get('window').height;
 
 class SectionScreen extends Component {
   constructor(props) {
@@ -17,11 +22,19 @@ class SectionScreen extends Component {
     const { sections } = props;
     this.state = {
       isOpen: false,
-      data: sections || []
+      data: sections,
     };
   }
 
   componentWillMount() {
+    this.setSections();
+  }
+
+  componentWillReceiveProps() {
+    this.setSections();
+  }
+
+  setSections() {
     const { sections } = this.props;
     if (sections) {
       sections.sort(dynamicSort('title'));
@@ -74,6 +87,25 @@ class SectionScreen extends Component {
       </TouchableOpacity>
     );
   }
+  _onRefresh() {
+    fetchSections(sections => {
+     this.props.setSections(sections)
+    });
+  }
+
+  handleSetSectionStatus(favorite, item) {
+    let tmpData = this.state.data;
+    const tmpItem = item;
+    tmpData = tmpData.filter(section => section.id + '' !== item.id + '');
+    if (favorite) {
+      tmpItem.favorite = 'favorite';
+    } else {
+      delete tmpItem.favorite;
+    }
+    tmpData.push(tmpItem);
+    tmpData.sort(dynamicSort('title'));
+    this.setState({ data: tmpData });
+  }
 
   render() {
     const { navigation, screenProps } = this.props;
@@ -90,12 +122,19 @@ class SectionScreen extends Component {
             navigation={navigation}
           />
         </View>
+
         <FlatList
-          style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }
+          style={{ height: HEIGHT - (Platform.OS === 'ios' ? 113 : 135) }}
           data={this.state.data}
-          contentContainerStyle={{ alignItems: 'center' }}
-          renderItem={({ item }) => (
-            <SectionListItem
+          contentContainerStyle={{ alignItems: 'center', paddingBottom: 60 }}
+          renderItem={({ item }) => {
+            return (<SectionListItem
               sectionTitle={item.title}
               sectionInfoText={item.info}
               sectionIcon={item.favorite}
@@ -105,24 +144,14 @@ class SectionScreen extends Component {
                   title: item.title,
                   description: item.info,
                   image: item.image,
-                  setSectionStatus: favorite => {
-                    let tmpData = this.state.data;
-                    const tmpItem = item;
-                    tmpData = tmpData.filter(section => section.id + '' !== item.id + '');
-                    if (favorite) {
-                      tmpItem.favorite = 'favorite';
-                    } else {
-                      delete tmpItem.favorite;
-                    }
-                    tmpData.push(tmpItem);
-                    tmpData.sort(dynamicSort('title'));
-                    this.setState({ data: tmpData });
-                  }
+                  setSectionStatus: favorite => this.handleSetSectionStatus(favorite, item)
                 })
               }
-            />
-          )}
+            />)
+          }}
         />
+        {this.state.data.length === 0 ?
+        <Text style={styles.textStyle}>{strings.refresh}</Text> : null}
       </View>
     );
   }
@@ -140,7 +169,15 @@ const styles = {
     padding: 1,
     backgroundColor: 'transparent',
     width: 60
+  },
+  textStyle: {
+    textAlign: 'center',
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Bold',
+    fontSize: 36,
+    position: 'absolute',
+    top: HEIGHT / 2
   }
 };
 
-export default connect(mapStateToProps, { setProgress })(SectionScreen);
+export default connect(mapStateToProps, { setSections })(SectionScreen);

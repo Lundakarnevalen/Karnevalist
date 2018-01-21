@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView, Text, Keyboard } from 'react-native';
+import { View, Dimensions, ScrollView, Text, Keyboard } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -67,14 +67,46 @@ class LoginScreen extends Component {
       });
   }
 
+  getAlertButtons(message) {
+    const strings = this.getStrings()
+    switch (message) {
+      case strings.emailError:
+      case strings.passwordError:
+        return ([{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }])
+      case strings.passwordPopupInfo:
+        return (
+          [{
+            text: strings.cancel,
+            onPress: () =>
+              this.setState({
+                alertVisible: false,
+                resetPasswordError: '',
+                forgotPasswordEmail: ''
+              })
+          },
+          { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
+        ])
+      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+
+    }
+  }
+
   handleLogin() {
     Keyboard.dismiss();
     const strings = this.getStrings();
     const { email, password } = this.state;
     if (email === '') {
-      Alert.alert(strings.error, strings.emailError);
+      this.setState({
+        alertVisible: true,
+        message: strings.emailError,
+        alertHeader: strings.error
+       })
     } else if (password === '') {
-      Alert.alert(strings.error, strings.passwordError);
+      this.setState({
+        alertVisible: true,
+        message: strings.passwordError,
+        alertHeader: strings.error
+       })
     } else {
       this.setState({ loading: true, loadingComplete: false });
       axios
@@ -93,7 +125,11 @@ class LoginScreen extends Component {
         .catch(error => {
           const msg = handleErrorMsg(error.message, strings);
           this.setState({ loading: false, loadingComplete: false });
-          Alert.alert(strings.error, msg);
+          this.setState({
+            alertVisible: true,
+            message: msg,
+            alertHeader: strings.error
+           })
         });
     }
   }
@@ -107,7 +143,8 @@ class LoginScreen extends Component {
       loadingComplete,
       forgotPasswordEmail,
       alertVisible,
-      resetPasswordError
+      resetPasswordError,
+      message
     } = this.state;
     const strings = this.getStrings();
     return (
@@ -152,7 +189,11 @@ class LoginScreen extends Component {
             <CustomButton
               text={strings.forgotPassword}
               onPress={() => {
-                this.setState({ alertVisible: true });
+                this.setState({
+                  alertVisible: true,
+                  message: strings.passwordPopupInfo,
+                  alertHeader: strings.passwordPopupHeader
+                });
               }}
               style="textButton"
             />
@@ -174,21 +215,12 @@ class LoginScreen extends Component {
             <SuperAgileAlert
               alertVisible={alertVisible}
               setAlertVisible={visible => this.setState({ alertVisible: visible })}
-              buttonsIn={[
-                {
-                  text: strings.cancel,
-                  onPress: () =>
-                    this.setState({
-                      alertVisible: false,
-                      resetPasswordError: ' ',
-                      forgotPasswordEmail: ''
-                    })
-                },
-                { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
-              ]}
-              header={strings.passwordPopupHeader}
-              info={strings.passwordPopupInfo}
+              buttonsIn={this.getAlertButtons(message)}
+              header={this.state.alertHeader || ''}
+              info={this.state.message || ''}
             >
+            {message === strings.passwordPopupInfo ? (
+              <View>
               <Input
                 placeholder={strings.email}
                 width={Dimensions.get('window').width / 1.2}
@@ -201,6 +233,9 @@ class LoginScreen extends Component {
                 onSubmitEditing={() => this.handleResetPassword()}
               />
               <Text style={errorTextStyle}>{resetPasswordError}</Text>
+              </View>
+            )
+            : null}
             </SuperAgileAlert>
           </View>
         </ScrollView>

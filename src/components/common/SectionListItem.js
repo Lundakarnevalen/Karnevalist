@@ -36,16 +36,6 @@ class SectionListItem extends Component {
       );
     }
   }
-  renderContentText(sectionContent) {
-    const { contentStyle } = styles;
-    if (sectionContent) {
-      return (
-        <Text numberOfLines={1} style={contentStyle}>
-          {sectionContent}
-        </Text>
-      );
-    }
-  }
 
   render() {
     const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
