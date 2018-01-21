@@ -18,7 +18,7 @@ const expiredTokenTitle = {
 
 const expiredTokenMessage = {
   SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
-  EN: 'Your sessions has expired please login again to continue '
+  EN: 'Your session has expired please login again to continue '
 };
 
 const studentUnion = {
@@ -91,6 +91,11 @@ const cancel = {
   EN: 'Cancel'
 };
 
+const ok = {
+  SE: 'OK',
+  EN: 'OK'
+}
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -109,6 +114,7 @@ export const LOGIN_SCREEN_STRINGS = {
     'errorMsgInternal',
     'passwordPopupHeader',
     'passwordPopupInfo',
+    'ok',
     'cancel',
     'resetPassword',
     'responseFail',
@@ -169,6 +175,7 @@ export const LOGIN_SCREEN_STRINGS = {
     SE: 'Avbryt',
     EN: 'Cancel'
   },
+  ok,
   resetPassword: {
     SE: 'Återställ lösenord',
     EN: 'Reset password'
@@ -209,7 +216,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorMsg400',
     'errorMsg401',
     'errorMsg404',
-    'errorMsgInternal'
+    'errorMsgInternal',
+    'ok'
   ],
   header: {
     SE: 'Skapa profil',
@@ -288,7 +296,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Invalid email or password'
   },
   errorMsg404,
-  errorMsgInternal
+  errorMsgInternal,
+  ok
 };
 
 export const REGISTRATION_INFO_SCREEN_STRINGS = {
@@ -344,7 +353,7 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Jag förstår',
     EN: 'I understand'
-  }
+  },
 };
 
 export const SECTION_SCREEN_STRINGS = {
@@ -427,7 +436,14 @@ export const CONFIRM_PAGE_STRINGS = {
     'send',
     'toSections',
     'expiredTokenTitle',
-    'expiredTokenMessage'
+    'expiredTokenMessage',
+    'alertErrorHeader',
+    'alertSuccessHeader',
+    'ok',
+    'confirmMessage',
+    'confirmHeader',
+    'yes',
+    'cancel'
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -439,7 +455,7 @@ export const CONFIRM_PAGE_STRINGS = {
   },
   selectionOK: {
     SE: 'Tack för dina val',
-    EN: 'Thanks for your choices'
+    EN: 'Thank you for your choices'
   },
   send: {
     SE: 'Skicka',
@@ -450,7 +466,29 @@ export const CONFIRM_PAGE_STRINGS = {
     EN: 'To section selection'
   },
   expiredTokenTitle,
-  expiredTokenMessage
+  expiredTokenMessage,
+  alertErrorHeader: {
+    SE: 'Fel',
+    EN: 'Error'
+  },
+  alertSuccessHeader: {
+    SE: 'WEHEJ',
+    EN: 'WEHEJ'
+  },
+  ok,
+  yes: {
+    SE: 'JA',
+    EN: 'YES'
+  },
+  confirmMessage: {
+    SE: 'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
+    EN: 'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
+  },
+  confirmHeader: {
+    SE: 'Bekräfta',
+    EN: 'Confirm'
+  },
+  cancel
 };
 
 export const MY_PROFILE_SCREEN_STRINGS = {
@@ -484,7 +522,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'updateInfoMessageSuccess',
     'updateInfoMessageFail',
     'expiredTokenTitle',
-    'expiredTokenMessage'
+    'expiredTokenMessage',
+    'ok'
   ],
   title: {
     SE: 'Användarinfo',
@@ -570,7 +609,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Something went wrong'
   },
   expiredTokenTitle,
-  expiredTokenMessage
+  expiredTokenMessage,
+  ok
 };
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {
