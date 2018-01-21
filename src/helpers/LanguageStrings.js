@@ -78,13 +78,9 @@ const phoneNumber = {
   SE: 'Telefonnummer',
   EN: 'Phone number'
 };
-const foodPreferences = {
+const foodPreference = {
   SE: 'Matpreferenser',
   EN: 'Food preferences'
-};
-const personalNumber = {
-  SE: 'Personnummer',
-  EN: 'Personal number'
 };
 const driversLicense = {
   SE: 'Jag har körkort',
@@ -201,7 +197,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'postNumber',
     'city',
     'phoneNumber',
-    'foodPreferences',
+    'foodPreference',
     'shirtSize',
     'shirtSizeArray',
     'studentUnion',
@@ -236,7 +232,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   postNumber,
   city,
   phoneNumber,
-  foodPreferences,
+  foodPreference,
   shirtSize,
   shirtSizeArray: {
     SE: [shirtSize.SE, 'Small', 'Medium', 'Large'],
@@ -467,7 +463,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'postNumber',
     'city',
     'phoneNumber',
-    'foodPreferences',
+    'foodPreference',
     'language',
     'careOf',
     'driversLicense',
@@ -501,7 +497,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   postNumber,
   city,
   phoneNumber,
-  foodPreferences,
+  foodPreference,
   careOf: {
     //TODO make accurate description
     SE: 'C/O',
