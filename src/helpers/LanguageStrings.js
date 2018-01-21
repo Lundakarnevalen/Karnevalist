@@ -390,8 +390,8 @@ export const HOME_SCREEN_STRINGS = {
     EN: 'Rank the sections after which one you most want to work with.'
   },
   SendIn: {
-    SE: 'Checka ut.',
-    EN: 'Check out.'
+    SE: 'Skicka in din ansökan.',
+    EN: 'Send in you application.'
   }
 };
 

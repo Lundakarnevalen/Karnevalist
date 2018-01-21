@@ -3,10 +3,29 @@ import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import TimelineItem from './TimelineItem';
 import { HOME_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
+import { dynamicSort } from '../../helpers/functions';
+import { getFavoriteSections } from '../../helpers/LocalSave';
 
 const WIDTH = Dimensions.get('window').width;
 
 class Timeline extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      overFiveSections: false
+    };
+  }
+
+  componentWillMount() {
+    getFavoriteSections(sections => {
+      console.log(sections);
+      console.log(sections.length);
+      if (sections.length < 5) {
+       this.setState({ overFiveSections: false })
+     } else
+      this.setState({ overFiveSections: true })
+    });
+  }
   getStrings() {
     const { language } = this.props;
     const { fields } = HOME_SCREEN_STRINGS;
@@ -16,7 +35,7 @@ class Timeline extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
     return (
       <View>
@@ -28,24 +47,50 @@ class Timeline extends Component {
         />
         <View style={styles.barView1} />
         <TimelineItem
-          style={'notDone'}
+          style={this.props.progress >= 2 ? 'done' : 'notDone'}
           width={WIDTH - 50}
           text={strings.ChooseSections}
           onPress={() => navigation.navigate('Sections')}
         />
         <View style={styles.barView23} />
         <TimelineItem
-          style={'notDone'}
+          style={this.props.progress >= 3 ? 'done' : 'notDone'}
           width={WIDTH - 50}
           text={strings.Rank}
-          onPress={() => navigation.navigate('Sections')}
+          onPress={this.props.progress >= 3 ?
+            () => screenProps.navigation.navigate('ConfirmPage', {
+            navigation,
+            setSectionStatus: id => {
+              let tmpData = this.state.data;
+              const tmpItem = tmpData.filter(section => section.id + '' === id + '')[0];
+              tmpData = tmpData.filter(section => section.id + '' !== id + '');
+              delete tmpItem.favorite;
+              tmpData.push(tmpItem);
+              tmpData.sort(dynamicSort('title'));
+              this.setState({ data: tmpData });
+            }
+          }) : () => screenProps.navigation.navigate('HomeScreen')
+        }
         />
         <View style={styles.barView4} />
         <TimelineItem
-          style={'notDone'}
+          style={this.props.progress >= 3 ? 'done' : 'notDone'}
           width={WIDTH - 50}
           text={strings.SendIn}
-          onPress={() => navigation.navigate('Sections')}
+          onPress={this.props.progress >= 3 ?
+            () => screenProps.navigation.navigate('ConfirmPage', {
+            navigation,
+            setSectionStatus: id => {
+              let tmpData = this.state.data;
+              const tmpItem = tmpData.filter(section => section.id + '' === id + '')[0];
+              tmpData = tmpData.filter(section => section.id + '' !== id + '');
+              delete tmpItem.favorite;
+              tmpData.push(tmpItem);
+              tmpData.sort(dynamicSort('title'));
+              this.setState({ data: tmpData });
+            }
+          }) : () => screenProps.navigation.navigate('HomeScreen')
+        }
         />
       </View>
     );
@@ -95,8 +140,9 @@ const styles = {
   },
 };
 
-const mapStateToProps = ({ currentLanguage }) => {
+const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
-  return { language };
+  const { progress } = userInformation;
+  return { language, progress };
 };
 export default connect(mapStateToProps, null)(Timeline);

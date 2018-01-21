@@ -181,6 +181,7 @@ class ConfirmPage extends Component {
     axios
       .post(SECTION_PRIORITY_URL, { sectionPriorities }, { headers })
       .then(response => {
+        console.log(response.data);
         if (response.data.success) {
           this.props.setSectionPriorities(sectionPriorities);
           this.props.setProgress(PROGRESS.SENT_SECTIONS);

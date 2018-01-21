@@ -19,7 +19,7 @@ class HomeScreen extends Component {
 
   render() {
     const { container } = styles;
-    const { navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
     return (
       <View>
@@ -28,7 +28,7 @@ class HomeScreen extends Component {
         <View style={{ height: 20 }} />
         <View style={container}>
           <CountDown />
-          <Timeline />
+          <Timeline navigation={navigation} screenProps={screenProps} />
         </View>
       </View>
     );

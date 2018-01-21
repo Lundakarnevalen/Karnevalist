@@ -70,10 +70,13 @@ class TimelineItem extends Component {
     }
   }
   render() {
-    const { onPress, text, width = WIDTH / 1.5 } = this.props;
-    const { button, roundView, textButton, barView, textView } = styles;
+    const { text, navigation } = this.props;
+    const { button, roundView, textButton, textView } = styles;
     return (
-      <TouchableOpacity onPress={onPress} style={[button]}>
+      <TouchableOpacity
+        style={[button]}
+        onPress={() => this.props.onPress()}
+      >
         <View style={[this.getStyle(), roundView]} />
         <View style={[textView]}>
         <Text style={[this.getTextStyle(), textButton]}>{text}</Text>

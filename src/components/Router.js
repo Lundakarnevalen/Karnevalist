@@ -23,12 +23,6 @@ const LoggedIn = StackNavigator({
       header: null
     }
   },
-  ConfirmPage: {
-    screen: ConfirmPage,
-    navigationOptions: {
-      header: null
-    }
-  },
   SectionItemScreen: {
     screen: SectionItemScreen,
     navigationOptions: {
@@ -89,7 +83,13 @@ const Router = StackNavigator(
       navigationOptions: {
         header: null
       }
-    }
+    },
+    ConfirmPage: {
+      screen: ConfirmPage,
+      navigationOptions: {
+        header: null
+      }
+    },
   },
   {
     mode: 'modal',
