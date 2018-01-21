@@ -15,7 +15,15 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setToken, setEmail } from '../../actions';
-import { Header, Input, DKPicker, CustomButton, CheckBox, BackgroundImage, SuperAgileAlert } from '../common';
+import {
+  Header,
+  Input,
+  DKPicker,
+  CustomButton,
+  CheckBox,
+  BackgroundImage,
+  SuperAgileAlert
+} from '../common';
 import Loading from '../common/Loading';
 import { REGISTER_URL } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
@@ -137,8 +145,7 @@ class RegistrationScreen extends Component {
 
   anyErrors() {
     const { errors, foodPreferenceError, foodPreference } = this.state;
-    return (errors.indexOf(true) !== -1 ||
-    (foodPreferenceError && foodPreference !== ''))
+    return errors.indexOf(true) !== -1 || (foodPreferenceError && foodPreference !== '');
   }
 
   trimValues() {
@@ -161,6 +168,7 @@ class RegistrationScreen extends Component {
           style="dropDownButton"
           width={WIDTH}
           onPress={() => {
+            Keyboard.dismiss();
             return tag === 'shirt'
               ? this.setState({ showShirtPicker: true })
               : this.setState({ showStudentUnionPicker: true });

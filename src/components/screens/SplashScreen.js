@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native';
+import { Animated, View, Image, Text, StatusBar, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { getItem, getPopoverStatus } from '../../helpers/LocalSave';
 import { BackgroundImage } from '../common';
-import { TOKEN_URL, SECTION_URL, IMAGE_URL } from '../../helpers/Constants';
+import { TOKEN_URL } from '../../helpers/Constants';
 import {
   setSections,
   setToken,
@@ -13,8 +13,7 @@ import {
   setSectionScreenPopover,
   setHomeScreenPopover
 } from '../../actions';
-
-const WIDTH = Dimensions.get('window').width;
+import { fetchSections } from '../../helpers/ApiManager';
 
 class SplashScreen extends Component {
   constructor(props) {
@@ -28,71 +27,9 @@ class SplashScreen extends Component {
     StatusBar.setBarStyle('light-content', true);
     this.spin();
     this.authorize();
-    this.getSectionInfo();
     getPopoverStatus('homeScreenPopover', bool => this.props.setHomeScreenPopover(bool));
     getPopoverStatus('sectionScreenPopover', bool => this.props.setSectionScreenPopover(bool));
-  }
-
-  getImage(url, section) {
-    const tempSection = section;
-    axios
-      .get(url)
-      .then(r => {
-        const image = (
-          <Image
-            style={{ width: WIDTH, height: WIDTH, resizeMode: 'contain' }}
-            source={{ uri: r.data.source_url }}
-            defaultSource={require('../../../res/Monstergubbe.png')}
-          />
-        );
-
-        const rowImage = (
-          <Image
-            style={styles.rowImage}
-            source={{ uri: r.data.source_url }}
-            defaultSource={require('../../../res/Monstergubbe.png')}
-          />
-        );
-
-        tempSection.imguri = r.data.source_url;
-        tempSection.image = image;
-        tempSection.rowImage = rowImage;
-        this.props.setSections(tempSection);
-        return tempSection;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-  stripHtmlString(string) {
-    return string
-      .replace(/(<([^>]+)>)/gi, '')
-      .replace(/(&#8211;)/gi, '-')
-      .replace(/(&nbsp;)/gi, '')
-      .replace(/(&#8230;)/gi, '...');
-  }
-
-  getSectionInfo() {
-    axios
-      .get(SECTION_URL)
-      .then(response => {
-        response.data.forEach(item => {
-          const strippedContent = this.stripHtmlString(item.content.rendered);
-          const strippedTitle = this.stripHtmlString(item.title.rendered);
-          const imgId = item.featured_media;
-          const imgUrl = IMAGE_URL + imgId;
-          const section = {
-            key: item.id,
-            id: item.id,
-            title: strippedTitle,
-            info: strippedContent
-          };
-          this.getImage(imgUrl, section);
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    fetchSections(sections => this.props.setSections(sections));
   }
 
   authorize() {

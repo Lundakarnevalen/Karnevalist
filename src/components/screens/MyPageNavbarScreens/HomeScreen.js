@@ -36,7 +36,7 @@ class HomeScreen extends Component {
     const strings = this.getStrings();
     return (
       <View style={{ flex: 1 }}>
-        <BackgroundImage pictureNumber={3} />
+        <BackgroundImage pictureNumber={1} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <View style={container}>
           <CountDown language={language} />
