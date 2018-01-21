@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Header, SectionListItem, BackgroundImage } from '../../common';
+import { Header, SectionListItem, BackgroundImage, Popover } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
-import { setSections } from '../../../actions';
+import { setSections, setSectionScreenPopover } from '../../../actions';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { dynamicSort } from '../../../helpers/functions';
@@ -72,7 +72,8 @@ class SectionScreen extends Component {
     return (
       <TouchableOpacity
         style={rightIconStyle}
-        onPress={() =>
+        onPress={() => {
+          this.props.setSectionScreenPopover(false);
           screenProps.navigation.navigate('ConfirmPage', {
             navigation,
             setSectionStatus: id => {
@@ -84,8 +85,8 @@ class SectionScreen extends Component {
               tmpData.sort(dynamicSort('title'));
               this.setState({ data: tmpData });
             }
-          })
-        }
+          });
+        }}
       >
         <MaterialIcons name="local-mall" size={30} color={'white'} />
       </TouchableOpacity>
@@ -109,6 +110,19 @@ class SectionScreen extends Component {
     tmpData.push(tmpItem);
     tmpData.sort(dynamicSort('title'));
     this.setState({ data: tmpData });
+  }
+
+  renderPopover(text) {
+    const { popover } = this.props;
+    if (popover)
+      return (
+        <Popover
+          onPress={() => this.props.setSectionScreenPopover(false)}
+          type={'topRight'}
+          text={text}
+          name={'sectionScreenPopover'}
+        />
+      );
   }
 
   render() {
@@ -152,6 +166,7 @@ class SectionScreen extends Component {
             );
           }}
         />
+        {this.renderPopover(strings.popoverText)}
         {this.state.data.length === 0 ? (
           <Text style={styles.textStyle}>{strings.refresh}</Text>
         ) : null}
@@ -160,10 +175,15 @@ class SectionScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ userInformation, sections, currentLanguage }) => {
+const mapStateToProps = ({ userInformation, sections, currentLanguage, popoverStatus }) => {
   const { language } = currentLanguage;
   const { progress } = userInformation;
-  return { sections: sections.sections, language, progress };
+  return {
+    sections: sections.sections,
+    language,
+    progress,
+    popover: popoverStatus.sectionScreenPopover
+  };
 };
 
 const styles = {
@@ -183,4 +203,4 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps, { setSections })(SectionScreen);
+export default connect(mapStateToProps, { setSections, setSectionScreenPopover })(SectionScreen);
