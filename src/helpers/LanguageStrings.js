@@ -78,13 +78,9 @@ const phoneNumber = {
   SE: 'Telefonnummer',
   EN: 'Phone number'
 };
-const foodPreferences = {
+const foodPreference = {
   SE: 'Matpreferenser',
   EN: 'Food preferences'
-};
-const personalNumber = {
-  SE: 'Personnummer',
-  EN: 'Personal number'
 };
 const driversLicense = {
   SE: 'Jag har körkort',
@@ -201,7 +197,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'postNumber',
     'city',
     'phoneNumber',
-    'foodPreferences',
+    'foodPreference',
     'shirtSize',
     'shirtSizeArray',
     'studentUnion',
@@ -236,7 +232,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   postNumber,
   city,
   phoneNumber,
-  foodPreferences,
+  foodPreference,
   shirtSize,
   shirtSizeArray: {
     SE: [shirtSize.SE, 'Small', 'Medium', 'Large'],
@@ -379,11 +375,11 @@ export const HOME_SCREEN_STRINGS = {
   }
 };
 
-export const PROFILE_SCREEN_STRINGS = {
+export const SETTINGS_SCREEN_STRINGS = {
   fields: ['title', 'profile', 'registration', 'logout'],
   title: {
-    SE: 'Min profil',
-    EN: 'My Profile'
+    SE: 'Inställningar',
+    EN: 'Settings'
   },
   profile: {
     SE: 'Min profil',
@@ -467,7 +463,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'postNumber',
     'city',
     'phoneNumber',
-    'foodPreferences',
+    'foodPreference',
     'language',
     'careOf',
     'driversLicense',
@@ -501,7 +497,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   postNumber,
   city,
   phoneNumber,
-  foodPreferences,
+  foodPreference,
   careOf: {
     //TODO make accurate description
     SE: 'C/O',
@@ -592,6 +588,18 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
 export const LOADING_STRINGS = {
   fields: ['loading'],
   loading
+};
+
+export const COUNT_DOWN_STRINGS = {
+  fields: ['karneval', 'upprop'],
+  karneval: {
+    SE: 'Det är karneval!',
+    EN: 'It\'s carnival!'
+  },
+  upprop: {
+    SE: 'Det är upprop!',
+    EN: 'It\'s call day!'
+  }
 };
 
 export const ERROR_MSG_INPUT_FIELD = {
