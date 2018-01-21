@@ -19,7 +19,7 @@ class HomeScreen extends Component {
 
   render() {
     const { container } = styles;
-    const { navigation, screenProps } = this.props;
+    const { navigation, screenProps, language } = this.props;
     const strings = this.getStrings();
     return (
       <View>
