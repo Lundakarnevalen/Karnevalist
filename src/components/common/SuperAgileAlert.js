@@ -35,7 +35,8 @@ class SuperAgileAlert extends Component {
             {
               borderBottomLeftRadius: buttonsIn.length === 1 ? 5 : this.getBorderLeftRadius(i),
               borderBottomRightRadius: buttonsIn.length === 1 ? 5 : this.getBorderRightRadius(i),
-              backgroundColor: '#F7A021'
+              backgroundColor: '#F7A021',
+              borderLeftWidth: i > 0 ? 1 : 0
             }
           ]}
         >
