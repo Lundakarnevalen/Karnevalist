@@ -12,8 +12,9 @@ class SongBookScreen extends Component {
   constructor(props) {
     super(props);
     const data = [];
-    songs2014.dict.array.forEach(song => {
+    songs2014.dict.array.forEach((song, i) => {
       const item = {};
+      item.key = i;
       item.name = song.string[1];
       item.melody = song.string[2];
       item.text = song.string[3];
@@ -23,10 +24,6 @@ class SongBookScreen extends Component {
     this.state = {
       data
     };
-  }
-
-  componentWillMount() {
-    console.log(this.state.data);
   }
 
   getStrings() {
@@ -49,7 +46,7 @@ class SongBookScreen extends Component {
         <FlatList
           style={{ height: HEIGHT - (Platform.OS === 'ios' ? 113 : 135) }}
           data={this.state.data}
-          contentContainerStyle={{ alignItems: 'center' }}
+          contentContainerStyle={{ alignItems: 'center', paddingBottom: 60 }}
           renderItem={({ item }) => (
             <SectionListItem
               sectionTitle={item.name}

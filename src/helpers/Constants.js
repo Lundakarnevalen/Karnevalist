@@ -1,3 +1,5 @@
+import { NavigationActions } from 'react-navigation'
+
 export const TOKEN_URL = 'https://api.10av10.com/api/hello/';
 export const SECTION_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
 export const IMAGE_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/media/';
@@ -11,3 +13,9 @@ export const PROGRESS = Object.freeze({
   CHOOSE_SECTIONS: 2,
   SENT_SECTIONS: 3
 })
+
+export const LOGOUT_RESET_ACTION = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
+  key: null
+});
