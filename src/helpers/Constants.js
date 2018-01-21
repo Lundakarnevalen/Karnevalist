@@ -12,6 +12,7 @@ export const USER_URL = BASE_URL + '/api/user/';
 export const NEWS_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/posts?category=';
 
 export const PROGRESS = Object.freeze({
+  REGISTER: 0,
   CHECK_IN: 1,
   CHOOSE_SECTIONS: 2,
   SENT_SECTIONS: 3

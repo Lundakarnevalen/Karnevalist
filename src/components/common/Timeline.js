@@ -35,15 +35,28 @@ class Timeline extends Component {
   render() {
     const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
+    /*Problemet är nu om man kan välja sektioner innna man checkat in.
+    Om om man kan det så behöver vi kunna se till att den man är på inte
+    flyttas till Skicka in förrän efter att man både har valt 5 och checkat in*/
     return (
       <View>
         <TimelineItem
           style={'done'}
           width={WIDTH - 50}
-          text={strings.CheckIn}
+          text={strings.Register}
           onPress={() => navigation.navigate('HomeScreen')}
         />
         <View style={styles.barView1} />
+        <TimelineItem
+          style={this.props.progress >= 1 ? 'done' : 'notDone'} //Ändra så progress ändras när man checkat in
+          width={WIDTH - 50}
+          focus={this.props.progress === 0}
+          text={strings.CheckIn}
+          onPress={this.props.progress >= 1 ?
+            () => navigation.navigate('HomeScreen')
+            : () => navigation.navigate('HomeScreen')} //Ändra till var man kan checka in.
+        />
+        <View style={styles.barView23} />
         <TimelineItem
           style={this.props.progress >= 2 ? 'done' : 'notDone'}
           width={WIDTH - 50}
@@ -99,7 +112,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: -25,
-    marginBottom: -38,
+    marginBottom: -22,
     marginLeft: 24
   },
   barView23: {
@@ -108,7 +121,8 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: -10,
+    marginTop: -22,
+    marginBottom: -38,
     marginLeft: 24
   },
   barView4: {
