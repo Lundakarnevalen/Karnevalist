@@ -23,7 +23,7 @@ class SplashScreen extends Component {
     StatusBar.setBarStyle('light-content', true);
     this.spin();
     this.authorize();
-    // fetchSections((sections) => this.props.setSections(sections));
+    fetchSections((sections) => this.props.setSections(sections));
   }
 
   authorize() {
