@@ -8,6 +8,7 @@ import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
 import MyRegistrationScreen from './screens/MyPageNavbarScreens/MyRegistrationScreen';
 import ConfirmPage from './screens/ConfirmPage';
+import SongScreen from './screens/MyPageNavbarScreens/SongScreen';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
 
 const LoggedIn = StackNavigator({
@@ -25,6 +26,12 @@ const LoggedIn = StackNavigator({
   },
   ConfirmPage: {
     screen: ConfirmPage,
+    navigationOptions: {
+      header: null
+    }
+  },
+  SongScreen: {
+    screen: SongScreen,
     navigationOptions: {
       header: null
     }

@@ -5,18 +5,16 @@ import {
   View,
   Dimensions,
   ScrollView,
-  TouchableOpacity,
-  Keyboard,
-  Platform
+  TouchableOpacity
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
-import { USER_URL } from '../../../helpers/Constants';
-import { logout } from '../../../helpers/functions';
+import { USER_URL, LOGOUT_RESET_ACTION } from '../../../helpers/Constants';
 import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../../helpers/ApiManager';
+import { removeItem } from '../../../helpers/LocalSave';
 
 const HEIGHT = Dimensions.get('window').height;
 
@@ -39,7 +37,6 @@ class MyProfileScreen extends Component {
   }
 
   getUserInfo() {
-    const strings = this.getStrings();
     const url = USER_URL + this.props.email;
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
@@ -53,12 +50,7 @@ class MyProfileScreen extends Component {
       })
       .catch(error => {
         if (error.response.status === 401)
-          logout(
-            this.props.navigation,
-            true,
-            strings.expiredTokenTitle,
-            strings.expiredTokenMessage
-          );
+          this.handleLogout()
         const msg = handleErrorMsg(error.message);
         console.log(msg);
       });
@@ -77,22 +69,38 @@ class MyProfileScreen extends Component {
   }
 
   getRightIcon() {
+    const strings = this.getStrings();
     const { rightIconStyle } = styles;
     return (
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
-          if (this.state.editMode && this.state.changesMade) this.setState({ alertVisible: true });
+          if (this.state.editMode && this.state.changesMade)
+            this.setState({
+              alertVisible: true,
+              message: strings.popUpInfo,
+              alertHeader: strings.popUpHeader
+            });
           this.setState({ editMode: !this.state.editMode });
         }}
       >
         <MaterialIcons
           name={this.state.editMode ? 'done' : 'edit'}
           style={{ color: 'white', right: 0 }}
-          size={35}
+          size={30}
         />
       </TouchableOpacity>
     );
+  }
+  handleLogout() {
+    const strings = this.getStrings()
+      removeItem('email');
+      removeItem('accessToken');
+      this.setState({
+        alertVisible: true,
+        message: strings.expiredTokenMessage,
+        alertHeader: strings.expiredTokenTitle,
+     })
   }
 
   saveChanges() {
@@ -120,6 +128,8 @@ class MyProfileScreen extends Component {
         this.setState({ success, showToast: true, changesMade: false });
       })
       .catch(error => {
+        if (error.response.status === 401)
+          this.handleLogout()
         const msg = handleErrorMsg(error.message);
         console.log(msg);
       });
@@ -134,14 +144,15 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      const color = (editMode && (key !== 'email')) ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
+      const color =
+        editMode && key !== 'email' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
       return (
         <Input
           extraContainerStyle={{ backgroundColor: color }}
           key={key}
           placeholder={labels[key]}
           value={user[key]}
-          editable={editMode && (key !== 'email')}
+          editable={editMode && key !== 'email'}
           onChangeText={text => {
             user[key] = text;
             this.setState({ user, changesMade: true });
@@ -150,6 +161,29 @@ class MyProfileScreen extends Component {
       );
     });
     return textFields;
+  }
+
+  setAlertVisible(visible, message) {
+    const strings = this.getStrings();
+    this.setState({ alertVisible: visible })
+    if (message === strings.expiredTokenMessage)
+      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
+  }
+
+  renderAlertButtons(message) {
+    const strings = this.getStrings()
+    switch (message) {
+      case strings.expiredTokenMessage:
+        return ([
+          { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
+        ])
+      case strings.popUpInfo:
+        return ([
+          { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+          { text: strings.save, onPress: () => this.saveChanges() }
+        ])
+      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+    }
   }
 
   renderMainView() {
@@ -164,7 +198,7 @@ class MyProfileScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { alertVisible, success, showToast } = this.state;
+    const { alertVisible, success, showToast, message, alertHeader } = this.state;
     const strings = this.getStrings();
     return (
       <View>
@@ -178,16 +212,10 @@ class MyProfileScreen extends Component {
         />
         <SuperAgileAlert
           alertVisible={alertVisible}
-          setAlertVisible={visible => this.setState({ alertVisible: visible })}
-          buttonsIn={[
-            {
-              text: strings.cancel,
-              onPress: () => this.setState({ alertVisible: false })
-            },
-            { text: strings.save, onPress: () => this.saveChanges() }
-          ]}
-          header={strings.popUpHeader}
-          info={strings.popUpInfo}
+          setAlertVisible={visible => this.setAlertVisible(visible, message)}
+          buttonsIn={this.renderAlertButtons(message)}
+          header={alertHeader}
+          info={message}
         />
         {this.renderMainView()}
       </View>

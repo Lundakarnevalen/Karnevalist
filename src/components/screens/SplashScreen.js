@@ -38,8 +38,17 @@ class SplashScreen extends Component {
           />
         );
 
+        const rowImage = (
+          <Image
+            style={styles.rowImage}
+            source={{ uri: r.data.source_url }}
+            defaultSource={require('../../../res/Monstergubbe.png')}
+          />
+        );
+
         tempSection.imguri = r.data.source_url;
         tempSection.image = image;
+        tempSection.rowImage = rowImage;
         this.props.setSections(tempSection);
         return tempSection;
       })
@@ -163,6 +172,14 @@ const styles = {
     color: 'white',
     fontFamily: 'Avenir Next Medium',
     backgroundColor: 'transparent'
+  },
+  rowImage: {
+    width: 40,
+    height: 40,
+    alignSelf: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 8
   }
 };
 
