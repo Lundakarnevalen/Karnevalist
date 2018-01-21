@@ -23,7 +23,7 @@ class Popover extends Component {
     if (this.props.type === 'bottomLeft')
       return (
         <TouchableOpacity
-          onPress={() => this.props.onPress}
+          onPress={this.props.onPress}
           style={[talkBubbleBottomLeft, this.zIndexWorkaround(1000)]}
         >
           <PulsatingView animate>
@@ -37,7 +37,7 @@ class Popover extends Component {
     if (this.props.type === 'topRight')
       return (
         <TouchableOpacity
-          onPress={() => this.renderOnPress()}
+          onPress={this.props.onPress}
           style={[talkBubbleTopRight, this.zIndexWorkaround(1000)]}
         >
           <PulsatingView animate>
@@ -81,8 +81,8 @@ const styles = {
   talkBubbleBottomLeft: {
     backgroundColor: 'transparent',
     position: 'absolute',
-    bottom: 60,
-    left: 116
+    bottom: 4,
+    left: 117
   },
   talkBubbleSquareSmall: {
     width: 200,

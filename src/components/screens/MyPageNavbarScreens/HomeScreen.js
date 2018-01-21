@@ -35,10 +35,9 @@ class HomeScreen extends Component {
     const { navigation, language } = this.props;
     const strings = this.getStrings();
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <BackgroundImage pictureNumber={3} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
-        {this.renderPopover(strings.popoverText)}
         <View style={container}>
           <CountDown language={language} />
           <CustomButton
@@ -48,6 +47,7 @@ class HomeScreen extends Component {
             onPress={() => navigation.navigate('Sections')}
           />
         </View>
+        {this.renderPopover(strings.popoverText)}
       </View>
     );
   }

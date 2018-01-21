@@ -86,10 +86,16 @@ const TabNav = TabNavigator(
     Sections: {
       screen: SectionScreen,
       navigationOptions: props => ({
-        tabBarOnPress: (scene, jumpToIndex) => {
-          jumpToIndex(scene.index);
-          props.screenProps.setHomeScreenPopover(false);
-        },
+        tabBarOnPress:
+          Platform.OS === 'ios'
+            ? (scene, jumpToIndex) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              }
+            : ({ scene, jumpToIndex }) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
         tabBarIcon: ({ tintColor, focused }) => (
@@ -100,10 +106,16 @@ const TabNav = TabNavigator(
     SongBook: {
       screen: SongBookScreen,
       navigationOptions: props => ({
-        tabBarOnPress: (scene, jumpToIndex) => {
-          jumpToIndex(scene.index);
-          props.screenProps.setHomeScreenPopover(false);
-        },
+        tabBarOnPress:
+          Platform.OS === 'ios'
+            ? (scene, jumpToIndex) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              }
+            : ({ scene, jumpToIndex }) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons name="local-library" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
@@ -113,11 +125,17 @@ const TabNav = TabNavigator(
     Settings: {
       screen: SettingsScreen,
       navigationOptions: props => ({
-        tabBarOnPress: (scene, jumpToIndex) => {
-          jumpToIndex(scene.index);
-          props.screenProps.setHomeScreenPopover(false);
-        },
-        tabBarLabel: PROFILE_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarOnPress:
+          Platform.OS === 'ios'
+            ? (scene, jumpToIndex) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              }
+            : ({ scene, jumpToIndex }) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              },
+        tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons name="settings" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
