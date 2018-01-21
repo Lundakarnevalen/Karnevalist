@@ -96,8 +96,8 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -22,
-    marginBottom: -30,
+    marginTop: -29,
+    marginBottom: -40,
     marginLeft: 22
   },
   barView23: {
@@ -106,7 +106,7 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: -30,
+    margin: -40,
     marginLeft: 22
   },
   barView4: {
@@ -115,8 +115,8 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -30,
-    marginBottom: -22,
+    marginTop: -40,
+    marginBottom: -29,
     marginLeft: 22
   },
 };

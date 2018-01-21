@@ -8,11 +8,7 @@ import { setSections } from '../../../actions';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { dynamicSort } from '../../../helpers/functions';
-<<<<<<< HEAD
-import { setProgress } from '../../../actions';
-=======
 import { fetchSections } from '../../../helpers/ApiManager';
->>>>>>> 3cd44cef6f4c175b6f9249477b7118b1d78a17a6
 
 const HEIGHT = Dimensions.get('window').height;
 

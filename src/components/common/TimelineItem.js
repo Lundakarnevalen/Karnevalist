@@ -100,7 +100,8 @@ const styles = {
     borderWidth: 0,
     width: Dimensions.get('window').width / 2,
     fontFamily: 'Avenir Next Medium',
-    color: '#fff'
+    color: '#fff',
+    fontSize: 17
   },
   textView: {
     backgroundColor: 'rgba(247, 160, 33, 1)',

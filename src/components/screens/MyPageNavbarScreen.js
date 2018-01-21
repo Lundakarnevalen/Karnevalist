@@ -43,15 +43,13 @@ class MyPageNavbarScreen extends Component {
           if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
           else {
             getFavoriteSections((sections) => {
-              console.log(sections.length)
-              if (sections.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+              if (sections.length >= 5) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
             })
           }
         }
       })
       .catch(error => {
         getFavoriteSections((sections) => {
-          console.log(sections.length)
           if (sections.length >= 5) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
         })
         console.log(error);
