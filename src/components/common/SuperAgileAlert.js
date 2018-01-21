@@ -33,9 +33,8 @@ class SuperAgileAlert extends Component {
           style={[
             buttonStyle,
             {
-              borderBottomLeftRadius: this.getBorderLeftRadius(i),
-              borderBottomRightRadius: this.getBorderRightRadius(i),
-              marginRight: this.getRightMargin(i),
+              borderBottomLeftRadius: buttonsIn.length === 1 ? 5 : this.getBorderLeftRadius(i),
+              borderBottomRightRadius: buttonsIn.length === 1 ? 5 : this.getBorderRightRadius(i),
               backgroundColor: '#F7A021'
             }
           ]}
@@ -59,10 +58,12 @@ class SuperAgileAlert extends Component {
     return (
       <Modal transparent visible={alertVisible} onRequestClose={() => setAlertVisible(false)}>
         <BlurView tint={'dark'} intensity={70} style={outerViewStyle}>
-          <View style={alertBoxStyle}>
-            <Text style={headerTextStyle}>{header}</Text>
-            <Text style={infoTextStyle}>{info}</Text>
-            {children}
+          <View style={{ width: Dimensions.get('window').width / 1.1 }}>
+            <View style={alertBoxStyle}>
+              <Text style={headerTextStyle}>{header}</Text>
+              <Text style={infoTextStyle}>{info}</Text>
+              {children}
+            </View>
             <View style={buttonContainerStyle}>{this.createButtons()}</View>
           </View>
         </BlurView>
@@ -81,18 +82,21 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'column',
     width: Dimensions.get('window').width / 1.1,
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
     borderWidth: 1,
+    borderBottomWidth: 1,
     backgroundColor: 'white',
     borderColor: '#F7A021',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    paddingBottom: 20
   },
   buttonStyle: {
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
     borderColor: 'white',
-    width: Dimensions.get('window').width / (1.1 * 2)
+    flex: 1
   },
   buttonTextStyle: {
     color: 'white',
@@ -114,8 +118,7 @@ const styles = {
     marginBottom: 10
   },
   buttonContainerStyle: {
-    flexDirection: 'row',
-    marginTop: 10
+    flexDirection: 'row'
   }
 };
 
