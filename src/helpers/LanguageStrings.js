@@ -379,11 +379,11 @@ export const HOME_SCREEN_STRINGS = {
   }
 };
 
-export const PROFILE_SCREEN_STRINGS = {
+export const SETTINGS_SCREEN_STRINGS = {
   fields: ['title', 'profile', 'registration', 'logout'],
   title: {
-    SE: 'Min profil',
-    EN: 'My profile'
+    SE: 'Inställningar',
+    EN: 'Settings'
   },
   profile: {
     SE: 'Min profil',
