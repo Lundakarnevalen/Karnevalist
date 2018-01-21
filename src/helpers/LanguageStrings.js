@@ -18,7 +18,7 @@ const expiredTokenTitle = {
 
 const expiredTokenMessage = {
   SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
-  EN: 'Your sessions has expired please login again to continue '
+  EN: 'Your session has expired please login again to continue '
 };
 
 const studentUnion = {
@@ -526,7 +526,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'updateInfoMessageSuccess',
     'updateInfoMessageFail',
     'expiredTokenTitle',
-    'expiredTokenMessage'
+    'expiredTokenMessage',
+    'ok'
   ],
   title: {
     SE: 'Användarinfo',
@@ -612,7 +613,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Something went wrong'
   },
   expiredTokenTitle,
-  expiredTokenMessage
+  expiredTokenMessage,
+  ok
 };
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {

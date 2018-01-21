@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { View, ListView, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, SectionListItem, BackgroundImage } from '../../common';
-import { logout } from '../../../helpers/functions';
+import { removeItem } from '../../../helpers/LocalSave';
 import { setProgress } from '../../../actions';
 import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { LOGOUT_RESET_ACTION } from '../../../helpers/Constants';
 
 const height = Dimensions.get('window').height;
 
@@ -29,6 +30,12 @@ class ProfileScreen extends Component {
     return strings;
   }
 
+  handleLogout() {
+    removeItem('email');
+    removeItem('accessToken');
+    this.props.screenProps.navigation.dispatch(LOGOUT_RESET_ACTION);
+  }
+
   render() {
     const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
@@ -50,7 +57,7 @@ class ProfileScreen extends Component {
                   screenProps.navigation.navigate('MyRegistration', { info: rowData });
                 } else if (rowData.key === 'logout') {
                   this.props.setProgress(0);
-                  logout(screenProps.navigation);
+                  this.handleLogout()
                 }
               }}
             />

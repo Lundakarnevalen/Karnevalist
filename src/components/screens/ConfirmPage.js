@@ -8,10 +8,10 @@ import { Row, Header, BackgroundImage, CustomButton, SuperAgileAlert } from '../
 import {
   getFavoriteSections,
   saveFavoriteSections,
-  removeFavoriteSection
+  removeFavoriteSection,
+  removeItem
 } from '../../helpers/LocalSave';
-import { logout } from '../../helpers/functions';
-import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
+import { SECTION_PRIORITY_URL, PROGRESS, LOGOUT_RESET_ACTION } from '../../helpers/Constants';
 import { setSectionPriorities, setProgress } from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
@@ -136,6 +136,17 @@ class ConfirmPage extends Component {
     }
   }
 
+  handleLogout() {
+    const strings = this.getStrings()
+    removeItem('email');
+    removeItem('accessToken');
+    this.setState({
+      alertVisible: true,
+      message: strings.expiredTokenMessage,
+      alertHeader: strings.expiredTokenTitle,
+     })
+  }
+
   postSectionPriorities() {
     getFavoriteSections(sections => {
       const strings = this.getStrings();
@@ -157,13 +168,7 @@ class ConfirmPage extends Component {
         })
         .catch(error => {
           if (error.response.status === 401)
-            logout(
-              this.props.navigation,
-              true,
-              strings.expiredTokenTitle,
-              strings.expiredTokenMessage
-            );
-          console.log(error);
+            this.handleLogout()
       });
     })
   }
@@ -194,7 +199,7 @@ class ConfirmPage extends Component {
             text: strings.ok,
             onPress: () => {
               this.setState({ alertVisible: false })
-              this.props.navigation.goBack(null);
+              this.props.navigation.goBack();
             }
           }
         ])
@@ -203,9 +208,14 @@ class ConfirmPage extends Component {
           { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
           { text: strings.yes, onPress: () => this.postSectionPriorities() }
         ])
+      case strings.expiredTokenMessage:
+        return ([
+          { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
+        ])
       default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
     }
   }
+
   updateData() {
     const data = {};
     const allSections = this.props.sections;
@@ -229,6 +239,8 @@ class ConfirmPage extends Component {
     this.setState({ alertVisible: visible })
     if (message === strings.selectionOK) // This makes sure you can't stay on ConfirmPage
       this.props.navigation.goBack();
+    if (message === strings.expiredTokenMessage)
+      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
   render() {
