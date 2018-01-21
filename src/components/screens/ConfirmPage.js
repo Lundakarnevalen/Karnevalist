@@ -200,12 +200,9 @@ class ConfirmPage extends Component {
           }
         ])
       case strings.confirmMessage:
-        return (
-          [{
-            text: strings.cancel,
-            onPress: () => this.setState({ alertVisible: false })
-          },
-            { text: strings.yes, onPress: () => this.postSectionPriorities() }
+        return ([
+          { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+          { text: strings.yes, onPress: () => this.postSectionPriorities() }
         ])
       default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
     }

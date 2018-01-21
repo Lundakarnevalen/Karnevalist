@@ -3,7 +3,6 @@ import {
   Animated,
   Easing,
   Text,
-  Image,
   Platform,
   Dimensions,
   View,
