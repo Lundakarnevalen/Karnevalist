@@ -80,7 +80,7 @@ class LoginScreen extends Component {
             onPress: () =>
               this.setState({
                 alertVisible: false,
-                resetPasswordError: ' ',
+                resetPasswordError: '',
                 forgotPasswordEmail: ''
               })
           },

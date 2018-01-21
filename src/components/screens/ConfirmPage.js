@@ -15,8 +15,8 @@ import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import { setSectionPriorities, setProgress } from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
-const window = Dimensions.get('window');
 const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 class ConfirmPage extends Component {
   constructor(props) {
@@ -44,19 +44,13 @@ class ConfirmPage extends Component {
   }
 
   renderSortableListOrMessage() {
-    const { contentContainer, list, textStyle } = styles;
+    const { contentContainer, list, textStyle, listContainerView } = styles;
     const { navigation } = this.props;
     const { strings, data, order } = this.state;
     if (Object.keys(data).length === 0) {
       return (
-        <View
-          style={{
-            height: window.height - 64,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <Text style={[textStyle, { color: 'white' }]}>{strings.sectionSelection}</Text>
+        <View style={listContainerView}>
+          <Text style={textStyle}>{strings.sectionSelection}</Text>
           <CustomButton
             style={'standardButton'}
             text={strings.toSections}
@@ -66,13 +60,7 @@ class ConfirmPage extends Component {
       );
     }
     return (
-      <View
-        style={{
-          height: window.height - 64,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
+      <View style={listContainerView}>
         <SortableList
           style={list}
           contentContainerStyle={contentContainer}
@@ -84,12 +72,7 @@ class ConfirmPage extends Component {
             saveFavoriteSections(nextOrder, () => {});
           }}
         />
-        <View
-          style={{
-            width: WIDTH,
-            paddingLeft: 8
-          }}
-        >
+        <View style={{ width: WIDTH, paddingLeft: 8 }}>
           <CustomButton
             style={Object.keys(data).length >= 5 ? 'standardButton' : 'tintStandardButton'}
             text={strings.send}
@@ -101,33 +84,24 @@ class ConfirmPage extends Component {
     );
   }
 
-  getBackgroundColor() {
-    const { data } = this.state;
-    if (Object.keys(data).length >= 5) {
-      return '#F7A021';
-    }
-    return '#a9a9a9';
-  }
-
   getConfirmButtonStyle() {
     return {
-      height: window.height / 9,
-      backgroundColor: this.getBackgroundColor(),
+      height: HEIGHT / 9,
+      backgroundColor: Object.keys(this.state.data).length >= 5 ? '#F7A021' : '#a9a9a9',
       borderColor: '#ffffff',
       borderRadius: 0,
       margin: 0,
       justifyContent: 'center',
       alignItems: 'center',
       bottom: 0,
-      width: window.width
+      width: WIDTH
     };
   }
 
   deleteRow(key) {
     removeFavoriteSection(key, result => {
-      if (result) {
+      if (result)
         this.updateData();
-      }
     });
     this.props.navigation.state.params.setSectionStatus(key);
   }
@@ -138,25 +112,11 @@ class ConfirmPage extends Component {
       <Row
         data={data}
         index={index + 1}
-        iconName={this.getRowIconName()}
+        iconName={this.state.editMode ? 'trash' : 'navicon'}
         active={active}
         deleteRow={() => this.deleteRow(data.id)}
       />
     );
-  }
-
-  getHeaderIconName() {
-    if (this.state.editMode) {
-      return 'done';
-    }
-    return 'edit';
-  }
-
-  getRowIconName() {
-    if (this.state.editMode) {
-      return 'trash';
-    }
-    return 'navicon';
   }
 
   onPressConfirmButton() {
@@ -208,19 +168,16 @@ class ConfirmPage extends Component {
     })
   }
 
-  onPressHeaderButton() {
-    this.setState({ editMode: !this.state.editMode });
-  }
 
   getRightIcon() {
     if (Object.keys(this.state.data).length > 0) {
       return (
         <TouchableOpacity
           style={{ width: 50, alignItems: 'center' }}
-          onPress={() => this.onPressHeaderButton()}
+          onPress={() => this.setState({ editMode: !this.state.editMode })}
         >
           <MaterialIcons
-            name={this.getHeaderIconName()}
+            name={this.state.editMode ? 'done' : 'edit'}
             style={{ color: 'white', right: 0 }}
             size={30}
           />
@@ -229,33 +186,32 @@ class ConfirmPage extends Component {
     }
   }
 
-renderAlertButtons(message) {
-  const strings = this.getStrings()
-  switch (message) {
-    case strings.selectionOK:
-      return ([
-        {
-          text: strings.ok,
-          onPress: () => {
-            this.setState({ alertVisible: false })
-            this.props.navigation.goBack(null);
+  renderAlertButtons(message) {
+    const strings = this.getStrings()
+    switch (message) {
+      case strings.selectionOK:
+        return ([
+          {
+            text: strings.ok,
+            onPress: () => {
+              this.setState({ alertVisible: false })
+              this.props.navigation.goBack(null);
+            }
           }
-        }
-      ])
-    case strings.confirmMessage:
-      return (
-        [{
-          text: strings.cancel,
-          onPress: () => this.setState({ alertVisible: false })
-        },
-          { text: strings.yes, onPress: () => this.postSectionPriorities() }
-      ])
-    default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+        ])
+      case strings.confirmMessage:
+        return (
+          [{
+            text: strings.cancel,
+            onPress: () => this.setState({ alertVisible: false })
+          },
+            { text: strings.yes, onPress: () => this.postSectionPriorities() }
+        ])
+      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
     }
   }
   updateData() {
     const data = {};
-    let order = [];
     const allSections = this.props.sections;
     getFavoriteSections(sections => {
       if (sections) {
@@ -267,13 +223,20 @@ renderAlertButtons(message) {
             imguri: s.imguri
           };
         });
-        order = sections;
       }
-      this.setState({ data, order });
+      this.setState({ data, order: sections });
     });
   }
 
+  setAlertVisible(visible, message) {
+    const strings = this.getStrings();
+    this.setState({ alertVisible: visible })
+    if (message === strings.selectionOK) // This makes sure you can't stay on ConfirmPage
+      this.props.navigation.goBack();
+  }
+
   render() {
+    const { message, alertVisible, alertHeader } = this.state
     const strings = this.getStrings();
     return (
       <View style={styles.container}>
@@ -285,11 +248,11 @@ renderAlertButtons(message) {
         />
         {this.renderSortableListOrMessage()}
         <SuperAgileAlert
-          alertVisible={this.state.alertVisible}
-          setAlertVisible={visible => this.setState({ alertVisible: visible })}
-          buttonsIn={this.renderAlertButtons(this.state.message)}
-          header={this.state.alertHeader || ''}
-          info={this.state.message || ''}
+          alertVisible={alertVisible}
+          setAlertVisible={visible => this.setAlertVisible(visible, message)}
+          buttonsIn={this.renderAlertButtons(message)}
+          header={alertHeader || ''}
+          info={message || ''}
         />
       </View>
     );
@@ -298,8 +261,8 @@ renderAlertButtons(message) {
 
 const styles = {
   container: {
-    width: window.width,
-    height: window.height,
+    width: WIDTH,
+    height: HEIGHT,
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0)',
     paddingTop: 0
@@ -312,12 +275,18 @@ const styles = {
     flex: 1
   },
   contentContainer: {
-    width: window.width
+    width: WIDTH
   },
   textStyle: {
     fontSize: 24,
     fontFamily: 'Avenir Next Bold',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    color: 'white'
+  },
+  listContainerView: {
+    height: HEIGHT - 64,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 };
 
