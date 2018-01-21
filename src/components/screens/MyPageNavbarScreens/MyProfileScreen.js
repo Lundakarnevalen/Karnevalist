@@ -5,7 +5,8 @@ import {
   View,
   Dimensions,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -24,7 +25,10 @@ class MyProfileScreen extends Component {
     this.state = {
       editMode: false,
       errors: [false, false, false, false, false],
+      hasErrors: false,
       alertVisible: false,
+      errorAlertVisible: false,
+      anyError: false,
       user: null,
       changesMade: false,
       showToast: false,
@@ -77,12 +81,20 @@ class MyProfileScreen extends Component {
 
   getRightIcon() {
     const { rightIconStyle } = styles;
+    const { anyError } = this.state;
     return (
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
-          if (this.state.editMode && this.state.changesMade) this.setState({ alertVisible: true });
-          this.setState({ editMode: !this.state.editMode });
+          if (this.state.editMode && this.state.changesMade) {
+            if (anyError || this.anyEmpty()) {
+              this.setState({ errorAlertVisible: true });
+            } else if (this.state.changesMade) {
+              this.setState({ alertVisible: true });
+            }
+          } else {
+           this.setState({ editMode: !this.state.editMode });
+         }
         }}
       >
         <MaterialIcons
@@ -92,6 +104,15 @@ class MyProfileScreen extends Component {
         />
       </TouchableOpacity>
     );
+  }
+
+  anyEmpty() {
+    return false;
+  }
+
+  anyErrors() {
+    const { errors } = this.state;
+    return errors.indexOf(true) !== -1;
   }
 
   saveChanges() {
@@ -120,7 +141,6 @@ class MyProfileScreen extends Component {
       })
       .catch(error => {
         const msg = handleErrorMsg(error.message);
-        console.log(msg);
       });
   }
 
@@ -189,7 +209,6 @@ class MyProfileScreen extends Component {
     }
   }
 
-
   renderFields() {
     const { user, editMode, errors } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
@@ -201,7 +220,6 @@ class MyProfileScreen extends Component {
     const textFields = Object.keys(labels).map(key => {
       const color =
         editMode && key !== 'email' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
-      console.log(labels[key]);
       return (
         <Input
           extraContainerStyle={{ backgroundColor: color }}
@@ -211,10 +229,10 @@ class MyProfileScreen extends Component {
           editable={editMode && key !== 'email'}
           onChangeText={text => {
             user[key] = text;
-            errors[key] = !this.fulfilsRequirement(key, text);
-            this.setState({ user, changesMade: true });
+            this.setState({ anyError: !this.fulfilsRequirement(key, text) });
+            this.setState({ user, changesMade: true, errors });
           }}
-          hasError={errors[key]}
+          hasError={!this.fulfilsRequirement(key, user[key])}
           warningMessage={this.getWarningMessage(key)}
         />
       );
@@ -234,7 +252,7 @@ class MyProfileScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { alertVisible, success, showToast } = this.state;
+    const { alertVisible, success, showToast, errorAlertVisible } = this.state;
     const strings = this.getStrings();
     return (
       <View>
@@ -254,10 +272,28 @@ class MyProfileScreen extends Component {
               text: strings.cancel,
               onPress: () => this.setState({ alertVisible: false })
             },
-            { text: strings.save, onPress: () => this.saveChanges() }
+            {
+              text: strings.save,
+              onPress: () => {
+                this.saveChanges();
+                this.setState({ editMode: false });
+              }
+            }
           ]}
           header={strings.popUpHeader}
           info={strings.popUpInfo}
+        />
+        <SuperAgileAlert
+          alertVisible={errorAlertVisible}
+          setAlertVisible={visible => this.setState({ errorAlertVisible: visible })}
+          buttonsIn={[
+            {
+              text: 'Ok',
+              onPress: () => this.setState({ errorAlertVisible: false })
+            }
+          ]}
+          header={'ERROR'}
+          info={'fel på input'}
         />
         {this.renderMainView()}
       </View>
