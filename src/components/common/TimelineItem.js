@@ -69,6 +69,12 @@ class TimelineItem extends Component {
         return styles.button;
     }
   }
+
+  getFocused() {
+    if (this.props.focus) {
+      return { backgroundColor: 'rgba(247, 160, 33, 1)' };
+    }
+  }
   render() {
     const { text, navigation } = this.props;
     const { button, roundView, textButton, textView } = styles;
@@ -78,7 +84,7 @@ class TimelineItem extends Component {
         onPress={() => this.props.onPress()}
       >
         <View style={[this.getStyle(), roundView]} />
-        <View style={[textView]}>
+        <View style={[textView, this.getFocused()]}>
         <Text style={[this.getTextStyle(), textButton]}>{text}</Text>
         </View>
       </TouchableOpacity>
@@ -103,14 +109,17 @@ const styles = {
     color: '#fff',
     fontSize: 17
   },
+  focusView: {
+    backgroundColor: 'rgba(247, 160, 33, 1)'
+  },
   textView: {
-    backgroundColor: 'rgba(247, 160, 33, 1)',
+    backgroundColor: 'rgba(247, 160, 33, 0.5)',
     borderRadius: 15,
     marginLeft: 6
   },
   roundView: {
-    height: Dimensions.get('window').width / 7,
-    width: Dimensions.get('window').width / 7,
+    height: Dimensions.get('window').width / 6.5,
+    width: Dimensions.get('window').width / 6.5,
     borderRadius: 90,
     justifyContent: 'center',
     alignItems: 'center'

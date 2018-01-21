@@ -47,6 +47,7 @@ class Timeline extends Component {
         <TimelineItem
           style={this.props.progress >= 2 ? 'done' : 'notDone'}
           width={WIDTH - 50}
+          focus={this.props.progress === 1}
           text={strings.ChooseSections}
           onPress={this.props.progress >= 2 ?
             () => navigation.navigate('HomeScreen')
@@ -55,6 +56,7 @@ class Timeline extends Component {
         <View style={styles.barView4} />
         <TimelineItem
           style={this.props.progress >= 3 ? 'done' : 'notDone'}
+          focus={(this.props.progress === 2)}
           width={WIDTH - 50}
           text={strings.SendIn}
           onPress={this.props.progress >= 3 ?
@@ -96,9 +98,9 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -29,
-    marginBottom: -40,
-    marginLeft: 22
+    marginTop: -25,
+    marginBottom: -38,
+    marginLeft: 24
   },
   barView23: {
     width: Dimensions.get('window').width / 9 / 5,
@@ -106,8 +108,8 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: -40,
-    marginLeft: 22
+    margin: -10,
+    marginLeft: 24
   },
   barView4: {
     width: Dimensions.get('window').width / 9 / 5,
@@ -115,9 +117,9 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -40,
-    marginBottom: -29,
-    marginLeft: 22
+    marginTop: -38,
+    marginBottom: -25,
+    marginLeft: 24
   },
 };
 
