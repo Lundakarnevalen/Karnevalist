@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native';
+import { Animated, View, Image, Text, StatusBar, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { getItem } from '../../helpers/LocalSave';
-import BackgroundImage from '../common/BackgroundImage';
-import { setTheme, setSections, setToken, setEmail } from '../../actions';
+import { NavigationActions } from 'react-navigation';
+import { getItem, getPopoverStatus } from '../../helpers/LocalSave';
+import { BackgroundImage } from '../common';
+import { TOKEN_URL } from '../../helpers/Constants';
+import {
+  setSections,
+  setToken,
+  setEmail,
+  setSectionScreenPopover,
+  setHomeScreenPopover
+} from '../../actions';
+import { fetchSections } from '../../helpers/ApiManager';
 
-const baseURL = 'https://api.10av10.com/api/user/';
-const WIDTH = Dimensions.get('window').width;
 class SplashScreen extends Component {
   constructor(props) {
     super(props);
@@ -17,89 +24,53 @@ class SplashScreen extends Component {
   }
 
   componentWillMount() {
-    this.setCurrenTheme();
+    StatusBar.setBarStyle('light-content', true);
     this.spin();
     this.authorize();
-    this.getSectionInfo();
-  }
-
-  getImage(url, section) {
-    const tempSection = section;
-    axios
-      .get(url)
-      .then(r => {
-        const image = (
-          <Image
-            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
-            source={{ uri: r.data.source_url }}
-            defaultSource={require('../../../res/Monstergubbe.png')}
-          />
-        );
-        tempSection.imguri = r.data.source_url;
-        tempSection.image = image;
-        this.props.setSections(tempSection);
-        return tempSection;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
-  getSectionInfo() {
-    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
-    axios.get(url).then(response => {
-      response.data.forEach(item => {
-        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
-        const imgId = item.featured_media;
-        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
-        const section = {
-          key: item.id,
-          id: item.id,
-          title: item.title.rendered,
-          info: strippedContent
-        };
-        this.getImage(imgUrl, section);
-      });
-    });
+    getPopoverStatus('homeScreenPopover', bool => this.props.setHomeScreenPopover(bool));
+    getPopoverStatus('sectionScreenPopover', bool => this.props.setSectionScreenPopover(bool));
+    fetchSections(sections => this.props.setSections(sections));
   }
 
   authorize() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
+      key: null
+    });
     setTimeout(
       () =>
         getItem('email', email => {
           if (email !== null) {
             getItem('accessToken', token => {
-              const url = baseURL + email;
               const headers = {
                 Authorization: 'Bearer ' + token,
                 'content-type': 'application/json'
               };
               axios
-                .get(url, { headers })
+                .post(TOKEN_URL, {}, { headers })
                 .then(response => {
                   const { success } = response.data;
                   if (success) {
-                    this.props.navigation.navigate('MyPageNavbarScreen');
+                    resetAction.actions = [
+                      NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
+                    ];
                     this.props.setToken(token);
                     this.props.setEmail(email);
-                  } else this.props.navigation.navigate('LoginScreen');
+                    this.props.navigation.dispatch(resetAction);
+                  } else this.props.navigation.dispatch(resetAction);
                 })
                 .catch(error => {
-                  this.props.navigation.navigate('LoginScreen');
                   console.log(error.message);
+                  this.props.navigation.dispatch(resetAction);
                 });
             });
           } else {
-            this.props.navigation.navigate('LoginScreen');
+            this.props.navigation.dispatch(resetAction);
           }
         }),
       2000
     );
-  }
-
-  setCurrenTheme() {
-    StatusBar.setBarStyle('light-content', true);
-    this.props.setTheme('night');
   }
 
   spin() {
@@ -146,7 +117,21 @@ const styles = {
     color: 'white',
     fontFamily: 'Avenir Next Medium',
     backgroundColor: 'transparent'
+  },
+  rowImage: {
+    width: 40,
+    height: 40,
+    alignSelf: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 8
   }
 };
 
-export default connect(null, { setTheme, setSections, setToken, setEmail })(SplashScreen);
+export default connect(null, {
+  setSections,
+  setToken,
+  setEmail,
+  setSectionScreenPopover,
+  setHomeScreenPopover
+})(SplashScreen);

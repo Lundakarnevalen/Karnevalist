@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView } from 'react-native';
+import { View, Dimensions, ScrollView, Text, Keyboard } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import CustomButton from '../common/CustomButton';
 import { setLanguage, setToken, setEmail } from '../../actions';
-import Input from '../common/Input';
-import SuperAgileAlert from '../common/SuperAgileAlert';
-import BackgroundImage from '../common/BackgroundImage';
+import { Input, SuperAgileAlert, BackgroundImage, Toast, CustomButton } from '../common';
 import Loading from '../common/Loading';
+import { LOGIN_URL, FORGOT_PASSWORD_URL } from '../../helpers/Constants';
 import { saveItem } from '../../helpers/LocalSave';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
@@ -25,7 +23,9 @@ class LoginScreen extends Component {
       password: '',
       loading: false,
       loadingComplete: false,
-      forgotPasswordEmail: ''
+      forgotPasswordEmail: '',
+      resetPasswordError: ' ',
+      showToast: false
     };
   }
 
@@ -44,38 +44,73 @@ class LoginScreen extends Component {
   }
 
   handleResetPassword() {
-    const url = 'https://api.10av10.com/login/forgotpassword';
     const strings = this.getStrings();
     axios
-      .post(url, {
+      .post(FORGOT_PASSWORD_URL, {
         email: this.state.forgotPasswordEmail
       })
       .then(response => {
         if (!response.data.success) {
-          Alert.alert(strings.responseFail);
+          this.setState({ resetPasswordError: strings.responseFail });
         } else {
-          Alert.alert(strings.responseSuccess);
+          this.setState({
+            alertVisible: false,
+            forgotPasswordEmail: '',
+            resetPasswordError: ' ',
+            showToast: true
+          });
         }
       })
       .catch(error => {
         const msg = handleErrorMsg(error.message, strings);
-        Alert.alert(strings.error, msg);
+        this.setState({ resetPasswordError: msg });
       });
-    this.setState({ alertVisible: false, forgotPasswordEmail: '' });
+  }
+
+  getAlertButtons(message) {
+    const strings = this.getStrings()
+    switch (message) {
+      case strings.emailError:
+      case strings.passwordError:
+        return ([{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }])
+      case strings.passwordPopupInfo:
+        return (
+          [{
+            text: strings.cancel,
+            onPress: () =>
+              this.setState({
+                alertVisible: false,
+                resetPasswordError: '',
+                forgotPasswordEmail: ''
+              })
+          },
+          { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
+        ])
+      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+
+    }
   }
 
   handleLogin() {
-    const url = 'https://api.10av10.com/login/email';
+    Keyboard.dismiss();
     const strings = this.getStrings();
     const { email, password } = this.state;
     if (email === '') {
-      Alert.alert(strings.error, strings.emailError);
+      this.setState({
+        alertVisible: true,
+        message: strings.emailError,
+        alertHeader: strings.error
+       })
     } else if (password === '') {
-      Alert.alert(strings.error, strings.passwordError);
+      this.setState({
+        alertVisible: true,
+        message: strings.passwordError,
+        alertHeader: strings.error
+       })
     } else {
       this.setState({ loading: true, loadingComplete: false });
       axios
-        .post(url, {
+        .post(LOGIN_URL, {
           email,
           password
         })
@@ -90,26 +125,32 @@ class LoginScreen extends Component {
         .catch(error => {
           const msg = handleErrorMsg(error.message, strings);
           this.setState({ loading: false, loadingComplete: false });
-          Alert.alert(strings.error, msg);
+          this.setState({
+            alertVisible: true,
+            message: msg,
+            alertHeader: strings.error
+           })
         });
     }
   }
 
   render() {
-    const { containerStyle, container1 } = styles;
+    const { containerStyle, container1, errorTextStyle } = styles;
     const {
       email,
       password,
       loading,
       loadingComplete,
       forgotPasswordEmail,
-      alertVisible
+      alertVisible,
+      resetPasswordError,
+      message
     } = this.state;
     const strings = this.getStrings();
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="handled">
           <View style={container1}>
             <View style={{ alignSelf: 'flex-start' }}>
               <CustomButton
@@ -123,6 +164,7 @@ class LoginScreen extends Component {
               value={email}
               keyboardType={'email-address'}
               placeholder={strings.email}
+              autoCapitalize="none"
               width={WIDTH}
               onChangeText={text => this.setState({ email: text })}
               returnKeyType={'next'}
@@ -147,7 +189,11 @@ class LoginScreen extends Component {
             <CustomButton
               text={strings.forgotPassword}
               onPress={() => {
-                this.setState({ alertVisible: true });
+                this.setState({
+                  alertVisible: true,
+                  message: strings.passwordPopupInfo,
+                  alertHeader: strings.passwordPopupHeader
+                });
               }}
               style="textButton"
             />
@@ -169,24 +215,35 @@ class LoginScreen extends Component {
             <SuperAgileAlert
               alertVisible={alertVisible}
               setAlertVisible={visible => this.setState({ alertVisible: visible })}
-              buttonsIn={[
-                { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
-                { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
-              ]}
-              header={strings.passwordPopupHeader}
-              info={strings.passwordPopupInfo}
+              buttonsIn={this.getAlertButtons(message)}
+              header={this.state.alertHeader || ''}
+              info={this.state.message || ''}
             >
+            {message === strings.passwordPopupInfo ? (
+              <View>
               <Input
-                placeholder={strings.inputPlaceholder}
-                title={strings.inputTitle}
+                placeholder={strings.email}
                 width={Dimensions.get('window').width / 1.2}
-                underlineColorAndroid="transparent"
-                onChangeText={text => this.setState({ forgotPasswordEmail: text })}
+                underlineColorAndroid={'transparent'}
+                onChangeText={text =>
+                  this.setState({ forgotPasswordEmail: text, resetPasswordError: ' ' })
+                }
                 value={forgotPasswordEmail}
+                returnKeyType={'done'}
+                onSubmitEditing={() => this.handleResetPassword()}
               />
+              <Text style={errorTextStyle}>{resetPasswordError}</Text>
+              </View>
+            )
+            : null}
             </SuperAgileAlert>
           </View>
         </ScrollView>
+        <Toast
+          showToast={this.state.showToast}
+          onClose={() => this.setState({ showToast: false })}
+          message={strings.resetPasswordComplete}
+        />
         {loading ? (
           <Loading
             loadingComplete={loadingComplete}
@@ -230,6 +287,11 @@ const styles = {
   containerStyle: {
     width: Dimensions.get('window').width,
     height: HEIGHT
+  },
+  errorTextStyle: {
+    textAlign: 'center',
+    fontFamily: 'Avenir Next Medium',
+    color: 'red'
   }
 };
 

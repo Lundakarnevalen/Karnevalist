@@ -12,28 +12,27 @@ const shirtSize = {
 };
 
 const expiredTokenTitle = {
-  SE: 'Session Slut',
+  SE: 'Sessionen har förfallit',
   EN: 'Session Expired'
 };
 
 const expiredTokenMessage = {
   SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
-  EN: 'Your sessions has expired please login again to continue '
+  EN: 'Your session has expired please log in again to continue'
 };
 
 const studentUnion = {
   SE: 'Välj nation',
-  EN: 'Choose student union'
+  EN: 'Choose your student union'
 };
 const errorMsg400 = {
-  SE: 'Fel email eller lösenord',
+  SE: 'Fel mail eller lösenord',
   EN: 'Wrong email or password'
 };
 const errorMsg401 = {
-  SE: 'Fel email eller lösenord',
+  SE: 'Fel mail eller lösenord',
   EN: 'Wrong email or password'
 };
-
 const errorMsg404 = {
   SE: 'Något gick fel...',
   EN: 'Something went wrong...'
@@ -42,12 +41,10 @@ const errorMsgInternal = {
   SE: 'Internt fel, var god försök igen senare',
   EN: 'Internal error, please try again later'
 };
-
 const error = {
   SE: 'Fel',
   EN: 'Error'
 };
-
 const firstName = {
   SE: 'Förnamn',
   EN: 'First name'
@@ -62,17 +59,16 @@ const socialSecurityNumber = {
   EN: 'Social security number'
 };
 const email = {
-  SE: 'Email',
+  SE: 'Mail',
   EN: 'Email'
 };
-
 const address = {
   SE: 'Adress',
   EN: 'Address'
 };
 const postNumber = {
   SE: 'Postnummer',
-  EN: 'Post number'
+  EN: 'Postal code'
 };
 const city = {
   SE: 'Stad',
@@ -82,16 +78,10 @@ const phoneNumber = {
   SE: 'Telefonnummer',
   EN: 'Phone number'
 };
-const foodPreferences = {
+const foodPreference = {
   SE: 'Matpreferenser',
   EN: 'Food preferences'
 };
-
-const personalNumber = {
-  SE: 'Personnummer',
-  EN: 'Personal number'
-};
-
 const driversLicense = {
   SE: 'Jag har körkort',
   EN: 'I have a drivers license'
@@ -99,6 +89,11 @@ const driversLicense = {
 const cancel = {
   SE: 'Avbryt',
   EN: 'Cancel'
+};
+
+const ok = {
+  SE: 'OK',
+  EN: 'OK'
 };
 
 export const LOGIN_SCREEN_STRINGS = {
@@ -119,14 +114,20 @@ export const LOGIN_SCREEN_STRINGS = {
     'errorMsgInternal',
     'passwordPopupHeader',
     'passwordPopupInfo',
+    'ok',
     'cancel',
     'resetPassword',
     'responseFail',
-    'responseSuccess'
+    'responseSuccess',
+    'resetPasswordComplete'
   ],
   email: {
-    SE: 'Email Adress',
+    SE: 'Mailadress',
     EN: 'Email Address'
+  },
+  resetPasswordComplete: {
+    SE: 'Ett mail har skickats med information om hur du byter lösenord.',
+    EN: 'An email has been sent with information about how to reset your password.'
   },
   password,
   loginButton: {
@@ -138,23 +139,23 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Ändra till svenska'
   },
   forgotPassword: {
-    SE: 'Glömt lösenord?',
-    EN: 'Forgot your password?'
+    SE: 'Glömt ditt lösenord?',
+    EN: 'Forgotten your password?'
   },
   createProfile: {
-    SE: 'Skapa profil',
-    EN: 'Create profile'
+    SE: 'Skapa din profil',
+    EN: 'Create your profile'
   },
   readMore: {
     SE: 'Läs mer om registreringen',
     EN: 'Read more about the registration'
   },
   emailError: {
-    SE: 'Email fältet måste fyllas i',
+    SE: 'Mail-fältet måste fyllas i',
     EN: 'The email field is required'
   },
   passwordError: {
-    SE: 'Lösenord fältet måste fyllas i',
+    SE: 'Lösenord-fältet måste fyllas i',
     EN: 'The password field is required'
   },
   error,
@@ -163,27 +164,28 @@ export const LOGIN_SCREEN_STRINGS = {
   errorMsg404,
   errorMsgInternal,
   passwordPopupHeader: {
-    SE: 'Glömt lösenord?',
-    EN: 'Forgot password?'
+    SE: 'Glömt ditt lösenord?',
+    EN: 'Forgotten your password?'
   },
   passwordPopupInfo: {
-    SE: 'Var god fyll i din email adress så skickas ett nytt lösenord till dig',
-    EN: 'Please, fill in your email address below and you will receive a new password'
+    SE: 'Var god fyll i din mailadress så skickas ett nytt lösenord till dig',
+    EN: 'Please fill in your email address below to receive a new password'
   },
   cancel: {
     SE: 'Avbryt',
     EN: 'Cancel'
   },
+  ok,
   resetPassword: {
     SE: 'Återställ lösenord',
     EN: 'Reset password'
   },
   responseFail: {
-    SE: 'Var god ange en giltig email adress',
+    SE: 'Var god ange en giltig mailadress',
     EN: 'Please enter a valid email address'
   },
   responseSuccess: {
-    SE: 'Tack, kolla din inbox för ditt nya lösenord',
+    SE: 'Tack, kolla din inkorg för ditt nya lösenord',
     EN: 'Thank you, check your inbox for your new password'
   }
 };
@@ -202,7 +204,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'postNumber',
     'city',
     'phoneNumber',
-    'foodPreferences',
+    'foodPreference',
     'shirtSize',
     'shirtSizeArray',
     'studentUnion',
@@ -210,24 +212,12 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'activeKarneval',
     'driversLicense',
     'register',
-    'errorFirstName',
-    'errorLastName',
-    'errorSocialSecurityNumber',
-    'errorEmail',
-    'errorConfirmEmail',
-    'errorAddress',
-    'errorPostNumber',
-    'errorCity',
-    'errorPhoneNumber',
-    'errorPassword',
-    'errorConfirmPassword',
-    'errorEmailMatch',
-    'errorPasswordMatch',
     'error',
     'errorMsg400',
     'errorMsg401',
     'errorMsg404',
-    'errorMsgInternal'
+    'errorMsgInternal',
+    'ok'
   ],
   header: {
     SE: 'Skapa profil',
@@ -238,7 +228,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   socialSecurityNumber,
   email,
   confirmEmail: {
-    SE: 'Bekräfta email',
+    SE: 'Bekräfta mail',
     EN: 'Confirm email'
   },
   password,
@@ -250,7 +240,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   postNumber,
   city,
   phoneNumber,
-  foodPreferences,
+  foodPreference,
   shirtSize,
   shirtSizeArray: {
     SE: [shirtSize.SE, 'Small', 'Medium', 'Large'],
@@ -296,69 +286,18 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Registrera',
     EN: 'Register'
   },
-  errorFirstName: {
-    SE: 'Förnamn krävs',
-    EN: 'First name is required'
-  },
-  errorLastName: {
-    SE: 'Efternamn krävs',
-    EN: 'Last name is required'
-  },
-  errorSocialSecurityNumber: {
-    SE: 'Personnummer krävs',
-    EN: 'Social security number is required'
-  },
-  errorEmail: {
-    SE: 'Email krävs',
-    EN: 'Email is required'
-  },
-  errorConfirmEmail: {
-    SE: 'Var god bekräfta din email',
-    EN: 'Please confirm your email'
-  },
-  errorAddress: {
-    SE: 'Adress krävs',
-    EN: 'Address is required'
-  },
-  errorPostNumber: {
-    SE: 'Postnummer krävs',
-    EN: 'Post number is required'
-  },
-  errorCity: {
-    SE: 'Stad krävs',
-    EN: 'City is required'
-  },
-  errorPhoneNumber: {
-    SE: 'Telefonnummer krävs',
-    EN: 'Phone number is required'
-  },
-  errorPassword: {
-    SE: 'Lösenord krävs',
-    EN: 'Password is required'
-  },
-  errorConfirmPassword: {
-    SE: 'Var god bekräfta ditt lösenord',
-    EN: 'Please confirm your password'
-  },
-  errorEmailMatch: {
-    SE: 'Email adresserna matchar inte',
-    EN: "The emails doesn't match"
-  },
-  errorPasswordMatch: {
-    SE: 'Lösenorden matchar inte',
-    EN: "The passwords doesn't match"
-  },
   error,
   errorMsg400: {
-    SE: 'Ogiltig email eller lösenord',
-    EN: 'Invalid email or password'
+    SE: 'Ogiltig mailadress eller lösenord',
+    EN: 'Invalid email address or password'
   },
   errorMsg401: {
-    SE: 'Ogiltig email eller lösenord',
-    EN: 'Invalid email or password'
+    SE: 'Ogiltig mailadress eller lösenord',
+    EN: 'Invalid email address or password'
   },
   errorMsg404,
-  errorMsgInternal
+  errorMsgInternal,
+  ok
 };
 
 export const REGISTRATION_INFO_SCREEN_STRINGS = {
@@ -375,19 +314,19 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   ],
   title: {
     SE: 'Om registreringen',
-    EN: 'About the registration'
+    EN: 'About the Registration'
   },
   header: {
     SE: '3 enkla steg för att bli Karnevalist',
     EN: '3 simple steps to become a Karnevalist'
   },
   panelTitle1: {
-    SE: 'Skapa profil',
-    EN: 'Create profile'
+    SE: 'Skapa en profil',
+    EN: 'Create a profile'
   },
   panelTitle2: {
-    SE: 'Kom på uppropet och välj sektion',
-    EN: 'Come to the call and choose section'
+    SE: 'Kom på uppropet och välj dina sektioner',
+    EN: 'Come to the call and choose your sections'
   },
   panelTitle3: {
     SE: 'Skicka din ansökan',
@@ -395,13 +334,17 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   },
   infoText1: {
     SE:
-      'Första steget är att skapa en profil, antingen här eller på Karnevalist.se. När du skapat en profil tilldelas du ett profil-ID som du använder vid incheckning under uppropsdagen.',
+      'Första steget är att skapa en profil, antingen här eller på Karnevalist.se.' +
+      ' När du skapat en profil tilldelas du ett profil-ID som' +
+      ' du använder vid incheckning under uppropsdagen.',
     EN:
-      "The first step is to create a profile, either here or at Karnevalist.se. When you've created a profile, you are assigned a profile ID that you use when checking in during the call day."
+      'The first step is to create a profile, either here or at Karnevalist.se.' +
+      ' When you have created a profile, you are assigned a profile ID that you use' +
+      ' when checking in during the call day.'
   },
   infoText2: {
-    SE: 'Välj vilken sektion du vill vara delaktig i under karnevalen.',
-    EN: 'Choose which section you want to participate in during the carnival.'
+    SE: 'Välj vilka sektioner du vill vara delaktig i under karnevalen.',
+    EN: 'Choose which sections you want to participate in during the carnival.'
   },
   infoText3: {
     SE: 'Skicka in din ansökan och vänta på svar.',
@@ -414,10 +357,18 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title'],
+  fields: ['title', 'refresh', 'popoverText'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
+  },
+  popoverText: {
+    SE: 'Här skickar du in dina val',
+    EN: 'Submit your choices here'
+  },
+  refresh: {
+    SE: 'Dra ner för att uppdatera',
+    EN: 'Pull down to refresh'
   }
 };
 
@@ -430,7 +381,7 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: ['title', 'buttonText', 'CheckIn', 'ChooseSections', 'Rank', 'SendIn'],
+  fields: ['title', 'buttonText', 'CheckIn', 'ChooseSections', 'Rank', 'SendIn', 'popoverText'],
   title: {
     SE: 'Hem',
     EN: 'Home'
@@ -454,14 +405,18 @@ export const HOME_SCREEN_STRINGS = {
   SendIn: {
     SE: 'Checka ut.',
     EN: 'Check out.'
+  },
+  popoverText: {
+    SE: 'Här väljer du dina sektioner',
+    EN: 'Select your sections here'
   }
 };
 
-export const PROFILE_SCREEN_STRINGS = {
+export const SETTINGS_SCREEN_STRINGS = {
   fields: ['title', 'profile', 'registration', 'logout'],
   title: {
-    SE: 'Min profil',
-    EN: 'My profile'
+    SE: 'Inställningar',
+    EN: 'Settings'
   },
   profile: {
     SE: 'Min profil',
@@ -509,11 +464,18 @@ export const CONFIRM_PAGE_STRINGS = {
     'send',
     'toSections',
     'expiredTokenTitle',
-    'expiredTokenMessage'
+    'expiredTokenMessage',
+    'alertErrorHeader',
+    'alertSuccessHeader',
+    'ok',
+    'confirmMessage',
+    'confirmHeader',
+    'yes',
+    'cancel'
   ],
   title: {
     SE: 'Bekräfta dina val',
-    EN: 'Confirmation page'
+    EN: 'Confirmation Page'
   },
   sectionSelection: {
     SE: 'Vänligen välj minst 5 stycken sektioner',
@@ -521,7 +483,7 @@ export const CONFIRM_PAGE_STRINGS = {
   },
   selectionOK: {
     SE: 'Tack för dina val',
-    EN: 'Thanks for your choices'
+    EN: 'Thank you for your choices'
   },
   send: {
     SE: 'Skicka',
@@ -532,7 +494,29 @@ export const CONFIRM_PAGE_STRINGS = {
     EN: 'To section selection'
   },
   expiredTokenTitle,
-  expiredTokenMessage
+  expiredTokenMessage,
+  alertErrorHeader: {
+    SE: 'Fel',
+    EN: 'Error'
+  },
+  alertSuccessHeader: {
+    SE: 'WEHEJ',
+    EN: 'WEHEJ'
+  },
+  ok,
+  yes: {
+    SE: 'JA',
+    EN: 'YES'
+  },
+  confirmMessage: {
+    SE: 'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
+    EN: 'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
+  },
+  confirmHeader: {
+    SE: 'Bekräfta',
+    EN: 'Confirm'
+  },
+  cancel
 };
 
 export const MY_PROFILE_SCREEN_STRINGS = {
@@ -545,8 +529,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'postNumber',
     'city',
     'phoneNumber',
-    'foodPreferences',
-    'personalNumber',
+    'foodPreference',
     'language',
     'careOf',
     'driversLicense',
@@ -567,7 +550,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'updateInfoMessageSuccess',
     'updateInfoMessageFail',
     'expiredTokenTitle',
-    'expiredTokenMessage'
+    'expiredTokenMessage',
+    'ok'
   ],
   title: {
     SE: 'Användarinfo',
@@ -580,8 +564,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   postNumber,
   city,
   phoneNumber,
-  foodPreferences,
-  personalNumber,
+  foodPreference,
   careOf: {
     //TODO make accurate description
     SE: 'C/O',
@@ -654,7 +637,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Something went wrong'
   },
   expiredTokenTitle,
-  expiredTokenMessage
+  expiredTokenMessage,
+  ok
 };
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {
@@ -672,4 +656,86 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
 export const LOADING_STRINGS = {
   fields: ['loading'],
   loading
+};
+
+export const COUNT_DOWN_STRINGS = {
+  fields: ['karneval', 'upprop'],
+  karneval: {
+    SE: 'Det är karneval!',
+    EN: "It's carnival!"
+  },
+  upprop: {
+    SE: 'Det är upprop!',
+    EN: "It's call day!"
+  }
+};
+
+export const ERROR_MSG_INPUT_FIELD = {
+  fields: [
+    'errorMsgOnlyDigits',
+    'errorMsgOnlyLetters',
+    'errorMsgInvalidEmail',
+    'errorMsgNoMatchEmail',
+    'errorMsgPwd',
+    'errorMsgPhoneNbr',
+    'errorMsgSocialSecurity',
+    'errorMsgNoMatchPassword',
+    'errorMsgZipCode',
+    'errorMsgFoodPreference',
+    'errorMsgWrongInput',
+    'errorMsgCity',
+    'errorMsgAnyEmpty'
+  ],
+  errorMsgOnlyDigits: {
+    SE: 'Detta fält får endast innehålla siffror',
+    EN: 'This field may only contain digits'
+  },
+  errorMsgOnlyLetters: {
+    SE: 'Detta fält får endast innehålla bokstäver',
+    EN: 'This field may only contain letters'
+  },
+  errorMsgInvalidEmail: {
+    SE: 'Ej giltig mailadress',
+    EN: 'Not a valid email address'
+  },
+  errorMsgNoMatchEmail: {
+    SE: 'Mailadresserna matchar inte',
+    EN: 'The email addresses do not match'
+  },
+  errorMsgNoMatchPassword: {
+    SE: 'Lösenorden matchar inte',
+    EN: 'The passwords do not match'
+  },
+  errorMsgPwd: {
+    SE: 'Måste bestå av minst 5 tecken',
+    EN: 'Must consist of at least 5 characters'
+  },
+  errorMsgPhoneNbr: {
+    SE: 'Format: (+)XXXXXXXXXX',
+    EN: 'Format: (+)XXXXXXXXXX'
+  },
+  errorMsgSocialSecurity: {
+    SE: 'Format: YYMMDDXXXX',
+    EN: 'Format: YYMMDDXXXX'
+  },
+  errorMsgZipCode: {
+    SE: '5 siffror',
+    EN: '5 digits'
+  },
+  errorMsgCity: {
+    SE: 'Endast bokstäver',
+    EN: 'Only letters'
+  },
+  errorMsgFoodPreference: {
+    SE: 'Ex: gluten, laktos...',
+    EN: 'Ex: gluten, lactose intolerant... '
+  },
+  errorMsgWrongInput: {
+    SE: 'Vänligen se till att alla val är korrekt ifyllda',
+    EN: 'Please make sure the fields are filled in correctly'
+  },
+  errorMsgAnyEmpty: {
+    SE: 'Vänligen se till att inga obligatoriska fält är tomma',
+    EN: 'Please make sure no mandatory fields are left empty'
+  }
 };

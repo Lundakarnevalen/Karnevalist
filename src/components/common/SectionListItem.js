@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width - 16;
 
@@ -37,20 +36,16 @@ class SectionListItem extends Component {
       );
     }
   }
-  renderContentText(sectionContent) {
-    const { contentStyle } = styles;
-    if (sectionContent) {
-      return (
-        <Text numberOfLines={1} style={contentStyle}>
-          {sectionContent}
-        </Text>
-      );
-    }
-  }
 
   render() {
     const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
-    const { sectionTitle = '', sectionInfoText = '', sectionDate = '', onPress } = this.props;
+    const {
+      sectionTitle = '',
+      sectionIcon = '',
+      sectionInfoText = '',
+      sectionDate = '',
+      onPress
+    } = this.props;
     return (
       <TouchableOpacity
         onPress={() => onPress()}
@@ -66,7 +61,10 @@ class SectionListItem extends Component {
                 { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
               ]}
             >
-              {sectionTitle}
+              {sectionIcon === '' ? null : (
+                <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+              )}
+              {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
             </Text>
             {sectionInfoText === '' ? null : (
               <Text
@@ -111,7 +109,8 @@ const styles = {
     fontSize: 14,
     marginLeft: 8,
     backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Medium'
+    fontFamily: 'Avenir Next Medium',
+    color: '#333'
   },
   dateViewStyle: {
     height: 60,
@@ -130,9 +129,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(SectionListItem);
+export { SectionListItem };

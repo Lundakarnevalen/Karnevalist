@@ -1,52 +1,40 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, TouchableOpacity, Alert, BackHandler } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
-import Row from '../common/Row';
-import Header from '../common/Header';
-import { getSections, removeItem } from '../../helpers/LocalSave';
-import { logout } from '../../helpers/functions';
-import BackgroundImage from '../common/BackgroundImage';
-import { setSectionPriorities } from '../../actions';
-import CustomButton from '../common/CustomButton';
+import { Row, Header, BackgroundImage, CustomButton, SuperAgileAlert } from '../common';
+import {
+  getFavoriteSections,
+  saveFavoriteSections,
+  removeFavoriteSection,
+  removeItem
+} from '../../helpers/LocalSave';
+import { SECTION_PRIORITY_URL, PROGRESS, LOGOUT_RESET_ACTION } from '../../helpers/Constants';
+import { setSectionPriorities, setProgress } from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
-const window = Dimensions.get('window');
 const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 class ConfirmPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: {},
+      order: [],
       editMode: false,
       alertVisible: false,
+      message: '',
+      alertHeader: '',
       strings: this.getStrings()
     };
   }
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
-    const tempData = [];
-    const allSections = this.props.sections;
-    getSections(sections => {
-      sections.forEach((section, i) => {
-        const key = section.key.substring(7);
-        const s = allSections.filter(item => item.key + '' === key)[0];
-        tempData.push({
-          key,
-          localKey: section.key,
-          id: i,
-          text: s.title,
-          infoText: s.info,
-          imguri: s.imguri
-        });
-      });
-      const order = tempData.map(x => x.id);
-      this.setState({ data: tempData, order });
-    });
+    this.updateData();
   }
 
   getStrings() {
@@ -58,15 +46,13 @@ class ConfirmPage extends Component {
   }
 
   renderSortableListOrMessage() {
-    const { contentContainer, list, textStyle } = styles;
+    const { contentContainer, list, textStyle, listContainerView } = styles;
     const { navigation } = this.props;
-    const { strings } = this.state;
-    if (this.state.data.length === 0) {
+    const { strings, data, order } = this.state;
+    if (Object.keys(data).length === 0) {
       return (
-        <View
-          style={{ height: window.height - 64, alignItems: 'center', justifyContent: 'center' }}
-        >
-          <Text style={[textStyle, { color: 'white' }]}>{strings.sectionSelection}</Text>
+        <View style={listContainerView}>
+          <Text style={textStyle}>{strings.sectionSelection}</Text>
           <CustomButton
             style={'standardButton'}
             text={strings.toSections}
@@ -75,31 +61,51 @@ class ConfirmPage extends Component {
         </View>
       );
     }
-      return (
-        <View style={{ height: window.height - 64, justifyContent: 'center', alignItems: 'center' }}>
-          <SortableList
-            style={list}
-            contentContainerStyle={contentContainer}
-            data={this.state.data}
-            renderRow={this.renderRow.bind(this)}
-            onChangeOrder={(nextOrder) => this.setState({ order: nextOrder })}
+    return (
+      <View style={listContainerView}>
+        <SortableList
+          style={list}
+          contentContainerStyle={contentContainer}
+          data={data}
+          order={order}
+          renderRow={this.renderRow.bind(this)}
+          onChangeOrder={nextOrder => {
+            this.setState({ order: nextOrder })
+            saveFavoriteSections(nextOrder, () => {});
+          }}
+        />
+        <View style={{ width: WIDTH, paddingLeft: 8 }}>
+          <CustomButton
+            style={Object.keys(data).length >= 5 ? 'standardButton' : 'tintStandardButton'}
+            text={strings.send}
+            width={WIDTH - 16}
+            onPress={() => this.onPressConfirmButton()}
           />
-            <CustomButton
-              style={this.state.data.length >= 5 ? 'standardButton' : 'tintStandardButton'}
-              text={strings.send}
-              width={WIDTH - 15}
-              onPress={() => this.onPressConfirmButton()}
-            />
         </View>
-      );
+      </View>
+    );
   }
 
-  deleteRow(id) {
-    const newData = this.state.data.filter(dataItem => dataItem.id !== id);
-    const toRemove = this.state.data.filter(dataItem => dataItem.id === id);
-    const newOrder = this.state.order.filter(i => i !== id);
-    removeItem(toRemove[0].localKey);
-    this.setState({ data: newData, order: newOrder });
+  getConfirmButtonStyle() {
+    return {
+      height: HEIGHT / 9,
+      backgroundColor: Object.keys(this.state.data).length >= 5 ? '#F7A021' : '#a9a9a9',
+      borderColor: '#ffffff',
+      borderRadius: 0,
+      margin: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      bottom: 0,
+      width: WIDTH
+    };
+  }
+
+  deleteRow(key) {
+    removeFavoriteSection(key, result => {
+      if (result)
+        this.updateData();
+    });
+    this.props.navigation.state.params.setSectionStatus(key);
   }
 
   renderRow(item) {
@@ -108,91 +114,139 @@ class ConfirmPage extends Component {
       <Row
         data={data}
         index={index + 1}
-        iconName={this.getRowIconName()}
+        iconName={this.state.editMode ? 'trash' : 'navicon'}
         active={active}
         deleteRow={() => this.deleteRow(data.id)}
       />
     );
   }
 
-  getHeaderIconName() {
-    if (this.state.editMode) {
-      return 'done';
-    }
-    return 'edit';
-  }
-
-  getRowIconName() {
-    if (this.state.editMode) {
-      return 'trash';
-    }
-    return 'navicon';
-  }
-
   onPressConfirmButton() {
-    const { data, strings, order } = this.state;
-    if (data.length < 5) {
-      Alert.alert(strings.sectionSelection);
+    const { data, strings } = this.state;
+    if (Object.keys(data).length < 5) {
+      this.setState({
+        alertVisible: true,
+        message: strings.sectionSelection,
+        alertHeader: strings.alertErrorHeader
+       })
     } else {
-      const sectionPriorities = order.map(i => {
-        const index = data.findIndex(d => d.id + '' === i + '');
-        return data[index].key;
-      });
-      this.postSectionPriorities(sectionPriorities);
+      this.setState({
+        alertVisible: true,
+        message: strings.confirmMessage,
+        alertHeader: strings.confirmHeader
+      })
     }
   }
 
-  postSectionPriorities(sectionPriorities) {
-    const strings = this.getStrings();
-    const url = 'https://api.10av10.com/api/section/';
-    const headers = {
-      Authorization: 'Bearer ' + this.props.token,
-      'content-type': 'application/json'
-    };
-    axios
-      .post(url, { sectionPriorities }, { headers })
-      .then(response => {
-        if (response.data.success) {
-          this.props.setSectionPriorities(sectionPriorities);
-          Alert.alert(strings.selectionOK);
-        }
-        //TODO TOAST??
-      })
-      .catch(error => {
-        if (error.response.status === 401)
-          logout(
-            this.props.navigation,
-            true,
-            strings.expiredTokenTitle,
-            strings.expiredTokenMessage
-          );
-        // const msg = handleErrorMsg(error.message)
-        console.log(error);
-      });
+  handleLogout() {
+    const strings = this.getStrings()
+    removeItem('email');
+    removeItem('accessToken');
+    this.setState({
+      alertVisible: true,
+      message: strings.expiredTokenMessage,
+      alertHeader: strings.expiredTokenTitle,
+     })
   }
 
-  onPressHeaderButton() {
-    this.setState({ editMode: !this.state.editMode });
+  postSectionPriorities() {
+    getFavoriteSections(sections => {
+      const strings = this.getStrings();
+      const headers = {
+        Authorization: 'Bearer ' + this.props.token,
+        'content-type': 'application/json'
+      };
+      axios
+        .post(SECTION_PRIORITY_URL, { sectionPriorities: sections }, { headers })
+        .then(response => {
+          if (response.data.success) {
+            this.props.setProgress(PROGRESS.SENT_SECTIONS);
+            this.props.setSectionPriorities(sections)
+            this.setState({
+              message: strings.selectionOK,
+              alertHeader: strings.alertSuccessHeader
+             })
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 401)
+            this.handleLogout()
+      });
+    })
   }
 
   getRightIcon() {
-    if (this.state.data.length > 0) {
+    if (Object.keys(this.state.data).length > 0) {
       return (
         <TouchableOpacity
           style={{ width: 50, alignItems: 'center' }}
-          onPress={() => this.onPressHeaderButton()}
+          onPress={() => this.setState({ editMode: !this.state.editMode })}
         >
           <MaterialIcons
-            name={this.getHeaderIconName()}
+            name={this.state.editMode ? 'done' : 'edit'}
             style={{ color: 'white', right: 0 }}
-            size={35}
+            size={30}
           />
         </TouchableOpacity>
       );
     }
   }
 
+  renderAlertButtons(message) {
+    const strings = this.getStrings()
+    switch (message) {
+      case strings.selectionOK:
+        return ([
+          {
+            text: strings.ok,
+            onPress: () => {
+              this.setState({ alertVisible: false })
+              this.props.navigation.goBack();
+            }
+          }
+        ])
+      case strings.confirmMessage:
+        return ([
+          { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+          { text: strings.yes, onPress: () => this.postSectionPriorities() }
+        ])
+      case strings.expiredTokenMessage:
+        return ([
+          { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
+        ])
+      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+    }
+  }
+
+  updateData() {
+    const data = {};
+    const allSections = this.props.sections;
+    getFavoriteSections(sections => {
+      if (sections) {
+        sections.forEach(key => {
+          const s = allSections.filter(item => item.key + '' === key + '')[0];
+          data[key] = {
+            id: key,
+            text: s.title,
+            rowImage: s.rowImage,
+          };
+        });
+      }
+      this.setState({ data, order: sections });
+    });
+  }
+
+  setAlertVisible(visible, message) {
+    const strings = this.getStrings();
+    this.setState({ alertVisible: visible })
+    if (message === strings.selectionOK) // This makes sure you can't stay on ConfirmPage
+      this.props.navigation.goBack();
+    if (message === strings.expiredTokenMessage)
+      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
+  }
+
   render() {
+    const { message, alertVisible, alertHeader } = this.state
     const strings = this.getStrings();
     return (
       <View style={styles.container}>
@@ -203,6 +257,13 @@ class ConfirmPage extends Component {
           rightIcon={this.getRightIcon()}
         />
         {this.renderSortableListOrMessage()}
+        <SuperAgileAlert
+          alertVisible={alertVisible}
+          setAlertVisible={visible => this.setAlertVisible(visible, message)}
+          buttonsIn={this.renderAlertButtons(message)}
+          header={alertHeader || ''}
+          info={message || ''}
+        />
       </View>
     );
   }
@@ -210,8 +271,8 @@ class ConfirmPage extends Component {
 
 const styles = {
   container: {
-    width: window.width,
-    height: window.height,
+    width: WIDTH,
+    height: HEIGHT,
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0)',
     paddingTop: 0
@@ -221,29 +282,28 @@ const styles = {
     color: '#ffffff'
   },
   list: {
-    flex: 1,
+    flex: 1
   },
   contentContainer: {
-    width: window.width
-  },
-  image: {
-    width: 50,
-    height: 50,
-    marginRight: 30,
-    borderRadius: 25
+    width: WIDTH
   },
   textStyle: {
     fontSize: 24,
     fontFamily: 'Avenir Next Bold',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    color: 'white'
+  },
+  listContainerView: {
+    height: HEIGHT - 64,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 };
 
-const mapStateToProps = ({ currentTheme, sections, currentLanguage, userInformation }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token } = userInformation;
-  return { theme, sections: sections.sections, language, token };
+  return { sections: sections.sections, language, token };
 };
 
-export default connect(mapStateToProps, { setSectionPriorities })(ConfirmPage);
+export default connect(mapStateToProps, { setSectionPriorities, setProgress })(ConfirmPage);

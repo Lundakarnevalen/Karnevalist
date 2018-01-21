@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setSections, setSectionPriorities } from '../../actions';
+import {
+  setSections,
+  setSectionPriorities,
+  setProgress,
+  setHomeScreenPopover
+} from '../../actions';
+import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
 import NewsScreen from './MyPageNavbarScreens/NewsScreen';
-import ProfileScreen from './MyPageNavbarScreens/ProfileScreen';
+import SettingsScreen from './MyPageNavbarScreens/SettingsScreen';
 import {
   SECTION_SCREEN_STRINGS,
   NEWS_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
-  PROFILE_SCREEN_STRINGS,
+  SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
 } from '../../helpers/LanguageStrings';
 
-const THEME_COLOR = '#F7A021';
-const SIZE = 30;
+const SIZE = Dimensions.get('window').width / 11;
 
 class MyPageNavbarScreen extends Component {
   componentWillMount() {
@@ -31,17 +36,17 @@ class MyPageNavbarScreen extends Component {
   }
 
   getSectionPriorities(token) {
-    const url = 'https://api.10av10.com/api/section/';
     const headers = {
       Authorization: 'Bearer ' + token,
       'content-type': 'application/json'
     };
     axios
-      .get(url, { headers })
+      .get(SECTION_PRIORITY_URL, { headers })
       .then(response => {
         const { success, sectionPriorities } = response.data;
         if (success) {
           this.props.setSectionPriorities(sectionPriorities);
+          if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
         }
       })
       .catch(error => {
@@ -51,16 +56,51 @@ class MyPageNavbarScreen extends Component {
   }
 
   render() {
-    const { navigation, language } = this.props;
-    return <TabNav screenProps={{ navigation, language }} />;
+    const { navigation, language, setHomeScreenPopover } = this.props;
+    return <TabNav screenProps={{ navigation, language, setHomeScreenPopover }} />;
   }
 }
 
 const TabNav = TabNavigator(
   {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: props => ({
+        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarIcon: ({ tintColor, focused }) => (
+          <MaterialIcons name="home" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+        )
+      })
+    },
+    /*
+    //TODO: When we got better suppoert for showing one news this should be uncommented
+    News: {
+      screen: NewsScreen,
+      navigationOptions: props => ({
+        tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarOptions: {
+          labelStyle: {
+            fontSize: 10
+          }
+        },
+        tabBarIcon: ({ tintColor, focused }) => (
+          <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+        )
+      })
+    },*/
     Sections: {
       screen: SectionScreen,
       navigationOptions: props => ({
+        tabBarOnPress:
+          Platform.OS === 'ios'
+            ? (scene, jumpToIndex) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              }
+            : ({ scene, jumpToIndex }) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
         tabBarIcon: ({ tintColor, focused }) => (
@@ -71,40 +111,38 @@ const TabNav = TabNavigator(
     SongBook: {
       screen: SongBookScreen,
       navigationOptions: props => ({
+        tabBarOnPress:
+          Platform.OS === 'ios'
+            ? (scene, jumpToIndex) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              }
+            : ({ scene, jumpToIndex }) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons name="local-library" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     },
-    Home: {
-      screen: HomeScreen,
+    Settings: {
+      screen: SettingsScreen,
       navigationOptions: props => ({
-        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarOnPress:
+          Platform.OS === 'ios'
+            ? (scene, jumpToIndex) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              }
+            : ({ scene, jumpToIndex }) => {
+                jumpToIndex(scene.index);
+                props.screenProps.setHomeScreenPopover(false);
+              },
+        tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="home" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
-        )
-      })
-    },
-    News: {
-      screen: NewsScreen,
-      navigationOptions: props => ({
-        tabBarLabel: NEWS_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
-        )
-      })
-    },
-    Profile: {
-      screen: ProfileScreen,
-      navigationOptions: props => ({
-        tabBarLabel: PROFILE_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="account-circle"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
+          <MaterialIcons name="settings" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     }
@@ -115,10 +153,10 @@ const TabNav = TabNavigator(
     initialRouteName: 'Home',
     tabBarOptions: {
       showIcon: true,
-      activeTintColor: THEME_COLOR,
+      activeTintColor: '#F7A021',
       inactiveTintColor: '#A9A9A9',
       labelStyle: {
-        fontSize: 10,
+        fontSize: 8,
         margin: 0
       },
       iconStyle: {
@@ -130,7 +168,7 @@ const TabNav = TabNavigator(
         backgroundColor: '#ffffff'
       },
       indicatorStyle: {
-        backgroundColor: THEME_COLOR
+        backgroundColor: '#F7A021'
       }
     }
   }
@@ -141,4 +179,9 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { token } = userInformation;
   return { language, token, sections: sections.sections };
 };
-export default connect(mapStateToProps, { setSections, setSectionPriorities })(MyPageNavbarScreen);
+export default connect(mapStateToProps, {
+  setSections,
+  setSectionPriorities,
+  setProgress,
+  setHomeScreenPopover
+})(MyPageNavbarScreen);

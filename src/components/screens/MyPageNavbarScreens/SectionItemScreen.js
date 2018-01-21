@@ -1,30 +1,25 @@
 import React, { Component } from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  ScrollView,
-  Platform,
-  BackHandler
-} from 'react-native';
+import { View, TouchableOpacity, Text, Dimensions, ScrollView, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { Constants } from 'expo';
-import Header from '../../common/Header';
-import Toast from '../../common/Toast';
-import { saveItem, removeItem, getItem } from '../../../helpers/LocalSave';
+import { Header, Toast } from '../../common';
+import { PROGRESS } from '../../../helpers/Constants';
+import {
+  getFavoriteSection,
+  saveFavoriteSection,
+  removeFavoriteSection
+} from '../../../helpers/LocalSave';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
-
+const WIDTH = Dimensions.get('window').width;
 class SectionItemScreen extends Component {
   componentWillMount() {
     const { id } = this.props.navigation.state.params;
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
-    getItem('sektion' + id, result => {
+    getFavoriteSection(id, result => {
       if (result) {
-        this.setState({ added: true });
+        this.setState({ favorite: true });
       }
     });
   }
@@ -33,7 +28,7 @@ class SectionItemScreen extends Component {
     super(props);
     this.state = {
       showToast: false,
-      added: false
+      favorite: false
     };
   }
 
@@ -45,36 +40,40 @@ class SectionItemScreen extends Component {
     return strings;
   }
 
-  renderRightIcon(id, title) {
-    if (!this.state.added) {
+  renderRightIcon(id) {
+    const { rightIconStyle } = styles;
+    if (this.props.progress === PROGRESS.SENT_SECTIONS) return;
+    if (!this.state.favorite) {
       return (
         <TouchableOpacity
-          style={{ padding: 1, backgroundColor: 'transparent' }}
+          style={rightIconStyle}
           onPress={() => {
-            saveItem('sektion' + id, title);
-            this.setState({ showToast: true, added: true });
+            saveFavoriteSection(id);
+            this.props.navigation.state.params.setSectionStatus(true);
+            this.setState({ showToast: true, favorite: true });
           }}
         >
-          <MaterialIcons name="favorite" size={30} color={'white'} />
+          <MaterialIcons name="favorite-border" size={30} color={'white'} />
         </TouchableOpacity>
       );
     }
     return (
       <TouchableOpacity
-        style={{ padding: 1, backgroundColor: 'transparent' }}
+        style={rightIconStyle}
         onPress={() => {
-          removeItem('sektion' + id);
-          this.setState({ showToast: true, added: false });
+          removeFavoriteSection(id, () => {});
+          this.props.navigation.state.params.setSectionStatus(false);
+          this.setState({ showToast: true, favorite: false });
         }}
       >
-        <MaterialIcons name="delete" size={30} color={'white'} />
+        <MaterialIcons name="favorite" size={30} color={'white'} />
       </TouchableOpacity>
     );
   }
 
   renderToastMessage(title) {
     const strings = this.getStrings();
-    if (!this.state.added) {
+    if (!this.state.favorite) {
       return strings.messageStart + title + strings.messageEndRemove;
     }
     return strings.messageStart + title + strings.messageEndAdd;
@@ -83,14 +82,13 @@ class SectionItemScreen extends Component {
   render() {
     const { navigation } = this.props;
     const { title, description, image, id } = navigation.state.params;
-    const { container, scrollStyle, headerStyle, textStyle } = styles;
+    const { containerStyle, headerStyle, textStyle } = styles;
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id, title)} />
+      <View style={containerStyle}>
+        <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id)} />
         <View>
-          <ScrollView style={scrollStyle}>
-            <View style={container}>{image}</View>
-            <View style={{ height: 10, backgroundColor: 'white' }} />
+          <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+            {image}
             <Text style={[headerStyle, { color: '#F7A021' }]}>{title}</Text>
             <Text style={textStyle}>{description}</Text>
           </ScrollView>
@@ -106,14 +104,19 @@ class SectionItemScreen extends Component {
 }
 
 const styles = {
-  container: {
+  containerStyle: {
+    height: HEIGHT,
+    width: WIDTH,
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  imageStyle: {
     marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    width: Dimensions.get('window').width
-  },
-  scrollStyle: {
-    maxHeight: Platform.OS === 'ios' ? HEIGHT : HEIGHT - Constants.statusBarHeight
+    width: WIDTH - 5,
+    height: WIDTH - 5,
+    resizeMode: 'contain'
   },
   headerStyle: {
     fontSize: 26,
@@ -125,14 +128,21 @@ const styles = {
     fontSize: 16,
     margin: 10,
     fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    color: '#333'
+  },
+  rightIconStyle: {
+    alignItems: 'center',
+    padding: 1,
+    backgroundColor: 'transparent',
+    width: 60
   }
 };
 
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  const { progress } = userInformation;
+  return { language, progress };
 };
 
 export default connect(mapStateToProps, null)(SectionItemScreen);
