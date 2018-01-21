@@ -135,14 +135,14 @@ class RegistrationScreen extends Component {
       studentUnion === 'Välj nation' ||
       studentUnion === 'Choose student union' ||
       studentUnion === ''
-    ) return true
+    )
+      return true;
     return false;
   }
 
   anyErrors() {
     const { errors, foodPreferencesError, foodPreferences } = this.state;
-    return (errors.indexOf(true) !== -1 ||
-    (foodPreferencesError && foodPreferences !== ''))
+    return errors.indexOf(true) !== -1 || (foodPreferencesError && foodPreferences !== '');
   }
 
   trimValues() {
@@ -497,31 +497,16 @@ class RegistrationScreen extends Component {
             width={WIDTH}
             onPress={() => {
               this.trimValues();
-<<<<<<< HEAD
               if (this.anyEmpty()) {
-                Alert.alert(errorStrings.errorMsgAnyEmpty);
-              } else if (this.anyErrors()) {
-                Alert.alert(errorStrings.errorMsgWrongInput);
-=======
-              if (
-                firstNameError ||
-                lastNameError ||
-                emailError ||
-                confirmedEmailError ||
-                passwordError ||
-                confirmedPasswordError ||
-                socialSecurityNbrError ||
-                postNumberError ||
-                cityError ||
-                phoneNbrError ||
-                foodPreferencesError ||
-                this.anyEmpty()
-              ) {
                 this.setState({
                   alertVisible: true,
-                  message: errorStrings.errorMsgWrongInput,
-                })
->>>>>>> 6edaccf290116b89af9d85c9d8b64d8846ae0c08
+                  message: errorStrings.errorMsgAnyEmpty
+                });
+              } else if (this.anyErrors()) {
+                this.setState({
+                  alertVisible: true,
+                  message: errorStrings.errorMsgWrongInput
+                });
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
@@ -590,7 +575,7 @@ class RegistrationScreen extends Component {
         <SuperAgileAlert
           alertVisible={alertVisible}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
-          buttonsIn={ [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]}
+          buttonsIn={[{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]}
           header={strings.error}
           info={this.state.message || ''}
         />
