@@ -1,13 +1,81 @@
 import axios from 'axios';
+import React from 'react'
+import { Dimensions, Image } from 'react-native';
+import { SECTION_URL, IMAGE_URL, NEWS_URL } from './Constants'
+import { stripHtmlString } from './functions'
 
-const url = 'http://lundakarnevalen.se/wp-json/wp/v2/posts?category=';
+const WIDTH = Dimensions.get('window').width
+const HEIGHT = Dimensions.get('window').height
 
 export function getNews() {
   return axios
-    .get(url + '7')
+    .get(NEWS_URL + '7')
     .then(response => response.data)
     .catch(error => {
       console.log(error);
+    });
+}
+
+function fetchImage(url, section, cb) {
+  const tempSection = section;
+  axios
+    .get(url)
+    .then(r => {
+      const image = (
+        <Image
+          style={{ width: WIDTH, height: WIDTH, resizeMode: 'contain' }}
+          source={{ uri: r.data.source_url }}
+          defaultSource={require('../../res/Monstergubbe.png')}
+        />
+      );
+
+      const rowImage = (
+        <Image
+          style={{
+            width: 40,
+            height: 40,
+            alignSelf: 'center',
+            marginLeft: 10,
+            marginRight: 10,
+            borderRadius: 8
+          }}
+          source={{ uri: r.data.source_url }}
+          defaultSource={require('../../res/Monstergubbe.png')}
+        />
+      );
+
+      tempSection.imguri = r.data.source_url;
+      tempSection.image = image;
+      tempSection.rowImage = rowImage;
+      cb(tempSection)
+      // this.props.setSections(tempSection);
+      return tempSection;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+export function fetchSections(cb) {
+  axios
+    .get(SECTION_URL)
+    .then(response => {
+      response.data.forEach(item => {
+        const strippedContent = stripHtmlString(item.content.rendered);
+        const strippedTitle = stripHtmlString(item.title.rendered);
+        const imgId = item.featured_media;
+        const imgUrl = IMAGE_URL + imgId;
+        const section = {
+          key: item.id,
+          id: item.id,
+          title: strippedTitle,
+          info: strippedContent
+        };
+        fetchImage(imgUrl, section, cb);
+      });
+    })
+    .catch(error => {
+      console.error(error);
     });
 }
 

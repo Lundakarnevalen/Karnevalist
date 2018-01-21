@@ -26,11 +26,11 @@ const studentUnion = {
   EN: 'Choose your student union'
 };
 const errorMsg400 = {
-  SE: 'Fel mejl eller lösenord',
+  SE: 'Fel mail eller lösenord',
   EN: 'Wrong email or password'
 };
 const errorMsg401 = {
-  SE: 'Fel mejl eller lösenord',
+  SE: 'Fel mail eller lösenord',
   EN: 'Wrong email or password'
 };
 const errorMsg404 = {
@@ -59,7 +59,7 @@ const socialSecurityNumber = {
   EN: 'Social security number'
 };
 const email = {
-  SE: 'Mejl',
+  SE: 'Mail',
   EN: 'Email'
 };
 const address = {
@@ -94,7 +94,7 @@ const cancel = {
 const ok = {
   SE: 'OK',
   EN: 'OK'
-}
+};
 
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
@@ -122,11 +122,11 @@ export const LOGIN_SCREEN_STRINGS = {
     'resetPasswordComplete'
   ],
   email: {
-    SE: 'Mejladress',
+    SE: 'Mailadress',
     EN: 'Email Address'
   },
   resetPasswordComplete: {
-    SE: 'Ett mejl har skickats med information om hur du byter lösenord.',
+    SE: 'Ett mail har skickats med information om hur du byter lösenord.',
     EN: 'An email has been sent with information about how to reset your password.'
   },
   password,
@@ -151,7 +151,7 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Read more about the registration'
   },
   emailError: {
-    SE: 'Mejl-fältet måste fyllas i',
+    SE: 'Mail-fältet måste fyllas i',
     EN: 'The email field is required'
   },
   passwordError: {
@@ -168,7 +168,7 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Forgotten your password?'
   },
   passwordPopupInfo: {
-    SE: 'Var god fyll i din mejladress så skickas ett nytt lösenord till dig',
+    SE: 'Var god fyll i din mailadress så skickas ett nytt lösenord till dig',
     EN: 'Please fill in your email address below to receive a new password'
   },
   cancel: {
@@ -181,7 +181,7 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Reset password'
   },
   responseFail: {
-    SE: 'Var god ange en giltig mejladress',
+    SE: 'Var god ange en giltig mailadress',
     EN: 'Please enter a valid email address'
   },
   responseSuccess: {
@@ -228,7 +228,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   socialSecurityNumber,
   email,
   confirmEmail: {
-    SE: 'Bekräfta mejl',
+    SE: 'Bekräfta mail',
     EN: 'Confirm email'
   },
   password,
@@ -288,11 +288,11 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   error,
   errorMsg400: {
-    SE: 'Ogiltig mejladress eller lösenord',
+    SE: 'Ogiltig mailadress eller lösenord',
     EN: 'Invalid email address or password'
   },
   errorMsg401: {
-    SE: 'Ogiltig mejladress eller lösenord',
+    SE: 'Ogiltig mailadress eller lösenord',
     EN: 'Invalid email address or password'
   },
   errorMsg404,
@@ -353,14 +353,18 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Jag förstår',
     EN: 'I understand'
-  },
+  }
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title'],
+  fields: ['title', 'refresh'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
+  },
+  refresh: {
+    SE: 'Dra ner för att uppdatera',
+    EN: 'Pull down to refresh'
   }
 };
 
@@ -644,11 +648,11 @@ export const COUNT_DOWN_STRINGS = {
   fields: ['karneval', 'upprop'],
   karneval: {
     SE: 'Det är karneval!',
-    EN: 'It\'s carnival!'
+    EN: "It's carnival!"
   },
   upprop: {
     SE: 'Det är upprop!',
-    EN: 'It\'s call day!'
+    EN: "It's call day!"
   }
 };
 
@@ -677,11 +681,11 @@ export const ERROR_MSG_INPUT_FIELD = {
     EN: 'This field may only contain letters'
   },
   errorMsgInvalidEmail: {
-    SE: 'Ej giltig mejladress',
+    SE: 'Ej giltig mailadress',
     EN: 'Not a valid email address'
   },
   errorMsgNoMatchEmail: {
-    SE: 'Mejladresserna matchar inte',
+    SE: 'Mailadresserna matchar inte',
     EN: 'The email addresses do not match'
   },
   errorMsgNoMatchPassword: {

@@ -9,3 +9,11 @@ export function dynamicSort(property) {
     return result * sortOrder;
   };
 }
+
+export function stripHtmlString(string) {
+  return string
+    .replace(/(<([^>]+)>)/gi, '')
+    .replace(/(&#8211;)/gi, '-')
+    .replace(/(&nbsp;)/gi, '')
+    .replace(/(&#8230;)/gi, '...');
+}
