@@ -5,9 +5,7 @@ import {
   View,
   Dimensions,
   ScrollView,
-  TouchableOpacity,
-  Keyboard,
-  Platform
+  TouchableOpacity
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -15,7 +13,7 @@ import { connect } from 'react-redux';
 import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
 import { USER_URL } from '../../../helpers/Constants';
 import { logout } from '../../../helpers/functions';
-import { MY_PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { MY_PROFILE_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../../helpers/ApiManager';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -25,6 +23,7 @@ class MyProfileScreen extends Component {
     super(props);
     this.state = {
       editMode: false,
+      errors: [false, false, false, false, false],
       alertVisible: false,
       user: null,
       changesMade: false,
@@ -125,8 +124,74 @@ class MyProfileScreen extends Component {
       });
   }
 
+  isEmail(toTest) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      toTest
+    );
+  }
+
+  containsOnlyLetters(toTest) {
+    return /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(
+      toTest
+    );
+  }
+
+  isValidPhoneNbr(toTest) {
+    return /^\+?\d+$/.test(toTest) && toTest.length >= 7 && toTest.length <= 20;
+  }
+
+  containsOnlyDigits(text) {
+    return /^\d+$/.test(text);
+  }
+
+  fulfilsRequirement(key, toCheck) {
+    switch (key) {
+      case 'firstName':
+        return this.containsOnlyLetters(toCheck);
+      case 'lastName':
+        return this.containsOnlyLetters(toCheck);
+      case 'email':
+        return this.isEmail(toCheck);
+      case 'city':
+        return this.containsOnlyLetters(toCheck);
+      case 'postNumber':
+        return this.containsOnlyDigits(toCheck) && toCheck.length === 5;
+      case 'phoneNumber':
+        return this.isValidPhoneNbr(toCheck);
+      default:
+        return true;
+    }
+  }
+
+  getErrorStrings() {
+    const { language } = this.props;
+    const { fields } = ERROR_MSG_INPUT_FIELD;
+    const strings = {};
+    fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
+    return strings;
+  }
+
+  getWarningMessage(key) {
+    const errorStrings = this.getErrorStrings();
+    switch (key) {
+      case 'firstName':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'lastName':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'city':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'postNumber':
+        return errorStrings.errorMsgZipCode;
+      case 'phoneNumber':
+        return errorStrings.errorMsgPhoneNbr;
+      default:
+        return;
+    }
+  }
+
+
   renderFields() {
-    const { user, editMode } = this.state;
+    const { user, editMode, errors } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
     fields.forEach(field => {
@@ -134,18 +199,23 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      const color = (editMode && (key !== 'email')) ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
+      const color =
+        editMode && key !== 'email' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
+      console.log(labels[key]);
       return (
         <Input
           extraContainerStyle={{ backgroundColor: color }}
           key={key}
           placeholder={labels[key]}
           value={user[key]}
-          editable={editMode && (key !== 'email')}
+          editable={editMode && key !== 'email'}
           onChangeText={text => {
             user[key] = text;
+            errors[key] = !this.fulfilsRequirement(key, text);
             this.setState({ user, changesMade: true });
           }}
+          hasError={errors[key]}
+          warningMessage={this.getWarningMessage(key)}
         />
       );
     });
