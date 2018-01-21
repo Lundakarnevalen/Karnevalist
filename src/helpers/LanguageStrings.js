@@ -596,6 +596,18 @@ export const LOADING_STRINGS = {
   loading
 };
 
+export const COUNT_DOWN_STRINGS = {
+  fields: ['karneval', 'upprop'],
+  karneval: {
+    SE: 'Det är karneval!',
+    EN: 'It\'s carnival!'
+  },
+  upprop: {
+    SE: 'Det är upprop!',
+    EN: 'It\'s call day!'
+  }
+};
+
 export const ERROR_MSG_INPUT_FIELD = {
   fields: [
     'errorMsgOnlyDigits',
