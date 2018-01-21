@@ -55,7 +55,6 @@ class MyProfileScreen extends Component {
       .catch(error => {
         if (error.response.status === 401) this.handleLogout();
         const msg = handleErrorMsg(error.message);
-        console.log(msg);
       });
   }
 
@@ -80,7 +79,7 @@ class MyProfileScreen extends Component {
         style={rightIconStyle}
         onPress={() => {
           if (this.state.editMode && this.state.changesMade) {
-            if (anyError || this.anyEmpty() || !validAddress) {
+            if (anyError || !validAddress) {
               this.setState({ errorAlertVisible: true });
             } else if (this.state.changesMade) {
               this.setState({
@@ -102,6 +101,7 @@ class MyProfileScreen extends Component {
       </TouchableOpacity>
     );
   }
+
   handleLogout() {
     const strings = this.getStrings();
     removeItem('email');
@@ -111,10 +111,6 @@ class MyProfileScreen extends Component {
       message: strings.expiredTokenMessage,
       alertHeader: strings.expiredTokenTitle
     });
-  }
-
-  anyEmpty() {
-    return false;
   }
 
   saveChanges() {
@@ -212,6 +208,14 @@ class MyProfileScreen extends Component {
     }
   }
 
+  checkAddressError(text) {
+    if (text === '') {
+      this.setState({ validAddress: false });
+    } else {
+      this.setState({ validAddress: true });
+    }
+  }
+
   renderFields() {
     const { user, editMode, errors } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
@@ -231,11 +235,9 @@ class MyProfileScreen extends Component {
           value={user[key]}
           editable={editMode && key !== 'email'}
           onChangeText={text => {
-            if (user[key] === 'address' && text === '') {
-               this.setState({ validAddress: false })
-                } else {
-                  this.setState({ validAddress: true })
-              }
+            if (key === 'address') {
+              this.checkAddressError(text);
+            }
             user[key] = text;
             this.setState({ anyError: !this.fulfilsRequirement(key, text) });
             this.setState({ user, changesMade: true, errors });
