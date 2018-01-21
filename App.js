@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Font, ScreenOrientation } from 'expo';
-import { getItem, saveItem } from './src/helpers/LocalSave'
+import { getItem, saveItem } from './src/helpers/LocalSave';
 import Router from './src/components/Router';
 import reducers from './src/reducers';
-
 
 class App extends Component {
   constructor(props) {
@@ -16,12 +15,12 @@ class App extends Component {
   }
 
   componentWillMount() {
-    getItem('language', (language) => {
+    getItem('language', language => {
       if (language === null) {
-        this.setState({ language: 'SE' })
-        saveItem('language', 'SE')
+        this.setState({ language: 'SE' });
+        saveItem('language', 'SE');
       } else {
-        this.setState({ language })
+        this.setState({ language });
       }
     });
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
@@ -43,8 +42,8 @@ class App extends Component {
 
   render() {
     if (this.state.fontsLoaded && this.state.language) {
-      const { language } = this.state //, { currentLanguage: language }
-      const INITIAL_STATE = { currentLanguage: { language } }
+      const { language } = this.state; //, { currentLanguage: language }
+      const INITIAL_STATE = { currentLanguage: { language } };
       return (
         <Provider store={createStore(reducers, INITIAL_STATE)}>
           <Router />

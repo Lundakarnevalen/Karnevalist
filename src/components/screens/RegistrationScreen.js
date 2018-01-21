@@ -11,17 +11,23 @@ import {
   Keyboard
 } from 'react-native';
 import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Header from '../common/Header';
-import Input from '../common/Input';
-import DKPicker from '../common/DKPicker';
-import CustomButton from '../common/CustomButton';
-import ButtonChoiceManager from '../common/ButtonChoiceManager';
-import BackgroundImage from '../common/BackgroundImage';
+import { setToken, setEmail } from '../../actions';
+import {
+  Header,
+  Input,
+  DKPicker,
+  CustomButton,
+  ButtonChoiceManager,
+  BackgroundImage
+} from '../common';
 import Loading from '../common/Loading';
-import { REGISTRATION_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
+import { REGISTER_URL } from '../../helpers/Constants';
+import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
+import { saveItem } from '../../helpers/LocalSave';
 
 const WIDTH = Dimensions.get('window').width - 32;
 const HEIGHT = Dimensions.get('window').height;
@@ -31,22 +37,14 @@ class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      confirmedEmail: '',
-      password: '',
-      confirmedPassword: '',
-      address: '',
-      postNumber: '',
-      city: '',
-      phoneNbr: '',
-      foodPreferences: '',
+      inputs: ['', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
-      socialSecurityNumberInput: '',
+      foodPreferences: '',
+      errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showStudentUnionPicker: false,
+      foodPreferencesError: false,
       loading: false,
       loadingComplete: false,
       keyboardHeight: 0
@@ -88,12 +86,71 @@ class RegistrationScreen extends Component {
     }
   }
 
+  isEmail(toTest) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      toTest
+    );
+  }
+
+  containsOnlyLetters(toTest) {
+    return /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(
+      toTest
+    );
+  }
+
+  isValidPhoneNbr(toTest) {
+    return /^\+?\d+$/.test(toTest) && toTest.length >= 7 && toTest.length <= 20;
+  }
+
+  containsOnlyDigits(text) {
+    return /^\d+$/.test(text);
+  }
+
   getStrings() {
     const { language } = this.props;
     const { fields } = REGISTRATION_SCREEN_STRINGS;
     const strings = {};
     fields.forEach(field => (strings[field] = REGISTRATION_SCREEN_STRINGS[field][language]));
     return strings;
+  }
+
+  getErrorStrings() {
+    const { language } = this.props;
+    const { fields } = ERROR_MSG_INPUT_FIELD;
+    const strings = {};
+    fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
+    return strings;
+  }
+
+  anyEmpty() {
+    const { inputs, studentUnion, shirtSize } = this.state;
+    if (
+      inputs.indexOf('') !== -1 ||
+      shirtSize === 'Välj tröjstorlek' ||
+      shirtSize === 'Choose shirt size' ||
+      shirtSize === '' ||
+      studentUnion === 'Välj nation' ||
+      studentUnion === 'Choose student union' ||
+      studentUnion === ''
+    ) return true
+    return false;
+  }
+
+  anyErrors() {
+    const { errors, foodPreferencesError, foodPreferences } = this.state;
+    return (errors.indexOf(true) !== -1 ||
+    (foodPreferencesError && foodPreferences !== ''))
+  }
+
+  trimValues() {
+    const { inputs } = this.state;
+    const trimmedList = inputs;
+    for (let i = 0; i < trimmedList.length; i++) {
+      if (!(i === 5 || i === 6)) {
+        trimmedList[i] = inputs[i].trim();
+      }
+    }
+    this.setState({ inputs: trimmedList });
   }
 
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
@@ -163,30 +220,23 @@ class RegistrationScreen extends Component {
 
   render() {
     const strings = this.getStrings();
-    const { flexHorizontal } = styles;
+    const errorStrings = this.getErrorStrings();
+    const { flexHorizontal, rightIconStyle } = styles;
     const {
-      firstName,
-      lastName,
-      email,
-      confirmedEmail,
-      address,
-      postNumber,
-      city,
-      phoneNbr,
+      inputs,
+      errors,
       foodPreferences,
-      password,
-      confirmedPassword,
+      foodPreferencesError,
       loading,
       loadingComplete,
       shirtSize,
       showShirtPicker,
       studentUnion,
-      showStudentUnionPicker,
-      socialSecurityNumberInput
+      showStudentUnionPicker
     } = this.state;
 
     const closeButton = (
-      <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
+      <TouchableOpacity style={rightIconStyle} onPress={() => this.props.navigation.goBack(null)}>
         <MaterialCommunityIcons size={30} name="close" color={'white'} />
       </TouchableOpacity>
     );
@@ -196,99 +246,136 @@ class RegistrationScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.header} rightIcon={closeButton} />
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.contentContainer}
           style={{ height: HEIGHT - 64 }}
           ref={'scrollView'}
         >
           <Input
             placeholder={strings.firstName}
-            onChangeText={firstNameInput => {
-              this.setState({ firstName: firstNameInput });
+            onChangeText={text => {
+              inputs[0] = text;
+              errors[0] = !this.containsOnlyLetters(text);
+              this.setState({ inputs, errors });
             }}
-            value={firstName}
+            value={inputs[0]}
             onSubmitEditing={() => this.refs.secondInput.focus()}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             autoFocus
+            hasError={errors[0]}
+            warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
             ref={'secondInput'}
             onSubmitEditing={() => this.refs.thirdInput.focus()}
             placeholder={strings.lastName}
-            onChangeText={lastNameInput => {
-              this.setState({ lastName: lastNameInput });
+            onChangeText={text => {
+              inputs[1] = text;
+              errors[1] = !this.containsOnlyLetters(text);
+              this.setState({ inputs, errors });
             }}
-            value={lastName}
+            value={inputs[1]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
+            hasError={errors[1]}
+            warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
             ref={'thirdInput'}
             onSubmitEditing={() => this.refs.fourthInput.focus()}
             placeholder={strings.socialSecurityNumber}
             onChangeText={text => {
-              this.setState({ socialSecurityNumberInput: text });
+              inputs[2] = text;
+              errors[2] = !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text));
+              this.setState({ inputs, errors });
             }}
-            value={socialSecurityNumberInput}
+            value={inputs[2]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
+            hasError={errors[2]}
+            warningMessage={errorStrings.errorMsgSocialSecurity}
           />
           <Input
             ref={'fourthInput'}
             onSubmitEditing={() => this.refs.fifthInput.focus()}
             placeholder={strings.email}
             keyboardType="email-address"
-            onChangeText={emailInput => {
-              this.setState({ email: emailInput });
+            autoCapitalize="none"
+            onChangeText={text => {
+              inputs[3] = text;
+              errors[3] = !this.isEmail(text);
+              errors[4] = text !== inputs[4];
+              this.setState({
+                inputs,
+                errors
+              });
             }}
-            value={email}
+            value={inputs[3]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
+            hasError={errors[3]}
+            warningMessage={errorStrings.errorMsgInvalidEmail}
           />
           <Input
             ref={'fifthInput'}
             onSubmitEditing={() => this.refs.sixthInput.focus()}
             placeholder={strings.confirmEmail}
             keyboardType="email-address"
-            onChangeText={emailInput => {
-              this.setState({ confirmedEmail: emailInput });
+            autoCapitalize="none"
+            onChangeText={text => {
+              inputs[4] = text;
+              errors[4] = text !== inputs[3];
+              this.setState({ inputs, errors });
             }}
-            value={confirmedEmail}
+            value={inputs[4]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
+            hasError={errors[4]}
+            warningMessage={errorStrings.errorMsgNoMatchEmail}
           />
           <Input
             ref={'sixthInput'}
             onSubmitEditing={() => this.refs.seventhInput.focus()}
             placeholder={strings.password}
             onChangeText={text => {
-              this.setState({ password: text });
+              inputs[5] = text;
+              errors[5] = text.length < 5;
+              errors[6] = text !== inputs[6];
+              this.setState({ inputs, errors });
             }}
-            value={password}
+            value={inputs[5]}
+            hasError={errors[5]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             secureText
+            warningMessage={errorStrings.errorMsgPwd}
           />
           <Input
             ref={'seventhInput'}
             onSubmitEditing={() => this.refs.eigthInput.focus()}
             placeholder={strings.confirmPassword}
             onChangeText={text => {
-              this.setState({ confirmedPassword: text });
+              inputs[6] = text;
+              errors[6] = text !== inputs[5];
+              this.setState({ inputs, errors });
             }}
-            value={confirmedPassword}
+            value={inputs[6]}
+            hasError={errors[6]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             secureText
+            warningMessage={errorStrings.errorMsgNoMatchPassword}
           />
           <Input
             ref={'eigthInput'}
             onSubmitEditing={() => this.refs.ninthInput.focus()}
             placeholder={strings.address}
-            onChangeText={addressInput => {
-              this.setState({ address: addressInput });
+            onChangeText={text => {
+              inputs[7] = text;
+              this.setState({ inputs });
             }}
-            value={address}
+            value={inputs[7]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
           />
@@ -304,26 +391,37 @@ class RegistrationScreen extends Component {
               onSubmitEditing={() => this.refs.tenthInput.focus()}
               placeholder={strings.postNumber}
               keyboardType="numeric"
-              onChangeText={postNumberInput => {
-                this.setState({ postNumber: postNumberInput });
+              onChangeText={text => {
+                inputs[8] = text;
+                errors[8] = text.length !== 5 || !this.containsOnlyDigits(text);
+                this.setState({
+                  inputs,
+                  errors
+                });
               }}
               width={WIDTH / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
-              value={postNumber}
+              value={inputs[8]}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
+              hasError={errors[8]}
+              warningMessage={errorStrings.errorMsgZipCode}
             />
             <Input
               ref={'tenthInput'}
               onSubmitEditing={() => this.refs.eleventhInput.focus()}
               placeholder={strings.city}
-              onChangeText={cityInput => {
-                this.setState({ city: cityInput });
+              onChangeText={text => {
+                inputs[9] = text;
+                errors[9] = !this.containsOnlyLetters(text);
+                this.setState({ inputs, errors });
               }}
               width={WIDTH / 2 - 4}
-              value={city}
+              value={inputs[9]}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
+              hasError={errors[9]}
+              warningMessage={errorStrings.errorMsgCity}
             />
           </View>
           <Input
@@ -331,22 +429,35 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.twelthInput.focus()}
             placeholder={strings.phoneNumber}
             keyboardType="phone-pad"
-            onChangeText={phoneNbrInput => {
-              this.setState({ phoneNbr: phoneNbrInput });
+            onChangeText={text => {
+              inputs[10] = text;
+              errors[10] = !this.isValidPhoneNbr(text);
+              this.setState({
+                inputs,
+                errors
+              });
             }}
-            value={phoneNbr}
+            value={inputs[10]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
+            hasError={errors[10]}
+            warningMessage={errorStrings.errorMsgPhoneNbr}
           />
           <Input
             ref={'twelthInput'}
             placeholder={strings.foodPreferences}
-            onChangeText={foodPreferencesInput => {
-              this.setState({ foodPreferences: foodPreferencesInput });
+            onChangeText={text => {
+              this.setState({
+                foodPreferences: text,
+                foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
+              });
             }}
             value={foodPreferences}
             returnKeyType={'done'}
+            autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
+            hasError={foodPreferencesError}
+            warningMessage={[errorStrings.errorMsgFoodPreference]}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,
@@ -379,48 +490,32 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
-              if (firstName === '') {
-                Alert.alert(strings.error, strings.errorFirstName);
-              } else if (lastName === '') {
-                Alert.alert(strings.error, strings.errorLastName);
-              } else if (socialSecurityNumberInput === '') {
-                Alert.alert(strings.error, strings.errorSocialSecurityNumber);
-              } else if (email === '') {
-                Alert.alert(strings.error, strings.errorEmail);
-              } else if (confirmedEmail === '') {
-                Alert.alert(strings.error, strings.errorConfirmEmail);
-              } else if (address === '') {
-                Alert.alert(strings.error, strings.errorAddress);
-              } else if (postNumber === '') {
-                Alert.alert(strings.error, strings.errorPostNumber);
-              } else if (city === '') {
-                Alert.alert(strings.error, strings.errorCity);
-              } else if (phoneNbr === '') {
-                Alert.alert(strings.error, strings.errorPhoneNumber);
-              } else if (password === '') {
-                Alert.alert(strings.error, strings.errorPassword);
-              } else if (confirmedPassword === '') {
-                Alert.alert(strings.error, strings.errorConfirmPassword);
-              } else if (email !== confirmedEmail) {
-                Alert.alert(strings.error, strings.errorEmailMatch);
-              } else if (password !== confirmedPassword) {
-                Alert.alert(strings.error, strings.errorPasswordMatch);
+              this.trimValues();
+              if (this.anyEmpty()) {
+                Alert.alert(errorStrings.errorMsgAnyEmpty);
+              } else if (this.anyErrors()) {
+                Alert.alert(errorStrings.errorMsgWrongInput);
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
-                  .post('https://api.10av10.com/register', {
-                    email,
-                    password,
-                    postNumber,
-                    firstName,
-                    lastName,
-                    phoneNumber: phoneNbr,
-                    address,
-                    city,
-                    foodPreferences,
-                    personalNumber: socialSecurityNumberInput
+                  .post(REGISTER_URL, {
+                    firstName: inputs[0],
+                    lastName: inputs[1],
+                    personalNumber: inputs[2],
+                    email: inputs[3],
+                    password: inputs[5],
+                    address: inputs[7],
+                    postNumber: inputs[8],
+                    city: inputs[9],
+                    phoneNumber: inputs[10],
+                    foodPreferences
                   })
-                  .then(() => {
+                  .then(response => {
+                    const { accessToken } = response.data;
+                    this.props.setToken(accessToken);
+                    this.props.setEmail(inputs[3]);
+                    saveItem('email', inputs[3]);
+                    saveItem('accessToken', accessToken);
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
@@ -451,8 +546,13 @@ class RegistrationScreen extends Component {
           <Loading
             loadingComplete={loadingComplete}
             redirect={() => {
-              this.props.navigation.navigate('LoginScreen');
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
+                key: null
+              });
               this.setState({ loading: false, loadingComplete: false });
+              this.props.navigation.dispatch(resetAction);
             }}
           />
         ) : null}
@@ -482,14 +582,19 @@ const styles = {
     borderRadius: 3,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     borderWidth: 1
+  },
+  rightIconStyle: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    width: 60,
+    paddingRight: 0
   }
 };
 
-const mapStateToProps = ({ currentTheme, userInformation, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { picture } = userInformation;
   const { language } = currentLanguage;
-  return { theme, picture, language };
+  return { picture, language };
 };
 
-export default connect(mapStateToProps, null)(RegistrationScreen);
+export default connect(mapStateToProps, { setToken, setEmail })(RegistrationScreen);

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { NavigationActions } from 'react-navigation';
 import { getItem } from '../../helpers/LocalSave';
-import BackgroundImage from '../common/BackgroundImage';
-import { setTheme, setSections, setToken, setEmail } from '../../actions';
+import { BackgroundImage } from '../common';
+import { TOKEN_URL, SECTION_URL, IMAGE_URL } from '../../helpers/Constants';
+import { setSections, setToken, setEmail } from '../../actions';
 
-const baseURL = 'https://api.10av10.com/api/user/';
 const WIDTH = Dimensions.get('window').width;
+
 class SplashScreen extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class SplashScreen extends Component {
   }
 
   componentWillMount() {
-    this.setCurrenTheme();
+    StatusBar.setBarStyle('light-content', true);
     this.spin();
     this.authorize();
     this.getSectionInfo();
@@ -30,11 +32,12 @@ class SplashScreen extends Component {
       .then(r => {
         const image = (
           <Image
-            style={{ width: WIDTH - 10, height: WIDTH - 50 }}
+            style={{ width: WIDTH, height: WIDTH, resizeMode: 'contain' }}
             source={{ uri: r.data.source_url }}
             defaultSource={require('../../../res/Monstergubbe.png')}
           />
         );
+
         tempSection.imguri = r.data.source_url;
         tempSection.image = image;
         this.props.setSections(tempSection);
@@ -44,62 +47,76 @@ class SplashScreen extends Component {
         console.error(error);
       });
   }
+  stripHtmlString(string) {
+    return string
+      .replace(/(<([^>]+)>)/gi, '')
+      .replace(/(&#8211;)/gi, '-')
+      .replace(/(&nbsp;)/gi, '')
+      .replace(/(&#8230;)/gi, '...');
+  }
 
   getSectionInfo() {
-    const url = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
-    axios.get(url).then(response => {
-      response.data.forEach(item => {
-        const strippedContent = item.content.rendered.replace(/(<([^>]+)>)/gi, '');
-        const imgId = item.featured_media;
-        const imgUrl = 'http://lundakarnevalen.se/wp-json/wp/v2/media/' + imgId;
-        const section = {
-          key: item.id,
-          id: item.id,
-          title: item.title.rendered,
-          info: strippedContent
-        };
-        this.getImage(imgUrl, section);
+    axios
+      .get(SECTION_URL)
+      .then(response => {
+        response.data.forEach(item => {
+          const strippedContent = this.stripHtmlString(item.content.rendered);
+          const strippedTitle = this.stripHtmlString(item.title.rendered);
+          const imgId = item.featured_media;
+          const imgUrl = IMAGE_URL + imgId;
+          const section = {
+            key: item.id,
+            id: item.id,
+            title: strippedTitle,
+            info: strippedContent
+          };
+          this.getImage(imgUrl, section);
+        });
+      })
+      .catch(error => {
+        console.error(error);
       });
-    });
   }
 
   authorize() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
+      key: null
+    });
     setTimeout(
       () =>
         getItem('email', email => {
           if (email !== null) {
             getItem('accessToken', token => {
-              const url = baseURL + email;
               const headers = {
                 Authorization: 'Bearer ' + token,
                 'content-type': 'application/json'
               };
               axios
-                .get(url, { headers })
+                .post(TOKEN_URL, {}, { headers })
                 .then(response => {
                   const { success } = response.data;
                   if (success) {
-                    this.props.navigation.navigate('MyPageNavbarScreen');
+                    resetAction.actions = [
+                      NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
+                    ];
                     this.props.setToken(token);
                     this.props.setEmail(email);
-                  } else this.props.navigation.navigate('LoginScreen');
+                    this.props.navigation.dispatch(resetAction);
+                  } else this.props.navigation.dispatch(resetAction);
                 })
                 .catch(error => {
-                  this.props.navigation.navigate('LoginScreen');
                   console.log(error.message);
+                  this.props.navigation.dispatch(resetAction);
                 });
             });
           } else {
-            this.props.navigation.navigate('LoginScreen');
+            this.props.navigation.dispatch(resetAction);
           }
         }),
       2000
     );
-  }
-
-  setCurrenTheme() {
-    StatusBar.setBarStyle('light-content', true);
-    this.props.setTheme('night');
   }
 
   spin() {
@@ -149,4 +166,4 @@ const styles = {
   }
 };
 
-export default connect(null, { setTheme, setSections, setToken, setEmail })(SplashScreen);
+export default connect(null, { setSections, setToken, setEmail })(SplashScreen);

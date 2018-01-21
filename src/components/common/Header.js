@@ -2,32 +2,33 @@ import React, { Component } from 'react';
 import { View, Dimensions, Text, Platform, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
 
 const WIDTH = Dimensions.get('window').width;
 
 class Header extends Component {
   renderRightIcon() {
     const { rightIcon } = this.props;
+    const { rightIconStyle } = styles;
     if (rightIcon) {
-      return <View style={{ flex: 1, alignItems: 'center' }}>{rightIcon}</View>;
+      return <View style={rightIconStyle}>{rightIcon}</View>;
     }
-    return <View style={{ flex: 1, alignItems: 'center' }} />;
+    return <View style={rightIconStyle} />;
   }
 
   renderLeftIcon() {
     const { leftIcon, navigation } = this.props;
+    const { backButtonArea, backButtonStyle, iconStyle } = styles;
     if (leftIcon === null) {
-      return <View style={{ flex: 1, alignItems: 'center' }} />;
+      return <View style={iconStyle} />;
     } else if (leftIcon) {
-      return <View style={{ flex: 1, alignItems: 'center' }}>{leftIcon}</View>;
+      return <View style={iconStyle}>{leftIcon}</View>;
     }
     const backButton = navigation ? (
-      <TouchableOpacity onPress={() => navigation.goBack(null)}>
+      <TouchableOpacity style={backButtonArea} onPress={() => navigation.goBack(null)}>
         <Ionicons size={30} name="md-arrow-back" color={'white'} />
       </TouchableOpacity>
     ) : null;
-    return <View style={{ flex: 1, alignItems: 'center' }}>{backButton}</View>;
+    return <View style={backButtonStyle}>{backButton}</View>;
   }
 
   render() {
@@ -71,12 +72,23 @@ const styles = {
     color: 'white',
     backgroundColor: 'transparent',
     fontFamily: 'Avenir Next Medium'
+  },
+  backButtonArea: {
+    paddingLeft: 20,
+    width: 60
+  },
+  backButtonStyle: {
+    flex: 1,
+    alignItems: 'flex-start'
+  },
+  iconStyle: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  rightIconStyle: {
+    flex: 1,
+    alignItems: 'flex-end'
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(Header);
+export { Header };

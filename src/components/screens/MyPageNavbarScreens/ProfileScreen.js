@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { View, ListView, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import Header from '../../common/Header';
-import SectionListItem from '../../common/SectionListItem';
-import BackgroundImage from '../../common/BackgroundImage';
+import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { logout } from '../../../helpers/functions';
+import { setProgress } from '../../../actions';
 import { PROFILE_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const height = Dimensions.get('window').height;
@@ -50,6 +49,7 @@ class ProfileScreen extends Component {
                 } else if (rowData.key === 'registration') {
                   screenProps.navigation.navigate('MyRegistration', { info: rowData });
                 } else if (rowData.key === 'logout') {
+                  this.props.setProgress(0);
                   logout(screenProps.navigation);
                 }
               }}
@@ -60,10 +60,9 @@ class ProfileScreen extends Component {
     );
   }
 }
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  return { language };
 };
 
-export default connect(mapStateToProps, null)(ProfileScreen);
+export default connect(mapStateToProps, { setProgress })(ProfileScreen);
