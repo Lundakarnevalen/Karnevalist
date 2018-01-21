@@ -355,7 +355,7 @@ export const SECTION_SCREEN_STRINGS = {
   },
   popoverText: {
     SE: 'Här skickar du in dina val',
-    EN: 'Here you submit your choices'
+    EN: 'Submit your choices here'
   }
 };
 
@@ -379,7 +379,7 @@ export const HOME_SCREEN_STRINGS = {
   },
   popoverText: {
     SE: 'Här väljer du dina sektioner',
-    EN: 'Here you choose your sections'
+    EN: 'Select your sections here'
   }
 };
 
@@ -602,11 +602,11 @@ export const COUNT_DOWN_STRINGS = {
   fields: ['karneval', 'upprop'],
   karneval: {
     SE: 'Det är karneval!',
-    EN: 'It\'s carnival!'
+    EN: "It's carnival!"
   },
   upprop: {
     SE: 'Det är upprop!',
-    EN: 'It\'s call day!'
+    EN: "It's call day!"
   }
 };
 
