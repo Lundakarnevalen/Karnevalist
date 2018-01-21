@@ -217,7 +217,7 @@ class MyProfileScreen extends Component {
   }
 
   renderFields() {
-    const { user, editMode, errors } = this.state;
+    const { user, editMode } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
     fields.forEach(field => {
@@ -240,7 +240,7 @@ class MyProfileScreen extends Component {
             }
             user[key] = text;
             this.setState({ anyError: !this.fulfilsRequirement(key, text) });
-            this.setState({ user, changesMade: true, errors });
+            this.setState({ user, changesMade: true });
           }}
           hasError={!this.fulfilsRequirement(key, user[key])}
           warningMessage={this.getWarningMessage(key)}
