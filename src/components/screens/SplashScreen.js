@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'react-native';
+import { Animated, View, Image, Text, StatusBar, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
@@ -8,8 +8,6 @@ import { BackgroundImage } from '../common';
 import { TOKEN_URL } from '../../helpers/Constants';
 import { fetchSections } from '../../helpers/ApiManager';
 import { setSections, setToken, setEmail } from '../../actions';
-
-const WIDTH = Dimensions.get('window').width;
 
 class SplashScreen extends Component {
   constructor(props) {
