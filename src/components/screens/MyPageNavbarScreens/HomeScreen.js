@@ -17,14 +17,14 @@ class HomeScreen extends Component {
 
   render() {
     const { container } = styles;
-    const { navigation } = this.props;
+    const { navigation, language } = this.props;
     const strings = this.getStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={3} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <View style={container}>
-          <CountDown />
+          <CountDown language={language} />
           <CustomButton
             style={'standardButton'}
             width={WIDTH - 50}
