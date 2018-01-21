@@ -23,8 +23,6 @@ class MyProfileScreen extends Component {
     super(props);
     this.state = {
       editMode: false,
-      errors: [false, false, false, false, false],
-      hasErrors: false,
       alertVisible: false,
       errorAlertVisible: false,
       anyError: false,
@@ -32,6 +30,7 @@ class MyProfileScreen extends Component {
       changesMade: false,
       showToast: false,
       success: false,
+      validAddress: true,
       message: ''
     };
   }
@@ -54,8 +53,7 @@ class MyProfileScreen extends Component {
         this.setState({ oldUser: { ...user }, user });
       })
       .catch(error => {
-        if (error.response.status === 401)
-          this.handleLogout()
+        if (error.response.status === 401) this.handleLogout();
         const msg = handleErrorMsg(error.message);
         console.log(msg);
       });
@@ -76,23 +74,24 @@ class MyProfileScreen extends Component {
   getRightIcon() {
     const strings = this.getStrings();
     const { rightIconStyle } = styles;
-    const { anyError } = this.state;
+    const { anyError, validAddress } = this.state;
     return (
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
           if (this.state.editMode && this.state.changesMade) {
-            if (anyError || this.anyEmpty()) {
+            if (anyError || this.anyEmpty() || !validAddress) {
               this.setState({ errorAlertVisible: true });
             } else if (this.state.changesMade) {
               this.setState({
                 message: strings.popUpInfo,
                 alertHeader: strings.popUpHeader,
-                alertVisible: true })
+                alertVisible: true
+              });
             }
           } else {
-           this.setState({ editMode: !this.state.editMode });
-         }
+            this.setState({ editMode: !this.state.editMode });
+          }
         }}
       >
         <MaterialIcons
@@ -104,23 +103,18 @@ class MyProfileScreen extends Component {
     );
   }
   handleLogout() {
-    const strings = this.getStrings()
-      removeItem('email');
-      removeItem('accessToken');
-      this.setState({
-        alertVisible: true,
-        message: strings.expiredTokenMessage,
-        alertHeader: strings.expiredTokenTitle,
-     })
+    const strings = this.getStrings();
+    removeItem('email');
+    removeItem('accessToken');
+    this.setState({
+      alertVisible: true,
+      message: strings.expiredTokenMessage,
+      alertHeader: strings.expiredTokenTitle
+    });
   }
 
   anyEmpty() {
     return false;
-  }
-
-  anyErrors() {
-    const { errors } = this.state;
-    return errors.indexOf(true) !== -1;
   }
 
   saveChanges() {
@@ -148,8 +142,7 @@ class MyProfileScreen extends Component {
         this.setState({ success, showToast: true, changesMade: false });
       })
       .catch(error => {
-        if (error.response.status === 401)
-          this.handleLogout()
+        if (error.response.status === 401) this.handleLogout();
         const msg = handleErrorMsg(error.message);
       });
   }
@@ -238,6 +231,11 @@ class MyProfileScreen extends Component {
           value={user[key]}
           editable={editMode && key !== 'email'}
           onChangeText={text => {
+            if (user[key] === 'address' && text === '') {
+               this.setState({ validAddress: false })
+                } else {
+                  this.setState({ validAddress: true })
+              }
             user[key] = text;
             this.setState({ anyError: !this.fulfilsRequirement(key, text) });
             this.setState({ user, changesMade: true, errors });
@@ -252,28 +250,33 @@ class MyProfileScreen extends Component {
 
   setAlertVisible(visible, message) {
     const strings = this.getStrings();
-    this.setState({ alertVisible: visible })
+    this.setState({ alertVisible: visible });
     if (message === strings.expiredTokenMessage)
       this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
   renderAlertButtons(message) {
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     switch (message) {
       case strings.expiredTokenMessage:
-        return ([
+        return [
           { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
-        ])
+        ];
       case strings.popUpInfo:
-        return ([
+        return [
           { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
-          { text: strings.save, onPress: () => this.saveChanges() }
-        ])
+          {
+            text: strings.save,
+            onPress: () => {
+              this.saveChanges();
+              this.setState({ editMode: false });
+            }
+          }
+        ];
       case strings.ok:
-      return ([
-        { text: strings.ok, onPress: () => this.setState({ errorAlertVisible: false }) }
-      ])
-      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+        return [{ text: strings.ok, onPress: () => this.setState({ errorAlertVisible: false }) }];
+      default:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
     }
   }
 
@@ -289,7 +292,14 @@ class MyProfileScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { alertVisible, success, showToast, message, alertHeader, errorAlertVisible } = this.state;
+    const {
+      alertVisible,
+      success,
+      showToast,
+      message,
+      alertHeader,
+      errorAlertVisible
+    } = this.state;
     const strings = this.getStrings();
     return (
       <View>
@@ -312,7 +322,7 @@ class MyProfileScreen extends Component {
           alertVisible={errorAlertVisible}
           setAlertVisible={visible => this.setState({ errorAlertVisible: visible })}
           buttonsIn={this.renderAlertButtons('OK')}
-          header={strings.inalidChangesMadeHeader}
+          header={strings.invalidChangesMadeHeader}
           info={strings.invalidChangesMadeText}
         />
         {this.renderMainView()}
