@@ -71,7 +71,7 @@ class Row extends Component {
   }
 
   createRows(data) {
-    const { indexStyle, image } = styles;
+    const { indexStyle } = styles;
     return (
       <View
         style={{
@@ -82,7 +82,7 @@ class Row extends Component {
         }}
       >
         <Text style={[indexStyle, { color: '#F7A021' }]}>{this.props.index}</Text>
-        {<Image source={{ uri: data.imguri }} style={image} />}
+        {data.rowImage}
         <View
           style={{
             flex: 0.7,
@@ -137,14 +137,6 @@ const styles = {
     alignSelf: 'center',
     width: window.width - 16,
     elevation: 0
-  },
-  image: {
-    width: 40,
-    height: 40,
-    alignSelf: 'center',
-    marginLeft: 10,
-    marginRight: 10,
-    borderRadius: 8
   },
   indexStyle: {
     alignSelf: 'center',

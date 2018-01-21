@@ -220,7 +220,7 @@ class ConfirmPage extends Component {
           data[key] = {
             id: key,
             text: s.title,
-            imguri: s.imguri
+            rowImage: s.rowImage,
           };
         });
       }
