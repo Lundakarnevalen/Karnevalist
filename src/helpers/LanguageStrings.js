@@ -12,25 +12,25 @@ const shirtSize = {
 };
 
 const expiredTokenTitle = {
-  SE: 'Session Slut',
+  SE: 'Sessionen har förfallit',
   EN: 'Session Expired'
 };
 
 const expiredTokenMessage = {
   SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
-  EN: 'Your session has expired please login again to continue '
+  EN: 'Your session has expired please log in again to continue'
 };
 
 const studentUnion = {
   SE: 'Välj nation',
-  EN: 'Choose student union'
+  EN: 'Choose your student union'
 };
 const errorMsg400 = {
-  SE: 'Fel email eller lösenord',
+  SE: 'Fel mejl eller lösenord',
   EN: 'Wrong email or password'
 };
 const errorMsg401 = {
-  SE: 'Fel email eller lösenord',
+  SE: 'Fel mejl eller lösenord',
   EN: 'Wrong email or password'
 };
 const errorMsg404 = {
@@ -59,7 +59,7 @@ const socialSecurityNumber = {
   EN: 'Social security number'
 };
 const email = {
-  SE: 'Email',
+  SE: 'Mejl',
   EN: 'Email'
 };
 const address = {
@@ -68,7 +68,7 @@ const address = {
 };
 const postNumber = {
   SE: 'Postnummer',
-  EN: 'Post number'
+  EN: 'Postal code'
 };
 const city = {
   SE: 'Stad',
@@ -122,12 +122,12 @@ export const LOGIN_SCREEN_STRINGS = {
     'resetPasswordComplete'
   ],
   email: {
-    SE: 'Email Adress',
+    SE: 'Mejladress',
     EN: 'Email Address'
   },
   resetPasswordComplete: {
-    SE: 'Ett email har skickats med information om hur du byter lösenord.',
-    EN: 'An email has been send with information about how to reset your password.'
+    SE: 'Ett mejl har skickats med information om hur du byter lösenord.',
+    EN: 'An email has been sent with information about how to reset your password.'
   },
   password,
   loginButton: {
@@ -139,23 +139,23 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Ändra till svenska'
   },
   forgotPassword: {
-    SE: 'Glömt lösenord?',
-    EN: 'Forgot your password?'
+    SE: 'Glömt ditt lösenord?',
+    EN: 'Forgotten your password?'
   },
   createProfile: {
-    SE: 'Skapa profil',
-    EN: 'Create profile'
+    SE: 'Skapa din profil',
+    EN: 'Create your profile'
   },
   readMore: {
     SE: 'Läs mer om registreringen',
     EN: 'Read more about the registration'
   },
   emailError: {
-    SE: 'Email fältet måste fyllas i',
+    SE: 'Mejl-fältet måste fyllas i',
     EN: 'The email field is required'
   },
   passwordError: {
-    SE: 'Lösenord fältet måste fyllas i',
+    SE: 'Lösenord-fältet måste fyllas i',
     EN: 'The password field is required'
   },
   error,
@@ -164,12 +164,12 @@ export const LOGIN_SCREEN_STRINGS = {
   errorMsg404,
   errorMsgInternal,
   passwordPopupHeader: {
-    SE: 'Glömt lösenord?',
-    EN: 'Forgot password?'
+    SE: 'Glömt ditt lösenord?',
+    EN: 'Forgotten your password?'
   },
   passwordPopupInfo: {
-    SE: 'Var god fyll i din email adress så skickas ett nytt lösenord till dig',
-    EN: 'Please, fill in your email address below and you will receive a new password'
+    SE: 'Var god fyll i din mejladress så skickas ett nytt lösenord till dig',
+    EN: 'Please fill in your email address below to receive a new password'
   },
   cancel: {
     SE: 'Avbryt',
@@ -181,11 +181,11 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Reset password'
   },
   responseFail: {
-    SE: 'Var god ange en giltig email adress',
+    SE: 'Var god ange en giltig mejladress',
     EN: 'Please enter a valid email address'
   },
   responseSuccess: {
-    SE: 'Tack, kolla din inbox för ditt nya lösenord',
+    SE: 'Tack, kolla din inkorg för ditt nya lösenord',
     EN: 'Thank you, check your inbox for your new password'
   }
 };
@@ -228,7 +228,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   socialSecurityNumber,
   email,
   confirmEmail: {
-    SE: 'Bekräfta email',
+    SE: 'Bekräfta mejl',
     EN: 'Confirm email'
   },
   password,
@@ -288,12 +288,12 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   error,
   errorMsg400: {
-    SE: 'Ogiltig email eller lösenord',
-    EN: 'Invalid email or password'
+    SE: 'Ogiltig mejladress eller lösenord',
+    EN: 'Invalid email address or password'
   },
   errorMsg401: {
-    SE: 'Ogiltig email eller lösenord',
-    EN: 'Invalid email or password'
+    SE: 'Ogiltig mejladress eller lösenord',
+    EN: 'Invalid email address or password'
   },
   errorMsg404,
   errorMsgInternal,
@@ -314,19 +314,19 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   ],
   title: {
     SE: 'Om registreringen',
-    EN: 'About the registration'
+    EN: 'About the Registration'
   },
   header: {
     SE: '3 enkla steg för att bli Karnevalist',
     EN: '3 simple steps to become a Karnevalist'
   },
   panelTitle1: {
-    SE: 'Skapa profil',
-    EN: 'Create profile'
+    SE: 'Skapa en profil',
+    EN: 'Create a profile'
   },
   panelTitle2: {
-    SE: 'Kom på uppropet och välj sektion',
-    EN: 'Come to the call and choose section'
+    SE: 'Kom på uppropet och välj dina sektioner',
+    EN: 'Come to the call and choose your sections'
   },
   panelTitle3: {
     SE: 'Skicka din ansökan',
@@ -335,16 +335,16 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   infoText1: {
     SE:
       'Första steget är att skapa en profil, antingen här eller på Karnevalist.se.' +
-      'När du skapat en profil tilldelas du ett profil-ID som' +
-      'du använder vid incheckning under uppropsdagen.',
+      ' När du skapat en profil tilldelas du ett profil-ID som' +
+      ' du använder vid incheckning under uppropsdagen.',
     EN:
       'The first step is to create a profile, either here or at Karnevalist.se.' +
-      'When you have created a profile, you are assigned a profile ID that you use' +
-      'when checking in during the call day.'
+      ' When you have created a profile, you are assigned a profile ID that you use' +
+      ' when checking in during the call day.'
   },
   infoText2: {
-    SE: 'Välj vilken sektion du vill vara delaktig i under karnevalen.',
-    EN: 'Choose which section you want to participate in during the carnival.'
+    SE: 'Välj vilka sektioner du vill vara delaktig i under karnevalen.',
+    EN: 'Choose which sections you want to participate in during the carnival.'
   },
   infoText3: {
     SE: 'Skicka in din ansökan och vänta på svar.',
@@ -447,7 +447,7 @@ export const CONFIRM_PAGE_STRINGS = {
   ],
   title: {
     SE: 'Bekräfta dina val',
-    EN: 'Confirmation page'
+    EN: 'Confirmation Page'
   },
   sectionSelection: {
     SE: 'Vänligen välj minst 5 stycken sektioner',
@@ -667,11 +667,11 @@ export const ERROR_MSG_INPUT_FIELD = {
     EN: 'This field may only contain letters'
   },
   errorMsgInvalidEmail: {
-    SE: 'Ej giltig email adress',
-    EN: 'Not valid email address'
+    SE: 'Ej giltig mejladress',
+    EN: 'Not a valid email address'
   },
   errorMsgNoMatchEmail: {
-    SE: 'Email adresserna matchar inte',
+    SE: 'Mejladresserna matchar inte',
     EN: 'The email addresses do not match'
   },
   errorMsgNoMatchPassword: {
