@@ -91,7 +91,7 @@ class SectionScreen extends Component {
         <FlatList
           style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
           data={this.state.data}
-          contentContainerStyle={{ alignItems: 'center' }}
+          contentContainerStyle={{ alignItems: 'center', paddingBottom: 60 }}
           renderItem={({ item }) => (
             <SectionListItem
               sectionTitle={item.title}
