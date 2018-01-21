@@ -1,0 +1,610 @@
+{
+   "@version": "1.0",
+   "dict": {
+      "key": [
+         "title",
+         "songs"
+      ],
+      "string": "Elise",
+      "array": [
+         {
+            "key": [
+               "category",
+               "img",
+               "page_number",
+               "name",
+               "isWinner",
+               "text"
+            ],
+            "string": [
+               "Karnevalsmelodin",
+               "not.png",
+               "Karnevalsmelodin",
+               "Jag kan inte sitta still\nJag får inte någon ro\nNu är längtan över, sätter allt på paus\nDet är nåt som är på gång\nHar aldrig känt så här förut Glömmer allt som var, det e karneval\nMed hjärtslagen i takt till basen lyfter händerna mot taken ingen sömn på flera nätter aldrig känt mig mera vaken\nBRYGGA\nDet e nu i vår det händer\nDet e vart fjärde år\nKom möt upp med alla vänner Kom och skrik i Lundagård\nLjuset bländar, hjärtat bultar Nu är det fest i Lund Exploderar på en sekund REFR\nFutu-futu\n-ral\n-karneval Futu-futu-futu -ral\n-karneval -futu-futu-futu\nEtt universum fyllt av allt hundra fester på en dag\nNu blir gammalt nytt\noch generalen har fått bröst\nKarnevölen fyller glasen\nvem vet nåt om morgondagen Alla dansar Borgen skakar Aldrig känt mig mera vaken\n(BRYGGA) (REFR)\nVi är våren när det händer Vi är vart fjärde år\nVi är allesammans vänner skriker ut i Lundagård\nVi ska övertyga världen att fira maj i Lund Exploderar på en sekund\n||: REFR :||"
+            ],
+            "integer": "6",
+            "true": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Alkoholfria visor",
+               "Nyktronauten",
+               "Melodi: I Apladalen i värnamo",
+               "Att dricka vin när man bor på månen, ja det gör bara den största fånen!\nTy är man packad i outer space, kan man få spyan i eget face!",
+               "alkofri.png"
+            ],
+            "integer": "9",
+            "true": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Alkoholfria visor",
+               "Min kompis Rasmus",
+               "Melodi: I Apladalen i Värnamo",
+               "Min kompis Rasmus det är en stursk en, han dricker mjölk för att släcka törsten.\nHar aldrig smakat en droppe sprit, på detta gör han en stor profit.\nHan bjuder ofta till stora fester, Där gäller medhavt för alla gäster.\nHans liv är flott och extravagant, Finansieras av våran pant!",
+               "alkofri.png"
+            ],
+            "integer": "10",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Alkoholfria visor",
+               "Vatten",
+               "Melodi: Flickorna i Småland",
+               "Å en,\nÅ två\nÅ en två...\nDet är vatten ifrån Bolmen, det är vatten ifrån kran, det är vatten ifrån Ramlösa och ifrån Evian.\nDet är vatten från buteljer och från Lommas hamnkvarter, och från Lundagårdsfontänen så jag kastar upp med er!",
+               "alkofri.png"
+            ],
+            "integer": "11",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Punschvisor",
+               "Avlyssning av godo",
+               "Melodi: Skånska slott och herresäten",
+               "En gång ville Merkel ha punsch mitt i natten, då la hon mobilen i ett glas med vatten.\nVattnet blev punsch och nu undrar du hur? Inte så svårt med (B)arrak i sin lur!",
+               "punsch.png"
+            ],
+            "integer": "13",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "name",
+               "page_number",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Punschvisor",
+               "Kommunal profilering",
+               "Melodi: Stad i ljus",
+               "Jag drömde om en framtid\nDär vattenverket bytt profil\nOch levererar drycken\nSom bättre passar en student med klass och stil ||: Rinner ner, ur min kallvattenkran\nPunschen gul, närhelst jag vill på dan’ :||",
+               "punsch.png"
+            ],
+            "integer": "14",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Punschvisor",
+               "När isarna smälter",
+               "Melodi: Oh when the saints",
+               "Koldioxid, kärnvapenkrig, framtiden bådar bara skit. Isarna smälter tempen stiger, Så vi får dricka punschen varm! (På en strand!)",
+               "punsch.png"
+            ],
+            "integer": "15",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Punschvisor",
+               "Punschline",
+               "Melodi: Piluttavisan (Madicken)",
+               "En punchline, en punchline är viktig för en dryckessång, en punchline, en punchline som sjunges gång på gång\nDen skapar poängen i slutet av en visas text, och detta är enkelt, på intet sett komplext\npunsch, punsch, punsch, punsch, punsch, punsch, punsch, punsch,\npunsch, punsch, punsch, punsch, punsch, punsch, punsch, punsch, punsch, punsch\nEn punchline, en punchline är knorren på vår sång!",
+               "punsch.png"
+            ],
+            "integer": "16",
+            "true": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "Anti-snapsvise-snapsvisan",
+               "Melodi: Hej tomtegubbar",
+               "Vem tog nu ton med kling i glaset? Jag orkar snart inte mera.\nSång stoppar upp kalaset, jag hinner ej konversera!\nJag har en dröm att blott en gång, få kunna supa förutan sång.\nTänk om det bara fanns ett bra sätt, att all musik censurera!",
+               "snaps.png"
+            ],
+            "integer": "18",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "Bakåtsträvande framtidsteknik",
+               "Melodi: Cotton Eye Joe",
+               "Snåle Kent har tatt patent på en pryl som är potent\nDen är blank och den är fin Det är Kents lilla tidsmaskin\nNär på fest han tömt sin snaps Reser han direkt tillbaks...\n...en och en halv minut och sen dricker han den om igen",
+               "snaps.png"
+            ],
+            "integer": "19",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "Dagen efter",
+               "Melodi: När vi gräver guld i USA",
+               "Jag vet det innan det har skett: Var gång jag dricker går det snett\nJag kan mig ej besinna\nJag förolämpar, stjäl och slåss Hånglar upp gifta män förstås\nOch en och annan kvinna\n”Vi orkar inte med dig mer, hejdå” Jag har ju druckit nog för två.\nFör alla supar jag borde avstått, för skålar som jag fått Och när det blitt för vått,\nvill jag be om ursäkt här och nu.\nFör alla misstag jag ligger bakom, cyklar som jag snott Jag önskar det ogjort\nMen så kommer spriten fram igen.\nOch jag ragglar hem i gryningen!",
+               "snaps.png"
+            ],
+            "integer": "20",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "Energidryck",
+               "Melodi: När månen vandrar sin tysta ban",
+               "Forskarna säger att det är tjafs, men jag vet mer än de flesta.\nHur energi skapas i ett nafs, ja, det är lätt, låt oss testa.\nNär gommen krockar med kalla nubben då blir man piggare här på stubben\nEn snabb lektion\ni kall fusion",
+               "snaps.png"
+            ],
+            "integer": "21",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "Fallstudie",
+               "Melodi: Obladi Oblada",
+               "Bakåt faller vi när snapsen tagit slut\nNeråt faller man när man fått slag\nFramåt fall om slaget kommer bakifrån\nNär man ligger känner man sig som ett fån\nLite fram Lite snett Lite bakåt\nFall i fel tid: aldrig ball\nTiden fram Tiden snett Tiden bakåt\nHellre framtid än framfall",
+               "snaps.png"
+            ],
+            "integer": "22",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "In real life",
+               "Melodi: Huvud, axlar, knä och tå",
+               "Facebook, twitter, instagram, tryck på like Facebook, twitter, instagram, tryck på like Världen har ju blivit virtuell\n(men) snapsen tar vi IRL, skål och svälj!",
+               "snaps.png"
+            ],
+            "integer": "23",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "Kosta vad det kostar vill!",
+               "Melodi: I Apladalen i Värnamo",
+               "Glas av olika sorter\nÖl, punsch, snaps och porter\nDet är kutym att man häller rätt dryck I ett glas utav rätt sort\nMen jag tar vasen som står bordet Och blommorna kastar jag bort\nI den har jag spriten\nVarför ska den va liten\n... nubben?",
+               "snaps.png"
+            ],
+            "integer": "24",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "Långtidsnjutning",
+               "Melodi: I Apladalen i Värnamo",
+               "Jag har en kompis, han heter Krister Han blandar snapsen med vanligt klister Den då i magen sen stannar kvar\nSå han kan njuta i flera dar!",
+               "snaps.png"
+            ],
+            "integer": "25",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "Kalsongtricket",
+               "Melodi: Kalle på spången",
+               "Om man vill bli fullast på snabbaste sätt, Ta tam-i tam-i tam-i tampongen.\nSen doppa i vinet, och stoppa den rätt,\ni kal-i kal-i kal-i kal-i kalsongen.",
+               "snaps.png"
+            ],
+            "integer": "26",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Snapsvisor",
+               "YOLO!",
+               "Melodi: Morsgrisar är vi allihopa",
+               "Jag blandar vin och öl och cola, snaps och brännvin, gorgonzola Yoghurt och gin och skumma grejer, men som man säger: YOLO!\nYOLO och YOLO, YOLO och YOLO!",
+               "snaps.png"
+            ],
+            "integer": "27",
+            "true": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Vinvisor",
+               "Gammelmormor saknar täckning",
+               "Melodi: Fritiof och Carmencita (Samborombon)",
+               "Min gammelmormor har ett hus förutan data Där kan man inte surfa, där så får man prata\nOm veckans väder och om stickade kläder\nOch om rean i Höör. Det är så trist så att jag dör\nMen då så händer något som jag väntat på: Gammelmormor öppnar sherryn!\nDå drar hon glatt historien\nNär hon var ung och dejta tjugotusen män Som stod uppställda på rad och gjorde allt hon bad dem om\noch sen sket hon alltid i att ringa\nSen visar hon sin lindy hop\nOch då så får hon alltid samma gamla propp\nAmbulansen kommer och hon lallar: Livet är en fest! Hoppas att hon aldrig får täckning!",
+               "vin.png"
+            ],
+            "integer": "29",
+            "true": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Vinvisor",
+               "Lillördag",
+               "Melodi: Visa vid vindens ängar",
+               "Det hälldes vin över bord och sängar Och det är sås på min tyllgardin\nJag tror fåtöljen har brutit benen Från köket doftar det av urin\nVi skulle sjunga don’t stop believin Ukulelen hämtar aldrig sig\nVi fira onsdag med korridoren Men kära mor oroa dig ej\nFör trots att jag har fått slut på pengar Och trots en spricka tvärs min display\nOch trots allt vin över bord och sängar Är Lund är det roligaste som hänt mig",
+               "vin.png"
+            ],
+            "integer": "30",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Vinvisor",
+               "This is the wine",
+               "Melodi: This is the way",
+               "This\nThis is the wine\nThis is the wine we’ll whine about\nWhen I wake up tomorrow (wakin’ up, wakin’ up) This is the wine we’ll whine about",
+               "vin.png"
+            ],
+            "integer": "31",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Ölvisor",
+               "2014",
+               "Melodi: Also Sprach Zarathustra (Temat från 2001: A Space Odyssey)",
+               "||:Kar-ne-völ\nHURRA!\nom-bom-bom-bom-bom-bom-bom-bom-bom- bom-bom-bom-bom :||",
+               "öl.png"
+            ],
+            "integer": "33",
+            "true": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Ölvisor",
+               "Inga kalla pilsner",
+               "Melodi: Vår på saltkråkan (nu är våren kommen)",
+               "I en snar framtid när vi har förstört vår miljö\nHur ska vi svalka oss när det inte kommer nån snö?\nInga kalla pilsner Inga kalla pilsner\ntur att ljummen karnevöl är JÄTTEGOTT!",
+               "öl.png"
+            ],
+            "integer": "34",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Ölvisor",
+               "Du är min öl",
+               "Melodi: Du är min man",
+               "Du är min öl!",
+               "öl.png"
+            ],
+            "integer": "35",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Ölvisor",
+               "Mammas goda råd",
+               "Melodi: En kulen natt",
+               "När jag fyllt arton år, fick jag av mamma,\nen massa goda råd och tips, som jag anamma.\nDet bästa råd-eli-rådet va’, När kära morsan min hon sa\n“När flaskan din gått i sin, sin, sin Så ät gul snö – det kan va’ öl!”",
+               "öl.png"
+            ],
+            "integer": "35",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Ölvisor",
+               "Utbildning utan framtid eller “Konsten att strula till ett liv”",
+               "Melodi: Nu har vi ljus här i vårt hus",
+               "Svenskt Näringsliv på offensiv skrev: “Inget CSN för tidsfördriv!”\nTanken nog god, men jag förstod inte ett ord\nVad är till exempel “genomströmning”? Är det drickans väg till blåsans tömning?\nFår jag svaren ifall jag tar en öl till i anställningsbaren?",
+               "öl.png"
+            ],
+            "integer": "37",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Övriga visor",
+               "När åren gått",
+               "Melodi: Auld Lang syne",
+               "När åren gått och tiden flytt Ifrån oss i denna sal\nNär vi minns våran tid i Lund Ja, då minns vi karneval!\nJag vet det låter deppigt men Låt oss glömma alla kval\nFör skålen efter denna sång Den är ännu futural!",
+               "not.png"
+            ],
+            "integer": "39",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Övriga visor",
+               "Varning för fest",
+               "Melodi: Diggiloo, Diggiley Diggiloo, Diggiley",
+               "Diggiloo, Diggiley\nAlla tittar på mig\nnär jag går här i min varselväst Men jag vill ju bara varna\nhela välden för fest!",
+               "not.png"
+            ],
+            "integer": "40",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Övriga visor",
+               "Preventiva visan",
+               "Melodi: Blåsippan ute i backarna står",
+               "När åren gått och tiden flytt Ifrån oss i denna sal\nNär vi minns våran tid i Lund Ja, då minns vi karneval!\nJag vet det låter deppigt men Låt oss glömma alla kval\nFör skålen efter denna sång Den är ännu futural!",
+               "not.png"
+            ],
+            "integer": "41",
+            "false": []
+         },
+         {
+            "key": [
+               "category",
+               "page_number",
+               "name",
+               "isWinner",
+               "melodi",
+               "text",
+               "img"
+            ],
+            "string": [
+               "Övriga visor",
+               "Tempus futurum",
+               "Melodi: Temperaturen är hög uti kroppen",
+               "Tempus futurum är det som ska hända Presens är något som händer just nu\nPerfekt är något som redan har varit Här i vårt presens vi sjunger just nu:\nTempus futurum Presens och perfekt\nTempus futurum Presens perfekt\nTempus futurum drack dricka druckit Det kan va’ roligt att kröka ett verb!\nMelodi: Temperaturen är hög uti kroppen",
+               "not.png"
+            ],
+            "integer": "42",
+            "true": []
+         }
+      ]
+   }
+}
