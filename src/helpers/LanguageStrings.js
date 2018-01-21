@@ -524,8 +524,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'expiredTokenTitle',
     'expiredTokenMessage',
     'ok',
-    'inalidChangesMadeText',
-    'inalidChangesMadeHeader'
+    'invalidChangesMadeText',
+    'invalidChangesMadeHeader'
   ],
   title: {
     SE: 'Användarinfo',
@@ -610,11 +610,11 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     SE: 'Något gick fel',
     EN: 'Something went wrong'
   },
-  inalidChangesMadeText: {
+  invalidChangesMadeText: {
     SE: 'Vänligen se till att alla val är korrekt ifyllda',
     EN: 'Please make sure the fields are filled in correctly'
   },
-  inalidChangesMadeHeader: {
+  invalidChangesMadeHeader: {
     SE: 'OBS!',
     EN: 'Error'
   },
