@@ -21,7 +21,8 @@ import {
   DKPicker,
   CustomButton,
   ButtonChoiceManager,
-  BackgroundImage
+  BackgroundImage,
+  SuperAgileAlert
 } from '../common';
 import Loading from '../common/Loading';
 import { REGISTER_URL } from '../../helpers/Constants';
@@ -56,7 +57,8 @@ class RegistrationScreen extends Component {
       loading: false,
       loadingComplete: false,
       keyboardHeight: 0,
-      listToTrim: []
+      listToTrim: [],
+      alertVisible: false
     };
   }
 
@@ -264,7 +266,10 @@ class RegistrationScreen extends Component {
       foodPreferencesError,
       showShirtPicker,
       studentUnion,
-      showStudentUnionPicker
+      showStudentUnionPicker,
+      alertVisible,
+      alertHeader,
+      message
     } = this.state;
 
     const closeButton = (
@@ -530,7 +535,10 @@ class RegistrationScreen extends Component {
                 foodPreferencesError ||
                 this.anyEmpty()
               ) {
-                Alert.alert(errorStrings.errorMsgWrongInput);
+                this.setState({
+                  alertVisible: true,
+                  message: errorStrings.errorMsgWrongInput,
+                })
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
@@ -556,8 +564,12 @@ class RegistrationScreen extends Component {
                   })
                   .catch(error => {
                     const msg = handleErrorMsg(error.message, strings);
-                    this.setState({ loadingComplete: false, loading: false });
-                    Alert.alert(strings.error, msg);
+                    this.setState({
+                      loadingComplete: false,
+                      loading: false,
+                      alertVisible: true,
+                      message: msg
+                    });
                   });
               }
             }}
@@ -592,6 +604,13 @@ class RegistrationScreen extends Component {
             }}
           />
         ) : null}
+        <SuperAgileAlert
+          alertVisible={alertVisible}
+          setAlertVisible={visible => this.setState({ alertVisible: visible })}
+          buttonsIn={ [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]}
+          header={strings.error}
+          info={this.state.message || ''}
+        />
       </View>
     );
   }

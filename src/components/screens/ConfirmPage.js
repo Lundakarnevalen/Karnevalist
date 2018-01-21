@@ -168,7 +168,6 @@ class ConfirmPage extends Component {
     })
   }
 
-
   getRightIcon() {
     if (Object.keys(this.state.data).length > 0) {
       return (
