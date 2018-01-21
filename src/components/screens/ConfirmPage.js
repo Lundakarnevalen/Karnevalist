@@ -70,7 +70,7 @@ class ConfirmPage extends Component {
           order={order}
           renderRow={this.renderRow.bind(this)}
           onChangeOrder={nextOrder => {
-            this.setState({ order: nextOrder })
+            this.setState({ order: nextOrder });
             saveFavoriteSections(nextOrder, () => {});
           }}
         />
@@ -102,8 +102,7 @@ class ConfirmPage extends Component {
 
   deleteRow(key) {
     removeFavoriteSection(key, result => {
-      if (result)
-        this.updateData();
+      if (result) this.updateData();
     });
     this.props.navigation.state.params.setSectionStatus(key);
   }
@@ -128,25 +127,25 @@ class ConfirmPage extends Component {
         alertVisible: true,
         message: strings.sectionSelection,
         alertHeader: strings.alertErrorHeader
-       })
+      });
     } else {
       this.setState({
         alertVisible: true,
         message: strings.confirmMessage,
         alertHeader: strings.confirmHeader
-      })
+      });
     }
   }
 
   handleLogout() {
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     removeItem('email');
     removeItem('accessToken');
     this.setState({
       alertVisible: true,
       message: strings.expiredTokenMessage,
-      alertHeader: strings.expiredTokenTitle,
-     })
+      alertHeader: strings.expiredTokenTitle
+    });
   }
 
   postSectionPriorities() {
@@ -161,18 +160,17 @@ class ConfirmPage extends Component {
         .then(response => {
           if (response.data.success) {
             this.props.setProgress(PROGRESS.SENT_SECTIONS);
-            this.props.setSectionPriorities(sections)
+            this.props.setSectionPriorities(sections);
             this.setState({
               message: strings.selectionOK,
               alertHeader: strings.alertSuccessHeader
-             })
+            });
           }
         })
         .catch(error => {
-          if (error.response.status === 401)
-            this.handleLogout()
-      });
-    })
+          if (error.response.status === 401) this.handleLogout();
+        });
+    });
   }
 
   getRightIcon() {
@@ -193,42 +191,45 @@ class ConfirmPage extends Component {
   }
 
   renderAlertButtons(message) {
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     switch (message) {
       case strings.selectionOK:
-        return ([
+        return [
           {
             text: strings.ok,
             onPress: () => {
-              this.setState({ alertVisible: false })
+              this.setState({ alertVisible: false });
               this.props.navigation.goBack();
             }
           }
-        ])
+        ];
       case strings.confirmMessage:
-        return ([
+        return [
           { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
           { text: strings.yes, onPress: () => this.postSectionPriorities() }
-        ])
+        ];
       case strings.expiredTokenMessage:
-        return ([
+        return [
           { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
-        ])
-      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+        ];
+      default:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
     }
   }
 
   updateData() {
+    const { language } = this.props;
     const data = {};
     const allSections = this.props.sections;
     getFavoriteSections(sections => {
       if (sections) {
         sections.forEach(key => {
           const s = allSections.filter(item => item.key + '' === key + '')[0];
+          console.log(s);
           data[key] = {
             id: key,
-            text: s.title,
-            rowImage: s.rowImage,
+            text: s.title[language],
+            rowImage: s.rowImage
           };
         });
       }
@@ -238,15 +239,16 @@ class ConfirmPage extends Component {
 
   setAlertVisible(visible, message) {
     const strings = this.getStrings();
-    this.setState({ alertVisible: visible })
-    if (message === strings.selectionOK) // This makes sure you can't stay on ConfirmPage
+    this.setState({ alertVisible: visible });
+    if (message === strings.selectionOK)
+      // This makes sure you can't stay on ConfirmPage
       this.props.navigation.goBack();
     if (message === strings.expiredTokenMessage)
       this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
   render() {
-    const { message, alertVisible, alertHeader } = this.state
+    const { message, alertVisible, alertHeader } = this.state;
     const strings = this.getStrings();
     return (
       <View style={styles.container}>

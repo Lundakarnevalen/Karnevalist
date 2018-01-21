@@ -24,6 +24,7 @@ class SectionScreen extends Component {
   constructor(props) {
     super(props);
     const { sections } = props;
+    console.log(sections);
     this.state = {
       isOpen: false,
       data: sections
@@ -93,6 +94,7 @@ class SectionScreen extends Component {
   }
   _onRefresh() {
     fetchSections(sections => {
+      console.log(sections);
       this.props.setSections(sections);
     });
   }
@@ -112,7 +114,7 @@ class SectionScreen extends Component {
   }
 
   render() {
-    const { navigation, screenProps } = this.props;
+    const { navigation, screenProps, language } = this.props;
     const strings = this.getStrings();
     return (
       <View>
@@ -134,18 +136,19 @@ class SectionScreen extends Component {
           data={this.state.data}
           contentContainerStyle={{ alignItems: 'center', paddingBottom: 60 }}
           renderItem={({ item }) => {
+            const { id, title, info, image, favorite } = item;
             return (
               <SectionListItem
-                sectionTitle={item.title}
-                sectionInfoText={item.info}
-                sectionIcon={item.favorite}
+                sectionTitle={title[language]}
+                sectionInfoText={info[language]}
+                sectionIcon={favorite}
                 onPress={() =>
                   screenProps.navigation.navigate('SectionItemScreen', {
-                    id: item.id,
-                    title: item.title,
-                    description: item.info,
-                    image: item.image,
-                    setSectionStatus: favorite => this.handleSetSectionStatus(favorite, item)
+                    id,
+                    title: title[language],
+                    description: info[language],
+                    image,
+                    setSectionStatus: fav => this.handleSetSectionStatus(fav, item)
                   })
                 }
               />
