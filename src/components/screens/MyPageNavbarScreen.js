@@ -86,7 +86,7 @@ const TabNav = TabNavigator(
     Sections: {
       screen: SectionScreen,
       navigationOptions: props => ({
-        tabBarOnPress: ({ scene, jumpToIndex }) => {
+        tabBarOnPress: (scene, jumpToIndex) => {
           jumpToIndex(scene.index);
           props.screenProps.setHomeScreenPopover(false);
         },
@@ -100,7 +100,7 @@ const TabNav = TabNavigator(
     SongBook: {
       screen: SongBookScreen,
       navigationOptions: props => ({
-        tabBarOnPress: ({ scene, jumpToIndex }) => {
+        tabBarOnPress: (scene, jumpToIndex) => {
           jumpToIndex(scene.index);
           props.screenProps.setHomeScreenPopover(false);
         },
@@ -113,7 +113,7 @@ const TabNav = TabNavigator(
     Settings: {
       screen: SettingsScreen,
       navigationOptions: props => ({
-        tabBarOnPress: ({ scene, jumpToIndex }) => {
+        tabBarOnPress: (scene, jumpToIndex) => {
           jumpToIndex(scene.index);
           props.screenProps.setHomeScreenPopover(false);
         },
