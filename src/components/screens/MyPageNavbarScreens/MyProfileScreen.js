@@ -49,8 +49,7 @@ class MyProfileScreen extends Component {
         this.setState({ oldUser: { ...user }, user });
       })
       .catch(error => {
-        if (error.response.status === 401)
-          this.handleLogout()
+        if (error.response.status === 401) this.handleLogout();
         const msg = handleErrorMsg(error.message);
         console.log(msg);
       });
@@ -93,14 +92,14 @@ class MyProfileScreen extends Component {
     );
   }
   handleLogout() {
-    const strings = this.getStrings()
-      removeItem('email');
-      removeItem('accessToken');
-      this.setState({
-        alertVisible: true,
-        message: strings.expiredTokenMessage,
-        alertHeader: strings.expiredTokenTitle,
-     })
+    const strings = this.getStrings();
+    removeItem('email');
+    removeItem('accessToken');
+    this.setState({
+      alertVisible: true,
+      message: strings.expiredTokenMessage,
+      alertHeader: strings.expiredTokenTitle
+    });
   }
 
   saveChanges() {
@@ -128,8 +127,7 @@ class MyProfileScreen extends Component {
         this.setState({ success, showToast: true, changesMade: false });
       })
       .catch(error => {
-        if (error.response.status === 401)
-          this.handleLogout()
+        if (error.response.status === 401) this.handleLogout();
         const msg = handleErrorMsg(error.message);
         console.log(msg);
       });
@@ -165,24 +163,25 @@ class MyProfileScreen extends Component {
 
   setAlertVisible(visible, message) {
     const strings = this.getStrings();
-    this.setState({ alertVisible: visible })
+    this.setState({ alertVisible: visible });
     if (message === strings.expiredTokenMessage)
       this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
   renderAlertButtons(message) {
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     switch (message) {
       case strings.expiredTokenMessage:
-        return ([
+        return [
           { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
-        ])
+        ];
       case strings.popUpInfo:
-        return ([
+        return [
           { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
           { text: strings.save, onPress: () => this.saveChanges() }
-        ])
-      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+        ];
+      default:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
     }
   }
 
@@ -202,7 +201,7 @@ class MyProfileScreen extends Component {
     const strings = this.getStrings();
     return (
       <View>
-        <BackgroundImage pictureNumber={5} />
+        <BackgroundImage pictureNumber={4} />
         <Header title={strings.title} navigation={navigation} rightIcon={this.getRightIcon()} />
         <Toast
           color={'#f4376d'}

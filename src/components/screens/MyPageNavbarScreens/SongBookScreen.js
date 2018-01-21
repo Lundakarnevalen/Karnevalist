@@ -39,7 +39,7 @@ class SongBookScreen extends Component {
     const strings = this.getStrings();
     return (
       <View>
-        <BackgroundImage pictureNumber={2} />
+        <BackgroundImage pictureNumber={3} />
         <View>
           <Header title={strings.title} leftIcon={null} navigation={navigation} />
         </View>
