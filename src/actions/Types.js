@@ -5,3 +5,5 @@ export const SET_SECTIONS = 'set_sections';
 export const SET_SECTION_PRIORITIES = 'set_section_priorities';
 export const SET_LANGUAGE = 'set_language';
 export const SET_PROGRESS = 'set_progress';
+export const SET_HOMESCREENPOPOVER = 'set_homescreen_popover';
+export const SET_SECTIONSCREENPOPOVER = 'set_sectionscreen_popover';

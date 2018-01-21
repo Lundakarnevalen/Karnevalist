@@ -1,47 +1,62 @@
 import { AsyncStorage } from 'react-native';
 
-export function getItem(key, callback) {
-  AsyncStorage.getItem(key, (err, result) => {
-    if (err) {
-      console.error(err);
+export function getFavoriteSections(callback) {
+  AsyncStorage.getItem('sections', (error, result) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    let sections = [];
+    if (result) {
+      sections = JSON.parse(result);
+    }
+    callback(sections);
+  });
+}
+
+export function getFavoriteSection(sectionId, callback) {
+  getFavoriteSections(sections => {
+    if (sections) {
+      const index = getIndex(sections, sectionId);
+      if (index !== -1) {
+        callback(sections[index]);
+      }
+    }
+  });
+}
+
+export function getItem(item, callback) {
+  AsyncStorage.getItem(item, (error, result) => {
+    if (error) {
+      console.error(error);
       return;
     }
     callback(result);
   });
 }
 
-export function saveItem(key, value) {
-  AsyncStorage.setItem(key, value, err => {
-    if (err) console.error(err);
-  });
-}
-
-export function getSections(cb) {
-  AsyncStorage.getAllKeys((err, keys) => {
-    const sectionKeys = keys.filter(k => k.includes('sektion'));
-    AsyncStorage.multiGet(sectionKeys, (error, stores) => {
-      cb(
-        stores.map((result, i, store) => {
-          const key = store[i][0];
-          const value = store[i][1];
-          return { key, value };
-        })
-      );
-    });
-  });
-}
-
-export function removeItem(key) {
-  AsyncStorage.removeItem(key, error => {
+export function saveFavoriteSections(sections, callback) {
+  AsyncStorage.setItem('sections', JSON.stringify(sections), error => {
     if (error) {
       console.error(error);
       return;
     }
+    callback(true);
   });
 }
-export function removeItems(keys) {
-  AsyncStorage.multiRemove(keys, err => {
-    if (err) console.error(err);
+
+export function saveFavoriteSection(sectionId) {
+  getFavoriteSections(sections => {
+    if (sections) {
+      sections.push(sectionId);
+      saveFavoriteSections(sections, () => {});
+    }
+  });
+}
+
+export function saveItem(item, value) {
+  AsyncStorage.setItem(item, value, error => {
+    if (error) console.error(error);
   });
 }
 
@@ -58,4 +73,37 @@ export function setPopoverStatus(key, value) {
   AsyncStorage.setItem(key, value, err => {
     if (err) console.error(err);
   });
+}
+export function removeFavoriteSection(sectionId, callback) {
+  getFavoriteSections(sections => {
+    if (sections) {
+      const index = getIndex(sections, sectionId);
+      if (index !== -1) {
+        sections.splice(index, 1);
+        saveFavoriteSections(sections, result => {
+          if (result) {
+            callback(true);
+          }
+        });
+      }
+    }
+  });
+}
+
+export function removeItem(item) {
+  AsyncStorage.removeItem(item, error => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+  });
+}
+
+function getIndex(array, value) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] + '' === value + '') {
+      return i;
+    }
+  }
+  return -1;
 }

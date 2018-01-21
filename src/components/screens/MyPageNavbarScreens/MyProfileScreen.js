@@ -5,7 +5,9 @@ import {
   View,
   Dimensions,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard,
+  Platform
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -75,9 +77,10 @@ class MyProfileScreen extends Component {
   }
 
   getRightIcon() {
+    const { rightIconStyle } = styles;
     return (
       <TouchableOpacity
-        style={{ width: 50, alignItems: 'center' }}
+        style={rightIconStyle}
         onPress={() => {
           if (this.state.editMode && this.state.changesMade) this.setState({ alertVisible: true });
           this.setState({ editMode: !this.state.editMode });
@@ -131,12 +134,14 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
+      const color = (editMode && (key !== 'email')) ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
       return (
         <Input
+          extraContainerStyle={{ backgroundColor: color }}
           key={key}
           placeholder={labels[key]}
           value={user[key]}
-          editable={editMode}
+          editable={editMode && (key !== 'email')}
           onChangeText={text => {
             user[key] = text;
             this.setState({ user, changesMade: true });
@@ -207,6 +212,11 @@ const styles = {
   },
   loading: {
     marginTop: HEIGHT / 3
+  },
+  rightIconStyle: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    width: 60
   }
 };
 const mapStateToProps = ({ currentLanguage, userInformation }) => {

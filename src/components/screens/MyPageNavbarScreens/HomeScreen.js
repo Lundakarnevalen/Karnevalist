@@ -3,23 +3,31 @@ import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, CustomButton, BackgroundImage, CountDown, Popover } from '../../common';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { setHomeScreenPopover } from '../../../actions';
 
 const WIDTH = Dimensions.get('window').width;
 
 class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isVisible: true
-    };
-  }
-
   getStrings() {
     const { language } = this.props;
     const { fields } = HOME_SCREEN_STRINGS;
     const strings = {};
     fields.forEach(field => (strings[field] = HOME_SCREEN_STRINGS[field][language]));
     return strings;
+  }
+
+  renderPopover(text) {
+    const { popover } = this.props;
+    if (popover)
+      return (
+        <Popover
+          onPress={() => setHomeScreenPopover(false)}
+          type={'bottomLeft'}
+          text={text}
+          big
+          name={'homeScreenPopover'}
+        />
+      );
   }
 
   render() {
@@ -30,7 +38,7 @@ class HomeScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={3} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
-        <Popover type={'bottomLeft'} text={strings.popoverText} big name={'homeScreenPopover'} />
+        {this.renderPopover(strings.popoverText)}
         <View style={container}>
           <CountDown />
           <CustomButton
@@ -74,9 +82,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentLanguage }) => {
+const mapStateToProps = ({ currentLanguage, popoverStatus }) => {
   const { language } = currentLanguage;
-  return { language };
+  return { language, popover: popoverStatus.homeScreenPopover };
 };
 
 export default connect(mapStateToProps, null)(HomeScreen);

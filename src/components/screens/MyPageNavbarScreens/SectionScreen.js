@@ -5,7 +5,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Header, SectionListItem, BackgroundImage, Popover } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { dynamicSort } from '../../../helpers/functions';
+import { setSectionScreenPopover } from '../../../actions';
 
 const height = Dimensions.get('window').height;
 
@@ -13,11 +15,29 @@ class SectionScreen extends Component {
   constructor(props) {
     super(props);
     const { sections } = props;
-    if (sections) sections.sort(dynamicSort('title'));
     this.state = {
       isOpen: false,
       data: sections || []
     };
+  }
+
+  componentWillMount() {
+    const { sections } = this.props;
+    if (sections) {
+      sections.sort(dynamicSort('title'));
+    }
+    getFavoriteSections(result => {
+      if (result) {
+        for (let i = 0; i < sections.length; i++) {
+          result.forEach(id => {
+            if (sections[i].id + '' === id + '') {
+              sections[i].favorite = 'favorite';
+            }
+          });
+        }
+      }
+      this.setState({ data: sections });
+    });
   }
 
   getStrings() {
@@ -31,17 +51,42 @@ class SectionScreen extends Component {
   renderRightIcon() {
     if (this.props.progress === PROGRESS.SENT_SECTIONS) return null;
     const { screenProps, navigation } = this.props;
+    const { rightIconStyle } = styles;
     return (
       <TouchableOpacity
-        onPress={() =>
+        style={rightIconStyle}
+        onPress={() => {
+          this.props.setSectionScreenPopover(false);
           screenProps.navigation.navigate('ConfirmPage', {
-            navigation
-          })
-        }
+            navigation,
+            setSectionStatus: id => {
+              let tmpData = this.state.data;
+              const tmpItem = tmpData.filter(section => section.id + '' === id + '')[0];
+              tmpData = tmpData.filter(section => section.id + '' !== id + '');
+              delete tmpItem.favorite;
+              tmpData.push(tmpItem);
+              tmpData.sort(dynamicSort('title'));
+              this.setState({ data: tmpData });
+            }
+          });
+        }}
       >
         <MaterialIcons name="local-mall" size={30} color={'white'} />
       </TouchableOpacity>
     );
+  }
+
+  renderPopover(text) {
+    const { popover } = this.props;
+    if (popover)
+      return (
+        <Popover
+          onPress={() => this.props.setSectionScreenPopover(false)}
+          type={'topRight'}
+          text={text}
+          name={'sectionScreenPopover'}
+        />
+      );
   }
 
   render() {
@@ -66,27 +111,55 @@ class SectionScreen extends Component {
             <SectionListItem
               sectionTitle={item.title}
               sectionInfoText={item.info}
+              sectionIcon={item.favorite}
               onPress={() =>
                 screenProps.navigation.navigate('SectionItemScreen', {
                   id: item.id,
                   title: item.title,
                   description: item.info,
-                  image: item.image
+                  image: item.image,
+                  setSectionStatus: favorite => {
+                    let tmpData = this.state.data;
+                    const tmpItem = item;
+                    tmpData = tmpData.filter(section => section.id + '' !== item.id + '');
+                    if (favorite) {
+                      tmpItem.favorite = 'favorite';
+                    } else {
+                      delete tmpItem.favorite;
+                    }
+                    tmpData.push(tmpItem);
+                    tmpData.sort(dynamicSort('title'));
+                    this.setState({ data: tmpData });
+                  }
                 })
               }
             />
           )}
         />
-        <Popover type={'topRight'} text={strings.popoverText} name={'sectionScreenPopover'} />
+        {this.renderPopover(strings.popoverText)}
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ userInformation, sections, currentLanguage }) => {
+const mapStateToProps = ({ userInformation, sections, currentLanguage, popoverStatus }) => {
   const { language } = currentLanguage;
   const { progress } = userInformation;
-  return { sections: sections.sections, language, progress };
+  return {
+    sections: sections.sections,
+    language,
+    progress,
+    popover: popoverStatus.sectionScreenPopover
+  };
 };
 
-export default connect(mapStateToProps, null)(SectionScreen);
+const styles = {
+  rightIconStyle: {
+    alignItems: 'center',
+    padding: 1,
+    backgroundColor: 'transparent',
+    width: 60
+  }
+};
+
+export default connect(mapStateToProps, { setSectionScreenPopover })(SectionScreen);

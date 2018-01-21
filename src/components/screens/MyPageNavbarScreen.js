@@ -4,7 +4,12 @@ import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setSections, setSectionPriorities, setProgress } from '../../actions';
+import {
+  setSections,
+  setSectionPriorities,
+  setProgress,
+  setHomeScreenPopover
+} from '../../actions';
 import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
@@ -51,8 +56,8 @@ class MyPageNavbarScreen extends Component {
   }
 
   render() {
-    const { navigation, language } = this.props;
-    return <TabNav screenProps={{ navigation, language }} />;
+    const { navigation, language, setHomeScreenPopover } = this.props;
+    return <TabNav screenProps={{ navigation, language, setHomeScreenPopover }} />;
   }
 }
 
@@ -81,6 +86,10 @@ const TabNav = TabNavigator(
     Sections: {
       screen: SectionScreen,
       navigationOptions: props => ({
+        tabBarOnPress: ({ scene, jumpToIndex }) => {
+          jumpToIndex(scene.index);
+          props.screenProps.setHomeScreenPopover(false);
+        },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
         tabBarIcon: ({ tintColor, focused }) => (
@@ -91,6 +100,10 @@ const TabNav = TabNavigator(
     SongBook: {
       screen: SongBookScreen,
       navigationOptions: props => ({
+        tabBarOnPress: ({ scene, jumpToIndex }) => {
+          jumpToIndex(scene.index);
+          props.screenProps.setHomeScreenPopover(false);
+        },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons name="local-library" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
@@ -100,6 +113,10 @@ const TabNav = TabNavigator(
     Profile: {
       screen: ProfileScreen,
       navigationOptions: props => ({
+        tabBarOnPress: ({ scene, jumpToIndex }) => {
+          jumpToIndex(scene.index);
+          props.screenProps.setHomeScreenPopover(false);
+        },
         tabBarLabel: PROFILE_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
           <MaterialIcons
@@ -146,5 +163,6 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
 export default connect(mapStateToProps, {
   setSections,
   setSectionPriorities,
-  setProgress
+  setProgress,
+  setHomeScreenPopover
 })(MyPageNavbarScreen);

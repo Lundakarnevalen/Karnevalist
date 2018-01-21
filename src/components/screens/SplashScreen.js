@@ -3,10 +3,16 @@ import { Animated, Dimensions, View, Image, Text, StatusBar, Easing } from 'reac
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
-import { getItem } from '../../helpers/LocalSave';
+import { getItem, getPopoverStatus } from '../../helpers/LocalSave';
 import { BackgroundImage } from '../common';
 import { TOKEN_URL, SECTION_URL, IMAGE_URL } from '../../helpers/Constants';
-import { setSections, setToken, setEmail } from '../../actions';
+import {
+  setSections,
+  setToken,
+  setEmail,
+  setSectionScreenPopover,
+  setHomeScreenPopover
+} from '../../actions';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -23,6 +29,8 @@ class SplashScreen extends Component {
     this.spin();
     this.authorize();
     this.getSectionInfo();
+    getPopoverStatus('homeScreenPopover', bool => this.props.setHomeScreenPopover(bool));
+    getPopoverStatus('sectionScreenPopover', bool => this.props.setSectionScreenPopover(bool));
   }
 
   getImage(url, section) {
@@ -166,4 +174,10 @@ const styles = {
   }
 };
 
-export default connect(null, { setSections, setToken, setEmail })(SplashScreen);
+export default connect(null, {
+  setSections,
+  setToken,
+  setEmail,
+  setSectionScreenPopover,
+  setHomeScreenPopover
+})(SplashScreen);

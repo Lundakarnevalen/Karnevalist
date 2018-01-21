@@ -1,22 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import PulsatingView from './PulsatingView';
-import { setPopoverStatus, getPopoverStatus } from '../../helpers/LocalSave';
 
 class Popover extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isVisible: true
-    };
-  }
-
-  componentWillMount() {
-    getPopoverStatus(this.props.name, bool => this.setState({ isVisible: bool }));
-    //console.log(getPopoverStatus(this.props.name));
-    //this.setState({ isVisible: getPopoverStatus(this.props.name) });
-  }
-
   zIndexWorkaround = val => {
     return Platform.select({
       ios: { zIndex: val },
@@ -24,17 +10,7 @@ class Popover extends Component {
     });
   };
 
-  renderOnPress() {
-    setPopoverStatus(this.props.name, this.props.name);
-    this.setState({ isVisible: false });
-  }
-
   renderBubble() {
-    getPopoverStatus(this.props.name, bool => this.renderBubbleCallback(bool));
-  }
-
-  renderBubbleCallback(bool) {
-    this.setState({ isVisible: bool });
     const {
       talkBubbleSquareBig,
       talkBubbleSquareSmall,
@@ -44,13 +20,10 @@ class Popover extends Component {
       talkBubbleTriangleBottomLeft,
       textStyle
     } = styles;
-    if (!this.state.isVisible) {
-      return <View />;
-    }
     if (this.props.type === 'bottomLeft')
       return (
         <TouchableOpacity
-          onPress={() => this.renderOnPress()}
+          onPress={() => this.props.onPress}
           style={[talkBubbleBottomLeft, this.zIndexWorkaround(1000)]}
         >
           <PulsatingView animate>
@@ -109,7 +82,7 @@ const styles = {
     backgroundColor: 'transparent',
     position: 'absolute',
     top: 477,
-    left: 20
+    left: 116
   },
   talkBubbleSquareSmall: {
     width: 200,
@@ -120,7 +93,7 @@ const styles = {
     alignItems: 'center'
   },
   talkBubbleSquareBig: {
-    width: 248,
+    width: 246,
     height: 40,
     backgroundColor: '#333',
     borderRadius: 10,

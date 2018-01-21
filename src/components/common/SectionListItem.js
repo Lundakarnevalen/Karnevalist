@@ -49,7 +49,13 @@ class SectionListItem extends Component {
 
   render() {
     const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
-    const { sectionTitle = '', sectionInfoText = '', sectionDate = '', onPress } = this.props;
+    const {
+      sectionTitle = '',
+      sectionIcon = '',
+      sectionInfoText = '',
+      sectionDate = '',
+      onPress
+    } = this.props;
     return (
       <TouchableOpacity
         onPress={() => onPress()}
@@ -65,7 +71,10 @@ class SectionListItem extends Component {
                 { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
               ]}
             >
-              {sectionTitle}
+              {sectionIcon === '' ? null : (
+                <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+              )}
+              {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
             </Text>
             {sectionInfoText === '' ? null : (
               <Text
