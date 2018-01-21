@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -19,7 +19,7 @@ import {
   SONGBOOK_SCREEN_STRINGS
 } from '../../helpers/LanguageStrings';
 
-const SIZE = 30;
+const SIZE = Dimensions.get('window').width / 10;
 
 class MyPageNavbarScreen extends Component {
   componentWillMount() {
