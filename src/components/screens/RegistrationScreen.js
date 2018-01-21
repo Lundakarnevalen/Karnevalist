@@ -510,7 +510,9 @@ class RegistrationScreen extends Component {
                     phoneNumber: inputs[10],
                     foodPreference,
                     driversLicense,
-                    pastInvolvement: activeCarneval2014
+                    pastInvolvement: activeCarneval2014,
+                    shirtSize,
+                    studentUnion
                   })
                   .then(response => {
                     const { accessToken } = response.data;
