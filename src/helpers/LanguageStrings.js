@@ -644,7 +644,8 @@ export const ERROR_MSG_INPUT_FIELD = {
     'errorMsgZipCode',
     'errorMsgFoodPreference',
     'errorMsgWrongInput',
-    'errorMsgCity'
+    'errorMsgCity',
+    'errorMsgAnyEmpty'
   ],
   errorMsgOnlyDigits: {
     SE: 'Detta fält får endast innehålla siffror',
@@ -691,7 +692,11 @@ export const ERROR_MSG_INPUT_FIELD = {
     EN: 'Ex: gluten, lactose intolerant... '
   },
   errorMsgWrongInput: {
-    SE: 'Vänligen se till att alla fält är korrekt ifyllda',
+    SE: 'Vänligen se till att alla val är korrekt ifyllda',
     EN: 'Please make sure the fields are filled in correctly'
+  },
+  errorMsgAnyEmpty: {
+    SE: 'Vänligen se till att inga obligatoriska fält är tomma',
+    EN: 'Please make sure no mandatory fields are left empty'
   }
 };
