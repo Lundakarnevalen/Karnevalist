@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { View, Dimensions, TouchableOpacity } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, CustomButton, BackgroundImage, CountDown } from '../../common';
+import { Header, BackgroundImage, CountDown } from '../../common';
 import Timeline from '../../common/Timeline';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { PROGRESS } from '../../../helpers/Constants';
+import { setSections, setSectionPriorities, setProgress } from '../../../actions';
+import { getFavoriteSections } from '../../../helpers/LocalSave'
+
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -19,8 +22,9 @@ class HomeScreen extends Component {
 
   render() {
     const { container } = styles;
-    const { navigation, screenProps, language } = this.props;
+    const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
+    // console.log(this.props.sections.length);
     return (
       <View>
         <BackgroundImage pictureNumber={3} />
@@ -43,9 +47,9 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentLanguage }) => {
+const mapStateToProps = ({ currentLanguage, sections }) => {
   const { language } = currentLanguage;
-  return { language };
+  return { language, sectionPrio: sections.sectionPriorities };
 };
 
-export default connect(mapStateToProps, null)(HomeScreen);
+export default connect(mapStateToProps, { setProgress })(HomeScreen);

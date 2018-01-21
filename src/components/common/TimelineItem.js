@@ -99,10 +99,13 @@ const styles = {
     backgroundColor: 'transparent',
     borderWidth: 0,
     width: Dimensions.get('window').width / 2,
+    fontFamily: 'Avenir Next Medium',
+    color: '#fff'
   },
   textView: {
-    backgroundColor: 'rgba(247, 160, 33, 0.7)',
+    backgroundColor: 'rgba(247, 160, 33, 1)',
     borderRadius: 15,
+    marginLeft: 6
   },
   roundView: {
     height: Dimensions.get('window').width / 7,

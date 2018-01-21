@@ -7,6 +7,7 @@ import { PROGRESS } from '../../../helpers/Constants';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { dynamicSort } from '../../../helpers/functions';
+import { setProgress } from '../../../actions';
 
 const height = Dimensions.get('window').height;
 
@@ -77,6 +78,7 @@ class SectionScreen extends Component {
   render() {
     const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
+
     return (
       <View>
         <BackgroundImage pictureNumber={1} />
@@ -141,4 +143,4 @@ const styles = {
   }
 };
 
-export default connect(mapStateToProps, null)(SectionScreen);
+export default connect(mapStateToProps, { setProgress })(SectionScreen);

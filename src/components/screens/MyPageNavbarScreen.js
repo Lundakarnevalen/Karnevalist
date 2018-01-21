@@ -6,14 +6,13 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { setSections, setSectionPriorities, setProgress } from '../../actions';
 import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
+import { getFavoriteSections } from '../../helpers/LocalSave'
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
-import NewsScreen from './MyPageNavbarScreens/NewsScreen';
 import SettingsScreen from './MyPageNavbarScreens/SettingsScreen';
 import {
   SECTION_SCREEN_STRINGS,
-  NEWS_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
@@ -42,10 +41,19 @@ class MyPageNavbarScreen extends Component {
         if (success) {
           this.props.setSectionPriorities(sectionPriorities);
           if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
+          else {
+            getFavoriteSections((sections) => {
+              console.log(sections.length)
+              if (sections.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+            })
+          }
         }
       })
       .catch(error => {
-        // const msg = handleErrorMsg(error.message)
+        getFavoriteSections((sections) => {
+          console.log(sections.length)
+          if (sections.length >= 5) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+        })
         console.log(error);
       });
   }
@@ -141,7 +149,7 @@ const TabNav = TabNavigator(
 const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { language } = currentLanguage;
   const { token } = userInformation;
-  return { language, token, sections: sections.sections };
+  return { language, token, sections: sections.sections, sectionsPrios: sections.sectionPriorities };
 };
 export default connect(mapStateToProps, {
   setSections,

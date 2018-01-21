@@ -18,8 +18,6 @@ class Timeline extends Component {
 
   componentWillMount() {
     getFavoriteSections(sections => {
-      console.log(sections);
-      console.log(sections.length);
       if (sections.length < 5) {
        this.setState({ overFiveSections: false })
      } else
@@ -43,34 +41,16 @@ class Timeline extends Component {
           style={'done'}
           width={WIDTH - 50}
           text={strings.CheckIn}
-          onPress={() => navigation.navigate('Sections')}
+          onPress={() => navigation.navigate('HomeScreen')}
         />
         <View style={styles.barView1} />
         <TimelineItem
           style={this.props.progress >= 2 ? 'done' : 'notDone'}
           width={WIDTH - 50}
           text={strings.ChooseSections}
-          onPress={() => navigation.navigate('Sections')}
-        />
-        <View style={styles.barView23} />
-        <TimelineItem
-          style={this.props.progress >= 3 ? 'done' : 'notDone'}
-          width={WIDTH - 50}
-          text={strings.Rank}
-          onPress={this.props.progress >= 3 ?
-            () => screenProps.navigation.navigate('ConfirmPage', {
-            navigation,
-            setSectionStatus: id => {
-              let tmpData = this.state.data;
-              const tmpItem = tmpData.filter(section => section.id + '' === id + '')[0];
-              tmpData = tmpData.filter(section => section.id + '' !== id + '');
-              delete tmpItem.favorite;
-              tmpData.push(tmpItem);
-              tmpData.sort(dynamicSort('title'));
-              this.setState({ data: tmpData });
-            }
-          }) : () => screenProps.navigation.navigate('HomeScreen')
-        }
+          onPress={this.props.progress >= 2 ?
+            () => navigation.navigate('HomeScreen')
+            : () => navigation.navigate('Sections')}
         />
         <View style={styles.barView4} />
         <TimelineItem
@@ -78,7 +58,8 @@ class Timeline extends Component {
           width={WIDTH - 50}
           text={strings.SendIn}
           onPress={this.props.progress >= 3 ?
-            () => screenProps.navigation.navigate('ConfirmPage', {
+            () => screenProps.navigation.navigate('HomeScreen')
+            : () => screenProps.navigation.navigate('ConfirmPage', {
             navigation,
             setSectionStatus: id => {
               let tmpData = this.state.data;
@@ -89,7 +70,7 @@ class Timeline extends Component {
               tmpData.sort(dynamicSort('title'));
               this.setState({ data: tmpData });
             }
-          }) : () => screenProps.navigation.navigate('HomeScreen')
+          })
         }
         />
       </View>
