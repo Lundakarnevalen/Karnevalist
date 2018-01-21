@@ -6,22 +6,22 @@ class CheckBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPressed: true
+      isPressed: false
     };
   }
 
   getIconName() {
-    if (this.props.isPressed) {
+    if (this.props.value) {
       return 'check-box';
     }
     return 'check-box-outline-blank';
   }
 
   render() {
-    const { size, onPress, color } = this.props;
-    const { textStyle, multipleChoiceStyle } = styles;
+    const { size, color, onPress } = this.props;
+    const { textStyle, checkBoxStyle } = styles;
     return (
-      <TouchableOpacity style={multipleChoiceStyle} onPress={onPress}>
+      <TouchableOpacity style={checkBoxStyle} onPress={onPress}>
         <MaterialIcons
           name={this.getIconName()}
           size={size}
@@ -35,16 +35,15 @@ class CheckBox extends Component {
 }
 
 const styles = {
-  multipleChoiceStyle: {
+  checkBoxStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'transparent'
   },
   textStyle: {
     fontSize: 16,
     backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold'
+    fontFamily: 'Avenir Next Medium'
   }
 };
 
