@@ -15,14 +15,7 @@ import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setToken, setEmail } from '../../actions';
-import {
-  Header,
-  Input,
-  DKPicker,
-  CustomButton,
-  ButtonChoiceManager,
-  BackgroundImage
-} from '../common';
+import { Header, Input, DKPicker, CustomButton, CheckBox, BackgroundImage } from '../common';
 import Loading from '../common/Loading';
 import { REGISTER_URL } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
@@ -40,11 +33,13 @@ class RegistrationScreen extends Component {
       inputs: ['', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
-      foodPreferences: '',
+      activeCarneval2014: false,
+      driversLicense: false,
+      foodPreference: '',
       errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showStudentUnionPicker: false,
-      foodPreferencesError: false,
+      foodPreferenceError: false,
       loading: false,
       loadingComplete: false,
       keyboardHeight: 0
@@ -132,14 +127,15 @@ class RegistrationScreen extends Component {
       studentUnion === 'Välj nation' ||
       studentUnion === 'Choose student union' ||
       studentUnion === ''
-    ) return true
+    )
+      return true;
     return false;
   }
 
   anyErrors() {
-    const { errors, foodPreferencesError, foodPreferences } = this.state;
+    const { errors, foodPreferenceError, foodPreference } = this.state;
     return (errors.indexOf(true) !== -1 ||
-    (foodPreferencesError && foodPreferences !== ''))
+    (foodPreferenceError && foodPreference !== ''))
   }
 
   trimValues() {
@@ -225,14 +221,16 @@ class RegistrationScreen extends Component {
     const {
       inputs,
       errors,
-      foodPreferences,
-      foodPreferencesError,
+      foodPreference,
+      foodPreferenceError,
       loading,
       loadingComplete,
       shirtSize,
       showShirtPicker,
       studentUnion,
-      showStudentUnionPicker
+      showStudentUnionPicker,
+      activeCarneval2014,
+      driversLicense
     } = this.state;
 
     const closeButton = (
@@ -445,18 +443,18 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'twelthInput'}
-            placeholder={strings.foodPreferences}
+            placeholder={strings.foodPreference}
             onChangeText={text => {
               this.setState({
-                foodPreferences: text,
-                foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
+                foodPreference: text,
+                foodPreferenceError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
               });
             }}
-            value={foodPreferences}
+            value={foodPreference}
             returnKeyType={'done'}
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={foodPreferencesError}
+            hasError={foodPreferenceError}
             warningMessage={[errorStrings.errorMsgFoodPreference]}
           />
           {this.renderPickerForPlatform(
@@ -472,16 +470,18 @@ class RegistrationScreen extends Component {
             'union'
           )}
           <View style={{ right: 3 }}>
-            <ButtonChoiceManager
-              buttonInputVector={[strings.activeKarneval]}
-              multipleChoice
+            <CheckBox
+              name={strings.activeKarneval}
               size={30}
+              onPress={() => this.setState({ activeCarneval2014: !activeCarneval2014 })}
+              value={activeCarneval2014}
               color={'white'}
             />
-            <ButtonChoiceManager
-              buttonInputVector={[strings.driversLicense]}
-              multipleChoice
+            <CheckBox
+              name={strings.driversLicense}
               size={30}
+              onPress={() => this.setState({ driversLicense: !driversLicense })}
+              value={driversLicense}
               color={'white'}
             />
           </View>
@@ -508,7 +508,11 @@ class RegistrationScreen extends Component {
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],
-                    foodPreferences
+                    foodPreference,
+                    driversLicense,
+                    pastInvolvement: activeCarneval2014,
+                    shirtSize,
+                    studentUnion
                   })
                   .then(response => {
                     const { accessToken } = response.data;
