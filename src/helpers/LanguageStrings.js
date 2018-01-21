@@ -357,10 +357,14 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title'],
+  fields: ['title', 'refresh'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
+  },
+  refresh: {
+    SE: 'Dra ner för att uppdatera',
+    EN: 'Pull down to refresh'
   }
 };
 
