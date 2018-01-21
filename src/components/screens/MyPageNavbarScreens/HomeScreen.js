@@ -27,7 +27,7 @@ class HomeScreen extends Component {
     // console.log(this.props.sections.length);
     return (
       <View>
-        <BackgroundImage pictureNumber={3} />
+        <BackgroundImage pictureNumber={1} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <View style={{ height: 20 }} />
         <View style={container}>
