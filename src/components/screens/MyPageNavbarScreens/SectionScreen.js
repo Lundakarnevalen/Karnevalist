@@ -23,8 +23,8 @@ const HEIGHT = Dimensions.get('window').height;
 class SectionScreen extends Component {
   constructor(props) {
     super(props);
-    const { sections } = props;
-    console.log(sections);
+    const { sections, language } = props;
+    sections.sort(dynamicSort('title', language));
     this.state = {
       isOpen: false,
       data: sections
@@ -40,9 +40,9 @@ class SectionScreen extends Component {
   }
 
   setSections() {
-    const { sections } = this.props;
+    const { sections, language } = this.props;
     if (sections) {
-      sections.sort(dynamicSort('title'));
+      sections.sort(dynamicSort('title', language));
     }
     getFavoriteSections(result => {
       if (result) {
@@ -68,7 +68,7 @@ class SectionScreen extends Component {
 
   renderRightIcon() {
     if (this.props.progress === PROGRESS.SENT_SECTIONS) return null;
-    const { screenProps, navigation } = this.props;
+    const { screenProps, navigation, language } = this.props;
     const { rightIconStyle } = styles;
     return (
       <TouchableOpacity
@@ -82,7 +82,7 @@ class SectionScreen extends Component {
               tmpData = tmpData.filter(section => section.id + '' !== id + '');
               delete tmpItem.favorite;
               tmpData.push(tmpItem);
-              tmpData.sort(dynamicSort('title'));
+              tmpData.sort(dynamicSort('title', language));
               this.setState({ data: tmpData });
             }
           })
@@ -109,7 +109,7 @@ class SectionScreen extends Component {
       delete tmpItem.favorite;
     }
     tmpData.push(tmpItem);
-    tmpData.sort(dynamicSort('title'));
+    tmpData.sort(dynamicSort('title', this.props.language));
     this.setState({ data: tmpData });
   }
 
