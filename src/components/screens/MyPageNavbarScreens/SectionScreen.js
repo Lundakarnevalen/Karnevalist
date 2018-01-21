@@ -19,7 +19,6 @@ class SectionScreen extends Component {
     this.state = {
       isOpen: false,
       data: sections,
-      refreshing: false
     };
   }
 
@@ -85,10 +84,8 @@ class SectionScreen extends Component {
     );
   }
   _onRefresh() {
-    this.setState({ refreshing: true });
     fetchSections(sections => {
      this.props.setSections(sections)
-     this.setState({ refreshing: false });
     });
   }
 
@@ -124,7 +121,7 @@ class SectionScreen extends Component {
         <FlatList
         refreshControl={
           <RefreshControl
-            refreshing={this.state.refreshing}
+            refreshing={false}
             onRefresh={this._onRefresh.bind(this)}
           />
         }
