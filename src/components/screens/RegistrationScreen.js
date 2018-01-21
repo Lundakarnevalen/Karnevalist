@@ -35,11 +35,11 @@ class RegistrationScreen extends Component {
       studentUnion: '',
       activeCarneval2014: false,
       driversLicense: false,
-      foodPreferences: '',
+      foodPreference: '',
       errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showStudentUnionPicker: false,
-      foodPreferencesError: false,
+      foodPreferenceError: false,
       loading: false,
       loadingComplete: false,
       keyboardHeight: 0
@@ -133,9 +133,9 @@ class RegistrationScreen extends Component {
   }
 
   anyErrors() {
-    const { errors, foodPreferencesError, foodPreferences } = this.state;
+    const { errors, foodPreferenceError, foodPreference } = this.state;
     return (errors.indexOf(true) !== -1 ||
-    (foodPreferencesError && foodPreferences !== ''))
+    (foodPreferenceError && foodPreference !== ''))
   }
 
   trimValues() {
@@ -221,8 +221,8 @@ class RegistrationScreen extends Component {
     const {
       inputs,
       errors,
-      foodPreferences,
-      foodPreferencesError,
+      foodPreference,
+      foodPreferenceError,
       loading,
       loadingComplete,
       shirtSize,
@@ -443,18 +443,18 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'twelthInput'}
-            placeholder={strings.foodPreferences}
+            placeholder={strings.foodPreference}
             onChangeText={text => {
               this.setState({
-                foodPreferences: text,
-                foodPreferencesError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
+                foodPreference: text,
+                foodPreferenceError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
               });
             }}
-            value={foodPreferences}
+            value={foodPreference}
             returnKeyType={'done'}
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
-            hasError={foodPreferencesError}
+            hasError={foodPreferenceError}
             warningMessage={[errorStrings.errorMsgFoodPreference]}
           />
           {this.renderPickerForPlatform(
@@ -508,7 +508,7 @@ class RegistrationScreen extends Component {
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],
-                    foodPreferences,
+                    foodPreference,
                     driversLicense,
                     pastInvolvement: activeCarneval2014
                   })
