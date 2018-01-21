@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Dimensions, ScrollView, Text, Keyboard } from 'react-native';
+import { View, Dimensions, ScrollView, Text, Keyboard } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
