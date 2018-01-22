@@ -6,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 const WIDTH = Dimensions.get('window').width;
 
 class TimelineItem extends Component {
-
   getDone() {
     const borderWidth = 0;
     const backgroundColor = '#F7A021';
@@ -24,7 +23,7 @@ class TimelineItem extends Component {
       backgroundColor,
       padding: 10,
       borderWidth,
-      borderColor,
+      borderColor
     };
   }
 
@@ -44,7 +43,7 @@ class TimelineItem extends Component {
     return {
       backgroundColor,
       padding: 10,
-      borderWidth,
+      borderWidth
     };
   }
 
@@ -76,7 +75,7 @@ class TimelineItem extends Component {
       <TouchableOpacity onPress={onPress} style={[button]}>
         <View style={[this.getStyle(), roundView]} />
         <View style={[textView]}>
-        <Text style={[this.getTextStyle(), textButton]}>{text}</Text>
+          <Text style={[this.getTextStyle(), textButton]}>{text}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -95,11 +94,11 @@ const styles = {
   textButton: {
     backgroundColor: 'transparent',
     borderWidth: 0,
-    width: Dimensions.get('window').width / 2,
+    width: Dimensions.get('window').width / 2
   },
   textView: {
     backgroundColor: 'rgba(247, 160, 33, 0.7)',
-    borderRadius: 15,
+    borderRadius: 15
   },
   roundView: {
     height: Dimensions.get('window').width / 7,
@@ -115,9 +114,4 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentTheme }) => {
-  const { theme } = currentTheme;
-  return { theme };
-};
-
-export default connect(mapStateToProps, null)(TimelineItem);
+export default TimelineItem;

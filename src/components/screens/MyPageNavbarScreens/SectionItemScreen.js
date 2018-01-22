@@ -4,8 +4,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Header, Toast } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
+import { setProgress } from '../../../actions';
 import {
   getFavoriteSection,
+  getFavoriteSections,
   saveFavoriteSection,
   removeFavoriteSection
 } from '../../../helpers/LocalSave';
@@ -48,6 +50,13 @@ class SectionItemScreen extends Component {
         <TouchableOpacity
           style={rightIconStyle}
           onPress={() => {
+            getFavoriteSections(sections => {
+              if (sections.length >= 4) {
+                this.props.setProgress(3);
+              } else {
+                this.props.setProgress(2);
+              }
+            });
             saveFavoriteSection(id);
             this.props.navigation.state.params.setSectionStatus(true);
             this.setState({ showToast: true, favorite: true });
@@ -61,7 +70,15 @@ class SectionItemScreen extends Component {
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
-          removeFavoriteSection(id, () => {});
+          removeFavoriteSection(id, () => {
+            getFavoriteSections(sections => {
+              if (sections.length >= 5) {
+                this.props.setProgress(3);
+              } else {
+                this.props.setProgress(2);
+              }
+            });
+          });
           this.props.navigation.state.params.setSectionStatus(false);
           this.setState({ showToast: true, favorite: false });
         }}
@@ -145,4 +162,4 @@ const mapStateToProps = ({ userInformation, currentLanguage }) => {
   return { language, progress };
 };
 
-export default connect(mapStateToProps, null)(SectionItemScreen);
+export default connect(mapStateToProps, { setProgress })(SectionItemScreen);

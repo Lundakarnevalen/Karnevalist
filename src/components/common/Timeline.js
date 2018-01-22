@@ -92,12 +92,11 @@ const styles = {
     marginTop: -30,
     marginBottom: -22,
     marginLeft: 22
-  },
+  }
 };
 
-const mapStateToProps = ({ currentTheme, currentLanguage }) => {
-  const { theme } = currentTheme;
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  return { theme, language };
+  return { language };
 };
 export default connect(mapStateToProps, null)(Timeline);

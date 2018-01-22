@@ -114,7 +114,7 @@ class SectionScreen extends Component {
 
   renderPopover(text) {
     const { popover } = this.props;
-    if (popover)
+    if (popover && this.props.progress >= 2)
       return (
         <Popover
           onPress={() => this.props.setSectionScreenPopover(false)}
