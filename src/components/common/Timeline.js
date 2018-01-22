@@ -3,10 +3,26 @@ import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import TimelineItem from './TimelineItem';
 import { HOME_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
+import { dynamicSort } from '../../helpers/functions';
+import { getFavoriteSections } from '../../helpers/LocalSave';
 
 const WIDTH = Dimensions.get('window').width;
 
 class Timeline extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      overFiveSections: false
+    };
+  }
+
+  componentWillMount() {
+    getFavoriteSections(sections => {
+      if (sections.length < 5) {
+        this.setState({ overFiveSections: false });
+      } else this.setState({ overFiveSections: true });
+    });
+  }
   getStrings() {
     const { language } = this.props;
     const { fields } = HOME_SCREEN_STRINGS;
@@ -16,36 +32,66 @@ class Timeline extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
+    /*Problemet är nu om man kan välja sektioner innna man checkat in.
+    Om om man kan det så behöver vi kunna se till att den man är på inte
+    flyttas till Skicka in förrän efter att man både har valt 5 och checkat in*/
     return (
       <View>
         <TimelineItem
           style={'done'}
           width={WIDTH - 50}
-          text={strings.CheckIn}
-          onPress={() => navigation.navigate('Sections')}
+          text={strings.Register}
+          onPress={() => navigation.navigate('HomeScreen')}
         />
         <View style={styles.barView1} />
         <TimelineItem
-          style={'notDone'}
+          style={this.props.progress >= 1 ? 'done' : 'notDone'} //Ändra så progress ändras när man checkat in
           width={WIDTH - 50}
-          text={strings.ChooseSections}
-          onPress={() => navigation.navigate('Sections')}
+          focus={this.props.progress === 0}
+          text={strings.CheckIn}
+          onPress={
+            this.props.progress >= 1
+              ? () => navigation.navigate('HomeScreen')
+              : () => navigation.navigate('HomeScreen')
+          } //Ändra till var man kan checka in.
         />
         <View style={styles.barView23} />
         <TimelineItem
-          style={'notDone'}
+          style={this.props.progress >= 2 ? 'done' : 'notDone'}
           width={WIDTH - 50}
-          text={strings.Rank}
-          onPress={() => navigation.navigate('Sections')}
+          focus={this.props.progress === 1}
+          text={strings.ChooseSections}
+          onPress={
+            this.props.progress >= 2
+              ? () => navigation.navigate('HomeScreen')
+              : () => navigation.navigate('Sections')
+          }
         />
         <View style={styles.barView4} />
         <TimelineItem
-          style={'notDone'}
+          style={this.props.progress >= 3 ? 'done' : 'notDone'}
+          focus={this.props.progress === 2}
           width={WIDTH - 50}
           text={strings.SendIn}
-          onPress={() => navigation.navigate('Sections')}
+          onPress={
+            this.props.progress >= 3
+              ? () => screenProps.navigation.navigate('HomeScreen')
+              : () =>
+                  screenProps.navigation.navigate('ConfirmPage', {
+                    navigation,
+                    setSectionStatus: id => {
+                      let tmpData = this.state.data;
+                      const tmpItem = tmpData.filter(section => section.id + '' === id + '')[0];
+                      tmpData = tmpData.filter(section => section.id + '' !== id + '');
+                      delete tmpItem.favorite;
+                      tmpData.push(tmpItem);
+                      tmpData.sort(dynamicSort('title'));
+                      this.setState({ data: tmpData });
+                    }
+                  })
+          }
         />
       </View>
     );
@@ -70,9 +116,9 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -22,
-    marginBottom: -30,
-    marginLeft: 22
+    marginTop: -25,
+    marginBottom: -22,
+    marginLeft: 24
   },
   barView23: {
     width: Dimensions.get('window').width / 9 / 5,
@@ -80,8 +126,9 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: -30,
-    marginLeft: 22
+    marginTop: -22,
+    marginBottom: -38,
+    marginLeft: 24
   },
   barView4: {
     width: Dimensions.get('window').width / 9 / 5,
@@ -89,14 +136,15 @@ const styles = {
     backgroundColor: '#F7A021',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -30,
-    marginBottom: -22,
-    marginLeft: 22
+    marginTop: -38,
+    marginBottom: -25,
+    marginLeft: 24
   }
 };
 
-const mapStateToProps = ({ currentLanguage }) => {
+const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
-  return { language };
+  const { progress } = userInformation;
+  return { language, progress };
 };
 export default connect(mapStateToProps, null)(Timeline);

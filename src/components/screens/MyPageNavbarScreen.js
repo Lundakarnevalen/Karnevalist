@@ -11,14 +11,13 @@ import {
   setHomeScreenPopover
 } from '../../actions';
 import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
+import { getFavoriteSections } from '../../helpers/LocalSave';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
-import NewsScreen from './MyPageNavbarScreens/NewsScreen';
 import SettingsScreen from './MyPageNavbarScreens/SettingsScreen';
 import {
   SECTION_SCREEN_STRINGS,
-  NEWS_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS

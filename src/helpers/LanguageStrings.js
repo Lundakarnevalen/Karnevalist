@@ -390,9 +390,13 @@ export const HOME_SCREEN_STRINGS = {
     SE: 'Påbörja din registrering',
     EN: 'Begin your registration'
   },
-  CheckIn: {
+  Register: {
     SE: 'Påbörja din registrering',
     EN: 'Begin your registration'
+  },
+  CheckIn: {
+    SE: 'Checka in',
+    EN: 'Check in'
   },
   ChooseSections: {
     SE: 'Välja vilka sektioner du vill jobba med, minst 5 stycken.',

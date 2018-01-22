@@ -9,7 +9,8 @@ import {
   getFavoriteSection,
   getFavoriteSections,
   saveFavoriteSection,
-  removeFavoriteSection
+  removeFavoriteSection,
+  getFavoriteSections
 } from '../../../helpers/LocalSave';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
@@ -60,6 +61,10 @@ class SectionItemScreen extends Component {
             saveFavoriteSection(id);
             this.props.navigation.state.params.setSectionStatus(true);
             this.setState({ showToast: true, favorite: true });
+            getFavoriteSections(sections => {
+              console.log(sections.length);
+              if (sections.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+            });
           }}
         >
           <MaterialIcons name="favorite-border" size={30} color={'white'} />

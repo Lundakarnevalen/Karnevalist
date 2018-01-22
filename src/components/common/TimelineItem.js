@@ -68,13 +68,19 @@ class TimelineItem extends Component {
         return styles.button;
     }
   }
+
+  getFocused() {
+    if (this.props.focus) {
+      return { backgroundColor: 'rgba(247, 160, 33, 1)' };
+    }
+  }
   render() {
-    const { onPress, text, width = WIDTH / 1.5 } = this.props;
-    const { button, roundView, textButton, barView, textView } = styles;
+    const { text, navigation } = this.props;
+    const { button, roundView, textButton, textView } = styles;
     return (
-      <TouchableOpacity onPress={onPress} style={[button]}>
+      <TouchableOpacity style={[button]} onPress={() => this.props.onPress()}>
         <View style={[this.getStyle(), roundView]} />
-        <View style={[textView]}>
+        <View style={[textView, this.getFocused()]}>
           <Text style={[this.getTextStyle(), textButton]}>{text}</Text>
         </View>
       </TouchableOpacity>
@@ -94,15 +100,22 @@ const styles = {
   textButton: {
     backgroundColor: 'transparent',
     borderWidth: 0,
-    width: Dimensions.get('window').width / 2
+    width: Dimensions.get('window').width / 2,
+    fontFamily: 'Avenir Next Medium',
+    color: '#fff',
+    fontSize: 17
+  },
+  focusView: {
+    backgroundColor: 'rgba(247, 160, 33, 1)'
   },
   textView: {
-    backgroundColor: 'rgba(247, 160, 33, 0.7)',
-    borderRadius: 15
+    backgroundColor: 'rgba(247, 160, 33, 0.5)',
+    borderRadius: 15,
+    marginLeft: 6
   },
   roundView: {
-    height: Dimensions.get('window').width / 7,
-    width: Dimensions.get('window').width / 7,
+    height: Dimensions.get('window').width / 6.5,
+    width: Dimensions.get('window').width / 6.5,
     borderRadius: 90,
     justifyContent: 'center',
     alignItems: 'center'

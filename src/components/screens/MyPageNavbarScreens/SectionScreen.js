@@ -128,6 +128,7 @@ class SectionScreen extends Component {
   render() {
     const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
+
     return (
       <View>
         <BackgroundImage pictureNumber={2} />
