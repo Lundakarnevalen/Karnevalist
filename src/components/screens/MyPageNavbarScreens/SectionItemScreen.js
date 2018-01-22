@@ -9,8 +9,7 @@ import {
   getFavoriteSection,
   getFavoriteSections,
   saveFavoriteSection,
-  removeFavoriteSection,
-  getFavoriteSections
+  removeFavoriteSection
 } from '../../../helpers/LocalSave';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 

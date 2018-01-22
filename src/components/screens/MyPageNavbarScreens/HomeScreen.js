@@ -187,7 +187,6 @@ const styles = {
   }
 };
 
-<<<<<<< HEAD
 const mapStateToProps = ({ currentLanguage, popoverStatus, userInformation, sections }) => {
   const { language } = currentLanguage;
   const { progress, token, email } = userInformation;
@@ -199,11 +198,6 @@ const mapStateToProps = ({ currentLanguage, popoverStatus, userInformation, sect
     email,
     sectionPriorities: sections.sectionPriorities
   };
-=======
-const mapStateToProps = ({ currentLanguage, sections }) => {
-  const { language } = currentLanguage;
-  return { language, sectionPrio: sections.sectionPriorities };
->>>>>>> 213bdee84b0c670a4a17873b23f3650352c50bfc
 };
 
 export default connect(mapStateToProps, { setProgress })(HomeScreen);
