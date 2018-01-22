@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import { Header, BackgroundImage, CountDown } from '../../common';
 import Timeline from '../../common/Timeline';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { PROGRESS } from '../../../helpers/Constants';
-import { setSections, setSectionPriorities, setProgress } from '../../../actions';
-import { getFavoriteSections } from '../../../helpers/LocalSave'
-
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -24,7 +20,6 @@ class HomeScreen extends Component {
     const { container } = styles;
     const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
-    // console.log(this.props.sections.length);
     return (
       <View>
         <BackgroundImage pictureNumber={1} />
@@ -52,4 +47,4 @@ const mapStateToProps = ({ currentLanguage, sections }) => {
   return { language, sectionPrio: sections.sectionPriorities };
 };
 
-export default connect(mapStateToProps, { setProgress })(HomeScreen);
+export default connect(mapStateToProps, null)(HomeScreen);
