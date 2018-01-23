@@ -3,7 +3,14 @@ import { View, Dimensions, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
-import { Header, BackgroundImage, CountDown, Popover } from '../../common';
+import {
+  Header,
+  BackgroundImage,
+  CountDown,
+  Popover,
+  SectionListItem,
+  SuperAgileAlert
+} from '../../common';
 import Timeline from '../../common/Timeline';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { fetchCheckInStatus } from '../../../helpers/ApiManager';
@@ -16,7 +23,8 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      animate: true
+      animate: true,
+      alertVisible: false
     };
   }
 
@@ -97,6 +105,42 @@ class HomeScreen extends Component {
     );
   }
 
+  renderIcon(prog) {
+    if (this.props.progress >= prog) {
+      return 'done';
+    }
+    if (this.props.progress + 1 === prog) {
+      return 'keyboard-arrow-right';
+    }
+    return;
+  }
+
+  renderStyle(prog) {
+    if (this.props.progress >= prog) {
+      return {
+        backgroundColor: 'rgba(255,255,255, 0.4)'
+      };
+    }
+    if (this.props.progress + 1 === prog) {
+      return {};
+    }
+  }
+
+  renderOnPress(prog) {
+    if (this.props.progress + 1 === prog) {
+      if (prog === 2) {
+        this.setState({ alertVisible: true });
+      }
+      if (prog === 3) {
+        this.props.navigation.navigate('Sections');
+      }
+      if (prog === 4) {
+        this.props.navigation.navigate('ConfirmPage');
+      }
+    }
+    return;
+  }
+
   render() {
     const { container, textStyle, textStyleProgress } = styles;
     const { navigation } = this.props;
@@ -112,27 +156,59 @@ class HomeScreen extends Component {
         />
         <View style={{ height: 20 }} />
         <View style={container}>
-          <Text style={textStyleProgress}>Du är just nu </Text>
-          <Progress.Circle
-            borderWidth={6}
-            thickness={12}
-            textStyle={{ fontSize: 35, fontWeight: 'bold' }}
-            progress={this.renderProgress()}
-            formatText={() => this.animateProgress()}
-            size={140}
-            showsText
-            color={'#FFF'}
-          />
-          <Text style={textStyleProgress}>Karnevalist</Text>
-
-          <View>
-            <Text style={[textStyle, this.renderProgressItemStyle(1)]}>1. Skapa profil</Text>
-            <Text style={[textStyle, this.renderProgressItemStyle(2)]}>2. Checka in</Text>
-            <Text style={[textStyle, this.renderProgressItemStyle(3)]}>
-              3. Välj minst 5 sektioner
-            </Text>
-            <Text style={[textStyle, this.renderProgressItemStyle(4)]}>4. Skicka in dina val</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Text style={textStyleProgress}>Du är just nu </Text>
+            <Progress.Circle
+              borderWidth={3}
+              thickness={9}
+              textStyle={{ fontSize: 22, fontWeight: 'bold' }}
+              progress={this.renderProgress()}
+              formatText={() => this.animateProgress()}
+              size={90}
+              showsText
+              color={'#FFF'}
+            />
+            <Text style={textStyleProgress}>Karnevalist</Text>
           </View>
+          <View style={{ justifyContent: 'center', marginTop: 12 }}>
+            <SectionListItem
+              icon={this.renderIcon(1)}
+              style={this.renderStyle(1)}
+              onPress={() => this.renderOnPress(1)}
+              sectionInfoText={'1. Skapa Profil'}
+            />
+            <SectionListItem
+              icon={this.renderIcon(2)}
+              style={this.renderStyle(2)}
+              onPress={() => this.renderOnPress(2)}
+              sectionInfoText={'2. Checka In'}
+            />
+            <SectionListItem
+              icon={this.renderIcon(3)}
+              style={this.renderStyle(3)}
+              onPress={() => this.renderOnPress(3)}
+              sectionInfoText={'3. Välj minst 5 sektioner'}
+            />
+            <SectionListItem
+              icon={this.renderIcon(4)}
+              style={this.renderStyle(4)}
+              onPress={() => this.renderOnPress(4)}
+              sectionInfoText={'4. Skicka in dina val'}
+            />
+          </View>
+          <SuperAgileAlert
+            alertVisible={this.state.alertVisible}
+            setAlertVisible={visible => this.setState({ alertVisible: visible })}
+            buttonsIn={1}
+            header={'Checka In'}
+            info={'Check in sker den 4 feb lalallala osv osv lasda'}
+          />
         </View>
         {this.renderPopover(strings.popoverText)}
       </View>
@@ -165,7 +241,7 @@ const styles = {
     marginTop: 20
   },
   textStyleProgress: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
     fontFamily: 'Avenir Next Medium',
