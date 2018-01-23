@@ -42,7 +42,7 @@ class HomeScreen extends Component {
 
   renderPopover(text) {
     const { popover } = this.props;
-    console.log(this.props.progress);
+    // console.log(this.props.progress);
     if (popover && this.props.progress >= 2) {
       console.log('test');
       return (
@@ -219,7 +219,8 @@ class HomeScreen extends Component {
 const styles = {
   container: {
     alignItems: 'center',
-    width: WIDTH
+    width: WIDTH,
+    backgroundColor: 'transparent'
   },
   welcome: {
     fontSize: 20,
