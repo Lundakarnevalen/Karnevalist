@@ -26,6 +26,7 @@ class SplashScreen extends Component {
   }
 
   componentWillMount() {
+    const { language } = this.props;
     StatusBar.setBarStyle('light-content', true);
     this.spin();
     this.authorize();
@@ -33,7 +34,7 @@ class SplashScreen extends Component {
     getPopoverStatus('homeScreenPopover', bool => this.props.setHomeScreenPopover(bool));
     getPopoverStatus('sectionScreenPopover', bool => this.props.setSectionScreenPopover(bool));
     fetchSections(sections => {
-      sections.sort(dynamicSort('title', 'SE'));
+      sections.sort(dynamicSort('title', language));
       this.props.setSections(sections);
     });
   }
@@ -134,7 +135,12 @@ const styles = {
   }
 };
 
-export default connect(null, {
+const mapStateToProps = ({ currentLanguage }) => {
+  const { language } = currentLanguage;
+  return { language };
+};
+
+export default connect(mapStateToProps, {
   setSections,
   setToken,
   setEmail,
