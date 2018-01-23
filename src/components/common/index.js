@@ -12,3 +12,4 @@ export * from './CheckBox';
 export * from './BackgroundImage';
 export * from './countDown/CountDown';
 export * from './countDown/CountDownItem';
+export * from './Popover';

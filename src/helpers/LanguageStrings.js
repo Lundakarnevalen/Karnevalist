@@ -357,10 +357,14 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title', 'refresh'],
+  fields: ['title', 'refresh', 'popoverText'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
+  },
+  popoverText: {
+    SE: 'Här skickar du in dina val',
+    EN: 'Submit your choices here'
   },
   refresh: {
     SE: 'Dra ner för att uppdatera',
@@ -377,7 +381,7 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: ['title', 'buttonText'],
+  fields: ['title', 'buttonText', 'popoverText'],
   title: {
     SE: 'Hem',
     EN: 'Home'
@@ -385,11 +389,15 @@ export const HOME_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Påbörja din registrering',
     EN: 'Begin your registration'
+  },
+  popoverText: {
+    SE: 'Här väljer du dina sektioner',
+    EN: 'Select your sections here'
   }
 };
 
 export const SETTINGS_SCREEN_STRINGS = {
-  fields: ['title', 'profile', 'registration', 'logout'],
+  fields: ['title', 'profile', 'registration', 'logout', 'cancel', 'ok', 'alertHeader', 'alertMessage'],
   title: {
     SE: 'Inställningar',
     EN: 'Settings'
@@ -405,6 +413,16 @@ export const SETTINGS_SCREEN_STRINGS = {
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
+  },
+  cancel,
+  ok,
+  alertHeader: {
+    SE: 'Bekräfta',
+    EN: 'Confirm'
+  },
+  alertMessage: {
+    SE: 'Du loggas nu ut',
+    EN: 'You will now be logged out'
   }
 };
 
@@ -527,7 +545,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'updateInfoMessageFail',
     'expiredTokenTitle',
     'expiredTokenMessage',
-    'ok'
+    'ok',
+    'invalidChangesMadeText',
+    'invalidChangesMadeHeader'
   ],
   title: {
     SE: 'Användarinfo',
@@ -611,6 +631,14 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   updateInfoMessageFail: {
     SE: 'Något gick fel',
     EN: 'Something went wrong'
+  },
+  invalidChangesMadeText: {
+    SE: 'Vänligen se till att alla val är korrekt ifyllda',
+    EN: 'Please make sure the fields are filled in correctly'
+  },
+  invalidChangesMadeHeader: {
+    SE: 'OBS!',
+    EN: 'Error'
   },
   expiredTokenTitle,
   expiredTokenMessage,
