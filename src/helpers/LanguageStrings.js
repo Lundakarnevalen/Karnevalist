@@ -545,7 +545,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'updateInfoMessageFail',
     'expiredTokenTitle',
     'expiredTokenMessage',
-    'ok'
+    'ok',
+    'invalidChangesMadeText',
+    'invalidChangesMadeHeader'
   ],
   title: {
     SE: 'Användarinfo',
@@ -629,6 +631,14 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   updateInfoMessageFail: {
     SE: 'Något gick fel',
     EN: 'Something went wrong'
+  },
+  invalidChangesMadeText: {
+    SE: 'Vänligen se till att alla val är korrekt ifyllda',
+    EN: 'Please make sure the fields are filled in correctly'
+  },
+  invalidChangesMadeHeader: {
+    SE: 'OBS!',
+    EN: 'Error'
   },
   expiredTokenTitle,
   expiredTokenMessage,
