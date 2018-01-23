@@ -42,9 +42,7 @@ class HomeScreen extends Component {
 
   renderPopover(text) {
     const { popover } = this.props;
-    // console.log(this.props.progress);
     if (popover && this.props.progress >= 2) {
-      console.log('test');
       return (
         <Popover
           onPress={() => setHomeScreenPopover(false)}
@@ -122,7 +120,10 @@ class HomeScreen extends Component {
       };
     }
     if (this.props.progress + 1 === prog) {
-      return {};
+      return {
+        height: 80,
+        borderWidth: 4,
+      };
     }
   }
 
