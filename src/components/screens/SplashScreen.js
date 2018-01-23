@@ -3,7 +3,8 @@ import { Animated, View, Image, Text, StatusBar, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
-import { getItem, getPopoverStatus } from '../../helpers/LocalSave';
+import { getItem, getPopoverStatus, getFavoriteSections } from '../../helpers/LocalSave';
+import { dynamicSort } from '../../helpers/functions';
 import { BackgroundImage } from '../common';
 import { TOKEN_URL } from '../../helpers/Constants';
 import {
@@ -11,7 +12,8 @@ import {
   setToken,
   setEmail,
   setSectionScreenPopover,
-  setHomeScreenPopover
+  setHomeScreenPopover,
+  setSectionPriorities
 } from '../../actions';
 import { fetchSections } from '../../helpers/ApiManager';
 
@@ -27,9 +29,13 @@ class SplashScreen extends Component {
     StatusBar.setBarStyle('light-content', true);
     this.spin();
     this.authorize();
+    getFavoriteSections(result => this.props.setSectionPriorities(result));
     getPopoverStatus('homeScreenPopover', bool => this.props.setHomeScreenPopover(bool));
     getPopoverStatus('sectionScreenPopover', bool => this.props.setSectionScreenPopover(bool));
-    fetchSections(sections => this.props.setSections(sections));
+    fetchSections(sections => {
+      sections.sort(dynamicSort('title', 'SE'));
+      this.props.setSections(sections);
+    });
   }
 
   authorize() {
@@ -133,5 +139,6 @@ export default connect(null, {
   setToken,
   setEmail,
   setSectionScreenPopover,
-  setHomeScreenPopover
+  setHomeScreenPopover,
+  setSectionPriorities
 })(SplashScreen);
