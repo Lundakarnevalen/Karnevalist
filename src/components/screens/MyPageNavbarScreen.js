@@ -27,6 +27,33 @@ import { getSectionPriorities } from '../../helpers/ApiManager';
 const SIZE = Dimensions.get('window').width / 11;
 
 class MyPageNavbarScreen extends Component {
+  componentWillMount() {
+    if (this.props.token) this.getSectionPriorities(this.props.token);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.token) this.getSectionPriorities(nextProps.token);
+  }
+
+  getSectionPriorities(token) {
+    const headers = {
+      Authorization: 'Bearer ' + token,
+      'content-type': 'application/json'
+    };
+    axios
+      .get(SECTION_PRIORITY_URL, { headers })
+      .then(response => {
+        const { success, sectionPriorities } = response.data;
+        if (success) {
+          this.props.setSectionPriorities(sectionPriorities);
+          if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
+        }
+      })
+      .catch(error => {
+        // const msg = handleErrorMsg(error.message)
+        console.log(error);
+      });
+  }
   render() {
     console.log(this.props.token);
     const { navigation, language, setHomeScreenPopover, progress } = this.props;
