@@ -7,12 +7,11 @@ import { PROGRESS } from '../../../helpers/Constants';
 import { setProgress } from '../../../actions';
 import {
   getFavoriteSection,
+  getFavoriteSections,
   saveFavoriteSection,
-  removeFavoriteSection,
-  getFavoriteSections
+  removeFavoriteSection
 } from '../../../helpers/LocalSave';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
@@ -51,13 +50,20 @@ class SectionItemScreen extends Component {
         <TouchableOpacity
           style={rightIconStyle}
           onPress={() => {
+            getFavoriteSections(sections => {
+              if (sections.length >= 4) {
+                this.props.setProgress(3);
+              } else {
+                this.props.setProgress(2);
+              }
+            });
             saveFavoriteSection(id);
             this.props.navigation.state.params.setSectionStatus(true);
             this.setState({ showToast: true, favorite: true });
-            getFavoriteSections((sections) => {
-              console.log(sections.length)
+            getFavoriteSections(sections => {
+              console.log(sections.length);
               if (sections.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
-            })
+            });
           }}
         >
           <MaterialIcons name="favorite-border" size={30} color={'white'} />
@@ -69,13 +75,16 @@ class SectionItemScreen extends Component {
         style={rightIconStyle}
         onPress={() => {
           removeFavoriteSection(id, () => {
-            this.props.navigation.state.params.setSectionStatus(false);
-            this.setState({ showToast: true, favorite: false });
-            getFavoriteSections((sections) => {
-              console.log(sections.length)
-              if (sections.length < 6) this.props.setProgress(PROGRESS.CHECK_IN);
-            })
+            getFavoriteSections(sections => {
+              if (sections.length >= 5) {
+                this.props.setProgress(3);
+              } else {
+                this.props.setProgress(2);
+              }
+            });
           });
+          this.props.navigation.state.params.setSectionStatus(false);
+          this.setState({ showToast: true, favorite: false });
         }}
       >
         <MaterialIcons name="favorite" size={30} color={'white'} />

@@ -357,10 +357,14 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title', 'refresh'],
+  fields: ['title', 'refresh', 'popoverText'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
+  },
+  popoverText: {
+    SE: 'Här skickar du in dina val',
+    EN: 'Submit your choices here'
   },
   refresh: {
     SE: 'Dra ner för att uppdatera',
@@ -377,7 +381,7 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: ['title', 'buttonText', 'Register', 'CheckIn', 'ChooseSections', 'Rank', 'SendIn'],
+  fields: ['title', 'buttonText', 'CheckIn', 'ChooseSections', 'Rank', 'SendIn', 'popoverText'],
   title: {
     SE: 'Hem',
     EN: 'Home'
@@ -403,8 +407,12 @@ export const HOME_SCREEN_STRINGS = {
     EN: 'Rank the sections after which one you most want to work with.'
   },
   SendIn: {
-    SE: 'Skicka in din ansökan.',
-    EN: 'Send in you application.'
+    SE: 'Checka ut.',
+    EN: 'Check out.'
+  },
+  popoverText: {
+    SE: 'Här väljer du dina sektioner',
+    EN: 'Select your sections here'
   }
 };
 

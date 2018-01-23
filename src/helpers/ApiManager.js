@@ -1,11 +1,18 @@
 import axios from 'axios';
-import React from 'react'
+import React from 'react';
 import { Dimensions, Image } from 'react-native';
-import { SECTION_URL, IMAGE_URL, NEWS_URL } from './Constants'
-import { stripHtmlString } from './functions'
+import {
+  SECTION_URL,
+  IMAGE_URL,
+  NEWS_URL,
+  CHECK_IN_URL,
+  SECTION_PRIORITY_URL,
+  PROGRESS
+} from './Constants';
+import { stripHtmlString } from './functions';
 
-const WIDTH = Dimensions.get('window').width
-const HEIGHT = Dimensions.get('window').height
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 export function getNews() {
   return axios
@@ -47,12 +54,42 @@ function fetchImage(url, section, cb) {
       tempSection.imguri = r.data.source_url;
       tempSection.image = image;
       tempSection.rowImage = rowImage;
-      cb(tempSection)
+      cb(tempSection);
       // this.props.setSections(tempSection);
       return tempSection;
     })
     .catch(error => {
       console.error(error);
+    });
+}
+
+export function fetchCheckInStatus(email, token, callback) {
+  const URL = CHECK_IN_URL + email;
+  const headers = {
+    Authorization: 'Bearer ' + token
+  };
+  axios.get(URL, { headers }).then(response => {
+    callback(response.data.checkedIn);
+  });
+}
+
+export function getSectionPriorities(token) {
+  const headers = {
+    Authorization: 'Bearer ' + token,
+    'content-type': 'application/json'
+  };
+  axios
+    .get(SECTION_PRIORITY_URL, { headers })
+    .then(response => {
+      const { success, sectionPriorities } = response.data;
+      if (success) {
+        this.props.setSectionPriorities(sectionPriorities);
+        if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
+      }
+    })
+    .catch(error => {
+      // const msg = handleErrorMsg(error.message)
+      console.log(error);
     });
 }
 

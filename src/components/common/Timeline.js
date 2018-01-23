@@ -19,9 +19,8 @@ class Timeline extends Component {
   componentWillMount() {
     getFavoriteSections(sections => {
       if (sections.length < 5) {
-       this.setState({ overFiveSections: false })
-     } else
-      this.setState({ overFiveSections: true })
+        this.setState({ overFiveSections: false });
+      } else this.setState({ overFiveSections: true });
     });
   }
   getStrings() {
@@ -52,9 +51,11 @@ class Timeline extends Component {
           width={WIDTH - 50}
           focus={this.props.progress === 0}
           text={strings.CheckIn}
-          onPress={this.props.progress >= 1 ?
-            () => navigation.navigate('HomeScreen')
-            : () => navigation.navigate('HomeScreen')} //Ändra till var man kan checka in.
+          onPress={
+            this.props.progress >= 1
+              ? () => navigation.navigate('HomeScreen')
+              : () => navigation.navigate('HomeScreen')
+          } //Ändra till var man kan checka in.
         />
         <View style={styles.barView23} />
         <TimelineItem
@@ -62,31 +63,35 @@ class Timeline extends Component {
           width={WIDTH - 50}
           focus={this.props.progress === 1}
           text={strings.ChooseSections}
-          onPress={this.props.progress >= 2 ?
-            () => navigation.navigate('HomeScreen')
-            : () => navigation.navigate('Sections')}
+          onPress={
+            this.props.progress >= 2
+              ? () => navigation.navigate('HomeScreen')
+              : () => navigation.navigate('Sections')
+          }
         />
         <View style={styles.barView4} />
         <TimelineItem
           style={this.props.progress >= 3 ? 'done' : 'notDone'}
-          focus={(this.props.progress === 2)}
+          focus={this.props.progress === 2}
           width={WIDTH - 50}
           text={strings.SendIn}
-          onPress={this.props.progress >= 3 ?
-            () => screenProps.navigation.navigate('HomeScreen')
-            : () => screenProps.navigation.navigate('ConfirmPage', {
-            navigation,
-            setSectionStatus: id => {
-              let tmpData = this.state.data;
-              const tmpItem = tmpData.filter(section => section.id + '' === id + '')[0];
-              tmpData = tmpData.filter(section => section.id + '' !== id + '');
-              delete tmpItem.favorite;
-              tmpData.push(tmpItem);
-              tmpData.sort(dynamicSort('title'));
-              this.setState({ data: tmpData });
-            }
-          })
-        }
+          onPress={
+            this.props.progress >= 3
+              ? () => screenProps.navigation.navigate('HomeScreen')
+              : () =>
+                  screenProps.navigation.navigate('ConfirmPage', {
+                    navigation,
+                    setSectionStatus: id => {
+                      let tmpData = this.state.data;
+                      const tmpItem = tmpData.filter(section => section.id + '' === id + '')[0];
+                      tmpData = tmpData.filter(section => section.id + '' !== id + '');
+                      delete tmpItem.favorite;
+                      tmpData.push(tmpItem);
+                      tmpData.sort(dynamicSort('title'));
+                      this.setState({ data: tmpData });
+                    }
+                  })
+          }
         />
       </View>
     );
@@ -134,7 +139,7 @@ const styles = {
     marginTop: -38,
     marginBottom: -25,
     marginLeft: 24
-  },
+  }
 };
 
 const mapStateToProps = ({ currentLanguage, userInformation }) => {
