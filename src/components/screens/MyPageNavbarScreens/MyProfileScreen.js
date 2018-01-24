@@ -7,7 +7,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
@@ -93,11 +93,15 @@ class MyProfileScreen extends Component {
           }
         }}
       >
-        <MaterialIcons
-          name={this.state.editMode ? 'done' : 'edit'}
-          style={{ color: 'white', right: 0 }}
-          size={30}
-        />
+        {!this.state.editMode ? (
+          <MaterialCommunityIcons
+            name={'account-edit'}
+            style={{ color: 'white', right: 0 }}
+            size={30}
+          />
+        ) : (
+          <MaterialIcons name={'done'} style={{ color: 'white', right: 0 }} size={30} />
+        )}
       </TouchableOpacity>
     );
   }
