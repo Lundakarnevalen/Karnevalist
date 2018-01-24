@@ -31,7 +31,7 @@ class MyRegistrationScreen extends Component {
   }
 
   getSectionPriority(sectionPriorities) {
-    const { sections } = this.props;
+    const { sections, language } = this.props;
     const data = sectionPriorities.map((key, i) => {
       const index = sections.findIndex(s => s.key + '' === key + '');
       const section = sections[index];
@@ -39,9 +39,9 @@ class MyRegistrationScreen extends Component {
         key: section.key,
         id: section.key,
         image: section.image,
-        info: section.info,
-        titleAndRank: i + 1 + ' ' + section.title,
-        title: section.title
+        info: section.info[language],
+        titleAndRank: i + 1 + ' ' + section.title[language],
+        title: section.title[language]
       };
     });
     return data;
