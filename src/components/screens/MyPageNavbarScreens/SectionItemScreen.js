@@ -4,34 +4,21 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Header, Toast } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
-import { setProgress } from '../../../actions';
-import {
-  getFavoriteSection,
-  getFavoriteSections,
-  saveFavoriteSection,
-  removeFavoriteSection
-} from '../../../helpers/LocalSave';
+import { removeSectionPriority, addSectionPriority, setProgress } from '../../../actions';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 class SectionItemScreen extends Component {
-  componentWillMount() {
-    const { id } = this.props.navigation.state.params;
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
-    getFavoriteSection(id, result => {
-      if (result) {
-        this.setState({ favorite: true });
-      }
-    });
-  }
-
   constructor(props) {
     super(props);
     this.state = {
-      showToast: false,
-      favorite: false
+      showToast: false
     };
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
   }
 
   getStrings() {
@@ -42,23 +29,17 @@ class SectionItemScreen extends Component {
     return strings;
   }
 
-  renderRightIcon(id) {
+  renderRightIcon() {
     const { rightIconStyle } = styles;
+    const { sectionPriorities, navigation } = this.props;
+    const { id } = navigation.state.params;
     if (this.props.progress === PROGRESS.SENT_SECTIONS) return;
-    if (!this.state.favorite) {
+    if (sectionPriorities.indexOf(id) === -1) {
       return (
         <TouchableOpacity
           style={rightIconStyle}
           onPress={() => {
-            getFavoriteSections(sections => {
-              if (sections.length >= 4) {
-                this.props.setProgress(3);
-              } else {
-                this.props.setProgress(2);
-              }
-            });
-            saveFavoriteSection(id);
-            this.props.navigation.state.params.setSectionStatus(true);
+            this.props.addSectionPriority(id);
             this.setState({ showToast: true, favorite: true });
             getFavoriteSections(sections => {
               if (sections.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
@@ -73,16 +54,7 @@ class SectionItemScreen extends Component {
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
-          removeFavoriteSection(id, () => {
-            getFavoriteSections(sections => {
-              if (sections.length >= 5) {
-                this.props.setProgress(3);
-              } else {
-                this.props.setProgress(2);
-              }
-            });
-          });
-          this.props.navigation.state.params.setSectionStatus(false);
+          this.props.removeSectionPriority(id);
           this.setState({ showToast: true, favorite: false });
         }}
       >
@@ -159,10 +131,17 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ userInformation, currentLanguage }) => {
+const mapStateToProps = ({ userInformation, currentLanguage, sections }) => {
   const { language } = currentLanguage;
   const { progress } = userInformation;
-  return { language, progress };
+  const { sectionPriorities } = sections;
+  return {
+    language,
+    progress,
+    sectionPriorities
+  };
 };
 
-export default connect(mapStateToProps, { setProgress })(SectionItemScreen);
+export default connect(mapStateToProps, { removeSectionPriority, addSectionPriority, setProgress })(
+  SectionItemScreen
+);

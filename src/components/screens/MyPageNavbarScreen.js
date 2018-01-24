@@ -4,12 +4,7 @@ import { TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
-import {
-  setSections,
-  setSectionPriorities,
-  setProgress,
-  setHomeScreenPopover
-} from '../../actions';
+import { setSections, setProgress, setHomeScreenPopover } from '../../actions';
 import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
 import { getFavoriteSections } from '../../helpers/LocalSave';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
@@ -45,7 +40,6 @@ class MyPageNavbarScreen extends Component {
       .then(response => {
         const { success, sectionPriorities } = response.data;
         if (success) {
-          this.props.setSectionPriorities(sectionPriorities);
           if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
         }
       })
@@ -186,7 +180,6 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
 };
 export default connect(mapStateToProps, {
   setSections,
-  setSectionPriorities,
   setProgress,
   setHomeScreenPopover
 })(MyPageNavbarScreen);

@@ -23,44 +23,31 @@ export function getNews() {
     });
 }
 
-function fetchImage(url, section, cb) {
-  const tempSection = section;
-  axios
-    .get(url)
-    .then(r => {
-      const image = (
-        <Image
-          style={{ width: WIDTH, height: WIDTH, resizeMode: 'contain' }}
-          source={{ uri: r.data.source_url }}
-          defaultSource={require('../../res/Monstergubbe.png')}
-        />
-      );
+function getImage(imageUrl) {
+  return (
+    <Image
+      style={{ width: WIDTH, height: WIDTH, resizeMode: 'contain' }}
+      source={{ uri: imageUrl }}
+      defaultSource={require('../../res/Monstergubbe.png')}
+    />
+  );
+}
 
-      const rowImage = (
-        <Image
-          style={{
-            width: 40,
-            height: 40,
-            alignSelf: 'center',
-            marginLeft: 10,
-            marginRight: 10,
-            borderRadius: 8
-          }}
-          source={{ uri: r.data.source_url }}
-          defaultSource={require('../../res/Monstergubbe.png')}
-        />
-      );
-
-      tempSection.imguri = r.data.source_url;
-      tempSection.image = image;
-      tempSection.rowImage = rowImage;
-      cb(tempSection);
-      // this.props.setSections(tempSection);
-      return tempSection;
-    })
-    .catch(error => {
-      console.error(error);
-    });
+function getRowImage(imageUrl) {
+  return (
+    <Image
+      style={{
+        width: 40,
+        height: 40,
+        alignSelf: 'center',
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 8
+      }}
+      source={{ uri: imageUrl }}
+      defaultSource={require('../../res/Monstergubbe.png')}
+    />
+  );
 }
 
 export function fetchCheckInStatus(email, token, callback) {
@@ -97,19 +84,19 @@ export function fetchSections(cb) {
   axios
     .get(SECTION_URL)
     .then(response => {
-      response.data.forEach(item => {
-        const strippedContent = stripHtmlString(item.content.rendered);
-        const strippedTitle = stripHtmlString(item.title.rendered);
-        const imgId = item.featured_media;
-        const imgUrl = IMAGE_URL + imgId;
-        const section = {
-          key: item.id,
-          id: item.id,
-          title: strippedTitle,
-          info: strippedContent
-        };
-        fetchImage(imgUrl, section, cb);
+      const sections = [];
+      response.data.sections.forEach(item => {
+        const { id, nameSv, imageUrl, textSv, textEn } = item;
+        sections.push({
+          key: id,
+          id,
+          title: { EN: nameSv, SE: nameSv },
+          info: { EN: textEn, SE: textSv },
+          image: getImage(imageUrl),
+          rowImage: getRowImage(imageUrl)
+        });
       });
+      cb(sections);
     })
     .catch(error => {
       console.error(error);

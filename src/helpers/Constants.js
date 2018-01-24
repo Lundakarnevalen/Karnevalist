@@ -2,7 +2,7 @@ import { NavigationActions } from 'react-navigation';
 
 const BASE_URL = 'https://api.10av10.com';
 export const TOKEN_URL = BASE_URL + '/api/hello/';
-export const SECTION_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/lksektion/';
+export const SECTION_URL = BASE_URL + '/getallsections';
 export const IMAGE_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/media/';
 export const REGISTER_URL = BASE_URL + '/register';
 export const SECTION_PRIORITY_URL = BASE_URL + '/api/section/';

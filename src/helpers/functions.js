@@ -1,11 +1,15 @@
-export function dynamicSort(property) {
+export function dynamicSort(property, language = null) {
   let sortOrder = 1;
   if (property[0] === '-') {
     sortOrder = -1;
     property = property.substr(1);
   }
   return function (a, b) {
-    const result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+    let result
+    if (language === null)
+      result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+    else
+      result = a[property][language] < b[property][language] ? -1 : a[property][language] > b[property][language] ? 1 : 0;
     return result * sortOrder;
   };
 }

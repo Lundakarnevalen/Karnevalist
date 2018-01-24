@@ -1,4 +1,10 @@
-import { SET_SECTIONS, SET_SECTION_PRIORITIES } from '../actions/Types.js';
+import {
+  SET_SECTIONS,
+  SET_SECTION_PRIORITIES,
+  REMOVE_SECTION_PRIO,
+  ADD_SECTION_PRIO
+} from '../actions/Types.js';
+import { setFavoriteSections } from '../helpers/LocalSave';
 
 const INITIAL_STATE = {
   sections: [],
@@ -6,16 +12,26 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
+  let newSectionPriorities = null;
   switch (action.type) {
     case SET_SECTIONS: {
-      const tempSections = state.sections.slice();
-      if (tempSections.findIndex(i => i.key === action.payload.key) === -1)
-        tempSections.push(action.payload);
-      return { ...state, sections: tempSections };
+      return { ...state, sections: action.payload };
     }
     case SET_SECTION_PRIORITIES: {
+      setFavoriteSections(action.payload);
       return { ...state, sectionPriorities: action.payload };
     }
+    case REMOVE_SECTION_PRIO:
+      newSectionPriorities = state.sectionPriorities.filter(
+        sectionPrio => sectionPrio !== action.payload
+      );
+      setFavoriteSections(newSectionPriorities);
+      return { ...state, sectionPriorities: newSectionPriorities };
+    case ADD_SECTION_PRIO:
+      newSectionPriorities = state.sectionPriorities.slice();
+      newSectionPriorities.push(action.payload);
+      setFavoriteSections(newSectionPriorities);
+      return { ...state, sectionPriorities: newSectionPriorities };
     default:
       return state;
   }

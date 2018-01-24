@@ -81,7 +81,7 @@ class HomeScreen extends Component {
     const { email, token } = this.props;
     this.props.setProgress(1);
     fetchCheckInStatus(email, token, bool => {
-      if (true) {
+      if (bool) {
         this.props.setProgress(2);
         getFavoriteSections(sections => {
           if (sections.length >= 5) {
@@ -122,7 +122,7 @@ class HomeScreen extends Component {
     if (this.props.progress + 1 === prog) {
       return {
         height: 80,
-        borderWidth: 4,
+        borderWidth: 4
       };
     }
   }
@@ -282,4 +282,4 @@ const mapStateToProps = ({ currentLanguage, popoverStatus, userInformation, sect
   };
 };
 
-export default connect(mapStateToProps, { setProgress } )(HomeScreen);
+export default connect(mapStateToProps, { setProgress })(HomeScreen);
