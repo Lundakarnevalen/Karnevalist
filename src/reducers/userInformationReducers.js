@@ -25,7 +25,7 @@ export default (state = INITIAL_STATE, action) => {
     case SET_PROGRESS:
       return { ...state, progress: action.payload };
     case SET_USERINFO:
-      return { ...state, picture: action.payload };
+      return { ...state, userinfo: action.payload };
 
     default:
       return state;

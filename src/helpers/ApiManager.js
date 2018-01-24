@@ -65,20 +65,21 @@ export function fetchSections(cb) {
 }
 
 export function fetchUserinfo(email, token, cb = null) {
-  const url = USER_URL + this.props.email;
+  const url = USER_URL + email;
   const headers = {
-    Authorization: 'Bearer ' + this.props.token,
+    Authorization: 'Bearer ' + token,
     'content-type': 'application/json'
   };
   axios
     .get(url, { headers })
     .then(response => {
       const { user } = response.data;
-      this.setState({ oldUser: { ...user }, user });
+    if (typeof cb === 'function')
+      cb(user)
     })
     .catch(error => {
-      if (error.response.status === 401) this.handleLogout();
-      const msg = handleErrorMsg(error.message);
+      if (error.response.status === 401 && typeof cb === 'function')
+        cb(error, true)
     });
 }
 
