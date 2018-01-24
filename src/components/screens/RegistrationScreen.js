@@ -198,11 +198,25 @@ class RegistrationScreen extends Component {
   }
 
   anyErrors() {
-    const { errors, foodPreferenceError, foodPreference, bffError, bff } = this.state;
+    const {
+      errors,
+      foodPreferenceError,
+      foodPreference,
+      bffError,
+      bff,
+      gdpr1,
+      gdpr2,
+      gdpr3,
+      gdpr4
+    } = this.state;
     return (
       errors.indexOf(true) !== -1 ||
       (bffError && bff !== '') ||
-      (foodPreferenceError && foodPreference !== '')
+      (foodPreferenceError && foodPreference !== '') ||
+      gdpr1 === false ||
+      gdpr2 === false ||
+      gdpr3 === false ||
+      gdpr4 === false
     );
   }
 
