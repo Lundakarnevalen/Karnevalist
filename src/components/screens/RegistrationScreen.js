@@ -38,7 +38,7 @@ class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputs: ['', '', '', '', '', '', '', '', '', '', ''],
+      inputs: ['', '', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
       activeCarneval2014: false,
@@ -390,6 +390,18 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
           />
+          <Input
+            ref={'C/O'}
+            onSubmitEditing={() => this.refs.co.focus()}
+            placeholder={strings.co}
+            onChangeText={text => {
+              inputs[11] = text;
+              this.setState({ inputs });
+            }}
+            value={inputs[11]}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
           <View
             style={flexHorizontal}
             ref={'horizontalInputView'}
@@ -524,6 +536,7 @@ class RegistrationScreen extends Component {
                     email: inputs[3],
                     password: inputs[5],
                     address: inputs[7],
+                    co: inputs[11],
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],

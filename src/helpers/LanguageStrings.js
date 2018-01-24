@@ -217,7 +217,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorMsg401',
     'errorMsg404',
     'errorMsgInternal',
-    'ok'
+    'ok',
+    'co'
   ],
   header: {
     SE: 'Skapa profil',
@@ -227,6 +228,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
   lastName,
   socialSecurityNumber,
   email,
+  co: {
+    SE: 'C/O',
+    EN: 'C/O'
+  },
   confirmEmail: {
     SE: 'Bekräfta mail',
     EN: 'Confirm email'
