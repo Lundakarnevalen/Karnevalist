@@ -67,7 +67,7 @@ class MyPageNavbarScreen extends Component {
         }
       })
       .catch(error => {
-        // const msg = handleErrorMsg(error.message)
+        // const msg = handleErrorMsg(error)
         console.log(error);
       });
   }

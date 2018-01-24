@@ -37,6 +37,18 @@ const errorMsg404 = {
   SE: 'Något gick fel...',
   EN: 'Something went wrong...'
 };
+const errorMsg409EmailAndPersonalNumber = {
+  SE: 'Mail och personnummer är redan i bruk',
+  EN: 'Email and social security number is already in use'
+};
+const errorMsg409Email = {
+  SE: 'Mail är redan i bruk',
+  EN: 'Email is already in use'
+};
+const errorMsg409PersonalNumber = {
+  SE: 'Personnummer är redan i bruk',
+  EN: 'Social security number is already in use'
+};
 const errorMsgInternal = {
   SE: 'Internt fel, var god försök igen senare',
   EN: 'Internal error, please try again later'
@@ -226,6 +238,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorMsg401',
     'errorMsg404',
     'errorMsgInternal',
+    'errorMsg409EmailAndPersonalNumber',
+    'errorMsg409Email',
+    'errorMsg409PersonalNumber',
     'ok'
   ],
   header: {
@@ -307,6 +322,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Invalid email address or password'
   },
   errorMsg404,
+  errorMsg409EmailAndPersonalNumber,
+  errorMsg409Email,
+  errorMsg409PersonalNumber,
   errorMsgInternal,
   ok
 };

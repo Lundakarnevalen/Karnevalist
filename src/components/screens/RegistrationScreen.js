@@ -541,7 +541,7 @@ class RegistrationScreen extends Component {
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
-                    const msg = handleErrorMsg(error.message, strings);
+                    const msg = handleErrorMsg(error, strings);
                     this.setState({
                       loadingComplete: false,
                       loading: false,
