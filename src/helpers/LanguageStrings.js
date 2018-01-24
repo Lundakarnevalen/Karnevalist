@@ -381,39 +381,59 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: ['title', 'buttonText', 'CheckIn', 'ChooseSections', 'Rank', 'SendIn', 'popoverText'],
+  fields: ['title', 'createProfile', 'Karnevalist', 'RightNow', 'CheckIn', 'ChooseSections', 'info', 'SendIn', 'popoverText', 'step1', 'step2', 'step3', 'step4'],
   title: {
     SE: 'Hem',
     EN: 'Home'
   },
-  buttonText: {
-    SE: 'Påbörja din registrering',
-    EN: 'Begin your registration'
+  createProfile: {
+    SE: 'Skapa profil',
+    EN: 'Create a profile'
   },
-  Register: {
-    SE: 'Påbörja din registrering',
-    EN: 'Begin your registration'
+  RightNow: {
+    SE: 'Du är just nu',
+    EN: 'You are now'
+  },
+  Karnevalist: {
+    SE: 'Karnevalist',
+    EN: 'Karnevalist'
   },
   CheckIn: {
     SE: 'Checka in',
     EN: 'Check in'
   },
   ChooseSections: {
-    SE: 'Välja vilka sektioner du vill jobba med, minst 5 stycken.',
-    EN: 'Choose which section you want to work with, at least 5.'
+    SE: 'Välj minst 5 sektioner',
+    EN: 'Choose at least 5 sections'
   },
-  Rank: {
-    SE: 'Rangordna sektionerna efter vilken du helst vill jobba med.',
-    EN: 'Rank the sections after which one you most want to work with.'
+  info: {
+    SE: 'Check in sker den 4 februari.',
+    EN: 'Check in happens February the 4th.'
   },
   SendIn: {
-    SE: 'Checka ut.',
-    EN: 'Check out.'
+    SE: 'Skicka in dina val',
+    EN: 'Check in you choices'
   },
   popoverText: {
     SE: 'Här väljer du dina sektioner',
     EN: 'Select your sections here'
-  }
+  },
+  step1: {
+    SE: 'Steg 1',
+    EN: 'Step 1'
+  },
+  step2: {
+    SE: 'Steg 2',
+    EN: 'Step 2'
+  },
+  step3: {
+    SE: 'Steg 3',
+    EN: 'Step 3'
+  },
+  step4: {
+    SE: 'Steg 4',
+    EN: 'Step 4'
+  },
 };
 
 export const SETTINGS_SCREEN_STRINGS = {

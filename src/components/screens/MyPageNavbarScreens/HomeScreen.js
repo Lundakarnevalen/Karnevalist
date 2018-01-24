@@ -120,7 +120,10 @@ class HomeScreen extends Component {
       };
     }
     if (this.props.progress + 1 === prog) {
-      return {};
+      return {
+        height: 80,
+        borderWidth: 4,
+      };
     }
   }
 
@@ -162,7 +165,7 @@ class HomeScreen extends Component {
               alignItems: 'center'
             }}
           >
-            <Text style={textStyleProgress}>Du är just nu </Text>
+            <Text style={textStyleProgress}> {strings.RightNow} </Text>
             <Progress.Circle
               borderWidth={3}
               thickness={9}
@@ -173,40 +176,44 @@ class HomeScreen extends Component {
               showsText
               color={'#FFF'}
             />
-            <Text style={textStyleProgress}>Karnevalist</Text>
+            <Text style={textStyleProgress}> {strings.Karnevalist} </Text>
           </View>
           <View style={{ justifyContent: 'center', marginTop: 12 }}>
             <SectionListItem
+              sectionTitle={strings.step1}
               icon={this.renderIcon(1)}
               style={this.renderStyle(1)}
               onPress={() => this.renderOnPress(1)}
-              sectionInfoText={'1. Skapa Profil'}
+              sectionInfoText={strings.createProfile}
             />
             <SectionListItem
+              sectionTitle={strings.step2}
               icon={this.renderIcon(2)}
               style={this.renderStyle(2)}
               onPress={() => this.renderOnPress(2)}
-              sectionInfoText={'2. Checka In'}
+              sectionInfoText={strings.CheckIn}
             />
             <SectionListItem
+              sectionTitle={strings.step3}
               icon={this.renderIcon(3)}
               style={this.renderStyle(3)}
               onPress={() => this.renderOnPress(3)}
-              sectionInfoText={'3. Välj minst 5 sektioner'}
+              sectionInfoText={strings.ChooseSections}
             />
             <SectionListItem
+              sectionTitle={strings.step4}
               icon={this.renderIcon(4)}
               style={this.renderStyle(4)}
               onPress={() => this.renderOnPress(4)}
-              sectionInfoText={'4. Skicka in dina val'}
+              sectionInfoText={strings.SendIn}
             />
           </View>
           <SuperAgileAlert
             alertVisible={this.state.alertVisible}
             setAlertVisible={visible => this.setState({ alertVisible: visible })}
             buttonsIn={1}
-            header={'Checka In'}
-            info={'Check in sker den 4 feb lalallala osv osv lasda'}
+            header={strings.CheckIn}
+            info={strings.info}
           />
         </View>
         {this.renderPopover(strings.popoverText)}
@@ -218,7 +225,8 @@ class HomeScreen extends Component {
 const styles = {
   container: {
     alignItems: 'center',
-    width: WIDTH
+    width: WIDTH,
+    backgroundColor: 'transparent'
   },
   welcome: {
     fontSize: 20,
@@ -274,4 +282,4 @@ const mapStateToProps = ({ currentLanguage, popoverStatus, userInformation, sect
   };
 };
 
-export default connect(mapStateToProps, { setProgress })(HomeScreen);
+export default connect(mapStateToProps, { setProgress } )(HomeScreen);
