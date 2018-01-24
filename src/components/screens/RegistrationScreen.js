@@ -52,7 +52,11 @@ class RegistrationScreen extends Component {
       keyboardHeight: 0,
       listToTrim: [],
       alertVisible: false,
-      message: ''
+      message: '',
+      gdpr1: false,
+      gdpr2: false,
+      gdpr3: false,
+      gdpr4: false
     };
   }
 
@@ -242,7 +246,11 @@ class RegistrationScreen extends Component {
       alertVisible,
       message,
       activeCarneval2014,
-      driversLicense
+      driversLicense,
+      gdpr1,
+      gdpr2,
+      gdpr3,
+      gdpr4
     } = this.state;
 
     const closeButton = (
@@ -494,6 +502,36 @@ class RegistrationScreen extends Component {
               size={30}
               onPress={() => this.setState({ driversLicense: !driversLicense })}
               value={driversLicense}
+              color={'white'}
+            />
+          </View>
+          <View style={{ right: 3 }}>
+            <CheckBox
+              name={strings.gdpr1}
+              size={30}
+              onPress={() => this.setState({ gdpr1: !gdpr1 })}
+              value={gdpr1}
+              color={'white'}
+            />
+            <CheckBox
+              name={strings.gdpr2}
+              size={30}
+              onPress={() => this.setState({ gdpr2: !gdpr2 })}
+              value={gdpr2}
+              color={'white'}
+            />
+            <CheckBox
+              name={strings.gdpr3}
+              size={30}
+              onPress={() => this.setState({ gdpr3: !gdpr3 })}
+              value={gdpr3}
+              color={'white'}
+            />
+            <CheckBox
+              name={strings.gdpr4}
+              size={30}
+              onPress={() => this.setState({ gdpr4: !gdpr4 })}
+              value={gdpr4}
               color={'white'}
             />
           </View>
