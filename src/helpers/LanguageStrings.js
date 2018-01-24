@@ -207,6 +207,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'activeKarneval',
     'driversLicense',
     'driversLicenseArray',
+    'checkBoxNames',
+    'checkBoxesHeader',
+    'checkBoxesHeaderToLearn',
     'register',
     'error',
     'errorMsg400',
@@ -220,7 +223,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'yearStudyStart',
     'previousInvolvement',
     'corps',
-    'bff'
+    'bff',
+    'groupLeader'
   ],
   header: {
     SE: 'Skapa profil',
@@ -255,6 +259,14 @@ export const REGISTRATION_SCREEN_STRINGS = {
   previousInvolvement: {
     SE: 'Tidigare studentengagemang',
     EN: 'Previous student involvement'
+  },
+  checkBoxesHeader: {
+    SE: 'Jag har erfarenhet av:',
+    EN: 'I have experience in:'
+  },
+  checkBoxesHeaderToLearn: {
+    SE: 'Jag vill lära mig om:',
+    EN: 'I want to learn:'
   },
   driversLicense,
   driversLicenseArray: {
@@ -332,8 +344,50 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'I started study'
   },
   bff: {
-    SE: 'placeholder',
-    EN: 'placeholder'
+    SE: 'KarneKompis',
+    EN: 'KarneFriend'
+  },
+  groupLeader: {
+    SE: 'Jag vill vara gruppledare',
+    EN: 'I want to be group leader'
+  },
+  checkBoxNames: {
+    SE: ['logistik',
+    'administration',
+    'spexa',
+    'peppaTagga',
+    'lagaMat',
+    'bar',
+    'teknikLjudLjus',
+    'redigeraFotoFilmAnimeringar',
+    'programmeringNatverk',
+    'byggaSnickra',
+    'design',
+    'sy',
+    'ekonomi',
+    'kommunikation',
+    'serviceinriktad',
+    'sakerhet',
+    'alltiallo'
+  ],
+    EN: ['Logistics',
+    'Administration',
+    'Spex',
+    'Cheer',
+    'Cook food',
+    'Bar',
+    'Lights/sound',
+    'Photos/movie/animation editing',
+    'Programming & Networks',
+    'Construction',
+    'Design',
+    'Sew',
+    'Economics',
+    'Communication',
+    'Service',
+    'safety',
+    'Allround'
+  ]
   }
 };
 

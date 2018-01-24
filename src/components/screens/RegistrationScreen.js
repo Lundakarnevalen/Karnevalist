@@ -7,7 +7,8 @@ import {
   Platform,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard
+  Keyboard,
+  Text
 } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
@@ -60,7 +61,47 @@ class RegistrationScreen extends Component {
       plenipotentiary: false,
       message: '',
       bff: '',
-      bffError: false
+      bffError: false,
+      //CheckBoxes
+      groupLeader: false,
+      wantToWorkWith: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      wantToLearn: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     };
   }
 
@@ -156,10 +197,20 @@ class RegistrationScreen extends Component {
   anyErrors() {
     const { errors, foodPreferenceError, foodPreference, bffError, bff } = this.state;
     return (
-    errors.indexOf(true) !== -1
-    || (bffError && bff !== '')
-    || (foodPreferenceError && foodPreference !== '')
-  )
+      errors.indexOf(true) !== -1 ||
+      (bffError && bff !== '') ||
+      (foodPreferenceError && foodPreference !== '')
+    );
+  }
+
+  getTrueValuesFromList(list) {
+    const newList = [];
+    for (let i = 0; i < list.length; i++) {
+      if (list[i] === true) {
+        newList.push(REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN[i])
+      }
+    }
+    return newList;
   }
 
   trimValues() {
@@ -215,6 +266,44 @@ class RegistrationScreen extends Component {
         </Picker>
       </View>
     );
+  }
+
+  renderCheckBoxes(opt) {
+    const strings = this.getStrings();
+    const { wantToWorkWith, wantToLearn } = this.state;
+    const checkBoxes = [];
+    if (opt === 1) {
+      for (let i = 0; i < strings.checkBoxNames.length; i++) {
+        checkBoxes.push(
+          <CheckBox
+            name={strings.checkBoxNames[i]}
+            size={30}
+            onPress={() => {
+              wantToWorkWith[i] = !wantToWorkWith[i];
+              this.setState({ wantToWorkWith });
+            }}
+            value={wantToWorkWith[i]}
+            color={'white'}
+          />
+        );
+      }
+    } else {
+      for (let i = 0; i < strings.checkBoxNames.length; i++) {
+        checkBoxes.push(
+          <CheckBox
+            name={strings.checkBoxNames[i]}
+            size={30}
+            onPress={() => {
+              wantToLearn[i] = !wantToLearn[i];
+              this.setState({ wantToLearn });
+            }}
+            value={wantToLearn[i]}
+            color={'white'}
+          />
+        );
+      }
+    }
+    return checkBoxes;
   }
 
   renderPickerArray(tag, tagArray) {
@@ -276,7 +365,10 @@ class RegistrationScreen extends Component {
       previousInvolvement,
       corps,
       bff,
-      bffError
+      bffError,
+      groupLeader,
+      wantToWorkWith,
+      wantToLearn,
     } = this.state;
 
     const closeButton = (
@@ -428,7 +520,7 @@ class RegistrationScreen extends Component {
             onSubmitEditing={() => this.refs.ninthInput.focus()}
             placeholder={strings.co}
             onChangeText={text => {
-              this.setState({ co: text })
+              this.setState({ co: text });
             }}
             value={co}
             returnKeyType={'next'}
@@ -597,11 +689,22 @@ class RegistrationScreen extends Component {
             warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
+          <CheckBox
+            name={strings.groupLeader}
+            size={30}
+            onPress={() => this.setState({ groupLeader: !groupLeader })}
+            value={groupLeader}
+            color={'white'}
+          />
+          <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeader}</Text>
+          {this.renderCheckBoxes(1)}
+          <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeaderToLearn}</Text>
+          {this.renderCheckBoxes(2)}
           <Input
             ref={'other'}
             placeholder={strings.other}
             onChangeText={text => {
-              this.setState({ other: text })
+              this.setState({ other: text });
             }}
             value={other}
             returnKeyType={'done'}
@@ -612,6 +715,9 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
+              const interest = this.getTrueValuesFromList(wantToLearn);
+              const skills = this.getTrueValuesFromList(wantToWorkWith);
+              console.log('interests: ' + interest + 'skills: ' + skills)
               this.trimValues();
               if (this.anyEmpty()) {
                 this.setState({
@@ -647,7 +753,10 @@ class RegistrationScreen extends Component {
                     studentUnion,
                     plenipotentiary,
                     startOfStudies: inputs[11],
-                    misc: other
+                    misc: other,
+                    skills,
+                    interest,
+                    groupLeader
                   })
                   .then(response => {
                     const { accessToken } = response.data;
@@ -745,6 +854,12 @@ const styles = {
     backgroundColor: 'transparent',
     width: 60,
     paddingRight: 0
+  },
+  checkBoxHeaderStyle: {
+    backgroundColor: 'transparent',
+    width: Dimensions.get('window').width,
+    fontSize: 30,
+    color: 'white'
   }
 };
 
