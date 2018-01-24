@@ -47,7 +47,7 @@ class SectionScreen extends Component {
           screenProps.navigation.navigate('ConfirmPage');
         }}
       >
-        <MaterialIcons name="local-mall" size={30} color={'white'} />
+        <MaterialIcons name="format-list-numbered" size={30} color={'white'} />
       </TouchableOpacity>
     );
   }

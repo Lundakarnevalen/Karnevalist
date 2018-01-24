@@ -9,7 +9,6 @@ import {
   SECTION_PRIORITY_URL,
   PROGRESS
 } from './Constants';
-import { stripHtmlString } from './functions';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -106,6 +105,23 @@ export function fetchSections(cb) {
     })
     .catch(error => {
       console.error(error);
+    });
+}
+
+export function fetchUserinfo(email, token, cb = null) {
+  const url = USER_URL + email;
+  const headers = {
+    Authorization: 'Bearer ' + token,
+    'content-type': 'application/json'
+  };
+  axios
+    .get(url, { headers })
+    .then(response => {
+      const { user } = response.data;
+      if (typeof cb === 'function') cb(user);
+    })
+    .catch(error => {
+      if (typeof cb === 'function') cb(error, true);
     });
 }
 

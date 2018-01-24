@@ -1,4 +1,4 @@
-import { SET_TOKEN, SET_PICTURE, SET_EMAIL, SET_PROGRESS, RESET_DATA } from './Types.js';
+import { SET_TOKEN, SET_PICTURE, SET_EMAIL, SET_PROGRESS, SET_USERINFO, RESET_DATA } from './Types.js';
 
 // Set token
 export const setToken = token => {
@@ -32,6 +32,12 @@ export const setProgress = progress => {
   };
 };
 
+export const setUserinfo = userinfo => {
+  return {
+    type: SET_USERINFO,
+    payload: userinfo
+  };
+};
 // Reset all data to initial state
 export const resetData = () => {
   return {

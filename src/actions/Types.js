@@ -3,6 +3,7 @@ export const SET_TOKEN = 'set_token';
 export const SET_PICTURE = 'set_picture';
 export const SET_EMAIL = 'set_email';
 export const SET_PROGRESS = 'set_progress';
+export const SET_USERINFO = 'set_userinfo'
 export const RESET_DATA = 'reset_data';
 
 // Sections
