@@ -68,14 +68,14 @@ class LoginScreen extends Component {
   }
 
   getAlertButtons(message) {
-    const strings = this.getStrings()
+    const strings = this.getStrings();
     switch (message) {
       case strings.emailError:
       case strings.passwordError:
-        return ([{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }])
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
       case strings.passwordPopupInfo:
-        return (
-          [{
+        return [
+          {
             text: strings.cancel,
             onPress: () =>
               this.setState({
@@ -85,9 +85,9 @@ class LoginScreen extends Component {
               })
           },
           { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
-        ])
-      default: return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
-
+        ];
+      default:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
     }
   }
 
@@ -100,13 +100,13 @@ class LoginScreen extends Component {
         alertVisible: true,
         message: strings.emailError,
         alertHeader: strings.error
-       })
+      });
     } else if (password === '') {
       this.setState({
         alertVisible: true,
         message: strings.passwordError,
         alertHeader: strings.error
-       })
+      });
     } else {
       this.setState({ loading: true, loadingComplete: false });
       axios
@@ -131,7 +131,7 @@ class LoginScreen extends Component {
             alertVisible: true,
             message: msg,
             alertHeader: strings.error
-           })
+          });
         });
     }
   }
@@ -152,7 +152,7 @@ class LoginScreen extends Component {
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={4} />
-        <ScrollView keyboardShouldPersistTaps="handled">
+        <ScrollView keyboardShouldPersistTaps="handled" scrollEnabled={false}>
           <View style={container1}>
             <View style={{ alignSelf: 'flex-start' }}>
               <CustomButton
@@ -189,6 +189,14 @@ class LoginScreen extends Component {
               width={WIDTH}
             />
             <CustomButton
+              text={strings.createProfile}
+              width={WIDTH}
+              onPress={() => {
+                this.props.navigation.navigate('RegistrationScreen');
+              }}
+              style="standardButton"
+            />
+            <CustomButton
               text={strings.forgotPassword}
               onPress={() => {
                 this.setState({
@@ -199,21 +207,6 @@ class LoginScreen extends Component {
               }}
               style="textButton"
             />
-            <CustomButton
-              text={strings.createProfile}
-              width={WIDTH}
-              onPress={() => {
-                this.props.navigation.navigate('RegistrationScreen');
-              }}
-              style="standardButton"
-            />
-            <CustomButton
-              text={strings.readMore}
-              onPress={() => {
-                this.props.navigation.navigate('RegistrationInfo');
-              }}
-              style="textButton"
-            />
             <SuperAgileAlert
               alertVisible={alertVisible}
               setAlertVisible={visible => this.setState({ alertVisible: visible })}
@@ -221,23 +214,22 @@ class LoginScreen extends Component {
               header={this.state.alertHeader || ''}
               info={this.state.message || ''}
             >
-            {message === strings.passwordPopupInfo ? (
-              <View>
-              <Input
-                placeholder={strings.email}
-                width={Dimensions.get('window').width / 1.2}
-                underlineColorAndroid={'transparent'}
-                onChangeText={text =>
-                  this.setState({ forgotPasswordEmail: text, resetPasswordError: ' ' })
-                }
-                value={forgotPasswordEmail}
-                returnKeyType={'done'}
-                onSubmitEditing={() => this.handleResetPassword()}
-              />
-              <Text style={errorTextStyle}>{resetPasswordError}</Text>
-              </View>
-            )
-            : null}
+              {message === strings.passwordPopupInfo ? (
+                <View>
+                  <Input
+                    placeholder={strings.email}
+                    width={Dimensions.get('window').width / 1.2}
+                    underlineColorAndroid={'transparent'}
+                    onChangeText={text =>
+                      this.setState({ forgotPasswordEmail: text, resetPasswordError: ' ' })
+                    }
+                    value={forgotPasswordEmail}
+                    returnKeyType={'done'}
+                    onSubmitEditing={() => this.handleResetPassword()}
+                  />
+                  <Text style={errorTextStyle}>{resetPasswordError}</Text>
+                </View>
+              ) : null}
             </SuperAgileAlert>
           </View>
         </ScrollView>
