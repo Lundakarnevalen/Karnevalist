@@ -96,7 +96,6 @@ const styles = {
   containerStyle: {
     height: HEIGHT,
     width: WIDTH,
-    alignItems: 'center',
     backgroundColor: 'white'
   },
   imageStyle: {
