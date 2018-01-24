@@ -39,9 +39,9 @@ class MyPageNavbarScreen extends Component {
       token,
       bool => {
         if (bool) {
-          this.props.setProgress(2);
-          if (this.props.sectionPriorities >= 5) {
-            this.props.setProgress(3);
+          this.props.setProgress(PROGRESS.CHECK_IN);
+          if (this.props.sectionPriorities.length > 4) {
+            this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
             this.getSectionPriorities(token);
           }
         }

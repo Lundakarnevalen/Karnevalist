@@ -39,9 +39,10 @@ class SectionItemScreen extends Component {
         <TouchableOpacity
           style={rightIconStyle}
           onPress={() => {
+            if (sectionPriorities.length > 3 && this.props.progress > PROGRESS.CREATE_PROFILE)
+              this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
             this.props.addSectionPriority(id);
             this.setState({ showToast: true, favorite: true });
-            if (sectionPriorities.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
           }}
         >
           <MaterialIcons name="favorite-border" size={30} color={'white'} />
@@ -52,9 +53,13 @@ class SectionItemScreen extends Component {
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
+          if (
+            this.props.sectionPriorities.length < 6 &&
+            this.props.progress > PROGRESS.CREATE_PROFILE
+          )
+            this.props.setProgress(PROGRESS.CHECK_IN);
           this.props.removeSectionPriority(id);
           this.setState({ showToast: true, favorite: false });
-          //TODO: om vi tar bort och går under 5 sektioner så måste timeline backa ett steg
         }}
       >
         <MaterialIcons name="favorite" size={30} color={'white'} />

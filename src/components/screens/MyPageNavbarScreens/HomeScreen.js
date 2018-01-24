@@ -73,9 +73,9 @@ class HomeScreen extends Component {
       token,
       bool => {
         setTimeout(() => {
-          if (true) {
+          if (bool) {
             this.props.setProgress(PROGRESS.CHECK_IN);
-            if (this.props.sectionPriorities >= 5) {
+            if (this.props.sectionPriorities.length > 4) {
               this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
             }
           }

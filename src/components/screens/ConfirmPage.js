@@ -116,7 +116,14 @@ class ConfirmPage extends Component {
         index={index + 1}
         iconName={this.state.editMode ? 'trash' : 'navicon'}
         active={active}
-        deleteRow={() => this.props.removeSectionPriority(data.id)}
+        deleteRow={() => {
+          if (
+            this.props.sectionPriorities.length < 6 &&
+            this.props.progress > PROGRESS.CREATE_PROFILE
+          )
+            this.props.setProgress(PROGRESS.CHECK_IN);
+          this.props.removeSectionPriority(data.id);
+        }}
       />
     );
   }
@@ -285,9 +292,9 @@ const styles = {
 
 const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
-  const { token } = userInformation;
+  const { token, progress } = userInformation;
   const { sectionPriorities } = sections;
-  return { sections: sections.sections, language, token, sectionPriorities };
+  return { sections: sections.sections, language, token, sectionPriorities, progress };
 };
 
 export default connect(mapStateToProps, {

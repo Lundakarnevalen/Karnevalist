@@ -4,6 +4,7 @@ import { Dimensions, Image } from 'react-native';
 import {
   SECTION_URL,
   IMAGE_URL,
+  USER_URL,
   NEWS_URL,
   CHECK_IN_URL,
   SECTION_PRIORITY_URL,
