@@ -4,7 +4,6 @@ import { Dimensions, Image } from 'react-native';
 import { SECTION_URL, NEWS_URL, USER_URL, CHECK_IN_URL } from './Constants';
 
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
 
 export function getNews() {
   return axios
