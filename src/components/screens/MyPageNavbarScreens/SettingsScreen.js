@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
-import { View, ListView, Dimensions, Platform } from 'react-native';
+import { View, FlatList, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, SectionListItem, BackgroundImage, SuperAgileAlert } from '../../common';
 import { removeItem } from '../../../helpers/LocalSave';
 import { setProgress } from '../../../actions';
-import { LOGOUT_RESET_ACTION } from '../../../helpers/Constants';
+import { LOGOUT_RESET_ACTION, PROGRESS } from '../../../helpers/Constants';
 import { SETTINGS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const height = Dimensions.get('window').height;
-
-const settingsTitles = [{ key: 'profile' }, { key: 'registration' }, { key: 'logout' }];
+const WITH_MY_REG = [{ key: 'profile' }, { key: 'registration' }, { key: 'logout' }];
+const WO_MY_REG = [{ key: 'profile' }, { key: 'logout' }];
 
 class SettingsScreen extends Component {
   constructor(props) {
     super(props);
-    const strings = this.getStrings();
-    const data = settingsTitles.map(item => ({ key: item.key, title: strings[item.key] }));
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows(data),
       alertVisible: false
     };
+  }
+
+  getItems() {
+    const strings = this.getStrings();
+    const { progress } = this.props;
+    const settingsTitles = progress === PROGRESS.SENT_SECTIONS ? WITH_MY_REG : WO_MY_REG;
+    const items = settingsTitles.map(item => ({ key: item.key, title: strings[item.key] }));
+    return items;
   }
 
   getStrings() {
@@ -39,11 +43,11 @@ class SettingsScreen extends Component {
   }
 
   renderAlertButtons() {
-    const strings = this.getStrings()
-    return ([
+    const strings = this.getStrings();
+    return [
       { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
       { text: strings.ok, onPress: () => this.handleLogout() }
-    ])
+    ];
   }
 
   render() {
@@ -53,20 +57,20 @@ class SettingsScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
-        <ListView
+        <FlatList
           style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
           contentContainerStyle={{ alignItems: 'center' }}
-          dataSource={this.state.dataSource}
-          renderRow={rowData => (
+          data={this.getItems()}
+          renderItem={({ item }) => (
             <SectionListItem
-              sectionTitle={rowData.title}
+              sectionTitle={item.title}
               onPress={() => {
-                if (rowData.key === 'profile') {
-                  screenProps.navigation.navigate('MyProfile', { info: rowData });
-                } else if (rowData.key === 'registration') {
-                  screenProps.navigation.navigate('MyRegistration', { info: rowData });
-                } else if (rowData.key === 'logout') {
-                  this.setState({ alertVisible: true })
+                if (item.key === 'profile') {
+                  screenProps.navigation.navigate('MyProfile', { info: item });
+                } else if (item.key === 'registration') {
+                  screenProps.navigation.navigate('MyRegistration', { info: item });
+                } else if (item.key === 'logout') {
+                  this.setState({ alertVisible: true });
                 }
               }}
             />
@@ -83,9 +87,10 @@ class SettingsScreen extends Component {
     );
   }
 }
-const mapStateToProps = ({ currentLanguage }) => {
+const mapStateToProps = ({ currentLanguage, userInformation }) => {
+  const { progress } = userInformation;
   const { language } = currentLanguage;
-  return { language };
+  return { language, progress };
 };
 
 export default connect(mapStateToProps, { setProgress })(SettingsScreen);
