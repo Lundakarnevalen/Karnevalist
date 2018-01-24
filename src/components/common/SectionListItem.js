@@ -101,7 +101,7 @@ const styles = {
   },
   titleStyle: {
     fontSize: 20,
-    marginLeft: 2,
+    marginLeft: 8,
     backgroundColor: 'transparent',
     fontFamily: 'Avenir Next Medium'
   },

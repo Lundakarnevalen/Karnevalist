@@ -6,6 +6,7 @@ import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
 import { Row, Header, BackgroundImage, CustomButton, SuperAgileAlert } from '../common';
 import { removeItem } from '../../helpers/LocalSave';
+import { fetchCheckInStatus } from '../../helpers/ApiManager';
 import { SECTION_PRIORITY_URL, PROGRESS, LOGOUT_RESET_ACTION } from '../../helpers/Constants';
 import { removeSectionPriority, setSectionPriorities, setProgress } from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
@@ -29,6 +30,15 @@ class ConfirmPage extends Component {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
     this.updateData();
+    this.checkCheckIn();
+  }
+
+  checkCheckIn() {
+    const { token, email, progress } = this.props
+    fetchCheckInStatus(email, token, checkedIn => {
+      if (checkedIn && progress === PROGRESS.CHECK_IN)
+        this.props.setProgress(PROGRESS.CHOOSE_SECTIONS)
+    });
   }
 
   updateData() {
@@ -151,7 +161,7 @@ class ConfirmPage extends Component {
   }
 
   postSectionPriorities() {
-    const { sectionPriorities } = this.props;
+    const { sectionPriorities, progress } = this.props;
     const strings = this.getStrings();
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
@@ -285,9 +295,9 @@ const styles = {
 
 const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
-  const { token } = userInformation;
+  const { token, progress } = userInformation;
   const { sectionPriorities } = sections;
-  return { sections: sections.sections, language, token, sectionPriorities };
+  return { sections: sections.sections, progress,  language, token, sectionPriorities };
 };
 
 export default connect(mapStateToProps, {
