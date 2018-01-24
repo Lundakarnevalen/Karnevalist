@@ -100,8 +100,7 @@ class MyProfileScreen extends Component {
 
 const styles = {
   scrollStyle: {
-    marginTop: 20,
-    height: HEIGHT - 120,
+    height: HEIGHT - 64,
     paddingTop: 4,
     paddingRight: 16,
     paddingLeft: 16
