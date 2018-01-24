@@ -26,3 +26,10 @@ export const setProgress = progress => {
     payload: progress
   };
 };
+
+export const setUserinfo = userinfo => {
+  return {
+    type: SET_PROGRESS,
+    payload: userinfo
+  };
+};

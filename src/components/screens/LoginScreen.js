@@ -3,7 +3,7 @@ import { View, Dimensions, ScrollView, Text, Keyboard } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import { setLanguage, setToken, setEmail } from '../../actions';
+import { setLanguage, setToken, setEmail, setUserinfo } from '../../actions';
 import { Input, SuperAgileAlert, BackgroundImage, Toast, CustomButton } from '../common';
 import Loading from '../common/Loading';
 import { LOGIN_URL, FORGOT_PASSWORD_URL } from '../../helpers/Constants';
@@ -115,9 +115,11 @@ class LoginScreen extends Component {
           password
         })
         .then(res => {
-          const { accessToken } = res.data;
+          const { accessToken, userinfo } = res.data;
+          console.log(res.data);
           this.props.setToken(accessToken);
           this.props.setEmail(email);
+          this.props.setUserinfo(userinfo);
           saveItem('email', email);
           saveItem('accessToken', accessToken);
           this.setState({ loadingComplete: true });
@@ -300,4 +302,4 @@ const mapStateToProps = ({ currentLanguage }) => {
   return { language };
 };
 
-export default connect(mapStateToProps, { setLanguage, setToken, setEmail })(LoginScreen);
+export default connect(mapStateToProps, { setLanguage, setToken, setEmail, setUserinfo })(LoginScreen);
