@@ -54,7 +54,7 @@ class MyProfileScreen extends Component {
       })
       .catch(error => {
         if (error.response.status === 401) this.handleLogout();
-        const msg = handleErrorMsg(error.message);
+        const msg = handleErrorMsg(error);
       });
   }
 
@@ -139,7 +139,7 @@ class MyProfileScreen extends Component {
       })
       .catch(error => {
         if (error.response.status === 401) this.handleLogout();
-        const msg = handleErrorMsg(error.message);
+        const msg = handleErrorMsg(error);
       });
   }
 

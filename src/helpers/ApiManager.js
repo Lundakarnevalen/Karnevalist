@@ -64,7 +64,8 @@ export function fetchSections(cb) {
     });
 }
 
-export function handleErrorMsg(message, strings = null) {
+export function handleErrorMsg(error, strings = null) {
+  const { message, response } = error;
   if (strings === null) return message;
   let msg;
   if (message.includes('400')) {
@@ -73,6 +74,17 @@ export function handleErrorMsg(message, strings = null) {
     msg = strings.errorMsg401;
   } else if (message.includes('404')) {
     msg = strings.errorMsg404;
+  } else if (message.includes('409')) {
+    if (
+      response.data.error.indexOf('email') !== -1 &&
+      response.data.error.indexOf('personalNumber') !== -1
+    ) {
+      msg = strings.errorMsg409EmailAndPersonalNumber;
+    } else if (response.data.error.indexOf('email') !== -1) {
+      msg = strings.errorMsg409Email;
+    } else if (response.data.error.indexOf('personalNumber') !== -1) {
+      msg = strings.errorMsg409PersonalNumber;
+    }
   } else {
     msg = strings.errorMsgInternal;
   }

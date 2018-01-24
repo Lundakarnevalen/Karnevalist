@@ -62,7 +62,7 @@ class LoginScreen extends Component {
         }
       })
       .catch(error => {
-        const msg = handleErrorMsg(error.message, strings);
+        const msg = handleErrorMsg(error, strings);
         this.setState({ resetPasswordError: msg });
       });
   }
