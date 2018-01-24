@@ -74,11 +74,11 @@ export function fetchUserinfo(email, token, cb = null) {
     .get(url, { headers })
     .then(response => {
       const { user } = response.data;
-    if (typeof cb === 'function')
-      cb(user)
+      if (typeof cb === 'function')
+        cb(user)
     })
     .catch(error => {
-      if (error.response.status === 401 && typeof cb === 'function')
+      if (typeof cb === 'function')
         cb(error, true)
     });
 }

@@ -53,14 +53,14 @@ class SplashScreen extends Component {
             getItem('accessToken', token => {
               fetchUserinfo(email, token, (response, error = false) => {
                 if (error) {
-
+                  this.props.navigation.dispatch(resetAction);
                 } else {
                   resetAction.actions = [
                     NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
                   ];
+                  const userinfo = Object.assign({}, response, response.KarnevalistInfo);
                   this.props.setToken(token);
                   this.props.setEmail(email);
-                  const userinfo = Object.assign({}, response, response.KarnevalistInfo)
                   this.props.setUserinfo(userinfo)
                   this.props.navigation.dispatch(resetAction);
                 }
