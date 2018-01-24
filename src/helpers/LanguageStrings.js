@@ -248,8 +248,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
   foodPreference,
   shirtSize,
   shirtSizeArray: {
-    SE: [shirtSize.SE, 'Small', 'Medium', 'Large'],
-    EN: [shirtSize.EN, 'Small', 'Medium', 'Large']
+    SE: [shirtSize.SE, 'Small', 'Medium', 'Large', 'X-Large'],
+    EN: [shirtSize.EN, 'Small', 'Medium', 'Large', 'X-Large']
   },
   studentUnion,
   studentUnionArray: {
