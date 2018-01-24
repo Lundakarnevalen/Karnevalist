@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Dimensions, Image } from 'react-native';
-import { SECTION_URL, NEWS_URL } from './Constants';
+import { SECTION_URL, NEWS_URL, USER_URL } from './Constants';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -64,7 +64,25 @@ export function fetchSections(cb) {
     });
 }
 
+export function fetchUserinfo(email, token, cb = null) {
+  const url = USER_URL + email;
+  const headers = {
+    Authorization: 'Bearer ' + token,
+    'content-type': 'application/json'
+  };
+  axios
+    .get(url, { headers })
+    .then(response => {
+      const { user } = response.data;
+      if (typeof cb === 'function') cb(user);
+    })
+    .catch(error => {
+      if (typeof cb === 'function') cb(error, true);
+    });
+}
+
 export function handleErrorMsg(error, strings = null) {
+  console.log(error);
   const { message, response } = error;
   if (strings === null) return message;
   let msg;
