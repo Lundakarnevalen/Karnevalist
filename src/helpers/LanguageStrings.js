@@ -215,7 +215,11 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorMsgInternal',
     'ok',
     'co',
-    'other'
+    'other',
+    'plenipotentiary',
+    'yearStudyStart',
+    'previousInvolvement',
+    'corps'
   ],
   header: {
     SE: 'Skapa profil',
@@ -228,6 +232,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
   co: {
     SE: 'C/O',
     EN: 'C/O'
+  },
+  corps: {
+    SE: 'Studnetkår',
+    EN: 'Student union'
   },
   confirmEmail: {
     SE: 'Bekräfta mail',
@@ -243,6 +251,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
   city,
   phoneNumber,
   foodPreference,
+  previousInvolvement: {
+    SE: 'Tidigare studentengagemang',
+    EN: 'Previous student involvement'
+  },
   driversLicense,
   driversLicenseArray: {
     SE: [driversLicense.SE, 'Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
@@ -309,6 +321,14 @@ export const REGISTRATION_SCREEN_STRINGS = {
   other: {
     SE: 'Övrigt',
     EN: 'Other'
+  },
+  plenipotentiary: {
+    SE: 'Jag har ett fullmaktsombud',
+    EN: 'There is a power of attorney for me'
+  },
+  yearStudyStart: {
+    SE: 'Jag började studera år',
+    EN: 'I started study'
   }
 };
 
@@ -709,7 +729,8 @@ export const ERROR_MSG_INPUT_FIELD = {
     'errorMsgFoodPreference',
     'errorMsgWrongInput',
     'errorMsgCity',
-    'errorMsgAnyEmpty'
+    'errorMsgAnyEmpty',
+    'errorMsgShortOnlyDigits',
   ],
   errorMsgOnlyDigits: {
     SE: 'Detta fält får endast innehålla siffror',
@@ -746,6 +767,10 @@ export const ERROR_MSG_INPUT_FIELD = {
   errorMsgZipCode: {
     SE: '5 siffror',
     EN: '5 digits'
+  },
+  errorMsgShortOnlyDigits: {
+    SE: 'Endast siffror',
+    EN: 'Only Digits'
   },
   errorMsgCity: {
     SE: 'Endast bokstäver',

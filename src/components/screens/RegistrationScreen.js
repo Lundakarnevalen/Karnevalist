@@ -37,15 +37,16 @@ class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputs: ['', '', '', '', '', '', '', '', '', '', ''],
+      inputs: ['', '', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
       driversLicense: '',
+      previousInvolvement: '',
       activeCarneval2014: false,
       foodPreference: '',
       co: '',
       other: '',
-      errors: [false, false, false, false, false, false, false, false, false, false],
+      errors: [false, false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showDriversLicensePicker: false,
       showStudentUnionPicker: false,
@@ -55,7 +56,9 @@ class RegistrationScreen extends Component {
       keyboardHeight: 0,
       listToTrim: [],
       alertVisible: false,
-      message: ''
+      corps: '',
+      plenipotentiary: false,
+      message: '',
     };
   }
 
@@ -262,7 +265,10 @@ class RegistrationScreen extends Component {
       message,
       activeCarneval2014,
       driversLicense,
-      other
+      other,
+      plenipotentiary,
+      previousInvolvement,
+      corps
     } = this.state;
 
     const closeButton = (
@@ -498,7 +504,7 @@ class RegistrationScreen extends Component {
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={foodPreferenceError}
-            warningMessage={[errorStrings.errorMsgFoodPreference]}
+            warningMessage={errorStrings.errorMsgFoodPreference}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,
@@ -524,6 +530,51 @@ class RegistrationScreen extends Component {
             onPress={() => this.setState({ activeCarneval2014: !activeCarneval2014 })}
             value={activeCarneval2014}
             color={'white'}
+          />
+          <CheckBox
+            name={strings.plenipotentiary}
+            size={30}
+            onPress={() => this.setState({ plenipotentiary: !plenipotentiary })}
+            value={plenipotentiary}
+            color={'white'}
+          />
+          <Input
+            ref={'yearStudyStart'}
+            onSubmitEditing={() => this.refs.previousEngagement.focus()}
+            placeholder={strings.yearStudyStart}
+            onChangeText={text => {
+              inputs[11] = text;
+              errors[11] = !this.containsOnlyDigits(text);
+              this.setState({ inputs, errors });
+            }}
+            hasError={errors[11]}
+            value={inputs[11]}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            warningMessage={errorStrings.errorMsgShortOnlyDigits}
+          />
+          <Input
+            ref={'previousInvolvement'}
+            onSubmitEditing={() => this.refs.other.focus()}
+            placeholder={strings.previousInvolvement}
+            onChangeText={text => {
+              this.setState({ previousInvolvement: text });
+            }}
+            value={previousInvolvement}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            warningMessage={errorStrings.errorMsgPreviousInvolvement}
+          />
+          <Input
+            ref={'corps'}
+            onSubmitEditing={() => this.refs.other.focus()}
+            placeholder={strings.corps}
+            onChangeText={text => {
+              this.setState({ corps: text });
+            }}
+            value={corps}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'other'}
@@ -567,10 +618,14 @@ class RegistrationScreen extends Component {
                     phoneNumber: inputs[10],
                     foodPreference,
                     driversLicense,
-                    pastInvolvement: activeCarneval2014,
+                    activeCarneval2014,
+                    pastInvolvement: previousInvolvement,
                     shirtSize,
+                    corps,
                     studentUnion,
-                    other
+                    plenipotentiary,
+                    startOfStudies: inputs[11],
+                    misc: other
                   })
                   .then(response => {
                     const { accessToken } = response.data;
