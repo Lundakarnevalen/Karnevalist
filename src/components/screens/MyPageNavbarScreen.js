@@ -55,7 +55,6 @@ class MyPageNavbarScreen extends Component {
       });
   }
   render() {
-    console.log(this.props.token);
     const { navigation, language, setHomeScreenPopover, progress } = this.props;
     return <TabNav screenProps={{ navigation, language, setHomeScreenPopover, progress }} />;
   }

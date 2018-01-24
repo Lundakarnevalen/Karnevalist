@@ -42,9 +42,7 @@ class HomeScreen extends Component {
 
   renderPopover(text) {
     const { popover } = this.props;
-    console.log(this.props.progress);
     if (popover && this.props.progress >= 2) {
-      console.log('test');
       return (
         <Popover
           onPress={() => setHomeScreenPopover(false)}
@@ -127,15 +125,16 @@ class HomeScreen extends Component {
   }
 
   renderOnPress(prog) {
+    const { navigation } = this.props;
     if (this.props.progress + 1 === prog) {
       if (prog === 2) {
         this.setState({ alertVisible: true });
       }
       if (prog === 3) {
-        this.props.navigation.navigate('Sections');
+        //this.props.navigation.navigate('Sections');
       }
       if (prog === 4) {
-        this.props.navigation.navigate('ConfirmPage');
+        //this.props.screenProps.navigation.navigate('ConfirmPage');
       }
     }
     return;
@@ -145,7 +144,6 @@ class HomeScreen extends Component {
     const { container, textStyle, textStyleProgress } = styles;
     const { navigation } = this.props;
     const strings = this.getStrings();
-    // console.log(this.props.sections.length);
     return (
       <View style={{ flex: 1 }}>
         <BackgroundImage pictureNumber={1} />

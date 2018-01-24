@@ -61,7 +61,6 @@ class SectionItemScreen extends Component {
             this.props.navigation.state.params.setSectionStatus(true);
             this.setState({ showToast: true, favorite: true });
             getFavoriteSections(sections => {
-              console.log(sections.length);
               if (sections.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
             });
           }}
