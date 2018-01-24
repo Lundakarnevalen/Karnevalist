@@ -11,6 +11,7 @@ import {
   setSectionPriorities
 } from '../../actions';
 import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
+import { fetchCheckInStatus } from '../../helpers/ApiManager';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
@@ -27,12 +28,16 @@ import {
 const SIZE = Dimensions.get('window').width / 11;
 
 class MyPageNavbarScreen extends Component {
-  componentWillMount() {
-    if (this.props.token) this.getSectionPriorities(this.props.token);
-  }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.token) this.getSectionPriorities(nextProps.token);
+  componentWillMount() {
+    const { token, email, progress } = this.props;
+    if (token) {
+      this.getSectionPriorities(token);
+      fetchCheckInStatus(email, token, checkedIn => {
+        if (checkedIn && progress === PROGRESS.CHECK_IN)
+          this.props.setProgress(PROGRESS.CHOOSE_SECTIONS)
+      });
+    }
   }
 
   getSectionPriorities(token) {
@@ -178,8 +183,8 @@ const TabNav = TabNavigator(
 
 const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { language } = currentLanguage;
-  const { token } = userInformation;
-  return { language, token, sections: sections.sections };
+  const { token, email, progress } = userInformation;
+  return { language, token, email, progress, sections: sections.sections };
 };
 export default connect(mapStateToProps, {
   setSections,

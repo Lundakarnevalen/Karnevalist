@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Dimensions, Image } from 'react-native';
-import { SECTION_URL, NEWS_URL, USER_URL } from './Constants';
+import { SECTION_URL, NEWS_URL, USER_URL, CHECK_IN_URL } from './Constants';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -79,6 +79,19 @@ export function fetchUserinfo(email, token, cb = null) {
     .catch(error => {
       if (typeof cb === 'function') cb(error, true);
     });
+}
+
+export function fetchCheckInStatus(email, token, callback) {
+  const URL = CHECK_IN_URL + email;
+  const headers = {
+    Authorization: 'Bearer ' + token
+  };
+  axios.get(URL, { headers }).then(response => {
+    callback(response.data.checkedIn);
+  })
+  .catch(error => {
+    if (typeof callback === 'function') callback(error);
+  });
 }
 
 export function handleErrorMsg(error, strings = null) {

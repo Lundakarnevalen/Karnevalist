@@ -10,6 +10,7 @@ export const FORGOT_PASSWORD_URL = BASE_URL + '/login/forgotpassword';
 export const LOGIN_URL = BASE_URL + '/login/email';
 export const USER_URL = BASE_URL + '/api/user/';
 export const NEWS_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/posts?category=';
+export const CHECK_IN_URL = BASE_URL + '/api/user/checkin/';
 
 export const PROGRESS = Object.freeze({
   CHECK_IN: 1,

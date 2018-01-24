@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Animated, View, Image, Text, StatusBar, Easing } from 'react-native';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { getItem, getPopoverStatus, getFavoriteSections } from '../../helpers/LocalSave';
 import { dynamicSort } from '../../helpers/functions';
 import { BackgroundImage } from '../common';
-import { TOKEN_URL } from '../../helpers/Constants';
 import {
   setSections,
   setToken,
@@ -57,10 +55,9 @@ class SplashScreen extends Component {
                 resetAction.actions = [
                   NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
                 ];
-                const allUserinfo = Object.assign({}, response, response.KarnevalistInfo);
                 this.props.setToken(token);
                 this.props.setEmail(email);
-                this.props.setUserinfo(allUserinfo)
+                this.props.setUserinfo(response)
                 this.props.navigation.dispatch(resetAction);
               }
             })
