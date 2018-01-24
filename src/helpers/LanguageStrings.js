@@ -497,7 +497,8 @@ export const CONFIRM_PAGE_STRINGS = {
     'confirmMessage',
     'confirmHeader',
     'yes',
-    'cancel'
+    'cancel',
+    'checkinMessage',
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -542,7 +543,11 @@ export const CONFIRM_PAGE_STRINGS = {
     SE: 'Bekräfta',
     EN: 'Confirm'
   },
-  cancel
+  cancel,
+  checkinMessage: {
+    SE: 'Du måste vara incheckad innan du kan skicka in',
+    EN: 'You must be checked in to send'
+  }
 };
 
 export const MY_PROFILE_SCREEN_STRINGS = {

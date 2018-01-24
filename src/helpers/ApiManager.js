@@ -88,6 +88,9 @@ export function fetchCheckInStatus(email, token, callback) {
   };
   axios.get(URL, { headers }).then(response => {
     callback(response.data.checkedIn);
+  })
+  .catch(error => {
+    if (typeof callback === 'function') callback(error);
   });
 }
 

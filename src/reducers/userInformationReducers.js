@@ -6,13 +6,14 @@ import {
   SET_USERINFO,
   RESET_DATA
 } from '../actions/Types.js';
+import { PROGRESS } from '../helpers/Constants'
 
 // Initial state for user information
 const INITIAL_STATE = {
   token: null,
   email: null,
   picture: null,
-  progress: 0,
+  progress: PROGRESS.CHECK_IN,
   userinfo: {}
 };
 

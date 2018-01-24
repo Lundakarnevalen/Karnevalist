@@ -57,10 +57,9 @@ class SplashScreen extends Component {
                 resetAction.actions = [
                   NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
                 ];
-                const allUserinfo = Object.assign({}, response, response.KarnevalistInfo);
                 this.props.setToken(token);
                 this.props.setEmail(email);
-                this.props.setUserinfo(allUserinfo)
+                this.props.setUserinfo(response)
                 this.props.navigation.dispatch(resetAction);
               }
             })
