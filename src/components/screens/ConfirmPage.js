@@ -6,6 +6,7 @@ import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
 import { Row, Header, BackgroundImage, CustomButton, SuperAgileAlert } from '../common';
 import { removeItem } from '../../helpers/LocalSave';
+import { fetchCheckInStatus } from '../../helpers/ApiManager';
 import { SECTION_PRIORITY_URL, PROGRESS, LOGOUT_RESET_ACTION } from '../../helpers/Constants';
 import { removeSectionPriority, setSectionPriorities, setProgress } from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
@@ -128,7 +129,7 @@ class ConfirmPage extends Component {
     );
   }
 
-  onPressConfirmButton() {
+  handleSend() {
     const { strings } = this.state;
     const { sectionPriorities } = this.props;
     if (sectionPriorities.length < 5) {
@@ -155,6 +156,26 @@ class ConfirmPage extends Component {
       message: strings.expiredTokenMessage,
       alertHeader: strings.expiredTokenTitle
     });
+  }
+
+  onPressConfirmButton() {
+    const strings = this.getStrings();
+    const { progress, email, token } = this.props;
+    if (progress === PROGRESS.CHECK_IN) {
+      fetchCheckInStatus(email, token, checkedIn => {
+        if (checkedIn === true) {
+          // Detta för att fetchCheckInStatus
+          this.props.setProgress(PROGRESS.CHOOSE_SECTIONS); //avänder callback vid error också
+          this.handleSend();
+        } else {
+          this.setState({
+            alertVisible: true,
+            message: strings.checkinMessage,
+            alertHeader: strings.alertErrorHeader
+          });
+        }
+      });
+    } else if (progress > PROGRESS.CHECK_IN) this.handleSend();
   }
 
   postSectionPriorities() {
@@ -292,9 +313,9 @@ const styles = {
 
 const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
-  const { token, progress } = userInformation;
+  const { token, email, progress } = userInformation;
   const { sectionPriorities } = sections;
-  return { sections: sections.sections, language, token, sectionPriorities, progress };
+  return { sections: sections.sections, progress, email, language, token, sectionPriorities };
 };
 
 export default connect(mapStateToProps, {

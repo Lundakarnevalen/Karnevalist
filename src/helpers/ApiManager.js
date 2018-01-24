@@ -1,15 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Dimensions, Image } from 'react-native';
-import {
-  SECTION_URL,
-  IMAGE_URL,
-  USER_URL,
-  NEWS_URL,
-  CHECK_IN_URL,
-  SECTION_PRIORITY_URL,
-  PROGRESS
-} from './Constants';
+import { SECTION_URL, NEWS_URL, USER_URL, CHECK_IN_URL } from './Constants';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -50,42 +42,6 @@ function getRowImage(imageUrl) {
   );
 }
 
-export function fetchCheckInStatus(email, token, callback, errorCallback) {
-  const URL = CHECK_IN_URL + email;
-  const headers = {
-    Authorization: 'Bearer ' + token
-  };
-  axios
-    .get(URL, { headers })
-    .then(response => {
-      callback(response.data.checkedIn);
-    })
-    .catch(error => {
-      errorCallback();
-      console.log(error.response);
-    });
-}
-
-export function getSectionPriorities(token) {
-  const headers = {
-    Authorization: 'Bearer ' + token,
-    'content-type': 'application/json'
-  };
-  axios
-    .get(SECTION_PRIORITY_URL, { headers })
-    .then(response => {
-      const { success, sectionPriorities } = response.data;
-      if (success) {
-        this.props.setSectionPriorities(sectionPriorities);
-        if (sectionPriorities.length > 0) this.props.setProgress(PROGRESS.SENT_SECTIONS);
-      }
-    })
-    .catch(error => {
-      // const msg = handleErrorMsg(error.message)
-      console.log(error);
-    });
-}
-
 export function fetchSections(cb) {
   axios
     .get(SECTION_URL)
@@ -123,6 +79,21 @@ export function fetchUserinfo(email, token, cb = null) {
     })
     .catch(error => {
       if (typeof cb === 'function') cb(error, true);
+    });
+}
+
+export function fetchCheckInStatus(email, token, callback) {
+  const URL = CHECK_IN_URL + email;
+  const headers = {
+    Authorization: 'Bearer ' + token
+  };
+  axios
+    .get(URL, { headers })
+    .then(response => {
+      callback(response.data.checkedIn);
+    })
+    .catch(error => {
+      if (typeof callback === 'function') callback(error);
     });
 }
 
