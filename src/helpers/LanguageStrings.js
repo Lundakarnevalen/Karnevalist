@@ -10,21 +10,22 @@ const shirtSize = {
   SE: 'Välj tröjstorlek',
   EN: 'Choose shirt size'
 };
-
 const expiredTokenTitle = {
   SE: 'Sessionen har förfallit',
   EN: 'Session Expired'
 };
-
 const expiredTokenMessage = {
   SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
   EN: 'Your session has expired please log in again to continue'
 };
-
 const studentUnion = {
   SE: 'Välj nation',
   EN: 'Choose your student union'
 };
+const driversLicense = {
+  SE: 'Välj körkortstyp',
+  EN: 'Choose type of drivers license'
+}
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
   EN: 'Wrong email or password'
@@ -53,7 +54,6 @@ const lastName = {
   SE: 'Efternamn',
   EN: 'Last name'
 };
-
 const socialSecurityNumber = {
   SE: 'Personnummer',
   EN: 'Social security number'
@@ -82,15 +82,10 @@ const foodPreference = {
   SE: 'Matpreferenser',
   EN: 'Food preferences'
 };
-const driversLicense = {
-  SE: 'Jag har körkort',
-  EN: 'I have a drivers license'
-};
 const cancel = {
   SE: 'Avbryt',
   EN: 'Cancel'
 };
-
 const ok = {
   SE: 'OK',
   EN: 'OK'
@@ -211,6 +206,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'studentUnionArray',
     'activeKarneval',
     'driversLicense',
+    'driversLicenseArray',
     'register',
     'error',
     'errorMsg400',
@@ -246,6 +242,11 @@ export const REGISTRATION_SCREEN_STRINGS = {
   city,
   phoneNumber,
   foodPreference,
+  driversLicense,
+  driversLicenseArray: {
+    SE: [driversLicense.SE, 'Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
+    EN: [driversLicense.EN, 'I do not have a drivers license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+  },
   shirtSize,
   shirtSizeArray: {
     SE: [shirtSize.SE, 'Small', 'Medium', 'Large', 'X-Large'],
@@ -286,7 +287,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Jag var aktiv under karnevalen 2014',
     EN: 'I was active during the karneval 2014'
   },
-  driversLicense,
   register: {
     SE: 'Registrera',
     EN: 'Register'
