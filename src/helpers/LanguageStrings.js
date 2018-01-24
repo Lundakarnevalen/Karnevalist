@@ -25,7 +25,7 @@ const studentUnion = {
 const driversLicense = {
   SE: 'Välj körkortstyp',
   EN: 'Choose type of drivers license'
-}
+};
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
   EN: 'Wrong email or password'
@@ -37,6 +37,18 @@ const errorMsg401 = {
 const errorMsg404 = {
   SE: 'Något gick fel...',
   EN: 'Something went wrong...'
+};
+const errorMsg409EmailAndPersonalNumber = {
+  SE: 'Mail och personnummer är redan i bruk',
+  EN: 'Email and social security number is already in use'
+};
+const errorMsg409Email = {
+  SE: 'Mail är redan i bruk',
+  EN: 'Email is already in use'
+};
+const errorMsg409PersonalNumber = {
+  SE: 'Personnummer är redan i bruk',
+  EN: 'Social security number is already in use'
 };
 const errorMsgInternal = {
   SE: 'Internt fel, var god försök igen senare',
@@ -89,6 +101,15 @@ const cancel = {
 const ok = {
   SE: 'OK',
   EN: 'OK'
+};
+
+const profile = {
+  SE: 'Min Profil',
+  EN: 'My Profile'
+};
+const registration = {
+  SE: 'Min Registrering',
+  EN: 'My Registration'
 };
 
 export const LOGIN_SCREEN_STRINGS = {
@@ -224,7 +245,14 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'previousInvolvement',
     'corps',
     'bff',
-    'groupLeader'
+    'groupLeader',
+    'gdpr1',
+    'gdpr2',
+    'gdpr3',
+    'gdpr4',
+    'errorMsg409EmailAndPersonalNumber',
+    'errorMsg409Email',
+    'errorMsg409PersonalNumber'
   ],
   header: {
     SE: 'Skapa profil',
@@ -329,6 +357,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Invalid email address or password'
   },
   errorMsg404,
+  errorMsg409EmailAndPersonalNumber,
+  errorMsg409Email,
+  errorMsg409PersonalNumber,
   errorMsgInternal,
   ok,
   other: {
@@ -352,42 +383,75 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'I want to be group leader'
   },
   checkBoxNames: {
-    SE: ['logistik',
-    'administration',
-    'spexa',
-    'peppaTagga',
-    'lagaMat',
-    'bar',
-    'teknikLjudLjus',
-    'redigeraFotoFilmAnimeringar',
-    'programmeringNatverk',
-    'byggaSnickra',
-    'design',
-    'sy',
-    'ekonomi',
-    'kommunikation',
-    'serviceinriktad',
-    'sakerhet',
-    'alltiallo'
-  ],
-    EN: ['Logistics',
-    'Administration',
-    'Spex',
-    'Cheer',
-    'Cook food',
-    'Bar',
-    'Lights/sound',
-    'Photos/movie/animation editing',
-    'Programming & Networks',
-    'Construction',
-    'Design',
-    'Sew',
-    'Economics',
-    'Communication',
-    'Service',
-    'safety',
-    'Allround'
-  ]
+    SE: [
+      'logistik',
+      'administration',
+      'spexa',
+      'peppaTagga',
+      'lagaMat',
+      'bar',
+      'teknikLjudLjus',
+      'redigeraFotoFilmAnimeringar',
+      'programmeringNatverk',
+      'byggaSnickra',
+      'design',
+      'sy',
+      'ekonomi',
+      'kommunikation',
+      'serviceinriktad',
+      'sakerhet',
+      'alltiallo'
+    ],
+    EN: [
+      'Logistics',
+      'Administration',
+      'Spex',
+      'Cheer',
+      'Cook food',
+      'Bar',
+      'Lights/sound',
+      'Photos/movie/animation editing',
+      'Programming & Networks',
+      'Construction',
+      'Design',
+      'Sew',
+      'Economics',
+      'Communication',
+      'Service',
+      'safety',
+      'Allround'
+    ]
+  },
+  gdpr1: {
+    SE:
+      'Jag är medveten om och godkänner att Lundakarnevalen samlar in mina personuppgifter för att:' +
+      ' kontrollera mitt Studentlundsmedlemsskap, registrera mig i Folkuniversitetets Studiecirklar' +
+      ' (för att kunna söka bidrag till Lundakarnevalens verksamheter kan studiecirklar förekomma, detta kommer att informeras om i respektive sektion)' +
+      ' samt användas tillsammans med Lundakarnevalens samarbetsorganisation ung media.',
+    EN:
+      'I am aware of and allow the use of my personal information by Lundakarnevalen to: Control my membership in Studentlund, ' +
+      'register me for study circles at Folkuniversitetet (to be able to get benefits for the activities organized by Lundakarnevalen study circles might occur, the section will provide information about this)' +
+      ' and to be used together with ung media, a cooperation organization of Lundakarnevalen.'
+  },
+  gdpr2: {
+    SE:
+      'Jag är medveten om att Lundakarnevalen kommer att fota/filma och att jag kan förekomma i Lundakarnevalens bilder.' +
+      ' Jag godkänner att Lundakarnevalen använder sådant foto och film på Facebook, Instagram, Youtube och i karnevalsboxen.',
+    EN:
+      'I am aware that Lundakarnevalen will take pictures/movies and that I can appear in these. I allow Lundakarnevalen to' +
+      ' use these pictures and movies on Facebook, Instagram, Youtube and in karnevalsboxen.'
+  },
+  gdpr3: {
+    SE: 'Jag är medveten om och godkänner att mina kontaktuppgifter behövs under hela år 2018.',
+    EN: 'I am aware of and allow the use of my contact information during the whole year of 2018.'
+  },
+  gdpr4: {
+    SE:
+      'Om jag accepterar en post med mer ansvar godkänner jag att mina kontaktuppgifter sparas till nästa Lundakarneval,' +
+      ' för att göra en överlämning till en efterträdare.',
+    EN:
+      'If I accept a post with more responsibility I allow my contact information to be saved until the next Lundakarneval,' +
+      ' to make a handover to a successor.'
   }
 };
 
@@ -502,14 +566,8 @@ export const SETTINGS_SCREEN_STRINGS = {
     SE: 'Inställningar',
     EN: 'Settings'
   },
-  profile: {
-    SE: 'Min profil',
-    EN: 'My profile'
-  },
-  registration: {
-    SE: 'Min registrering',
-    EN: 'My registration'
-  },
+  profile,
+  registration,
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
@@ -565,7 +623,8 @@ export const CONFIRM_PAGE_STRINGS = {
     'confirmMessage',
     'confirmHeader',
     'yes',
-    'cancel'
+    'cancel',
+    'checkinMessage'
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -610,7 +669,11 @@ export const CONFIRM_PAGE_STRINGS = {
     SE: 'Bekräfta',
     EN: 'Confirm'
   },
-  cancel
+  cancel,
+  checkinMessage: {
+    SE: 'Du måste vara incheckad innan du kan skicka in',
+    EN: 'You must be checked in to send'
+  }
 };
 
 export const MY_PROFILE_SCREEN_STRINGS = {
@@ -619,13 +682,13 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'firstName',
     'lastName',
     'email',
+    'careOf',
     'address',
     'postNumber',
     'city',
     'phoneNumber',
     'foodPreference',
     'language',
-    'careOf',
     'driversLicense',
     'disability',
     'audition',
@@ -649,10 +712,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'invalidChangesMadeText',
     'invalidChangesMadeHeader'
   ],
-  title: {
-    SE: 'Användarinfo',
-    EN: 'User info'
-  },
+  title: profile,
   firstName,
   lastName,
   email,
@@ -747,10 +807,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {
   fields: ['title', 'emptyListMessage'],
-  title: {
-    SE: 'Mina val',
-    EN: 'My choices'
-  },
+  title: registration,
   emptyListMessage: {
     SE: 'Du har inte valt några sektioner',
     EN: 'You have not chosen any sections'
@@ -789,7 +846,7 @@ export const ERROR_MSG_INPUT_FIELD = {
     'errorMsgWrongInput',
     'errorMsgCity',
     'errorMsgAnyEmpty',
-    'errorMsgShortOnlyDigits',
+    'errorMsgShortOnlyDigits'
   ],
   errorMsgOnlyDigits: {
     SE: 'Detta fält får endast innehålla siffror',

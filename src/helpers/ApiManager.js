@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Dimensions, Image } from 'react-native';
-import { SECTION_URL, NEWS_URL } from './Constants';
+import { SECTION_URL, NEWS_URL, USER_URL, CHECK_IN_URL } from './Constants';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -64,7 +64,39 @@ export function fetchSections(cb) {
     });
 }
 
-export function handleErrorMsg(message, strings = null) {
+export function fetchUserinfo(email, token, cb = null) {
+  const url = USER_URL + email;
+  const headers = {
+    Authorization: 'Bearer ' + token,
+    'content-type': 'application/json'
+  };
+  axios
+    .get(url, { headers })
+    .then(response => {
+      const { user } = response.data;
+      if (typeof cb === 'function') cb(user);
+    })
+    .catch(error => {
+      if (typeof cb === 'function') cb(error, true);
+    });
+}
+
+export function fetchCheckInStatus(email, token, callback) {
+  const URL = CHECK_IN_URL + email;
+  const headers = {
+    Authorization: 'Bearer ' + token
+  };
+  axios.get(URL, { headers }).then(response => {
+    callback(response.data.checkedIn);
+  })
+  .catch(error => {
+    if (typeof callback === 'function') callback(error);
+  });
+}
+
+export function handleErrorMsg(error, strings = null) {
+  console.log(error);
+  const { message, response } = error;
   if (strings === null) return message;
   let msg;
   if (message.includes('400')) {
@@ -73,6 +105,17 @@ export function handleErrorMsg(message, strings = null) {
     msg = strings.errorMsg401;
   } else if (message.includes('404')) {
     msg = strings.errorMsg404;
+  } else if (message.includes('409')) {
+    if (
+      response.data.error.indexOf('email') !== -1 &&
+      response.data.error.indexOf('personalNumber') !== -1
+    ) {
+      msg = strings.errorMsg409EmailAndPersonalNumber;
+    } else if (response.data.error.indexOf('email') !== -1) {
+      msg = strings.errorMsg409Email;
+    } else if (response.data.error.indexOf('personalNumber') !== -1) {
+      msg = strings.errorMsg409PersonalNumber;
+    }
   } else {
     msg = strings.errorMsgInternal;
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 class CheckBox extends Component {
@@ -42,6 +42,8 @@ const styles = {
     backgroundColor: 'transparent'
   },
   textStyle: {
+    flex: 1,
+    flexWrap: 'wrap',
     fontSize: 16,
     backgroundColor: 'transparent',
     fontFamily: 'Avenir Next Medium'

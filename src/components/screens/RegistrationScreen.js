@@ -43,7 +43,6 @@ class RegistrationScreen extends Component {
       studentUnion: '',
       driversLicense: '',
       previousInvolvement: '',
-      activeCarneval2014: false,
       foodPreference: '',
       co: '',
       other: '',
@@ -59,7 +58,6 @@ class RegistrationScreen extends Component {
       alertVisible: false,
       corps: '',
       plenipotentiary: false,
-      message: '',
       bff: '',
       bffError: false,
       //CheckBoxes
@@ -101,7 +99,12 @@ class RegistrationScreen extends Component {
         false,
         false,
         false
-      ]
+      ],
+      message: '',
+      gdpr1: false,
+      gdpr2: false,
+      gdpr3: false,
+      gdpr4: false
     };
   }
 
@@ -207,7 +210,7 @@ class RegistrationScreen extends Component {
     const newList = [];
     for (let i = 0; i < list.length; i++) {
       if (list[i] === true) {
-        newList.push(REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN[i])
+        newList.push(REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN[i]);
       }
     }
     return newList;
@@ -358,7 +361,6 @@ class RegistrationScreen extends Component {
       showDriversLicensePicker,
       alertVisible,
       message,
-      activeCarneval2014,
       driversLicense,
       other,
       plenipotentiary,
@@ -369,6 +371,10 @@ class RegistrationScreen extends Component {
       groupLeader,
       wantToWorkWith,
       wantToLearn,
+      gdpr1,
+      gdpr2,
+      gdpr3,
+      gdpr4
     } = this.state;
 
     const closeButton = (
@@ -606,38 +612,6 @@ class RegistrationScreen extends Component {
             hasError={foodPreferenceError}
             warningMessage={errorStrings.errorMsgFoodPreference}
           />
-          {this.renderPickerForPlatform(
-            strings.shirtSize,
-            strings.shirtSizeArray,
-            shirtSize,
-            'shirt'
-          )}
-          {this.renderPickerForPlatform(
-            strings.studentUnion,
-            strings.studentUnionArray,
-            studentUnion,
-            'union'
-          )}
-          {this.renderPickerForPlatform(
-            strings.driversLicense,
-            strings.driversLicenseArray,
-            driversLicense,
-            'driversLicense'
-          )}
-          <CheckBox
-            name={strings.activeKarneval}
-            size={30}
-            onPress={() => this.setState({ activeCarneval2014: !activeCarneval2014 })}
-            value={activeCarneval2014}
-            color={'white'}
-          />
-          <CheckBox
-            name={strings.plenipotentiary}
-            size={30}
-            onPress={() => this.setState({ plenipotentiary: !plenipotentiary })}
-            value={plenipotentiary}
-            color={'white'}
-          />
           <Input
             ref={'yearStudyStart'}
             onSubmitEditing={() => this.refs.previousEngagement.focus()}
@@ -689,6 +663,31 @@ class RegistrationScreen extends Component {
             warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
+          {this.renderPickerForPlatform(
+            strings.shirtSize,
+            strings.shirtSizeArray,
+            shirtSize,
+            'shirt'
+          )}
+          {this.renderPickerForPlatform(
+            strings.studentUnion,
+            strings.studentUnionArray,
+            studentUnion,
+            'union'
+          )}
+          {this.renderPickerForPlatform(
+            strings.driversLicense,
+            strings.driversLicenseArray,
+            driversLicense,
+            'driversLicense'
+          )}
+          <CheckBox
+            name={strings.plenipotentiary}
+            size={30}
+            onPress={() => this.setState({ plenipotentiary: !plenipotentiary })}
+            value={plenipotentiary}
+            color={'white'}
+          />
           <CheckBox
             name={strings.groupLeader}
             size={30}
@@ -710,6 +709,36 @@ class RegistrationScreen extends Component {
             returnKeyType={'done'}
             scrollToInput={y => this.scrollToInput(y)}
           />
+          <View style={{ right: 3 }}>
+            <CheckBox
+              name={strings.gdpr1}
+              size={30}
+              onPress={() => this.setState({ gdpr1: !gdpr1 })}
+              value={gdpr1}
+              color={'white'}
+            />
+            <CheckBox
+              name={strings.gdpr2}
+              size={30}
+              onPress={() => this.setState({ gdpr2: !gdpr2 })}
+              value={gdpr2}
+              color={'white'}
+            />
+            <CheckBox
+              name={strings.gdpr3}
+              size={30}
+              onPress={() => this.setState({ gdpr3: !gdpr3 })}
+              value={gdpr3}
+              color={'white'}
+            />
+            <CheckBox
+              name={strings.gdpr4}
+              size={30}
+              onPress={() => this.setState({ gdpr4: !gdpr4 })}
+              value={gdpr4}
+              color={'white'}
+            />
+          </View>
           <CustomButton
             text={strings.register}
             style={'standardButton'}
@@ -717,7 +746,7 @@ class RegistrationScreen extends Component {
             onPress={() => {
               const interest = this.getTrueValuesFromList(wantToLearn);
               const skills = this.getTrueValuesFromList(wantToWorkWith);
-              console.log('interests: ' + interest + 'skills: ' + skills)
+              console.log('interests: ' + interest + 'skills: ' + skills);
               this.trimValues();
               if (this.anyEmpty()) {
                 this.setState({
@@ -745,7 +774,6 @@ class RegistrationScreen extends Component {
                     phoneNumber: inputs[10],
                     foodPreference,
                     driversLicense,
-                    activeCarneval2014,
                     pastInvolvement: previousInvolvement,
                     shirtSize,
                     corps,
@@ -767,7 +795,7 @@ class RegistrationScreen extends Component {
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
-                    const msg = handleErrorMsg(error.message, strings);
+                    const msg = handleErrorMsg(error, strings);
                     this.setState({
                       loadingComplete: false,
                       loading: false,
@@ -859,6 +887,7 @@ const styles = {
     backgroundColor: 'transparent',
     width: Dimensions.get('window').width,
     fontSize: 30,
+    paddingBottom: 10,
     color: 'white'
   }
 };
