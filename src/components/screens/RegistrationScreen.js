@@ -38,14 +38,16 @@ class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputs: ['', '', '', '', '', '', '', '', '', '', '', ''],
+      inputs: ['', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
       studentUnion: '',
+      driversLicense: '',
       activeCarneval2014: false,
-      driversLicense: false,
       foodPreference: '',
+      co: '',
       errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
+      showDriversLicensePicker: false,
       showStudentUnionPicker: false,
       foodPreferenceError: false,
       loading: false,
@@ -129,7 +131,7 @@ class RegistrationScreen extends Component {
   }
 
   anyEmpty() {
-    const { inputs, studentUnion, shirtSize } = this.state;
+    const { inputs, studentUnion, shirtSize, driversLicense } = this.state;
     if (
       inputs.indexOf('') !== -1 ||
       shirtSize === 'Välj tröjstorlek' ||
@@ -137,7 +139,10 @@ class RegistrationScreen extends Component {
       shirtSize === '' ||
       studentUnion === 'Välj nation' ||
       studentUnion === 'Choose student union' ||
-      studentUnion === ''
+      studentUnion === '' ||
+      driversLicense === 'Jag har inget körkort' ||
+      driversLicense === 'I do not have a drivers license' ||
+      driversLicense === ''
     )
       return true;
     return false;
@@ -169,9 +174,19 @@ class RegistrationScreen extends Component {
           width={WIDTH}
           onPress={() => {
             Keyboard.dismiss();
-            return tag === 'shirt'
-              ? this.setState({ showShirtPicker: true })
-              : this.setState({ showStudentUnionPicker: true });
+            switch (tag) {
+              case 'shirt':
+                this.setState({ showShirtPicker: true });
+                break;
+              case 'union':
+                this.setState({ showStudentUnionPicker: true });
+                break;
+              case 'driversLicense':
+                this.setState({ showDriversLicensePicker: true });
+                break;
+              default:
+                break;
+            }
           }}
         />
       );
@@ -194,23 +209,24 @@ class RegistrationScreen extends Component {
   }
 
   renderPickerArray(tag, tagArray) {
-    if (tag === 'shirt') {
-      return tagArray.map(item => {
-        return <Picker.Item key={item} label={item} value={item} />;
-      });
-    }
     return tagArray.map(item => {
       return <Picker.Item key={item} label={item} value={item} />;
     });
   }
 
   renderDKBackgroundCloser() {
-    const { showShirtPicker, showStudentUnionPicker } = this.state;
-    if (showShirtPicker || showStudentUnionPicker) {
+    const { showShirtPicker, showStudentUnionPicker, showDriversLicensePicker } = this.state;
+    if (showShirtPicker || showStudentUnionPicker || showDriversLicensePicker) {
       return (
         <TouchableWithoutFeedback
           style={{ position: 'absolute' }}
-          onPress={() => this.setState({ showShirtPicker: false, showStudentUnionPicker: false })}
+          onPress={() =>
+            this.setState({
+              showShirtPicker: false,
+              showStudentUnionPicker: false,
+              showDriversLicensePicker: false
+            })
+          }
         >
           <View
             style={{
@@ -234,12 +250,14 @@ class RegistrationScreen extends Component {
       errors,
       foodPreference,
       foodPreferenceError,
+      co,
       loading,
       loadingComplete,
       shirtSize,
       showShirtPicker,
       studentUnion,
       showStudentUnionPicker,
+      showDriversLicensePicker,
       alertVisible,
       message,
       activeCarneval2014,
@@ -380,7 +398,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'eigthInput'}
-            onSubmitEditing={() => this.refs.ninthInput.focus()}
+            onSubmitEditing={() => this.refs.co.focus()}
             placeholder={strings.address}
             onChangeText={text => {
               inputs[7] = text;
@@ -391,14 +409,13 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
-            ref={'C/O'}
-            onSubmitEditing={() => this.refs.co.focus()}
+            ref={'co'}
+            onSubmitEditing={() => this.refs.ninthInput.focus()}
             placeholder={strings.co}
             onChangeText={text => {
-              inputs[11] = text;
-              this.setState({ inputs });
+              this.setState({ co: text })
             }}
-            value={inputs[11]}
+            value={co}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
           />
@@ -494,22 +511,19 @@ class RegistrationScreen extends Component {
             studentUnion,
             'union'
           )}
-          <View style={{ right: 3 }}>
-            <CheckBox
-              name={strings.activeKarneval}
-              size={30}
-              onPress={() => this.setState({ activeCarneval2014: !activeCarneval2014 })}
-              value={activeCarneval2014}
-              color={'white'}
-            />
-            <CheckBox
-              name={strings.driversLicense}
-              size={30}
-              onPress={() => this.setState({ driversLicense: !driversLicense })}
-              value={driversLicense}
-              color={'white'}
-            />
-          </View>
+          {this.renderPickerForPlatform(
+            strings.driversLicense,
+            strings.driversLicenseArray,
+            driversLicense,
+            'driversLicense'
+          )}
+          <CheckBox
+            name={strings.activeKarneval}
+            size={30}
+            onPress={() => this.setState({ activeCarneval2014: !activeCarneval2014 })}
+            value={activeCarneval2014}
+            color={'white'}
+          />
           <CustomButton
             text={strings.register}
             style={'standardButton'}
@@ -536,7 +550,7 @@ class RegistrationScreen extends Component {
                     email: inputs[3],
                     password: inputs[5],
                     address: inputs[7],
-                    co: inputs[11],
+                    co,
                     postNumber: inputs[8],
                     city: inputs[9],
                     phoneNumber: inputs[10],
@@ -581,6 +595,13 @@ class RegistrationScreen extends Component {
           value={studentUnion}
           isShowing={showStudentUnionPicker}
           close={() => this.setState({ showStudentUnionPicker: false })}
+        />
+        <DKPicker
+          onValueChange={newValue => this.setState({ driversLicense: newValue })}
+          items={strings.driversLicenseArray}
+          value={driversLicense}
+          isShowing={showDriversLicensePicker}
+          close={() => this.setState({ showDriversLicensePicker: false })}
         />
         {loading ? (
           <Loading
