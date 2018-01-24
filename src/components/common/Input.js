@@ -83,6 +83,8 @@ class Input extends Component {
       editable = true,
       keyboardType = 'default',
       extraContainerStyle,
+      extraInputStyle,
+      extraPlaceHolderStyle,
       returnKeyType,
       onSubmitEditing = () => {},
       autoFocus = false
@@ -93,7 +95,13 @@ class Input extends Component {
         style={[containerStyle, extraContainerStyle, { width, borderColor: this.getBorderColor() }]}
       >
         {placeholder === '' ? null : (
-          <Animated.Text style={[this.getPlaceholderStyle(), { color: this.getTextColor() }]}>
+          <Animated.Text
+            style={[
+              this.getPlaceholderStyle(),
+              { color: this.getTextColor() },
+              extraPlaceHolderStyle
+            ]}
+          >
             {placeholder}
           </Animated.Text>
         )}
@@ -110,7 +118,7 @@ class Input extends Component {
           onEndEditing={() => this.inputDeselected()}
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
-          style={[inputStyle, { width }, textInputStyle]}
+          style={[inputStyle, { width }, textInputStyle, extraInputStyle]}
           autoCapitalize={autoCapitalize}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}

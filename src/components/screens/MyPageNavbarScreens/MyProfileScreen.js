@@ -54,7 +54,6 @@ class MyProfileScreen extends Component {
       })
       .catch(error => {
         if (error.response.status === 401) this.handleLogout();
-        const msg = handleErrorMsg(error.message);
       });
   }
 
@@ -143,7 +142,6 @@ class MyProfileScreen extends Component {
       })
       .catch(error => {
         if (error.response.status === 401) this.handleLogout();
-        const msg = handleErrorMsg(error.message);
       });
   }
 
@@ -229,11 +227,15 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      const color =
-        editMode && key !== 'email' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
+      const backgroundColor = editMode && key !== 'email' ? 'white' : 'transparent';
+      const borderWidth = editMode && key !== 'email' ? 1 : 0;
+      const textColor = editMode && key !== 'email' ? 'black' : 'white';
+      const placeholderTextColor = editMode && key !== 'email' ? '#F7A021' : 'white';
       return (
         <Input
-          extraContainerStyle={{ backgroundColor: color }}
+          extraContainerStyle={{ backgroundColor, borderWidth }}
+          extraInputStyle={{ color: textColor }}
+          extraPlaceHolderStyle={{ color: placeholderTextColor }}
           key={key}
           placeholder={labels[key]}
           value={user[key]}
