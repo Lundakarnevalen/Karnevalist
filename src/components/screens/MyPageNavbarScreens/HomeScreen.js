@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Text, TouchableOpacity } from 'react-native';
+import { View, Dimensions, Text, TouchableOpacity, Image, Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
@@ -8,10 +8,9 @@ import {
   BackgroundImage,
   CountDown,
   Popover,
-  SectionListItem,
+  TimeLineItem,
   SuperAgileAlert
 } from '../../common';
-import Timeline from '../../common/Timeline';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { fetchCheckInStatus } from '../../../helpers/ApiManager';
 import { getFavoriteSections } from '../../../helpers/LocalSave';
@@ -24,12 +23,10 @@ class HomeScreen extends Component {
     super(props);
     this.state = {
       animate: true,
-      alertVisible: false
+      checkInLoading: false,
+      alertVisible: false,
+      spinValue: new Animated.Value(0)
     };
-  }
-
-  componentWillMount() {
-    this.update();
   }
 
   getStrings() {
@@ -68,38 +65,25 @@ class HomeScreen extends Component {
     return this.props.progress * 0.25;
   }
 
-  renderProgressItemStyle(progressItem) {
-    if (this.props.progress >= progressItem) {
-      return { textDecorationLine: 'line-through' };
-    }
-    if (this.props.progress + 1 === progressItem) {
-      return { color: '#F7A021', fontWeight: 'bold' };
-    }
-  }
-
-  update() {
+  updateProgress() {
     const { email, token } = this.props;
     this.props.setProgress(1);
-    fetchCheckInStatus(email, token, bool => {
-      if (bool) {
-        this.props.setProgress(2);
-        getFavoriteSections(sections => {
-          if (sections.length >= 5) {
+    fetchCheckInStatus(
+      email,
+      token,
+      bool => {
+        setTimeout(
+          () => this.setState({ checkInLoading: false, spinValue: new Animated.Value(0) }),
+          1500
+        );
+        if (bool) {
+          this.props.setProgress(2);
+          if (this.props.sectionPriorities >= 5) {
             this.props.setProgress(3);
           }
-          if (this.props.sectionPriorities.length > 0) {
-            this.props.setProgress(4);
-          }
-        });
-      }
-    });
-  }
-
-  renderRightIcon() {
-    return (
-      <TouchableOpacity style={styles.rightIconStyle} onPress={() => this.update()}>
-        <MaterialIcons name="refresh" size={30} color={'#fff'} />
-      </TouchableOpacity>
+        }
+      },
+      () => this.setState({ checkInLoading: false })
     );
   }
 
@@ -110,34 +94,63 @@ class HomeScreen extends Component {
     if (this.props.progress + 1 === prog) {
       return 'keyboard-arrow-right';
     }
-    return;
+    return 'none';
   }
 
   renderStyle(prog) {
-    if (this.props.progress >= prog) {
+    if (this.props.progress + 1 !== prog) {
       return {
         backgroundColor: 'rgba(255,255,255, 0.4)'
       };
     }
     if (this.props.progress + 1 === prog) {
       return {
-        height: 80,
-        borderWidth: 4
+        height: 70,
+        borderWidth: 2
       };
     }
   }
 
+  renderCheckInLoading() {
+    const { containerAnimated, image } = styles;
+    const spin = this.state.spinValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+    });
+    return (
+      <Animated.View style={[containerAnimated, { transform: [{ rotate: spin }] }]}>
+        <Image style={image} source={require('../../../../res/Monstergubbe.png')} />
+      </Animated.View>
+    );
+  }
+  spin() {
+    this.state.spinValue.setValue(0);
+    Animated.timing(this.state.spinValue, {
+      toValue: 1,
+      duration: 1500,
+      easing: Easing.linear
+    }).start(() => {
+      if (this.props.loadingComplete) {
+        this.props.redirect();
+      } else {
+        this.spin();
+      }
+    });
+  }
+
   renderOnPress(prog) {
-    const { navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     if (this.props.progress + 1 === prog) {
-      if (prog === 2) {
-        this.setState({ alertVisible: true });
+      if (prog === 2 && !this.state.checkInLoading) {
+        this.setState({ checkInLoading: true });
+        this.spin();
+        this.updateProgress();
       }
       if (prog === 3) {
-        //this.props.navigation.navigate('Sections');
+        navigation.navigate('Sections');
       }
       if (prog === 4) {
-        //this.props.screenProps.navigation.navigate('ConfirmPage');
+        screenProps.navigation.navigate('ConfirmPage');
       }
     }
     return;
@@ -150,12 +163,7 @@ class HomeScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <BackgroundImage pictureNumber={1} />
-        <Header
-          title={strings.title}
-          leftIcon={null}
-          rightIcon={this.renderRightIcon()}
-          navigation={navigation}
-        />
+        <Header title={strings.title} leftIcon={null} rightIcon={null} navigation={navigation} />
         <View style={{ height: 20 }} />
         <View style={container}>
           <View
@@ -179,28 +187,29 @@ class HomeScreen extends Component {
             <Text style={textStyleProgress}> {strings.Karnevalist} </Text>
           </View>
           <View style={{ justifyContent: 'center', marginTop: 12 }}>
-            <SectionListItem
+            <TimeLineItem
               sectionTitle={strings.step1}
               icon={this.renderIcon(1)}
               style={this.renderStyle(1)}
               onPress={() => this.renderOnPress(1)}
               sectionInfoText={strings.createProfile}
             />
-            <SectionListItem
+            <TimeLineItem
               sectionTitle={strings.step2}
-              icon={this.renderIcon(2)}
+              icon={this.state.checkInLoading ? this.renderCheckInLoading() : 'refresh'}
               style={this.renderStyle(2)}
+              refresh
               onPress={() => this.renderOnPress(2)}
               sectionInfoText={strings.CheckIn}
             />
-            <SectionListItem
+            <TimeLineItem
               sectionTitle={strings.step3}
               icon={this.renderIcon(3)}
               style={this.renderStyle(3)}
               onPress={() => this.renderOnPress(3)}
               sectionInfoText={strings.ChooseSections}
             />
-            <SectionListItem
+            <TimeLineItem
               sectionTitle={strings.step4}
               icon={this.renderIcon(4)}
               style={this.renderStyle(4)}
@@ -208,13 +217,6 @@ class HomeScreen extends Component {
               sectionInfoText={strings.SendIn}
             />
           </View>
-          <SuperAgileAlert
-            alertVisible={this.state.alertVisible}
-            setAlertVisible={visible => this.setState({ alertVisible: visible })}
-            buttonsIn={1}
-            header={strings.CheckIn}
-            info={strings.info}
-          />
         </View>
         {this.renderPopover(strings.popoverText)}
       </View>
@@ -266,6 +268,15 @@ const styles = {
   },
   popoverText: {
     color: '#E4FDE1'
+  },
+  containerAnimated: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  image: {
+    width: 45,
+    height: 45,
+    resizeMode: 'contain'
   }
 };
 

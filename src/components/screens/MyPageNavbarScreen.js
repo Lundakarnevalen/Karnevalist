@@ -17,17 +17,37 @@ import {
   SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
 } from '../../helpers/LanguageStrings';
-import { getSectionPriorities } from '../../helpers/ApiManager';
+import { getSectionPriorities, fetchCheckInStatus } from '../../helpers/ApiManager';
 
 const SIZE = Dimensions.get('window').width / 11;
 
 class MyPageNavbarScreen extends Component {
   componentWillMount() {
-    if (this.props.token) this.getSectionPriorities(this.props.token);
+    if (this.props.token) this.updateProgress();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.token) this.getSectionPriorities(nextProps.token);
+    if (nextProps.token) this.updateProgress();
+  }
+
+  updateProgress() {
+    const { email, token } = this.props;
+    this.props.setProgress(1);
+    //this.props.setProgress(2);
+    fetchCheckInStatus(
+      email,
+      token,
+      bool => {
+        if (bool) {
+          this.props.setProgress(2);
+          if (this.props.sectionPriorities >= 5) {
+            this.props.setProgress(3);
+            this.getSectionPriorities(token);
+          }
+        }
+      },
+      null
+    );
   }
 
   getSectionPriorities(token) {

@@ -50,14 +50,21 @@ function getRowImage(imageUrl) {
   );
 }
 
-export function fetchCheckInStatus(email, token, callback) {
+export function fetchCheckInStatus(email, token, callback, errorCallback) {
   const URL = CHECK_IN_URL + email;
   const headers = {
     Authorization: 'Bearer ' + token
   };
-  axios.get(URL, { headers }).then(response => {
-    callback(response.data.checkedIn);
-  });
+  axios
+    .get(URL, { headers })
+    .then(response => {
+      console.log(response.data);
+      callback(response.data.checkedIn);
+    })
+    .catch(error => {
+      errorCallback();
+      console.log(error.response);
+    });
 }
 
 export function getSectionPriorities(token) {

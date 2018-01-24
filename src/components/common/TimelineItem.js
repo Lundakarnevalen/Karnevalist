@@ -1,130 +1,206 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, Dimensions, View } from 'react-native';
-import { connect } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const WIDTH = Dimensions.get('window').width;
+const WIDTH = Dimensions.get('window').width - 16;
 
-class TimelineItem extends Component {
-  getDone() {
-    const borderWidth = 0;
-    const backgroundColor = '#F7A021';
-    return {
-      backgroundColor,
-      padding: 10,
-      borderWidth
-    };
-  }
-  getNotDone() {
-    const borderWidth = 3;
-    const backgroundColor = 'rgba(247, 160, 33, 0.5)';
-    const borderColor = 'rgba(247, 160, 33, 1)';
-    return {
-      backgroundColor,
-      padding: 10,
-      borderWidth,
-      borderColor
-    };
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'June',
+  'July',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+];
+
+class TimeLineItem extends Component {
+  getColor() {
+    return '#F7A021';
   }
 
-  getDoneText() {
-    const borderWidth = 0;
-    const backgroundColor = 'transparent';
-    return {
-      backgroundColor,
-      padding: 10,
-      borderWidth
-    };
-  }
-
-  getNotDoneText() {
-    const borderWidth = 0;
-    const backgroundColor = 'transparent';
-    return {
-      backgroundColor,
-      padding: 10,
-      borderWidth
-    };
-  }
-
-  getStyle() {
-    switch (this.props.style) {
-      case 'done':
-        return this.getDone();
-      case 'notDone':
-        return this.getNotDone();
-      default:
-        return styles.button;
-    }
-  }
-
-  getTextStyle() {
-    switch (this.props.style) {
-      case 'done':
-        return this.getDoneText();
-      case 'notDone':
-        return this.getNotDoneText();
-      default:
-        return styles.button;
-    }
-  }
-
-  getFocused() {
-    if (this.props.focus) {
-      return { backgroundColor: 'rgba(247, 160, 33, 1)' };
-    }
-  }
-  render() {
-    const { text } = this.props;
-    const { button, roundView, textButton, textView } = styles;
-    return (
-      <TouchableOpacity style={[button]} onPress={() => this.props.onPress()}>
-        <View style={[this.getStyle(), roundView]} />
-        <View style={[textView, this.getFocused()]}>
-          <Text style={[this.getTextStyle(), textButton]}>{text}</Text>
+  renderDateView(sectionDate) {
+    const { dateViewStyle, dateStyle } = styles;
+    const sectionDateParts = sectionDate.split('T')[0].split('-');
+    if (sectionDate) {
+      return (
+        <View style={[dateViewStyle, { backgroundColor: this.getColor() }]}>
+          <Text style={dateStyle}>{sectionDateParts[2]}</Text>
+          <Text style={dateStyle}>{months[sectionDateParts[1] - 1]}</Text>
         </View>
+      );
+    }
+  }
+
+  renderStyle() {
+    if (this.props.style) {
+      return this.props.style;
+    }
+    return;
+  }
+
+  renderIcon() {
+    if (this.props.icon === 'none') {
+      return;
+    }
+    if (this.props.icon === 'done') {
+      return (
+        <MaterialIcons
+          name={this.props.icon}
+          style={styles.continueIconIndicatorStyle}
+          color={this.getColor()}
+          size={40}
+        />
+      );
+    }
+    if (this.props.icon === 'refresh') {
+      return (
+        <MaterialIcons
+          name={this.props.icon}
+          style={styles.continueIconIndicatorStyle}
+          color={this.getColor()}
+          size={40}
+        />
+      );
+    }
+    if (this.props.icon === 'keyboard-arrow-right') {
+      return (
+        <MaterialIcons
+          name={'keyboard-arrow-right'}
+          style={styles.continueIconIndicatorStyle}
+          color={this.getColor()}
+          size={50}
+        />
+      );
+    }
+    // This one is for the spinner <3
+    return this.props.icon;
+  }
+
+  renderType() {
+    const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
+    const {
+      sectionTitle = '',
+      sectionIcon = '',
+      sectionInfoText = '',
+      sectionDate = '',
+      onPress
+    } = this.props;
+    if (this.props.refresh) {
+      return (
+        <View style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}>
+          <View style={{ flexDirection: 'row' }}>
+            {this.renderDateView(sectionDate)}
+            <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+              <Text
+                numberOfLines={1}
+                style={[
+                  titleStyle,
+                  { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
+                ]}
+              >
+                {sectionIcon === '' ? null : (
+                  <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+                )}
+                {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
+              </Text>
+              {sectionInfoText === '' ? null : (
+                <Text
+                  numberOfLines={1}
+                  style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                >
+                  {sectionInfoText}
+                </Text>
+              )}
+            </View>
+          </View>
+          <TouchableOpacity onPress={() => onPress()}>{this.renderIcon()}</TouchableOpacity>
+        </View>
+      );
+    }
+    return (
+      <TouchableOpacity
+        onPress={() => onPress()}
+        style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}
+      >
+        <View style={{ flexDirection: 'row' }}>
+          {this.renderDateView(sectionDate)}
+          <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+            <Text
+              numberOfLines={1}
+              style={[
+                titleStyle,
+                { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
+              ]}
+            >
+              {sectionIcon === '' ? null : (
+                <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+              )}
+              {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
+            </Text>
+            {sectionInfoText === '' ? null : (
+              <Text
+                numberOfLines={1}
+                style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+              >
+                {sectionInfoText}
+              </Text>
+            )}
+          </View>
+        </View>
+        <View>{this.renderIcon()}</View>
       </TouchableOpacity>
     );
+  }
+
+  render() {
+    return this.renderType();
   }
 }
 
 const styles = {
-  button: {
-    marginTop: 20,
-    marginBottom: 20,
-    borderRadius: 3,
+  containerStyle: {
+    height: 60,
+    backgroundColor: 'white',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
+    width: WIDTH,
+    borderWidth: 1,
+    marginTop: 8
   },
-  textButton: {
+  titleStyle: {
+    fontSize: 20,
+    marginLeft: 8,
     backgroundColor: 'transparent',
-    borderWidth: 0,
-    width: Dimensions.get('window').width / 2,
+    fontFamily: 'Avenir Next Medium'
+  },
+  contentStyle: {
+    fontSize: 14,
+    marginLeft: 8,
+    backgroundColor: 'transparent',
     fontFamily: 'Avenir Next Medium',
-    color: '#fff',
-    fontSize: 17
+    color: '#333'
   },
-  focusView: {
-    backgroundColor: 'rgba(247, 160, 33, 1)'
-  },
-  textView: {
-    backgroundColor: 'rgba(247, 160, 33, 0.5)',
-    borderRadius: 15,
-    marginLeft: 6
-  },
-  roundView: {
-    height: Dimensions.get('window').width / 6.5,
-    width: Dimensions.get('window').width / 6.5,
-    borderRadius: 90,
+  dateViewStyle: {
+    height: 60,
+    width: WIDTH * 0.15,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  barView: {
-    width: Dimensions.get('window').width / 9 / 4,
-    height: Dimensions.get('window').width / 8,
-    backgroundColor: '#F7A021'
+  dateStyle: {
+    fontSize: 16,
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir Next Bold'
+  },
+  continueIconIndicatorStyle: {
+    backgroundColor: 'transparent'
   }
 };
 
-export default TimelineItem;
+export { TimeLineItem };
