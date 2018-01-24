@@ -37,6 +37,18 @@ const errorMsg404 = {
   SE: 'Något gick fel...',
   EN: 'Something went wrong...'
 };
+const errorMsg409EmailAndPersonalNumber = {
+  SE: 'Mail och personnummer är redan i bruk',
+  EN: 'Email and social security number is already in use'
+};
+const errorMsg409Email = {
+  SE: 'Mail är redan i bruk',
+  EN: 'Email is already in use'
+};
+const errorMsg409PersonalNumber = {
+  SE: 'Personnummer är redan i bruk',
+  EN: 'Social security number is already in use'
+};
 const errorMsgInternal = {
   SE: 'Internt fel, var god försök igen senare',
   EN: 'Internal error, please try again later'
@@ -94,6 +106,15 @@ const cancel = {
 const ok = {
   SE: 'OK',
   EN: 'OK'
+};
+
+const profile = {
+  SE: 'Min Profil',
+  EN: 'My Profile'
+};
+const registration = {
+  SE: 'Min Registrering',
+  EN: 'My Registration'
 };
 
 export const LOGIN_SCREEN_STRINGS = {
@@ -221,7 +242,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'gdpr1',
     'gdpr2',
     'gdpr3',
-    'gdpr4'
+    'gdpr4',
+    'errorMsg409EmailAndPersonalNumber',
+    'errorMsg409Email',
+    'errorMsg409PersonalNumber'
   ],
   header: {
     SE: 'Skapa profil',
@@ -302,6 +326,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Invalid email address or password'
   },
   errorMsg404,
+  errorMsg409EmailAndPersonalNumber,
+  errorMsg409Email,
+  errorMsg409PersonalNumber,
   errorMsgInternal,
   ok,
   gdpr1: {
@@ -443,14 +470,8 @@ export const SETTINGS_SCREEN_STRINGS = {
     SE: 'Inställningar',
     EN: 'Settings'
   },
-  profile: {
-    SE: 'Min profil',
-    EN: 'My profile'
-  },
-  registration: {
-    SE: 'Min registrering',
-    EN: 'My registration'
-  },
+  profile,
+  registration,
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
@@ -560,13 +581,13 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'firstName',
     'lastName',
     'email',
+    'careOf',
     'address',
     'postNumber',
     'city',
     'phoneNumber',
     'foodPreference',
     'language',
-    'careOf',
     'driversLicense',
     'disability',
     'audition',
@@ -590,10 +611,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'invalidChangesMadeText',
     'invalidChangesMadeHeader'
   ],
-  title: {
-    SE: 'Användarinfo',
-    EN: 'User info'
-  },
+  title: profile,
   firstName,
   lastName,
   email,
@@ -688,10 +706,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {
   fields: ['title', 'emptyListMessage'],
-  title: {
-    SE: 'Mina val',
-    EN: 'My choices'
-  },
+  title: registration,
   emptyListMessage: {
     SE: 'Du har inte valt några sektioner',
     EN: 'You have not chosen any sections'

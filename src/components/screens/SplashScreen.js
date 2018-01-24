@@ -13,9 +13,10 @@ import {
   setEmail,
   setSectionScreenPopover,
   setHomeScreenPopover,
-  setSectionPriorities
+  setSectionPriorities,
+  setUserinfo
 } from '../../actions';
-import { fetchSections } from '../../helpers/ApiManager';
+import { fetchSections, fetchUserinfo } from '../../helpers/ApiManager';
 
 class SplashScreen extends Component {
   constructor(props) {
@@ -45,37 +46,29 @@ class SplashScreen extends Component {
       actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
       key: null
     });
-    setTimeout(
-      () =>
-        getItem('email', email => {
-          if (email !== null) {
-            getItem('accessToken', token => {
-              const headers = {
-                Authorization: 'Bearer ' + token,
-                'content-type': 'application/json'
-              };
-              axios
-                .post(TOKEN_URL, {}, { headers })
-                .then(response => {
-                  const { success } = response.data;
-                  if (success) {
-                    resetAction.actions = [
-                      NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
-                    ];
-                    this.props.setToken(token);
-                    this.props.setEmail(email);
-                    this.props.navigation.dispatch(resetAction);
-                  } else this.props.navigation.dispatch(resetAction);
-                })
-                .catch(error => {
-                  console.log(error.message);
-                  this.props.navigation.dispatch(resetAction);
-                });
-            });
-          } else {
-            this.props.navigation.dispatch(resetAction);
-          }
-        }),
+    setTimeout(() =>
+      getItem('email', email => {
+        if (email !== null) {
+          getItem('accessToken', token => {
+            fetchUserinfo(email, token, (response, error = false) => {
+              if (error) {
+                this.props.navigation.dispatch(resetAction);
+              } else {
+                resetAction.actions = [
+                  NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
+                ];
+                const allUserinfo = Object.assign({}, response, response.KarnevalistInfo);
+                this.props.setToken(token);
+                this.props.setEmail(email);
+                this.props.setUserinfo(allUserinfo)
+                this.props.navigation.dispatch(resetAction);
+              }
+            })
+          });
+        } else {
+          this.props.navigation.dispatch(resetAction);
+        }
+      }),
       2000
     );
   }
@@ -146,5 +139,6 @@ export default connect(mapStateToProps, {
   setEmail,
   setSectionScreenPopover,
   setHomeScreenPopover,
-  setSectionPriorities
+  setSectionPriorities,
+  setUserinfo
 })(SplashScreen);
