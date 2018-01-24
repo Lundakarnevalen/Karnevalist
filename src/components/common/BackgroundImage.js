@@ -22,7 +22,7 @@ class BackgroundImage extends Component {
   }
 
   getOpacityStyle() {
-    const backgroundColor = 'rgba(255, 255, 255, 0.3)';
+    const backgroundColor = 'rgba(0, 0, 0, 0.3)';
     return {
       backgroundColor,
       width: WIDTH,

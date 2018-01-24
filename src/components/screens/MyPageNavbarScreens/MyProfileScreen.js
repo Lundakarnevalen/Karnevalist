@@ -7,8 +7,8 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
-// import { MaterialIcons } from '@expo/vector-icons';
-// import axios from 'axios';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
 import { USER_URL, LOGOUT_RESET_ACTION } from '../../../helpers/Constants';
@@ -48,11 +48,15 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      const color =
-        editMode && key !== 'email' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(210, 210, 210, 0.7)';
+      const backgroundColor = editMode && key !== 'email' ? 'white' : 'transparent';
+      const borderWidth = editMode && key !== 'email' ? 1 : 0;
+      const textColor = editMode && key !== 'email' ? 'black' : 'white';
+      const placeholderTextColor = editMode && key !== 'email' ? '#F7A021' : 'white';
       return (
         <Input
-          extraContainerStyle={{ backgroundColor: color }}
+          extraContainerStyle={{ backgroundColor, borderWidth }}
+          extraInputStyle={{ color: textColor }}
+          extraPlaceHolderStyle={{ color: placeholderTextColor }}
           key={key}
           placeholder={labels[key]}
           value={user[key]}
