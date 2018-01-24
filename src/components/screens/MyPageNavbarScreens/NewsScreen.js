@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, Dimensions, Platform } from 'react-native';
+import { View, FlatList, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { getNews } from '../../../helpers/ApiManager';
@@ -10,19 +10,13 @@ const height = Dimensions.get('window').height;
 class NewsScreen extends Component {
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows([])
+      data: []
     };
   }
 
   componentWillMount() {
-    getNews().then(response => {
-      const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-      this.setState({
-        dataSource: ds.cloneWithRows(response)
-      });
-    });
+    getNews().then(response => this.setState({ data: response }));
   }
 
   getStrings() {
@@ -34,25 +28,26 @@ class NewsScreen extends Component {
   }
 
   render() {
+    const { data } = this.state;
     const { navigation, screenProps } = this.props;
     const strings = this.getStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
-        <ListView
+        <FlatList
           enableEmptySections
           style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
-          dataSource={this.state.dataSource}
+          data={data}
           enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}
-          renderRow={rowData => (
+          renderItem={({ item }) => (
             <SectionListItem
-              sectionTitle={rowData.title.rendered}
-              sectionDate={rowData.date}
+              sectionTitle={item.title.rendered}
+              sectionDate={item.date}
               onPress={() =>
                 screenProps.navigation.navigate('SingleNewsScreen', {
-                  info: { title: rowData.title.rendered, url: rowData.link }
+                  info: { title: item.title.rendered, url: item.link }
                 })
               }
             />

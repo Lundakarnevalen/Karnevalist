@@ -256,6 +256,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Helsingkrona Nation',
       'Kalmar Nation',
       'Kristianstads Nation',
+      'Lunds Nation',
       'Malmö Nation',
       'Sydskånska Nation',
       'Västgöta Nation',
@@ -270,6 +271,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Helsingkrona Nation',
       'Kalmar Nation',
       'Kristianstads Nation',
+      'Lunds Nation',
       'Malmö Nation',
       'Sydskånska Nation',
       'Västgöta Nation',
@@ -437,7 +439,16 @@ export const HOME_SCREEN_STRINGS = {
 };
 
 export const SETTINGS_SCREEN_STRINGS = {
-  fields: ['title', 'profile', 'registration', 'logout', 'cancel', 'ok', 'alertHeader', 'alertMessage'],
+  fields: [
+    'title',
+    'profile',
+    'registration',
+    'logout',
+    'cancel',
+    'ok',
+    'alertHeader',
+    'alertMessage'
+  ],
   title: {
     SE: 'Inställningar',
     EN: 'Settings'

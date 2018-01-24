@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, ScrollView } from 'react-native';
+import { View, Text, Dimensions, ScrollView, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Header } from '../../common';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
@@ -7,6 +7,10 @@ import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 class SectionItemScreen extends Component {
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+  }
+
   getStrings() {
     const { language } = this.props;
     const { fields } = SECTION_ITEM_SCREEN_STRINGS;
@@ -38,7 +42,6 @@ const styles = {
   containerStyle: {
     height: HEIGHT,
     width: WIDTH,
-    alignItems: 'center',
     backgroundColor: 'white'
   },
   headerStyle: {
