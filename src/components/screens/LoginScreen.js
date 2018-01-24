@@ -116,9 +116,10 @@ class LoginScreen extends Component {
         })
         .then(res => {
           const { accessToken, userinfo } = res.data;
+          const allUserinfo = Object.assign({}, userinfo, userinfo.KarnevalistInfo);
           this.props.setToken(accessToken);
           this.props.setEmail(email);
-          this.props.setUserinfo(userinfo);
+          this.props.setUserinfo(allUserinfo);
           saveItem('email', email);
           saveItem('accessToken', accessToken);
           this.setState({ loadingComplete: true });
