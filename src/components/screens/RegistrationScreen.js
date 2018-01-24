@@ -140,8 +140,8 @@ class RegistrationScreen extends Component {
       studentUnion === 'Välj nation' ||
       studentUnion === 'Choose student union' ||
       studentUnion === '' ||
-      driversLicense === 'Jag har inget körkort' ||
-      driversLicense === 'I do not have a drivers license' ||
+      driversLicense === 'Välj körkortstyp' ||
+      driversLicense === 'Choose type of drivers license' ||
       driversLicense === ''
     )
       return true;
