@@ -214,7 +214,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorMsg404',
     'errorMsgInternal',
     'ok',
-    'co'
+    'co',
+    'other'
   ],
   header: {
     SE: 'Skapa profil',
@@ -304,7 +305,11 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   errorMsg404,
   errorMsgInternal,
-  ok
+  ok,
+  other: {
+    SE: 'Övrigt',
+    EN: 'Other'
+  }
 };
 
 export const REGISTRATION_INFO_SCREEN_STRINGS = {

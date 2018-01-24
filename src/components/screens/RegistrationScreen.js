@@ -44,6 +44,7 @@ class RegistrationScreen extends Component {
       activeCarneval2014: false,
       foodPreference: '',
       co: '',
+      other: '',
       errors: [false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showDriversLicensePicker: false,
@@ -260,7 +261,8 @@ class RegistrationScreen extends Component {
       alertVisible,
       message,
       activeCarneval2014,
-      driversLicense
+      driversLicense,
+      other
     } = this.state;
 
     const closeButton = (
@@ -523,6 +525,16 @@ class RegistrationScreen extends Component {
             value={activeCarneval2014}
             color={'white'}
           />
+          <Input
+            ref={'other'}
+            placeholder={strings.other}
+            onChangeText={text => {
+              this.setState({ other: text })
+            }}
+            value={other}
+            returnKeyType={'done'}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
           <CustomButton
             text={strings.register}
             style={'standardButton'}
@@ -557,7 +569,8 @@ class RegistrationScreen extends Component {
                     driversLicense,
                     pastInvolvement: activeCarneval2014,
                     shirtSize,
-                    studentUnion
+                    studentUnion,
+                    other
                   })
                   .then(response => {
                     const { accessToken } = response.data;
