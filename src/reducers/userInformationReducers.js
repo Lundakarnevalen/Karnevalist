@@ -3,9 +3,11 @@ import {
   SET_PICTURE,
   SET_EMAIL,
   SET_PROGRESS,
-  SET_USERINFO
+  SET_USERINFO,
+  RESET_DATA
 } from '../actions/Types.js';
 
+// Initial state for user information
 const INITIAL_STATE = {
   token: null,
   email: null,
@@ -25,8 +27,9 @@ export default (state = INITIAL_STATE, action) => {
     case SET_PROGRESS:
       return { ...state, progress: action.payload };
     case SET_USERINFO:
-      return { ...state, userinfo: action.payload };
-
+    return { ...state, userinfo: action.payload };
+    case RESET_DATA:
+      return { state: INITIAL_STATE };
     default:
       return state;
   }

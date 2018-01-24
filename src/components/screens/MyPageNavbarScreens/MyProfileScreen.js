@@ -71,7 +71,8 @@ class MyProfileScreen extends Component {
   }
 
   renderMainView() {
-    if (this.state.user === null)
+    const { user } = this.state;
+    if (user === null)
       return (
         <View style={styles.loading}>
           <ActivityIndicator size="large" color={'white'} />
@@ -331,3 +332,13 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
   //   header={strings.invalidChangesMadeHeader}
   //   info={strings.invalidChangesMadeText}
   // />
+
+  //<View>
+  //   {this.renderMainView()}
+  //   <Toast
+  //     color={'#f4376d'}
+  //     showToast={showToast}
+  //     onClose={() => this.setState({ showToast: false })}
+  //     message={this.getMsg(success, strings)}
+  //   />
+  // </View>

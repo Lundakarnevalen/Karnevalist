@@ -46,30 +46,29 @@ class SplashScreen extends Component {
       actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
       key: null
     });
-    setTimeout(
-      () =>
-        getItem('email', email => {
-          if (email !== null) {
-            getItem('accessToken', token => {
-              fetchUserinfo(email, token, (response, error = false) => {
-                if (error) {
-                  this.props.navigation.dispatch(resetAction);
-                } else {
-                  resetAction.actions = [
-                    NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
-                  ];
-                  const userinfo = Object.assign({}, response, response.KarnevalistInfo);
-                  this.props.setToken(token);
-                  this.props.setEmail(email);
-                  this.props.setUserinfo(userinfo)
-                  this.props.navigation.dispatch(resetAction);
-                }
-              })
-            });
-          } else {
-            this.props.navigation.dispatch(resetAction);
-          }
-        }),
+    setTimeout(() =>
+      getItem('email', email => {
+        if (email !== null) {
+          getItem('accessToken', token => {
+            fetchUserinfo(email, token, (response, error = false) => {
+              if (error) {
+                this.props.navigation.dispatch(resetAction);
+              } else {
+                resetAction.actions = [
+                  NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
+                ];
+                const userinfo = Object.assign({}, response, response.KarnevalistInfo);
+                this.props.setToken(token);
+                this.props.setEmail(email);
+                this.props.setUserinfo(userinfo)
+                this.props.navigation.dispatch(resetAction);
+              }
+            })
+          });
+        } else {
+          this.props.navigation.dispatch(resetAction);
+        }
+      }),
       2000
     );
   }
