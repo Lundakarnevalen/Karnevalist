@@ -59,6 +59,8 @@ class RegistrationScreen extends Component {
       corps: '',
       plenipotentiary: false,
       message: '',
+      bff: '',
+      bffError: false
     };
   }
 
@@ -152,8 +154,12 @@ class RegistrationScreen extends Component {
   }
 
   anyErrors() {
-    const { errors, foodPreferenceError, foodPreference } = this.state;
-    return errors.indexOf(true) !== -1 || (foodPreferenceError && foodPreference !== '');
+    const { errors, foodPreferenceError, foodPreference, bffError, bff } = this.state;
+    return (
+    errors.indexOf(true) !== -1
+    || (bffError && bff !== '')
+    || (foodPreferenceError && foodPreference !== '')
+  )
   }
 
   trimValues() {
@@ -268,7 +274,9 @@ class RegistrationScreen extends Component {
       other,
       plenipotentiary,
       previousInvolvement,
-      corps
+      corps,
+      bff,
+      bffError
     } = this.state;
 
     const closeButton = (
@@ -567,13 +575,26 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'corps'}
-            onSubmitEditing={() => this.refs.other.focus()}
+            onSubmitEditing={() => this.refs.bff.focus()}
             placeholder={strings.corps}
             onChangeText={text => {
               this.setState({ corps: text });
             }}
             value={corps}
             returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
+          <Input
+            ref={'bff'}
+            onSubmitEditing={() => this.refs.other.focus()}
+            placeholder={strings.bff}
+            onChangeText={text => {
+              this.setState({ bff: text, bffError: !this.isEmail(text) });
+            }}
+            value={bff}
+            returnKeyType={'next'}
+            hasError={bffError}
+            warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
@@ -622,6 +643,7 @@ class RegistrationScreen extends Component {
                     pastInvolvement: previousInvolvement,
                     shirtSize,
                     corps,
+                    bff,
                     studentUnion,
                     plenipotentiary,
                     startOfStudies: inputs[11],

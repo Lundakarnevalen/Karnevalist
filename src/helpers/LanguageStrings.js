@@ -219,7 +219,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'plenipotentiary',
     'yearStudyStart',
     'previousInvolvement',
-    'corps'
+    'corps',
+    'bff'
   ],
   header: {
     SE: 'Skapa profil',
@@ -329,6 +330,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
   yearStudyStart: {
     SE: 'Jag började studera år',
     EN: 'I started study'
+  },
+  bff: {
+    SE: 'placeholder',
+    EN: 'placeholder'
   }
 };
 
