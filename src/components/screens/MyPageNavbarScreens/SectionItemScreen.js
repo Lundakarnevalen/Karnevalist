@@ -41,9 +41,7 @@ class SectionItemScreen extends Component {
           onPress={() => {
             this.props.addSectionPriority(id);
             this.setState({ showToast: true, favorite: true });
-            getFavoriteSections(sections => {
-              if (sections.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
-            });
+            if (sectionPriorities.length > 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
           }}
         >
           <MaterialIcons name="favorite-border" size={30} color={'white'} />
@@ -56,6 +54,7 @@ class SectionItemScreen extends Component {
         onPress={() => {
           this.props.removeSectionPriority(id);
           this.setState({ showToast: true, favorite: false });
+          //TODO: om vi tar bort och går under 5 sektioner så måste timeline backa ett steg
         }}
       >
         <MaterialIcons name="favorite" size={30} color={'white'} />
