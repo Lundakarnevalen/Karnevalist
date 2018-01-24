@@ -31,14 +31,9 @@ class MyPageNavbarScreen extends Component {
     if (this.props.token) this.updateProgress();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.token) this.updateProgress();
-  }
-
   updateProgress() {
     const { email, token } = this.props;
     this.props.setProgress(1);
-    //this.props.setProgress(2);
     fetchCheckInStatus(
       email,
       token,

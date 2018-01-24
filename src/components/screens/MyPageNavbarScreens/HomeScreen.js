@@ -8,13 +8,14 @@ import {
   BackgroundImage,
   CountDown,
   Popover,
-  TimeLineItem,
+  TimelineItem,
   SuperAgileAlert
 } from '../../common';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { fetchCheckInStatus } from '../../../helpers/ApiManager';
 import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
+import { PROGRESS } from '../../../helpers/Constants';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -67,21 +68,19 @@ class HomeScreen extends Component {
 
   updateProgress() {
     const { email, token } = this.props;
-    this.props.setProgress(1);
     fetchCheckInStatus(
       email,
       token,
       bool => {
-        setTimeout(
-          () => this.setState({ checkInLoading: false, spinValue: new Animated.Value(0) }),
-          1500
-        );
-        if (bool) {
-          this.props.setProgress(2);
-          if (this.props.sectionPriorities >= 5) {
-            this.props.setProgress(3);
+        setTimeout(() => {
+          if (true) {
+            this.props.setProgress(PROGRESS.CHECK_IN);
+            if (this.props.sectionPriorities >= 5) {
+              this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+            }
           }
-        }
+          this.setState({ checkInLoading: false, spinValue: new Animated.Value(0) });
+        }, 1500);
       },
       () => this.setState({ checkInLoading: false })
     );
@@ -92,6 +91,7 @@ class HomeScreen extends Component {
       return 'done';
     }
     if (this.props.progress + 1 === prog) {
+      if (prog === 2) return 'refresh';
       return 'keyboard-arrow-right';
     }
     return 'none';
@@ -157,7 +157,7 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { container, textStyle, textStyleProgress } = styles;
+    const { container, textStyleProgress } = styles;
     const { navigation } = this.props;
     const strings = this.getStrings();
     return (
@@ -187,29 +187,29 @@ class HomeScreen extends Component {
             <Text style={textStyleProgress}> {strings.Karnevalist} </Text>
           </View>
           <View style={{ justifyContent: 'center', marginTop: 12 }}>
-            <TimeLineItem
+            <TimelineItem
               sectionTitle={strings.step1}
               icon={this.renderIcon(1)}
               style={this.renderStyle(1)}
               onPress={() => this.renderOnPress(1)}
               sectionInfoText={strings.createProfile}
             />
-            <TimeLineItem
+            <TimelineItem
               sectionTitle={strings.step2}
-              icon={this.state.checkInLoading ? this.renderCheckInLoading() : 'refresh'}
+              icon={this.state.checkInLoading ? this.renderCheckInLoading() : this.renderIcon(2)}
               style={this.renderStyle(2)}
               refresh
               onPress={() => this.renderOnPress(2)}
               sectionInfoText={strings.CheckIn}
             />
-            <TimeLineItem
+            <TimelineItem
               sectionTitle={strings.step3}
               icon={this.renderIcon(3)}
               style={this.renderStyle(3)}
               onPress={() => this.renderOnPress(3)}
               sectionInfoText={strings.ChooseSections}
             />
-            <TimeLineItem
+            <TimelineItem
               sectionTitle={strings.step4}
               icon={this.renderIcon(4)}
               style={this.renderStyle(4)}

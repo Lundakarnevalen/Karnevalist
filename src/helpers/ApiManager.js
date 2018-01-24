@@ -58,7 +58,6 @@ export function fetchCheckInStatus(email, token, callback, errorCallback) {
   axios
     .get(URL, { headers })
     .then(response => {
-      console.log(response.data);
       callback(response.data.checkedIn);
     })
     .catch(error => {

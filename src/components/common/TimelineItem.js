@@ -19,7 +19,7 @@ const months = [
   'Dec'
 ];
 
-class TimeLineItem extends Component {
+class TimelineItem extends Component {
   getColor() {
     return '#F7A021';
   }
@@ -203,4 +203,4 @@ const styles = {
   }
 };
 
-export { TimeLineItem };
+export { TimelineItem };

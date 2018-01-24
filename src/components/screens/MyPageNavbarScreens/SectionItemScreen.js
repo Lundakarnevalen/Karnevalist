@@ -41,7 +41,7 @@ class SectionItemScreen extends Component {
           onPress={() => {
             this.props.addSectionPriority(id);
             this.setState({ showToast: true, favorite: true });
-            if (sectionPriorities.length > 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+            if (sectionPriorities.length >= 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
           }}
         >
           <MaterialIcons name="favorite-border" size={30} color={'white'} />

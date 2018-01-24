@@ -24,6 +24,12 @@ const LoggedIn = StackNavigator({
       header: null
     }
   },
+  SongScreen: {
+    screen: SongScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   SectionItemScreen: {
     screen: SectionItemScreen,
     navigationOptions: {
@@ -90,7 +96,7 @@ const Router = StackNavigator(
       navigationOptions: {
         header: null
       }
-    },
+    }
   },
   {
     mode: 'modal',
