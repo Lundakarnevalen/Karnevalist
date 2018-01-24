@@ -62,7 +62,7 @@ class LoginScreen extends Component {
         }
       })
       .catch(error => {
-        const msg = handleErrorMsg(error.message, strings);
+        const msg = handleErrorMsg(error, strings);
         this.setState({ resetPasswordError: msg });
       });
   }
@@ -125,7 +125,7 @@ class LoginScreen extends Component {
           this.setState({ loadingComplete: true });
         })
         .catch(error => {
-          const msg = handleErrorMsg(error.message, strings);
+          const msg = handleErrorMsg(error, strings);
           this.setState({ loading: false, loadingComplete: false });
           this.setState({
             alertVisible: true,
@@ -294,4 +294,6 @@ const mapStateToProps = ({ currentLanguage }) => {
   return { language };
 };
 
-export default connect(mapStateToProps, { setLanguage, setToken, setEmail, setUserinfo })(LoginScreen);
+export default connect(mapStateToProps, { setLanguage, setToken, setEmail, setUserinfo })(
+  LoginScreen
+);

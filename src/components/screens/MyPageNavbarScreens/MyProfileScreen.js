@@ -100,8 +100,7 @@ class MyProfileScreen extends Component {
 
 const styles = {
   scrollStyle: {
-    marginTop: 20,
-    height: HEIGHT - 120,
+    height: HEIGHT - 64,
     paddingTop: 4,
     paddingRight: 16,
     paddingLeft: 16
@@ -192,7 +191,7 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 //     })
 //     .catch(error => {
 //       if (error.response.status === 401) this.handleLogout();
-//       const msg = handleErrorMsg(error.message);
+//       const msg = handleErrorMsg(error);
 //     });
 // }
 
@@ -289,7 +288,7 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 //     })
 //     .catch(error => {
 //       if (error.response.status === 401) this.handleLogout();
-//       const msg = handleErrorMsg(error.message);
+//       const msg = handleErrorMsg(error);
 //     });
 // }
 //
