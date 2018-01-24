@@ -116,7 +116,6 @@ class LoginScreen extends Component {
         })
         .then(res => {
           const { accessToken, userinfo } = res.data;
-          console.log(res.data);
           this.props.setToken(accessToken);
           this.props.setEmail(email);
           this.props.setUserinfo(userinfo);

@@ -60,7 +60,8 @@ class SplashScreen extends Component {
                   ];
                   this.props.setToken(token);
                   this.props.setEmail(email);
-                  this.props.setUserinfo(response)
+                  const userinfo = Object.assign({}, response, response.KarnevalistInfo)
+                  this.props.setUserinfo(userinfo)
                   this.props.navigation.dispatch(resetAction);
                 }
               })

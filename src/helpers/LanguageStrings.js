@@ -96,6 +96,15 @@ const ok = {
   EN: 'OK'
 };
 
+const profile = {
+  SE: 'Min Profil',
+  EN: 'My Profile'
+};
+const registration = {
+  SE: 'Min Registrering',
+  EN: 'My Registration'
+};
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -413,14 +422,8 @@ export const SETTINGS_SCREEN_STRINGS = {
     SE: 'Inställningar',
     EN: 'Settings'
   },
-  profile: {
-    SE: 'Min profil',
-    EN: 'My profile'
-  },
-  registration: {
-    SE: 'Min registrering',
-    EN: 'My registration'
-  },
+  profile,
+  registration,
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
@@ -560,10 +563,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'invalidChangesMadeText',
     'invalidChangesMadeHeader'
   ],
-  title: {
-    SE: 'Användarinfo',
-    EN: 'User info'
-  },
+  title: profile,
   firstName,
   lastName,
   email,
@@ -658,10 +658,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {
   fields: ['title', 'emptyListMessage'],
-  title: {
-    SE: 'Mina val',
-    EN: 'My choices'
-  },
+  title: registration,
   emptyListMessage: {
     SE: 'Du har inte valt några sektioner',
     EN: 'You have not chosen any sections'
