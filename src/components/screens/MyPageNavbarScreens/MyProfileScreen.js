@@ -287,7 +287,8 @@ class MyProfileScreen extends Component {
   }
 
   renderMainView() {
-    if (this.state.user === null)
+    const { user } = this.state;
+    if (user === null)
       return (
         <View style={styles.loading}>
           <ActivityIndicator size="large" color={'white'} />
@@ -300,23 +301,17 @@ class MyProfileScreen extends Component {
     const { navigation } = this.props;
     const {
       alertVisible,
-      success,
-      showToast,
       message,
       alertHeader,
-      errorAlertVisible
+      errorAlertVisible,
+      success,
+      showToast
     } = this.state;
     const strings = this.getStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
         <Header title={strings.title} navigation={navigation} rightIcon={this.getRightIcon()} />
-        <Toast
-          color={'#f4376d'}
-          showToast={showToast}
-          onClose={() => this.setState({ showToast: false })}
-          message={this.getMsg(success, strings)}
-        />
         <SuperAgileAlert
           alertVisible={alertVisible}
           setAlertVisible={visible => this.setAlertVisible(visible, message)}
@@ -331,7 +326,15 @@ class MyProfileScreen extends Component {
           header={strings.invalidChangesMadeHeader}
           info={strings.invalidChangesMadeText}
         />
-        {this.renderMainView()}
+        <View>
+          {this.renderMainView()}
+          <Toast
+            color={'#f4376d'}
+            showToast={showToast}
+            onClose={() => this.setState({ showToast: false })}
+            message={this.getMsg(success, strings)}
+          />
+        </View>
       </View>
     );
   }
