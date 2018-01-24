@@ -3,7 +3,7 @@ import { View, FlatList, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, SectionListItem, BackgroundImage, SuperAgileAlert } from '../../common';
 import { removeItem } from '../../../helpers/LocalSave';
-import { setProgress } from '../../../actions';
+import { setProgress, resetData } from '../../../actions';
 import { LOGOUT_RESET_ACTION, PROGRESS } from '../../../helpers/Constants';
 import { SETTINGS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
@@ -39,6 +39,7 @@ class SettingsScreen extends Component {
     removeItem('email');
     removeItem('accessToken');
     this.props.setProgress(0);
+    this.props.resetData();
     this.props.screenProps.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
@@ -93,4 +94,4 @@ const mapStateToProps = ({ currentLanguage, userInformation }) => {
   return { language, progress };
 };
 
-export default connect(mapStateToProps, { setProgress })(SettingsScreen);
+export default connect(mapStateToProps, { setProgress, resetData })(SettingsScreen);
