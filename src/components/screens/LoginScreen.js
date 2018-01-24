@@ -205,13 +205,6 @@ class LoginScreen extends Component {
               }}
               style="textButton"
             />
-            <CustomButton
-              text={strings.readMore}
-              onPress={() => {
-                this.props.navigation.navigate('RegistrationInfo');
-              }}
-              style="textButton"
-            />
             <SuperAgileAlert
               alertVisible={alertVisible}
               setAlertVisible={visible => this.setState({ alertVisible: visible })}
