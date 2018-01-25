@@ -13,7 +13,8 @@
       "bundleIdentifier": "com.lundakarnevalen2018.Karnevalist"
     },
     "android": {
-      "package": "com.lundakarnevalen2018.Karnevalist"
+      "package": "com.lundakarnevalen2018.Karnevalist",
+      "permissions": []
     }
   }
 }
