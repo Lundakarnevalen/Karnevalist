@@ -56,6 +56,7 @@ class RegistrationScreen extends Component {
       keyboardHeight: 0,
       alertVisible: false,
       corps: '',
+      showCorpPicker: false,
       plenipotentiary: false,
       bff: '',
       bffError: false,
@@ -219,16 +220,8 @@ class RegistrationScreen extends Component {
     );
   }
 
-  getTrueValuesFromList(list, tag) {
+  getTrueValuesFromList(list, names) {
     const newList = [];
-    const checkBoxNames = REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN;
-    const auditionNames = REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN;
-    let names = [];
-    if (tag === 'audition') {
-      names = auditionNames;
-    } else {
-      names = checkBoxNames;
-    }
     for (let i = 0; i < list.length; i++) {
       if (list[i] === true) {
         newList.push(names[i]);
@@ -238,15 +231,14 @@ class RegistrationScreen extends Component {
   }
 
   trimValues() {
-    const { inputs, yearStudyStart } = this.state;
+    const { inputs } = this.state;
     const trimmedList = inputs;
-    const trimYearStudyStart = yearStudyStart.trim();
     for (let i = 0; i < trimmedList.length; i++) {
       if (!(i === 5 || i === 6)) {
         trimmedList[i] = inputs[i].trim();
       }
     }
-    this.setState({ inputs: trimmedList, yearStudyStart: trimYearStudyStart });
+    this.setState({ inputs: trimmedList });
   }
 
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
@@ -263,11 +255,14 @@ class RegistrationScreen extends Component {
               case 'shirt':
                 this.setState({ showShirtPicker: true });
                 break;
-              case 'union':
+              case 'nation':
                 this.setState({ showstudentNationPicker: true });
                 break;
               case 'driversLicense':
                 this.setState({ showDriversLicensePicker: true });
+                break;
+              case 'corps':
+                this.setState({ showCorpPicker: true });
                 break;
               default:
                 break;
@@ -373,8 +368,13 @@ class RegistrationScreen extends Component {
   }
 
   renderDKBackgroundCloser() {
-    const { showShirtPicker, showstudentNationPicker, showDriversLicensePicker } = this.state;
-    if (showShirtPicker || showstudentNationPicker || showDriversLicensePicker) {
+    const {
+      showShirtPicker,
+      showstudentNationPicker,
+      showDriversLicensePicker,
+      showCorpPicker
+    } = this.state;
+    if (showShirtPicker || showstudentNationPicker || showDriversLicensePicker || showCorpPicker) {
       return (
         <TouchableWithoutFeedback
           style={{ position: 'absolute' }}
@@ -382,7 +382,8 @@ class RegistrationScreen extends Component {
             this.setState({
               showShirtPicker: false,
               showstudentNationPicker: false,
-              showDriversLicensePicker: false
+              showDriversLicensePicker: false,
+              showCorpPicker: false
             })
           }
         >
@@ -411,6 +412,7 @@ class RegistrationScreen extends Component {
       co,
       loading,
       loadingComplete,
+      showCorpPicker,
       shirtSize,
       showShirtPicker,
       studentNation,
@@ -689,7 +691,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'previousInvolvement'}
-            onSubmitEditing={() => this.refs.corps.focus()}
+            onSubmitEditing={() => this.refs.bff.focus()}
             placeholder={strings.previousInvolvement}
             onChangeText={text => {
               this.setState({ previousInvolvement: text });
@@ -698,17 +700,6 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgPreviousInvolvement}
-          />
-          <Input
-            ref={'corps'}
-            onSubmitEditing={() => this.refs.bff.focus()}
-            placeholder={strings.corps}
-            onChangeText={text => {
-              this.setState({ corps: text });
-            }}
-            value={corps}
-            returnKeyType={'next'}
-            scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
             ref={'bff'}
@@ -733,8 +724,9 @@ class RegistrationScreen extends Component {
             strings.studentNation,
             strings.studentNationArray,
             studentNation,
-            'union'
+            'nation'
           )}
+          {this.renderPickerForPlatform(strings.corps, strings.corpsList, corps, 'corps')}
           {this.renderPickerForPlatform(
             strings.driversLicense,
             strings.driversLicenseArray,
@@ -810,11 +802,20 @@ class RegistrationScreen extends Component {
             onPress={() => {
               const smallPleasures = this.getTrueValuesFromList(
                 smallAuditionCheckBoxes,
-                'audition'
+                REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
               );
-              const bigPleasures = this.getTrueValuesFromList(bigAuditionCheckBoxes, 'audition');
-              const interest = this.getTrueValuesFromList(wantToLearn);
-              const skills = this.getTrueValuesFromList(wantToWorkWith);
+              const bigPleasures = this.getTrueValuesFromList(
+                bigAuditionCheckBoxes,
+                REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+              );
+              const interest = this.getTrueValuesFromList(
+                wantToLearn,
+                REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+              );
+              const skills = this.getTrueValuesFromList(
+                wantToWorkWith,
+                REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+              );
               const postData = {
                 firstName: inputs[0],
                 lastName: inputs[1],
@@ -899,6 +900,13 @@ class RegistrationScreen extends Component {
           value={driversLicense}
           isShowing={showDriversLicensePicker}
           close={() => this.setState({ showDriversLicensePicker: false })}
+        />
+        <DKPicker
+          onValueChange={newValue => this.setState({ corps: newValue })}
+          items={strings.corpsList}
+          value={corps}
+          isShowing={showCorpPicker}
+          close={() => this.setState({ showCorpPicker: false })}
         />
         {loading ? (
           <Loading
