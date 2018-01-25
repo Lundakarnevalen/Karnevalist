@@ -175,7 +175,7 @@ class HomeScreen extends Component {
           <View style={{ justifyContent: 'center', marginTop: 12 }}>
             <TimelineItem
               sectionTitle={strings.step1}
-              done={() => progress >= PROGRESS.CREATE_PROFILE}
+              done={progress >= PROGRESS.CREATE_PROFILE}
               icon={this.renderIcon(PROGRESS.CREATE_PROFILE)}
               style={this.renderStyle(PROGRESS.CREATE_PROFILE)}
               onPress={() => this.renderOnPress(PROGRESS.CREATE_PROFILE)}
@@ -188,14 +188,14 @@ class HomeScreen extends Component {
                   ? this.renderCheckInLoading()
                   : this.renderIcon(PROGRESS.CHECK_IN)
               }
-              done={() => progress >= PROGRESS.CHECK_IN}
+              done={progress >= PROGRESS.CHECK_IN}
               style={this.renderStyle(PROGRESS.CHECK_IN)}
               refresh
               onPress={() => this.renderOnPress(PROGRESS.CHECK_IN)}
               sectionInfoText={strings.CheckIn}
             />
             <TimelineItem
-              done={() => progress >= PROGRESS.CHOOSE_SECTIONS}
+              done={progress >= PROGRESS.CHOOSE_SECTIONS}
               sectionTitle={strings.step3}
               icon={this.renderIcon(PROGRESS.CHOOSE_SECTIONS)}
               style={this.renderStyle(PROGRESS.CHOOSE_SECTIONS)}
@@ -203,7 +203,7 @@ class HomeScreen extends Component {
               sectionInfoText={strings.ChooseSections}
             />
             <TimelineItem
-              done={() => progress >= PROGRESS.SENT_SECTIONS}
+              done={progress >= PROGRESS.SENT_SECTIONS}
               sectionTitle={strings.step4}
               icon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
               style={this.renderStyle(PROGRESS.SENT_SECTIONS)}
