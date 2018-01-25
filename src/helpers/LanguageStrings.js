@@ -587,7 +587,9 @@ export const CONFIRM_PAGE_STRINGS = {
     'confirmHeader',
     'yes',
     'cancel',
-    'checkinMessage'
+    'checkinMessage',
+    'notCheckedInButton',
+    'notFiveSections'
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -636,6 +638,14 @@ export const CONFIRM_PAGE_STRINGS = {
   checkinMessage: {
     SE: 'Du måste vara incheckad innan du kan skicka in',
     EN: 'You must be checked in to send'
+  },
+  notCheckedInButton: {
+    SE: 'Vargod checka in...',
+    EN: 'Please check in...'
+  },
+  notFiveSections: {
+    SE: 'Vargod välj 5 sektioner...',
+    EN: 'Please select 5 sections...'
   }
 };
 

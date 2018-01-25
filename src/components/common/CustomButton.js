@@ -103,10 +103,14 @@ class CustomButton extends Component {
   }
 
   render() {
-    const { onPress, text, width = WIDTH / 1.5 } = this.props;
+    const { onPress, text, width = WIDTH / 1.5, style = '' } = this.props;
     const { button } = styles;
     return (
-      <TouchableOpacity onPress={onPress} style={[this.getStyle(), button, { width }]}>
+      <TouchableOpacity
+        disabled={style === 'tintStandardButton'}
+        onPress={onPress}
+        style={[this.getStyle(), button, { width }]}
+      >
         <Text style={[this.getTextStyle()]}>{text}</Text>
         {this.isDropDownButton()}
       </TouchableOpacity>
