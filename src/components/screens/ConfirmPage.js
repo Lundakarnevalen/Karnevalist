@@ -28,7 +28,14 @@ class ConfirmPage extends Component {
   }
 
   componentWillMount() {
+    const { email, token, sectionPriorities } = this.props;
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    fetchCheckInStatus(email, token, checkedIn => {
+      if (checkedIn === true) {
+        if (sectionPriorities.length > 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+        else this.props.setProgress(PROGRESS.CHECK_IN);
+      }
+    });
     this.updateData();
   }
 
@@ -58,8 +65,19 @@ class ConfirmPage extends Component {
 
   renderSortableListOrMessage() {
     const { contentContainer, list, textStyle, listContainerView } = styles;
-    const { navigation, sectionPriorities } = this.props;
+    const { navigation, sectionPriorities, progress } = this.props;
     const { strings, data } = this.state;
+    let buttonText = '';
+    switch (progress) {
+      case PROGRESS.CHOOSE_SECTIONS:
+        buttonText = strings.send;
+        break;
+      case PROGRESS.CHECK_IN:
+        buttonText = strings.notFiveSections;
+        break;
+      default:
+        buttonText = strings.notCheckedInButton;
+    }
     if (sectionPriorities.length === 0) {
       return (
         <View style={listContainerView}>
@@ -84,29 +102,14 @@ class ConfirmPage extends Component {
         />
         <View style={{ width: WIDTH, paddingLeft: 8 }}>
           <CustomButton
-            style={sectionPriorities.length >= 5 ? 'standardButton' : 'tintStandardButton'}
-            text={strings.send}
+            style={progress < PROGRESS.CHOOSE_SECTIONS ? 'tintStandardButton' : 'standardButton'}
+            text={buttonText}
             width={WIDTH - 16}
-            onPress={() => this.onPressConfirmButton()}
+            onPress={() => this.handleSend()}
           />
         </View>
       </View>
     );
-  }
-
-  getConfirmButtonStyle() {
-    const { sectionPriorities } = this.props;
-    return {
-      height: HEIGHT / 9,
-      backgroundColor: sectionPriorities.length >= 5 ? '#F7A021' : '#a9a9a9',
-      borderColor: '#ffffff',
-      borderRadius: 0,
-      margin: 0,
-      justifyContent: 'center',
-      alignItems: 'center',
-      bottom: 0,
-      width: WIDTH
-    };
   }
 
   renderRow(item) {
@@ -131,20 +134,11 @@ class ConfirmPage extends Component {
 
   handleSend() {
     const { strings } = this.state;
-    const { sectionPriorities } = this.props;
-    if (sectionPriorities.length < 5) {
-      this.setState({
-        alertVisible: true,
-        message: strings.sectionSelection,
-        alertHeader: strings.alertErrorHeader
-      });
-    } else {
-      this.setState({
-        alertVisible: true,
-        message: strings.confirmMessage,
-        alertHeader: strings.confirmHeader
-      });
-    }
+    this.setState({
+      alertVisible: true,
+      message: strings.confirmMessage,
+      alertHeader: strings.confirmHeader
+    });
   }
 
   handleLogout() {
@@ -156,26 +150,6 @@ class ConfirmPage extends Component {
       message: strings.expiredTokenMessage,
       alertHeader: strings.expiredTokenTitle
     });
-  }
-
-  onPressConfirmButton() {
-    const strings = this.getStrings();
-    const { progress, email, token } = this.props;
-    if (progress === PROGRESS.CHECK_IN) {
-      fetchCheckInStatus(email, token, checkedIn => {
-        if (checkedIn === true) {
-          // Detta för att fetchCheckInStatus
-          this.props.setProgress(PROGRESS.CHOOSE_SECTIONS); //avänder callback vid error också
-          this.handleSend();
-        } else {
-          this.setState({
-            alertVisible: true,
-            message: strings.checkinMessage,
-            alertHeader: strings.alertErrorHeader
-          });
-        }
-      });
-    } else if (progress > PROGRESS.CHECK_IN) this.handleSend();
   }
 
   postSectionPriorities() {
