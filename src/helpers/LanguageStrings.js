@@ -271,7 +271,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'C/O'
   },
   corps: {
-    SE: 'Studnetkår',
+    SE: 'Studentkår',
     EN: 'Student union'
   },
   confirmEmail: {
