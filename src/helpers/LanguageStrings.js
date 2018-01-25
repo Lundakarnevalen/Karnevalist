@@ -390,7 +390,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   yearStudyStart: {
     SE: 'Jag började studera år',
-    EN: 'I started study'
+    EN: 'Year of study start'
   },
   bff: {
     SE: 'KarneKompis',
@@ -782,8 +782,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Corps'
   },
   startOfStudies: {
-    SE: 'Studiestart',
-    EN: 'Start of studies'
+    SE: 'Jag började studera år',
+    EN: 'Year of study start'
   },
   pastInvolvement: {
     SE: 'Tidigare engagemang',
