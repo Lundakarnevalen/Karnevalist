@@ -109,6 +109,7 @@ class HomeScreen extends Component {
       </Animated.View>
     );
   }
+
   spin() {
     this.state.spinValue.setValue(0);
     Animated.timing(this.state.spinValue, {
@@ -116,9 +117,7 @@ class HomeScreen extends Component {
       duration: 1500,
       easing: Easing.linear
     }).start(() => {
-      if (this.props.loadingComplete) {
-        this.props.redirect();
-      } else {
+      if (this.state.checkInLoading) {
         this.spin();
       }
     });
