@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Platform, Dimensions } from 'react-native';
 import PulsatingView from './PulsatingView';
+
+const WIDTH = Dimensions.get('window').width;
 
 class Popover extends Component {
   zIndexWorkaround = val => {
@@ -62,12 +64,12 @@ const styles = {
     backgroundColor: 'transparent',
     position: 'absolute',
     top: 72,
-    left: 152
+    right: 0
   },
   talkBubbleTriangleTopRight: {
     width: 0,
     height: 0,
-    left: 160,
+    left: WIDTH / 2,
     marginBottom: -20,
     backgroundColor: 'transparent',
     borderStyle: 'solid',
@@ -76,26 +78,26 @@ const styles = {
     borderBottomWidth: 30,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: '#333'
+    borderBottomColor: '#F7A021'
   },
   talkBubbleBottomLeft: {
     backgroundColor: 'transparent',
     position: 'absolute',
     bottom: 4,
-    left: 117
+    left: WIDTH / 3.57
   },
   talkBubbleSquareSmall: {
-    width: 200,
+    width: WIDTH / 1.62,
     height: 40,
-    backgroundColor: '#333',
+    backgroundColor: '#F7A021',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
   talkBubbleSquareBig: {
-    width: 246,
+    width: WIDTH / 1.32,
     height: 40,
-    backgroundColor: '#333',
+    backgroundColor: '#F7A021',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
@@ -112,7 +114,7 @@ const styles = {
     transform: [{ rotate: '180deg' }],
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: '#333'
+    borderBottomColor: '#F7A021'
   },
   textStyle: {
     color: '#fff'

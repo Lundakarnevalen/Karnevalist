@@ -163,10 +163,10 @@ class HomeScreen extends Component {
             <Progress.Circle
               borderWidth={3}
               thickness={9}
-              textStyle={{ fontSize: 22, fontWeight: 'bold' }}
+              textStyle={{ fontSize: WIDTH / 17, fontWeight: 'bold' }}
               progress={this.renderProgress()}
               formatText={() => this.animateProgress()}
-              size={90}
+              size={WIDTH / 4}
               showsText
               color={'#FFF'}
             />
@@ -244,7 +244,7 @@ const styles = {
     marginTop: 20
   },
   textStyleProgress: {
-    fontSize: 20,
+    fontSize: WIDTH / 19,
     fontWeight: 'bold',
     color: '#fff',
     fontFamily: 'Avenir Next Medium',
