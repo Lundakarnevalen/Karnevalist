@@ -423,7 +423,10 @@ class RegistrationScreen extends Component {
       gdpr1,
       gdpr2,
       gdpr3,
-      gdpr4
+      gdpr4,
+      smallAuditionCheckBoxes,
+      bigAuditionCheckBoxes
+
     } = this.state;
 
     const closeButton = (
@@ -797,6 +800,8 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
+              const smallPleasures = this.getTrueValuesFromList(smallAuditionCheckBoxes);
+              const bigPleasures = this.getTrueValuesFromList(bigAuditionCheckBoxes);
               const interest = this.getTrueValuesFromList(wantToLearn);
               const skills = this.getTrueValuesFromList(wantToWorkWith);
               console.log('interests: ' + interest + 'skills: ' + skills);
@@ -837,7 +842,9 @@ class RegistrationScreen extends Component {
                     misc: other,
                     skills,
                     interest,
-                    groupLeader
+                    groupLeader,
+                    smallPleasures,
+                    bigPleasures
                   })
                   .then(response => {
                     const { accessToken } = response.data;
