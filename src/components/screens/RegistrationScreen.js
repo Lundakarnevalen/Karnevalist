@@ -281,30 +281,25 @@ class RegistrationScreen extends Component {
           onValueChange={item => {
             switch (tag) {
               case 'shirt':
-                this.setState({ showShirtPicker: true });
-                if (title === '') this.setState({ shirtSize: tagArray[0] });
-                else this.setState({ shirtSize: item })
+                this.setState({ shirtSize: item });
                 break;
               case 'nation':
-                this.setState({ showstudentNationPicker: true });
-                if (title === '') this.setState({ studentNation: tagArray[0] });
-                else this.setState({ shirtSize: item })
+                this.setState({ studentNation: item });
                 break;
               case 'driversLicense':
-                this.setState({ showDriversLicensePicker: true });
-                if (title === '') this.setState({ driversLicense: tagArray[0] });
-                else this.setState({ shirtSize: item })
+                this.setState({ driversLicense: item });
                 break;
               case 'corps':
-                this.setState({ showCorpPicker: true });
+                this.setState({ corps: item });
                 break;
               default:
                 break;
             }
           }}
-          selectedValue={tag === 'shirt' ? shirtSize : studentNation}
+          selectedValue={title === '' ? defaultTitle : title}
           style={styles.androidPicker}
         >
+          <Picker.Item label={defaultTitle} value={''} />
           {this.renderPickerArray(tag, tagArray)}
         </Picker>
       </View>
