@@ -14,7 +14,7 @@ import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { setToken, setEmail } from '../../actions';
+import { setToken, setEmail, setUserinfo } from '../../actions';
 import {
   Header,
   Input,
@@ -834,6 +834,7 @@ class RegistrationScreen extends Component {
                     this.props.setEmail(inputs[3]);
                     saveItem('email', inputs[3]);
                     saveItem('accessToken', accessToken);
+                    this.props.setUserinfo(postData);
                     this.setState({ loadingComplete: true });
                   })
                   .catch(error => {
@@ -947,4 +948,4 @@ const mapStateToProps = ({ userInformation, currentLanguage }) => {
   return { picture, language };
 };
 
-export default connect(mapStateToProps, { setToken, setEmail })(RegistrationScreen);
+export default connect(mapStateToProps, { setToken, setEmail, setUserinfo })(RegistrationScreen);
