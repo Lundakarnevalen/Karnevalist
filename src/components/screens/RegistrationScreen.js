@@ -239,7 +239,6 @@ class RegistrationScreen extends Component {
   }
 
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
-    const { shirtSize, studentNation } = this.state;
     if (Platform.OS === 'ios') {
       return (
         <CustomButton
