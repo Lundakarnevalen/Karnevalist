@@ -305,8 +305,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   driversLicense,
   driversLicenseArray: {
-    SE: [driversLicense.SE, 'Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
-    EN: [driversLicense.EN, 'I do not have a drivers license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+    SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
+    EN: ['I do not have a drivers license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
   driversLicenseEmpty: {
     SE: 'Välj körkortstyp',
@@ -314,8 +314,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   shirtSize,
   shirtSizeArray: {
-    SE: [shirtSize.SE, 'Small', 'Medium', 'Large', 'X-Large'],
-    EN: [shirtSize.EN, 'Small', 'Medium', 'Large', 'X-Large']
+    SE: ['Small', 'Medium', 'Large', 'X-Large'],
+    EN: ['Small', 'Medium', 'Large', 'X-Large']
   },
   shirtSizeEmpty: {
     SE: 'Välj tröjstorlek',
@@ -324,7 +324,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
   studentNation,
   studentNationArray: {
     SE: [
-      studentNation.SE,
       'Blekingska Nation',
       'Göteborgs Nation',
       'Hallands Nation',
@@ -339,7 +338,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Östgöta Nation'
     ],
     EN: [
-      studentNation.EN,
       'Blekingska Nation',
       'Göteborgs Nation',
       'Hallands Nation',
