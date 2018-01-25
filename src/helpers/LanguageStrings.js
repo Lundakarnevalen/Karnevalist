@@ -402,7 +402,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   auditionSmallSceneHeader: {
     SE: 'Audition (Liten Scen): ',
-    EN: 'Audition (Small scene): '
+    EN: 'Audition (Small Scene): '
   },
   auditionBigSceneHeader: {
     SE: 'Audition (Stor Scen): ',
@@ -414,23 +414,23 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   checkBoxNames: {
     SE: [
-      'logistik',
-      'administration',
-      'spexa',
-      'peppaTagga',
-      'lagaMat',
-      'bar',
-      'teknikLjudLjus',
-      'redigeraFotoFilmAnimeringar',
-      'programmeringNatverk',
-      'byggaSnickra',
-      'design',
-      'sy',
-      'ekonomi',
-      'kommunikation',
-      'serviceinriktad',
-      'sakerhet',
-      'alltiallo'
+      'Logistik',
+      'Administration',
+      'Spexa',
+      'Peppa && Tagga',
+      'Laga mat',
+      'Bar',
+      'Teknik- Ljud && Ljus',
+      'Redigera Foto/Film/Animeringar',
+      'Programmering && Nätverk',
+      'Bygga && Snickra',
+      'Design',
+      'Sy',
+      'Ekonomi',
+      'Kommunikation',
+      'Serviceinriktad',
+      'Säkerhet',
+      'Alltiallo'
     ],
     EN: [
       'Logistics',
@@ -439,16 +439,16 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Cheer',
       'Cook food',
       'Bar',
-      'Lights/sound',
-      'Photos/movie/animation editing',
-      'Programming & Networks',
+      'Lights && sound',
+      'Editing - photos/movie/animation',
+      'Programming && Networks',
       'Construction',
       'Design',
       'Sew',
       'Economics',
       'Communication',
       'Service',
-      'safety',
+      'Safety',
       'Allround'
     ]
   },
