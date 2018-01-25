@@ -26,7 +26,7 @@ export default (state = INITIAL_STATE, action) => {
     case SET_PICTURE:
       return { ...state, picture: action.payload };
     case SET_PROGRESS:
-      if (action.payload !== PROGRESS.SENT_SECTIONS)
+      if (state.progress !== PROGRESS.SENT_SECTIONS)
         return { ...state, progress: action.payload };
       return { ...state };
 
