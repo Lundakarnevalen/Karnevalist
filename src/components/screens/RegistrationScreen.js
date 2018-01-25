@@ -294,21 +294,21 @@ class RegistrationScreen extends Component {
   renderCheckBoxes(names, listToWorkWith, setState) {
     const myListToWorkWith = listToWorkWith;
     const checkBoxes = [];
-      for (let i = 0; i < names.length; i++) {
-        checkBoxes.push(
-          <CheckBox
-            key={i}
-            name={names[i]}
-            size={30}
-            onPress={() => {
-              myListToWorkWith[i] = !listToWorkWith[i];
-              setState(myListToWorkWith);
-            }}
-            value={listToWorkWith[i]}
-            color={'white'}
-          />
-        );
-      }
+    for (let i = 0; i < names.length; i++) {
+      checkBoxes.push(
+        <CheckBox
+          key={i}
+          name={names[i]}
+          size={30}
+          onPress={() => {
+            myListToWorkWith[i] = !listToWorkWith[i];
+            setState(myListToWorkWith);
+          }}
+          value={listToWorkWith[i]}
+          color={'white'}
+        />
+      );
+    }
     return checkBoxes;
   }
 
