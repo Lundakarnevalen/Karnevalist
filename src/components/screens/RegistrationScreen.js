@@ -100,6 +100,8 @@ class RegistrationScreen extends Component {
         false,
         false
       ],
+      smallAuditionCheckBoxes: [false, false, false],
+      bigAuditionCheckBoxes: [false, false, false],
       message: '',
       gdpr1: false,
       gdpr2: false,
@@ -285,7 +287,12 @@ class RegistrationScreen extends Component {
 
   renderCheckBoxes(opt) {
     const strings = this.getStrings();
-    const { wantToWorkWith, wantToLearn } = this.state;
+    const {
+      wantToWorkWith,
+      wantToLearn,
+      smallAuditionCheckBoxes,
+      bigAuditionCheckBoxes
+    } = this.state;
     const checkBoxes = [];
     if (opt === 1) {
       for (let i = 0; i < strings.checkBoxNames.length; i++) {
@@ -317,6 +324,21 @@ class RegistrationScreen extends Component {
           />
         );
       }
+    } else if (3) {
+      for (let i = 0; i < strings.auditionCheckboxes.length; i++) {
+        checkBoxes.push(
+          <CheckBox
+            name={strings.auditionCheckboxes[i]}
+            size={30}
+            onPress={() => {
+              bigAuditionCheckBoxes[i] = !bigAuditionCheckBoxes[i];
+              this.setState({ bigAuditionCheckBoxes });
+            }}
+            value={wantToLearn[i]}
+            color={'white'}
+          />
+        );
+      }
     } else {
       for (let i = 0; i < strings.auditionCheckboxes.length; i++) {
         checkBoxes.push(
@@ -324,8 +346,8 @@ class RegistrationScreen extends Component {
             name={strings.auditionCheckboxes[i]}
             size={30}
             onPress={() => {
-              wantToLearn[i] = !wantToLearn[i];
-              this.setState({ wantToLearn });
+              smallAuditionCheckBoxes[i] = !smallAuditionCheckBoxes[i];
+              this.setState({ smallAuditionCheckBoxes });
             }}
             value={wantToLearn[i]}
             color={'white'}
@@ -725,7 +747,7 @@ class RegistrationScreen extends Component {
           <Text style={styles.checkBoxHeaderStyle}>{strings.auditionSmallSceneHeader}</Text>
           {this.renderCheckBoxes(3)}
           <Text style={styles.checkBoxHeaderStyle}>{strings.auditionBigSceneHeader}</Text>
-          {this.renderCheckBoxes(3)}
+          {this.renderCheckBoxes(4)}
           <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeader}</Text>
           {this.renderCheckBoxes(1)}
           <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeaderToLearn}</Text>
