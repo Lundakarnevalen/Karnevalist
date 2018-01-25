@@ -256,6 +256,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'gdpr2',
     'gdpr3',
     'gdpr4',
+    'corpsList',
     'errorMsg409EmailAndPersonalNumber',
     'errorMsg409Email',
     'errorMsg409PersonalNumber'
@@ -387,6 +388,30 @@ export const REGISTRATION_SCREEN_STRINGS = {
   plenipotentiary: {
     SE: 'Jag har ett fullmaktsombud',
     EN: 'There is a power of attorney for me'
+  },
+  corpsList: {
+    SE: [
+      'Corpus Medicum',
+      'Humanistiska och teologiska studentkåren',
+      'Juridiska Föreningen',
+      'LundaEkonomerna',
+      'Lunds Naturvetarkår',
+      'Samhällsvetarkåren',
+      'Studentkåren vid Konstnärliga fakulteten i Malmö',
+      'TLTH',
+      'Lunds Doktorandkår'
+    ],
+    EN: [
+      'Corpus Medicum',
+      'Humanistiska och teologiska studentkåren',
+      'Juridiska Föreningen',
+      'LundaEkonomerna',
+      'Lunds Naturvetarkår',
+      'Samhällsvetarkåren',
+      'Studentkåren vid Konstnärliga fakulteten i Malmö',
+      'TLTH',
+      'Lunds Doktorandkår'
+    ]
   },
   yearStudyStart: {
     SE: 'Jag började studera år',
