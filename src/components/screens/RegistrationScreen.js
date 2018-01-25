@@ -40,7 +40,7 @@ class RegistrationScreen extends Component {
     this.state = {
       inputs: ['', '', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
-      studentUnion: '',
+      studentNation: '',
       driversLicense: '',
       previousInvolvement: '',
       foodPreference: '',
@@ -49,12 +49,11 @@ class RegistrationScreen extends Component {
       errors: [false, false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
       showDriversLicensePicker: false,
-      showStudentUnionPicker: false,
+      showstudentNationPicker: false,
       foodPreferenceError: false,
       loading: false,
       loadingComplete: false,
       keyboardHeight: 0,
-      listToTrim: [],
       alertVisible: false,
       corps: '',
       plenipotentiary: false,
@@ -182,14 +181,14 @@ class RegistrationScreen extends Component {
   }
 
   anyEmpty() {
-    const { inputs, studentUnion, shirtSize, driversLicense } = this.state;
+    const { inputs, studentNation, shirtSize, driversLicense } = this.state;
     const strings = this.getStrings();
     if (
       inputs.indexOf('') !== -1 ||
       shirtSize === strings.shirtSizeEmpty ||
       shirtSize === '' ||
-      studentUnion === strings.studenUnionEmpty ||
-      studentUnion === '' ||
+      studentNation === strings.studenUnionEmpty ||
+      studentNation === '' ||
       driversLicense === strings.driversLicenseEmpty ||
       driversLicense === ''
     )
@@ -222,13 +221,13 @@ class RegistrationScreen extends Component {
 
   getTrueValuesFromList(list, tag) {
     const newList = [];
-    const checkBoxNames = REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
-    const auditionNames = REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+    const checkBoxNames = REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN;
+    const auditionNames = REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN;
     let names = [];
     if (tag === 'audition') {
-      names = auditionNames
+      names = auditionNames;
     } else {
-      names = checkBoxNames
+      names = checkBoxNames;
     }
     for (let i = 0; i < list.length; i++) {
       if (list[i] === true) {
@@ -239,18 +238,19 @@ class RegistrationScreen extends Component {
   }
 
   trimValues() {
-    const { inputs } = this.state;
+    const { inputs, yearStudyStart } = this.state;
     const trimmedList = inputs;
+    const trimYearStudyStart = yearStudyStart.trim();
     for (let i = 0; i < trimmedList.length; i++) {
       if (!(i === 5 || i === 6)) {
         trimmedList[i] = inputs[i].trim();
       }
     }
-    this.setState({ inputs: trimmedList });
+    this.setState({ inputs: trimmedList, yearStudyStart: trimYearStudyStart });
   }
 
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
-    const { shirtSize, studentUnion } = this.state;
+    const { shirtSize, studentNation } = this.state;
     if (Platform.OS === 'ios') {
       return (
         <CustomButton
@@ -264,7 +264,7 @@ class RegistrationScreen extends Component {
                 this.setState({ showShirtPicker: true });
                 break;
               case 'union':
-                this.setState({ showStudentUnionPicker: true });
+                this.setState({ showstudentNationPicker: true });
                 break;
               case 'driversLicense':
                 this.setState({ showDriversLicensePicker: true });
@@ -282,9 +282,9 @@ class RegistrationScreen extends Component {
           onValueChange={itemValue => {
             return tag === 'shirt'
               ? this.setState({ shirtSize: itemValue })
-              : this.setState({ studentUnion: itemValue });
+              : this.setState({ studentNation: itemValue });
           }}
-          selectedValue={tag === 'shirt' ? shirtSize : studentUnion}
+          selectedValue={tag === 'shirt' ? shirtSize : studentNation}
           style={styles.androidPicker}
         >
           {this.renderPickerArray(tag, tagArray)}
@@ -373,15 +373,15 @@ class RegistrationScreen extends Component {
   }
 
   renderDKBackgroundCloser() {
-    const { showShirtPicker, showStudentUnionPicker, showDriversLicensePicker } = this.state;
-    if (showShirtPicker || showStudentUnionPicker || showDriversLicensePicker) {
+    const { showShirtPicker, showstudentNationPicker, showDriversLicensePicker } = this.state;
+    if (showShirtPicker || showstudentNationPicker || showDriversLicensePicker) {
       return (
         <TouchableWithoutFeedback
           style={{ position: 'absolute' }}
           onPress={() =>
             this.setState({
               showShirtPicker: false,
-              showStudentUnionPicker: false,
+              showstudentNationPicker: false,
               showDriversLicensePicker: false
             })
           }
@@ -413,8 +413,8 @@ class RegistrationScreen extends Component {
       loadingComplete,
       shirtSize,
       showShirtPicker,
-      studentUnion,
-      showStudentUnionPicker,
+      studentNation,
+      showstudentNationPicker,
       showDriversLicensePicker,
       alertVisible,
       message,
@@ -719,6 +719,7 @@ class RegistrationScreen extends Component {
             value={bff}
             returnKeyType={'next'}
             hasError={bffError}
+            autoCapitalize="none"
             warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
@@ -729,9 +730,9 @@ class RegistrationScreen extends Component {
             'shirt'
           )}
           {this.renderPickerForPlatform(
-            strings.studentUnion,
-            strings.studentUnionArray,
-            studentUnion,
+            strings.studentNation,
+            strings.studentNationArray,
+            studentNation,
             'union'
           )}
           {this.renderPickerForPlatform(
@@ -807,7 +808,10 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
-              const smallPleasures = this.getTrueValuesFromList(smallAuditionCheckBoxes, 'audition');
+              const smallPleasures = this.getTrueValuesFromList(
+                smallAuditionCheckBoxes,
+                'audition'
+              );
               const bigPleasures = this.getTrueValuesFromList(bigAuditionCheckBoxes, 'audition');
               const interest = this.getTrueValuesFromList(wantToLearn);
               const skills = this.getTrueValuesFromList(wantToWorkWith);
@@ -828,7 +832,7 @@ class RegistrationScreen extends Component {
                 shirtSize,
                 corps,
                 bff,
-                studentUnion,
+                studentNation,
                 plenipotentiary,
                 startOfStudies: inputs[11],
                 misc: other,
@@ -838,7 +842,6 @@ class RegistrationScreen extends Component {
                 smallPleasures,
                 bigPleasures
               };
-              console.log(postData);
               this.trimValues();
               if (this.anyEmpty()) {
                 this.setState({
@@ -852,34 +855,6 @@ class RegistrationScreen extends Component {
                 });
               } else {
                 this.setState({ loadingComplete: false, loading: true });
-                const postData = {
-                  firstName: inputs[0],
-                  lastName: inputs[1],
-                  personalNumber: inputs[2],
-                  email: inputs[3],
-                  password: inputs[5],
-                  address: inputs[7],
-                  co,
-                  postNumber: inputs[8],
-                  city: inputs[9],
-                  phoneNumber: inputs[10],
-                  foodPreference,
-                  driversLicense,
-                  pastInvolvement: previousInvolvement,
-                  shirtSize,
-                  corps,
-                  bff,
-                  studentUnion,
-                  plenipotentiary,
-                  startOfStudies: inputs[11],
-                  misc: other,
-                  skills,
-                  interest,
-                  groupLeader,
-                  smallPleasures,
-                  bigPleasures
-                };
-                console.log(postData);
                 axios
                   .post(REGISTER_URL, postData)
                   .then(response => {
@@ -912,11 +887,11 @@ class RegistrationScreen extends Component {
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
-          onValueChange={newValue => this.setState({ studentUnion: newValue })}
-          items={strings.studentUnionArray}
-          value={studentUnion}
-          isShowing={showStudentUnionPicker}
-          close={() => this.setState({ showStudentUnionPicker: false })}
+          onValueChange={newValue => this.setState({ studentNation: newValue })}
+          items={strings.studentNationArray}
+          value={studentNation}
+          isShowing={showstudentNationPicker}
+          close={() => this.setState({ showstudentNationPicker: false })}
         />
         <DKPicker
           onValueChange={newValue => this.setState({ driversLicense: newValue })}
