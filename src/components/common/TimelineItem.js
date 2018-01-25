@@ -54,7 +54,7 @@ class TimelineItem extends Component {
     return this.props.icon;
   }
 
-  renderType() {
+  render() {
     const { containerStyle, titleStyle, contentStyle } = styles;
     const {
       sectionTitle = '',
@@ -164,10 +164,6 @@ class TimelineItem extends Component {
         <View>{this.renderIcon()}</View>
       </TouchableOpacity>
     );
-  }
-
-  render() {
-    return this.renderType();
   }
 }
 

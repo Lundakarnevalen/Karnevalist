@@ -164,7 +164,7 @@ class HomeScreen extends Component {
               borderWidth={3}
               thickness={9}
               textStyle={{ fontSize: 22, fontWeight: 'bold' }}
-              progress={this.renderProgress()}
+              progress={progress * 0.25}
               formatText={() => this.animateProgress()}
               size={90}
               showsText
