@@ -446,7 +446,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Teknik- Ljud & Ljus',
       'Redigera Foto/Film/Animeringar',
       'Programmering & Nätverk',
-      'Bygga && Snickra',
+      'Bygga & Snickra',
       'Design',
       'Sy',
       'Ekonomi',
