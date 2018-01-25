@@ -231,6 +231,9 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'activeKarneval',
     'driversLicense',
     'driversLicenseArray',
+    'auditionSmallSceneHeader',
+    'auditionBigSceneHeader',
+    'auditionCheckboxes',
     'checkBoxNames',
     'checkBoxesHeader',
     'checkBoxesHeaderToLearn',
@@ -396,6 +399,18 @@ export const REGISTRATION_SCREEN_STRINGS = {
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
     EN: 'I want to be group leader'
+  },
+  auditionSmallSceneHeader: {
+    SE: 'Audition (Liten Scen): ',
+    EN: 'Audition (Small scene): '
+  },
+  auditionBigSceneHeader: {
+    SE: 'Audition (Stor Scen): ',
+    EN: 'Audition (Big Scene): '
+  },
+  auditionCheckboxes: {
+    SE: ['Scen', 'Orkester', 'Dans'],
+    EN: ['Scene', 'Orchestra', 'Dance']
   },
   checkBoxNames: {
     SE: [

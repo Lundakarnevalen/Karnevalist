@@ -302,11 +302,26 @@ class RegistrationScreen extends Component {
           />
         );
       }
-    } else {
+    } else if (opt === 2) {
       for (let i = 0; i < strings.checkBoxNames.length; i++) {
         checkBoxes.push(
           <CheckBox
             name={strings.checkBoxNames[i]}
+            size={30}
+            onPress={() => {
+              wantToLearn[i] = !wantToLearn[i];
+              this.setState({ wantToLearn });
+            }}
+            value={wantToLearn[i]}
+            color={'white'}
+          />
+        );
+      }
+    } else {
+      for (let i = 0; i < strings.auditionCheckboxes.length; i++) {
+        checkBoxes.push(
+          <CheckBox
+            name={strings.auditionCheckboxes[i]}
             size={30}
             onPress={() => {
               wantToLearn[i] = !wantToLearn[i];
@@ -707,6 +722,10 @@ class RegistrationScreen extends Component {
             value={groupLeader}
             color={'white'}
           />
+          <Text style={styles.checkBoxHeaderStyle}>{strings.auditionSmallSceneHeader}</Text>
+          {this.renderCheckBoxes(3)}
+          <Text style={styles.checkBoxHeaderStyle}>{strings.auditionBigSceneHeader}</Text>
+          {this.renderCheckBoxes(3)}
           <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeader}</Text>
           {this.renderCheckBoxes(1)}
           <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeaderToLearn}</Text>
