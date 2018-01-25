@@ -589,18 +589,72 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: ['title', 'buttonText', 'popoverText'],
+  fields: [
+    'title',
+    'createProfile',
+    'Karnevalist',
+    'RightNow',
+    'CheckIn',
+    'ChooseSections',
+    'info',
+    'SendIn',
+    'popoverText',
+    'step1',
+    'step2',
+    'step3',
+    'step4'
+  ],
   title: {
     SE: 'Hem',
     EN: 'Home'
   },
-  buttonText: {
-    SE: 'Påbörja din registrering',
-    EN: 'Begin your registration'
+  createProfile: {
+    SE: 'Skapa profil',
+    EN: 'Create a profile'
+  },
+  RightNow: {
+    SE: 'Du är just nu',
+    EN: 'You are now'
+  },
+  Karnevalist: {
+    SE: 'Karnevalist',
+    EN: 'Karnevalist'
+  },
+  CheckIn: {
+    SE: 'Checka in',
+    EN: 'Check in'
+  },
+  ChooseSections: {
+    SE: 'Välj minst 5 sektioner',
+    EN: 'Choose at least 5 sections'
+  },
+  info: {
+    SE: 'Check in sker den 4 februari.',
+    EN: 'Check in happens February the 4th.'
+  },
+  SendIn: {
+    SE: 'Skicka in dina val',
+    EN: 'Submit your choices'
   },
   popoverText: {
     SE: 'Här väljer du dina sektioner',
     EN: 'Select your sections here'
+  },
+  step1: {
+    SE: 'Steg 1',
+    EN: 'Step 1'
+  },
+  step2: {
+    SE: 'Steg 2',
+    EN: 'Step 2'
+  },
+  step3: {
+    SE: 'Steg 3',
+    EN: 'Step 3'
+  },
+  step4: {
+    SE: 'Steg 4',
+    EN: 'Step 4'
   }
 };
 

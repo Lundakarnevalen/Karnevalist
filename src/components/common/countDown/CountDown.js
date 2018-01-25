@@ -6,14 +6,15 @@ import { CountDownItem } from '..';
  * Uppropet är den 4:e februari
  *
  */
- const SIZE = Dimensions.get('window').width;
+const SIZE = Dimensions.get('window').width;
 const ONE_DAY = 86400000;
 const ONE_HOUR = 3600000;
 const ONE_MIN = 60000;
 const ONE_SECOND = 1000;
-const END_TIME = (new Date('Feb 4, 2018 00:00:01') - new Date().getTime()) < -ONE_DAY
-  ? new Date('May 18, 2018 00:00:01')
-  : new Date('Feb 4, 2018 00:00:01');
+const END_TIME =
+  new Date('Feb 4, 2018 00:00:01') - new Date().getTime() < -ONE_DAY
+    ? new Date('May 18, 2018 00:00:01')
+    : new Date('Feb 4, 2018 00:00:01');
 let interval;
 
 class CountDown extends Component {
@@ -69,28 +70,16 @@ class CountDown extends Component {
     if (this.state.upprop) {
       const strings = this.getStrings();
       return (
-        <View
-          style={styles.containerStyle2}
-        >
-          <Text
-            style={styles.textStyle2}
-          >
-            {strings.upprop}
-          </Text>
+        <View style={styles.containerStyle2}>
+          <Text style={styles.textStyle2}>{strings.upprop}</Text>
         </View>
       );
     }
     if (this.state.karneval) {
       const strings = this.getStrings();
       return (
-        <View
-          style={styles.containerStyle2}
-        >
-          <Text
-            style={styles.textStyle2}
-          >
-            {strings.karneval}
-          </Text>
+        <View style={styles.containerStyle2}>
+          <Text style={styles.textStyle2}>{strings.karneval}</Text>
         </View>
       );
     }
@@ -117,13 +106,13 @@ const styles = {
     justifyContent: 'center'
   },
   textStyle: {
-    fontSize: 32,
+    fontSize: 27,
     backgroundColor: 'transparent',
     color: 'white',
     fontFamily: 'Avenir Next Medium'
   },
   textStyle2: {
-    fontSize: 32,
+    fontSize: 27,
     backgroundColor: 'transparent',
     color: 'white',
     fontWeight: 'bold',

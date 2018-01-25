@@ -6,14 +6,14 @@ import {
   SET_USERINFO,
   RESET_DATA
 } from '../actions/Types.js';
-import { PROGRESS } from '../helpers/Constants'
+import { PROGRESS } from '../helpers/Constants';
 
 // Initial state for user information
 const INITIAL_STATE = {
   token: null,
   email: null,
   picture: null,
-  progress: PROGRESS.CHECK_IN,
+  progress: PROGRESS.CREATE_PROFILE,
   userinfo: {}
 };
 
@@ -26,12 +26,10 @@ export default (state = INITIAL_STATE, action) => {
     case SET_PICTURE:
       return { ...state, picture: action.payload };
     case SET_PROGRESS:
-      if (action.payload !== PROGRESS.SENT_SECTIONS)
-        return { ...state, progress: action.payload };
+      if (state.progress !== PROGRESS.SENT_SECTIONS) return { ...state, progress: action.payload };
       return { ...state };
-
     case SET_USERINFO:
-    return { ...state, userinfo: action.payload };
+      return { ...state, userinfo: action.payload };
     case RESET_DATA:
       return { ...INITIAL_STATE };
     default:

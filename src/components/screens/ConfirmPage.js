@@ -117,7 +117,14 @@ class ConfirmPage extends Component {
         index={index + 1}
         iconName={this.state.editMode ? 'trash' : 'navicon'}
         active={active}
-        deleteRow={() => this.props.removeSectionPriority(data.id)}
+        deleteRow={() => {
+          if (
+            this.props.sectionPriorities.length < 6 &&
+            this.props.progress > PROGRESS.CREATE_PROFILE
+          )
+            this.props.setProgress(PROGRESS.CHECK_IN);
+          this.props.removeSectionPriority(data.id);
+        }}
       />
     );
   }
@@ -156,7 +163,8 @@ class ConfirmPage extends Component {
     const { progress, email, token } = this.props;
     if (progress === PROGRESS.CHECK_IN) {
       fetchCheckInStatus(email, token, checkedIn => {
-        if (checkedIn === true) { // Detta för att fetchCheckInStatus
+        if (checkedIn === true) {
+          // Detta för att fetchCheckInStatus
           this.props.setProgress(PROGRESS.CHOOSE_SECTIONS); //avänder callback vid error också
           this.handleSend();
         } else {
@@ -167,8 +175,7 @@ class ConfirmPage extends Component {
           });
         }
       });
-    } else if (progress > PROGRESS.CHECK_IN)
-      this.handleSend()
+    } else if (progress > PROGRESS.CHECK_IN) this.handleSend();
   }
 
   postSectionPriorities() {
