@@ -61,43 +61,8 @@ class TimelineItem extends Component {
       sectionIcon = '',
       sectionInfoText = '',
       sectionDate = '',
-      onPress,
-      done
+      onPress
     } = this.props;
-    if (done) {
-      return (
-        <View style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-              <Text
-                numberOfLines={1}
-                style={[
-                  titleStyle,
-                  {
-                    width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7,
-                    color: this.getColor()
-                  }
-                ]}
-              >
-                {sectionIcon === '' ? null : (
-                  <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
-                )}
-                {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
-              </Text>
-              {sectionInfoText === '' ? null : (
-                <Text
-                  numberOfLines={1}
-                  style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
-                >
-                  {sectionInfoText}
-                </Text>
-              )}
-            </View>
-          </View>
-          {this.renderIcon()}
-        </View>
-      );
-    }
     if (this.props.refresh) {
       return (
         <View style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}>
