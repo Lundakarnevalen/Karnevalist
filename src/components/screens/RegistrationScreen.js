@@ -324,7 +324,7 @@ class RegistrationScreen extends Component {
           />
         );
       }
-    } else if (3) {
+    } else if (opt === 3) {
       for (let i = 0; i < strings.auditionCheckboxes.length; i++) {
         checkBoxes.push(
           <CheckBox
@@ -334,7 +334,7 @@ class RegistrationScreen extends Component {
               bigAuditionCheckBoxes[i] = !bigAuditionCheckBoxes[i];
               this.setState({ bigAuditionCheckBoxes });
             }}
-            value={wantToLearn[i]}
+            value={bigAuditionCheckBoxes[i]}
             color={'white'}
           />
         );
@@ -349,7 +349,7 @@ class RegistrationScreen extends Component {
               smallAuditionCheckBoxes[i] = !smallAuditionCheckBoxes[i];
               this.setState({ smallAuditionCheckBoxes });
             }}
-            value={wantToLearn[i]}
+            value={smallAuditionCheckBoxes[i]}
             color={'white'}
           />
         );
@@ -426,7 +426,6 @@ class RegistrationScreen extends Component {
       gdpr4,
       smallAuditionCheckBoxes,
       bigAuditionCheckBoxes
-
     } = this.state;
 
     const closeButton = (
@@ -748,9 +747,9 @@ class RegistrationScreen extends Component {
             color={'white'}
           />
           <Text style={styles.checkBoxHeaderStyle}>{strings.auditionSmallSceneHeader}</Text>
-          {this.renderCheckBoxes(3)}
-          <Text style={styles.checkBoxHeaderStyle}>{strings.auditionBigSceneHeader}</Text>
           {this.renderCheckBoxes(4)}
+          <Text style={styles.checkBoxHeaderStyle}>{strings.auditionBigSceneHeader}</Text>
+          {this.renderCheckBoxes(3)}
           <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeader}</Text>
           {this.renderCheckBoxes(1)}
           <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeaderToLearn}</Text>
