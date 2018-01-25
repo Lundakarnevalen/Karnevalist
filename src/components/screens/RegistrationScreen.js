@@ -658,6 +658,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'twelthInput'}
             placeholder={strings.foodPreference}
+            onSubmitEditing={() => this.refs.yearStudyStart.focus()}
             onChangeText={text => {
               this.setState({
                 foodPreference: text,
@@ -665,7 +666,7 @@ class RegistrationScreen extends Component {
               });
             }}
             value={foodPreference}
-            returnKeyType={'done'}
+            returnKeyType={'next'}
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={foodPreferenceError}
@@ -673,7 +674,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'yearStudyStart'}
-            onSubmitEditing={() => this.refs.previousEngagement.focus()}
+            onSubmitEditing={() => this.refs.previousInvolvement.focus()}
             placeholder={strings.yearStudyStart}
             onChangeText={text => {
               inputs[11] = text;
@@ -688,7 +689,7 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'previousInvolvement'}
-            onSubmitEditing={() => this.refs.other.focus()}
+            onSubmitEditing={() => this.refs.corps.focus()}
             placeholder={strings.previousInvolvement}
             onChangeText={text => {
               this.setState({ previousInvolvement: text });
@@ -711,13 +712,12 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'bff'}
-            onSubmitEditing={() => this.refs.other.focus()}
             placeholder={strings.bff}
             onChangeText={text => {
               this.setState({ bff: text, bffError: !this.isEmail(text) });
             }}
             value={bff}
-            returnKeyType={'next'}
+            returnKeyType={'done'}
             hasError={bffError}
             autoCapitalize="none"
             warningMessage={errorStrings.errorMsgInvalidEmail}
