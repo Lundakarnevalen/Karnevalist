@@ -222,9 +222,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'phoneNumber',
     'foodPreference',
     'shirtSize',
-    'shirtSizeEmpty',
-    'driversLicenseEmpty',
-    'studenUnionEmpty',
     'shirtSizeArray',
     'studentNation',
     'studentNationArray',
@@ -308,18 +305,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
     EN: ['I do not have a drivers license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
-  driversLicenseEmpty: {
-    SE: 'Välj körkortstyp',
-    EN: 'Choose type of drivers license'
-  },
   shirtSize,
   shirtSizeArray: {
     SE: ['Small', 'Medium', 'Large', 'X-Large'],
     EN: ['Small', 'Medium', 'Large', 'X-Large']
-  },
-  shirtSizeEmpty: {
-    SE: 'Välj tröjstorlek',
-    EN: 'Choose shirt size'
   },
   studentNation,
   studentNationArray: {
@@ -351,10 +340,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Wermlands Nation',
       'Östgöta Nation'
     ]
-  },
-  studenUnionEmpty: {
-    SE: 'Välj nation',
-    EN: 'Choose student nation'
   },
   activeKarneval: {
     SE: 'Jag var aktiv under karnevalen 2014',

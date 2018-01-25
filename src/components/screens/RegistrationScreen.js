@@ -182,15 +182,12 @@ class RegistrationScreen extends Component {
   }
 
   anyEmpty() {
-    const { inputs, studentNation, shirtSize, driversLicense } = this.state;
-    const strings = this.getStrings();
+    const { inputs, studentNation, shirtSize, driversLicense, corps } = this.state;
     if (
       inputs.indexOf('') !== -1 ||
-      shirtSize === strings.shirtSizeEmpty ||
       shirtSize === '' ||
-      studentNation === strings.studenUnionEmpty ||
       studentNation === '' ||
-      driversLicense === strings.driversLicenseEmpty ||
+      corps === '' ||
       driversLicense === ''
     )
       return true;
