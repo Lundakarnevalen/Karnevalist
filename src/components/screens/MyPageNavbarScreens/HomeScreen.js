@@ -70,7 +70,7 @@ class HomeScreen extends Component {
     const { email, token } = this.props;
     fetchCheckInStatus(email, token, bool => {
       setTimeout(() => {
-        if (true === true) {
+        if (bool === true) {
           this.props.setProgress(PROGRESS.CHECK_IN);
           if (this.props.sectionPriorities.length > 4) {
             this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
