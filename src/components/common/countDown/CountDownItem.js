@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 
-const SIZE = Dimensions.get('window').width / 6;
+const SIZE = Dimensions.get('window').width / 14;
 
 /**
  * Uppropet är den 4:e februari
@@ -34,7 +34,7 @@ const styles = {
     justifyContent: 'center'
   },
   textStyle: {
-    fontSize: 32,
+    fontSize: 22,
     backgroundColor: 'transparent',
     color: '#f4376d',
     fontWeight: 'bold',

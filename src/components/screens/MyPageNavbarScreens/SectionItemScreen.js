@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Header, Toast } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
-import { removeSectionPriority, addSectionPriority } from '../../../actions';
+import { removeSectionPriority, addSectionPriority, setProgress } from '../../../actions';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -39,6 +39,8 @@ class SectionItemScreen extends Component {
         <TouchableOpacity
           style={rightIconStyle}
           onPress={() => {
+            if (sectionPriorities.length > 3 && this.props.progress > PROGRESS.CREATE_PROFILE)
+              this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
             this.props.addSectionPriority(id);
             this.setState({ showToast: true, favorite: true });
           }}
@@ -51,6 +53,11 @@ class SectionItemScreen extends Component {
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
+          if (
+            this.props.sectionPriorities.length < 6 &&
+            this.props.progress > PROGRESS.CREATE_PROFILE
+          )
+            this.props.setProgress(PROGRESS.CHECK_IN);
           this.props.removeSectionPriority(id);
           this.setState({ showToast: true, favorite: false });
         }}
@@ -138,6 +145,6 @@ const mapStateToProps = ({ userInformation, currentLanguage, sections }) => {
   };
 };
 
-export default connect(mapStateToProps, { removeSectionPriority, addSectionPriority })(
+export default connect(mapStateToProps, { removeSectionPriority, addSectionPriority, setProgress })(
   SectionItemScreen
 );

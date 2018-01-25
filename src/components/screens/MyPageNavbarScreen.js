@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Platform, Dimensions } from 'react-native';
 import { TabNavigator } from 'react-navigation';
-import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import {
   setSections,
@@ -11,33 +11,41 @@ import {
   setSectionPriorities
 } from '../../actions';
 import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
-import { fetchCheckInStatus } from '../../helpers/ApiManager';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
-import NewsScreen from './MyPageNavbarScreens/NewsScreen';
 import SettingsScreen from './MyPageNavbarScreens/SettingsScreen';
 import {
   SECTION_SCREEN_STRINGS,
-  NEWS_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
 } from '../../helpers/LanguageStrings';
+import { fetchCheckInStatus } from '../../helpers/ApiManager';
 
 const SIZE = Dimensions.get('window').width / 11;
 
 class MyPageNavbarScreen extends Component {
-
   componentWillMount() {
-    const { token, email, progress } = this.props;
-    if (token) {
-      this.getSectionPriorities(token);
-      fetchCheckInStatus(email, token, checkedIn => {
-        if (checkedIn && progress === PROGRESS.CHECK_IN)
-          this.props.setProgress(PROGRESS.CHOOSE_SECTIONS)
-      });
-    }
+    if (this.props.token) this.updateProgress();
+  }
+
+  updateProgress() {
+    const { email, token } = this.props;
+    fetchCheckInStatus(
+      email,
+      token,
+      checkedInStatus => {
+        if (checkedInStatus === true) {
+          this.props.setProgress(PROGRESS.CHECK_IN);
+          if (this.props.sectionPriorities.length > 4) {
+            this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+            this.getSectionPriorities(token);
+          }
+        }
+      },
+      null
+    );
   }
 
   getSectionPriorities(token) {
@@ -61,10 +69,9 @@ class MyPageNavbarScreen extends Component {
         console.log(error);
       });
   }
-
   render() {
-    const { navigation, language, setHomeScreenPopover } = this.props;
-    return <TabNav screenProps={{ navigation, language, setHomeScreenPopover }} />;
+    const { navigation, language, setHomeScreenPopover, progress } = this.props;
+    return <TabNav screenProps={{ navigation, language, setHomeScreenPopover, progress }} />;
   }
 }
 
@@ -102,11 +109,11 @@ const TabNav = TabNavigator(
           Platform.OS === 'ios'
             ? (scene, jumpToIndex) => {
                 jumpToIndex(scene.index);
-                props.screenProps.setHomeScreenPopover(false);
+                if (props.screenProps.progress >= 2) props.screenProps.setHomeScreenPopover(false);
               }
             : ({ scene, jumpToIndex }) => {
                 jumpToIndex(scene.index);
-                props.screenProps.setHomeScreenPopover(false);
+                if (props.screenProps.progress >= 2) props.screenProps.setHomeScreenPopover(false);
               },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
@@ -122,11 +129,11 @@ const TabNav = TabNavigator(
           Platform.OS === 'ios'
             ? (scene, jumpToIndex) => {
                 jumpToIndex(scene.index);
-                props.screenProps.setHomeScreenPopover(false);
+                if (props.screenProps.progress >= 2) props.screenProps.setHomeScreenPopover(false);
               }
             : ({ scene, jumpToIndex }) => {
                 jumpToIndex(scene.index);
-                props.screenProps.setHomeScreenPopover(false);
+                if (props.screenProps.progress >= 2) props.screenProps.setHomeScreenPopover(false);
               },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
@@ -141,11 +148,11 @@ const TabNav = TabNavigator(
           Platform.OS === 'ios'
             ? (scene, jumpToIndex) => {
                 jumpToIndex(scene.index);
-                props.screenProps.setHomeScreenPopover(false);
+                if (props.screenProps.progress >= 2) props.screenProps.setHomeScreenPopover(false);
               }
             : ({ scene, jumpToIndex }) => {
                 jumpToIndex(scene.index);
-                props.screenProps.setHomeScreenPopover(false);
+                if (props.screenProps.progress >= 2) props.screenProps.setHomeScreenPopover(false);
               },
         tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
@@ -184,7 +191,14 @@ const TabNav = TabNavigator(
 const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { language } = currentLanguage;
   const { token, email, progress } = userInformation;
-  return { language, token, email, progress, sections: sections.sections };
+  return {
+    language,
+    token,
+    email,
+    progress,
+    sections: sections.sections,
+    sectionPriorities: sections.sectionPriorities
+  };
 };
 export default connect(mapStateToProps, {
   setSections,

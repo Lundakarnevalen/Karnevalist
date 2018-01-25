@@ -86,12 +86,14 @@ export function fetchCheckInStatus(email, token, callback) {
   const headers = {
     Authorization: 'Bearer ' + token
   };
-  axios.get(URL, { headers }).then(response => {
-    callback(response.data.checkedIn);
-  })
-  .catch(error => {
-    if (typeof callback === 'function') callback(error);
-  });
+  axios
+    .get(URL, { headers })
+    .then(response => {
+      callback(response.data.checkedIn);
+    })
+    .catch(error => {
+      if (typeof callback === 'function') callback(error);
+    });
 }
 
 export function handleErrorMsg(error, strings = null) {
