@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, ScrollView, Text, Keyboard } from 'react-native';
+import { View, Dimensions, ScrollView, Keyboard } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -24,7 +24,7 @@ class LoginScreen extends Component {
       loading: false,
       loadingComplete: false,
       forgotPasswordEmail: '',
-      resetPasswordError: ' ',
+      resetPasswordError: '',
       showToast: false
     };
   }
@@ -45,6 +45,8 @@ class LoginScreen extends Component {
 
   handleResetPassword() {
     const strings = this.getStrings();
+    const forgotPasswordEmail = this.state.forgotPasswordEmail.trim();
+    this.setState({ forgotPasswordEmail });
     axios
       .post(FORGOT_PASSWORD_URL, {
         email: this.state.forgotPasswordEmail
@@ -56,7 +58,7 @@ class LoginScreen extends Component {
           this.setState({
             alertVisible: false,
             forgotPasswordEmail: '',
-            resetPasswordError: ' ',
+            resetPasswordError: '',
             showToast: true
           });
         }
@@ -136,7 +138,7 @@ class LoginScreen extends Component {
   }
 
   render() {
-    const { containerStyle, container1, errorTextStyle } = styles;
+    const { containerStyle, container1 } = styles;
     const {
       email,
       password,
@@ -220,13 +222,14 @@ class LoginScreen extends Component {
                     width={Dimensions.get('window').width / 1.2}
                     underlineColorAndroid={'transparent'}
                     onChangeText={text =>
-                      this.setState({ forgotPasswordEmail: text, resetPasswordError: ' ' })
+                      this.setState({ forgotPasswordEmail: text, resetPasswordError: '' })
                     }
                     value={forgotPasswordEmail}
                     returnKeyType={'done'}
                     onSubmitEditing={() => this.handleResetPassword()}
+                    hasError={resetPasswordError !== ''}
+                    warningMessage={resetPasswordError}
                   />
-                  <Text style={errorTextStyle}>{resetPasswordError}</Text>
                 </View>
               ) : null}
             </SuperAgileAlert>
@@ -280,11 +283,6 @@ const styles = {
   containerStyle: {
     width: Dimensions.get('window').width,
     height: HEIGHT
-  },
-  errorTextStyle: {
-    textAlign: 'center',
-    fontFamily: 'Avenir Next Medium',
-    color: 'red'
   }
 };
 
