@@ -7,7 +7,8 @@ import {
   Platform,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Keyboard
+  Keyboard,
+  Text
 } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
@@ -37,21 +38,70 @@ class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputs: ['', '', '', '', '', '', '', '', '', '', ''],
+      inputs: ['', '', '', '', '', '', '', '', '', '', '', ''],
       shirtSize: '',
-      studentUnion: '',
-      activeCarneval2014: false,
-      driversLicense: false,
+      studentNation: '',
+      driversLicense: '',
+      previousInvolvement: '',
       foodPreference: '',
-      errors: [false, false, false, false, false, false, false, false, false, false],
+      co: '',
+      other: '',
+      errors: [false, false, false, false, false, false, false, false, false, false, false],
       showShirtPicker: false,
-      showStudentUnionPicker: false,
+      showDriversLicensePicker: false,
+      showstudentNationPicker: false,
       foodPreferenceError: false,
       loading: false,
       loadingComplete: false,
       keyboardHeight: 0,
-      listToTrim: [],
       alertVisible: false,
+      corps: '',
+      showCorpPicker: false,
+      plenipotentiary: false,
+      bff: '',
+      bffError: false,
+      //CheckBoxes
+      groupLeader: false,
+      wantToWorkWith: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      wantToLearn: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      smallAuditionCheckBoxes: [false, false, false],
+      bigAuditionCheckBoxes: [false, false, false],
       message: '',
       gdpr1: false,
       gdpr2: false,
@@ -132,23 +182,49 @@ class RegistrationScreen extends Component {
   }
 
   anyEmpty() {
-    const { inputs, studentUnion, shirtSize } = this.state;
+    const { inputs, studentNation, shirtSize, driversLicense, corps } = this.state;
     if (
       inputs.indexOf('') !== -1 ||
-      shirtSize === 'Välj tröjstorlek' ||
-      shirtSize === 'Choose shirt size' ||
       shirtSize === '' ||
-      studentUnion === 'Välj nation' ||
-      studentUnion === 'Choose student union' ||
-      studentUnion === ''
+      studentNation === '' ||
+      corps === '' ||
+      driversLicense === ''
     )
       return true;
     return false;
   }
 
   anyErrors() {
-    const { errors, foodPreferenceError, foodPreference } = this.state;
-    return errors.indexOf(true) !== -1 || (foodPreferenceError && foodPreference !== '');
+    const {
+      errors,
+      foodPreferenceError,
+      foodPreference,
+      bffError,
+      bff,
+      gdpr1,
+      gdpr2,
+      gdpr3,
+      gdpr4
+    } = this.state;
+    return (
+      errors.indexOf(true) !== -1 ||
+      (bffError && bff !== '') ||
+      (foodPreferenceError && foodPreference !== '') ||
+      gdpr1 === false ||
+      gdpr2 === false ||
+      gdpr3 === false ||
+      gdpr4 === false
+    );
+  }
+
+  getTrueValuesFromList(list, names) {
+    const newList = [];
+    for (let i = 0; i < list.length; i++) {
+      if (list[i] === true) {
+        newList.push(names[i]);
+      }
+    }
+    return newList;
   }
 
   trimValues() {
@@ -163,7 +239,6 @@ class RegistrationScreen extends Component {
   }
 
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
-    const { shirtSize, studentUnion } = this.state;
     if (Platform.OS === 'ios') {
       return (
         <CustomButton
@@ -172,9 +247,26 @@ class RegistrationScreen extends Component {
           width={WIDTH}
           onPress={() => {
             Keyboard.dismiss();
-            return tag === 'shirt'
-              ? this.setState({ showShirtPicker: true })
-              : this.setState({ showStudentUnionPicker: true });
+            switch (tag) {
+              case 'shirt':
+                this.setState({ showShirtPicker: true });
+                if (title === '') this.setState({ shirtSize: tagArray[0] });
+                break;
+              case 'nation':
+                this.setState({ showstudentNationPicker: true });
+                if (title === '') this.setState({ studentNation: tagArray[0] });
+                break;
+              case 'driversLicense':
+                this.setState({ showDriversLicensePicker: true });
+                if (title === '') this.setState({ driversLicense: tagArray[0] });
+                break;
+              case 'corps':
+                this.setState({ showCorpPicker: true });
+                if (title === '') this.setState({ corps: tagArray[0] });
+                break;
+              default:
+                break;
+            }
           }}
         />
       );
@@ -182,38 +274,80 @@ class RegistrationScreen extends Component {
     return (
       <View>
         <Picker
-          onValueChange={itemValue => {
-            return tag === 'shirt'
-              ? this.setState({ shirtSize: itemValue })
-              : this.setState({ studentUnion: itemValue });
+          onValueChange={item => {
+            switch (tag) {
+              case 'shirt':
+                this.setState({ shirtSize: item });
+                break;
+              case 'nation':
+                this.setState({ studentNation: item });
+                break;
+              case 'driversLicense':
+                this.setState({ driversLicense: item });
+                break;
+              case 'corps':
+                this.setState({ corps: item });
+                break;
+              default:
+                break;
+            }
           }}
-          selectedValue={tag === 'shirt' ? shirtSize : studentUnion}
+          selectedValue={title === '' ? defaultTitle : title}
           style={styles.androidPicker}
         >
+          <Picker.Item label={defaultTitle} value={''} />
           {this.renderPickerArray(tag, tagArray)}
         </Picker>
       </View>
     );
   }
 
-  renderPickerArray(tag, tagArray) {
-    if (tag === 'shirt') {
-      return tagArray.map(item => {
-        return <Picker.Item key={item} label={item} value={item} />;
-      });
+  renderCheckBoxes(names, listToWorkWith, setState) {
+    const myListToWorkWith = listToWorkWith;
+    const checkBoxes = [];
+    for (let i = 0; i < names.length; i++) {
+      checkBoxes.push(
+        <CheckBox
+          key={i}
+          name={names[i]}
+          size={30}
+          onPress={() => {
+            myListToWorkWith[i] = !listToWorkWith[i];
+            setState(myListToWorkWith);
+          }}
+          value={listToWorkWith[i]}
+          color={'white'}
+        />
+      );
     }
+    return checkBoxes;
+  }
+
+  renderPickerArray(tag, tagArray) {
     return tagArray.map(item => {
       return <Picker.Item key={item} label={item} value={item} />;
     });
   }
 
   renderDKBackgroundCloser() {
-    const { showShirtPicker, showStudentUnionPicker } = this.state;
-    if (showShirtPicker || showStudentUnionPicker) {
+    const {
+      showShirtPicker,
+      showstudentNationPicker,
+      showDriversLicensePicker,
+      showCorpPicker
+    } = this.state;
+    if (showShirtPicker || showstudentNationPicker || showDriversLicensePicker || showCorpPicker) {
       return (
         <TouchableWithoutFeedback
           style={{ position: 'absolute' }}
-          onPress={() => this.setState({ showShirtPicker: false, showStudentUnionPicker: false })}
+          onPress={() =>
+            this.setState({
+              showShirtPicker: false,
+              showstudentNationPicker: false,
+              showDriversLicensePicker: false,
+              showCorpPicker: false
+            })
+          }
         >
           <View
             style={{
@@ -237,20 +371,33 @@ class RegistrationScreen extends Component {
       errors,
       foodPreference,
       foodPreferenceError,
+      co,
       loading,
       loadingComplete,
+      showCorpPicker,
       shirtSize,
       showShirtPicker,
-      studentUnion,
-      showStudentUnionPicker,
+      studentNation,
+      showstudentNationPicker,
+      showDriversLicensePicker,
       alertVisible,
       message,
-      activeCarneval2014,
       driversLicense,
+      other,
+      plenipotentiary,
+      previousInvolvement,
+      corps,
+      bff,
+      bffError,
+      groupLeader,
+      wantToWorkWith,
+      wantToLearn,
       gdpr1,
       gdpr2,
       gdpr3,
-      gdpr4
+      gdpr4,
+      smallAuditionCheckBoxes,
+      bigAuditionCheckBoxes
     } = this.state;
 
     const closeButton = (
@@ -387,13 +534,24 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'eigthInput'}
-            onSubmitEditing={() => this.refs.ninthInput.focus()}
+            onSubmitEditing={() => this.refs.co.focus()}
             placeholder={strings.address}
             onChangeText={text => {
               inputs[7] = text;
               this.setState({ inputs });
             }}
             value={inputs[7]}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
+          <Input
+            ref={'co'}
+            onSubmitEditing={() => this.refs.ninthInput.focus()}
+            placeholder={strings.co}
+            onChangeText={text => {
+              this.setState({ co: text });
+            }}
+            value={co}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
           />
@@ -464,6 +622,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'twelthInput'}
             placeholder={strings.foodPreference}
+            onSubmitEditing={() => this.refs.yearStudyStart.focus()}
             onChangeText={text => {
               this.setState({
                 foodPreference: text,
@@ -471,11 +630,51 @@ class RegistrationScreen extends Component {
               });
             }}
             value={foodPreference}
-            returnKeyType={'done'}
+            returnKeyType={'next'}
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={foodPreferenceError}
-            warningMessage={[errorStrings.errorMsgFoodPreference]}
+            warningMessage={errorStrings.errorMsgFoodPreference}
+          />
+          <Input
+            ref={'yearStudyStart'}
+            onSubmitEditing={() => this.refs.previousInvolvement.focus()}
+            placeholder={strings.yearStudyStart}
+            onChangeText={text => {
+              inputs[11] = text;
+              errors[11] = !this.containsOnlyDigits(text);
+              this.setState({ inputs, errors });
+            }}
+            hasError={errors[11]}
+            value={inputs[11]}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            warningMessage={errorStrings.errorMsgShortOnlyDigits}
+          />
+          <Input
+            ref={'previousInvolvement'}
+            onSubmitEditing={() => this.refs.bff.focus()}
+            placeholder={strings.previousInvolvement}
+            onChangeText={text => {
+              this.setState({ previousInvolvement: text });
+            }}
+            value={previousInvolvement}
+            returnKeyType={'next'}
+            scrollToInput={y => this.scrollToInput(y)}
+            warningMessage={errorStrings.errorMsgPreviousInvolvement}
+          />
+          <Input
+            ref={'bff'}
+            placeholder={strings.bff}
+            onChangeText={text => {
+              this.setState({ bff: text, bffError: !this.isEmail(text) });
+            }}
+            value={bff}
+            returnKeyType={'done'}
+            hasError={bffError}
+            autoCapitalize="none"
+            warningMessage={errorStrings.errorMsgInvalidEmail}
+            scrollToInput={y => this.scrollToInput(y)}
           />
           {this.renderPickerForPlatform(
             strings.shirtSize,
@@ -484,27 +683,58 @@ class RegistrationScreen extends Component {
             'shirt'
           )}
           {this.renderPickerForPlatform(
-            strings.studentUnion,
-            strings.studentUnionArray,
-            studentUnion,
-            'union'
+            strings.studentNation,
+            strings.studentNationArray,
+            studentNation,
+            'nation'
           )}
-          <View style={{ right: 3 }}>
-            <CheckBox
-              name={strings.activeKarneval}
-              size={30}
-              onPress={() => this.setState({ activeCarneval2014: !activeCarneval2014 })}
-              value={activeCarneval2014}
-              color={'white'}
-            />
-            <CheckBox
-              name={strings.driversLicense}
-              size={30}
-              onPress={() => this.setState({ driversLicense: !driversLicense })}
-              value={driversLicense}
-              color={'white'}
-            />
-          </View>
+          {this.renderPickerForPlatform(strings.corps, strings.corpsList, corps, 'corps')}
+          {this.renderPickerForPlatform(
+            strings.driversLicense,
+            strings.driversLicenseArray,
+            driversLicense,
+            'driversLicense'
+          )}
+          <CheckBox
+            name={strings.plenipotentiary}
+            size={30}
+            onPress={() => this.setState({ plenipotentiary: !plenipotentiary })}
+            value={plenipotentiary}
+            color={'white'}
+          />
+          <CheckBox
+            name={strings.groupLeader}
+            size={30}
+            onPress={() => this.setState({ groupLeader: !groupLeader })}
+            value={groupLeader}
+            color={'white'}
+          />
+          <Text style={styles.checkBoxHeaderStyle}>{strings.auditionSmallSceneHeader}</Text>
+          {this.renderCheckBoxes(strings.auditionCheckboxes, smallAuditionCheckBoxes, newState =>
+            this.setState({ smallAuditionCheckBoxes: newState })
+          )}
+          <Text style={styles.checkBoxHeaderStyle}>{strings.auditionBigSceneHeader}</Text>
+          {this.renderCheckBoxes(strings.auditionCheckboxes, bigAuditionCheckBoxes, newState =>
+            this.setState({ bigAuditionCheckBoxes: newState })
+          )}
+          <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeader}</Text>
+          {this.renderCheckBoxes(strings.checkBoxNames, wantToWorkWith, newState =>
+            this.setState({ wantToWorkWith: newState })
+          )}
+          <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeaderToLearn}</Text>
+          {this.renderCheckBoxes(strings.checkBoxNames, wantToLearn, newState =>
+            this.setState({ wantToLearn: newState })
+          )}
+          <Input
+            ref={'other'}
+            placeholder={strings.other}
+            onChangeText={text => {
+              this.setState({ other: text });
+            }}
+            value={other}
+            returnKeyType={'done'}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
           <View style={{ right: 3 }}>
             <CheckBox
               name={strings.gdpr1}
@@ -540,6 +770,49 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
+              const smallPleasures = this.getTrueValuesFromList(
+                smallAuditionCheckBoxes,
+                REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+              );
+              const bigPleasures = this.getTrueValuesFromList(
+                bigAuditionCheckBoxes,
+                REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+              );
+              const interest = this.getTrueValuesFromList(
+                wantToLearn,
+                REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+              );
+              const skills = this.getTrueValuesFromList(
+                wantToWorkWith,
+                REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+              );
+              const postData = {
+                firstName: inputs[0],
+                lastName: inputs[1],
+                personalNumber: inputs[2],
+                email: inputs[3],
+                password: inputs[5],
+                address: inputs[7],
+                co,
+                postNumber: inputs[8],
+                city: inputs[9],
+                phoneNumber: inputs[10],
+                foodPreference,
+                driversLicense,
+                pastInvolvement: previousInvolvement,
+                shirtSize,
+                corps,
+                bff,
+                studentNation,
+                plenipotentiary,
+                startOfStudies: inputs[11],
+                misc: other,
+                skills,
+                interest,
+                groupLeader,
+                smallPleasures,
+                bigPleasures
+              };
               this.trimValues();
               if (this.anyEmpty()) {
                 this.setState({
@@ -554,22 +827,7 @@ class RegistrationScreen extends Component {
               } else {
                 this.setState({ loadingComplete: false, loading: true });
                 axios
-                  .post(REGISTER_URL, {
-                    firstName: inputs[0],
-                    lastName: inputs[1],
-                    personalNumber: inputs[2],
-                    email: inputs[3],
-                    password: inputs[5],
-                    address: inputs[7],
-                    postNumber: inputs[8],
-                    city: inputs[9],
-                    phoneNumber: inputs[10],
-                    foodPreference,
-                    driversLicense,
-                    pastInvolvement: activeCarneval2014,
-                    shirtSize,
-                    studentUnion
-                  })
+                  .post(REGISTER_URL, postData)
                   .then(response => {
                     const { accessToken } = response.data;
                     this.props.setToken(accessToken);
@@ -600,11 +858,25 @@ class RegistrationScreen extends Component {
           close={() => this.setState({ showShirtPicker: false })}
         />
         <DKPicker
-          onValueChange={newValue => this.setState({ studentUnion: newValue })}
-          items={strings.studentUnionArray}
-          value={studentUnion}
-          isShowing={showStudentUnionPicker}
-          close={() => this.setState({ showStudentUnionPicker: false })}
+          onValueChange={newValue => this.setState({ studentNation: newValue })}
+          items={strings.studentNationArray}
+          value={studentNation}
+          isShowing={showstudentNationPicker}
+          close={() => this.setState({ showstudentNationPicker: false })}
+        />
+        <DKPicker
+          onValueChange={newValue => this.setState({ driversLicense: newValue })}
+          items={strings.driversLicenseArray}
+          value={driversLicense}
+          isShowing={showDriversLicensePicker}
+          close={() => this.setState({ showDriversLicensePicker: false })}
+        />
+        <DKPicker
+          onValueChange={newValue => this.setState({ corps: newValue })}
+          items={strings.corpsList}
+          value={corps}
+          isShowing={showCorpPicker}
+          close={() => this.setState({ showCorpPicker: false })}
         />
         {loading ? (
           <Loading
@@ -659,6 +931,13 @@ const styles = {
     backgroundColor: 'transparent',
     width: 60,
     paddingRight: 0
+  },
+  checkBoxHeaderStyle: {
+    backgroundColor: 'transparent',
+    width: Dimensions.get('window').width,
+    fontSize: 30,
+    paddingBottom: 10,
+    color: 'white'
   }
 };
 

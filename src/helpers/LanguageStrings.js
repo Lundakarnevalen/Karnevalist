@@ -10,20 +10,21 @@ const shirtSize = {
   SE: 'Välj tröjstorlek',
   EN: 'Choose shirt size'
 };
-
 const expiredTokenTitle = {
   SE: 'Sessionen har förfallit',
   EN: 'Session Expired'
 };
-
 const expiredTokenMessage = {
   SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
   EN: 'Your session has expired please log in again to continue'
 };
-
-const studentUnion = {
+const studentNation = {
   SE: 'Välj nation',
-  EN: 'Choose your student union'
+  EN: 'Choose your student nation'
+};
+const driversLicense = {
+  SE: 'Välj körkortstyp',
+  EN: 'Choose type of drivers license'
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
@@ -65,7 +66,6 @@ const lastName = {
   SE: 'Efternamn',
   EN: 'Last name'
 };
-
 const socialSecurityNumber = {
   SE: 'Personnummer',
   EN: 'Social security number'
@@ -94,15 +94,10 @@ const foodPreference = {
   SE: 'Matpreferenser',
   EN: 'Food preferences'
 };
-const driversLicense = {
-  SE: 'Jag har körkort',
-  EN: 'I have a drivers license'
-};
 const cancel = {
   SE: 'Avbryt',
   EN: 'Cancel'
 };
-
 const ok = {
   SE: 'OK',
   EN: 'OK'
@@ -228,10 +223,17 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'foodPreference',
     'shirtSize',
     'shirtSizeArray',
-    'studentUnion',
-    'studentUnionArray',
+    'studentNation',
+    'studentNationArray',
     'activeKarneval',
     'driversLicense',
+    'driversLicenseArray',
+    'auditionSmallSceneHeader',
+    'auditionBigSceneHeader',
+    'auditionCheckboxes',
+    'checkBoxNames',
+    'checkBoxesHeader',
+    'checkBoxesHeaderToLearn',
     'register',
     'error',
     'errorMsg400',
@@ -239,10 +241,19 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorMsg404',
     'errorMsgInternal',
     'ok',
+    'co',
+    'other',
+    'plenipotentiary',
+    'yearStudyStart',
+    'previousInvolvement',
+    'corps',
+    'bff',
+    'groupLeader',
     'gdpr1',
     'gdpr2',
     'gdpr3',
     'gdpr4',
+    'corpsList',
     'errorMsg409EmailAndPersonalNumber',
     'errorMsg409Email',
     'errorMsg409PersonalNumber'
@@ -255,6 +266,14 @@ export const REGISTRATION_SCREEN_STRINGS = {
   lastName,
   socialSecurityNumber,
   email,
+  co: {
+    SE: 'C/O',
+    EN: 'C/O'
+  },
+  corps: {
+    SE: 'Studentkår',
+    EN: 'Student union'
+  },
   confirmEmail: {
     SE: 'Bekräfta mail',
     EN: 'Confirm email'
@@ -269,15 +288,31 @@ export const REGISTRATION_SCREEN_STRINGS = {
   city,
   phoneNumber,
   foodPreference,
+  previousInvolvement: {
+    SE: 'Tidigare studentengagemang',
+    EN: 'Previous student involvement'
+  },
+  checkBoxesHeader: {
+    SE: 'Jag har erfarenhet av:',
+    EN: 'I have experience in:'
+  },
+  checkBoxesHeaderToLearn: {
+    SE: 'Jag vill lära mig om:',
+    EN: 'I want to learn:'
+  },
+  driversLicense,
+  driversLicenseArray: {
+    SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
+    EN: ['I do not have a drivers license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+  },
   shirtSize,
   shirtSizeArray: {
-    SE: [shirtSize.SE, 'Small', 'Medium', 'Large'],
-    EN: [shirtSize.EN, 'Small', 'Medium', 'Large']
+    SE: ['Small', 'Medium', 'Large', 'X-Large'],
+    EN: ['Small', 'Medium', 'Large', 'X-Large']
   },
-  studentUnion,
-  studentUnionArray: {
+  studentNation,
+  studentNationArray: {
     SE: [
-      studentUnion.SE,
       'Blekingska Nation',
       'Göteborgs Nation',
       'Hallands Nation',
@@ -292,7 +327,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Östgöta Nation'
     ],
     EN: [
-      studentUnion.EN,
       'Blekingska Nation',
       'Göteborgs Nation',
       'Hallands Nation',
@@ -311,7 +345,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Jag var aktiv under karnevalen 2014',
     EN: 'I was active during the karneval 2014'
   },
-  driversLicense,
   register: {
     SE: 'Registrera',
     EN: 'Register'
@@ -331,6 +364,102 @@ export const REGISTRATION_SCREEN_STRINGS = {
   errorMsg409PersonalNumber,
   errorMsgInternal,
   ok,
+  other: {
+    SE: 'Övrigt',
+    EN: 'Other'
+  },
+  plenipotentiary: {
+    SE: 'Jag har ett fullmaktsombud',
+    EN: 'There is a power of attorney for me'
+  },
+  corpsList: {
+    SE: [
+      'Corpus Medicum',
+      'Humanistiska och teologiska studentkåren',
+      'Juridiska Föreningen',
+      'LundaEkonomerna',
+      'Lunds Naturvetarkår',
+      'Samhällsvetarkåren',
+      'Studentkåren vid Konstnärliga fakulteten i Malmö',
+      'TLTH',
+      'Lunds Doktorandkår'
+    ],
+    EN: [
+      'Corpus Medicum',
+      'Humanistiska och teologiska studentkåren',
+      'Juridiska Föreningen',
+      'LundaEkonomerna',
+      'Lunds Naturvetarkår',
+      'Samhällsvetarkåren',
+      'Studentkåren vid Konstnärliga fakulteten i Malmö',
+      'TLTH',
+      'Lunds Doktorandkår'
+    ]
+  },
+  yearStudyStart: {
+    SE: 'Jag började studera år',
+    EN: 'Year of study start'
+  },
+  bff: {
+    SE: 'KarneKompis',
+    EN: 'KarneFriend'
+  },
+  groupLeader: {
+    SE: 'Jag vill vara gruppledare',
+    EN: 'I want to be group leader'
+  },
+  auditionSmallSceneHeader: {
+    SE: 'Audition (Liten Scen): ',
+    EN: 'Audition (Small Scene): '
+  },
+  auditionBigSceneHeader: {
+    SE: 'Audition (Stor Scen): ',
+    EN: 'Audition (Big Scene): '
+  },
+  auditionCheckboxes: {
+    SE: ['Scen', 'Orkester', 'Dans'],
+    EN: ['Scene', 'Orchestra', 'Dance']
+  },
+  checkBoxNames: {
+    SE: [
+      'Logistik',
+      'Administration',
+      'Spexa',
+      'Peppa & Tagga',
+      'Laga mat',
+      'Bar',
+      'Teknik- Ljud & Ljus',
+      'Redigera Foto/Film/Animeringar',
+      'Programmering & Nätverk',
+      'Bygga & Snickra',
+      'Design',
+      'Sy',
+      'Ekonomi',
+      'Kommunikation',
+      'Serviceinriktad',
+      'Säkerhet',
+      'Alltiallo'
+    ],
+    EN: [
+      'Logistics',
+      'Administration',
+      'Spex',
+      'Cheer',
+      'Cook food',
+      'Bar',
+      'Lights & sound',
+      'Editing - photos/movie/animation',
+      'Programming & Networks',
+      'Construction',
+      'Design',
+      'Sew',
+      'Economics',
+      'Communication',
+      'Service',
+      'Safety',
+      'Allround'
+    ]
+  },
   gdpr1: {
     SE:
       'Jag är medveten om och godkänner att Lundakarnevalen samlar in mina personuppgifter för att:' +
@@ -715,8 +844,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Corps'
   },
   startOfStudies: {
-    SE: 'Studiestart',
-    EN: 'Start of studies'
+    SE: 'Jag började studera år',
+    EN: 'Year of study start'
   },
   pastInvolvement: {
     SE: 'Tidigare engagemang',
@@ -808,7 +937,8 @@ export const ERROR_MSG_INPUT_FIELD = {
     'errorMsgFoodPreference',
     'errorMsgWrongInput',
     'errorMsgCity',
-    'errorMsgAnyEmpty'
+    'errorMsgAnyEmpty',
+    'errorMsgShortOnlyDigits'
   ],
   errorMsgOnlyDigits: {
     SE: 'Detta fält får endast innehålla siffror',
@@ -845,6 +975,10 @@ export const ERROR_MSG_INPUT_FIELD = {
   errorMsgZipCode: {
     SE: '5 siffror',
     EN: '5 digits'
+  },
+  errorMsgShortOnlyDigits: {
+    SE: 'Endast siffror',
+    EN: 'Only Digits'
   },
   errorMsgCity: {
     SE: 'Endast bokstäver',
