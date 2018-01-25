@@ -769,12 +769,12 @@ export const CONFIRM_PAGE_STRINGS = {
     EN: 'You must be checked in to send'
   },
   notCheckedInButton: {
-    SE: 'Var god checka in...',
-    EN: 'Please check in...'
+    SE: 'Var god checka in',
+    EN: 'Please check in'
   },
   notFiveSections: {
-    SE: 'Var god välj 5 sektioner...',
-    EN: 'Please select 5 sections...'
+    SE: 'Var god välj 5 sektioner',
+    EN: 'Please select 5 sections'
   }
 };
 
