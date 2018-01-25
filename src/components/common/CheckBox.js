@@ -37,6 +37,7 @@ class CheckBox extends Component {
 const styles = {
   checkBoxStyle: {
     flexDirection: 'row',
+    marginBottom: 10,
     alignItems: 'center',
     backgroundColor: 'transparent'
   },

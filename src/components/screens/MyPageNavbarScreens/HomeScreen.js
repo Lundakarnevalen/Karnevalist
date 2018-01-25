@@ -109,6 +109,7 @@ class HomeScreen extends Component {
       </Animated.View>
     );
   }
+
   spin() {
     this.state.spinValue.setValue(0);
     Animated.timing(this.state.spinValue, {
@@ -116,9 +117,7 @@ class HomeScreen extends Component {
       duration: 1500,
       easing: Easing.linear
     }).start(() => {
-      if (this.props.loadingComplete) {
-        this.props.redirect();
-      } else {
+      if (this.state.checkInLoading) {
         this.spin();
       }
     });
@@ -164,7 +163,7 @@ class HomeScreen extends Component {
               borderWidth={3}
               thickness={9}
               textStyle={{ fontSize: WIDTH / 17, fontWeight: 'bold' }}
-              progress={this.renderProgress()}
+              progress={progress * 0.25}
               formatText={() => this.animateProgress()}
               size={WIDTH / 4}
               showsText
