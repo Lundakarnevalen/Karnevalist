@@ -34,7 +34,7 @@ class HomeScreen extends Component {
     if (popover && this.props.progress >= 2) {
       return (
         <Popover
-          onPress={() => setHomeScreenPopover(false)}
+          onPress={() => this.props.setHomeScreenPopover(false)}
           type={'bottomLeft'}
           text={text}
           big
@@ -287,4 +287,4 @@ const mapStateToProps = ({ currentLanguage, popoverStatus, userInformation, sect
   };
 };
 
-export default connect(mapStateToProps, { setProgress })(HomeScreen);
+export default connect(mapStateToProps, { setProgress, setHomeScreenPopover })(HomeScreen);

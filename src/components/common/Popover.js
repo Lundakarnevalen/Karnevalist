@@ -63,7 +63,7 @@ const styles = {
   talkBubbleTopRight: {
     backgroundColor: 'transparent',
     position: 'absolute',
-    top: WIDTH / 4.09,
+    top: Platform.OS === 'ios' ? 70 : 74,
     right: 5
   },
   talkBubbleTriangleTopRight: {
