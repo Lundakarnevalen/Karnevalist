@@ -4,37 +4,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const WIDTH = Dimensions.get('window').width - 16;
 
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'June',
-  'July',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec'
-];
-
 class TimelineItem extends Component {
   getColor() {
     return '#F7A021';
-  }
-
-  renderDateView(sectionDate) {
-    const { dateViewStyle, dateStyle } = styles;
-    const sectionDateParts = sectionDate.split('T')[0].split('-');
-    if (sectionDate) {
-      return (
-        <View style={[dateViewStyle, { backgroundColor: this.getColor() }]}>
-          <Text style={dateStyle}>{sectionDateParts[2]}</Text>
-          <Text style={dateStyle}>{months[sectionDateParts[1] - 1]}</Text>
-        </View>
-      );
-    }
   }
 
   renderStyle() {
@@ -95,7 +67,6 @@ class TimelineItem extends Component {
       return (
         <View style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}>
           <View style={{ flexDirection: 'row' }}>
-            {this.renderDateView(sectionDate)}
             <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
               <Text
                 numberOfLines={1}

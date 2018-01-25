@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Text, TouchableOpacity, Image, Animated, Easing } from 'react-native';
+import { View, Dimensions, Text, Image, Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
-import { MaterialIcons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
-import {
-  Header,
-  BackgroundImage,
-  CountDown,
-  Popover,
-  TimelineItem,
-  SuperAgileAlert
-} from '../../common';
+import { Header, BackgroundImage, Popover, TimelineItem } from '../../common';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { fetchCheckInStatus } from '../../../helpers/ApiManager';
-import { getFavoriteSections } from '../../../helpers/LocalSave';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
 import { PROGRESS } from '../../../helpers/Constants';
 
@@ -68,9 +59,9 @@ class HomeScreen extends Component {
 
   updateProgress() {
     const { email, token } = this.props;
-    fetchCheckInStatus(email, token, bool => {
+    fetchCheckInStatus(email, token, checkedInStatus => {
       setTimeout(() => {
-        if (bool === true) {
+        if (checkedInStatus === true) {
           this.props.setProgress(PROGRESS.CHECK_IN);
           if (this.props.sectionPriorities.length > 4) {
             this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
@@ -184,31 +175,35 @@ class HomeScreen extends Component {
           <View style={{ justifyContent: 'center', marginTop: 12 }}>
             <TimelineItem
               sectionTitle={strings.step1}
-              icon={this.renderIcon(1)}
-              style={this.renderStyle(1)}
-              onPress={() => this.renderOnPress(1)}
+              icon={this.renderIcon(PROGRESS.CREATE_PROFILE)}
+              style={this.renderStyle(PROGRESS.CREATE_PROFILE)}
+              onPress={() => this.renderOnPress(PROGRESS.CREATE_PROFILE)}
               sectionInfoText={strings.createProfile}
             />
             <TimelineItem
               sectionTitle={strings.step2}
-              icon={this.state.checkInLoading ? this.renderCheckInLoading() : this.renderIcon(2)}
-              style={this.renderStyle(2)}
+              icon={
+                this.state.checkInLoading
+                  ? this.renderCheckInLoading()
+                  : this.renderIcon(PROGRESS.CHECK_IN)
+              }
+              style={this.renderStyle(PROGRESS.CHECK_IN)}
               refresh
-              onPress={() => this.renderOnPress(2)}
+              onPress={() => this.renderOnPress(PROGRESS.CHECK_IN)}
               sectionInfoText={strings.CheckIn}
             />
             <TimelineItem
               sectionTitle={strings.step3}
-              icon={this.renderIcon(3)}
-              style={this.renderStyle(3)}
-              onPress={() => this.renderOnPress(3)}
+              icon={this.renderIcon(PROGRESS.CHOOSE_SECTIONS)}
+              style={this.renderStyle(PROGRESS.CHOOSE_SECTIONS)}
+              onPress={() => this.renderOnPress(PROGRESS.CHOOSE_SECTIONS)}
               sectionInfoText={strings.ChooseSections}
             />
             <TimelineItem
               sectionTitle={strings.step4}
-              icon={this.renderIcon(4)}
-              style={this.renderStyle(4)}
-              onPress={() => this.renderOnPress(4)}
+              icon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
+              style={this.renderStyle(PROGRESS.SENT_SECTIONS)}
+              onPress={() => this.renderOnPress(PROGRESS.SENT_SECTIONS)}
               sectionInfoText={strings.SendIn}
             />
           </View>

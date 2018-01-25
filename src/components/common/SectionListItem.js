@@ -37,13 +37,6 @@ class SectionListItem extends Component {
     }
   }
 
-  renderStyle() {
-    if (this.props.style) {
-      return this.props.style;
-    }
-    return;
-  }
-
   render() {
     const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
     const {
@@ -56,7 +49,7 @@ class SectionListItem extends Component {
     return (
       <TouchableOpacity
         onPress={() => onPress()}
-        style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}
+        style={[containerStyle, { borderColor: this.getColor() }]}
       >
         <View style={{ flexDirection: 'row' }}>
           {this.renderDateView(sectionDate)}
@@ -86,7 +79,7 @@ class SectionListItem extends Component {
         <View>
           <MaterialIcons
             name={'keyboard-arrow-right'}
-            style={styles.continueIconIndicatorStyle}
+            style={continueIconIndicatorStyle}
             color={this.getColor()}
             size={this.props.icon === 'done' ? 40 : 50}
           />
