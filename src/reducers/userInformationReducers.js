@@ -32,7 +32,7 @@ export default (state = INITIAL_STATE, action) => {
     case SET_USERINFO:
       return { ...state, userinfo: action.payload };
     case RESET_DATA:
-      return { state: INITIAL_STATE };
+      return { ...INITIAL_STATE };
     default:
       return state;
   }

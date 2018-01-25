@@ -21,6 +21,6 @@ export const PROGRESS = Object.freeze({
 
 export const LOGOUT_RESET_ACTION = NavigationActions.reset({
   index: 0,
-  actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
+  actions: [NavigationActions.navigate({ routeName: 'SplashScreen' })],
   key: null
 });
