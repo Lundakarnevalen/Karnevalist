@@ -39,7 +39,9 @@ class Header extends Component {
         <View style={containerStyle}>
           {this.renderLeftIcon()}
           <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={textStyle}>{title || 'Placeholder'}</Text>
+            <Text style={textStyle} numberOfLines={1}>
+              {title || 'Placeholder'}
+            </Text>
           </View>
           {this.renderRightIcon()}
         </View>
