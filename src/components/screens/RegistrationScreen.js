@@ -220,11 +220,19 @@ class RegistrationScreen extends Component {
     );
   }
 
-  getTrueValuesFromList(list) {
+  getTrueValuesFromList(list, tag) {
     const newList = [];
+    const checkBoxNames = REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+    const auditionNames = REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+    let names = [];
+    if (tag === 'audition') {
+      names = auditionNames
+    } else {
+      names = checkBoxNames
+    }
     for (let i = 0; i < list.length; i++) {
       if (list[i] === true) {
-        newList.push(REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN[i]);
+        newList.push(names[i]);
       }
     }
     return newList;
@@ -799,11 +807,38 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
-              const smallPleasures = this.getTrueValuesFromList(smallAuditionCheckBoxes);
-              const bigPleasures = this.getTrueValuesFromList(bigAuditionCheckBoxes);
+              const smallPleasures = this.getTrueValuesFromList(smallAuditionCheckBoxes, 'audition');
+              const bigPleasures = this.getTrueValuesFromList(bigAuditionCheckBoxes, 'audition');
               const interest = this.getTrueValuesFromList(wantToLearn);
               const skills = this.getTrueValuesFromList(wantToWorkWith);
-              console.log('interests: ' + interest + 'skills: ' + skills);
+              const postData = {
+                firstName: inputs[0],
+                lastName: inputs[1],
+                personalNumber: inputs[2],
+                email: inputs[3],
+                password: inputs[5],
+                address: inputs[7],
+                co,
+                postNumber: inputs[8],
+                city: inputs[9],
+                phoneNumber: inputs[10],
+                foodPreference,
+                driversLicense,
+                pastInvolvement: previousInvolvement,
+                shirtSize,
+                corps,
+                bff,
+                studentUnion,
+                plenipotentiary,
+                startOfStudies: inputs[11],
+                misc: other,
+                skills,
+                interest,
+                groupLeader,
+                smallPleasures,
+                bigPleasures
+              };
+              console.log(postData);
               this.trimValues();
               if (this.anyEmpty()) {
                 this.setState({
@@ -817,34 +852,36 @@ class RegistrationScreen extends Component {
                 });
               } else {
                 this.setState({ loadingComplete: false, loading: true });
+                const postData = {
+                  firstName: inputs[0],
+                  lastName: inputs[1],
+                  personalNumber: inputs[2],
+                  email: inputs[3],
+                  password: inputs[5],
+                  address: inputs[7],
+                  co,
+                  postNumber: inputs[8],
+                  city: inputs[9],
+                  phoneNumber: inputs[10],
+                  foodPreference,
+                  driversLicense,
+                  pastInvolvement: previousInvolvement,
+                  shirtSize,
+                  corps,
+                  bff,
+                  studentUnion,
+                  plenipotentiary,
+                  startOfStudies: inputs[11],
+                  misc: other,
+                  skills,
+                  interest,
+                  groupLeader,
+                  smallPleasures,
+                  bigPleasures
+                };
+                console.log(postData);
                 axios
-                  .post(REGISTER_URL, {
-                    firstName: inputs[0],
-                    lastName: inputs[1],
-                    personalNumber: inputs[2],
-                    email: inputs[3],
-                    password: inputs[5],
-                    address: inputs[7],
-                    co,
-                    postNumber: inputs[8],
-                    city: inputs[9],
-                    phoneNumber: inputs[10],
-                    foodPreference,
-                    driversLicense,
-                    pastInvolvement: previousInvolvement,
-                    shirtSize,
-                    corps,
-                    bff,
-                    studentUnion,
-                    plenipotentiary,
-                    startOfStudies: inputs[11],
-                    misc: other,
-                    skills,
-                    interest,
-                    groupLeader,
-                    smallPleasures,
-                    bigPleasures
-                  })
+                  .post(REGISTER_URL, postData)
                   .then(response => {
                     const { accessToken } = response.data;
                     this.props.setToken(accessToken);
