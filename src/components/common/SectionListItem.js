@@ -64,7 +64,7 @@ class SectionListItem extends Component {
               {sectionIcon === '' ? null : (
                 <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
               )}
-              {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
+              {sectionIcon === '' || sectionIcon === null ? sectionTitle : ' ' + sectionTitle}
             </Text>
             {sectionInfoText === '' ? null : (
               <Text
