@@ -38,7 +38,6 @@ class SettingsScreen extends Component {
   handleLogout() {
     removeItem('email');
     removeItem('accessToken');
-    this.props.setProgress(0);
     this.props.resetData();
     this.props.screenProps.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
