@@ -18,9 +18,9 @@ const expiredTokenMessage = {
   SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
   EN: 'Your session has expired please log in again to continue'
 };
-const studentUnion = {
+const studentNation = {
   SE: 'Välj nation',
-  EN: 'Choose your student union'
+  EN: 'Choose your student nation'
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
@@ -226,8 +226,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'driversLicenseEmpty',
     'studenUnionEmpty',
     'shirtSizeArray',
-    'studentUnion',
-    'studentUnionArray',
+    'studentNation',
+    'studentNationArray',
     'activeKarneval',
     'driversLicense',
     'driversLicenseArray',
@@ -320,10 +320,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Välj tröjstorlek',
     EN: 'Choose shirt size'
   },
-  studentUnion,
-  studentUnionArray: {
+  studentNation,
+  studentNationArray: {
     SE: [
-      studentUnion.SE,
+      studentNation.SE,
       'Blekingska Nation',
       'Göteborgs Nation',
       'Hallands Nation',
@@ -338,7 +338,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Östgöta Nation'
     ],
     EN: [
-      studentUnion.EN,
+      studentNation.EN,
       'Blekingska Nation',
       'Göteborgs Nation',
       'Hallands Nation',
@@ -355,7 +355,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   studenUnionEmpty: {
     SE: 'Välj nation',
-    EN: 'Choose student union'
+    EN: 'Choose student nation'
   },
   activeKarneval: {
     SE: 'Jag var aktiv under karnevalen 2014',
