@@ -61,7 +61,7 @@ class SectionScreen extends Component {
 
   renderPopover(text) {
     const { popover } = this.props;
-    if (popover)
+    if (popover && this.props.progress >= 2)
       return (
         <Popover
           onPress={() => this.props.setSectionScreenPopover(false)}
@@ -75,6 +75,7 @@ class SectionScreen extends Component {
   render() {
     const { navigation, screenProps, language, sectionPriorities, sections } = this.props;
     const strings = this.getStrings();
+
     return (
       <View>
         <BackgroundImage pictureNumber={2} />

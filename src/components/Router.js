@@ -24,12 +24,6 @@ const LoggedIn = StackNavigator({
       header: null
     }
   },
-  ConfirmPage: {
-    screen: ConfirmPage,
-    navigationOptions: {
-      header: null
-    }
-  },
   SongScreen: {
     screen: SongScreen,
     navigationOptions: {
@@ -93,6 +87,12 @@ const Router = StackNavigator(
     },
     MyPageNavbarScreen: {
       screen: LoggedIn,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ConfirmPage: {
+      screen: ConfirmPage,
       navigationOptions: {
         header: null
       }

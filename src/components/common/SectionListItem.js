@@ -78,10 +78,10 @@ class SectionListItem extends Component {
         </View>
         <View>
           <MaterialIcons
-            name="keyboard-arrow-right"
+            name={'keyboard-arrow-right'}
             style={continueIconIndicatorStyle}
             color={this.getColor()}
-            size={50}
+            size={this.props.icon === 'done' ? 40 : 50}
           />
         </View>
       </TouchableOpacity>

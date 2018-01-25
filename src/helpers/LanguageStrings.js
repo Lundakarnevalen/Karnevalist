@@ -332,29 +332,35 @@ export const REGISTRATION_SCREEN_STRINGS = {
   errorMsgInternal,
   ok,
   gdpr1: {
-    SE: 'Jag är medveten om och godkänner att Lundakarnevalen samlar in mina personuppgifter för att:'
-    +' kontrollera mitt Studentlundsmedlemsskap, registrera mig i Folkuniversitetets Studiecirklar'
-    +' (för att kunna söka bidrag till Lundakarnevalens verksamheter kan studiecirklar förekomma, detta kommer att informeras om i respektive sektion)'
-    +' samt användas tillsammans med Lundakarnevalens samarbetsorganisation ung media.',
-    EN: 'I am aware of and allow the use of my personal information by Lundakarnevalen to: Control my membership in Studentlund, '
-    +'register me for study circles at Folkuniversitetet (to be able to get benefits for the activities organized by Lundakarnevalen study circles might occur, the section will provide information about this)'
-    +' and to be used together with ung media, a cooperation organization of Lundakarnevalen.'
+    SE:
+      'Jag är medveten om och godkänner att Lundakarnevalen samlar in mina personuppgifter för att:' +
+      ' kontrollera mitt Studentlundsmedlemsskap, registrera mig i Folkuniversitetets Studiecirklar' +
+      ' (för att kunna söka bidrag till Lundakarnevalens verksamheter kan studiecirklar förekomma, detta kommer att informeras om i respektive sektion)' +
+      ' samt användas tillsammans med Lundakarnevalens samarbetsorganisation ung media.',
+    EN:
+      'I am aware of and allow the use of my personal information by Lundakarnevalen to: Control my membership in Studentlund, ' +
+      'register me for study circles at Folkuniversitetet (to be able to get benefits for the activities organized by Lundakarnevalen study circles might occur, the section will provide information about this)' +
+      ' and to be used together with ung media, a cooperation organization of Lundakarnevalen.'
   },
   gdpr2: {
-    SE: 'Jag är medveten om att Lundakarnevalen kommer att fota/filma och att jag kan förekomma i Lundakarnevalens bilder.'
-    +' Jag godkänner att Lundakarnevalen använder sådant foto och film på Facebook, Instagram, Youtube och i karnevalsboxen.',
-    EN: 'I am aware that Lundakarnevalen will take pictures/movies and that I can appear in these. I allow Lundakarnevalen to'
-    +' use these pictures and movies on Facebook, Instagram, Youtube and in karnevalsboxen.'
+    SE:
+      'Jag är medveten om att Lundakarnevalen kommer att fota/filma och att jag kan förekomma i Lundakarnevalens bilder.' +
+      ' Jag godkänner att Lundakarnevalen använder sådant foto och film på Facebook, Instagram, Youtube och i karnevalsboxen.',
+    EN:
+      'I am aware that Lundakarnevalen will take pictures/movies and that I can appear in these. I allow Lundakarnevalen to' +
+      ' use these pictures and movies on Facebook, Instagram, Youtube and in karnevalsboxen.'
   },
   gdpr3: {
     SE: 'Jag är medveten om och godkänner att mina kontaktuppgifter behövs under hela år 2018.',
     EN: 'I am aware of and allow the use of my contact information during the whole year of 2018.'
   },
   gdpr4: {
-    SE: 'Om jag accepterar en post med mer ansvar godkänner jag att mina kontaktuppgifter sparas till nästa Lundakarneval,'
-    +' för att göra en överlämning till en efterträdare.',
-    EN: 'If I accept a post with more responsibility I allow my contact information to be saved until the next Lundakarneval,'
-    +' to make a handover to a successor.'
+    SE:
+      'Om jag accepterar en post med mer ansvar godkänner jag att mina kontaktuppgifter sparas till nästa Lundakarneval,' +
+      ' för att göra en överlämning till en efterträdare.',
+    EN:
+      'If I accept a post with more responsibility I allow my contact information to be saved until the next Lundakarneval,' +
+      ' to make a handover to a successor.'
   }
 };
 
@@ -411,8 +417,7 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Jag förstår',
     EN: 'I understand'
-  },
-
+  }
 };
 
 export const SECTION_SCREEN_STRINGS = {
@@ -440,18 +445,72 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: ['title', 'buttonText', 'popoverText'],
+  fields: [
+    'title',
+    'createProfile',
+    'Karnevalist',
+    'RightNow',
+    'CheckIn',
+    'ChooseSections',
+    'info',
+    'SendIn',
+    'popoverText',
+    'step1',
+    'step2',
+    'step3',
+    'step4'
+  ],
   title: {
     SE: 'Hem',
     EN: 'Home'
   },
-  buttonText: {
-    SE: 'Påbörja din registrering',
-    EN: 'Begin your registration'
+  createProfile: {
+    SE: 'Skapa profil',
+    EN: 'Create a profile'
+  },
+  RightNow: {
+    SE: 'Du är just nu',
+    EN: 'You are now'
+  },
+  Karnevalist: {
+    SE: 'Karnevalist',
+    EN: 'Karnevalist'
+  },
+  CheckIn: {
+    SE: 'Checka in',
+    EN: 'Check in'
+  },
+  ChooseSections: {
+    SE: 'Välj minst 5 sektioner',
+    EN: 'Choose at least 5 sections'
+  },
+  info: {
+    SE: 'Check in sker den 4 februari.',
+    EN: 'Check in happens February the 4th.'
+  },
+  SendIn: {
+    SE: 'Skicka in dina val',
+    EN: 'Submit your choices'
   },
   popoverText: {
     SE: 'Här väljer du dina sektioner',
     EN: 'Select your sections here'
+  },
+  step1: {
+    SE: 'Steg 1',
+    EN: 'Step 1'
+  },
+  step2: {
+    SE: 'Steg 2',
+    EN: 'Step 2'
+  },
+  step3: {
+    SE: 'Steg 3',
+    EN: 'Step 3'
+  },
+  step4: {
+    SE: 'Steg 4',
+    EN: 'Step 4'
   }
 };
 
@@ -528,7 +587,7 @@ export const CONFIRM_PAGE_STRINGS = {
     'confirmHeader',
     'yes',
     'cancel',
-    'checkinMessage',
+    'checkinMessage'
   ],
   title: {
     SE: 'Bekräfta dina val',
