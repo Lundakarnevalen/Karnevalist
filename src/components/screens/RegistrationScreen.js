@@ -262,12 +262,15 @@ class RegistrationScreen extends Component {
             switch (tag) {
               case 'shirt':
                 this.setState({ showShirtPicker: true });
+                if (title === '') this.setState({ shirtSize: tagArray[0] });
                 break;
               case 'union':
                 this.setState({ showstudentNationPicker: true });
+                if (title === '') this.setState({ studentNation: tagArray[0] });
                 break;
               case 'driversLicense':
                 this.setState({ showDriversLicensePicker: true });
+                if (title === '') this.setState({ driversLicense: tagArray[0] });
                 break;
               default:
                 break;
@@ -306,6 +309,7 @@ class RegistrationScreen extends Component {
       for (let i = 0; i < strings.checkBoxNames.length; i++) {
         checkBoxes.push(
           <CheckBox
+            key={i}
             name={strings.checkBoxNames[i]}
             size={30}
             onPress={() => {
@@ -321,6 +325,7 @@ class RegistrationScreen extends Component {
       for (let i = 0; i < strings.checkBoxNames.length; i++) {
         checkBoxes.push(
           <CheckBox
+            key={i}
             name={strings.checkBoxNames[i]}
             size={30}
             onPress={() => {
@@ -336,6 +341,7 @@ class RegistrationScreen extends Component {
       for (let i = 0; i < strings.auditionCheckboxes.length; i++) {
         checkBoxes.push(
           <CheckBox
+            key={i}
             name={strings.auditionCheckboxes[i]}
             size={30}
             onPress={() => {
@@ -351,6 +357,7 @@ class RegistrationScreen extends Component {
       for (let i = 0; i < strings.auditionCheckboxes.length; i++) {
         checkBoxes.push(
           <CheckBox
+            key={i}
             name={strings.auditionCheckboxes[i]}
             size={30}
             onPress={() => {
