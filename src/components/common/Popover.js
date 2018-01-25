@@ -30,7 +30,7 @@ class Popover extends Component {
         >
           <PulsatingView animate>
             <View animate style={this.props.big ? talkBubbleSquareBig : talkBubbleSquareSmall}>
-              <Text style={textStyle}>{this.props.text}</Text>
+              <Text style={[textStyle, { marginLeft: 16 }]}>{this.props.text}</Text>
             </View>
             <View style={talkBubbleTriangleBottomLeft} />
           </PulsatingView>
@@ -63,8 +63,8 @@ const styles = {
   talkBubbleTopRight: {
     backgroundColor: 'transparent',
     position: 'absolute',
-    top: 72,
-    right: 0
+    top: WIDTH / 4.09,
+    right: 5
   },
   talkBubbleTriangleTopRight: {
     width: 0,
@@ -84,7 +84,7 @@ const styles = {
     backgroundColor: 'transparent',
     position: 'absolute',
     bottom: 4,
-    left: WIDTH / 3.57
+    left: WIDTH / 3.12
   },
   talkBubbleSquareSmall: {
     width: WIDTH / 1.62,
@@ -95,7 +95,7 @@ const styles = {
     alignItems: 'center'
   },
   talkBubbleSquareBig: {
-    width: WIDTH / 1.32,
+    width: WIDTH / 1.48,
     height: 40,
     backgroundColor: '#F7A021',
     borderRadius: 10,
