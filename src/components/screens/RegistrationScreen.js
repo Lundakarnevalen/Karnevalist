@@ -266,6 +266,7 @@ class RegistrationScreen extends Component {
                 break;
               case 'corps':
                 this.setState({ showCorpPicker: true });
+                if (title === '') this.setState({ corps: tagArray[0] });
                 break;
               default:
                 break;
@@ -277,10 +278,29 @@ class RegistrationScreen extends Component {
     return (
       <View>
         <Picker
-          onValueChange={itemValue => {
-            return tag === 'shirt'
-              ? this.setState({ shirtSize: itemValue })
-              : this.setState({ studentNation: itemValue });
+          onValueChange={item => {
+            switch (tag) {
+              case 'shirt':
+                this.setState({ showShirtPicker: true });
+                if (title === '') this.setState({ shirtSize: tagArray[0] });
+                else this.setState({ shirtSize: item })
+                break;
+              case 'nation':
+                this.setState({ showstudentNationPicker: true });
+                if (title === '') this.setState({ studentNation: tagArray[0] });
+                else this.setState({ shirtSize: item })
+                break;
+              case 'driversLicense':
+                this.setState({ showDriversLicensePicker: true });
+                if (title === '') this.setState({ driversLicense: tagArray[0] });
+                else this.setState({ shirtSize: item })
+                break;
+              case 'corps':
+                this.setState({ showCorpPicker: true });
+                break;
+              default:
+                break;
+            }
           }}
           selectedValue={tag === 'shirt' ? shirtSize : studentNation}
           style={styles.androidPicker}
