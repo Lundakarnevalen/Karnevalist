@@ -62,9 +62,9 @@ class TimelineItem extends Component {
       sectionInfoText = '',
       sectionDate = '',
       onPress,
-      done
+      clickable
     } = this.props;
-    if (done) {
+    if (!clickable) {
       return (
         <View style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}>
           <View style={{ flexDirection: 'row' }}>
@@ -191,7 +191,8 @@ const styles = {
     color: '#333'
   },
   continueIconIndicatorStyle: {
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    marginLeft: -2
   }
 };
 

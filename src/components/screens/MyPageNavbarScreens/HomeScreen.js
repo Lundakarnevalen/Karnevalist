@@ -34,7 +34,7 @@ class HomeScreen extends Component {
     if (popover && this.props.progress >= 2) {
       return (
         <Popover
-          onPress={() => setHomeScreenPopover(false)}
+          onPress={() => this.props.setHomeScreenPopover(false)}
           type={'bottomLeft'}
           text={text}
           big
@@ -162,10 +162,10 @@ class HomeScreen extends Component {
             <Progress.Circle
               borderWidth={3}
               thickness={9}
-              textStyle={{ fontSize: 22, fontWeight: 'bold' }}
+              textStyle={{ fontSize: WIDTH / 17, fontWeight: 'bold' }}
               progress={progress * 0.25}
               formatText={() => this.animateProgress()}
-              size={90}
+              size={WIDTH / 4}
               showsText
               color={'#FFF'}
             />
@@ -174,7 +174,7 @@ class HomeScreen extends Component {
           <View style={{ justifyContent: 'center', marginTop: 12 }}>
             <TimelineItem
               sectionTitle={strings.step1}
-              done={progress >= PROGRESS.CREATE_PROFILE}
+              clickable={progress + 1 === PROGRESS.CREATE_PROFILE}
               icon={this.renderIcon(PROGRESS.CREATE_PROFILE)}
               style={this.renderStyle(PROGRESS.CREATE_PROFILE)}
               onPress={() => this.renderOnPress(PROGRESS.CREATE_PROFILE)}
@@ -187,14 +187,14 @@ class HomeScreen extends Component {
                   ? this.renderCheckInLoading()
                   : this.renderIcon(PROGRESS.CHECK_IN)
               }
-              done={progress >= PROGRESS.CHECK_IN}
+              clickable={progress + 1 === PROGRESS.CHECK_IN}
               style={this.renderStyle(PROGRESS.CHECK_IN)}
               refresh
               onPress={() => this.renderOnPress(PROGRESS.CHECK_IN)}
               sectionInfoText={strings.CheckIn}
             />
             <TimelineItem
-              done={progress >= PROGRESS.CHOOSE_SECTIONS}
+              clickable={progress + 1 === PROGRESS.CHOOSE_SECTIONS}
               sectionTitle={strings.step3}
               icon={this.renderIcon(PROGRESS.CHOOSE_SECTIONS)}
               style={this.renderStyle(PROGRESS.CHOOSE_SECTIONS)}
@@ -202,7 +202,7 @@ class HomeScreen extends Component {
               sectionInfoText={strings.ChooseSections}
             />
             <TimelineItem
-              done={progress >= PROGRESS.SENT_SECTIONS}
+              clickable={progress + 1 === PROGRESS.SENT_SECTIONS}
               sectionTitle={strings.step4}
               icon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
               style={this.renderStyle(PROGRESS.SENT_SECTIONS)}
@@ -243,7 +243,7 @@ const styles = {
     marginTop: 20
   },
   textStyleProgress: {
-    fontSize: 20,
+    fontSize: WIDTH / 19,
     fontWeight: 'bold',
     color: '#fff',
     fontFamily: 'Avenir Next Medium',
@@ -286,4 +286,4 @@ const mapStateToProps = ({ currentLanguage, popoverStatus, userInformation, sect
   };
 };
 
-export default connect(mapStateToProps, { setProgress })(HomeScreen);
+export default connect(mapStateToProps, { setProgress, setHomeScreenPopover })(HomeScreen);
