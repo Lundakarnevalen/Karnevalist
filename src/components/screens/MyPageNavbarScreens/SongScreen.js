@@ -21,11 +21,11 @@ class SectionItemScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { name, melody, text } = navigation.state.params;
+    const { name, melody, text, headerTitle } = navigation.state.params;
     const { containerStyle, headerStyle, subHeaderStyle, textStyle } = styles;
     return (
       <View style={containerStyle}>
-        <Header title={name} navigation={navigation} />
+        <Header title={headerTitle || name} navigation={navigation} />
         <View>
           <ScrollView>
             <Text style={[headerStyle, { color: '#F7A021' }]}>{name}</Text>
