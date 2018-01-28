@@ -550,7 +550,7 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title', 'refresh', 'popoverText'],
+  fields: ['title', 'refresh', 'popoverText', 'headerTitle'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
@@ -562,6 +562,10 @@ export const SECTION_SCREEN_STRINGS = {
   refresh: {
     SE: 'Dra ner för att uppdatera',
     EN: 'Pull down to refresh'
+  },
+  headerTitle: {
+    SE: 'Sektionsinfo',
+    EN: 'Section Info'
   }
 };
 
@@ -693,10 +697,14 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
 };
 
 export const SONGBOOK_SCREEN_STRINGS = {
-  fields: ['title'],
+  fields: ['title', 'headerTitle'],
   title: {
     SE: 'Sångbok',
     EN: 'Song Book'
+  },
+  headerTitle: {
+    SE: 'Sångtext',
+    EN: 'Song Text'
   }
 };
 

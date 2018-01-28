@@ -77,11 +77,15 @@ class SectionItemScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { title, description, image, id } = navigation.state.params;
+    const { headerTitle, title, description, image, id } = navigation.state.params;
     const { containerStyle, headerStyle, textStyle } = styles;
     return (
       <View style={containerStyle}>
-        <Header title={title} navigation={navigation} rightIcon={this.renderRightIcon(id)} />
+        <Header
+          title={headerTitle || title}
+          navigation={navigation}
+          rightIcon={this.renderRightIcon(id)}
+        />
         <View>
           <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
             {image}
