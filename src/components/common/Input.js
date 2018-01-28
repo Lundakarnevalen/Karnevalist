@@ -79,7 +79,7 @@ class Input extends Component {
   }
 
   render() {
-    const { inputStyle, containerStyle } = styles;
+    const { inputStyle, containerStyle, iconTouchableStyle } = styles;
     const {
       value,
       width,
@@ -143,10 +143,10 @@ class Input extends Component {
         />
         {icon ? (
           <TouchableOpacity
-            style={[{ right: 10, top: 7, position: 'absolute' }, this.zIndexWorkaround(1000)]}
+            style={[iconTouchableStyle, this.zIndexWorkaround(1000)]}
             onPress={iconOnPress}
           >
-            <FontAwesome name={icon} style={{ color: '#F7A021' }} size={30} />
+            <FontAwesome name={icon} style={{ color: '#F7A021' }} size={25} />
           </TouchableOpacity>
         ) : null}
       </View>
@@ -160,6 +160,12 @@ const styles = {
     backgroundColor: 'white',
     borderRadius: 2,
     borderWidth: 1
+  },
+  iconTouchableStyle: {
+    right: 10,
+    top: 9,
+    position: 'absolute',
+    backgroundColor: 'transparent'
   },
   inputStyle: {
     height: 44,

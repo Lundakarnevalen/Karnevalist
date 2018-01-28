@@ -334,18 +334,20 @@ class RegistrationScreen extends Component {
     switch (message) {
       case errorStrings.errorMsgAnyEmpty:
       case errorStrings.errorMsgWrongInput:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
       case strings.confirmRegister:
         return [
           { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
-          { text: strings.ok,
+          {
+            text: strings.ok,
             onPress: () => {
-            this.handleRegister()
-            this.setState({ alertVisible: false })
-          } }
-      ]
+              this.handleRegister();
+              this.setState({ alertVisible: false });
+            }
+          }
+        ];
       default:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
     }
   }
 
@@ -435,7 +437,7 @@ class RegistrationScreen extends Component {
         });
       });
   }
-  
+
   render() {
     const strings = this.getStrings();
     const errorStrings = this.getErrorStrings();
@@ -751,6 +753,7 @@ class RegistrationScreen extends Component {
             }}
             iconOnPress={() => this.setState({ karneAlertVisible: true })}
             value={bff}
+            extraInputStyle={{ paddingRight: 45 }}
             returnKeyType={'done'}
             hasError={bffError}
             autoCapitalize="none"
