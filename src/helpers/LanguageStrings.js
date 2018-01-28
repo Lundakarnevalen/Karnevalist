@@ -416,12 +416,14 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Year of study start'
   },
   bff: {
-    SE: 'KarneKompis',
+    SE: 'Karnekompis',
     EN: 'BFF'
   },
   bffInfo: {
-    SE: 'Skriv din karnevalistkompis email, som du vill jobba med.',
-    EN: 'Write another workers email here if you want to work together.'
+    SE:
+      'En karnekopmis är någon som du vill jobba med under eller i föreberedelserna till Lundakarnevalen. Skriv in din karnekompis mail i fältet! OBS, det finns ingen garanti för att du kommer tillsammans med din karnekompis.',
+    EN:
+      "A BFF is someone you wish to work with during or in the preparation for Lundakarnevalen. Enter your BFF's email in the field. There are no guarantee that you will end up with your BFF."
   },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',

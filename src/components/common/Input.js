@@ -154,11 +154,10 @@ const styles = {
     borderWidth: 1
   },
   iconTouchableStyle: {
-    right: 7,
-    width: 30,
-    height: 30,
-    top: 7,
-    padding: 5,
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'transparent'
   },
   inputStyle: {
