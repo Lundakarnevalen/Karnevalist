@@ -24,7 +24,7 @@ const studentNation = {
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
-  EN: 'Choose type of drivers license'
+  EN: 'Choose type of driver\'s license'
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
@@ -151,7 +151,7 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Log in'
   },
   languageButton: {
-    SE: 'Change to english',
+    SE: 'Change to English',
     EN: 'Ändra till svenska'
   },
   forgotPassword: {
@@ -303,7 +303,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   driversLicense,
   driversLicenseArray: {
     SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
-    EN: ['I do not have a drivers license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+    EN: ['I do not have a driver\'s license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
   shirtSize,
   shirtSizeArray: {
@@ -691,7 +691,7 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
     EN: '" added'
   },
   messageEndRemove: {
-    SE: '" bortagen',
+    SE: '" borttagen',
     EN: '" removed'
   }
 };
