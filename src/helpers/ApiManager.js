@@ -73,8 +73,8 @@ export function fetchUserinfo(email, token, cb = null) {
   axios
     .get(url, { headers })
     .then(response => {
-      const { user } = response.data;
-      if (typeof cb === 'function') cb(user);
+      const { userinfo } = response.data;
+      if (typeof cb === 'function') cb(userinfo);
     })
     .catch(error => {
       if (typeof cb === 'function') cb(error, true);
