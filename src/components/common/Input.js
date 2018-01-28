@@ -97,7 +97,8 @@ class Input extends Component {
       onSubmitEditing = () => {},
       autoFocus = false,
       icon,
-      iconOnPress
+      iconOnPress,
+      maxLength = 50
     } = this.props;
     return (
       <View
@@ -138,7 +139,7 @@ class Input extends Component {
           blurOnSubmit
           onSubmitEditing={() => onSubmitEditing()}
           autoFocus={autoFocus}
-          maxLength={50}
+          maxLength={maxLength}
         />
         {icon ? (
           <TouchableOpacity

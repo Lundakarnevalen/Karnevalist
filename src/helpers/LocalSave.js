@@ -22,14 +22,14 @@ export function getPopoverStatus(key, callback) {
 
 export function setPopoverStatus(key, value) {
   AsyncStorage.setItem(key, value, err => {
-    if (err) console.error(err);
+    if (err) console.log(err);
   });
 }
 
 export function getItem(item, callback) {
   AsyncStorage.getItem(item, (error, result) => {
     if (error) {
-      console.error(error);
+      console.log(error);
       return;
     }
     callback(result);
@@ -38,14 +38,14 @@ export function getItem(item, callback) {
 
 export function saveItem(item, value) {
   AsyncStorage.setItem(item, value, error => {
-    if (error) console.error(error);
+    if (error) console.log(error);
   });
 }
 
 export function removeItem(item) {
   AsyncStorage.removeItem(item, error => {
     if (error) {
-      console.error(error);
+      console.log(error);
       return;
     }
   });
