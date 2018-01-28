@@ -407,7 +407,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   },
   bffInfo: {
     SE: 'KarneKompis, skriv EN väns emailadress som du gärna vill jobba med:',
-    EN: "BFF, write your friend's email here, and we will try to put you in the same group:"
+    EN: "BFF, write your friend's email here and we will try to put you in the same group:"
   },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',

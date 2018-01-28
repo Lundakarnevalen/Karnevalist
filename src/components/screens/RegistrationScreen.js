@@ -943,7 +943,6 @@ const styles = {
   },
   bffHeaderStyle: {
     backgroundColor: 'transparent',
-    width: Dimensions.get('window').width,
     fontSize: 20,
     paddingBottom: 10,
     color: 'white'
