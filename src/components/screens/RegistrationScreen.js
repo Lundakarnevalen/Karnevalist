@@ -103,6 +103,7 @@ class RegistrationScreen extends Component {
       smallAuditionCheckBoxes: [false, false, false],
       bigAuditionCheckBoxes: [false, false, false],
       message: '',
+      karneAlertVisible: false,
       gdpr1: false,
       gdpr2: false,
       gdpr3: false,
@@ -397,7 +398,8 @@ class RegistrationScreen extends Component {
       gdpr3,
       gdpr4,
       smallAuditionCheckBoxes,
-      bigAuditionCheckBoxes
+      bigAuditionCheckBoxes,
+      karneAlertVisible
     } = this.state;
 
     const closeButton = (
@@ -663,6 +665,21 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgPreviousInvolvement}
           />
+          <Input
+            ref={'bff'}
+            icon={'question-circle-o'}
+            placeholder={strings.bff}
+            onChangeText={text => {
+              this.setState({ bff: text, bffError: !this.isEmail(text) });
+            }}
+            iconOnPress={() => this.setState({ karneAlertVisible: true })}
+            value={bff}
+            returnKeyType={'done'}
+            hasError={bffError}
+            autoCapitalize="none"
+            warningMessage={errorStrings.errorMsgInvalidEmail}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
           {this.renderPickerForPlatform(
             strings.shirtSize,
             strings.shirtSizeArray,
@@ -722,20 +739,7 @@ class RegistrationScreen extends Component {
             returnKeyType={'done'}
             scrollToInput={y => this.scrollToInput(y)}
           />
-          <Text style={styles.bffHeaderStyle}>{strings.bffInfo}</Text>
-          <Input
-            ref={'bff'}
-            placeholder={strings.bff}
-            onChangeText={text => {
-              this.setState({ bff: text, bffError: !this.isEmail(text) });
-            }}
-            value={bff}
-            returnKeyType={'done'}
-            hasError={bffError}
-            autoCapitalize="none"
-            warningMessage={errorStrings.errorMsgInvalidEmail}
-            scrollToInput={y => this.scrollToInput(y)}
-          />
+
           <View style={{ right: 3 }}>
             <CheckBox
               name={strings.gdpr1}
@@ -900,6 +904,14 @@ class RegistrationScreen extends Component {
           buttonsIn={[{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]}
           header={strings.error}
           info={message || ''}
+        />
+        <SuperAgileAlert
+          alertVisible={karneAlertVisible}
+          buttonsIn={[
+            { text: strings.ok, onPress: () => this.setState({ karneAlertVisible: false }) }
+          ]}
+          header={strings.bff}
+          info={strings.bffInfo}
         />
       </View>
     );

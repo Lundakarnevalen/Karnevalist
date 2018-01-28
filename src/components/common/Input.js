@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated, Text } from 'react-native';
+import { View, TextInput, Animated, Text, TouchableOpacity, Platform } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 class Input extends Component {
   constructor(props) {
@@ -33,6 +34,13 @@ class Input extends Component {
       this.setState({ borderColor: 'black' });
     }
   }
+
+  zIndexWorkaround = val => {
+    return Platform.select({
+      ios: { zIndex: val },
+      android: { elevation: val }
+    });
+  };
 
   addWarningText() {
     const { warningMessage, hasError = false, value } = this.props;
@@ -87,7 +95,9 @@ class Input extends Component {
       extraPlaceHolderStyle,
       returnKeyType,
       onSubmitEditing = () => {},
-      autoFocus = false
+      autoFocus = false,
+      icon,
+      iconOnPress
     } = this.props;
     return (
       <View
@@ -130,6 +140,14 @@ class Input extends Component {
           autoFocus={autoFocus}
           maxLength={50}
         />
+        {icon ? (
+          <TouchableOpacity
+            style={[{ right: 10, top: 7, position: 'absolute' }, this.zIndexWorkaround(1000)]}
+            onPress={iconOnPress}
+          >
+            <FontAwesome name={icon} style={{ color: '#F7A021' }} size={30} />
+          </TouchableOpacity>
+        ) : null}
       </View>
     );
   }

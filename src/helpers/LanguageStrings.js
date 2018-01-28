@@ -24,7 +24,7 @@ const studentNation = {
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
-  EN: 'Choose type of driver\'s license'
+  EN: "Choose type of driver's license"
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
@@ -304,7 +304,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   driversLicense,
   driversLicenseArray: {
     SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
-    EN: ['I do not have a driver\'s license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+    EN: ["I do not have a driver's license", 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
   shirtSize,
   shirtSizeArray: {
@@ -402,12 +402,12 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Year of study start'
   },
   bff: {
-    SE: 'KarneKompis email',
-    EN: 'BFF email'
+    SE: 'KarneKompis',
+    EN: 'BFF'
   },
   bffInfo: {
-    SE: 'KarneKompis, skriv EN väns emailadress som du gärna vill jobba med:',
-    EN: "BFF, write your friend's email here and we will try to put you in the same group:"
+    SE: 'Skriv din karnevalistkompis email, som du vill jobba med.',
+    EN: 'Write another workers email here if you want to work together.'
   },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
