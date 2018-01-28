@@ -75,6 +75,7 @@ class Input extends Component {
     const {
       value,
       width,
+      height = 44,
       placeholder,
       secureText,
       textInputStyle,
@@ -84,6 +85,8 @@ class Input extends Component {
       keyboardType = 'default',
       extraContainerStyle,
       extraInputStyle,
+      multiLine = false,
+      numberOfLines = 1,
       extraPlaceHolderStyle,
       returnKeyType,
       onSubmitEditing = () => {},
@@ -118,7 +121,7 @@ class Input extends Component {
           onEndEditing={() => this.inputDeselected()}
           onChangeText={text => this.props.onChangeText(text)}
           value={value}
-          style={[inputStyle, { width }, textInputStyle, extraInputStyle]}
+          style={[inputStyle, { width, height }, textInputStyle, extraInputStyle]}
           autoCapitalize={autoCapitalize}
           secureTextEntry={secureText}
           autoCorrect={autoCorrect}
@@ -129,6 +132,8 @@ class Input extends Component {
           onSubmitEditing={() => onSubmitEditing()}
           autoFocus={autoFocus}
           maxLength={50}
+          multiLine={multiLine}
+          numberOfLines={numberOfLines}
         />
       </View>
     );
