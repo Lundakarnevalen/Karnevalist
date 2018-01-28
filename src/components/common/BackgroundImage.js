@@ -16,6 +16,8 @@ class BackgroundImage extends Component {
         return require('../../../assets/images/night3.png');
       case 4:
         return require('../../../assets/images/night4.png');
+      case 'background-login':
+        return require('../../../assets/images/background-login-screen.png');
       default:
         return require('../../../assets/images/night5.png');
     }
