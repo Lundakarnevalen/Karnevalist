@@ -146,7 +146,7 @@ class Input extends Component {
             style={[iconTouchableStyle, this.zIndexWorkaround(1000)]}
             onPress={iconOnPress}
           >
-            <FontAwesome name={icon} style={{ color: '#F7A021' }} size={25} />
+            <FontAwesome name={icon} style={{ color: '#F7A021' }} size={20} />
           </TouchableOpacity>
         ) : null}
       </View>
@@ -162,8 +162,11 @@ const styles = {
     borderWidth: 1
   },
   iconTouchableStyle: {
-    right: 10,
-    top: 9,
+    right: 7,
+    width: 30,
+    height: 30,
+    top: 7,
+    padding: 5,
     position: 'absolute',
     backgroundColor: 'transparent'
   },
