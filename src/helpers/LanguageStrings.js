@@ -24,7 +24,7 @@ const studentNation = {
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
-  EN: 'Choose type of drivers license'
+  EN: 'Choose type of driver\'s license'
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
