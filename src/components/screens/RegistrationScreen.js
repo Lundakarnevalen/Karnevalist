@@ -460,6 +460,7 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[2]}
             warningMessage={errorStrings.errorMsgSocialSecurity}
+            maxLength={10}
           />
           <Input
             ref={'fourthInput'}
@@ -582,6 +583,7 @@ class RegistrationScreen extends Component {
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
               hasError={errors[8]}
               warningMessage={errorStrings.errorMsgZipCode}
+              maxLength={5}
             />
             <Input
               ref={'tenthInput'}
@@ -618,6 +620,7 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[10]}
             warningMessage={errorStrings.errorMsgPhoneNbr}
+            maxLength={16}
           />
           <Input
             ref={'twelthInput'}
