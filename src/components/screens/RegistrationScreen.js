@@ -333,18 +333,20 @@ class RegistrationScreen extends Component {
     switch (message) {
       case errorStrings.errorMsgAnyEmpty:
       case errorStrings.errorMsgWrongInput:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
       case strings.confirmRegister:
         return [
           { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
-          { text: strings.ok,
+          {
+            text: strings.ok,
             onPress: () => {
-            this.handleRegister()
-            this.setState({ alertVisible: false })
-          } }
-      ]
+              this.handleRegister();
+              this.setState({ alertVisible: false });
+            }
+          }
+        ];
       default:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
     }
   }
 
@@ -743,9 +745,17 @@ class RegistrationScreen extends Component {
           />
           <Input
             ref={'bff'}
+            icon={'question-circle-o'}
             placeholder={strings.bff}
             onChangeText={text => {
               this.setState({ bff: text, bffError: !this.isEmail(text) });
+            }}
+            iconOnPress={() => {
+              this.setState({
+                alertVisible: true,
+                message: strings.bffInfo,
+                alertHeader: strings.bff
+              });
             }}
             value={bff}
             returnKeyType={'done'}
@@ -754,6 +764,7 @@ class RegistrationScreen extends Component {
             warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
+
           {this.renderPickerForPlatform(
             strings.shirtSize,
             strings.shirtSizeArray,
@@ -813,6 +824,7 @@ class RegistrationScreen extends Component {
             returnKeyType={'done'}
             scrollToInput={y => this.scrollToInput(y)}
           />
+
           <View style={{ right: 3 }}>
             <CheckBox
               name={strings.gdpr1 + '*'}

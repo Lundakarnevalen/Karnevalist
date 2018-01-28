@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated, Text } from 'react-native';
+import { View, TextInput, Animated, Text, TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 class Input extends Component {
   constructor(props) {
@@ -71,7 +72,7 @@ class Input extends Component {
   }
 
   render() {
-    const { inputStyle, containerStyle } = styles;
+    const { inputStyle, containerStyle, iconTouchableStyle, innerContainerStyle } = styles;
     const {
       value,
       width,
@@ -88,6 +89,8 @@ class Input extends Component {
       returnKeyType,
       onSubmitEditing = () => {},
       autoFocus = false,
+      icon,
+      iconOnPress = () => {},
       maxLength = 50
     } = this.props;
     return (
@@ -107,30 +110,37 @@ class Input extends Component {
           </Animated.Text>
         )}
         {this.addWarningText()}
-        <TextInput
-          ref={'input'}
-          onFocus={() => {
-            if (typeof this.props.scrollToInput !== 'undefined') {
-              this.props.scrollToInput(this.state.screenPosition);
-            }
-            this.inputSelected();
-          }}
-          underlineColorAndroid={'transparent'}
-          onEndEditing={() => this.inputDeselected()}
-          onChangeText={text => this.props.onChangeText(text)}
-          value={value}
-          style={[inputStyle, { width }, textInputStyle, extraInputStyle]}
-          autoCapitalize={autoCapitalize}
-          secureTextEntry={secureText}
-          autoCorrect={autoCorrect}
-          editable={editable}
-          keyboardType={keyboardType}
-          returnKeyType={returnKeyType}
-          blurOnSubmit
-          onSubmitEditing={() => onSubmitEditing()}
-          autoFocus={autoFocus}
-          maxLength={maxLength}
-        />
+        <View style={innerContainerStyle}>
+          <TextInput
+            ref={'input'}
+            onFocus={() => {
+              if (typeof this.props.scrollToInput !== 'undefined') {
+                this.props.scrollToInput(this.state.screenPosition);
+              }
+              this.inputSelected();
+            }}
+            underlineColorAndroid={'transparent'}
+            onEndEditing={() => this.inputDeselected()}
+            onChangeText={text => this.props.onChangeText(text)}
+            value={value}
+            style={[inputStyle, textInputStyle, extraInputStyle]}
+            autoCapitalize={autoCapitalize}
+            secureTextEntry={secureText}
+            autoCorrect={autoCorrect}
+            editable={editable}
+            keyboardType={keyboardType}
+            returnKeyType={returnKeyType}
+            blurOnSubmit
+            onSubmitEditing={() => onSubmitEditing()}
+            autoFocus={autoFocus}
+            maxLength={maxLength}
+          />
+          {icon ? (
+            <TouchableOpacity style={iconTouchableStyle} onPress={iconOnPress}>
+              <FontAwesome name={icon} style={{ color: '#F7A021' }} size={20} />
+            </TouchableOpacity>
+          ) : null}
+        </View>
       </View>
     );
   }
@@ -143,13 +153,21 @@ const styles = {
     borderRadius: 2,
     borderWidth: 1
   },
+  iconTouchableStyle: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  },
   inputStyle: {
     height: 44,
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 10,
     color: '#000',
-    fontFamily: 'Avenir Next Medium'
+    fontFamily: 'Avenir Next Medium',
+    flex: 1
   },
   warningTextStyle: {
     color: 'red',
@@ -157,6 +175,10 @@ const styles = {
     position: 'absolute',
     right: 5,
     fontFamily: 'Avenir Next Medium'
+  },
+  innerContainerStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 };
 
