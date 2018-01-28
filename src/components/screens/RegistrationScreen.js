@@ -430,6 +430,9 @@ class RegistrationScreen extends Component {
             autoFocus
             hasError={errors[0]}
             warningMessage={errorStrings.errorMsgOnlyLetters}
+            multiLine
+            numberOfLines={3}
+            height={44 * 3}
           />
           <Input
             ref={'secondInput'}
