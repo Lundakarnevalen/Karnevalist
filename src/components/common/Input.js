@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated, Text, TouchableOpacity, Platform } from 'react-native';
+import { View, TextInput, Animated, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 class Input extends Component {
@@ -34,13 +34,6 @@ class Input extends Component {
       this.setState({ borderColor: 'black' });
     }
   }
-
-  zIndexWorkaround = val => {
-    return Platform.select({
-      ios: { zIndex: val },
-      android: { elevation: val }
-    });
-  };
 
   addWarningText() {
     const { warningMessage, hasError = false, value } = this.props;
@@ -79,7 +72,7 @@ class Input extends Component {
   }
 
   render() {
-    const { inputStyle, containerStyle, iconTouchableStyle } = styles;
+    const { inputStyle, containerStyle, iconTouchableStyle, innerContainerStyle } = styles;
     const {
       value,
       width,
@@ -97,7 +90,7 @@ class Input extends Component {
       onSubmitEditing = () => {},
       autoFocus = false,
       icon,
-      iconOnPress,
+      iconOnPress = () => {},
       maxLength = 50
     } = this.props;
     return (
@@ -117,38 +110,37 @@ class Input extends Component {
           </Animated.Text>
         )}
         {this.addWarningText()}
-        <TextInput
-          ref={'input'}
-          onFocus={() => {
-            if (typeof this.props.scrollToInput !== 'undefined') {
-              this.props.scrollToInput(this.state.screenPosition);
-            }
-            this.inputSelected();
-          }}
-          underlineColorAndroid={'transparent'}
-          onEndEditing={() => this.inputDeselected()}
-          onChangeText={text => this.props.onChangeText(text)}
-          value={value}
-          style={[inputStyle, { width }, textInputStyle, extraInputStyle]}
-          autoCapitalize={autoCapitalize}
-          secureTextEntry={secureText}
-          autoCorrect={autoCorrect}
-          editable={editable}
-          keyboardType={keyboardType}
-          returnKeyType={returnKeyType}
-          blurOnSubmit
-          onSubmitEditing={() => onSubmitEditing()}
-          autoFocus={autoFocus}
-          maxLength={maxLength}
-        />
-        {icon ? (
-          <TouchableOpacity
-            style={[iconTouchableStyle, this.zIndexWorkaround(1000)]}
-            onPress={iconOnPress}
-          >
-            <FontAwesome name={icon} style={{ color: '#F7A021' }} size={20} />
-          </TouchableOpacity>
-        ) : null}
+        <View style={innerContainerStyle}>
+          <TextInput
+            ref={'input'}
+            onFocus={() => {
+              if (typeof this.props.scrollToInput !== 'undefined') {
+                this.props.scrollToInput(this.state.screenPosition);
+              }
+              this.inputSelected();
+            }}
+            underlineColorAndroid={'transparent'}
+            onEndEditing={() => this.inputDeselected()}
+            onChangeText={text => this.props.onChangeText(text)}
+            value={value}
+            style={[inputStyle, textInputStyle, extraInputStyle]}
+            autoCapitalize={autoCapitalize}
+            secureTextEntry={secureText}
+            autoCorrect={autoCorrect}
+            editable={editable}
+            keyboardType={keyboardType}
+            returnKeyType={returnKeyType}
+            blurOnSubmit
+            onSubmitEditing={() => onSubmitEditing()}
+            autoFocus={autoFocus}
+            maxLength={maxLength}
+          />
+          {icon ? (
+            <TouchableOpacity style={iconTouchableStyle} onPress={iconOnPress}>
+              <FontAwesome name={icon} style={{ color: '#F7A021' }} size={20} />
+            </TouchableOpacity>
+          ) : null}
+        </View>
       </View>
     );
   }
@@ -167,7 +159,6 @@ const styles = {
     height: 30,
     top: 7,
     padding: 5,
-    position: 'absolute',
     backgroundColor: 'transparent'
   },
   inputStyle: {
@@ -176,7 +167,8 @@ const styles = {
     paddingRight: 8,
     paddingTop: 10,
     color: '#000',
-    fontFamily: 'Avenir Next Medium'
+    fontFamily: 'Avenir Next Medium',
+    flex: 1
   },
   warningTextStyle: {
     color: 'red',
@@ -184,6 +176,10 @@ const styles = {
     position: 'absolute',
     right: 5,
     fontFamily: 'Avenir Next Medium'
+  },
+  innerContainerStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 };
 

@@ -753,7 +753,6 @@ class RegistrationScreen extends Component {
             }}
             iconOnPress={() => this.setState({ karneAlertVisible: true })}
             value={bff}
-            extraInputStyle={{ paddingRight: 45 }}
             returnKeyType={'done'}
             hasError={bffError}
             autoCapitalize="none"
