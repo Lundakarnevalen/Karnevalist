@@ -345,19 +345,17 @@ class RegistrationScreen extends Component {
       ]
       default:
         return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
-
     }
   }
+
   handleRegister() {
     const strings = this.getStrings();
-    const errorStrings = this.getErrorStrings();
     const {
       inputs,
       foodPreference,
       co,
       shirtSize,
       studentNation,
-      message,
       driversLicense,
       other,
       plenipotentiary,
@@ -436,6 +434,7 @@ class RegistrationScreen extends Component {
         });
       });
   }
+  
   render() {
     const strings = this.getStrings();
     const errorStrings = this.getErrorStrings();
