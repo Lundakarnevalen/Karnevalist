@@ -242,7 +242,7 @@ class RegistrationScreen extends Component {
     if (Platform.OS === 'ios') {
       return (
         <CustomButton
-          text={title === '' ? defaultTitle : title}
+          text={title === '' ? defaultTitle + '*' : title}
           style="dropDownButton"
           width={WIDTH}
           onPress={() => {
@@ -417,7 +417,7 @@ class RegistrationScreen extends Component {
           ref={'scrollView'}
         >
           <Input
-            placeholder={strings.firstName}
+            placeholder={strings.firstName + '*'}
             onChangeText={text => {
               inputs[0] = text;
               errors[0] = !this.containsOnlyLetters(text);
@@ -434,7 +434,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'secondInput'}
             onSubmitEditing={() => this.refs.thirdInput.focus()}
-            placeholder={strings.lastName}
+            placeholder={strings.lastName + '*'}
             onChangeText={text => {
               inputs[1] = text;
               errors[1] = !this.containsOnlyLetters(text);
@@ -449,7 +449,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'thirdInput'}
             onSubmitEditing={() => this.refs.fourthInput.focus()}
-            placeholder={strings.socialSecurityNumber}
+            placeholder={strings.socialSecurityNumber + '*'}
             onChangeText={text => {
               inputs[2] = text;
               errors[2] = !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text));
@@ -464,7 +464,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'fourthInput'}
             onSubmitEditing={() => this.refs.fifthInput.focus()}
-            placeholder={strings.email}
+            placeholder={strings.email + '*'}
             keyboardType="email-address"
             autoCapitalize="none"
             onChangeText={text => {
@@ -485,7 +485,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'fifthInput'}
             onSubmitEditing={() => this.refs.sixthInput.focus()}
-            placeholder={strings.confirmEmail}
+            placeholder={strings.confirmEmail + '*'}
             keyboardType="email-address"
             autoCapitalize="none"
             onChangeText={text => {
@@ -502,7 +502,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'sixthInput'}
             onSubmitEditing={() => this.refs.seventhInput.focus()}
-            placeholder={strings.password}
+            placeholder={strings.password + '*'}
             onChangeText={text => {
               inputs[5] = text;
               errors[5] = text.length < 5;
@@ -519,7 +519,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'seventhInput'}
             onSubmitEditing={() => this.refs.eigthInput.focus()}
-            placeholder={strings.confirmPassword}
+            placeholder={strings.confirmPassword + '*'}
             onChangeText={text => {
               inputs[6] = text;
               errors[6] = text !== inputs[5];
@@ -535,7 +535,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'eigthInput'}
             onSubmitEditing={() => this.refs.co.focus()}
-            placeholder={strings.address}
+            placeholder={strings.address + '*'}
             onChangeText={text => {
               inputs[7] = text;
               this.setState({ inputs });
@@ -565,7 +565,7 @@ class RegistrationScreen extends Component {
             <Input
               ref={'ninthInput'}
               onSubmitEditing={() => this.refs.tenthInput.focus()}
-              placeholder={strings.postNumber}
+              placeholder={strings.postNumber + '*'}
               keyboardType="numeric"
               onChangeText={text => {
                 inputs[8] = text;
@@ -586,7 +586,7 @@ class RegistrationScreen extends Component {
             <Input
               ref={'tenthInput'}
               onSubmitEditing={() => this.refs.eleventhInput.focus()}
-              placeholder={strings.city}
+              placeholder={strings.city + '*'}
               onChangeText={text => {
                 inputs[9] = text;
                 errors[9] = !this.containsOnlyLetters(text);
@@ -603,7 +603,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'eleventhInput'}
             onSubmitEditing={() => this.refs.twelthInput.focus()}
-            placeholder={strings.phoneNumber}
+            placeholder={strings.phoneNumber + '*'}
             keyboardType="phone-pad"
             onChangeText={text => {
               inputs[10] = text;
@@ -639,7 +639,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'yearStudyStart'}
             onSubmitEditing={() => this.refs.previousInvolvement.focus()}
-            placeholder={strings.yearStudyStart}
+            placeholder={strings.yearStudyStart + '*'}
             onChangeText={text => {
               inputs[11] = text;
               errors[11] = !this.containsOnlyDigits(text);
@@ -737,28 +737,28 @@ class RegistrationScreen extends Component {
           />
           <View style={{ right: 3 }}>
             <CheckBox
-              name={strings.gdpr1}
+              name={strings.gdpr1 + '*'}
               size={30}
               onPress={() => this.setState({ gdpr1: !gdpr1 })}
               value={gdpr1}
               color={'white'}
             />
             <CheckBox
-              name={strings.gdpr2}
+              name={strings.gdpr2 + '*'}
               size={30}
               onPress={() => this.setState({ gdpr2: !gdpr2 })}
               value={gdpr2}
               color={'white'}
             />
             <CheckBox
-              name={strings.gdpr3}
+              name={strings.gdpr3 + '*'}
               size={30}
               onPress={() => this.setState({ gdpr3: !gdpr3 })}
               value={gdpr3}
               color={'white'}
             />
             <CheckBox
-              name={strings.gdpr4}
+              name={strings.gdpr4 + '*'}
               size={30}
               onPress={() => this.setState({ gdpr4: !gdpr4 })}
               value={gdpr4}
