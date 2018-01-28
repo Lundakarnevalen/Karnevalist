@@ -50,6 +50,7 @@ class SplashScreen extends Component {
           getItem('accessToken', token => {
             fetchUserinfo(email, token, (response, error = false) => {
               if (error) {
+                console.log(response);
                 this.props.navigation.dispatch(resetAction);
               } else {
                 resetAction.actions = [
