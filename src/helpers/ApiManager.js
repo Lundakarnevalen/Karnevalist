@@ -9,8 +9,8 @@ export function getNews() {
   return axios
     .get(NEWS_URL + '7')
     .then(response => response.data)
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
+      console.log('Error fetching news');
     });
 }
 
@@ -59,8 +59,8 @@ export function fetchSections(cb) {
       });
       cb(sections);
     })
-    .catch(error => {
-      console.error(error);
+    .catch(() => {
+      console.error('Error fetching sections');
     });
 }
 
@@ -76,8 +76,8 @@ export function fetchUserinfo(email, token, cb = null) {
       const { user } = response.data;
       if (typeof cb === 'function') cb(user);
     })
-    .catch(error => {
-      if (typeof cb === 'function') cb(error, true);
+    .catch(() => {
+      if (typeof cb === 'function') cb('Error fetching userinfo', true);
     });
 }
 
@@ -91,8 +91,8 @@ export function fetchCheckInStatus(email, token, callback) {
     .then(response => {
       callback(response.data.checkedIn);
     })
-    .catch(error => {
-      if (typeof callback === 'function') callback(error);
+    .catch(() => {
+      if (typeof callback === 'function') callback('Error fetching check in');
     });
 }
 
