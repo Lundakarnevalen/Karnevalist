@@ -663,19 +663,6 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgPreviousInvolvement}
           />
-          <Input
-            ref={'bff'}
-            placeholder={strings.bff}
-            onChangeText={text => {
-              this.setState({ bff: text, bffError: !this.isEmail(text) });
-            }}
-            value={bff}
-            returnKeyType={'done'}
-            hasError={bffError}
-            autoCapitalize="none"
-            warningMessage={errorStrings.errorMsgInvalidEmail}
-            scrollToInput={y => this.scrollToInput(y)}
-          />
           {this.renderPickerForPlatform(
             strings.shirtSize,
             strings.shirtSizeArray,
@@ -733,6 +720,20 @@ class RegistrationScreen extends Component {
             }}
             value={other}
             returnKeyType={'done'}
+            scrollToInput={y => this.scrollToInput(y)}
+          />
+          <Text style={styles.bffHeaderStyle}>{strings.bffInfo}</Text>
+          <Input
+            ref={'bff'}
+            placeholder={strings.bff}
+            onChangeText={text => {
+              this.setState({ bff: text, bffError: !this.isEmail(text) });
+            }}
+            value={bff}
+            returnKeyType={'done'}
+            hasError={bffError}
+            autoCapitalize="none"
+            warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
           <View style={{ right: 3 }}>
@@ -937,6 +938,13 @@ const styles = {
     backgroundColor: 'transparent',
     width: Dimensions.get('window').width,
     fontSize: 30,
+    paddingBottom: 10,
+    color: 'white'
+  },
+  bffHeaderStyle: {
+    backgroundColor: 'transparent',
+    width: Dimensions.get('window').width,
+    fontSize: 20,
     paddingBottom: 10,
     color: 'white'
   }

@@ -248,6 +248,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'previousInvolvement',
     'corps',
     'bff',
+    'bffInfo',
     'groupLeader',
     'gdpr1',
     'gdpr2',
@@ -401,8 +402,12 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Year of study start'
   },
   bff: {
-    SE: 'KarneKompis',
-    EN: 'KarneFriend'
+    SE: 'KarneKompis email',
+    EN: 'BFF email'
+  },
+  bffInfo: {
+    SE: 'KarneKompis, skriv EN väns emailadress som du gärna vill jobba med:',
+    EN: "BFF, write your friend's email here, and we will try to put you in the same group:"
   },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
