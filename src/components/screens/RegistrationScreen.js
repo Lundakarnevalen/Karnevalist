@@ -68,7 +68,6 @@ class RegistrationScreen extends Component {
       smallAuditionCheckBoxes: [false, false, false],
       bigAuditionCheckBoxes: [false, false, false],
       message: '',
-      karneAlertVisible: false,
       gdpr1: false,
       gdpr2: false,
       gdpr3: false,
@@ -474,8 +473,7 @@ class RegistrationScreen extends Component {
       gdpr3,
       gdpr4,
       smallAuditionCheckBoxes,
-      bigAuditionCheckBoxes,
-      karneAlertVisible
+      bigAuditionCheckBoxes
     } = this.state;
 
     const closeButton = (
@@ -751,7 +749,13 @@ class RegistrationScreen extends Component {
             onChangeText={text => {
               this.setState({ bff: text, bffError: !this.isEmail(text) });
             }}
-            iconOnPress={() => this.setState({ karneAlertVisible: true })}
+            iconOnPress={() => {
+              this.setState({
+                alertVisible: true,
+                message: strings.bffInfo,
+                alertHeader: strings.bff
+              });
+            }}
             value={bff}
             returnKeyType={'done'}
             hasError={bffError}
@@ -759,6 +763,7 @@ class RegistrationScreen extends Component {
             warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
+
           {this.renderPickerForPlatform(
             strings.shirtSize,
             strings.shirtSizeArray,
@@ -927,14 +932,6 @@ class RegistrationScreen extends Component {
           header={alertHeader || strings.error}
           info={message || ''}
         />
-        <SuperAgileAlert
-          alertVisible={karneAlertVisible}
-          buttonsIn={[
-            { text: strings.ok, onPress: () => this.setState({ karneAlertVisible: false }) }
-          ]}
-          header={strings.bff}
-          info={strings.bffInfo}
-        />
       </View>
     );
   }
@@ -972,12 +969,6 @@ const styles = {
     backgroundColor: 'transparent',
     width: Dimensions.get('window').width,
     fontSize: 30,
-    paddingBottom: 10,
-    color: 'white'
-  },
-  bffHeaderStyle: {
-    backgroundColor: 'transparent',
-    fontSize: 20,
     paddingBottom: 10,
     color: 'white'
   }
