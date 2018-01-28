@@ -152,7 +152,7 @@ class LoginScreen extends Component {
     const strings = this.getStrings();
     return (
       <View style={containerStyle}>
-        <BackgroundImage pictureNumber={4} />
+        <BackgroundImage pictureNumber={'background-login'} />
         <ScrollView keyboardShouldPersistTaps="handled" scrollEnabled={false}>
           <View style={container1}>
             <View style={{ alignSelf: 'flex-start' }}>
