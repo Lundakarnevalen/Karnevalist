@@ -75,7 +75,6 @@ class SectionScreen extends Component {
   render() {
     const { navigation, screenProps, language, sectionPriorities, sections } = this.props;
     const strings = this.getStrings();
-
     return (
       <View>
         <BackgroundImage pictureNumber={2} />
@@ -104,6 +103,7 @@ class SectionScreen extends Component {
                 onPress={() =>
                   screenProps.navigation.navigate('SectionItemScreen', {
                     id,
+                    headerTitle: strings.headerTitle,
                     title: title[language],
                     description: info[language],
                     image

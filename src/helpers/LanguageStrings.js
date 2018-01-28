@@ -24,7 +24,7 @@ const studentNation = {
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
-  EN: 'Choose type of drivers license'
+  EN: 'Choose type of driver\'s license'
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
@@ -156,7 +156,7 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Log in'
   },
   languageButton: {
-    SE: 'Change to english',
+    SE: 'Change to English',
     EN: 'Ändra till svenska'
   },
   forgotPassword: {
@@ -311,7 +311,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   driversLicense,
   driversLicenseArray: {
     SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
-    EN: ['I do not have a drivers license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+    EN: ['I do not have a driver\'s license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
   shirtSize,
   shirtSizeArray: {
@@ -564,7 +564,7 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title', 'refresh', 'popoverText'],
+  fields: ['title', 'refresh', 'popoverText', 'headerTitle'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
@@ -576,6 +576,10 @@ export const SECTION_SCREEN_STRINGS = {
   refresh: {
     SE: 'Dra ner för att uppdatera',
     EN: 'Pull down to refresh'
+  },
+  headerTitle: {
+    SE: 'Sektionsinfo',
+    EN: 'Section Info'
   }
 };
 
@@ -698,16 +702,20 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
     EN: '" added'
   },
   messageEndRemove: {
-    SE: '" bortagen',
+    SE: '" borttagen',
     EN: '" removed'
   }
 };
 
 export const SONGBOOK_SCREEN_STRINGS = {
-  fields: ['title'],
+  fields: ['title', 'headerTitle'],
   title: {
     SE: 'Sångbok',
     EN: 'Song Book'
+  },
+  headerTitle: {
+    SE: 'Sångtext',
+    EN: 'Song Text'
   }
 };
 
