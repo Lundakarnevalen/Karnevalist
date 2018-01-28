@@ -60,7 +60,7 @@ export function fetchSections(cb) {
       cb(sections);
     })
     .catch(() => {
-      console.error('Error fetching sections');
+      console.log('Error fetching sections');
     });
 }
 
