@@ -431,6 +431,7 @@ class RegistrationScreen extends Component {
         this.setState({
           loadingComplete: false,
           loading: false,
+          alertHeader: strings.error,
           alertVisible: true,
           message: msg
         });
