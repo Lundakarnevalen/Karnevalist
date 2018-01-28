@@ -24,7 +24,7 @@ const studentNation = {
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
-  EN: 'Choose type of driver\'s license'
+  EN: "Choose type of driver's license"
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
@@ -311,7 +311,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   driversLicense,
   driversLicenseArray: {
     SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
-    EN: ['I do not have a driver\'s license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+    EN: ["I do not have a driver's license", 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
   shirtSize,
   shirtSizeArray: {
@@ -560,7 +560,7 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Jag förstår',
     EN: 'I understand'
-  },
+  }
 };
 
 export const SECTION_SCREEN_STRINGS = {
@@ -737,7 +737,9 @@ export const CONFIRM_PAGE_STRINGS = {
     'cancel',
     'checkinMessage',
     'notCheckedInButton',
-    'notFiveSections'
+    'notFiveSections',
+    'sectionsPriosMessage',
+    'sectionsPriosHeader'
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -794,6 +796,14 @@ export const CONFIRM_PAGE_STRINGS = {
   notFiveSections: {
     SE: 'Var god välj 5 sektioner',
     EN: 'Please select 5 sections'
+  },
+  sectionsPriosMessage: {
+    SE: 'Registreringen har stängt',
+    EN: 'The registration is closed'
+  },
+  sectionsPriosHeader: {
+    SE: 'Registrering stängd',
+    EN: 'Registration closed'
   }
 };
 
