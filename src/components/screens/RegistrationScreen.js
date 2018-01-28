@@ -55,6 +55,7 @@ class RegistrationScreen extends Component {
       loadingComplete: false,
       keyboardHeight: 0,
       alertVisible: false,
+      alertHeader: '',
       corps: '',
       showCorpPicker: false,
       plenipotentiary: false,
@@ -362,6 +363,115 @@ class RegistrationScreen extends Component {
     }
   }
 
+  renderAlertButtons(message) {
+    const strings = this.getStrings();
+    const errorStrings = this.getErrorStrings();
+    switch (message) {
+      case errorStrings.errorMsgAnyEmpty:
+      case errorStrings.errorMsgWrongInput:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+      case strings.confirmRegister:
+        return [
+          { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+          { text: strings.ok,
+            onPress: () => {
+            this.handleRegister()
+            this.setState({ alertVisible: false })
+          } }
+      ]
+      default:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+
+    }
+  }
+  handleRegister() {
+    const strings = this.getStrings();
+    const errorStrings = this.getErrorStrings();
+    const {
+      inputs,
+      foodPreference,
+      co,
+      shirtSize,
+      studentNation,
+      message,
+      driversLicense,
+      other,
+      plenipotentiary,
+      previousInvolvement,
+      corps,
+      bff,
+      groupLeader,
+      wantToWorkWith,
+      wantToLearn,
+      smallAuditionCheckBoxes,
+      bigAuditionCheckBoxes
+    } = this.state;
+    const smallPleasures = this.getTrueValuesFromList(
+      smallAuditionCheckBoxes,
+      REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+    );
+    const bigPleasures = this.getTrueValuesFromList(
+      bigAuditionCheckBoxes,
+      REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+    );
+    const interest = this.getTrueValuesFromList(
+      wantToLearn,
+      REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+    );
+    const skills = this.getTrueValuesFromList(
+      wantToWorkWith,
+      REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+    );
+    const postData = {
+      firstName: inputs[0],
+      lastName: inputs[1],
+      personalNumber: inputs[2],
+      email: inputs[3],
+      password: inputs[5],
+      address: inputs[7],
+      co,
+      postNumber: inputs[8],
+      city: inputs[9],
+      phoneNumber: inputs[10],
+      foodPreference,
+      driversLicense,
+      pastInvolvement: previousInvolvement,
+      shirtSize,
+      corps,
+      bff,
+      studentNation,
+      plenipotentiary,
+      startOfStudies: inputs[11],
+      misc: other,
+      skills,
+      interest,
+      groupLeader,
+      smallPleasures,
+      bigPleasures
+    };
+    this.trimValues();
+    this.setState({ loadingComplete: false, loading: true });
+    axios
+      .post(REGISTER_URL, postData)
+      .then(response => {
+        const { accessToken } = response.data;
+        this.props.setToken(accessToken);
+        this.props.setEmail(inputs[3]);
+        saveItem('email', inputs[3]);
+        saveItem('accessToken', accessToken);
+        this.props.setUserinfo(postData);
+        this.setState({ loadingComplete: true });
+      })
+      .catch(error => {
+        const msg = handleErrorMsg(error, strings);
+        this.setState({
+          loadingComplete: false,
+          loading: false,
+          alertVisible: true,
+          message: msg
+        });
+      });
+  }
   render() {
     const strings = this.getStrings();
     const errorStrings = this.getErrorStrings();
@@ -380,6 +490,7 @@ class RegistrationScreen extends Component {
       studentNation,
       showstudentNationPicker,
       showDriversLicensePicker,
+      alertHeader,
       alertVisible,
       message,
       driversLicense,
@@ -770,82 +881,25 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
-              const smallPleasures = this.getTrueValuesFromList(
-                smallAuditionCheckBoxes,
-                REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
-              );
-              const bigPleasures = this.getTrueValuesFromList(
-                bigAuditionCheckBoxes,
-                REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
-              );
-              const interest = this.getTrueValuesFromList(
-                wantToLearn,
-                REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
-              );
-              const skills = this.getTrueValuesFromList(
-                wantToWorkWith,
-                REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
-              );
-              const postData = {
-                firstName: inputs[0],
-                lastName: inputs[1],
-                personalNumber: inputs[2],
-                email: inputs[3],
-                password: inputs[5],
-                address: inputs[7],
-                co,
-                postNumber: inputs[8],
-                city: inputs[9],
-                phoneNumber: inputs[10],
-                foodPreference,
-                driversLicense,
-                pastInvolvement: previousInvolvement,
-                shirtSize,
-                corps,
-                bff,
-                studentNation,
-                plenipotentiary,
-                startOfStudies: inputs[11],
-                misc: other,
-                skills,
-                interest,
-                groupLeader,
-                smallPleasures,
-                bigPleasures
-              };
               this.trimValues();
               if (this.anyEmpty()) {
                 this.setState({
                   alertVisible: true,
+                  alertHeader: strings.error,
                   message: errorStrings.errorMsgAnyEmpty
                 });
               } else if (this.anyErrors()) {
                 this.setState({
                   alertVisible: true,
+                  alertHeader: strings.error,
                   message: errorStrings.errorMsgWrongInput
                 });
               } else {
-                this.setState({ loadingComplete: false, loading: true });
-                axios
-                  .post(REGISTER_URL, postData)
-                  .then(response => {
-                    const { accessToken } = response.data;
-                    this.props.setToken(accessToken);
-                    this.props.setEmail(inputs[3]);
-                    saveItem('email', inputs[3]);
-                    saveItem('accessToken', accessToken);
-                    this.props.setUserinfo(postData);
-                    this.setState({ loadingComplete: true });
-                  })
-                  .catch(error => {
-                    const msg = handleErrorMsg(error, strings);
-                    this.setState({
-                      loadingComplete: false,
-                      loading: false,
-                      alertVisible: true,
-                      message: msg
-                    });
-                  });
+                this.setState({
+                  alertVisible: true,
+                  alertHeader: strings.alertHeader,
+                  message: strings.confirmRegister
+                });
               }
             }}
           />
@@ -896,8 +950,8 @@ class RegistrationScreen extends Component {
         <SuperAgileAlert
           alertVisible={alertVisible}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
-          buttonsIn={[{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]}
-          header={strings.error}
+          buttonsIn={this.renderAlertButtons(message)}
+          header={alertHeader || strings.error}
           info={message || ''}
         />
       </View>
