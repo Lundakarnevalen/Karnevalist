@@ -38,7 +38,7 @@ class RegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputs: ['', '', '', '', '', '', '', '', '', '', '', ''],
+      inputs: Array(12).fill(''),
       shirtSize: '',
       studentNation: '',
       driversLicense: '',
@@ -46,7 +46,7 @@ class RegistrationScreen extends Component {
       foodPreference: '',
       co: '',
       other: '',
-      errors: [false, false, false, false, false, false, false, false, false, false, false],
+      errors: Array(11).fill(false),
       showShirtPicker: false,
       showDriversLicensePicker: false,
       showstudentNationPicker: false,
@@ -55,6 +55,7 @@ class RegistrationScreen extends Component {
       loadingComplete: false,
       keyboardHeight: 0,
       alertVisible: false,
+      alertHeader: '',
       corps: '',
       showCorpPicker: false,
       plenipotentiary: false,
@@ -62,44 +63,8 @@ class RegistrationScreen extends Component {
       bffError: false,
       //CheckBoxes
       groupLeader: false,
-      wantToWorkWith: [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false
-      ],
-      wantToLearn: [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false
-      ],
+      wantToWorkWith: Array(17).fill(false),
+      wantToLearn: Array(17).fill(false),
       smallAuditionCheckBoxes: [false, false, false],
       bigAuditionCheckBoxes: [false, false, false],
       message: '',
@@ -242,7 +207,7 @@ class RegistrationScreen extends Component {
     if (Platform.OS === 'ios') {
       return (
         <CustomButton
-          text={title === '' ? defaultTitle : title}
+          text={title === '' ? defaultTitle + '*' : title}
           style="dropDownButton"
           width={WIDTH}
           onPress={() => {
@@ -362,6 +327,114 @@ class RegistrationScreen extends Component {
     }
   }
 
+  renderAlertButtons(message) {
+    const strings = this.getStrings();
+    const errorStrings = this.getErrorStrings();
+    switch (message) {
+      case errorStrings.errorMsgAnyEmpty:
+      case errorStrings.errorMsgWrongInput:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+      case strings.confirmRegister:
+        return [
+          { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+          { text: strings.ok,
+            onPress: () => {
+            this.handleRegister()
+            this.setState({ alertVisible: false })
+          } }
+      ]
+      default:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]
+    }
+  }
+
+  handleRegister() {
+    const strings = this.getStrings();
+    const {
+      inputs,
+      foodPreference,
+      co,
+      shirtSize,
+      studentNation,
+      driversLicense,
+      other,
+      plenipotentiary,
+      previousInvolvement,
+      corps,
+      bff,
+      groupLeader,
+      wantToWorkWith,
+      wantToLearn,
+      smallAuditionCheckBoxes,
+      bigAuditionCheckBoxes
+    } = this.state;
+    const smallPleasures = this.getTrueValuesFromList(
+      smallAuditionCheckBoxes,
+      REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+    );
+    const bigPleasures = this.getTrueValuesFromList(
+      bigAuditionCheckBoxes,
+      REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
+    );
+    const interest = this.getTrueValuesFromList(
+      wantToLearn,
+      REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+    );
+    const skills = this.getTrueValuesFromList(
+      wantToWorkWith,
+      REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
+    );
+    const postData = {
+      firstName: inputs[0],
+      lastName: inputs[1],
+      personalNumber: inputs[2],
+      email: inputs[3],
+      password: inputs[5],
+      address: inputs[7],
+      co,
+      postNumber: inputs[8],
+      city: inputs[9],
+      phoneNumber: inputs[10],
+      foodPreference,
+      driversLicense,
+      pastInvolvement: previousInvolvement,
+      shirtSize,
+      corps,
+      bff,
+      studentNation,
+      plenipotentiary,
+      startOfStudies: inputs[11],
+      misc: other,
+      skills,
+      interest,
+      groupLeader,
+      smallPleasures,
+      bigPleasures
+    };
+    this.trimValues();
+    this.setState({ loadingComplete: false, loading: true });
+    axios
+      .post(REGISTER_URL, postData)
+      .then(response => {
+        const { accessToken } = response.data;
+        this.props.setToken(accessToken);
+        this.props.setEmail(inputs[3]);
+        saveItem('email', inputs[3]);
+        saveItem('accessToken', accessToken);
+        this.props.setUserinfo(postData);
+        this.setState({ loadingComplete: true });
+      })
+      .catch(error => {
+        const msg = handleErrorMsg(error, strings);
+        this.setState({
+          loadingComplete: false,
+          loading: false,
+          alertVisible: true,
+          message: msg
+        });
+      });
+  }
+  
   render() {
     const strings = this.getStrings();
     const errorStrings = this.getErrorStrings();
@@ -380,6 +453,7 @@ class RegistrationScreen extends Component {
       studentNation,
       showstudentNationPicker,
       showDriversLicensePicker,
+      alertHeader,
       alertVisible,
       message,
       driversLicense,
@@ -417,7 +491,7 @@ class RegistrationScreen extends Component {
           ref={'scrollView'}
         >
           <Input
-            placeholder={strings.firstName}
+            placeholder={strings.firstName + '*'}
             onChangeText={text => {
               inputs[0] = text;
               errors[0] = !this.containsOnlyLetters(text);
@@ -437,7 +511,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'secondInput'}
             onSubmitEditing={() => this.refs.thirdInput.focus()}
-            placeholder={strings.lastName}
+            placeholder={strings.lastName + '*'}
             onChangeText={text => {
               inputs[1] = text;
               errors[1] = !this.containsOnlyLetters(text);
@@ -452,7 +526,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'thirdInput'}
             onSubmitEditing={() => this.refs.fourthInput.focus()}
-            placeholder={strings.socialSecurityNumber}
+            placeholder={strings.socialSecurityNumber + '*'}
             onChangeText={text => {
               inputs[2] = text;
               errors[2] = !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text));
@@ -463,11 +537,12 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[2]}
             warningMessage={errorStrings.errorMsgSocialSecurity}
+            maxLength={10}
           />
           <Input
             ref={'fourthInput'}
             onSubmitEditing={() => this.refs.fifthInput.focus()}
-            placeholder={strings.email}
+            placeholder={strings.email + '*'}
             keyboardType="email-address"
             autoCapitalize="none"
             onChangeText={text => {
@@ -488,7 +563,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'fifthInput'}
             onSubmitEditing={() => this.refs.sixthInput.focus()}
-            placeholder={strings.confirmEmail}
+            placeholder={strings.confirmEmail + '*'}
             keyboardType="email-address"
             autoCapitalize="none"
             onChangeText={text => {
@@ -505,7 +580,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'sixthInput'}
             onSubmitEditing={() => this.refs.seventhInput.focus()}
-            placeholder={strings.password}
+            placeholder={strings.password + '*'}
             onChangeText={text => {
               inputs[5] = text;
               errors[5] = text.length < 5;
@@ -522,7 +597,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'seventhInput'}
             onSubmitEditing={() => this.refs.eigthInput.focus()}
-            placeholder={strings.confirmPassword}
+            placeholder={strings.confirmPassword + '*'}
             onChangeText={text => {
               inputs[6] = text;
               errors[6] = text !== inputs[5];
@@ -538,7 +613,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'eigthInput'}
             onSubmitEditing={() => this.refs.co.focus()}
-            placeholder={strings.address}
+            placeholder={strings.address + '*'}
             onChangeText={text => {
               inputs[7] = text;
               this.setState({ inputs });
@@ -568,7 +643,7 @@ class RegistrationScreen extends Component {
             <Input
               ref={'ninthInput'}
               onSubmitEditing={() => this.refs.tenthInput.focus()}
-              placeholder={strings.postNumber}
+              placeholder={strings.postNumber + '*'}
               keyboardType="numeric"
               onChangeText={text => {
                 inputs[8] = text;
@@ -585,11 +660,12 @@ class RegistrationScreen extends Component {
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
               hasError={errors[8]}
               warningMessage={errorStrings.errorMsgZipCode}
+              maxLength={5}
             />
             <Input
               ref={'tenthInput'}
               onSubmitEditing={() => this.refs.eleventhInput.focus()}
-              placeholder={strings.city}
+              placeholder={strings.city + '*'}
               onChangeText={text => {
                 inputs[9] = text;
                 errors[9] = !this.containsOnlyLetters(text);
@@ -606,7 +682,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'eleventhInput'}
             onSubmitEditing={() => this.refs.twelthInput.focus()}
-            placeholder={strings.phoneNumber}
+            placeholder={strings.phoneNumber + '*'}
             keyboardType="phone-pad"
             onChangeText={text => {
               inputs[10] = text;
@@ -621,6 +697,7 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[10]}
             warningMessage={errorStrings.errorMsgPhoneNbr}
+            maxLength={16}
           />
           <Input
             ref={'twelthInput'}
@@ -642,7 +719,7 @@ class RegistrationScreen extends Component {
           <Input
             ref={'yearStudyStart'}
             onSubmitEditing={() => this.refs.previousInvolvement.focus()}
-            placeholder={strings.yearStudyStart}
+            placeholder={strings.yearStudyStart + '*'}
             onChangeText={text => {
               inputs[11] = text;
               errors[11] = !this.containsOnlyDigits(text);
@@ -740,28 +817,28 @@ class RegistrationScreen extends Component {
           />
           <View style={{ right: 3 }}>
             <CheckBox
-              name={strings.gdpr1}
+              name={strings.gdpr1 + '*'}
               size={30}
               onPress={() => this.setState({ gdpr1: !gdpr1 })}
               value={gdpr1}
               color={'white'}
             />
             <CheckBox
-              name={strings.gdpr2}
+              name={strings.gdpr2 + '*'}
               size={30}
               onPress={() => this.setState({ gdpr2: !gdpr2 })}
               value={gdpr2}
               color={'white'}
             />
             <CheckBox
-              name={strings.gdpr3}
+              name={strings.gdpr3 + '*'}
               size={30}
               onPress={() => this.setState({ gdpr3: !gdpr3 })}
               value={gdpr3}
               color={'white'}
             />
             <CheckBox
-              name={strings.gdpr4}
+              name={strings.gdpr4 + '*'}
               size={30}
               onPress={() => this.setState({ gdpr4: !gdpr4 })}
               value={gdpr4}
@@ -773,82 +850,25 @@ class RegistrationScreen extends Component {
             style={'standardButton'}
             width={WIDTH}
             onPress={() => {
-              const smallPleasures = this.getTrueValuesFromList(
-                smallAuditionCheckBoxes,
-                REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
-              );
-              const bigPleasures = this.getTrueValuesFromList(
-                bigAuditionCheckBoxes,
-                REGISTRATION_SCREEN_STRINGS.auditionCheckboxes.EN
-              );
-              const interest = this.getTrueValuesFromList(
-                wantToLearn,
-                REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
-              );
-              const skills = this.getTrueValuesFromList(
-                wantToWorkWith,
-                REGISTRATION_SCREEN_STRINGS.checkBoxNames.EN
-              );
-              const postData = {
-                firstName: inputs[0],
-                lastName: inputs[1],
-                personalNumber: inputs[2],
-                email: inputs[3],
-                password: inputs[5],
-                address: inputs[7],
-                co,
-                postNumber: inputs[8],
-                city: inputs[9],
-                phoneNumber: inputs[10],
-                foodPreference,
-                driversLicense,
-                pastInvolvement: previousInvolvement,
-                shirtSize,
-                corps,
-                bff,
-                studentNation,
-                plenipotentiary,
-                startOfStudies: inputs[11],
-                misc: other,
-                skills,
-                interest,
-                groupLeader,
-                smallPleasures,
-                bigPleasures
-              };
               this.trimValues();
               if (this.anyEmpty()) {
                 this.setState({
                   alertVisible: true,
+                  alertHeader: strings.error,
                   message: errorStrings.errorMsgAnyEmpty
                 });
               } else if (this.anyErrors()) {
                 this.setState({
                   alertVisible: true,
+                  alertHeader: strings.error,
                   message: errorStrings.errorMsgWrongInput
                 });
               } else {
-                this.setState({ loadingComplete: false, loading: true });
-                axios
-                  .post(REGISTER_URL, postData)
-                  .then(response => {
-                    const { accessToken } = response.data;
-                    this.props.setToken(accessToken);
-                    this.props.setEmail(inputs[3]);
-                    saveItem('email', inputs[3]);
-                    saveItem('accessToken', accessToken);
-                    this.props.setUserinfo(postData);
-                    this.setState({ loadingComplete: true });
-                  })
-                  .catch(error => {
-                    const msg = handleErrorMsg(error, strings);
-                    this.setState({
-                      loadingComplete: false,
-                      loading: false,
-                      alertVisible: true,
-                      message: msg
-                    });
-                  });
+                this.setState({
+                  alertVisible: true,
+                  alertHeader: strings.alertHeader,
+                  message: strings.confirmRegister
+                });
               }
             }}
           />
@@ -899,8 +919,8 @@ class RegistrationScreen extends Component {
         <SuperAgileAlert
           alertVisible={alertVisible}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
-          buttonsIn={[{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]}
-          header={strings.error}
+          buttonsIn={this.renderAlertButtons(message)}
+          header={alertHeader || strings.error}
           info={message || ''}
         />
       </View>

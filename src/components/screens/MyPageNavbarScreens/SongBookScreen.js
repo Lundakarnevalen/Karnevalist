@@ -52,6 +52,7 @@ class SongBookScreen extends Component {
               sectionTitle={item.name}
               onPress={() =>
                 screenProps.navigation.navigate('SongScreen', {
+                  headerTitle: strings.headerTitle,
                   name: item.name,
                   melody: item.melody,
                   text: item.text

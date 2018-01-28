@@ -90,7 +90,8 @@ class Input extends Component {
       extraPlaceHolderStyle,
       returnKeyType,
       onSubmitEditing = () => {},
-      autoFocus = false
+      autoFocus = false,
+      maxLength = 50
     } = this.props;
     return (
       <View
@@ -131,9 +132,9 @@ class Input extends Component {
           blurOnSubmit
           onSubmitEditing={() => onSubmitEditing()}
           autoFocus={autoFocus}
-          maxLength={50}
           multiLine={multiLine}
           numberOfLines={numberOfLines}
+          maxLength={maxLength}
         />
       </View>
     );

@@ -76,7 +76,7 @@ class MyProfileScreen extends Component {
 
   renderMainView() {
     const { user } = this.state;
-    if (user === null)
+    if (user === null || user === undefined)
       return (
         <View style={styles.loading}>
           <ActivityIndicator size="large" color={'white'} />

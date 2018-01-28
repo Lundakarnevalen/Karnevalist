@@ -24,7 +24,7 @@ const studentNation = {
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
-  EN: 'Choose type of drivers license'
+  EN: 'Choose type of driver\'s license'
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
@@ -112,6 +112,11 @@ const registration = {
   EN: 'My Registration'
 };
 
+const alertHeader = {
+  SE: 'Bekräfta',
+  EN: 'Confirm'
+};
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -151,7 +156,7 @@ export const LOGIN_SCREEN_STRINGS = {
     EN: 'Log in'
   },
   languageButton: {
-    SE: 'Change to english',
+    SE: 'Change to English',
     EN: 'Ändra till svenska'
   },
   forgotPassword: {
@@ -256,7 +261,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'corpsList',
     'errorMsg409EmailAndPersonalNumber',
     'errorMsg409Email',
-    'errorMsg409PersonalNumber'
+    'errorMsg409PersonalNumber',
+    'cancel',
+    'confirmRegister',
+    'alertHeader'
   ],
   header: {
     SE: 'Skapa profil',
@@ -303,7 +311,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   driversLicense,
   driversLicenseArray: {
     SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
-    EN: ['I do not have a drivers license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+    EN: ['I do not have a driver\'s license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
   shirtSize,
   shirtSizeArray: {
@@ -363,7 +371,13 @@ export const REGISTRATION_SCREEN_STRINGS = {
   errorMsg409Email,
   errorMsg409PersonalNumber,
   errorMsgInternal,
+  cancel,
   ok,
+  confirmRegister: {
+    SE: 'Du kan endast ändra dina uppgifter via karnevalist.se efter att du har registrerat dig',
+    EN: 'You can only change your information from karnevalist.se after you have registered'
+  },
+  alertHeader,
   other: {
     SE: 'Övrigt',
     EN: 'Other'
@@ -546,11 +560,11 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Jag förstår',
     EN: 'I understand'
-  }
+  },
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title', 'refresh', 'popoverText'],
+  fields: ['title', 'refresh', 'popoverText', 'headerTitle'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
@@ -562,6 +576,10 @@ export const SECTION_SCREEN_STRINGS = {
   refresh: {
     SE: 'Dra ner för att uppdatera',
     EN: 'Pull down to refresh'
+  },
+  headerTitle: {
+    SE: 'Sektionsinfo',
+    EN: 'Section Info'
   }
 };
 
@@ -666,10 +684,7 @@ export const SETTINGS_SCREEN_STRINGS = {
   },
   cancel,
   ok,
-  alertHeader: {
-    SE: 'Bekräfta',
-    EN: 'Confirm'
-  },
+  alertHeader,
   alertMessage: {
     SE: 'Du loggas nu ut',
     EN: 'You will now be logged out'
@@ -687,16 +702,20 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
     EN: '" added'
   },
   messageEndRemove: {
-    SE: '" bortagen',
+    SE: '" borttagen',
     EN: '" removed'
   }
 };
 
 export const SONGBOOK_SCREEN_STRINGS = {
-  fields: ['title'],
+  fields: ['title', 'headerTitle'],
   title: {
     SE: 'Sångbok',
     EN: 'Song Book'
+  },
+  headerTitle: {
+    SE: 'Sångtext',
+    EN: 'Song Text'
   }
 };
 
