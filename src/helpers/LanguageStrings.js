@@ -587,7 +587,8 @@ export const HOME_SCREEN_STRINGS = {
     'step1',
     'step2',
     'step3',
-    'step4'
+    'step4',
+    'CheckInInformation'
   ],
   title: {
     SE: 'Hem',
@@ -640,6 +641,10 @@ export const HOME_SCREEN_STRINGS = {
   step4: {
     SE: 'Steg 4',
     EN: 'Step 4'
+  },
+  CheckInInformation: {
+    SE: 'Du kommer kunna checka in när du är längst fram i kön. Fram tills dess kan du välja sektioner men det kommer inte synas här på första sidan.',
+    EN: 'You will be able to check in when you are first in line. Until then you can choose sections but it will not be shown here on the home screen.'
   }
 };
 
