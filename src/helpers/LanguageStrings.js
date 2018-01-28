@@ -112,6 +112,11 @@ const registration = {
   EN: 'My Registration'
 };
 
+const alertHeader = {
+  SE: 'Bekräfta',
+  EN: 'Confirm'
+};
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -248,6 +253,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'previousInvolvement',
     'corps',
     'bff',
+    'bffInfo',
     'groupLeader',
     'gdpr1',
     'gdpr2',
@@ -256,7 +262,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'corpsList',
     'errorMsg409EmailAndPersonalNumber',
     'errorMsg409Email',
-    'errorMsg409PersonalNumber'
+    'errorMsg409PersonalNumber',
+    'cancel',
+    'confirmRegister',
+    'alertHeader'
   ],
   header: {
     SE: 'Skapa profil',
@@ -363,7 +372,13 @@ export const REGISTRATION_SCREEN_STRINGS = {
   errorMsg409Email,
   errorMsg409PersonalNumber,
   errorMsgInternal,
+  cancel,
   ok,
+  confirmRegister: {
+    SE: 'Du kan endast ändra dina uppgifter via karnevalist.se efter att du har registrerat dig',
+    EN: 'You can only change your information from karnevalist.se after you have registered'
+  },
+  alertHeader,
   other: {
     SE: 'Övrigt',
     EN: 'Other'
@@ -401,8 +416,12 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Year of study start'
   },
   bff: {
-    SE: 'KarneKompis',
-    EN: 'KarneFriend'
+    SE: 'KarneKompis email',
+    EN: 'BFF email'
+  },
+  bffInfo: {
+    SE: 'KarneKompis, skriv EN väns emailadress som du gärna vill jobba med:',
+    EN: "BFF, write your friend's email here and we will try to put you in the same group:"
   },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
@@ -546,7 +565,7 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
   buttonText: {
     SE: 'Jag förstår',
     EN: 'I understand'
-  }
+  },
 };
 
 export const SECTION_SCREEN_STRINGS = {
@@ -670,10 +689,7 @@ export const SETTINGS_SCREEN_STRINGS = {
   },
   cancel,
   ok,
-  alertHeader: {
-    SE: 'Bekräfta',
-    EN: 'Confirm'
-  },
+  alertHeader,
   alertMessage: {
     SE: 'Du loggas nu ut',
     EN: 'You will now be logged out'
