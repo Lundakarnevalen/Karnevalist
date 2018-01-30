@@ -130,7 +130,6 @@ class HomeScreen extends Component {
         this.setState({ checkInLoading: true });
         this.spin();
         this.updateProgress();
-        this.setState({ alertVisible: true });
       }
       if (prog === 3) {
         navigation.navigate('Sections');
@@ -145,7 +144,6 @@ class HomeScreen extends Component {
   render() {
     const { container, textStyleProgress } = styles;
     const { navigation, progress } = this.props;
-    const { message, alertVisible, alertHeader } = this.state;
     const strings = this.getStrings();
     return (
       <View style={{ flex: 1 }}>
@@ -210,13 +208,6 @@ class HomeScreen extends Component {
               style={this.renderStyle(PROGRESS.SENT_SECTIONS)}
               onPress={() => this.renderOnPress(PROGRESS.SENT_SECTIONS)}
               sectionInfoText={strings.SendIn}
-            />
-            <SuperAgileAlert
-              alertVisible={alertVisible}
-              setAlertVisible={visible => this.setState({ alertVisible: visible })}
-              buttonsIn={[{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }]}
-              header={strings.CheckIn}
-              info={strings.CheckInInformation}
             />
           </View>
         </View>

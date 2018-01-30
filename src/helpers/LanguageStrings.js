@@ -592,7 +592,8 @@ export const HOME_SCREEN_STRINGS = {
     'step2',
     'step3',
     'step4',
-    'CheckInInformation'
+    'CheckInInformation',
+    'ok'
   ],
   title: {
     SE: 'Hem',
@@ -602,6 +603,7 @@ export const HOME_SCREEN_STRINGS = {
     SE: 'Skapa profil',
     EN: 'Create a profile'
   },
+  ok,
   RightNow: {
     SE: 'Du är just nu',
     EN: 'You are now'
@@ -611,8 +613,8 @@ export const HOME_SCREEN_STRINGS = {
     EN: 'Karnevalist'
   },
   CheckIn: {
-    SE: 'Checka in',
-    EN: 'Check in'
+    SE: 'Check in on call day at the head of the queue.',
+    EN: 'Check in on call day at the head of the queue.'
   },
   ChooseSections: {
     SE: 'Välj minst 5 sektioner',
