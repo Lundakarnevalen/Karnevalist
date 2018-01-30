@@ -172,6 +172,12 @@ class ConfirmPage extends Component {
       })
       .catch(error => {
         if (error.response.status === 401) this.handleLogout();
+        else if (error.response.status === 418)
+          this.setState({
+            alertVisible: true,
+            message: strings.sectionsPriosMessage,
+            alertHeader: strings.sectionsPriosHeader
+          });
       });
   }
 
