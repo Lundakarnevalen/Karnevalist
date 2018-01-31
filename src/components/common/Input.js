@@ -76,7 +76,6 @@ class Input extends Component {
     const {
       value,
       width,
-      height = 44,
       placeholder,
       secureText,
       autoCorrect = false,
@@ -97,7 +96,9 @@ class Input extends Component {
     } = this.props;
     return (
       <View
-        onLayout={event => this.setState({ screenPosition: 100 + event.nativeEvent.layout.y })}
+        onLayout={event =>
+          this.setState({ screenPosition: (multiline ? 200 : 100) + event.nativeEvent.layout.y })
+        }
         style={[containerStyle, extraContainerStyle, { width, borderColor: this.getBorderColor() }]}
       >
         {placeholder === '' ? null : (
@@ -125,7 +126,11 @@ class Input extends Component {
             onEndEditing={() => this.inputDeselected()}
             onChangeText={text => this.props.onChangeText(text)}
             value={value}
-            style={[inputStyle, { height, paddingTop: multiline ? 15 : 10 }, extraInputStyle]}
+            style={[
+              inputStyle,
+              { height: multiline ? 133 : 44, paddingTop: multiline ? 15 : 10 },
+              extraInputStyle
+            ]}
             autoCapitalize={autoCapitalize}
             secureTextEntry={secureText}
             autoCorrect={autoCorrect}
@@ -155,7 +160,7 @@ const styles = {
     marginBottom: 8,
     backgroundColor: 'white',
     borderRadius: 2,
-    borderWidth: 1,
+    borderWidth: 1
   },
   iconTouchableStyle: {
     width: 44,
