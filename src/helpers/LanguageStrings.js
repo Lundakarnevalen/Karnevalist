@@ -254,6 +254,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'corps',
     'bff',
     'bffInfo',
+    'smallPleasuresHeader',
+    'bigPleasuresHeader',
+    'smallPleasuresInfo',
+    'bigPleasuresInfo',
     'groupLeader',
     'gdpr1',
     'gdpr2',
@@ -425,17 +429,33 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN:
       "A BFF is someone you wish to work with during or in the preparation for Lundakarnevalen. Enter your BFF's email in the field. There are no guarantee that you will end up with your BFF."
   },
+  smallPleasuresHeader: {
+    SE: 'Audition (Små nöjen)',
+    EN: 'Audition (Small Pleasures)'
+  },
+  bigPleasuresHeader: {
+    SE: 'Audition (Stora nöjen)',
+    EN: 'Audition (Big Pleasures)'
+  },
+  smallPleasuresInfo: {
+    SE: 'Vill du gå på audition för något av våra små nöjen? Klicka i vad du skulle vilja gå på audition för.',
+    EN: 'Do you want to audition for any of our small pleasures? Click the checkboxes of the ones you want to audition for.'
+  },
+  bigPleasuresInfo: {
+    SE: 'Vill du gå på audition för något av våra stora nöjen? Klicka i vad du skulle vilja gå på audition för.',
+    EN: 'Do you want to audition for any of our big pleasures? Click the checkboxes of the ones you want to audition for.'
+  },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
     EN: 'I want to be group leader'
   },
   auditionSmallSceneHeader: {
-    SE: 'Audition (Liten Scen): ',
-    EN: 'Audition (Small Scene): '
+    SE: 'Audition (Små nöjen): ',
+    EN: 'Audition (Small Pleasures): '
   },
   auditionBigSceneHeader: {
-    SE: 'Audition (Stor Scen): ',
-    EN: 'Audition (Big Scene): '
+    SE: 'Audition (Stora nöjen): ',
+    EN: 'Audition (Big Pleasures): '
   },
   auditionCheckboxes: {
     SE: ['Scen', 'Orkester', 'Dans'],
