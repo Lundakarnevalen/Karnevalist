@@ -117,6 +117,17 @@ const alertHeader = {
   EN: 'Confirm'
 };
 
+const yes = {
+  SE: 'JA',
+  EN: 'YES'
+};
+
+const no = {
+  SE: 'NEJ',
+  EN: 'NO'
+};
+
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -779,10 +790,7 @@ export const CONFIRM_PAGE_STRINGS = {
     EN: 'WEHEJ'
   },
   ok,
-  yes: {
-    SE: 'JA',
-    EN: 'YES'
-  },
+  yes,
   confirmMessage: {
     SE: 'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
     EN: 'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
@@ -848,7 +856,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'expiredTokenMessage',
     'ok',
     'invalidChangesMadeText',
-    'invalidChangesMadeHeader'
+    'invalidChangesMadeHeader',
+    'yes',
+    'no'
   ],
   title: profile,
   firstName,
@@ -940,7 +950,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   },
   expiredTokenTitle,
   expiredTokenMessage,
-  ok
+  ok,
+  yes,
+  no
 };
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {

@@ -40,6 +40,7 @@ class MyProfileScreen extends Component {
   }
 
   renderFields() {
+    const strings = this.getStrings();
     const { user, editMode } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
@@ -52,6 +53,12 @@ class MyProfileScreen extends Component {
       const borderWidth = editMode && key !== 'email' ? 1 : 0;
       const textColor = editMode && key !== 'email' ? 'black' : 'white';
       const placeholderTextColor = editMode && key !== 'email' ? '#F7A021' : 'white';
+      if (user[key] === '' || user[key] === null || user[key] === undefined)
+        return null
+      if (user[key] === true)
+          user[key] = strings.yes;
+      if (user[key] === false)
+        user[key] = strings.no;
       return (
         <Input
           extraContainerStyle={{ backgroundColor, borderWidth }}

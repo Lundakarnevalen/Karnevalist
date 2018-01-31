@@ -1,6 +1,6 @@
 import { NavigationActions } from 'react-navigation';
 
-const BASE_URL = 'https://api.10av10.com';
+const BASE_URL = 'https://api.lundakarnevalen.se';
 export const TOKEN_URL = BASE_URL + '/api/hello/';
 export const SECTION_URL = BASE_URL + '/getallsections';
 export const IMAGE_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/media/';
