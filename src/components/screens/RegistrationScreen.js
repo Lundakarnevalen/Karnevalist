@@ -746,7 +746,7 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgPreviousInvolvement}
-            multiLine
+            multiline
             numberOfLines={3}
             height={44 * 3}
           />
