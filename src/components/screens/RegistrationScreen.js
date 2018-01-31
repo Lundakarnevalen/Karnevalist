@@ -13,7 +13,7 @@ import {
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import { setToken, setEmail, setUserinfo } from '../../actions';
 import {
   Header,
@@ -807,19 +807,63 @@ class RegistrationScreen extends Component {
             value={groupLeader}
             color={'white'}
           />
-          <Text style={styles.checkBoxHeaderStyle}>{strings.auditionSmallSceneHeader}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
+            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>
+              {strings.auditionSmallSceneHeader}
+            </Text>
+            <TouchableOpacity
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }}
+              onPress={() => {
+                this.setState({
+                  alertVisible: true,
+                  message: strings.smallPleasuresInfo,
+                  alertHeader: strings.smallPleasuresHeader
+                });
+              }}
+            >
+              <FontAwesome
+                name={'question-circle-o'}
+                style={{ color: '#F7A021', backgroundColor: 'transparent' }}
+                size={25}
+              />
+            </TouchableOpacity>
+          </View>
           {this.renderCheckBoxes(strings.auditionCheckboxes, smallAuditionCheckBoxes, newState =>
             this.setState({ smallAuditionCheckBoxes: newState })
           )}
-          <Text style={styles.checkBoxHeaderStyle}>{strings.auditionBigSceneHeader}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
+            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>
+              {strings.auditionBigSceneHeader}
+            </Text>
+            <TouchableOpacity
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }}
+              onPress={() => {
+                this.setState({
+                  alertVisible: true,
+                  message: strings.bigPleasuresInfo,
+                  alertHeader: strings.bigPleasuresHeader
+                });
+              }}
+            >
+              <FontAwesome
+                name={'question-circle-o'}
+                style={{ color: '#F7A021', backgroundColor: 'transparent' }}
+                size={25}
+              />
+            </TouchableOpacity>
+          </View>
           {this.renderCheckBoxes(strings.auditionCheckboxes, bigAuditionCheckBoxes, newState =>
             this.setState({ bigAuditionCheckBoxes: newState })
           )}
-          <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeader}</Text>
+          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>
+            {strings.checkBoxesHeader}
+          </Text>
           {this.renderCheckBoxes(strings.checkBoxNames, wantToWorkWith, newState =>
             this.setState({ wantToWorkWith: newState })
           )}
-          <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeaderToLearn}</Text>
+          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>
+            {strings.checkBoxesHeaderToLearn}
+          </Text>
           {this.renderCheckBoxes(strings.checkBoxNames, wantToLearn, newState =>
             this.setState({ wantToLearn: newState })
           )}
@@ -951,9 +995,6 @@ class RegistrationScreen extends Component {
 }
 
 const styles = {
-  titelTextStyle: {
-    fontSize: 40
-  },
   flexHorizontal: {
     flexDirection: 'row'
   },
@@ -981,8 +1022,7 @@ const styles = {
   checkBoxHeaderStyle: {
     backgroundColor: 'transparent',
     width: Dimensions.get('window').width,
-    fontSize: 30,
-    paddingBottom: 10,
+    fontSize: 18,
     color: 'white'
   }
 };
