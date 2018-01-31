@@ -125,7 +125,7 @@ class Input extends Component {
             onEndEditing={() => this.inputDeselected()}
             onChangeText={text => this.props.onChangeText(text)}
             value={value}
-            style={[inputStyle, { height }, extraInputStyle]}
+            style={[inputStyle, { height, paddingTop: multiline ? 15 : 10 }, extraInputStyle]}
             autoCapitalize={autoCapitalize}
             secureTextEntry={secureText}
             autoCorrect={autoCorrect}
@@ -138,7 +138,6 @@ class Input extends Component {
             maxLength={maxLength}
             multiline={multiline}
             numberOfLines={numberOfLines}
-            maxLength={200}
           />
           {icon ? (
             <TouchableOpacity style={iconTouchableStyle} onPress={iconOnPress}>
@@ -166,13 +165,12 @@ const styles = {
     backgroundColor: 'transparent'
   },
   inputStyle: {
-    height: 44,
     paddingLeft: 8,
     paddingRight: 8,
-    paddingTop: 10,
     color: '#000',
     fontFamily: 'Avenir Next Medium',
-    flex: 1
+    flex: 1,
+    fontSize: 16
   },
   warningTextStyle: {
     color: 'red',
