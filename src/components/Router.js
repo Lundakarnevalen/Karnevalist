@@ -68,7 +68,7 @@ const Router = StackNavigator(
       }
     },
     LoginScreen: {
-      screen: MyPageNavbarScreen,
+      screen: LoginScreen,
       navigationOptions: {
         header: null
       }
