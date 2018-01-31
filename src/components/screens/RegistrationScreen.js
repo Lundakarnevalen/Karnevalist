@@ -718,7 +718,7 @@ class RegistrationScreen extends Component {
             warningMessage={errorStrings.errorMsgFoodPreference}
             multiline
             numberOfLines={3}
-            height={44 * 3}
+            maxLength={200}
           />
           <Input
             ref={'yearStudyStart'}
@@ -748,7 +748,7 @@ class RegistrationScreen extends Component {
             warningMessage={errorStrings.errorMsgPreviousInvolvement}
             multiline
             numberOfLines={3}
-            height={44 * 3}
+            maxLength={200}
           />
           <Input
             ref={'bff'}
@@ -830,9 +830,9 @@ class RegistrationScreen extends Component {
             value={other}
             returnKeyType={'done'}
             scrollToInput={y => this.scrollToInput(y)}
-            multiLine
+            multiline
+            maxLength={200}
             numberOfLines={3}
-            height={44 * 3}
           />
 
           <View style={{ right: 3 }}>
