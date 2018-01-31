@@ -834,11 +834,11 @@ class RegistrationScreen extends Component {
           {this.renderCheckBoxes(strings.auditionCheckboxes, bigAuditionCheckBoxes, newState =>
             this.setState({ bigAuditionCheckBoxes: newState })
           )}
-          <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeader}</Text>
+          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>{strings.checkBoxesHeader}</Text>
           {this.renderCheckBoxes(strings.checkBoxNames, wantToWorkWith, newState =>
             this.setState({ wantToWorkWith: newState })
           )}
-          <Text style={styles.checkBoxHeaderStyle}>{strings.checkBoxesHeaderToLearn}</Text>
+          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>{strings.checkBoxesHeaderToLearn}</Text>
           {this.renderCheckBoxes(strings.checkBoxNames, wantToLearn, newState =>
             this.setState({ wantToLearn: newState })
           )}
