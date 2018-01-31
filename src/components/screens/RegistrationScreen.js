@@ -798,10 +798,10 @@ class RegistrationScreen extends Component {
             value={groupLeader}
             color={'white'}
           />
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={[styles.checkBoxHeaderStyle, { flex: 7 }]}>{strings.auditionSmallSceneHeader}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
+            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>{strings.auditionSmallSceneHeader}</Text>
             <TouchableOpacity 
-              style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} 
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }} 
               onPress={() => {
                 this.setState({
                   alertVisible: true,
@@ -810,16 +810,16 @@ class RegistrationScreen extends Component {
                 });
               }}
             >
-              <FontAwesome name={'question-circle-o'} style={{ color: '#F7A021' }} size={WIDTH / 8} />
+              <FontAwesome name={'question-circle-o'} style={{ color: '#F7A021' }} size={25} />
             </TouchableOpacity>
           </View>
           {this.renderCheckBoxes(strings.auditionCheckboxes, smallAuditionCheckBoxes, newState =>
             this.setState({ smallAuditionCheckBoxes: newState })
           )}
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={[styles.checkBoxHeaderStyle, { flex: 7 }]}>{strings.auditionBigSceneHeader}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
+            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>{strings.auditionBigSceneHeader}</Text>
             <TouchableOpacity 
-              style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} 
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }} 
               onPress={() => {
                 this.setState({
                   alertVisible: true,
@@ -828,7 +828,7 @@ class RegistrationScreen extends Component {
                 });
               }}
             >
-              <FontAwesome name={'question-circle-o'} style={{ color: '#F7A021' }} size={WIDTH / 8} />
+              <FontAwesome name={'question-circle-o'} style={{ color: '#F7A021' }} size={25} />
             </TouchableOpacity>
           </View>
           {this.renderCheckBoxes(strings.auditionCheckboxes, bigAuditionCheckBoxes, newState =>
@@ -967,9 +967,6 @@ class RegistrationScreen extends Component {
 }
 
 const styles = {
-  titelTextStyle: {
-    fontSize: 40
-  },
   flexHorizontal: {
     flexDirection: 'row'
   },
@@ -997,8 +994,7 @@ const styles = {
   checkBoxHeaderStyle: {
     backgroundColor: 'transparent',
     width: Dimensions.get('window').width,
-    fontSize: 30,
-    paddingBottom: 10,
+    fontSize: 18,
     color: 'white'
   }
 };
