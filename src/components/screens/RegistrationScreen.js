@@ -799,9 +799,11 @@ class RegistrationScreen extends Component {
             color={'white'}
           />
           <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
-            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>{strings.auditionSmallSceneHeader}</Text>
-            <TouchableOpacity 
-              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }} 
+            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>
+              {strings.auditionSmallSceneHeader}
+            </Text>
+            <TouchableOpacity
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }}
               onPress={() => {
                 this.setState({
                   alertVisible: true,
@@ -810,16 +812,22 @@ class RegistrationScreen extends Component {
                 });
               }}
             >
-              <FontAwesome name={'question-circle-o'} style={{ color: '#F7A021' }} size={25} />
+              <FontAwesome
+                name={'question-circle-o'}
+                style={{ color: '#F7A021', backgroundColor: 'transparent' }}
+                size={25}
+              />
             </TouchableOpacity>
           </View>
           {this.renderCheckBoxes(strings.auditionCheckboxes, smallAuditionCheckBoxes, newState =>
             this.setState({ smallAuditionCheckBoxes: newState })
           )}
           <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
-            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>{strings.auditionBigSceneHeader}</Text>
-            <TouchableOpacity 
-              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }} 
+            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>
+              {strings.auditionBigSceneHeader}
+            </Text>
+            <TouchableOpacity
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }}
               onPress={() => {
                 this.setState({
                   alertVisible: true,
@@ -828,17 +836,25 @@ class RegistrationScreen extends Component {
                 });
               }}
             >
-              <FontAwesome name={'question-circle-o'} style={{ color: '#F7A021' }} size={25} />
+              <FontAwesome
+                name={'question-circle-o'}
+                style={{ color: '#F7A021', backgroundColor: 'transparent' }}
+                size={25}
+              />
             </TouchableOpacity>
           </View>
           {this.renderCheckBoxes(strings.auditionCheckboxes, bigAuditionCheckBoxes, newState =>
             this.setState({ bigAuditionCheckBoxes: newState })
           )}
-          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>{strings.checkBoxesHeader}</Text>
+          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>
+            {strings.checkBoxesHeader}
+          </Text>
           {this.renderCheckBoxes(strings.checkBoxNames, wantToWorkWith, newState =>
             this.setState({ wantToWorkWith: newState })
           )}
-          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>{strings.checkBoxesHeaderToLearn}</Text>
+          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>
+            {strings.checkBoxesHeaderToLearn}
+          </Text>
           {this.renderCheckBoxes(strings.checkBoxNames, wantToLearn, newState =>
             this.setState({ wantToLearn: newState })
           )}
