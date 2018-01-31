@@ -117,6 +117,17 @@ const alertHeader = {
   EN: 'Confirm'
 };
 
+const yes = {
+  SE: 'JA',
+  EN: 'YES'
+};
+
+const no = {
+  SE: 'NEJ',
+  EN: 'NO'
+};
+
+
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -254,6 +265,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'corps',
     'bff',
     'bffInfo',
+    'smallPleasuresHeader',
+    'bigPleasuresHeader',
+    'smallPleasuresInfo',
+    'bigPleasuresInfo',
     'groupLeader',
     'gdpr1',
     'gdpr2',
@@ -333,7 +348,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Sydskånska Nation',
       'Västgöta Nation',
       'Wermlands Nation',
-      'Östgöta Nation'
+      'Östgöta Nation',
     ],
     EN: [
       'Blekingska Nation',
@@ -397,7 +412,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Samhällsvetarkåren',
       'Studentkåren vid Konstnärliga fakulteten i Malmö',
       'TLTH',
-      'Lunds Doktorandkår'
+      'Lunds Doktorandkår',
+      'Malmös Studentkår'
     ],
     EN: [
       'Corpus Medicum',
@@ -408,7 +424,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Samhällsvetarkåren',
       'Studentkåren vid Konstnärliga fakulteten i Malmö',
       'TLTH',
-      'Lunds Doktorandkår'
+      'Lunds Doktorandkår',
+      'Malmös Studentkår'
     ]
   },
   yearStudyStart: {
@@ -425,17 +442,33 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN:
       "A BFF is someone you wish to work with during or in the preparation for Lundakarnevalen. Enter your BFF's email in the field. There are no guarantee that you will end up with your BFF."
   },
+  smallPleasuresHeader: {
+    SE: 'Audition (Små nöjen)',
+    EN: 'Audition (Small Pleasures)'
+  },
+  bigPleasuresHeader: {
+    SE: 'Audition (Stora nöjen)',
+    EN: 'Audition (Big Pleasures)'
+  },
+  smallPleasuresInfo: {
+    SE: 'Vill du gå på audition för något av våra små nöjen? Klicka i vad du skulle vilja gå på audition för.',
+    EN: 'Do you want to audition for any of our small pleasures? Click the checkboxes of the ones you want to audition for.'
+  },
+  bigPleasuresInfo: {
+    SE: 'Vill du gå på audition för något av våra stora nöjen? Klicka i vad du skulle vilja gå på audition för.',
+    EN: 'Do you want to audition for any of our big pleasures? Click the checkboxes of the ones you want to audition for.'
+  },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
     EN: 'I want to be group leader'
   },
   auditionSmallSceneHeader: {
-    SE: 'Audition (Liten Scen): ',
-    EN: 'Audition (Small Scene): '
+    SE: 'Audition (Små nöjen): ',
+    EN: 'Audition (Small Pleasures): '
   },
   auditionBigSceneHeader: {
-    SE: 'Audition (Stor Scen): ',
-    EN: 'Audition (Big Scene): '
+    SE: 'Audition (Stora nöjen): ',
+    EN: 'Audition (Big Pleasures): '
   },
   auditionCheckboxes: {
     SE: ['Scen', 'Orkester', 'Dans'],
@@ -779,10 +812,7 @@ export const CONFIRM_PAGE_STRINGS = {
     EN: 'WEHEJ'
   },
   ok,
-  yes: {
-    SE: 'JA',
-    EN: 'YES'
-  },
+  yes,
   confirmMessage: {
     SE: 'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
     EN: 'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
@@ -828,7 +858,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'foodPreference',
     'language',
     'driversLicense',
-    'disability',
     'audition',
     'talent',
     'entertainmentCategory',
@@ -848,7 +877,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'expiredTokenMessage',
     'ok',
     'invalidChangesMadeText',
-    'invalidChangesMadeHeader'
+    'invalidChangesMadeHeader',
+    'yes',
+    'no'
   ],
   title: profile,
   firstName,
@@ -869,10 +900,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Language'
   },
   driversLicense,
-  disability: {
-    SE: 'Handikapp',
-    EN: 'disability'
-  },
   audition: {
     SE: 'Audition',
     EN: 'Audition'
@@ -940,7 +967,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   },
   expiredTokenTitle,
   expiredTokenMessage,
-  ok
+  ok,
+  yes,
+  no
 };
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {

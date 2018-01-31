@@ -78,13 +78,14 @@ class Input extends Component {
       width,
       placeholder,
       secureText,
-      textInputStyle,
       autoCorrect = false,
       autoCapitalize = 'sentences',
       editable = true,
       keyboardType = 'default',
       extraContainerStyle,
       extraInputStyle,
+      multiline = false,
+      numberOfLines = 1,
       extraPlaceHolderStyle,
       returnKeyType,
       onSubmitEditing = () => {},
@@ -95,7 +96,9 @@ class Input extends Component {
     } = this.props;
     return (
       <View
-        onLayout={event => this.setState({ screenPosition: 100 + event.nativeEvent.layout.y })}
+        onLayout={event =>
+          this.setState({ screenPosition: (multiline ? 200 : 100) + event.nativeEvent.layout.y })
+        }
         style={[containerStyle, extraContainerStyle, { width, borderColor: this.getBorderColor() }]}
       >
         {placeholder === '' ? null : (
@@ -123,7 +126,11 @@ class Input extends Component {
             onEndEditing={() => this.inputDeselected()}
             onChangeText={text => this.props.onChangeText(text)}
             value={value}
-            style={[inputStyle, textInputStyle, extraInputStyle]}
+            style={[
+              inputStyle,
+              { height: multiline ? 133 : 44, paddingTop: multiline ? 15 : 10 },
+              extraInputStyle
+            ]}
             autoCapitalize={autoCapitalize}
             secureTextEntry={secureText}
             autoCorrect={autoCorrect}
@@ -134,6 +141,8 @@ class Input extends Component {
             onSubmitEditing={() => onSubmitEditing()}
             autoFocus={autoFocus}
             maxLength={maxLength}
+            multiline={multiline}
+            numberOfLines={numberOfLines}
           />
           {icon ? (
             <TouchableOpacity style={iconTouchableStyle} onPress={iconOnPress}>
@@ -161,13 +170,13 @@ const styles = {
     backgroundColor: 'transparent'
   },
   inputStyle: {
-    height: 44,
     paddingLeft: 8,
     paddingRight: 8,
-    paddingTop: 10,
     color: '#000',
     fontFamily: 'Avenir Next Medium',
-    flex: 1
+    flex: 1,
+    fontSize: 16,
+    textAlignVertical: 'top'
   },
   warningTextStyle: {
     color: 'red',
