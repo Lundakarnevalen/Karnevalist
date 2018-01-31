@@ -175,7 +175,8 @@ const styles = {
     color: '#000',
     fontFamily: 'Avenir Next Medium',
     flex: 1,
-    fontSize: 16
+    fontSize: 16,
+    textAlignVertical: 'top'
   },
   warningTextStyle: {
     color: 'red',

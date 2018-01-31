@@ -707,8 +707,8 @@ class RegistrationScreen extends Component {
             onChangeText={text => {
               this.setState({
                 foodPreference: text,
-                foodPreferenceError: !(/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text))
-               })
+                foodPreferenceError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
+              });
             }}
             value={foodPreference}
             returnKeyType={'next'}
@@ -730,6 +730,8 @@ class RegistrationScreen extends Component {
               this.setState({ inputs, errors });
             }}
             hasError={errors[11]}
+            keyboardType="numeric"
+            maxLength={4}
             value={inputs[11]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
