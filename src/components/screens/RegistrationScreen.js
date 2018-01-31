@@ -507,9 +507,6 @@ class RegistrationScreen extends Component {
             autoFocus
             hasError={errors[0]}
             warningMessage={errorStrings.errorMsgOnlyLetters}
-            multiLine
-            numberOfLines={3}
-            height={44 * 3}
           />
           <Input
             ref={'secondInput'}
@@ -536,6 +533,7 @@ class RegistrationScreen extends Component {
               this.setState({ inputs, errors });
             }}
             value={inputs[2]}
+            keyboardType={'numeric'}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[2]}
@@ -709,8 +707,8 @@ class RegistrationScreen extends Component {
             onChangeText={text => {
               this.setState({
                 foodPreference: text,
-                foodPreferenceError: !/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text)
-              });
+                foodPreferenceError: !(/^[a-zåäöA-ZÅÄÖ., ]+$/.test(text))
+               })
             }}
             value={foodPreference}
             returnKeyType={'next'}
@@ -718,6 +716,9 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             hasError={foodPreferenceError}
             warningMessage={errorStrings.errorMsgFoodPreference}
+            multiline
+            numberOfLines={3}
+            height={44 * 3}
           />
           <Input
             ref={'yearStudyStart'}
@@ -745,6 +746,9 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgPreviousInvolvement}
+            multiLine
+            numberOfLines={3}
+            height={44 * 3}
           />
           <Input
             ref={'bff'}
@@ -826,6 +830,9 @@ class RegistrationScreen extends Component {
             value={other}
             returnKeyType={'done'}
             scrollToInput={y => this.scrollToInput(y)}
+            multiLine
+            numberOfLines={3}
+            height={44 * 3}
           />
 
           <View style={{ right: 3 }}>

@@ -79,14 +79,13 @@ class Input extends Component {
       height = 44,
       placeholder,
       secureText,
-      textInputStyle,
       autoCorrect = false,
       autoCapitalize = 'sentences',
       editable = true,
       keyboardType = 'default',
       extraContainerStyle,
       extraInputStyle,
-      multiLine = false,
+      multiline = false,
       numberOfLines = 1,
       extraPlaceHolderStyle,
       returnKeyType,
@@ -126,7 +125,7 @@ class Input extends Component {
             onEndEditing={() => this.inputDeselected()}
             onChangeText={text => this.props.onChangeText(text)}
             value={value}
-            style={[inputStyle, { height }, textInputStyle, extraInputStyle]}
+            style={[inputStyle, { height }, extraInputStyle]}
             autoCapitalize={autoCapitalize}
             secureTextEntry={secureText}
             autoCorrect={autoCorrect}
@@ -137,8 +136,9 @@ class Input extends Component {
             onSubmitEditing={() => onSubmitEditing()}
             autoFocus={autoFocus}
             maxLength={maxLength}
-            multiLine={multiLine}
+            multiline={multiline}
             numberOfLines={numberOfLines}
+            maxLength={200}
           />
           {icon ? (
             <TouchableOpacity style={iconTouchableStyle} onPress={iconOnPress}>
