@@ -24,7 +24,7 @@ const studentNation = {
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
-  EN: "Choose type of driver's license"
+  EN: 'Choose type of driver\'s license'
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
@@ -110,11 +110,6 @@ const profile = {
 const registration = {
   SE: 'Min Registrering',
   EN: 'My Registration'
-};
-
-const alertHeader = {
-  SE: 'Bekräfta',
-  EN: 'Confirm'
 };
 
 export const LOGIN_SCREEN_STRINGS = {
@@ -253,7 +248,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'previousInvolvement',
     'corps',
     'bff',
-    'bffInfo',
     'groupLeader',
     'gdpr1',
     'gdpr2',
@@ -262,10 +256,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'corpsList',
     'errorMsg409EmailAndPersonalNumber',
     'errorMsg409Email',
-    'errorMsg409PersonalNumber',
-    'cancel',
-    'confirmRegister',
-    'alertHeader'
+    'errorMsg409PersonalNumber'
   ],
   header: {
     SE: 'Skapa profil',
@@ -312,7 +303,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   driversLicense,
   driversLicenseArray: {
     SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
-    EN: ["I do not have a driver's license", 'B', 'C', 'D', 'BE', 'CE', 'DE']
+    EN: ['I do not have a driver\'s license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
   shirtSize,
   shirtSizeArray: {
@@ -372,13 +363,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   errorMsg409Email,
   errorMsg409PersonalNumber,
   errorMsgInternal,
-  cancel,
   ok,
-  confirmRegister: {
-    SE: 'Du kan endast ändra dina uppgifter via karnevalist.se efter att du har registrerat dig',
-    EN: 'You can only change your information from karnevalist.se after you have registered'
-  },
-  alertHeader,
   other: {
     SE: 'Övrigt',
     EN: 'Other'
@@ -416,14 +401,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Year of study start'
   },
   bff: {
-    SE: 'Karnekompis',
-    EN: 'BFF'
-  },
-  bffInfo: {
-    SE:
-      'En karnekopmis är någon som du vill jobba med under eller i föreberedelserna till Lundakarnevalen. Skriv in din karnekompis mail i fältet! OBS, det finns ingen garanti för att du kommer tillsammans med din karnekompis.',
-    EN:
-      "A BFF is someone you wish to work with during or in the preparation for Lundakarnevalen. Enter your BFF's email in the field. There are no guarantee that you will end up with your BFF."
+    SE: 'KarneKompis',
+    EN: 'KarneFriend'
   },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
@@ -634,7 +613,7 @@ export const HOME_SCREEN_STRINGS = {
     EN: 'Karnevalist'
   },
   CheckIn: {
-    SE: 'Check in on call day at the head of the queue.',
+    SE: 'Checka in på uppropsdagen längst fram i kön.',
     EN: 'Check in on call day at the head of the queue.'
   },
   ChooseSections: {
@@ -698,7 +677,10 @@ export const SETTINGS_SCREEN_STRINGS = {
   },
   cancel,
   ok,
-  alertHeader,
+  alertHeader: {
+    SE: 'Bekräfta',
+    EN: 'Confirm'
+  },
   alertMessage: {
     SE: 'Du loggas nu ut',
     EN: 'You will now be logged out'
@@ -751,9 +733,7 @@ export const CONFIRM_PAGE_STRINGS = {
     'cancel',
     'checkinMessage',
     'notCheckedInButton',
-    'notFiveSections',
-    'sectionsPriosMessage',
-    'sectionsPriosHeader'
+    'notFiveSections'
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -810,14 +790,6 @@ export const CONFIRM_PAGE_STRINGS = {
   notFiveSections: {
     SE: 'Var god välj 5 sektioner',
     EN: 'Please select 5 sections'
-  },
-  sectionsPriosMessage: {
-    SE: 'Registreringen har stängt',
-    EN: 'The registration is closed'
-  },
-  sectionsPriosHeader: {
-    SE: 'Registrering stängd',
-    EN: 'Registration closed'
   }
 };
 
