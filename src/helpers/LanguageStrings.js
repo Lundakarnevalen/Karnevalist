@@ -333,7 +333,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Sydskånska Nation',
       'Västgöta Nation',
       'Wermlands Nation',
-      'Östgöta Nation'
+      'Östgöta Nation',
     ],
     EN: [
       'Blekingska Nation',
@@ -397,7 +397,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Samhällsvetarkåren',
       'Studentkåren vid Konstnärliga fakulteten i Malmö',
       'TLTH',
-      'Lunds Doktorandkår'
+      'Lunds Doktorandkår',
+      'Malmös Studentkår'
     ],
     EN: [
       'Corpus Medicum',
@@ -408,7 +409,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Samhällsvetarkåren',
       'Studentkåren vid Konstnärliga fakulteten i Malmö',
       'TLTH',
-      'Lunds Doktorandkår'
+      'Lunds Doktorandkår',
+      'Malmös Studentkår'
     ]
   },
   yearStudyStart: {
@@ -828,7 +830,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'foodPreference',
     'language',
     'driversLicense',
-    'disability',
     'audition',
     'talent',
     'entertainmentCategory',
@@ -869,10 +870,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Language'
   },
   driversLicense,
-  disability: {
-    SE: 'Handikapp',
-    EN: 'disability'
-  },
   audition: {
     SE: 'Audition',
     EN: 'Audition'

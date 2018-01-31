@@ -533,6 +533,7 @@ class RegistrationScreen extends Component {
               this.setState({ inputs, errors });
             }}
             value={inputs[2]}
+            keyboardType={'numeric'}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[2]}
@@ -715,6 +716,9 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             hasError={foodPreferenceError}
             warningMessage={errorStrings.errorMsgFoodPreference}
+            multiline
+            numberOfLines={3}
+            maxLength={200}
           />
           <Input
             ref={'yearStudyStart'}
@@ -726,6 +730,8 @@ class RegistrationScreen extends Component {
               this.setState({ inputs, errors });
             }}
             hasError={errors[11]}
+            keyboardType="numeric"
+            maxLength={4}
             value={inputs[11]}
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
@@ -742,6 +748,9 @@ class RegistrationScreen extends Component {
             returnKeyType={'next'}
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgPreviousInvolvement}
+            multiline
+            numberOfLines={3}
+            maxLength={200}
           />
           <Input
             ref={'bff'}
@@ -823,6 +832,9 @@ class RegistrationScreen extends Component {
             value={other}
             returnKeyType={'done'}
             scrollToInput={y => this.scrollToInput(y)}
+            multiline
+            maxLength={200}
+            numberOfLines={3}
           />
 
           <View style={{ right: 3 }}>
