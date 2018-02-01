@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { Font, ScreenOrientation, Asset } from 'expo';
+import { Font, ScreenOrientation, Asset, AppLoading } from 'expo';
 import { getItem, saveItem } from './src/helpers/LocalSave';
 import Router from './src/components/Router';
 import reducers from './src/reducers';
@@ -59,7 +59,13 @@ class App extends Component {
         </Provider>
       );
     }
-    return null;
+    return (
+      <AppLoading
+        startAsync={this._loadAssetsAsync}
+        onFinish={() => this.setState({ isReady: true })}
+        onError={console.warn}
+      />
+    );
   }
 }
 
