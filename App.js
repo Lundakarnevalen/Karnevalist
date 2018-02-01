@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { Font, ScreenOrientation } from 'expo';
+import { Font, ScreenOrientation, Asset, AppLoading } from 'expo';
 import { getItem, saveItem } from './src/helpers/LocalSave';
 import Router from './src/components/Router';
 import reducers from './src/reducers';
@@ -10,7 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fontsLoaded: false
+      fontsLoaded: false,
+      imagesLoaded: false
     };
   }
 
@@ -24,6 +25,14 @@ class App extends Component {
       }
     });
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
+    Asset.loadAsync([
+      require('./assets/images/night1.png'),
+      require('./assets/images/night2.png'),
+      require('./assets/images/night3.png'),
+      require('./assets/images/night4.png'),
+      require('./assets/images/night5.png'),
+      require('./assets/images/background-login-screen.png')
+    ]).then(() => this.setState({ imagesLoaded: true }));
     Font.loadAsync({
       'Avenir Next Bold': require('./assets/fonts/AvenirNext-Bold-01.ttf'),
       'Avenir Next Bold Italic': require('./assets/fonts/AvenirNext-BoldItalic-02.ttf'),
@@ -41,8 +50,8 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.fontsLoaded && this.state.language) {
-      const { language } = this.state; //, { currentLanguage: language }
+    const { imagesLoaded, fontsLoaded, language } = this.state;
+    if (fontsLoaded && language && imagesLoaded) {
       const INITIAL_STATE = { currentLanguage: { language } };
       return (
         <Provider store={createStore(reducers, INITIAL_STATE)}>
@@ -50,7 +59,13 @@ class App extends Component {
         </Provider>
       );
     }
-    return null;
+    return (
+      <AppLoading
+        startAsync={this._loadAssetsAsync}
+        onFinish={() => this.setState({ isReady: true })}
+        onError={console.warn}
+      />
+    );
   }
 }
 

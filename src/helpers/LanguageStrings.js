@@ -24,7 +24,7 @@ const studentNation = {
 };
 const driversLicense = {
   SE: 'Välj körkortstyp',
-  EN: 'Choose type of driver\'s license'
+  EN: "Choose type of driver's license"
 };
 const errorMsg400 = {
   SE: 'Fel mail eller lösenord',
@@ -110,6 +110,21 @@ const profile = {
 const registration = {
   SE: 'Min Registrering',
   EN: 'My Registration'
+};
+
+const alertHeader = {
+  SE: 'Bekräfta',
+  EN: 'Confirm'
+};
+
+const yes = {
+  SE: 'JA',
+  EN: 'YES'
+};
+
+const no = {
+  SE: 'NEJ',
+  EN: 'NO'
 };
 
 export const LOGIN_SCREEN_STRINGS = {
@@ -248,6 +263,11 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'previousInvolvement',
     'corps',
     'bff',
+    'bffInfo',
+    'smallPleasuresHeader',
+    'bigPleasuresHeader',
+    'smallPleasuresInfo',
+    'bigPleasuresInfo',
     'groupLeader',
     'gdpr1',
     'gdpr2',
@@ -303,7 +323,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   driversLicense,
   driversLicenseArray: {
     SE: ['Jag har inget körkort', 'B', 'C', 'D', 'BE', 'CE', 'DE'],
-    EN: ['I do not have a driver\'s license', 'B', 'C', 'D', 'BE', 'CE', 'DE']
+    EN: ["I do not have a driver's license", 'B', 'C', 'D', 'BE', 'CE', 'DE']
   },
   shirtSize,
   shirtSizeArray: {
@@ -382,7 +402,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Samhällsvetarkåren',
       'Studentkåren vid Konstnärliga fakulteten i Malmö',
       'TLTH',
-      'Lunds Doktorandkår'
+      'Lunds Doktorandkår',
+      'Malmös Studentkår'
     ],
     EN: [
       'Corpus Medicum',
@@ -393,7 +414,8 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Samhällsvetarkåren',
       'Studentkåren vid Konstnärliga fakulteten i Malmö',
       'TLTH',
-      'Lunds Doktorandkår'
+      'Lunds Doktorandkår',
+      'Malmös Studentkår'
     ]
   },
   yearStudyStart: {
@@ -401,20 +423,46 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Year of study start'
   },
   bff: {
-    SE: 'KarneKompis',
-    EN: 'KarneFriend'
+    SE: 'Karnekompis',
+    EN: 'BFF'
+  },
+  bffInfo: {
+    SE:
+      'En karnekompis är någon som du vill jobba med under eller i föreberedelserna till Lundakarnevalen. Skriv in din karnekompis mail i fältet! OBS, det finns ingen garanti för att du kommer tillsammans med din karnekompis.',
+    EN:
+      "A BFF is someone you wish to work with during or in the preparation for Lundakarnevalen. Enter your BFF's email in the field. There are no guarantee that you will end up with your BFF."
+  },
+  smallPleasuresHeader: {
+    SE: 'Audition (Små nöjen)',
+    EN: 'Audition (Small Pleasures)'
+  },
+  bigPleasuresHeader: {
+    SE: 'Audition (Stora nöjen)',
+    EN: 'Audition (Big Pleasures)'
+  },
+  smallPleasuresInfo: {
+    SE:
+      'Vill du gå på audition för något av våra små nöjen? Klicka i vad du skulle vilja gå på audition för.',
+    EN:
+      'Do you want to audition for any of our small pleasures? Click the checkboxes of the ones you want to audition for.'
+  },
+  bigPleasuresInfo: {
+    SE:
+      'Vill du gå på audition för något av våra stora nöjen? Klicka i vad du skulle vilja gå på audition för.',
+    EN:
+      'Do you want to audition for any of our big pleasures? Click the checkboxes of the ones you want to audition for.'
   },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
     EN: 'I want to be group leader'
   },
   auditionSmallSceneHeader: {
-    SE: 'Audition (Liten Scen): ',
-    EN: 'Audition (Small Scene): '
+    SE: 'Audition (Små nöjen): ',
+    EN: 'Audition (Small Pleasures): '
   },
   auditionBigSceneHeader: {
-    SE: 'Audition (Stor Scen): ',
-    EN: 'Audition (Big Scene): '
+    SE: 'Audition (Stora nöjen): ',
+    EN: 'Audition (Big Pleasures): '
   },
   auditionCheckboxes: {
     SE: ['Scen', 'Orkester', 'Dans'],
@@ -649,8 +697,10 @@ export const HOME_SCREEN_STRINGS = {
     EN: 'Step 4'
   },
   CheckInInformation: {
-    SE: 'Du kommer kunna checka in när du är längst fram i kön. Fram tills dess kan du välja sektioner men det kommer inte synas här på första sidan.',
-    EN: 'You will be able to check in when you are first in line. Until then you can choose sections but it will not be shown here on the home screen.'
+    SE:
+      'Du kommer kunna checka in när du är längst fram i kön. Fram tills dess kan du välja sektioner men det kommer inte synas här på första sidan.',
+    EN:
+      'You will be able to check in when you are first in line. Until then you can choose sections but it will not be shown here on the home screen.'
   }
 };
 
@@ -766,10 +816,7 @@ export const CONFIRM_PAGE_STRINGS = {
     EN: 'WEHEJ'
   },
   ok,
-  yes: {
-    SE: 'JA',
-    EN: 'YES'
-  },
+  yes,
   confirmMessage: {
     SE: 'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
     EN: 'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
@@ -807,7 +854,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'foodPreference',
     'language',
     'driversLicense',
-    'disability',
     'audition',
     'talent',
     'entertainmentCategory',
@@ -827,7 +873,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'expiredTokenMessage',
     'ok',
     'invalidChangesMadeText',
-    'invalidChangesMadeHeader'
+    'invalidChangesMadeHeader',
+    'yes',
+    'no'
   ],
   title: profile,
   firstName,
@@ -848,10 +896,6 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Language'
   },
   driversLicense,
-  disability: {
-    SE: 'Handikapp',
-    EN: 'disability'
-  },
   audition: {
     SE: 'Audition',
     EN: 'Audition'
@@ -919,7 +963,9 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   },
   expiredTokenTitle,
   expiredTokenMessage,
-  ok
+  ok,
+  yes,
+  no
 };
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {
