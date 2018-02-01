@@ -59,7 +59,8 @@ class MyProfileScreen extends Component {
           user[key] = strings.yes;
       if (user[key] === false)
         user[key] = strings.no;
-      return (
+      if (user[key].length < 35)
+          return (
         <Input
           extraContainerStyle={{ backgroundColor, borderWidth }}
           extraInputStyle={{ color: textColor }}
@@ -70,6 +71,17 @@ class MyProfileScreen extends Component {
           editable={false}
         />
       );
+      return (<Input
+        extraContainerStyle={{ backgroundColor, borderWidth }}
+        extraInputStyle={{ color: textColor }}
+        extraPlaceHolderStyle={{ color: placeholderTextColor }}
+        key={key}
+        multiline
+        placeholder={labels[key]}
+        value={user[key]}
+        editable={false}
+      />
+    );
     });
     return textFields;
   }
