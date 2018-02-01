@@ -5,7 +5,7 @@
     "icon": "./assets/images/karneval-icon.png",
     "splash": {
       "image": "./assets/images/karneval-splash.png",
-      "backgroundColor": "#F7A021"
+      "backgroundColor": "white"
     },
     "slug": "lundakarnevalen2018",
     "sdkVersion": "22.0.0",
