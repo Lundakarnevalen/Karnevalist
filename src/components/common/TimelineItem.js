@@ -68,7 +68,7 @@ class TimelineItem extends Component {
       return (
         <View style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}>
           <View style={{ flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'column', justifyContent: 'center', marginRight: -7 }}>
               <Text
                 numberOfLines={1}
                 style={[
@@ -100,36 +100,38 @@ class TimelineItem extends Component {
     }
     if (this.props.refresh) {
       return (
-        <View style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-              <Text
-                numberOfLines={1}
-                style={[
-                  titleStyle,
-                  {
-                    width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7,
-                    color: this.getColor()
-                  }
-                ]}
-              >
-                {sectionIcon === '' ? null : (
-                  <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
-                )}
-                {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
-              </Text>
-              {sectionInfoText === '' ? null : (
+        <TouchableOpacity onPress={() => onPress()}>
+          <View style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'column', justifyContent: 'center', marginRight: -7 }}>
                 <Text
                   numberOfLines={1}
-                  style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                  style={[
+                    titleStyle,
+                    {
+                      width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7,
+                      color: this.getColor()
+                    }
+                  ]}
                 >
-                  {sectionInfoText}
+                  {sectionIcon === '' ? null : (
+                    <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+                  )}
+                  {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
                 </Text>
-              )}
+                {sectionInfoText === '' ? null : (
+                  <Text
+                    numberOfLines={1}
+                    style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                  >
+                    {sectionInfoText}
+                  </Text>
+                )}
+              </View>
             </View>
+            {this.renderIcon()}
           </View>
-          <TouchableOpacity onPress={() => onPress()}>{this.renderIcon()}</TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       );
     }
     return (
@@ -138,7 +140,7 @@ class TimelineItem extends Component {
         style={[containerStyle, this.renderStyle(), { borderColor: this.getColor() }]}
       >
         <View style={{ flexDirection: 'row' }}>
-          <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+          <View style={{ flexDirection: 'column', justifyContent: 'center', marginRight: -7 }}>
             <Text
               numberOfLines={1}
               style={[
@@ -184,7 +186,7 @@ const styles = {
     fontFamily: 'Avenir Next Medium'
   },
   contentStyle: {
-    fontSize: 14,
+    fontSize: WIDTH / 27,
     marginLeft: 8,
     backgroundColor: 'transparent',
     fontFamily: 'Avenir Next Medium',

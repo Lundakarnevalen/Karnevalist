@@ -127,7 +127,6 @@ const no = {
   EN: 'NO'
 };
 
-
 export const LOGIN_SCREEN_STRINGS = {
   fields: [
     'email',
@@ -277,10 +276,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'corpsList',
     'errorMsg409EmailAndPersonalNumber',
     'errorMsg409Email',
-    'errorMsg409PersonalNumber',
-    'cancel',
-    'confirmRegister',
-    'alertHeader'
+    'errorMsg409PersonalNumber'
   ],
   header: {
     SE: 'Skapa profil',
@@ -348,7 +344,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
       'Sydskånska Nation',
       'Västgöta Nation',
       'Wermlands Nation',
-      'Östgöta Nation',
+      'Östgöta Nation'
     ],
     EN: [
       'Blekingska Nation',
@@ -387,13 +383,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
   errorMsg409Email,
   errorMsg409PersonalNumber,
   errorMsgInternal,
-  cancel,
   ok,
-  confirmRegister: {
-    SE: 'Du kan endast ändra dina uppgifter via karnevalist.se efter att du har registrerat dig',
-    EN: 'You can only change your information from karnevalist.se after you have registered'
-  },
-  alertHeader,
   other: {
     SE: 'Övrigt',
     EN: 'Other'
@@ -451,12 +441,16 @@ export const REGISTRATION_SCREEN_STRINGS = {
     EN: 'Audition (Big Pleasures)'
   },
   smallPleasuresInfo: {
-    SE: 'Vill du gå på audition för något av våra små nöjen? Klicka i vad du skulle vilja gå på audition för.',
-    EN: 'Do you want to audition for any of our small pleasures? Click the checkboxes of the ones you want to audition for.'
+    SE:
+      'Vill du gå på audition för något av våra små nöjen? Klicka i vad du skulle vilja gå på audition för.',
+    EN:
+      'Do you want to audition for any of our small pleasures? Click the checkboxes of the ones you want to audition for.'
   },
   bigPleasuresInfo: {
-    SE: 'Vill du gå på audition för något av våra stora nöjen? Klicka i vad du skulle vilja gå på audition för.',
-    EN: 'Do you want to audition for any of our big pleasures? Click the checkboxes of the ones you want to audition for.'
+    SE:
+      'Vill du gå på audition för något av våra stora nöjen? Klicka i vad du skulle vilja gå på audition för.',
+    EN:
+      'Do you want to audition for any of our big pleasures? Click the checkboxes of the ones you want to audition for.'
   },
   groupLeader: {
     SE: 'Jag vill vara gruppledare',
@@ -645,7 +639,9 @@ export const HOME_SCREEN_STRINGS = {
     'step1',
     'step2',
     'step3',
-    'step4'
+    'step4',
+    'CheckInInformation',
+    'ok'
   ],
   title: {
     SE: 'Hem',
@@ -655,6 +651,7 @@ export const HOME_SCREEN_STRINGS = {
     SE: 'Skapa profil',
     EN: 'Create a profile'
   },
+  ok,
   RightNow: {
     SE: 'Du är just nu',
     EN: 'You are now'
@@ -664,8 +661,8 @@ export const HOME_SCREEN_STRINGS = {
     EN: 'Karnevalist'
   },
   CheckIn: {
-    SE: 'Checka in',
-    EN: 'Check in'
+    SE: 'Checka in på uppropsdagen längst fram i kön.',
+    EN: 'Check in on call day at the head of the queue.'
   },
   ChooseSections: {
     SE: 'Välj minst 5 sektioner',
@@ -698,6 +695,12 @@ export const HOME_SCREEN_STRINGS = {
   step4: {
     SE: 'Steg 4',
     EN: 'Step 4'
+  },
+  CheckInInformation: {
+    SE:
+      'Du kommer kunna checka in när du är längst fram i kön. Fram tills dess kan du välja sektioner men det kommer inte synas här på första sidan.',
+    EN:
+      'You will be able to check in when you are first in line. Until then you can choose sections but it will not be shown here on the home screen.'
   }
 };
 
@@ -724,7 +727,10 @@ export const SETTINGS_SCREEN_STRINGS = {
   },
   cancel,
   ok,
-  alertHeader,
+  alertHeader: {
+    SE: 'Bekräfta',
+    EN: 'Confirm'
+  },
   alertMessage: {
     SE: 'Du loggas nu ut',
     EN: 'You will now be logged out'
@@ -777,9 +783,7 @@ export const CONFIRM_PAGE_STRINGS = {
     'cancel',
     'checkinMessage',
     'notCheckedInButton',
-    'notFiveSections',
-    'sectionsPriosMessage',
-    'sectionsPriosHeader'
+    'notFiveSections'
   ],
   title: {
     SE: 'Bekräfta dina val',
@@ -833,14 +837,6 @@ export const CONFIRM_PAGE_STRINGS = {
   notFiveSections: {
     SE: 'Var god välj 5 sektioner',
     EN: 'Please select 5 sections'
-  },
-  sectionsPriosMessage: {
-    SE: 'Registreringen har stängt',
-    EN: 'The registration is closed'
-  },
-  sectionsPriosHeader: {
-    SE: 'Registrering stängd',
-    EN: 'Registration closed'
   }
 };
 
