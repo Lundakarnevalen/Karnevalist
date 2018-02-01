@@ -256,6 +256,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'errorMsg404',
     'errorMsgInternal',
     'ok',
+    'cancel',
     'co',
     'other',
     'plenipotentiary',
@@ -289,6 +290,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
   co: {
     SE: 'C/O',
     EN: 'C/O'
+  },
+  cancel: {
+    SE: 'Avbryt',
+    EN: 'Cancel'
   },
   corps: {
     SE: 'Studentkår',
