@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { Platform, Dimensions, Animated, Easing } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
-import { MaterialIcons } from '@expo/vector-icons';
-import axios from 'axios';
 import {
   setSections,
   setProgress,
   setHomeScreenPopover,
   setSectionPriorities
 } from '../../actions';
-import {  } from '../../helpers/Constants';
 import FirstScreen from './TreasurehuntScreens/FirstScreen';
 import SecondScreen from './TreasurehuntScreens/SecondScreen';
 import ThirdScreen from './TreasurehuntScreens/ThirdScreen';
@@ -21,11 +18,11 @@ import {
 class CardstackScreen extends Component {
   render() {
     const { navigation, language, setHomeScreenPopover, progress } = this.props;
-    return <TabNav screenProps={{ navigation, language, setHomeScreenPopover, progress }} />;
+    return <CardNav screenProps={{ navigation, language, setHomeScreenPopover, progress }} />;
   }
 }
 
-const TabNav = StackNavigator({
+const CardNav = StackNavigator({
   First: {
     screen: FirstScreen,
     navigationOptions: {
@@ -51,7 +48,7 @@ const TabNav = StackNavigator({
   // Detta är copy pasta
   transitionConfig: () => ({
       transitionSpec: {
-        duration: 300,
+        duration: 100,
         easing: Easing.out(Easing.poly(4)),
         timing: Animated.timing,
       },

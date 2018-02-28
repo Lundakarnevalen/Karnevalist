@@ -6,22 +6,40 @@ import {
   Platform
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Header } from '../../common'
+import { connect } from 'react-redux';
+import { Header, BackgroundImage, CountDown } from '../../common'
 import { HEIGHT, WIDTH } from '../../../helpers/Constants'
+import { TREASURE_HUNT_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 class FirstScreen extends Component {
+
+  getStrings() {
+    const { language } = this.props;
+    const { fields } = TREASURE_HUNT_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(field => (strings[field] = TREASURE_HUNT_SCREEN_STRINGS[field][language]));
+    return strings;
+  }
+
   render() {
+    const strings = this.getStrings()
+    const { mainContainer, textStyle, container, buttonContainer, countDownContainer, infoTextStyle } = styles
     return (
-      <View style={styles.mainContainer}>
-        <Header title={'First'} />
-        <Text>Imthe MyComponent component</Text>
-        <View style={styles.container}>
-          <View style={styles.buttonContainer}>
+      <View style={mainContainer}>
+        <BackgroundImage pictureNumber={1} />
+        <Header title={strings.treasureHunt} />
+        <View style={countDownContainer}>
+          <Text style={textStyle}>{strings.timeLeft + ': '}</Text>
+          <CountDown endDate={new Date('March 18, 2018 00:00:01')} />
+        </View>
+        <View style={container}>
+          <View style={buttonContainer}>
+            <Text style={infoTextStyle}>{strings.info}</Text>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Second')} >
             <MaterialIcons
               name={'keyboard-arrow-right'}
-              size={30}
-              style={{ backgroundColor: 'transparent' }}
+              size={60}
+              style={{ backgroundColor: 'transparent', color: 'pink' }}
             />
             </TouchableOpacity>
           </View>
@@ -40,11 +58,31 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  countDownContainer: {
+     alignItems: 'center',
+     flexDirection: 'row',
+    justifyContent: 'center'
+  },
   buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end'
+  },
+  textStyle: {
+    color: 'white',
+    fontSize: 22
+  },
+  infoTextStyle: {
+    flex: 1,
+    textAlign: 'center',
+    flexWrap: 'wrap',
+    color: 'white',
+    fontSize: 22
   }
 }
+const mapStateToProps = ({ currentLanguage }) => {
+  const { language } = currentLanguage;
+  return { language };
+};
 
-export default FirstScreen
+export default connect(mapStateToProps, null)(FirstScreen)

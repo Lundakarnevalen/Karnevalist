@@ -1087,3 +1087,28 @@ export const ERROR_MSG_INPUT_FIELD = {
     EN: 'Please make sure no mandatory fields are left empty'
   }
 };
+
+export const TREASURE_HUNT_SCREEN_STRINGS = {
+  fields: [
+    'treasureHunt',
+    'startButton',
+    'timeLeft',
+    'info'
+  ],
+  treasureHunt: {
+    SE: 'Skattjakt',
+    EN: 'Treasure Hunt'
+  },
+  startButton: {
+    SE: 'Starta',
+    EN: 'Start'
+  },
+  timeLeft: {
+    SE: 'TID KVAR',
+    EN: 'TIME LEFT'
+  },
+  info: {
+    SE: 'INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO',
+    EN: 'INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO'
+  }
+}
