@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import { Animated, Easing } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { connect } from 'react-redux';
-import {
-  setSections,
-  setProgress,
-  setHomeScreenPopover,
-  setSectionPriorities
-} from '../../actions';
 import FirstScreen from './TreasurehuntScreens/FirstScreen';
 import SecondScreen from './TreasurehuntScreens/SecondScreen';
 import ThirdScreen from './TreasurehuntScreens/ThirdScreen';
-import {
-} from '../../helpers/LanguageStrings';
-
 
 class CardstackScreen extends Component {
   render() {
-    const { navigation, language, setHomeScreenPopover, progress } = this.props;
-    return <CardNav screenProps={{ navigation, language, setHomeScreenPopover, progress }} />;
+    return <CardNav />;
   }
 }
 
@@ -45,7 +34,7 @@ const CardNav = StackNavigator({
 {
   mode: 'card',
 
-  // Detta är copy pasta
+  // This is copy paste, the standard android transission looks weird
   transitionConfig: () => ({
       transitionSpec: {
         duration: 100,
@@ -73,21 +62,5 @@ const CardNav = StackNavigator({
   }
 );
 
-const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
-  const { language } = currentLanguage;
-  const { token, email, progress } = userInformation;
-  return {
-    language,
-    token,
-    email,
-    progress,
-    sections: sections.sections,
-    sectionPriorities: sections.sectionPriorities
-  };
-};
-export default connect(mapStateToProps, {
-  setSections,
-  setProgress,
-  setHomeScreenPopover,
-  setSectionPriorities
-})(CardstackScreen);
+
+export default CardstackScreen
