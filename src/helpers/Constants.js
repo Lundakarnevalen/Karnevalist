@@ -1,4 +1,5 @@
 import { NavigationActions } from 'react-navigation';
+import { Dimensions } from 'react-native';
 
 const BASE_URL = 'https://api.lundakarnevalen.se';
 export const TOKEN_URL = BASE_URL + '/api/hello/';
@@ -24,3 +25,6 @@ export const LOGOUT_RESET_ACTION = NavigationActions.reset({
   actions: [NavigationActions.navigate({ routeName: 'SplashScreen' })],
   key: null
 });
+
+export const HEIGHT = Dimensions.get('window').height
+export const WIDTH = Dimensions.get('window').width
