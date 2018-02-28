@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Platform, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { WIDTH } from '../../helpers/Constants';
+import { WIDTH, IS_IOS } from '../../helpers/Constants';
 
 class Header extends Component {
   renderRightIcon() {
@@ -52,7 +52,7 @@ class Header extends Component {
 const styles = {
   containerStyle: {
     width: WIDTH,
-    height: Platform.OS === 'ios' ? 64 : 50,
+    height: IS_IOS ? 64 : 50,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

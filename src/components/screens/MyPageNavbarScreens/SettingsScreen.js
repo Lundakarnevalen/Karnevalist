@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, FlatList, Dimensions, Platform } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, SectionListItem, BackgroundImage, SuperAgileAlert } from '../../common';
 import { removeItem } from '../../../helpers/LocalSave';
 import { setProgress, resetData } from '../../../actions';
-import { LOGOUT_RESET_ACTION, PROGRESS, HEIGHT } from '../../../helpers/Constants';
+import { LOGOUT_RESET_ACTION, PROGRESS, HEIGHT, IS_IOS } from '../../../helpers/Constants';
 import { SETTINGS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const WITH_MY_REG = [{ key: 'profile' }, { key: 'registration' }, { key: 'logout' }];
@@ -57,7 +57,7 @@ class SettingsScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <FlatList
-          style={{ height: HEIGHT - (Platform.OS === 'ios' ? 113 : 135) }}
+          style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
           contentContainerStyle={{ alignItems: 'center' }}
           data={this.getItems()}
           renderItem={({ item }) => (

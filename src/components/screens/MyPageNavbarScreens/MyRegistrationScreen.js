@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { BackHandler, View, FlatList, Platform, Text, Dimensions } from 'react-native';
+import { BackHandler, View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { HEIGHT } from '../../../helpers/Constants';
+import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
 
 class MyRegistrationScreen extends Component {
   constructor(props) {
@@ -91,7 +91,7 @@ class MyRegistrationScreen extends Component {
 
 const styles = {
   style: {
-    paddingBottom: Platform.OS === 'ios' ? 132 : 155
+    paddingBottom: IS_IOS ? 132 : 155
   },
   textStyle: {
     textAlign: 'center',

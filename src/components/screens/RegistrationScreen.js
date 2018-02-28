@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {
   ScrollView,
   View,
-  Dimensions,
   Picker,
-  Platform,
   TouchableWithoutFeedback,
   TouchableOpacity,
   Keyboard,
@@ -25,7 +23,7 @@ import {
   SuperAgileAlert
 } from '../common';
 import Loading from '../common/Loading';
-import { REGISTER_URL, HEIGHT, WIDTH } from '../../helpers/Constants';
+import { REGISTER_URL, HEIGHT, WIDTH, IS_IOS } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { saveItem } from '../../helpers/LocalSave';
@@ -74,7 +72,7 @@ class RegistrationScreen extends Component {
   }
 
   componentWillMount() {
-    if (Platform.OS === 'ios') {
+    if (IS_IOS) {
       this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     } else {
       this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
@@ -82,7 +80,7 @@ class RegistrationScreen extends Component {
   }
 
   componentWillUnmount() {
-    if (Platform.OS === 'ios') {
+    if (IS_IOS) {
       this.keyboardWillShowSub.remove();
     } else {
       this.keyboardDidShowListener.remove();
@@ -202,7 +200,7 @@ class RegistrationScreen extends Component {
   }
 
   renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
-    if (Platform.OS === 'ios') {
+    if (IS_IOS) {
       return (
         <CustomButton
           text={title === '' ? defaultTitle + '*' : title}
