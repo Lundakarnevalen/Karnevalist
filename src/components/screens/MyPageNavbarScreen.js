@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Dimensions } from 'react-native';
+import { Platform } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,7 +10,7 @@ import {
   setHomeScreenPopover,
   setSectionPriorities
 } from '../../actions';
-import { SECTION_PRIORITY_URL, PROGRESS } from '../../helpers/Constants';
+import { SECTION_PRIORITY_URL, PROGRESS, WIDTH } from '../../helpers/Constants';
 import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
@@ -23,7 +23,7 @@ import {
 } from '../../helpers/LanguageStrings';
 import { fetchCheckInStatus } from '../../helpers/ApiManager';
 
-const SIZE = Dimensions.get('window').width / 11;
+const SIZE = WIDTH / 11;
 
 class MyPageNavbarScreen extends Component {
   componentWillMount() {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Picker, Dimensions, Animated } from 'react-native';
+import { View, Picker, Animated } from 'react-native';
 import { CustomButton } from '../common';
+import { WIDTH } from '../../helpers/Constants';
 
-const width = Dimensions.get('window').width;
 
 class DKPicker extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class DKPicker extends Component {
     const { pickerStyle } = styles;
     const { items, value } = this.props;
     return (
-      <Animated.View style={[pickerStyle, { width, bottom: this.state.bottom }]}>
+      <Animated.View style={[pickerStyle, { width: WIDTH, bottom: this.state.bottom }]}>
         <View
           onLayout={event => {
             this.setState({ height: event.nativeEvent.layout.height });
@@ -34,7 +34,7 @@ class DKPicker extends Component {
           <CustomButton
             text={'OK'}
             style={'standardButton'}
-            width={width - 50}
+            width={WIDTH - 50}
             onPress={() => this.props.close()}
           />
           <Picker

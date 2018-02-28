@@ -3,8 +3,8 @@ import { BackHandler, View, FlatList, Platform, Text, Dimensions } from 'react-n
 import { connect } from 'react-redux';
 import { Header, SectionListItem, BackgroundImage } from '../../common';
 import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { HEIGHT } from '../../../helpers/Constants';
 
-const HEIGHT = Dimensions.get('window').height;
 class MyRegistrationScreen extends Component {
   constructor(props) {
     super(props);

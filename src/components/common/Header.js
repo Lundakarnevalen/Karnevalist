@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Text, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, Platform, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-
-const WIDTH = Dimensions.get('window').width;
+import { WIDTH } from '../../helpers/Constants';
 
 class Header extends Component {
   renderRightIcon() {

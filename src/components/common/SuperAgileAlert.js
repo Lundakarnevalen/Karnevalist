@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BlurView } from 'expo';
 import { View, Text, Modal, Dimensions, TouchableOpacity } from 'react-native';
+import { WIDTH } from '../../helpers/Constants';
 
 class SuperAgileAlert extends Component {
   getBorderLeftRadius(index) {
@@ -59,7 +60,7 @@ class SuperAgileAlert extends Component {
     return (
       <Modal transparent visible={alertVisible} onRequestClose={() => setAlertVisible(false)}>
         <BlurView tint={'dark'} intensity={70} style={outerViewStyle}>
-          <View style={{ width: Dimensions.get('window').width / 1.1 }}>
+          <View style={{ width: WIDTH / 1.1 }}>
             <View style={alertBoxStyle}>
               <Text style={headerTextStyle}>{header}</Text>
               <Text style={infoTextStyle}>{info}</Text>
@@ -82,7 +83,7 @@ const styles = {
   alertBoxStyle: {
     alignItems: 'center',
     flexDirection: 'column',
-    width: Dimensions.get('window').width / 1.1,
+    width: WIDTH / 1.1,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderWidth: 1,

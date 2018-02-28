@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { View, FlatList, Dimensions, Platform } from 'react-native';
+import { View, FlatList, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, BackgroundImage, SectionListItem } from '../../common';
 import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { dynamicSort } from '../../../helpers/functions';
+import { HEIGHT } from '../../../helpers/Constants';
 import songs2014 from '../../../../assets/songbook/songs2014.json';
-
-const HEIGHT = Dimensions.get('window').height;
 
 class SongBookScreen extends Component {
   constructor(props) {

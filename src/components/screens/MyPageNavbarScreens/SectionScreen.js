@@ -3,7 +3,6 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  Dimensions,
   Platform,
   RefreshControl,
   Text
@@ -11,13 +10,11 @@ import {
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Header, SectionListItem, BackgroundImage, Popover } from '../../common';
-import { PROGRESS } from '../../../helpers/Constants';
+import { PROGRESS, HEIGHT } from '../../../helpers/Constants';
 import { setSections, setSectionScreenPopover } from '../../../actions';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { dynamicSort } from '../../../helpers/functions';
 import { fetchSections } from '../../../helpers/ApiManager';
-
-const HEIGHT = Dimensions.get('window').height;
 
 class SectionScreen extends Component {
   constructor(props) {

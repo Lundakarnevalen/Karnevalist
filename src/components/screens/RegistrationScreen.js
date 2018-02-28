@@ -25,13 +25,11 @@ import {
   SuperAgileAlert
 } from '../common';
 import Loading from '../common/Loading';
-import { REGISTER_URL } from '../../helpers/Constants';
+import { REGISTER_URL, HEIGHT, WIDTH } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { saveItem } from '../../helpers/LocalSave';
 
-const WIDTH = Dimensions.get('window').width - 32;
-const HEIGHT = Dimensions.get('window').height;
 let zipCodePosition = 0;
 
 class RegistrationScreen extends Component {
@@ -1021,7 +1019,7 @@ const styles = {
   },
   checkBoxHeaderStyle: {
     backgroundColor: 'transparent',
-    width: Dimensions.get('window').width,
+    width: WIDTH,
     fontSize: 18,
     color: 'white'
   }

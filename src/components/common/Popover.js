@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import PulsatingView from './PulsatingView';
-
-const WIDTH = Dimensions.get('window').width;
+import { WIDTH } from '../../helpers/Constants';
 
 class Popover extends Component {
   zIndexWorkaround = val => {
