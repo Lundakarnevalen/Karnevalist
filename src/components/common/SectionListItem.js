@@ -3,6 +3,7 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { WIDTH } from '../../helpers/Constants';
 
+const ITEM_WIDTH = WIDTH - 16
 const months = [
   'Jan',
   'Feb',
@@ -57,7 +58,7 @@ class SectionListItem extends Component {
               numberOfLines={1}
               style={[
                 titleStyle,
-                { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
+                { width: sectionDate === '' ? ITEM_WIDTH * 0.85 : ITEM_WIDTH * 0.7, color: this.getColor() }
               ]}
             >
               {sectionIcon === '' ? null : (
@@ -68,7 +69,7 @@ class SectionListItem extends Component {
             {sectionInfoText === '' ? null : (
               <Text
                 numberOfLines={1}
-                style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                style={[contentStyle, { width: sectionDate === '' ? ITEM_WIDTH * 0.85 : ITEM_WIDTH * 0.7 }]}
               >
                 {sectionInfoText}
               </Text>
@@ -94,7 +95,7 @@ const styles = {
     backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
-    width: WIDTH,
+    width: ITEM_WIDTH,
     borderWidth: 1,
     marginTop: 8
   },
@@ -113,7 +114,7 @@ const styles = {
   },
   dateViewStyle: {
     height: 60,
-    width: WIDTH * 0.15,
+    width: ITEM_WIDTH * 0.15,
     justifyContent: 'center',
     alignItems: 'center'
   },
