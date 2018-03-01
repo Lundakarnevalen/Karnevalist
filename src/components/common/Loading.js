@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Dimensions, Text, Animated, Image, Easing, View } from 'react-native';
-
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+import { Text, Animated, Image, Easing, View } from 'react-native';
+import { HEIGHT, WIDTH } from '../../helpers/Constants';
 /**
  * Loading class with redirect.
  * If redirect isn't needed redirect should be set to null.

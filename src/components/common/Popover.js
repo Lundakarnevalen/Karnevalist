@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import PulsatingView from './PulsatingView';
-
-const WIDTH = Dimensions.get('window').width;
+import { WIDTH, IS_IOS } from '../../helpers/Constants';
 
 class Popover extends Component {
   zIndexWorkaround = val => {
@@ -63,7 +62,7 @@ const styles = {
   talkBubbleTopRight: {
     backgroundColor: 'transparent',
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 70 : 74,
+    top: IS_IOS ? 70 : 74,
     right: 5
   },
   talkBubbleTriangleTopRight: {

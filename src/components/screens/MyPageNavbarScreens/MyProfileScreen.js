@@ -11,12 +11,10 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
-import { USER_URL, LOGOUT_RESET_ACTION } from '../../../helpers/Constants';
+import { USER_URL, LOGOUT_RESET_ACTION, HEIGHT } from '../../../helpers/Constants';
 import { MY_PROFILE_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../../helpers/LanguageStrings';
 // import { handleErrorMsg } from '../../../helpers/ApiManager';
 // import { removeItem } from '../../../helpers/LocalSave';
-
-const HEIGHT = Dimensions.get('window').height;
 
 class MyProfileScreen extends Component {
   constructor(props) {

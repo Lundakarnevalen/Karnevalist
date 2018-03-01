@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { View, Dimensions, ScrollView, Keyboard } from 'react-native';
+import { View, ScrollView, Keyboard } from 'react-native';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { setLanguage, setToken, setEmail, setUserinfo } from '../../actions';
 import { Input, SuperAgileAlert, BackgroundImage, Toast, CustomButton, Loading } from '../common';
-import { LOGIN_URL, FORGOT_PASSWORD_URL } from '../../helpers/Constants';
+import { LOGIN_URL, FORGOT_PASSWORD_URL, WIDTH, HEIGHT } from '../../helpers/Constants';
 import { saveItem } from '../../helpers/LocalSave';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 
-const WIDTH = Dimensions.get('window').width * 0.9;
-const HEIGHT = Dimensions.get('window').height;
+const COMPONENT_WIDTH = WIDTH * 0.9;
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -167,7 +166,7 @@ class LoginScreen extends Component {
               keyboardType={'email-address'}
               placeholder={strings.email}
               autoCapitalize="none"
-              width={WIDTH}
+              width={COMPONENT_WIDTH}
               onChangeText={text => this.setState({ email: text })}
               returnKeyType={'next'}
               onSubmitEditing={() => this.refs.secondInput.focus()}
@@ -176,7 +175,7 @@ class LoginScreen extends Component {
               ref={'secondInput'}
               value={password}
               placeholder={strings.password}
-              width={WIDTH}
+              width={COMPONENT_WIDTH}
               secureText
               onChangeText={text => this.setState({ password: text })}
               returnKeyType={'done'}
@@ -186,11 +185,11 @@ class LoginScreen extends Component {
               text={strings.loginButton}
               onPress={() => this.handleLogin()}
               style={'standardButton'}
-              width={WIDTH}
+              width={COMPONENT_WIDTH}
             />
             <CustomButton
               text={strings.createProfile}
-              width={WIDTH}
+              width={COMPONENT_WIDTH}
               onPress={() => {
                 this.props.navigation.navigate('RegistrationScreen');
               }}
@@ -218,7 +217,7 @@ class LoginScreen extends Component {
                 <View>
                   <Input
                     placeholder={strings.email}
-                    width={Dimensions.get('window').width / 1.2}
+                    width={WIDTH / 1.2}
                     underlineColorAndroid={'transparent'}
                     onChangeText={text =>
                       this.setState({ forgotPasswordEmail: text, resetPasswordError: '' })
@@ -280,7 +279,7 @@ const styles = {
     fontSize: 12
   },
   containerStyle: {
-    width: Dimensions.get('window').width,
+    width: WIDTH,
     height: HEIGHT
   }
 };

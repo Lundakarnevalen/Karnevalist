@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-
-const WIDTH = Dimensions.get('window').width - 16;
+import { WIDTH } from '../../helpers/Constants';
 
 class TimelineItem extends Component {
   getColor() {
@@ -17,30 +16,30 @@ class TimelineItem extends Component {
   }
 
   renderIcon() {
-    if (this.props.icon === 'none') {
+    if (this.props.rightIcon === 'none') {
       return;
     }
-    if (this.props.icon === 'done') {
+    if (this.props.rightIcon === 'done') {
       return (
         <MaterialIcons
-          name={this.props.icon}
+          name={this.props.rightIcon}
           style={styles.continueIconIndicatorStyle}
           color={this.getColor()}
           size={40}
         />
       );
     }
-    if (this.props.icon === 'refresh') {
+    if (this.props.rightIcon === 'refresh') {
       return (
         <MaterialIcons
-          name={this.props.icon}
+          name={this.props.rightIcon}
           style={styles.continueIconIndicatorStyle}
           color={this.getColor()}
           size={40}
         />
       );
     }
-    if (this.props.icon === 'keyboard-arrow-right') {
+    if (this.props.rightIcon === 'keyboard-arrow-right') {
       return (
         <MaterialIcons
           name={'keyboard-arrow-right'}
@@ -51,16 +50,16 @@ class TimelineItem extends Component {
       );
     }
     // This one is for the spinner <3
-    return this.props.icon;
+    return this.props.rightIcon;
   }
 
   render() {
     const { containerStyle, titleStyle, contentStyle } = styles;
     const {
-      sectionTitle = '',
-      sectionIcon = '',
-      sectionInfoText = '',
-      sectionDate = '',
+      title = '',
+      icon = '',
+      infoText = '',
+      itemDate = '',
       onPress,
       clickable
     } = this.props;
@@ -74,22 +73,22 @@ class TimelineItem extends Component {
                 style={[
                   titleStyle,
                   {
-                    width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7,
+                    width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7,
                     color: this.getColor()
                   }
                 ]}
               >
-                {sectionIcon === '' ? null : (
-                  <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+                {icon === '' || icon === 'none' ? null : (
+                  <MaterialIcons name={icon} size={15} color={this.getColor()} />
                 )}
-                {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
+                {icon === '' ? title : ' ' + title}
               </Text>
-              {sectionInfoText === '' ? null : (
+              {infoText === '' ? null : (
                 <Text
                   numberOfLines={1}
-                  style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                  style={[contentStyle, { width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
                 >
-                  {sectionInfoText}
+                  {infoText}
                 </Text>
               )}
             </View>
@@ -109,22 +108,22 @@ class TimelineItem extends Component {
                   style={[
                     titleStyle,
                     {
-                      width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7,
+                      width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7,
                       color: this.getColor()
                     }
                   ]}
                 >
-                  {sectionIcon === '' ? null : (
-                    <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+                  {icon === '' ? null : (
+                    <MaterialIcons name={icon} size={15} color={this.getColor()} />
                   )}
-                  {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
+                  {icon === '' ? title : ' ' + title}
                 </Text>
-                {sectionInfoText === '' ? null : (
+                {infoText === '' ? null : (
                   <Text
                     numberOfLines={1}
-                    style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                    style={[contentStyle, { width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
                   >
-                    {sectionInfoText}
+                    {infoText}
                   </Text>
                 )}
               </View>
@@ -145,20 +144,20 @@ class TimelineItem extends Component {
               numberOfLines={1}
               style={[
                 titleStyle,
-                { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
+                { width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
               ]}
             >
-              {sectionIcon === '' ? null : (
-                <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+              {icon === '' ? null : (
+                <MaterialIcons name={icon} size={15} color={this.getColor()} />
               )}
-              {sectionIcon === '' ? sectionTitle : ' ' + sectionTitle}
+              {icon === '' ? title : ' ' + title}
             </Text>
-            {sectionInfoText === '' ? null : (
+            {infoText === '' ? null : (
               <Text
                 numberOfLines={1}
-                style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                style={[contentStyle, { width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
               >
-                {sectionInfoText}
+                {infoText}
               </Text>
             )}
           </View>
