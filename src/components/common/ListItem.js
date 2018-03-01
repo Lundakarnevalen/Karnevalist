@@ -20,9 +20,6 @@ const months = [
 ];
 
 class ListItem extends Component {
-  getColor() {
-    return '#F7A021';
-  }
 
   renderDateView(itemDate) {
     const { dateViewStyle, dateStyle } = styles;
