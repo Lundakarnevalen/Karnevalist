@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, SectionListItem, BackgroundImage, SuperAgileAlert } from '../../common';
+import { Header, ListItem, BackgroundImage, SuperAgileAlert } from '../../common';
 import { removeItem } from '../../../helpers/LocalSave';
 import { setProgress, resetData } from '../../../actions';
 import { LOGOUT_RESET_ACTION, PROGRESS, HEIGHT, IS_IOS } from '../../../helpers/Constants';
@@ -61,8 +61,8 @@ class SettingsScreen extends Component {
           contentContainerStyle={{ alignItems: 'center' }}
           data={this.getItems()}
           renderItem={({ item }) => (
-            <SectionListItem
-              sectionTitle={item.title}
+            <ListItem
+              title={item.title}
               onPress={() => {
                 if (item.key === 'profile') {
                   screenProps.navigation.navigate('MyProfile', { info: item });

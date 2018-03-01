@@ -1,6 +1,6 @@
 export * from './Toast';
 export * from './SuperAgileAlert';
-export * from './SectionListItem';
+export * from './ListItem';
 export * from './Row';
 export * from './Input';
 export * from './Header';

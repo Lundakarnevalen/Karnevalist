@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, SectionListItem, BackgroundImage } from '../../common';
+import { Header, ListItem, BackgroundImage } from '../../common';
 import { getNews } from '../../../helpers/ApiManager';
 import { NEWS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
@@ -41,9 +41,9 @@ class NewsScreen extends Component {
           enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}
           renderItem={({ item }) => (
-            <SectionListItem
-              sectionTitle={item.title.rendered}
-              sectionDate={item.date}
+            <ListItem
+              title={item.title.rendered}
+              itemDate={item.date}
               onPress={() =>
                 screenProps.navigation.navigate('SingleNewsScreen', {
                   info: { title: item.title.rendered, url: item.link }
