@@ -13,3 +13,4 @@ export * from './countDown/CountDown';
 export * from './countDown/CountDownItem';
 export * from './Popover';
 export * from './TimelineItem';
+export * from './Loading';

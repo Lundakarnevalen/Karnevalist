@@ -22,9 +22,9 @@ import {
   CustomButton,
   CheckBox,
   BackgroundImage,
-  SuperAgileAlert
+  SuperAgileAlert,
+  Loading
 } from '../common';
-import Loading from '../common/Loading';
 import { REGISTER_URL } from '../../helpers/Constants';
 import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
