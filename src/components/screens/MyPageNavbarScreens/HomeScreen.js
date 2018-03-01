@@ -201,7 +201,14 @@ class HomeScreen extends Component {
               onPress={() => this.renderOnPress(PROGRESS.CHOOSE_SECTIONS)}
               infoText={strings.ChooseSections}
             />
-            
+            <TimelineItem
+              clickable={progress + 1 === PROGRESS.SENT_SECTIONS}
+              title={strings.step4}
+              icon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
+              style={this.renderStyle(PROGRESS.SENT_SECTIONS)}
+              onPress={() => this.renderOnPress(PROGRESS.SENT_SECTIONS)}
+              infoText={strings.SendIn}
+            />
           </View>
         </View>
         {this.renderPopover(strings.popoverText)}
