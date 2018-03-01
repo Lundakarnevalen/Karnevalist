@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BackHandler, View, FlatList, Platform, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, SectionListItem, BackgroundImage } from '../../common';
+import { Header, ListItem, BackgroundImage } from '../../common';
 import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -54,9 +54,9 @@ class MyRegistrationScreen extends Component {
           data={this.state.data}
           contentContainerStyle={{ alignItems: 'center' }}
           renderItem={({ item }) => (
-            <SectionListItem
-              sectionTitle={item.titleAndRank}
-              sectionInfoText={item.info}
+            <ListItem
+              title={item.titleAndRank}
+              infoText={item.info}
               onPress={() =>
                 this.props.navigation.navigate('SectionItemScreen', {
                   id: item.id,

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Header, SectionListItem, BackgroundImage, Popover } from '../../common';
+import { Header, ListItem, BackgroundImage, Popover } from '../../common';
 import { PROGRESS } from '../../../helpers/Constants';
 import { setSections, setSectionScreenPopover } from '../../../actions';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
@@ -96,10 +96,10 @@ class SectionScreen extends Component {
           renderItem={({ item }) => {
             const { id, title, info, image } = item;
             return (
-              <SectionListItem
-                sectionTitle={title[language]}
-                sectionInfoText={info[language]}
-                sectionIcon={sectionPriorities.indexOf(id) === -1 ? null : 'favorite'}
+              <ListItem
+                title={title[language]}
+                infoText={info[language]}
+                icon={sectionPriorities.indexOf(id) === -1 ? null : 'favorite'}
                 onPress={() =>
                   screenProps.navigation.navigate('SectionItemScreen', {
                     id,

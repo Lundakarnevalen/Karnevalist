@@ -173,15 +173,15 @@ class HomeScreen extends Component {
           </View>
           <View style={{ justifyContent: 'center', marginTop: 12 }}>
             <TimelineItem
-              sectionTitle={strings.step1}
+              title={strings.step1}
               clickable={progress + 1 === PROGRESS.CREATE_PROFILE}
               icon={this.renderIcon(PROGRESS.CREATE_PROFILE)}
               style={this.renderStyle(PROGRESS.CREATE_PROFILE)}
               onPress={() => this.renderOnPress(PROGRESS.CREATE_PROFILE)}
-              sectionInfoText={strings.createProfile}
+              infoText={strings.createProfile}
             />
             <TimelineItem
-              sectionTitle={strings.step2}
+              title={strings.step2}
               icon={
                 this.state.checkInLoading
                   ? this.renderCheckInLoading()
@@ -191,24 +191,17 @@ class HomeScreen extends Component {
               style={this.renderStyle(PROGRESS.CHECK_IN)}
               refresh
               onPress={() => this.renderOnPress(PROGRESS.CHECK_IN)}
-              sectionInfoText={strings.CheckIn}
+              infoText={strings.CheckIn}
             />
             <TimelineItem
               clickable={progress + 1 === PROGRESS.CHOOSE_SECTIONS}
-              sectionTitle={strings.step3}
+              title={strings.step3}
               icon={this.renderIcon(PROGRESS.CHOOSE_SECTIONS)}
               style={this.renderStyle(PROGRESS.CHOOSE_SECTIONS)}
               onPress={() => this.renderOnPress(PROGRESS.CHOOSE_SECTIONS)}
-              sectionInfoText={strings.ChooseSections}
+              infoText={strings.ChooseSections}
             />
-            <TimelineItem
-              clickable={progress + 1 === PROGRESS.SENT_SECTIONS}
-              sectionTitle={strings.step4}
-              icon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
-              style={this.renderStyle(PROGRESS.SENT_SECTIONS)}
-              onPress={() => this.renderOnPress(PROGRESS.SENT_SECTIONS)}
-              sectionInfoText={strings.SendIn}
-            />
+            
           </View>
         </View>
         {this.renderPopover(strings.popoverText)}

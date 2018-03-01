@@ -19,19 +19,19 @@ const months = [
   'Dec'
 ];
 
-class SectionListItem extends Component {
+class ListItem extends Component {
   getColor() {
     return '#F7A021';
   }
 
-  renderDateView(sectionDate) {
+  renderDateView(itemDate) {
     const { dateViewStyle, dateStyle } = styles;
-    const sectionDateParts = sectionDate.split('T')[0].split('-');
-    if (sectionDate) {
+    const dateParts = itemDate.split('T')[0].split('-');
+    if (itemDate) {
       return (
-        <View style={[dateViewStyle, { backgroundColor: this.getColor() }]}>
-          <Text style={dateStyle}>{sectionDateParts[2]}</Text>
-          <Text style={dateStyle}>{months[sectionDateParts[1] - 1]}</Text>
+        <View style={dateViewStyle}>
+          <Text style={dateStyle}>{dateParts[2]}</Text>
+          <Text style={dateStyle}>{months[dateParts[1] - 1]}</Text>
         </View>
       );
     }
@@ -40,38 +40,38 @@ class SectionListItem extends Component {
   render() {
     const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
     const {
-      sectionTitle = '',
-      sectionIcon = '',
-      sectionInfoText = '',
-      sectionDate = '',
+      title = '',
+      icon = '',
+      infoText = '',
+      itemDate = '',
       onPress
     } = this.props;
     return (
       <TouchableOpacity
         onPress={() => onPress()}
-        style={[containerStyle, { borderColor: this.getColor() }]}
+        style={containerStyle}
       >
         <View style={{ flexDirection: 'row' }}>
-          {this.renderDateView(sectionDate)}
+          {this.renderDateView(itemDate)}
           <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
             <Text
               numberOfLines={1}
               style={[
                 titleStyle,
-                { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7, color: this.getColor() }
+                { width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }
               ]}
             >
-              {sectionIcon === '' ? null : (
-                <MaterialIcons name={sectionIcon} size={15} color={this.getColor()} />
+              {icon === '' ? null : (
+                <MaterialIcons name={icon} size={15} color={'#F7A021'} />
               )}
-              {sectionIcon === '' || sectionIcon === null ? sectionTitle : ' ' + sectionTitle}
+              {icon === '' || icon === null ? title : ' ' + title}
             </Text>
-            {sectionInfoText === '' ? null : (
+            {infoText === '' ? null : (
               <Text
                 numberOfLines={1}
-                style={[contentStyle, { width: sectionDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                style={[contentStyle, { width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
               >
-                {sectionInfoText}
+                {infoText}
               </Text>
             )}
           </View>
@@ -80,7 +80,7 @@ class SectionListItem extends Component {
           <MaterialIcons
             name={'keyboard-arrow-right'}
             style={continueIconIndicatorStyle}
-            color={this.getColor()}
+            color={'#F7A021'}
             size={this.props.icon === 'done' ? 40 : 50}
           />
         </View>
@@ -97,13 +97,15 @@ const styles = {
     alignItems: 'center',
     width: WIDTH,
     borderWidth: 1,
-    marginTop: 8
+    marginTop: 8,
+    borderColor: '#F7A021'
   },
   titleStyle: {
     fontSize: 20,
     marginLeft: 8,
     backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Medium'
+    fontFamily: 'Avenir Next Medium',
+    color: '#F7A021'
   },
   contentStyle: {
     fontSize: 14,
@@ -116,7 +118,8 @@ const styles = {
     height: 60,
     width: WIDTH * 0.15,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#F7A021'
   },
   dateStyle: {
     fontSize: 16,
@@ -129,4 +132,4 @@ const styles = {
   }
 };
 
-export { SectionListItem };
+export { ListItem };
