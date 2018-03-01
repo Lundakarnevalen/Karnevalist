@@ -3,21 +3,17 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  Dimensions,
-  Platform,
   RefreshControl,
   Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Header, ListItem, BackgroundImage, Popover } from '../../common';
-import { PROGRESS } from '../../../helpers/Constants';
+import { PROGRESS, HEIGHT, IS_IOS } from '../../../helpers/Constants';
 import { setSections, setSectionScreenPopover } from '../../../actions';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { dynamicSort } from '../../../helpers/functions';
 import { fetchSections } from '../../../helpers/ApiManager';
-
-const HEIGHT = Dimensions.get('window').height;
 
 class SectionScreen extends Component {
   constructor(props) {
@@ -90,7 +86,7 @@ class SectionScreen extends Component {
           refreshControl={
             <RefreshControl refreshing={false} onRefresh={this._onRefresh.bind(this)} />
           }
-          style={{ height: HEIGHT - (Platform.OS === 'ios' ? 113 : 135) }}
+          style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
           data={sections}
           contentContainerStyle={{ alignItems: 'center', paddingBottom: 60 }}
           renderItem={({ item }) => {

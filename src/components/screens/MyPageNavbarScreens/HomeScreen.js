@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Text, Image, Animated, Easing } from 'react-native';
+import { View, Text, Image, Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
 import { Header, BackgroundImage, Popover, TimelineItem, SuperAgileAlert } from '../../common';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { fetchCheckInStatus } from '../../../helpers/ApiManager';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
-import { PROGRESS } from '../../../helpers/Constants';
-
-const WIDTH = Dimensions.get('window').width;
+import { PROGRESS, WIDTH } from '../../../helpers/Constants';
 
 class HomeScreen extends Component {
   constructor(props) {

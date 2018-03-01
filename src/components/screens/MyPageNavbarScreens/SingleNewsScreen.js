@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, WebView, Dimensions, BackHandler } from 'react-native';
+import { View, WebView, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Header } from '../../common';
+import { HEIGHT, WIDTH } from '../../../helpers/LanguageStrings';
 
 class NewsScreen extends Component {
   componentWillMount() {
@@ -13,7 +14,7 @@ class NewsScreen extends Component {
     const { title, url } = navigation.state.params.info;
     return (
       <View
-        style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}
+        style={{ height: HEIGHT, width: WIDTH }}
       >
         <Header title={title} navigation={navigation} />
         <WebView source={{ uri: url }} />

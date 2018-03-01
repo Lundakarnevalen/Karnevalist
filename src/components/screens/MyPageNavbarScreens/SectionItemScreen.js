@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Dimensions, ScrollView, BackHandler } from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Header, Toast } from '../../common';
-import { PROGRESS } from '../../../helpers/Constants';
+import { PROGRESS, WIDTH, HEIGHT } from '../../../helpers/Constants';
 import { removeSectionPriority, addSectionPriority, setProgress } from '../../../actions';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
-const HEIGHT = Dimensions.get('window').height;
-const WIDTH = Dimensions.get('window').width;
 class SectionItemScreen extends Component {
   constructor(props) {
     super(props);

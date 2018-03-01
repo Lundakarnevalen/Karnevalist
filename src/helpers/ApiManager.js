@@ -1,9 +1,7 @@
 import axios from 'axios';
 import React from 'react';
-import { Dimensions, Image } from 'react-native';
-import { SECTION_URL, NEWS_URL, USER_URL, CHECK_IN_URL } from './Constants';
-
-const WIDTH = Dimensions.get('window').width;
+import { Image } from 'react-native';
+import { SECTION_URL, NEWS_URL, USER_URL, CHECK_IN_URL, WIDTH } from './Constants';
 
 export function getNews() {
   return axios

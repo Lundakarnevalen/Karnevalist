@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, FlatList, Dimensions, Platform } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, ListItem, BackgroundImage } from '../../common';
 import { getNews } from '../../../helpers/ApiManager';
 import { NEWS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-
-const height = Dimensions.get('window').height;
+import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
 
 class NewsScreen extends Component {
   constructor(props) {
@@ -37,7 +36,7 @@ class NewsScreen extends Component {
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <FlatList
           enableEmptySections
-          style={{ height: height - (Platform.OS === 'ios' ? 113 : 135) }}
+          style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
           data={data}
           enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}

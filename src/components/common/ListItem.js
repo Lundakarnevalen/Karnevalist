@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { WIDTH } from '../../helpers/Constants';
 
-const WIDTH = Dimensions.get('window').width - 16;
-
+const ITEM_WIDTH = WIDTH - 16
 const months = [
   'Jan',
   'Feb',
@@ -55,7 +55,7 @@ class ListItem extends Component {
               numberOfLines={1}
               style={[
                 titleStyle,
-                { width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }
+                { width: itemDate === '' ? ITEM_WIDTH * 0.85 : ITEM_WIDTH * 0.7 }
               ]}
             >
               {icon === '' ? null : (
@@ -66,7 +66,7 @@ class ListItem extends Component {
             {infoText === '' ? null : (
               <Text
                 numberOfLines={1}
-                style={[contentStyle, { width: itemDate === '' ? WIDTH * 0.85 : WIDTH * 0.7 }]}
+                style={[contentStyle, { width: itemDate === '' ? ITEM_WIDTH * 0.85 : ITEM_WIDTH * 0.7 }]}
               >
                 {infoText}
               </Text>
@@ -92,7 +92,7 @@ const styles = {
     backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
-    width: WIDTH,
+    width: ITEM_WIDTH,
     borderWidth: 1,
     marginTop: 8,
     borderColor: '#F7A021'
@@ -113,7 +113,7 @@ const styles = {
   },
   dateViewStyle: {
     height: 60,
-    width: WIDTH * 0.15,
+    width: ITEM_WIDTH * 0.15,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F7A021'

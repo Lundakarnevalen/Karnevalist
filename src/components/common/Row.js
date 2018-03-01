@@ -4,13 +4,11 @@ import {
   Easing,
   Text,
   Platform,
-  Dimensions,
   View,
   TouchableOpacity
 } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
-
-const window = Dimensions.get('window');
+import { WIDTH } from '../../helpers/Constants';
 
 class Row extends Component {
   constructor(props) {
@@ -77,7 +75,7 @@ class Row extends Component {
           flexDirection: 'row',
           flex: 1,
           padding: 8,
-          width: window.width - 16
+          width: WIDTH - 16
         }}
       >
         <Text style={[indexStyle, { color: '#F7A021' }]}>{this.props.index}</Text>
@@ -134,7 +132,7 @@ const styles = {
     marginTop: 8,
     borderWidth: 1,
     alignSelf: 'center',
-    width: window.width - 16,
+    width: WIDTH - 16,
     elevation: 0
   },
   indexStyle: {

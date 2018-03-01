@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { View, FlatList, Dimensions, Platform } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, BackgroundImage, ListItem } from '../../common';
 import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { dynamicSort } from '../../../helpers/functions';
+import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
 import songs2014 from '../../../../assets/songbook/songs2014.json';
-
-const HEIGHT = Dimensions.get('window').height;
 
 class SongBookScreen extends Component {
   constructor(props) {
@@ -44,7 +43,7 @@ class SongBookScreen extends Component {
           <Header title={strings.title} leftIcon={null} navigation={navigation} />
         </View>
         <FlatList
-          style={{ height: HEIGHT - (Platform.OS === 'ios' ? 113 : 135) }}
+          style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
           data={this.state.data}
           contentContainerStyle={{ alignItems: 'center', paddingBottom: 60 }}
           renderItem={({ item }) => (
