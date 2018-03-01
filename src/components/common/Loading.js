@@ -77,4 +77,4 @@ const styles = {
   }
 };
 
-export default Loading;
+export { Loading };
