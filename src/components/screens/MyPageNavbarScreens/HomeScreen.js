@@ -175,14 +175,14 @@ class HomeScreen extends Component {
             <TimelineItem
               title={strings.step1}
               clickable={progress + 1 === PROGRESS.CREATE_PROFILE}
-              icon={this.renderIcon(PROGRESS.CREATE_PROFILE)}
+              rightIcon={this.renderIcon(PROGRESS.CREATE_PROFILE)}
               style={this.renderStyle(PROGRESS.CREATE_PROFILE)}
               onPress={() => this.renderOnPress(PROGRESS.CREATE_PROFILE)}
               infoText={strings.createProfile}
             />
             <TimelineItem
               title={strings.step2}
-              icon={
+              rightIcon={
                 this.state.checkInLoading
                   ? this.renderCheckInLoading()
                   : this.renderIcon(PROGRESS.CHECK_IN)
@@ -196,7 +196,7 @@ class HomeScreen extends Component {
             <TimelineItem
               clickable={progress + 1 === PROGRESS.CHOOSE_SECTIONS}
               title={strings.step3}
-              icon={this.renderIcon(PROGRESS.CHOOSE_SECTIONS)}
+              rightIcon={this.renderIcon(PROGRESS.CHOOSE_SECTIONS)}
               style={this.renderStyle(PROGRESS.CHOOSE_SECTIONS)}
               onPress={() => this.renderOnPress(PROGRESS.CHOOSE_SECTIONS)}
               infoText={strings.ChooseSections}
@@ -204,7 +204,7 @@ class HomeScreen extends Component {
             <TimelineItem
               clickable={progress + 1 === PROGRESS.SENT_SECTIONS}
               title={strings.step4}
-              icon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
+              rightIcon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
               style={this.renderStyle(PROGRESS.SENT_SECTIONS)}
               onPress={() => this.renderOnPress(PROGRESS.SENT_SECTIONS)}
               infoText={strings.SendIn}

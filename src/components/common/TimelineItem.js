@@ -17,30 +17,30 @@ class TimelineItem extends Component {
   }
 
   renderIcon() {
-    if (this.props.icon === 'none') {
+    if (this.props.rightIcon === 'none') {
       return;
     }
-    if (this.props.icon === 'done') {
+    if (this.props.rightIcon === 'done') {
       return (
         <MaterialIcons
-          name={this.props.icon}
+          name={this.props.rightIcon}
           style={styles.continueIconIndicatorStyle}
           color={this.getColor()}
           size={40}
         />
       );
     }
-    if (this.props.icon === 'refresh') {
+    if (this.props.rightIcon === 'refresh') {
       return (
         <MaterialIcons
-          name={this.props.icon}
+          name={this.props.rightIcon}
           style={styles.continueIconIndicatorStyle}
           color={this.getColor()}
           size={40}
         />
       );
     }
-    if (this.props.icon === 'keyboard-arrow-right') {
+    if (this.props.rightIcon === 'keyboard-arrow-right') {
       return (
         <MaterialIcons
           name={'keyboard-arrow-right'}
@@ -51,7 +51,7 @@ class TimelineItem extends Component {
       );
     }
     // This one is for the spinner <3
-    return this.props.icon;
+    return this.props.rightIcon;
   }
 
   render() {
