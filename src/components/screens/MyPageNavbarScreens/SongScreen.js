@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, ScrollView, BackHandler } from 'react-native';
+import { View, Text, ScrollView, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Header } from '../../common';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { HEIGHT, WIDTH } from '../../../helpers/Constants';
 
-const HEIGHT = Dimensions.get('window').height;
-const WIDTH = Dimensions.get('window').width;
 class SectionItemScreen extends Component {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());

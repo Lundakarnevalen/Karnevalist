@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text } from 'react-native';
 import { COUNT_DOWN_STRINGS } from '../../../helpers/LanguageStrings';
+import { WIDTH } from '../../../helpers/Constants';
 import { CountDownItem } from '..';
 /**
  * Uppropet är den 4:e februari
  *
  */
-const SIZE = Dimensions.get('window').width;
+const SIZE = WIDTH;
 const ONE_DAY = 86400000;
 const ONE_HOUR = 3600000;
 const ONE_MIN = 60000;

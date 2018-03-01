@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, TouchableOpacity, BackHandler } from 'react-native';
+import { Text, View, TouchableOpacity, BackHandler } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -7,12 +7,9 @@ import SortableList from 'react-native-sortable-list';
 import { Row, Header, BackgroundImage, CustomButton, SuperAgileAlert } from '../common';
 import { removeItem } from '../../helpers/LocalSave';
 import { fetchCheckInStatus } from '../../helpers/ApiManager';
-import { SECTION_PRIORITY_URL, PROGRESS, LOGOUT_RESET_ACTION } from '../../helpers/Constants';
+import { SECTION_PRIORITY_URL, PROGRESS, LOGOUT_RESET_ACTION, WIDTH, HEIGHT } from '../../helpers/Constants';
 import { removeSectionPriority, setSectionPriorities, setProgress } from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
-
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
 
 class ConfirmPage extends Component {
   constructor(props) {

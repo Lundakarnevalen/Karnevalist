@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
-const WIDTH = Dimensions.get('window').width;
+import { HEIGHT, WIDTH } from '../../helpers/Constants';
 
 class CustomButton extends Component {
   getUnderlineButtonText() {
@@ -136,7 +135,7 @@ const styles = {
     height: 44
   },
   alertButton: {
-    height: Dimensions.get('window').height / (4 * 4),
+    height: HEIGHT / (4 * 4),
     backgroundColor: '#f4376d',
     borderRadius: 0,
     margin: 0,
