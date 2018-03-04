@@ -1,6 +1,6 @@
 export * from './Toast';
 export * from './SuperAgileAlert';
-export * from './SectionListItem';
+export * from './ListItem';
 export * from './Row';
 export * from './Input';
 export * from './Header';
@@ -13,3 +13,4 @@ export * from './countDown/CountDown';
 export * from './countDown/CountDownItem';
 export * from './Popover';
 export * from './TimelineItem';
+export * from './Loading';

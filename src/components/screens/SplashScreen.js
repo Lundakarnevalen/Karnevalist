@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Animated, View, Image, Text, StatusBar, Easing } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { getItem, getPopoverStatus, getFavoriteSections } from '../../helpers/LocalSave';
 import { dynamicSort } from '../../helpers/functions';
-import { BackgroundImage } from '../common';
+import { BackgroundImage, Loading } from '../common';
 import {
   setSections,
   setToken,
@@ -17,17 +17,10 @@ import {
 import { fetchSections, fetchUserinfo } from '../../helpers/ApiManager';
 
 class SplashScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      spinValue: new Animated.Value(0)
-    };
-  }
 
   componentWillMount() {
     const { language } = this.props;
     StatusBar.setBarStyle('light-content', true);
-    this.spin();
     this.authorize();
     getFavoriteSections(result => this.props.setSectionPriorities(result));
     getPopoverStatus('homeScreenPopover', bool => this.props.setHomeScreenPopover(bool));
@@ -71,28 +64,15 @@ class SplashScreen extends Component {
     );
   }
 
-  spin() {
-    this.state.spinValue.setValue(0);
-    Animated.timing(this.state.spinValue, {
-      toValue: 1,
-      duration: 2000,
-      easing: Easing.linear
-    }).start(() => this.spin());
-  }
-
   render() {
-    const { container, text, image } = styles;
-    const spin = this.state.spinValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '360deg']
-    });
+    const { container } = styles;
     return (
       <View style={container}>
         <BackgroundImage picture={4} />
-        <Animated.View style={[container, { transform: [{ rotate: spin }] }]}>
-          <Text style={text}> LOADING </Text>
-          <Image style={image} source={require('../../../res/Monstergubbe.png')} />
-        </Animated.View>
+        <Loading
+          loadingComplete={false}
+          redirect={null}
+        />
       </View>
     );
   }

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { CustomButton, Header, ExpandeblePanel, BackgroundImage } from '../common';
 import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
-
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+import { HEIGHT, WIDTH } from '../../helpers/Constants';
 
 class RegistrationInfoScreen extends Component {
   getColor() {

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text } from 'react-native';
+import { WIDTH } from '../../../helpers/Constants';
 
-const SIZE = Dimensions.get('window').width / 14;
+const SIZE = WIDTH / 14;
 
 /**
  * Uppropet är den 4:e februari

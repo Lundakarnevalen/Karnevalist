@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Text, Image, Animated, Easing } from 'react-native';
+import { View, Text, Image, Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
 import { Header, BackgroundImage, Popover, TimelineItem, SuperAgileAlert } from '../../common';
 import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { fetchCheckInStatus } from '../../../helpers/ApiManager';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
-import { PROGRESS } from '../../../helpers/Constants';
-
-const WIDTH = Dimensions.get('window').width;
+import { PROGRESS, WIDTH } from '../../../helpers/Constants';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -173,16 +171,16 @@ class HomeScreen extends Component {
           </View>
           <View style={{ justifyContent: 'center', marginTop: 12 }}>
             <TimelineItem
-              sectionTitle={strings.step1}
+              title={strings.step1}
               clickable={progress + 1 === PROGRESS.CREATE_PROFILE}
-              icon={this.renderIcon(PROGRESS.CREATE_PROFILE)}
+              rightIcon={this.renderIcon(PROGRESS.CREATE_PROFILE)}
               style={this.renderStyle(PROGRESS.CREATE_PROFILE)}
               onPress={() => this.renderOnPress(PROGRESS.CREATE_PROFILE)}
-              sectionInfoText={strings.createProfile}
+              infoText={strings.createProfile}
             />
             <TimelineItem
-              sectionTitle={strings.step2}
-              icon={
+              title={strings.step2}
+              rightIcon={
                 this.state.checkInLoading
                   ? this.renderCheckInLoading()
                   : this.renderIcon(PROGRESS.CHECK_IN)
@@ -191,23 +189,23 @@ class HomeScreen extends Component {
               style={this.renderStyle(PROGRESS.CHECK_IN)}
               refresh
               onPress={() => this.renderOnPress(PROGRESS.CHECK_IN)}
-              sectionInfoText={strings.CheckIn}
+              infoText={strings.CheckIn}
             />
             <TimelineItem
               clickable={progress + 1 === PROGRESS.CHOOSE_SECTIONS}
-              sectionTitle={strings.step3}
-              icon={this.renderIcon(PROGRESS.CHOOSE_SECTIONS)}
+              title={strings.step3}
+              rightIcon={this.renderIcon(PROGRESS.CHOOSE_SECTIONS)}
               style={this.renderStyle(PROGRESS.CHOOSE_SECTIONS)}
               onPress={() => this.renderOnPress(PROGRESS.CHOOSE_SECTIONS)}
-              sectionInfoText={strings.ChooseSections}
+              infoText={strings.ChooseSections}
             />
             <TimelineItem
               clickable={progress + 1 === PROGRESS.SENT_SECTIONS}
-              sectionTitle={strings.step4}
-              icon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
+              title={strings.step4}
+              rightIcon={this.renderIcon(PROGRESS.SENT_SECTIONS)}
               style={this.renderStyle(PROGRESS.SENT_SECTIONS)}
               onPress={() => this.renderOnPress(PROGRESS.SENT_SECTIONS)}
-              sectionInfoText={strings.SendIn}
+              infoText={strings.SendIn}
             />
           </View>
         </View>

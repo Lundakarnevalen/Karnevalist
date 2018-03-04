@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, View } from 'react-native';
-
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+import { Image, View } from 'react-native';
+import { HEIGHT, WIDTH } from '../../helpers/Constants';
 
 class BackgroundImage extends Component {
   getPath() {
