@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import {
   setSections,
@@ -83,7 +83,7 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons name="home" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
+          <MaterialCommunityIcons name="treasure-chest" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
     },
