@@ -5,7 +5,10 @@ import * as Vibration from 'react-native/Libraries/Vibration/Vibration';
 
 class GameScreen extends Component {
   state = {
-    myLocation: null,
+    myLocation: {
+      longitude: 0,
+      latitude: 0
+    },
     dstLocation: {
       longitude: 13.215544,
       latitude: 55.721063
@@ -21,6 +24,24 @@ class GameScreen extends Component {
     return rad * (180 / Math.PI);
   }
 
+  distance(lat1, lng1, lat2, lng2) {
+    const earthRadius = 6371000;
+    const distLat = this.toRadians(lat2 - lat1);
+    const distLng = this.toRadians(lng2 - lng1);
+
+    const tmp1 = Math.sin(distLat / 2) * Math.sin(distLat / 2);
+    const tmp2 =
+      Math.cos(this.toRadians(lat1)) *
+      Math.cos(this.toRadians(lat2)) *
+      Math.sin(distLng / 2) *
+      Math.sin(distLng / 2);
+
+    const a = tmp1 + tmp2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return earthRadius * c;
+  }
+
   bearing(myLng, myLat, dstLng, dstLat) {
     const myLatRad = this.toRadians(myLat);
     const dstLatRad = this.toRadians(dstLat);
@@ -31,8 +52,6 @@ class GameScreen extends Component {
     const tmp1 = Math.cos(myLatRad) * Math.sin(dstLatRad);
     const tmp2 = Math.sin(myLatRad) * Math.cos(dstLatRad) * Math.cos(lngDiff);
     const x = tmp1 - tmp2;
-
-    console.log(Math.atan2(y, x));
 
     return (this.toDegrees(Math.atan2(y, x)) + 360) % 360;
   }
@@ -63,7 +82,8 @@ class GameScreen extends Component {
     Location.watchPositionAsync(
       {
         enableHighAccuracy: true,
-        timeInterval: 200
+        timeInterval: 200,
+        distanceInterval: 1
       },
       location => {
         this.setState({ myLocation: location.coords });
@@ -72,28 +92,36 @@ class GameScreen extends Component {
   };
 
   render() {
-    const dstBearing = this.state.location
-      ? this.bearing(
-          this.state.myLocation.longitude,
-          this.state.myLocation.latitude,
-          this.state.dstLocation.longitude,
-          this.state.dstLocation.latitude
-        )
-      : 0;
+    const { myLocation, dstLocation, myBearing } = this.state;
 
-    if (Math.abs(dstBearing - this.state.myBearing) < 30) {
+    const dstBearing = this.bearing(
+      myLocation.longitude,
+      myLocation.latitude,
+      dstLocation.longitude,
+      dstLocation.latitude
+    );
+
+    const dstDistance = this.distance(
+      myLocation.latitude,
+      myLocation.longitude,
+      dstLocation.latitude,
+      dstLocation.longitude
+    );
+
+    if (Math.abs(dstBearing - myBearing) < 30) {
       Vibration.vibrate(500);
     }
 
     return (
       <View style={{ flex: 1 }}>
-        <Text>{JSON.stringify(this.state.myLocation)}</Text>
+        <Text>{JSON.stringify(myLocation)}</Text>
         <Text>dstBearing = {dstBearing}</Text>
-        <Text>myBearing = {this.state.myBearing}</Text>
+        <Text>myBearing = {myBearing}</Text>
         <Text>
           dstBearing - myBearing =
-          {this.state.myLocation ? Math.abs(dstBearing - this.state.myBearing) : ''}
+          {Math.abs(dstBearing - myBearing)}
         </Text>
+        <Text>Dist = {dstDistance}</Text>
       </View>
     );
   }
