@@ -3,12 +3,11 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Platform
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Header, BackgroundImage, CountDown } from '../../common'
-import { HEIGHT, WIDTH } from '../../../helpers/Constants'
+import { HEIGHT, WIDTH, IS_IOS } from '../../../helpers/Constants'
 import { TREASURE_HUNT_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 class SecondScreen extends Component {
@@ -31,7 +30,7 @@ class SecondScreen extends Component {
         <Header title={strings.treasureHunt} />
         <View style={countDownContainer}>
           <Text style={textStyle}>{strings.timeLeft + ': '}</Text>
-          <CountDown endDate={new Date('March 18, 2018 00:00:01')} />
+          <CountDown endDate={this.props.screenProps.endDate} />
         </View>
         <View style={container}>
           <View style={buttonContainer}>
@@ -41,18 +40,17 @@ class SecondScreen extends Component {
             <MaterialIcons
               name={'keyboard-arrow-left'}
               size={60}
-              style={{ backgroundColor: 'transparent', color: 'pink' }}
+              style={{ backgroundColor: 'transparent', color: '#f4376d' }}
             />
             </TouchableOpacity >
             <Text style={infoTextStyle}>{strings.info}</Text>
             <TouchableOpacity
-
               onPress={() => navigation.navigate('Third')}
             >
             <MaterialIcons
               name={'keyboard-arrow-right'}
               size={60}
-              style={{ backgroundColor: 'transparent', color: 'pink' }}
+              style={{ backgroundColor: 'transparent', color: '#f4376d' }}
             />
             </TouchableOpacity>
           </View>
@@ -64,7 +62,7 @@ class SecondScreen extends Component {
 
 const styles = {
   mainContainer: {
-    height: HEIGHT - (Platform.OS === 'ios' ? 113 : 135),
+    height: HEIGHT - (IS_IOS ? 113 : 135),
     width: WIDTH
   },
   container: {

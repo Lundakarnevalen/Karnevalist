@@ -8,7 +8,8 @@ import GameScreen from './TreasurehuntScreens/GameScreen';
 
 class CardstackScreen extends Component {
   render() {
-    return <CardNav />;
+    const endDate = new Date('March 18, 2018 00:00:01')
+    return <CardNav screenProps={{ endDate }} />;
   }
 }
 

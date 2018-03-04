@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Platform,
   TouchableOpacity
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Header, CustomButton, BackgroundImage, CountDown } from '../../common';
-import { HEIGHT, WIDTH } from '../../../helpers/Constants'
+import { HEIGHT, WIDTH, IS_IOS } from '../../../helpers/Constants'
 import { TREASURE_HUNT_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 class ThirdScreen extends Component {
@@ -30,7 +29,7 @@ class ThirdScreen extends Component {
         <Header title={strings.treasureHunt} />
         <View style={countDownContainer}>
           <Text style={textStyle}>{strings.timeLeft + ': '}</Text>
-          <CountDown endDate={new Date('March 18, 2018 00:00:01')} />
+          <CountDown endDate={this.props.screenProps.endDate} />
         </View>
         <View style={container}>
           <View style={buttonContainer}>
@@ -38,16 +37,25 @@ class ThirdScreen extends Component {
             <MaterialIcons
               name={'keyboard-arrow-left'}
               size={60}
-              style={{ backgroundColor: 'transparent', color: 'pink' }}
+              style={{ backgroundColor: 'transparent', color: '#f4376d' }}
             />
             </TouchableOpacity>
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ marginTop: 200 }}>
               <CustomButton
                 style={'standardButton'}
                 onPress={() => this.props.navigation.navigate('GameScreen')}
                 text={strings.startButton}
               />
+            </View>
+            <TouchableOpacity
+              disabled
+            >
+              <MaterialIcons
+                name={'keyboard-arrow-right'}
+                size={60}
+                style={{ backgroundColor: 'transparent', color: 'grey' }}
+              />
+            </TouchableOpacity>
             </View>
           </View>
       </View>
@@ -57,7 +65,7 @@ class ThirdScreen extends Component {
 
 const styles = {
   mainContainer: {
-    height: HEIGHT - (Platform.OS === 'ios' ? 52 : 74), width: WIDTH
+    height: HEIGHT - (IS_IOS ? 113 : 135), width: WIDTH
   },
   container: {
     flex: 1,
@@ -67,12 +75,12 @@ const styles = {
   countDownContainer: {
      alignItems: 'center',
      flexDirection: 'row',
-    justifyContent: 'center'
+     justifyContent: 'center'
   },
   buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-between'
   },
   textStyle: {
     color: 'white',
