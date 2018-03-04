@@ -15,6 +15,7 @@ import HomeScreen from './MyPageNavbarScreens/HomeScreen';
 import SectionScreen from './MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
 import SettingsScreen from './MyPageNavbarScreens/SettingsScreen';
+import CardstackScreen from './CardstackScreen';
 import {
   SECTION_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
@@ -78,7 +79,7 @@ class MyPageNavbarScreen extends Component {
 const TabNav = TabNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: CardstackScreen,
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (

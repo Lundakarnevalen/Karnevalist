@@ -27,7 +27,9 @@ class CountDown extends Component {
       minutesLeft: 0,
       secondsLeft: 0,
       karneval: false,
-      upprop: false
+      upprop: false,
+      endDate: props.endDate || new Date(),
+      targetDate: props.targetDate || new Date('May 18, 2018 00:00:01')
     };
   }
 
@@ -49,7 +51,7 @@ class CountDown extends Component {
 
   getTimeLeft() {
     const now = new Date().getTime();
-    const timeLeft = END_TIME - now;
+    const timeLeft = this.state.endDate - now;
     if (timeLeft < 0) {
       if (new Date('May 18, 2018 00:00:01') - new Date().getTime() > 0) {
         this.setState({ upprop: true });
