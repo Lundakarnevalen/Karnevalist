@@ -12,6 +12,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
 import { USER_URL, LOGOUT_RESET_ACTION, HEIGHT } from '../../../helpers/Constants';
+import { isEmail, containsOnlyLetters, isValidPhoneNbr, containsOnlyDigits } from '../../../helpers/functions';
 import { MY_PROFILE_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../../helpers/LanguageStrings';
 // import { handleErrorMsg } from '../../../helpers/ApiManager';
 // import { removeItem } from '../../../helpers/LocalSave';
@@ -20,13 +21,33 @@ class MyProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: props.userinfo,
+      oldUser: props.userinfo,
+      editMode: false,
+      alertVisible: false,
+      anyError: false
     };
   }
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
-    this.setState({ user: this.props.userinfo });
+  }
+
+  checkAddressError(text) {
+    console.log(text);
+    if (text === '') {
+      this.setState({ validAddress: false });
+    } else {
+      this.setState({ validAddress: true });
+    }
+  }
+
+  getErrorStrings() {
+    const { language } = this.props;
+    const { fields } = ERROR_MSG_INPUT_FIELD;
+    const strings = {};
+    fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
+    return strings;
   }
 
   getStrings() {
@@ -35,6 +56,80 @@ class MyProfileScreen extends Component {
     const strings = {};
     fields.forEach(field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language]));
     return strings;
+  }
+
+  getRightIcon() {
+    const strings = this.getStrings();
+    const { rightIconStyle } = styles;
+    const { anyError, validAddress } = this.state;
+    return (
+      <TouchableOpacity
+        style={rightIconStyle}
+        onPress={() => {
+          if (this.state.editMode && this.state.changesMade) {
+            if (anyError || !validAddress) {
+              this.setState({
+                alertVisible: true,
+                alertHeader: strings.invalidChangesMadeHeader,
+                message: strings.invalidChangesMadeText,
+               });
+            } else if (this.state.changesMade) {
+              this.setState({
+                message: strings.popUpInfo,
+                alertHeader: strings.popUpHeader,
+                alertVisible: true
+              });
+            }
+          } else {
+            this.setState({ editMode: !this.state.editMode });
+          }
+        }}
+      >
+        <MaterialIcons
+          name={this.state.editMode ? 'done' : 'edit'}
+          style={{ color: 'pink', right: 0 }}
+          size={30}
+        />
+      </TouchableOpacity>
+    );
+  }
+
+  getWarningMessage(key) {
+    const errorStrings = this.getErrorStrings();
+    switch (key) {
+      case 'firstName':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'lastName':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'city':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'postNumber':
+        return errorStrings.errorMsgZipCode;
+      case 'phoneNumber':
+        return errorStrings.errorMsgPhoneNbr;
+      default:
+        return;
+    }
+  }
+
+  fulfilsRequirement(key, toCheck) {
+    return true
+    switch (key) {
+      case 'firstName':
+        return containsOnlyLetters(toCheck);
+      case 'lastName':
+        return containsOnlyLetters(toCheck);
+      case 'email':
+        return isEmail(toCheck);
+      case 'city':
+        return containsOnlyLetters(toCheck);
+      case 'postNumber':
+        return containsOnlyDigits(toCheck) && toCheck.length === 5;
+      case 'phoneNumber':
+        return isValidPhoneNbr(toCheck);
+      default:
+        return true;
+    }
   }
 
   renderFields() {
@@ -51,12 +146,13 @@ class MyProfileScreen extends Component {
       const borderWidth = editMode && key !== 'email' ? 1 : 0;
       const textColor = editMode && key !== 'email' ? 'black' : 'white';
       const placeholderTextColor = editMode && key !== 'email' ? '#F7A021' : 'white';
-      if (user[key] === '' || user[key] === null || user[key] === undefined)
+      if (user[key] === '' || user[key] === null || user[key] === undefined || user[key].length === 0)
         return null
       if (user[key] === true)
           user[key] = strings.yes;
       if (user[key] === false)
         user[key] = strings.no;
+      console.log(user[key]);
       return (
         <Input
           extraContainerStyle={{ backgroundColor, borderWidth }}
@@ -64,8 +160,16 @@ class MyProfileScreen extends Component {
           extraPlaceHolderStyle={{ color: placeholderTextColor }}
           key={key}
           placeholder={labels[key]}
+          onChangeText={text => {
+            if (key === 'address') {
+              this.checkAddressError(text);
+            }
+            user[key] = text;
+            this.setState({ anyError: !this.fulfilsRequirement(key, text) });
+            this.setState({ user, changesMade: true })
+          }}
           value={user[key]}
-          editable={false}
+          editable={editMode && key !== 'email'}
         />
       );
     });
@@ -79,6 +183,31 @@ class MyProfileScreen extends Component {
       this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
+  renderAlertButtons(message) {
+    const strings = this.getStrings();
+    switch (message) {
+      case strings.expiredTokenMessage:
+        return [
+          { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
+        ];
+      case strings.popUpInfo:
+        return [
+          { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+          {
+            text: strings.save,
+            onPress: () => {
+              this.saveChanges();
+              this.setState({ editMode: false });
+            }
+          }
+        ];
+      case strings.ok:
+        return [{ text: strings.ok, onPress: () => this.setState({ errorAlertVisible: false }) }];
+      default:
+        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
+    }
+  }
+
   renderMainView() {
     const { user } = this.state;
     if (user === null || user === undefined)
@@ -89,15 +218,34 @@ class MyProfileScreen extends Component {
       );
     return <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>;
   }
+  saveChanges() {
+    const { user, oldUser } = this.state;
+    const data = {};
+    let ctr = 0;
+    Object.keys(user).forEach(key => {
+      ctr++;
+      if (user[key] !== oldUser[key]) data[key] = user[key];
+      if (ctr === Object.keys(user).length) this.putData(data);
+    });
+    this.setState({ oldUser: user, alertVisible: false });
+  }
 
   render() {
     const { navigation } = this.props;
     const strings = this.getStrings();
+    const { alertVisible, message, alertHeader } = this.state
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header title={strings.title} navigation={navigation} />
+        <Header title={strings.title} navigation={navigation} rightIcon={this.getRightIcon()} />
         {this.renderMainView()}
+        <SuperAgileAlert
+          alertVisible={alertVisible}
+          setAlertVisible={visible => this.setAlertVisible(visible, message)}
+          buttonsIn={this.renderAlertButtons(message)}
+          header={alertHeader}
+          info={message}
+        />
       </View>
     );
   }
@@ -133,31 +281,8 @@ const mapStateToProps = ({ currentLanguage, userInformation }) => {
 
 export default connect(mapStateToProps, null)(MyProfileScreen);
 
-// getWarningMessage(key) {
-//   const errorStrings = this.getErrorStrings();
-//   switch (key) {
-//     case 'firstName':
-//       return errorStrings.errorMsgOnlyLetters;
-//     case 'lastName':
-//       return errorStrings.errorMsgOnlyLetters;
-//     case 'city':
-//       return errorStrings.errorMsgOnlyLetters;
-//     case 'postNumber':
-//       return errorStrings.errorMsgZipCode;
-//     case 'phoneNumber':
-//       return errorStrings.errorMsgPhoneNbr;
-//     default:
-//       return;
-//   }
-// }
 
-// checkAddressError(text) {
-//   if (text === '') {
-//     this.setState({ validAddress: false });
-//   } else {
-//     this.setState({ validAddress: true });
-//   }
-// }
+
 
 // handleLogout() {
 //   const strings = this.getStrings();
@@ -170,17 +295,7 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 //   });
 // }
 
-// saveChanges() {
-//   const { user, oldUser } = this.state;
-//   const data = {};
-//   let ctr = 0;
-//   Object.keys(user).forEach(key => {
-//     ctr++;
-//     if (user[key] !== oldUser[key]) data[key] = user[key];
-//     if (ctr === Object.keys(user).length) this.putData(data);
-//   });
-//   this.setState({ oldUser: user, alertVisible: false });
-// }
+
 
 // putData(data) {
 //   const url = USER_URL + this.props.email;
@@ -200,85 +315,12 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 //     });
 // }
 
-// isEmail(toTest) {
-//   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-//     toTest
-//   );
-// }
-//
-// containsOnlyLetters(toTest) {
-//   return /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(
-//     toTest
-//   );
-// }
-//
-// isValidPhoneNbr(toTest) {
-//   return /^\+?\d+$/.test(toTest) && toTest.length >= 7 && toTest.length <= 20;
-// }
-//
-// containsOnlyDigits(text) {
-//   return /^\d+$/.test(text);
-// }
-//
-// fulfilsRequirement(key, toCheck) {
-//   switch (key) {
-//     case 'firstName':
-//       return this.containsOnlyLetters(toCheck);
-//     case 'lastName':
-//       return this.containsOnlyLetters(toCheck);
-//     case 'email':
-//       return this.isEmail(toCheck);
-//     case 'city':
-//       return this.containsOnlyLetters(toCheck);
-//     case 'postNumber':
-//       return this.containsOnlyDigits(toCheck) && toCheck.length === 5;
-//     case 'phoneNumber':
-//       return this.isValidPhoneNbr(toCheck);
-//     default:
-//       return true;
-//   }
-// }
+
 //
 
-// getErrorStrings() {
-//   const { language } = this.props;
-//   const { fields } = ERROR_MSG_INPUT_FIELD;
-//   const strings = {};
-//   fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
-//   return strings;
-// }
 
-// getRightIcon() {
-//   const strings = this.getStrings();
-//   const { rightIconStyle } = styles;
-//   const { anyError, validAddress } = this.state;
-//   return (
-//     <TouchableOpacity
-//       style={rightIconStyle}
-//       onPress={() => {
-//         if (this.state.editMode && this.state.changesMade) {
-//           if (anyError || !validAddress) {
-//             this.setState({ errorAlertVisible: true });
-//           } else if (this.state.changesMade) {
-//             this.setState({
-//               message: strings.popUpInfo,
-//               alertHeader: strings.popUpHeader,
-//               alertVisible: true
-//             });
-//           }
-//         } else {
-//           this.setState({ editMode: !this.state.editMode });
-//         }
-//       }}
-//     >
-//       <MaterialIcons
-//         name={this.state.editMode ? 'done' : 'edit'}
-//         style={{ color: 'white', right: 0 }}
-//         size={30}
-//       />
-//     </TouchableOpacity>
-//   );
-// }
+
+
 // getUserInfo() {
 //   const url = USER_URL + this.props.email;
 //   const headers = {
@@ -301,37 +343,7 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 //   return success ? strings.updateInfoMessageSuccess : strings.updateInfoMessageFail;
 // }
 
-// renderAlertButtons(message) {
-//   const strings = this.getStrings();
-//   switch (message) {
-//     case strings.expiredTokenMessage:
-//       return [
-//         { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
-//       ];
-//     case strings.popUpInfo:
-//       return [
-//         { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
-//         {
-//           text: strings.save,
-//           onPress: () => {
-//             this.saveChanges();
-//             this.setState({ editMode: false });
-//           }
-//         }
-//       ];
-//     case strings.ok:
-//       return [{ text: strings.ok, onPress: () => this.setState({ errorAlertVisible: false }) }];
-//     default:
-//       return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
-//   }
-// }
-// <SuperAgileAlert
-//   alertVisible={alertVisible}
-//   setAlertVisible={visible => this.setAlertVisible(visible, message)}
-//   buttonsIn={this.renderAlertButtons(message)}
-//   header={alertHeader}
-//   info={message}
-// />
+
 // <SuperAgileAlert
 //   alertVisible={errorAlertVisible}
 //   setAlertVisible={visible => this.setState({ errorAlertVisible: visible })}
