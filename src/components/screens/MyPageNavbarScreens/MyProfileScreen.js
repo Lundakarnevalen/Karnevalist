@@ -20,8 +20,7 @@ import {
 import {
   USER_URL,
   LOGOUT_RESET_ACTION,
-  HEIGHT,
-  WIDTH
+  HEIGHT
 } from '../../../helpers/Constants';
 import {
   isEmail,
