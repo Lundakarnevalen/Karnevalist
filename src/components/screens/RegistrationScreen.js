@@ -24,9 +24,13 @@ import {
   Loading
 } from '../common';
 import { REGISTER_URL, HEIGHT, WIDTH, IS_IOS } from '../../helpers/Constants';
-import { REGISTRATION_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../helpers/LanguageStrings';
+import {
+  REGISTRATION_SCREEN_STRINGS,
+  ERROR_MSG_INPUT_FIELD
+} from '../../helpers/LanguageStrings';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { saveItem } from '../../helpers/LocalSave';
+import { getStrings } from '../../helpers/functions';
 
 let zipCodePosition = 0;
 
@@ -73,9 +77,15 @@ class RegistrationScreen extends Component {
 
   componentWillMount() {
     if (IS_IOS) {
-      this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+      this.keyboardWillShowSub = Keyboard.addListener(
+        'keyboardWillShow',
+        this.keyboardWillShow
+      );
     } else {
-      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+      this.keyboardDidShowListener = Keyboard.addListener(
+        'keyboardDidShow',
+        this.keyboardDidShow
+      );
     }
   }
 
@@ -126,24 +136,28 @@ class RegistrationScreen extends Component {
     return /^\d+$/.test(text);
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = REGISTRATION_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = REGISTRATION_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, REGISTRATION_SCREEN_STRINGS);
   }
 
   getErrorStrings() {
     const { language } = this.props;
     const { fields } = ERROR_MSG_INPUT_FIELD;
     const strings = {};
-    fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
+    fields.forEach(
+      field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language])
+    );
     return strings;
   }
 
   anyEmpty() {
-    const { inputs, studentNation, shirtSize, driversLicense, corps } = this.state;
+    const {
+      inputs,
+      studentNation,
+      shirtSize,
+      driversLicense,
+      corps
+    } = this.state;
     if (
       inputs.indexOf('') !== -1 ||
       shirtSize === '' ||
@@ -219,7 +233,8 @@ class RegistrationScreen extends Component {
                 break;
               case 'driversLicense':
                 this.setState({ showDriversLicensePicker: true });
-                if (title === '') this.setState({ driversLicense: tagArray[0] });
+                if (title === '')
+                  this.setState({ driversLicense: tagArray[0] });
                 break;
               case 'corps':
                 this.setState({ showCorpPicker: true });
@@ -297,7 +312,12 @@ class RegistrationScreen extends Component {
       showDriversLicensePicker,
       showCorpPicker
     } = this.state;
-    if (showShirtPicker || showstudentNationPicker || showDriversLicensePicker || showCorpPicker) {
+    if (
+      showShirtPicker ||
+      showstudentNationPicker ||
+      showDriversLicensePicker ||
+      showCorpPicker
+    ) {
       return (
         <TouchableWithoutFeedback
           style={{ position: 'absolute' }}
@@ -324,15 +344,23 @@ class RegistrationScreen extends Component {
   }
 
   renderAlertButtons(message) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const errorStrings = this.getErrorStrings();
     switch (message) {
       case errorStrings.errorMsgAnyEmpty:
       case errorStrings.errorMsgWrongInput:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
+        return [
+          {
+            text: strings.ok,
+            onPress: () => this.setState({ alertVisible: false })
+          }
+        ];
       case strings.confirmRegister:
         return [
-          { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+          {
+            text: strings.cancel,
+            onPress: () => this.setState({ alertVisible: false })
+          },
           {
             text: strings.ok,
             onPress: () => {
@@ -342,12 +370,17 @@ class RegistrationScreen extends Component {
           }
         ];
       default:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
+        return [
+          {
+            text: strings.ok,
+            onPress: () => this.setState({ alertVisible: false })
+          }
+        ];
     }
   }
 
   handleRegister() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const {
       inputs,
       foodPreference,
@@ -435,7 +468,7 @@ class RegistrationScreen extends Component {
   }
 
   render() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const errorStrings = this.getErrorStrings();
     const { flexHorizontal, rightIconStyle } = styles;
     const {
@@ -474,7 +507,10 @@ class RegistrationScreen extends Component {
     } = this.state;
 
     const closeButton = (
-      <TouchableOpacity style={rightIconStyle} onPress={() => this.props.navigation.goBack(null)}>
+      <TouchableOpacity
+        style={rightIconStyle}
+        onPress={() => this.props.navigation.goBack(null)}
+      >
         <MaterialCommunityIcons size={30} name="close" color={'white'} />
       </TouchableOpacity>
     );
@@ -782,7 +818,12 @@ class RegistrationScreen extends Component {
             studentNation,
             'nation'
           )}
-          {this.renderPickerForPlatform(strings.corps, strings.corpsList, corps, 'corps')}
+          {this.renderPickerForPlatform(
+            strings.corps,
+            strings.corpsList,
+            corps,
+            'corps'
+          )}
           {this.renderPickerForPlatform(
             strings.driversLicense,
             strings.driversLicenseArray,
@@ -803,12 +844,23 @@ class RegistrationScreen extends Component {
             value={groupLeader}
             color={'white'}
           />
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingBottom: 10
+            }}
+          >
             <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>
               {strings.auditionSmallSceneHeader}
             </Text>
             <TouchableOpacity
-              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }}
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 5
+              }}
               onPress={() => {
                 this.setState({
                   alertVisible: true,
@@ -824,15 +876,28 @@ class RegistrationScreen extends Component {
               />
             </TouchableOpacity>
           </View>
-          {this.renderCheckBoxes(strings.auditionCheckboxes, smallAuditionCheckBoxes, newState =>
-            this.setState({ smallAuditionCheckBoxes: newState })
+          {this.renderCheckBoxes(
+            strings.auditionCheckboxes,
+            smallAuditionCheckBoxes,
+            newState => this.setState({ smallAuditionCheckBoxes: newState })
           )}
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 10 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingBottom: 10
+            }}
+          >
             <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>
               {strings.auditionBigSceneHeader}
             </Text>
             <TouchableOpacity
-              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 5 }}
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 5
+              }}
               onPress={() => {
                 this.setState({
                   alertVisible: true,
@@ -848,14 +913,18 @@ class RegistrationScreen extends Component {
               />
             </TouchableOpacity>
           </View>
-          {this.renderCheckBoxes(strings.auditionCheckboxes, bigAuditionCheckBoxes, newState =>
-            this.setState({ bigAuditionCheckBoxes: newState })
+          {this.renderCheckBoxes(
+            strings.auditionCheckboxes,
+            bigAuditionCheckBoxes,
+            newState => this.setState({ bigAuditionCheckBoxes: newState })
           )}
           <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>
             {strings.checkBoxesHeader}
           </Text>
-          {this.renderCheckBoxes(strings.checkBoxNames, wantToWorkWith, newState =>
-            this.setState({ wantToWorkWith: newState })
+          {this.renderCheckBoxes(
+            strings.checkBoxNames,
+            wantToWorkWith,
+            newState => this.setState({ wantToWorkWith: newState })
           )}
           <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>
             {strings.checkBoxesHeaderToLearn}
@@ -951,7 +1020,9 @@ class RegistrationScreen extends Component {
           close={() => this.setState({ showstudentNationPicker: false })}
         />
         <DKPicker
-          onValueChange={newValue => this.setState({ driversLicense: newValue })}
+          onValueChange={newValue =>
+            this.setState({ driversLicense: newValue })
+          }
           items={strings.driversLicenseArray}
           value={driversLicense}
           isShowing={showDriversLicensePicker}
@@ -970,7 +1041,11 @@ class RegistrationScreen extends Component {
             redirect={() => {
               const resetAction = NavigationActions.reset({
                 index: 0,
-                actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
+                actions: [
+                  NavigationActions.navigate({
+                    routeName: 'MyPageNavbarScreen'
+                  })
+                ],
                 key: null
               });
               this.setState({ loading: false, loadingComplete: false });
@@ -1029,4 +1104,6 @@ const mapStateToProps = ({ userInformation, currentLanguage }) => {
   return { picture, language };
 };
 
-export default connect(mapStateToProps, { setToken, setEmail, setUserinfo })(RegistrationScreen);
+export default connect(mapStateToProps, { setToken, setEmail, setUserinfo })(
+  RegistrationScreen
+);
