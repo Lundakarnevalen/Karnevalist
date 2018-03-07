@@ -54,7 +54,7 @@ class SwipeScreen extends Component {
   renderNextButton(counter, strings) {
     const onPress =
       counter == 2
-        ? () => this.props.navigation.navigate('CloseGameScreen')
+        ? () => this.props.navigation.navigate('GameScreen')
         : () => this.setState({ counter: counter + 1 });
     const text = counter == 2 ? strings.startButton : strings.nextButton;
     return (
@@ -94,7 +94,7 @@ class SwipeScreen extends Component {
         config={config}
       >
         <View style={mainContainer}>
-          <BackgroundImage pictureNumber={1} />
+          <BackgroundImage pictureNumber={5} />
           <Header title={strings.treasureHunt} />
           {this.props.screenProps.endDate - new Date() < 0 ? (
             <View style={countDownContainer}>

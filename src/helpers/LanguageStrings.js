@@ -1108,7 +1108,8 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
     'thirdHeader',
     'thirdBody',
     'nextButton',
-    'finishedText'
+    'finishedText',
+    'showSture'
   ],
   treasureHunt: {
     SE: 'Skattjakt',
@@ -1159,5 +1160,9 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
   finishedText: {
     SE: 'Skattjakten är nu över',
     EN: 'The treasure hunt has ended'
+  },
+  showSture: {
+    SE: 'Visa denna för Sture',
+    EN: 'Show this to Sture'
   }
 };

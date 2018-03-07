@@ -3,12 +3,24 @@ import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 
 import { View, Text } from 'react-native';
+import { TREASURE_HUNT_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
 class CloseGameScreen extends Component {
+  getStrings() {
+    const { language } = this.props;
+    const { fields } = TREASURE_HUNT_SCREEN_STRINGS;
+    const strings = {};
+    fields.forEach(
+      field => (strings[field] = TREASURE_HUNT_SCREEN_STRINGS[field][language])
+    );
+    return strings;
+  }
+
   render() {
+    const strings = this.getStrings();
     return (
       <View style={styles.container}>
-        <Text> SHOW THIS TO STURE</Text>
+        <Text>{strings.showSture}</Text>
         <QRCode
           value={this.props.email}
           size={200}
@@ -29,9 +41,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ userInformation }) => {
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { email } = userInformation;
-  return { email };
+  const { language } = currentLanguage;
+  return { email, language };
 };
 
 export default connect(mapStateToProps, null)(CloseGameScreen);
