@@ -7,6 +7,7 @@ import { Header, BackgroundImage, CountDown, CustomButton } from '../../common';
 import { HEIGHT, WIDTH, IS_IOS } from '../../../helpers/Constants';
 import { TREASURE_HUNT_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 
+const HEADERS = ['first', 'second', 'third'];
 class SwipeScreen extends Component {
   state = {
     counter: 0
@@ -37,24 +38,14 @@ class SwipeScreen extends Component {
   }
 
   renderInfoText(counter, styles, strings) {
-    let textInt = '';
-    switch (counter) {
-      case 0:
-        textInt = 'first';
-        break;
-      case 1:
-        textInt = 'second';
-        break;
-      case 2:
-        textInt = 'third';
-        break;
-    }
     return (
       <View style={styles.progressButtonsStyle}>
         <Text style={styles.infoHeaderStyle}>
-          {strings[textInt + 'Header']}
+          {strings[HEADERS[counter] + 'Header']}
         </Text>
-        <Text style={styles.infoTextStyle}>{strings[textInt + 'Body']}</Text>
+        <Text style={styles.infoTextStyle}>
+          {strings[HEADERS[counter] + 'Body']}
+        </Text>
       </View>
     );
   }
@@ -62,7 +53,7 @@ class SwipeScreen extends Component {
   renderNextButton(counter, strings) {
     const onPress =
       counter == 2
-        ? () => this.props.navigation.navigate('GameScreen')
+        ? () => this.props.navigation.navigate('CloseGameScreen')
         : () => this.setState({ counter: counter + 1 });
     const text = counter == 2 ? strings.startButton : strings.nextButton;
     return (

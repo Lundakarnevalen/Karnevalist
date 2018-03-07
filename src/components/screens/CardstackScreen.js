@@ -3,6 +3,7 @@ import { Animated, Easing } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import SwipeScreen from './TreasurehuntScreens/SwipeScreen';
 import GameScreen from './TreasurehuntScreens/GameScreen';
+import CloseGameScreen from './TreasurehuntScreens/CloseGameScreen';
 
 class CardstackScreen extends Component {
   render() {
@@ -21,6 +22,12 @@ const CardNav = StackNavigator(
     },
     GameScreen: {
       screen: GameScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    CloseGameScreen: {
+      screen: CloseGameScreen,
       navigationOptions: {
         header: null
       }
