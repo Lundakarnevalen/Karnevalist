@@ -15,7 +15,8 @@ const expiredTokenTitle = {
   EN: 'Session Expired'
 };
 const expiredTokenMessage = {
-  SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
+  SE:
+    'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
   EN: 'Your session has expired please log in again to continue'
 };
 const studentNation = {
@@ -158,7 +159,8 @@ export const LOGIN_SCREEN_STRINGS = {
   },
   resetPasswordComplete: {
     SE: 'Ett mail har skickats med information om hur du byter lösenord.',
-    EN: 'An email has been sent with information about how to reset your password.'
+    EN:
+      'An email has been sent with information about how to reset your password.'
   },
   password,
   loginButton: {
@@ -389,8 +391,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
   cancel,
   ok,
   confirmRegister: {
-    SE: 'Du kan endast ändra dina uppgifter via karnevalist.se efter att du har registrerat dig',
-    EN: 'You can only change your information from karnevalist.se after you have registered'
+    SE:
+      'Du kan endast ändra dina uppgifter via karnevalist.se efter att du har registrerat dig',
+    EN:
+      'You can only change your information from karnevalist.se after you have registered'
   },
   alertHeader,
   other: {
@@ -537,8 +541,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
       ' use these pictures and movies on Facebook, Instagram, Youtube and in karnevalsboxen.'
   },
   gdpr3: {
-    SE: 'Jag är medveten om och godkänner att mina kontaktuppgifter behövs under hela år 2018.',
-    EN: 'I am aware of and allow the use of my contact information during the whole year of 2018.'
+    SE:
+      'Jag är medveten om och godkänner att mina kontaktuppgifter behövs under hela år 2018.',
+    EN:
+      'I am aware of and allow the use of my contact information during the whole year of 2018.'
   },
   gdpr4: {
     SE:
@@ -829,8 +835,10 @@ export const CONFIRM_PAGE_STRINGS = {
   ok,
   yes,
   confirmMessage: {
-    SE: 'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
-    EN: 'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
+    SE:
+      'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
+    EN:
+      'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
   },
   confirmHeader: {
     SE: 'Bekräfta',
@@ -1093,7 +1101,14 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
     'treasureHunt',
     'startButton',
     'timeLeft',
-    'info'
+    'firstHeader',
+    'firstBody',
+    'secondHeader',
+    'secondBody',
+    'thirdHeader',
+    'thirdBody',
+    'nextButton',
+    'finishedText'
   ],
   treasureHunt: {
     SE: 'Skattjakt',
@@ -1107,8 +1122,42 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
     SE: 'TID KVAR',
     EN: 'TIME LEFT'
   },
-  info: {
-    SE: 'INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO',
-    EN: 'INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO INFO'
+  firstHeader: {
+    SE: 'Välkommen till vår skattjakt!',
+    EN: 'Welcome to our treasure hunt! '
+  },
+  firstBody: {
+    SE:
+      'Lundakarnevalen anordnar en skattjakt där deltagarna letar sig igenom lund för att hitta den hemliga plats där Sture gömt sig. De första 25 kommer få ett pris!',
+    EN:
+      'Lundakarnevalen arranges a treasure hunt where the contestans compete to find Sture, who is hiding at a the (top) secret location. The first 25 to find him will recieve a special prize!'
+  },
+  secondHeader: {
+    SE: 'Hur kommer det gå till?',
+    EN: 'How will it work?'
+  },
+  secondBody: {
+    SE:
+      'Se till att du har igång GPS, vrid sen din mobil i olika riktningar and lägg märke till när den vibrerar. Detta betyder att den hemliga platsen är åt det hållet!',
+    EN:
+      'Ensure your location sensor is on, then turn your phone various directions and notice when it vibrates. That means the secret location is that way!'
+  },
+  thirdHeader: {
+    SE: 'Och sen då?',
+    EN: 'And then what?'
+  },
+  thirdBody: {
+    SE:
+      'När du kommit nära Sture får du en QR-kod att visa honom! \nJag förstår, nu kör vi!',
+    EN:
+      "When you get close to Sture, you will get a QR code to show him! \nI got it, let's GO!"
+  },
+  nextButton: {
+    SE: 'Nästa',
+    EN: 'Next'
+  },
+  finishedText: {
+    SE: 'Skattjakten är nu över',
+    EN: 'The treasure hunt has ended'
   }
-}
+};

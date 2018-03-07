@@ -36,7 +36,9 @@ class CountDown extends Component {
     const { language } = this.props;
     const { fields } = COUNT_DOWN_STRINGS;
     const strings = {};
-    fields.forEach(field => (strings[field] = COUNT_DOWN_STRINGS[field][language]));
+    fields.forEach(
+      field => (strings[field] = COUNT_DOWN_STRINGS[field][language])
+    );
     return strings;
   }
 
