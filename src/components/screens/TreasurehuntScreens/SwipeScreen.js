@@ -81,7 +81,7 @@ class SwipeScreen extends Component {
         config={config}
       >
         <View style={mainContainer}>
-          <BackgroundImage pictureNumber={1}/>
+          <BackgroundImage pictureNumber={5}/>
           <Header title={strings.treasureHunt}/>
           <View style={countDownContainer}>
             <Text style={textStyle}>{strings.timeLeft + ': '}</Text>
