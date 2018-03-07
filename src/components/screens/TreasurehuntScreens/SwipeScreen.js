@@ -26,6 +26,7 @@ class SwipeScreen extends Component {
   renderProgressButton(counter, value) {
     return (
       <MaterialIcons
+        key={value}
         name={'face'}
         onPress={() => this.setState({ counter: value })}
         size={35}
@@ -108,9 +109,7 @@ class SwipeScreen extends Component {
           {this.renderInfoText(counter, styles, strings)}
           {this.renderNextButton(counter, strings)}
           <View style={[progressButtonsStyle, { marginTop: 0 }]}>
-            {this.renderProgressButton(counter, 0)}
-            {this.renderProgressButton(counter, 1)}
-            {this.renderProgressButton(counter, 2)}
+            {[0, 1, 2].map(i => this.renderProgressButton(counter, i))}
           </View>
         </View>
       </GestureRecognizer>
