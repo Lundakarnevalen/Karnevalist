@@ -1,12 +1,26 @@
 {
-  "extends": "rallycoding",
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "es6": true,
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    // "airbnb",
+    "prettier",
+    "prettier/react",
+    "prettier/standard",
+  ],
   "rules": {
-    "arrow-body-style": 0,
-    "global-require": 0,
-    "prefer-template": 0,
-    "no-underscore-dangle": 0,
-    "react/sort-comp": 0,
-    "semi": 0,
-    "curly": 0
+    // more rules
   }
 }
