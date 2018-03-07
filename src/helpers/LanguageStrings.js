@@ -1162,7 +1162,7 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
     EN: 'The treasure hunt has ended'
   },
   showSture: {
-    SE: 'Visa denna för Sture',
-    EN: 'Show this to Sture'
+    SE: 'Du är extremt nära \n Visa denna för Sture',
+    EN: 'You are very close \n Show this to Sture'
   }
 };

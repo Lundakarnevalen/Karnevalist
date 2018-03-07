@@ -20,7 +20,7 @@ class CloseGameScreen extends Component {
     const strings = this.getStrings();
     return (
       <View style={styles.container}>
-        <Text>{strings.showSture}</Text>
+        <Text style={{ textAlign: 'center' }}>{strings.showSture}</Text>
         <QRCode
           value={this.props.email}
           size={200}
