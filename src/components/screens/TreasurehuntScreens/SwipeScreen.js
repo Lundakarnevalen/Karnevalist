@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View, Text } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import { Header, BackgroundImage, CountDown, CustomButton } from '../../common'
@@ -9,12 +9,12 @@ import { HEIGHT, WIDTH, IS_IOS } from '../../../helpers/Constants'
 import { TREASURE_HUNT_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 const ProgressButton = ({counter, value, onPress}) => (
-  <MaterialIcons
+  <Feather
     key={value}
-    name="face"
+    name={counter >= value ? 'check-circle' : 'circle'}
     onPress={onPress}
     size={35}
-    style={styles.navContainer}
+    style={styles.navItem}
   />
 )
 
@@ -27,13 +27,15 @@ ProgressButton.propTypes = {
 const InfoText = ({counter, strings}) => {
   const HEADERS = ['first', 'second', 'third']
   return (
-    <View>
-      <Text style={styles.headerText}>
-        {strings[HEADERS[counter] + 'Header']}
-      </Text>
-      <Text style={styles.bodyText}>
-        {strings[HEADERS[counter] + 'Body']}
-      </Text>
+    <View style={styles.textContainer}>
+      <View>
+        <Text style={styles.headerText}>
+          {strings[HEADERS[counter] + 'Header']}
+        </Text>
+        <Text style={styles.bodyText}>
+          {strings[HEADERS[counter] + 'Body']}
+        </Text>
+      </View>
     </View>
   )
 }
@@ -60,13 +62,13 @@ const CountDownContainer = ({screenProps, strings}) => {
   if (screenProps.endDate - new Date() < 0) {
     return (
       <View style={styles.countDownContainer}>
-        <Text>{strings.finishedText}</Text>
+        <Text style={styles.countDown}>{strings.finishedText}</Text>
       </View>
     )
   } else {
     return (
       <View style={styles.countDownContainer}>
-        <Text>{strings.timeLeft + ': '}</Text>
+        <Text style={styles.countDown}>{strings.timeLeft + ': '}</Text>
         <CountDown endDate={screenProps.endDate}/>
       </View>
     )
@@ -107,7 +109,7 @@ class SwipeScreen extends Component {
           <NextButton counter={counter} strings={strings} onPress={counter === 2
             ? () => this.props.navigation.navigate('CloseGameScreen')
             : () => this.setState({counter: counter + 1})}/>
-          <View>
+          <View styke={styles.navContainer}>
             {[0, 1, 2].map(i => <ProgressButton key={i} value={i} counter={counter}
                                                 onPress={() => this.setState({counter: i})}/>)}
           </View>
@@ -124,17 +126,53 @@ SwipeScreen.propTypes = {
 const styles = {
   mainContainer: {
     height: HEIGHT - (IS_IOS ? 113 : 135),
-    width: WIDTH
+    width: WIDTH,
   },
-  headerText: {},
+  countDown: {
+    fontSize: 22,
+    color: 'white',
+  },
+  nextButton: {
+    width: WIDTH,
+  },
+  textContainer: {
+    height: 350,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    marginRight: 10,
+    marginLeft: 10,
+  },
+  headerText: {
+    fontSize: 40,
+    color: '#000000',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Avenir Next Medium',
+    backgroundColor: 'transparent',
+  },
+  bodyText: {
+    fontSize: 22,
+    color: '#000000',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Avenir Next Medium',
+    backgroundColor: 'transparent',
+  },
   countDownContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'center'
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
   },
-  navContainer: {},
-  buttonContainer: {},
-  bodyText: {},
+  navItem: {
+    backgroundColor: 'transparent',
+  },
+  navContainer: {
+    backgroundColor: 'transparent',
+  },
+  buttonContainer: {
+    backgroundColor: 'transparent',
+  },
+
 }
 
 const mapStateToProps = ({currentLanguage}) => {

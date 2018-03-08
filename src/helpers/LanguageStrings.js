@@ -1116,8 +1116,8 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
     EN: 'Treasure Hunt'
   },
   startButton: {
-    SE: 'Starta',
-    EN: 'Start'
+    SE: 'Jag förstår, nu kör vi!',
+    EN: 'I got it, let\'s GO!'
   },
   timeLeft: {
     SE: 'TID KVAR',
@@ -1149,9 +1149,9 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
   },
   thirdBody: {
     SE:
-      'När du kommit nära Sture får du en QR-kod att visa honom! \nJag förstår, nu kör vi!',
+      'När du kommit nära Sture får du en QR-kod att visa honom!',
     EN:
-      "When you get close to Sture, you will get a QR code to show him! \nI got it, let's GO!"
+      "When you get close to Sture, you will get a QR code to show him!"
   },
   nextButton: {
     SE: 'Nästa',
