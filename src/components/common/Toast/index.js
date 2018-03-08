@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Animated } from 'react-native';
-import { WIDTH } from '../../helpers/Constants';
+import { WIDTH } from 'helpers/Constants';
 
 class Toast extends Component {
   constructor(props) {
