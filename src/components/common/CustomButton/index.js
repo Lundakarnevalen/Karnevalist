@@ -1,95 +1,83 @@
-import React, { Component } from 'react';
-import { TouchableOpacity, Text, Dimensions } from 'react-native';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
-import { HEIGHT, WIDTH } from 'helpers/Constants';
+import { WIDTH } from 'helpers/Constants';
 
-class CustomButton extends Component {
-  getStandardButton() {
-    const borderWidth = 0;
-    const backgroundColor = '#F7A021';
-    return {
-      backgroundColor,
-      padding: 10,
-      borderWidth
-    };
-  }
-
-  getTintStandardButton() {
-    const borderWidth = 0;
-    const backgroundColor = 'rgba(247, 160, 33, 0.8)';
-    return {
-      backgroundColor,
-      padding: 10,
-      borderWidth
-    };
-  }
-
-  isDropDownButton() {
-    if (this.props.style === 'dropDownButton') {
-      return (
-        <Ionicons
-          style={{ position: 'absolute', right: 10 }}
-          name="ios-arrow-dropdown"
-          size={25}
-          color={this.getStandardButtonText().color}
-        />
-      );
-    }
-  }
-
-  getStyle() {
-    switch (this.props.style) {
-      case 'textButton':
-        return styles.textButton;
-      case 'standardButton':
-        return this.getStandardButton();
-      case 'tintStandardButton':
-        return this.getTintStandardButton();
-      case 'acceptButton':
-        return styles.acceptButton;
-      case 'alertButton':
-        return styles.alertButton;
-      case 'dropDownButton':
-        return this.getStandardButton();
-      default:
-        return styles.button;
-    }
-  }
-
-  getTextStyle() {
-    switch (this.props.style) {
-      case 'textButton':
-        return styles.underlineButtonText;
-      case 'standardButton':
-        return styles.standardButtonText;
-      case 'tintStandardButton':
-        return styles.tintStandardButtonText;
-      case 'acceptButton':
-        return styles.whiteText;
-      case 'alertButton':
-        return styles.whiteText;
-      case 'dropDownButton':
-        return styles.standardButtonText;
-      default:
-        return styles.button;
-    }
-  }
-
-  render() {
-    const { onPress, text, width = WIDTH / 1.5, style = '' } = this.props;
-    const { button } = styles;
+const isDropDownButton = style => {
+  if (style === 'dropDownButton') {
     return (
-      <TouchableOpacity
-        disabled={style === 'tintStandardButton'}
-        onPress={onPress}
-        style={[this.getStyle(), button, { width }]}
-      >
-        <Text style={[this.getTextStyle()]}>{text}</Text>
-        {this.isDropDownButton()}
-      </TouchableOpacity>
+      <Ionicons
+        style={{ position: 'absolute', right: 10 }}
+        name="ios-arrow-dropdown"
+        size={25}
+        color={styles.standardButton.color}
+      />
     );
   }
-}
+  return null;
+};
 
+const getTextStyle = style => {
+  switch (style) {
+    case 'textButton':
+      return styles.underlineButtonText;
+    case 'standardButton':
+    case 'dropDownButton':
+      return styles.standardButtonText;
+    case 'tintStandardButton':
+      return styles.tintStandardButtonText;
+    case 'acceptButton':
+      return styles.whiteText;
+    case 'alertButton':
+      return styles.whiteText;
+    default:
+      return styles.button;
+  }
+};
+
+const getButtonStyle = style => {
+  switch (style) {
+    case 'textButton':
+      return styles.textButton;
+    case 'standardButton':
+    case 'dropDownButton':
+      return styles.standardButton;
+    case 'tintStandardButton':
+      return styles.tintStandardButton;
+    case 'acceptButton':
+      return styles.acceptButton;
+    case 'alertButton':
+      return styles.alertButton;
+    default:
+      return styles.button;
+  }
+};
+
+const CustomButton = props => {
+  const { onPress, text, width, style } = props;
+  const { button } = styles;
+  return (
+    <TouchableOpacity
+      disabled={style === 'tintStandardButton'}
+      onPress={onPress}
+      style={[getButtonStyle(style), button, { width }]}
+    >
+      <Text style={getTextStyle(style)}>{text}</Text>
+      {isDropDownButton(style)}
+    </TouchableOpacity>
+  );
+};
+CustomButton.defaultProps = {
+  width: WIDTH / 1.5,
+  style: ''
+};
+
+CustomButton.propTypes = {
+  onPress: PropTypes.func.isRequired,
+  style: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  width: PropTypes.number
+};
 export { CustomButton };

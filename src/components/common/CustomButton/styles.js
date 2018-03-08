@@ -1,5 +1,9 @@
 import { HEIGHT, WIDTH } from 'helpers/Constants';
 
+const text = {
+  fontSize: 16,
+  fontFamily: 'Avenir Next Medium'
+};
 export const styles = {
   button: {
     marginTop: 10,
@@ -34,13 +38,11 @@ export const styles = {
   },
   whiteText: {
     color: '#f4376d',
-    fontSize: 16,
-    fontFamily: 'Avenir Next Medium'
+    ...text
   },
   blackText: {
     color: 'black',
-    fontSize: 16,
-    fontFamily: 'Avenir Next Medium'
+    ...text
   },
   underlineButtonText: {
     color: '#ffffff',
@@ -49,12 +51,20 @@ export const styles = {
   },
   standardButtonText: {
     color: 'white',
-    fontSize: 16,
-    fontFamily: 'Avenir Next Medium'
+    ...text
   },
   tintStandardButtonText: {
     color: 'rgba(255, 255, 255, 0.5)',
-    fontSize: 16,
-    fontFamily: 'Avenir Next Medium'
+    ...text
+  },
+  standardButton: {
+    borderWidth: 0,
+    backgroundColor: '#F7A021',
+    padding: 10
+  },
+  tintStandardButton: {
+    backgroundColor: 'rgba(247, 160, 33, 0.8)',
+    padding: 10,
+    borderWidth: 0
   }
 };
