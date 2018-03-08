@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { WIDTH } from '../../helpers/Constants';
+import { WIDTH } from 'helpers/Constants';
 
-const ITEM_WIDTH = WIDTH - 16
+const ITEM_WIDTH = WIDTH - 16;
 const months = [
   'Jan',
   'Feb',
@@ -20,7 +20,6 @@ const months = [
 ];
 
 class ListItem extends Component {
-
   renderDateView(itemDate) {
     const { dateViewStyle, dateStyle } = styles;
     const dateParts = itemDate.split('T')[0].split('-');
@@ -35,7 +34,12 @@ class ListItem extends Component {
   }
 
   render() {
-    const { containerStyle, titleStyle, contentStyle, continueIconIndicatorStyle } = styles;
+    const {
+      containerStyle,
+      titleStyle,
+      contentStyle,
+      continueIconIndicatorStyle
+    } = styles;
     const {
       title = '',
       icon = '',
@@ -44,10 +48,7 @@ class ListItem extends Component {
       onPress
     } = this.props;
     return (
-      <TouchableOpacity
-        onPress={() => onPress()}
-        style={containerStyle}
-      >
+      <TouchableOpacity onPress={() => onPress()} style={containerStyle}>
         <View style={{ flexDirection: 'row' }}>
           {this.renderDateView(itemDate)}
           <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
@@ -55,18 +56,26 @@ class ListItem extends Component {
               numberOfLines={1}
               style={[
                 titleStyle,
-                { width: itemDate === '' ? ITEM_WIDTH * 0.85 : ITEM_WIDTH * 0.7 }
+                {
+                  width: itemDate === '' ? ITEM_WIDTH * 0.85 : ITEM_WIDTH * 0.7
+                }
               ]}
             >
               {icon === '' ? null : (
-                <MaterialIcons name={icon} size={15} color={'#F7A021'} />
+                <MaterialIcons name={icon} size={15} color="#F7A021" />
               )}
-              {icon === '' || icon === null ? title : ' ' + title}
+              {icon === '' || icon === null ? title : ` ${  title}`}
             </Text>
             {infoText === '' ? null : (
               <Text
                 numberOfLines={1}
-                style={[contentStyle, { width: itemDate === '' ? ITEM_WIDTH * 0.85 : ITEM_WIDTH * 0.7 }]}
+                style={[
+                  contentStyle,
+                  {
+                    width:
+                      itemDate === '' ? ITEM_WIDTH * 0.85 : ITEM_WIDTH * 0.7
+                  }
+                ]}
               >
                 {infoText}
               </Text>
@@ -75,9 +84,9 @@ class ListItem extends Component {
         </View>
         <View>
           <MaterialIcons
-            name={'keyboard-arrow-right'}
+            name="keyboard-arrow-right"
             style={continueIconIndicatorStyle}
-            color={'#F7A021'}
+            color="#F7A021"
             size={this.props.icon === 'done' ? 40 : 50}
           />
         </View>
