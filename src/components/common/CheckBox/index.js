@@ -1,53 +1,31 @@
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, Dimensions } from 'react-native';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { styles } from './styles';
 
-class CheckBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPressed: false
-    };
-  }
+const CheckBox = ({ size, color, name, onPress, value }) => (
+    <TouchableOpacity style={styles.checkBoxStyle} onPress={onPress}>
+      <MaterialIcons
+        name={value ? 'check-box' : 'check-box-outline-blank'}
+        size={size}
+        color={color}
+        style={{ backgroundColor: 'transparent' }}
+      />
+      <Text style={[styles.textStyle, { color }]}>{name}</Text>
+    </TouchableOpacity>
+  );
 
-  getIconName() {
-    if (this.props.value) {
-      return 'check-box';
-    }
-    return 'check-box-outline-blank';
-  }
-
-  render() {
-    const { size, color, onPress } = this.props;
-    const { textStyle, checkBoxStyle } = styles;
-    return (
-      <TouchableOpacity style={checkBoxStyle} onPress={onPress}>
-        <MaterialIcons
-          name={this.getIconName()}
-          size={size}
-          color={color}
-          style={{ backgroundColor: 'transparent' }}
-        />
-        <Text style={[textStyle, { color }]}>{this.props.name}</Text>
-      </TouchableOpacity>
-    );
-  }
-}
-
-const styles = {
-  checkBoxStyle: {
-    flexDirection: 'row',
-    marginBottom: 10,
-    alignItems: 'center',
-    backgroundColor: 'transparent'
-  },
-  textStyle: {
-    flex: 1,
-    flexWrap: 'wrap',
-    fontSize: 16,
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Medium'
-  }
+CheckBox.defaultProps = {
+  color: null,
+  name: ''
 };
 
+CheckBox.propTypes = {
+  color: PropTypes.string,
+  name: PropTypes.string,
+  onPress: PropTypes.func.isRequired,
+  size: PropTypes.number.isRequired,
+  value: PropTypes.bool.isRequired
+};
 export { CheckBox };
