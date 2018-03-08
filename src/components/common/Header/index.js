@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Platform, TouchableOpacity } from 'react-native';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { WIDTH, IS_IOS } from '../../helpers/Constants';
+import { WIDTH, IS_IOS } from 'helpers/Constants';
 
 class Header extends Component {
   renderRightIcon() {
@@ -23,8 +23,11 @@ class Header extends Component {
       return <View style={iconStyle}>{leftIcon}</View>;
     }
     const backButton = navigation ? (
-      <TouchableOpacity style={backButtonArea} onPress={() => navigation.goBack(null)}>
-        <Ionicons size={30} name="md-arrow-back" color={'white'} />
+      <TouchableOpacity
+        style={backButtonArea}
+        onPress={() => navigation.goBack(null)}
+      >
+        <Ionicons size={30} name="md-arrow-back" color="white" />
       </TouchableOpacity>
     ) : null;
     return <View style={backButtonStyle}>{backButton}</View>;
@@ -37,7 +40,9 @@ class Header extends Component {
       <View style={{ backgroundColor: '#F7A021', zIndex: 999 }}>
         <View style={containerStyle}>
           {this.renderLeftIcon()}
-          <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}>
+          <View
+            style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}
+          >
             <Text style={textStyle} numberOfLines={1}>
               {title || 'Placeholder'}
             </Text>
