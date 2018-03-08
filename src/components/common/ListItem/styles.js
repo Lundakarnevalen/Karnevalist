@@ -1,4 +1,4 @@
-import { WIDTH } from 'helpers/Constants';
+import { WIDTH } from '~/src/helpers/Constants';
 
 export const ITEM_WIDTH = WIDTH - 16;
 

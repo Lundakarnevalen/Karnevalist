@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Animated, Image, Easing, View } from 'react-native';
 import PropTypes from 'prop-types';
-import images from 'assets/images';
+import images from '~/assets/images';
 import { styles } from './styles';
 /**
  * Loading class with redirect.

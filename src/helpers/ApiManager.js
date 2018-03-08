@@ -8,7 +8,7 @@ import {
   CHECK_IN_URL,
   WIDTH
 } from './Constants';
-import images from 'assets/images';
+import images from '~/assets/images';
 
 export function getNews() {
   return axios

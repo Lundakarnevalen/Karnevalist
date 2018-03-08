@@ -29,9 +29,7 @@
 
   "settings": {
     "import/resolver": {
-      "node": {
-        "paths": ["assets/images"]
-      }
+      "babel-root-import": {},
     }
   }
 }

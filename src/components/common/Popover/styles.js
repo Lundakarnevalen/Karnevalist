@@ -1,4 +1,4 @@
-import { WIDTH, IS_IOS } from 'helpers/Constants';
+import { WIDTH, IS_IOS } from '~/src/helpers/Constants';
 
 export const styles = {
   talkBubbleTopRight: {

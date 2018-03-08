@@ -9,12 +9,12 @@ import {
   TimelineItem,
   SuperAgileAlert,
   CountDown
-} from '../../common';
-import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { fetchCheckInStatus } from '../../../helpers/ApiManager';
+} from '~/src/components/common';
+import { HOME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
+import { PROGRESS, WIDTH } from '~/src/helpers/Constants';
+import images from '~/assets/images';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
-import { PROGRESS, WIDTH } from '../../../helpers/Constants';
-import images from 'assets/images';
 
 class HomeScreen extends Component {
   constructor(props) {
