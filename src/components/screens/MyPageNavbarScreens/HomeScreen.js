@@ -14,6 +14,7 @@ import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { fetchCheckInStatus } from '../../../helpers/ApiManager';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
 import { PROGRESS, WIDTH } from '../../../helpers/Constants';
+import images from 'assets/images';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -117,10 +118,7 @@ class HomeScreen extends Component {
       <Animated.View
         style={[containerAnimated, { transform: [{ rotate: spin }] }]}
       >
-        <Image
-          style={image}
-          source={require('../../../../res/Monstergubbe.png')}
-        />
+        <Image style={image} source={images.monsterGubbe} />
       </Animated.View>
     );
   }

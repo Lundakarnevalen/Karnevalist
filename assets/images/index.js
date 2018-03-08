@@ -4,6 +4,7 @@ const night3 = require('./night3.png');
 const night4 = require('./night4.png');
 const night5 = require('./night5.png');
 const login = require('./background-login-screen.png');
+const monsterGubbe = require('./Monstergubbe.png');
 
 const images = {
   night1,
@@ -11,7 +12,8 @@ const images = {
   night3,
   night4,
   night5,
-  login
+  login,
+  monsterGubbe
 };
 
 export default images;
