@@ -1,100 +1,41 @@
-import React, { Component } from 'react';
-import { View, Text, Platform, TouchableOpacity } from 'react-native';
-import { Constants } from 'expo';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { WIDTH, IS_IOS } from 'helpers/Constants';
+import { styles } from './styles';
 
-class Header extends Component {
-  renderRightIcon() {
-    const { rightIcon } = this.props;
-    const { rightIconStyle } = styles;
-    if (rightIcon) {
-      return <View style={rightIconStyle}>{rightIcon}</View>;
-    }
-    return <View style={rightIconStyle} />;
+const LeftIcon = ({ icon, navigation }) => {
+  const { backButtonArea, backButtonStyle, iconStyle } = styles;
+  if (icon === null) {
+    return <View style={iconStyle} />;
+  } else if (icon) {
+    return <View style={iconStyle}>{icon}</View>;
   }
-
-  renderLeftIcon() {
-    const { leftIcon, navigation } = this.props;
-    const { backButtonArea, backButtonStyle, iconStyle } = styles;
-    if (leftIcon === null) {
-      return <View style={iconStyle} />;
-    } else if (leftIcon) {
-      return <View style={iconStyle}>{leftIcon}</View>;
-    }
-    const backButton = navigation ? (
-      <TouchableOpacity
-        style={backButtonArea}
-        onPress={() => navigation.goBack(null)}
-      >
-        <Ionicons size={30} name="md-arrow-back" color="white" />
-      </TouchableOpacity>
-    ) : null;
-    return <View style={backButtonStyle}>{backButton}</View>;
-  }
-
-  render() {
-    const { title } = this.props;
-    const { containerStyle, textStyle } = styles;
-    return (
-      <View style={{ backgroundColor: '#F7A021', zIndex: 999 }}>
-        <View style={containerStyle}>
-          {this.renderLeftIcon()}
-          <View
-            style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}
-          >
-            <Text style={textStyle} numberOfLines={1}>
-              {title || 'Placeholder'}
-            </Text>
-          </View>
-          {this.renderRightIcon()}
-        </View>
-      </View>
-    );
-  }
-}
-
-const styles = {
-  containerStyle: {
-    width: WIDTH,
-    height: IS_IOS ? 64 : 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    backgroundColor: '#F7A021',
-    borderBottomWidth: 1,
-    borderColor: 'gray',
-    ...Platform.select({
-      ios: {
-        paddingTop: 15
-      },
-      android: {
-        marginTop: Constants.statusBarHeight
-      }
-    })
-  },
-  textStyle: {
-    fontSize: 18,
-    color: 'white',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Medium'
-  },
-  backButtonArea: {
-    paddingLeft: 20,
-    width: 60
-  },
-  backButtonStyle: {
-    flex: 1,
-    alignItems: 'flex-start'
-  },
-  iconStyle: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  rightIconStyle: {
-    flex: 1,
-    alignItems: 'flex-end'
-  }
+  const backButton = navigation ? (
+    <TouchableOpacity
+      style={backButtonArea}
+      onPress={() => navigation.goBack(null)}
+    >
+      <Ionicons size={30} name="md-arrow-back" color="white" />
+    </TouchableOpacity>
+  ) : null;
+  return <View style={backButtonStyle}>{backButton}</View>;
 };
+
+LeftIcon.propTypes = {};
+
+const Header = ({ title, rightIcon, leftIcon, navigation }) => (
+  <View style={styles.statusBarStyle}>
+    <View style={styles.containerStyle}>
+      <LeftIcon icon={leftIcon} navigation={navigation} />
+      <View style={styles.textContainerStyle}>
+        <Text style={styles.textStyle} numberOfLines={1}>
+          {title || 'Placeholder'}
+        </Text>
+      </View>
+      <View style={styles.rightIconStyle}>{rightIcon}</View>
+    </View>
+  </View>
+);
 
 export { Header };
