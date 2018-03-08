@@ -1,35 +1,10 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { HEIGHT, WIDTH } from '../../helpers/Constants';
+import { styles } from './styles';
+import { HEIGHT, WIDTH } from 'helpers/Constants';
 
 class CustomButton extends Component {
-  getUnderlineButtonText() {
-    const color = '#ffffff';
-    return {
-      color,
-      textDecorationLine: 'underline',
-      fontFamily: 'Avenir Next Medium'
-    };
-  }
-
-  getStandardButtonText() {
-    const color = 'white';
-    return {
-      color,
-      fontSize: 16,
-      fontFamily: 'Avenir Next Medium'
-    };
-  }
-  getTintStandardButtonText() {
-    const color = 'rgba(255, 255, 255, 0.5)';
-    return {
-      color,
-      fontSize: 16,
-      fontFamily: 'Avenir Next Medium'
-    };
-  }
-
   getStandardButton() {
     const borderWidth = 0;
     const backgroundColor = '#F7A021';
@@ -55,7 +30,7 @@ class CustomButton extends Component {
       return (
         <Ionicons
           style={{ position: 'absolute', right: 10 }}
-          name={'ios-arrow-dropdown'}
+          name="ios-arrow-dropdown"
           size={25}
           color={this.getStandardButtonText().color}
         />
@@ -85,17 +60,17 @@ class CustomButton extends Component {
   getTextStyle() {
     switch (this.props.style) {
       case 'textButton':
-        return this.getUnderlineButtonText();
+        return styles.underlineButtonText;
       case 'standardButton':
-        return this.getStandardButtonText();
+        return styles.standardButtonText;
       case 'tintStandardButton':
-        return this.getTintStandardButtonText();
+        return styles.tintStandardButtonText;
       case 'acceptButton':
         return styles.whiteText;
       case 'alertButton':
         return styles.whiteText;
       case 'dropDownButton':
-        return this.getStandardButtonText();
+        return styles.standardButtonText;
       default:
         return styles.button;
     }
@@ -116,49 +91,5 @@ class CustomButton extends Component {
     );
   }
 }
-
-const styles = {
-  button: {
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
-  textButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 0
-  },
-  acceptButton: {
-    backgroundColor: 'green',
-    height: 44
-  },
-  alertButton: {
-    height: HEIGHT / (4 * 4),
-    backgroundColor: '#f4376d',
-    borderRadius: 0,
-    margin: 0,
-    marginLeft: 0.4,
-    marginRight: 0.4
-  },
-  dropDownButton: {
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 3,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  whiteText: {
-    color: '#f4376d',
-    fontSize: 16,
-    fontFamily: 'Avenir Next Medium'
-  },
-  blackText: {
-    color: 'black',
-    fontSize: 16,
-    fontFamily: 'Avenir Next Medium'
-  }
-};
 
 export { CustomButton };

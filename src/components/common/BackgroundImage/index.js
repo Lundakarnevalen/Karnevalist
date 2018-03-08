@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Image, View } from 'react-native';
 import images from 'assets/images';
 import { styles } from './styles';
@@ -34,20 +35,9 @@ const BackgroundImage = ({ pictureNumber }) => {
   );
 };
 
-// class BackgroundImage extends Component {
-//   render() {
-//     const { containerStyle, backgroundImageStyle, opacityStyle } = styles;
-//     return (
-//       <View style={containerStyle}>
-//         <Image
-//           defaultSource={this.getPath()}
-//           source={this.getPath()}
-//           style={backgroundImageStyle}
-//         />
-//         <View style={opacityStyle} />
-//       </View>
-//     );
-//   }
-// }
+BackgroundImage.propTypes = {
+  pictureNumber: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired
+};
 
 export { BackgroundImage };
