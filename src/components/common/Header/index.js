@@ -5,24 +5,31 @@ import { Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
 
 const LeftIcon = ({ icon, navigation }) => {
-  const { backButtonArea, backButtonStyle, iconStyle } = styles;
   if (icon === null) {
-    return <View style={iconStyle} />;
+    return <View style={styles.iconStyle} />;
   } else if (icon) {
-    return <View style={iconStyle}>{icon}</View>;
+    return <View style={styles.iconStyle}>{icon}</View>;
   }
   const backButton = navigation ? (
     <TouchableOpacity
-      style={backButtonArea}
-      onPress={() => navigation.goBack(null)}
+      style={styles.backButtonArea}
+      onPress={() => navigation.goBack()}
     >
       <Ionicons size={30} name="md-arrow-back" color="white" />
     </TouchableOpacity>
   ) : null;
-  return <View style={backButtonStyle}>{backButton}</View>;
+  return <View style={styles.backButtonStyle}>{backButton}</View>;
 };
 
-LeftIcon.propTypes = {};
+LeftIcon.defaultProps = {
+  icon: undefined,
+  navigation: undefined
+};
+
+LeftIcon.propTypes = {
+  icon: PropTypes.shape(),
+  navigation: PropTypes.shape()
+};
 
 const Header = ({ title, rightIcon, leftIcon, navigation }) => (
   <View style={styles.statusBarStyle}>
@@ -37,5 +44,18 @@ const Header = ({ title, rightIcon, leftIcon, navigation }) => (
     </View>
   </View>
 );
+
+Header.defaultProps = {
+  leftIcon: undefined,
+  navigation: undefined,
+  rightIcon: undefined
+};
+
+Header.propTypes = {
+  leftIcon: PropTypes.shape(),
+  navigation: PropTypes.shape(),
+  rightIcon: PropTypes.shape(),
+  title: PropTypes.string.isRequired
+};
 
 export { Header };
