@@ -3,3 +3,4 @@ node_modules/
 npm-debug.*
 .eslintrc
 .DS_Store
+.idea/
