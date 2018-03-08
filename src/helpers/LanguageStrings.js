@@ -1129,9 +1129,9 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
   },
   firstBody: {
     SE:
-      'Lundakarnevalen anordnar en skattjakt där deltagarna letar sig igenom lund för att hitta den hemliga plats där Sture gömt sig. De första 25 kommer få ett pris!',
+      'Lundakarnevalen anordnar en skattjakt där deltagarna letar sig igenom Lund för att hitta den hemliga plats där Sture gömt sig.\n\nDe 25 första får ett pris!',
     EN:
-      'Lundakarnevalen arranges a treasure hunt where the contestans compete to find Sture, who is hiding at a the (top) secret location. The first 25 to find him will recieve a special prize!'
+      'Lundakarnevalen arranges a treasure hunt where the contestans compete to find Sture, who is hiding at a the (top) secret location.\n\nThe first 25 to find him will recieve a special prize!'
   },
   secondHeader: {
     SE: 'Hur kommer det gå till?',
@@ -1154,8 +1154,8 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
       "When you get close to Sture, you will get a QR code to show him!"
   },
   nextButton: {
-    SE: 'Nästa',
-    EN: 'Next'
+    SE: 'Ge mig mer info!',
+    EN: 'Tell me more!'
   },
   finishedText: {
     SE: 'Skattjakten är nu över',
