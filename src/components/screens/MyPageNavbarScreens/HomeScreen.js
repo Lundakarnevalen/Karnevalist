@@ -166,7 +166,6 @@ class HomeScreen extends Component {
           rightIcon={null}
           navigation={navigation}
         />
-        <CountDown />
         <View style={{ height: 20 }} />
         <View style={container}>
           <View
