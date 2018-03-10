@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
+import { COUNT_DOWN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { getStrings } from '~/src/helpers/functions';
+
 import { CountDownItem } from './CountDownItem';
 import { countDownStyles } from './styles';
-/**
- * Uppropet är den 4:e februari
+/* Uppropet är den 4:e februari
  *
  */
 const ONE_DAY = 86400000;
@@ -65,8 +67,8 @@ class CountDown extends Component {
       textStyle2,
       textStyle
     } = countDownStyles;
+    const strings = getStrings(this.props.language, COUNT_DOWN_STRINGS);
     if (this.state.upprop) {
-      const strings = this.getStrings();
       return (
         <View style={containerStyle2}>
           <Text style={textStyle2}>{strings.upprop}</Text>
@@ -74,7 +76,6 @@ class CountDown extends Component {
       );
     }
     if (this.state.karneval) {
-      const strings = this.getStrings();
       return (
         <View style={containerStyle2}>
           <Text style={textStyle2}>{strings.karneval}</Text>
@@ -96,6 +97,8 @@ class CountDown extends Component {
   }
 }
 
-CountDown.propTypes = {};
+CountDown.propTypes = {
+  language: PropTypes.string
+};
 
 export { CountDown };

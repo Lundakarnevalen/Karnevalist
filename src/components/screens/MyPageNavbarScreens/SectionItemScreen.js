@@ -16,6 +16,7 @@ import {
   setProgress
 } from '../../../actions';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { getStrings } from '../../../helpers/functions';
 
 class SectionItemScreen extends Component {
   constructor(props) {
@@ -31,14 +32,8 @@ class SectionItemScreen extends Component {
     );
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = SECTION_ITEM_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(
-      field => (strings[field] = SECTION_ITEM_SCREEN_STRINGS[field][language])
-    );
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, SECTION_ITEM_SCREEN_STRINGS);
   }
 
   renderRightIcon() {
@@ -83,7 +78,7 @@ class SectionItemScreen extends Component {
   }
 
   renderToastMessage(title) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     if (!this.state.favorite) {
       return strings.messageStart + title + strings.messageEndRemove;
     }

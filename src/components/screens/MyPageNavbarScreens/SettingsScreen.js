@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, ListItem, BackgroundImage, SuperAgileAlert } from '../../common';
+import {
+  Header,
+  ListItem,
+  BackgroundImage,
+  SuperAgileAlert
+} from '../../common';
 import { removeItem } from '../../../helpers/LocalSave';
 import { setProgress, resetData } from '../../../actions';
-import { LOGOUT_RESET_ACTION, PROGRESS, HEIGHT, IS_IOS } from '../../../helpers/Constants';
+import {
+  LOGOUT_RESET_ACTION,
+  PROGRESS,
+  HEIGHT,
+  IS_IOS
+} from '../../../helpers/Constants';
 import { SETTINGS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { getStrings } from '../../../helpers/functions';
 
-const WITH_MY_REG = [{ key: 'profile' }, { key: 'registration' }, { key: 'logout' }];
+const WITH_MY_REG = [
+  { key: 'profile' },
+  { key: 'registration' },
+  { key: 'logout' }
+];
 const WO_MY_REG = [{ key: 'profile' }, { key: 'logout' }];
 
 class SettingsScreen extends Component {
@@ -19,19 +34,19 @@ class SettingsScreen extends Component {
   }
 
   getItems() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const { progress } = this.props;
-    const settingsTitles = progress === PROGRESS.SENT_SECTIONS ? WITH_MY_REG : WO_MY_REG;
-    const items = settingsTitles.map(item => ({ key: item.key, title: strings[item.key] }));
+    const settingsTitles =
+      progress === PROGRESS.SENT_SECTIONS ? WITH_MY_REG : WO_MY_REG;
+    const items = settingsTitles.map(item => ({
+      key: item.key,
+      title: strings[item.key]
+    }));
     return items;
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = SETTINGS_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = SETTINGS_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, SETTINGS_SCREEN_STRINGS);
   }
 
   handleLogout() {
@@ -42,16 +57,19 @@ class SettingsScreen extends Component {
   }
 
   renderAlertButtons() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     return [
-      { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+      {
+        text: strings.cancel,
+        onPress: () => this.setState({ alertVisible: false })
+      },
       { text: strings.ok, onPress: () => this.handleLogout() }
     ];
   }
 
   render() {
     const { navigation, screenProps } = this.props;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={5} />
@@ -67,7 +85,9 @@ class SettingsScreen extends Component {
                 if (item.key === 'profile') {
                   screenProps.navigation.navigate('MyProfile', { info: item });
                 } else if (item.key === 'registration') {
-                  screenProps.navigation.navigate('MyRegistration', { info: item });
+                  screenProps.navigation.navigate('MyRegistration', {
+                    info: item
+                  });
                 } else if (item.key === 'logout') {
                   this.setState({ alertVisible: true });
                 }
@@ -92,4 +112,6 @@ const mapStateToProps = ({ currentLanguage, userInformation }) => {
   return { language, progress };
 };
 
-export default connect(mapStateToProps, { setProgress, resetData })(SettingsScreen);
+export default connect(mapStateToProps, { setProgress, resetData })(
+  SettingsScreen
+);

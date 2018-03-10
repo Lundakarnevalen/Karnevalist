@@ -15,6 +15,7 @@ import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
 import { PROGRESS, WIDTH } from '~/src/helpers/Constants';
 import images from '~/assets/images';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
+import { getStrings } from '../../../helpers/functions';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -27,14 +28,8 @@ class HomeScreen extends Component {
     };
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = HOME_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(
-      field => (strings[field] = HOME_SCREEN_STRINGS[field][language])
-    );
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, HOME_SCREEN_STRINGS);
   }
 
   renderPopover(text) {
@@ -155,17 +150,12 @@ class HomeScreen extends Component {
 
   render() {
     const { container, textStyleProgress } = styles;
-    const { navigation, progress } = this.props;
-    const strings = this.getStrings();
+    const { progress } = this.props;
+    const strings = this.getLanguageStrings();
     return (
       <View style={{ flex: 1 }}>
         <BackgroundImage pictureNumber={1} />
-        <Header
-          title={strings.title}
-          leftIcon={null}
-          rightIcon={null}
-          navigation={navigation}
-        />
+        <Header title={strings.title} />
         <View style={{ height: 20 }} />
         <View style={container}>
           <View

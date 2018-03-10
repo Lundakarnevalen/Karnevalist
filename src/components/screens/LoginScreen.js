@@ -4,9 +4,22 @@ import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { setLanguage, setToken, setEmail, setUserinfo } from '../../actions';
-import { Input, SuperAgileAlert, BackgroundImage, Toast, CustomButton, Loading } from '../common';
-import { LOGIN_URL, FORGOT_PASSWORD_URL, WIDTH, HEIGHT } from '../../helpers/Constants';
+import {
+  Input,
+  SuperAgileAlert,
+  BackgroundImage,
+  Toast,
+  CustomButton,
+  Loading
+} from '../common';
+import {
+  LOGIN_URL,
+  FORGOT_PASSWORD_URL,
+  WIDTH,
+  HEIGHT
+} from '../../helpers/Constants';
 import { saveItem } from '../../helpers/LocalSave';
+import { getStrings } from '../../helpers/functions';
 import { handleErrorMsg } from '../../helpers/ApiManager';
 import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
 
@@ -27,12 +40,8 @@ class LoginScreen extends Component {
     };
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = LOGIN_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = LOGIN_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, LOGIN_SCREEN_STRINGS);
   }
 
   changeLang() {
@@ -42,7 +51,7 @@ class LoginScreen extends Component {
   }
 
   handleResetPassword() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const forgotPasswordEmail = this.state.forgotPasswordEmail.trim();
     this.setState({ forgotPasswordEmail });
     axios
@@ -68,11 +77,16 @@ class LoginScreen extends Component {
   }
 
   getAlertButtons(message) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     switch (message) {
       case strings.emailError:
       case strings.passwordError:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
+        return [
+          {
+            text: strings.ok,
+            onPress: () => this.setState({ alertVisible: false })
+          }
+        ];
       case strings.passwordPopupInfo:
         return [
           {
@@ -84,16 +98,24 @@ class LoginScreen extends Component {
                 forgotPasswordEmail: ''
               })
           },
-          { text: strings.resetPassword, onPress: () => this.handleResetPassword() }
+          {
+            text: strings.resetPassword,
+            onPress: () => this.handleResetPassword()
+          }
         ];
       default:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
+        return [
+          {
+            text: strings.ok,
+            onPress: () => this.setState({ alertVisible: false })
+          }
+        ];
     }
   }
 
   handleLogin() {
     Keyboard.dismiss();
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const { email, password } = this.state;
     if (email === '') {
       this.setState({
@@ -147,7 +169,7 @@ class LoginScreen extends Component {
       resetPasswordError,
       message
     } = this.state;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     return (
       <View style={containerStyle}>
         <BackgroundImage pictureNumber={'background-login'} />
@@ -208,7 +230,9 @@ class LoginScreen extends Component {
             />
             <SuperAgileAlert
               alertVisible={alertVisible}
-              setAlertVisible={visible => this.setState({ alertVisible: visible })}
+              setAlertVisible={visible =>
+                this.setState({ alertVisible: visible })
+              }
               buttonsIn={this.getAlertButtons(message)}
               header={this.state.alertHeader || ''}
               info={this.state.message || ''}
@@ -220,7 +244,10 @@ class LoginScreen extends Component {
                     width={WIDTH / 1.2}
                     underlineColorAndroid={'transparent'}
                     onChangeText={text =>
-                      this.setState({ forgotPasswordEmail: text, resetPasswordError: '' })
+                      this.setState({
+                        forgotPasswordEmail: text,
+                        resetPasswordError: ''
+                      })
                     }
                     value={forgotPasswordEmail}
                     returnKeyType={'done'}
@@ -244,10 +271,18 @@ class LoginScreen extends Component {
             redirect={() => {
               const resetAction = NavigationActions.reset({
                 index: 0,
-                actions: [NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })],
+                actions: [
+                  NavigationActions.navigate({
+                    routeName: 'MyPageNavbarScreen'
+                  })
+                ],
                 key: null
               });
-              this.setState({ loading: false, loadingComplete: false, password: '' });
+              this.setState({
+                loading: false,
+                loadingComplete: false,
+                password: ''
+              });
               this.props.navigation.dispatch(resetAction);
             }}
           />
@@ -289,6 +324,9 @@ const mapStateToProps = ({ currentLanguage }) => {
   return { language };
 };
 
-export default connect(mapStateToProps, { setLanguage, setToken, setEmail, setUserinfo })(
-  LoginScreen
-);
+export default connect(mapStateToProps, {
+  setLanguage,
+  setToken,
+  setEmail,
+  setUserinfo
+})(LoginScreen);
