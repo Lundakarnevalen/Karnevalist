@@ -45,7 +45,7 @@ class SectionItemScreen extends Component {
     const { rightIconStyle } = styles;
     const { sectionPriorities, navigation } = this.props;
     const { id } = navigation.state.params;
-    // if (this.props.progress === PROGRESS.SENT_SECTIONS) return;
+    if (this.props.progress === PROGRESS.SENT_SECTIONS) return;
     if (sectionPriorities.indexOf(id) === -1) {
       return (
         <TouchableOpacity
