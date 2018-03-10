@@ -29,8 +29,8 @@ export function stripHtmlString(string) {
 export function getStrings(language, COMPONENT_STRINGS) {
   const { fields } = COMPONENT_STRINGS;
   const strings = {};
-  fields.forEach(
-    field => (strings[field] = COMPONENT_STRINGS[field][language])
-  );
+  fields.forEach(field => {
+    strings[field] = COMPONENT_STRINGS[field][language];
+  });
   return strings;
 }
