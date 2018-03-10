@@ -10,9 +10,23 @@ import {
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Toast, BackgroundImage, SuperAgileAlert, Header, Input } from '../../common';
-import { USER_URL, LOGOUT_RESET_ACTION, HEIGHT } from '../../../helpers/Constants';
-import { MY_PROFILE_SCREEN_STRINGS, ERROR_MSG_INPUT_FIELD } from '../../../helpers/LanguageStrings';
+import {
+  Toast,
+  BackgroundImage,
+  SuperAgileAlert,
+  Header,
+  Input
+} from '../../common';
+import {
+  USER_URL,
+  LOGOUT_RESET_ACTION,
+  HEIGHT
+} from '../../../helpers/Constants';
+import { getStrings } from '../../../helpers/functions';
+import {
+  MY_PROFILE_SCREEN_STRINGS,
+  ERROR_MSG_INPUT_FIELD
+} from '../../../helpers/LanguageStrings';
 // import { handleErrorMsg } from '../../../helpers/ApiManager';
 // import { removeItem } from '../../../helpers/LocalSave';
 
@@ -25,20 +39,18 @@ class MyProfileScreen extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
     this.setState({ user: this.props.userinfo });
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = MY_PROFILE_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, MY_PROFILE_SCREEN_STRINGS);
   }
 
   renderFields() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const { user, editMode } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
@@ -47,16 +59,16 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      const backgroundColor = editMode && key !== 'email' ? 'white' : 'transparent';
+      const backgroundColor =
+        editMode && key !== 'email' ? 'white' : 'transparent';
       const borderWidth = editMode && key !== 'email' ? 1 : 0;
       const textColor = editMode && key !== 'email' ? 'black' : 'white';
-      const placeholderTextColor = editMode && key !== 'email' ? '#F7A021' : 'white';
+      const placeholderTextColor =
+        editMode && key !== 'email' ? '#F7A021' : 'white';
       if (user[key] === '' || user[key] === null || user[key] === undefined)
-        return null
-      if (user[key] === true)
-          user[key] = strings.yes;
-      if (user[key] === false)
-        user[key] = strings.no;
+        return null;
+      if (user[key] === true) user[key] = strings.yes;
+      if (user[key] === false) user[key] = strings.no;
       return (
         <Input
           extraContainerStyle={{ backgroundColor, borderWidth }}
@@ -73,7 +85,7 @@ class MyProfileScreen extends Component {
   }
 
   setAlertVisible(visible, message) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     this.setState({ alertVisible: visible });
     if (message === strings.expiredTokenMessage)
       this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
@@ -87,12 +99,14 @@ class MyProfileScreen extends Component {
           <ActivityIndicator size="large" color={'white'} />
         </View>
       );
-    return <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>;
+    return (
+      <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>
+    );
   }
 
   render() {
     const { navigation } = this.props;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
@@ -160,7 +174,7 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 // }
 
 // handleLogout() {
-//   const strings = this.getStrings();
+//   const strings = this.getLanguageStrings();
 //   removeItem('email');
 //   removeItem('accessToken');
 //   this.setState({
@@ -249,7 +263,7 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 // }
 
 // getRightIcon() {
-//   const strings = this.getStrings();
+//   const strings = this.getLanguageStrings();
 //   const { rightIconStyle } = styles;
 //   const { anyError, validAddress } = this.state;
 //   return (
@@ -302,7 +316,7 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 // }
 
 // renderAlertButtons(message) {
-//   const strings = this.getStrings();
+//   const strings = this.getLanguageStrings();
 //   switch (message) {
 //     case strings.expiredTokenMessage:
 //       return [

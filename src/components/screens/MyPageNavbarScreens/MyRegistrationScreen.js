@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Header, ListItem, BackgroundImage } from '../../common';
 import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
+import { getStrings } from '../../../helpers/functions';
 
 class MyRegistrationScreen extends Component {
   constructor(props) {
@@ -15,19 +16,13 @@ class MyRegistrationScreen extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
   }
 
-  getColor() {
-    return 'white';
-  }
-
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = MY_REGISTRATION_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = MY_REGISTRATION_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, MY_REGISTRATION_SCREEN_STRINGS);
   }
 
   getSectionPriority(sectionPriorities) {
@@ -69,14 +64,12 @@ class MyRegistrationScreen extends Component {
           )}
         />
       );
-    return (
-      <Text style={[styles.textStyle, { color: this.getColor() }]}>{strings.emptyListMessage}</Text>
-    );
+    return <Text style={styles.textStyle}>{strings.emptyListMessage}</Text>;
   }
 
   render() {
     const { navigation } = this.props;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={1} />
@@ -98,7 +91,8 @@ const styles = {
     backgroundColor: 'transparent',
     fontFamily: 'Avenir Next Bold',
     fontSize: 36,
-    marginTop: HEIGHT / 3
+    marginTop: HEIGHT / 3,
+    color: 'white'
   }
 };
 

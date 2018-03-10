@@ -12,7 +12,7 @@ import { Header, ListItem, BackgroundImage, Popover } from '../../common';
 import { PROGRESS, HEIGHT, IS_IOS } from '../../../helpers/Constants';
 import { setSections, setSectionScreenPopover } from '../../../actions';
 import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { dynamicSort } from '../../../helpers/functions';
+import { dynamicSort, getStrings } from '../../../helpers/functions';
 import { fetchSections } from '../../../helpers/ApiManager';
 
 class SectionScreen extends Component {
@@ -23,12 +23,8 @@ class SectionScreen extends Component {
     };
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = SECTION_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = SECTION_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, SECTION_SCREEN_STRINGS);
   }
 
   renderRightIcon() {
@@ -69,8 +65,14 @@ class SectionScreen extends Component {
   }
 
   render() {
-    const { navigation, screenProps, language, sectionPriorities, sections } = this.props;
-    const strings = this.getStrings();
+    const {
+      navigation,
+      screenProps,
+      language,
+      sectionPriorities,
+      sections
+    } = this.props;
+    const strings = this.getLanguageStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={2} />
@@ -84,7 +86,10 @@ class SectionScreen extends Component {
         </View>
         <FlatList
           refreshControl={
-            <RefreshControl refreshing={false} onRefresh={this._onRefresh.bind(this)} />
+            <RefreshControl
+              refreshing={false}
+              onRefresh={this._onRefresh.bind(this)}
+            />
           }
           style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
           data={sections}
@@ -110,7 +115,9 @@ class SectionScreen extends Component {
           }}
         />
         {this.renderPopover(strings.popoverText)}
-        {sections.length === 0 ? <Text style={styles.textStyle}>{strings.refresh}</Text> : null}
+        {sections.length === 0 ? (
+          <Text style={styles.textStyle}>{strings.refresh}</Text>
+        ) : null}
       </View>
     );
   }
@@ -133,7 +140,12 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ userInformation, sections, currentLanguage, popoverStatus }) => {
+const mapStateToProps = ({
+  userInformation,
+  sections,
+  currentLanguage,
+  popoverStatus
+}) => {
   const { language } = currentLanguage;
   const { progress } = userInformation;
   const { sectionPriorities } = sections;
@@ -146,4 +158,7 @@ const mapStateToProps = ({ userInformation, sections, currentLanguage, popoverSt
   };
 };
 
-export default connect(mapStateToProps, { setSections, setSectionScreenPopover })(SectionScreen);
+export default connect(mapStateToProps, {
+  setSections,
+  setSectionScreenPopover
+})(SectionScreen);

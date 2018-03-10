@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { COUNT_DOWN_STRINGS } from '../../../helpers/LanguageStrings';
 import { WIDTH } from '../../../helpers/Constants';
+import { getStrings } from '../../../helpers/functions';
 import { CountDownItem } from '..';
 /**
  * Uppropet är den 4:e februari
@@ -29,14 +30,6 @@ class CountDown extends Component {
       karneval: false,
       upprop: false
     };
-  }
-
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = COUNT_DOWN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = COUNT_DOWN_STRINGS[field][language]));
-    return strings;
   }
 
   componentWillMount() {
@@ -68,8 +61,8 @@ class CountDown extends Component {
   }
 
   render() {
+    const strings = getStrings(this.props.language, COUNT_DOWN_STRINGS);
     if (this.state.upprop) {
-      const strings = this.getStrings();
       return (
         <View style={styles.containerStyle2}>
           <Text style={styles.textStyle2}>{strings.upprop}</Text>
@@ -77,7 +70,6 @@ class CountDown extends Component {
       );
     }
     if (this.state.karneval) {
-      const strings = this.getStrings();
       return (
         <View style={styles.containerStyle2}>
           <Text style={styles.textStyle2}>{strings.karneval}</Text>

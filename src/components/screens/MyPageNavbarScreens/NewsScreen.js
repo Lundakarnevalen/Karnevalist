@@ -5,6 +5,7 @@ import { Header, ListItem, BackgroundImage } from '../../common';
 import { getNews } from '../../../helpers/ApiManager';
 import { NEWS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
+import { getStrings } from '../../../helpers/functions';
 
 class NewsScreen extends Component {
   constructor(props) {
@@ -18,18 +19,14 @@ class NewsScreen extends Component {
     getNews().then(response => this.setState({ data: response }));
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = NEWS_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = NEWS_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, NEWS_SCREEN_STRINGS);
   }
 
   render() {
     const { data } = this.state;
     const { navigation, screenProps } = this.props;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
