@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
-import { COUNT_DOWN_STRINGS } from '../../../helpers/LanguageStrings';
-import { WIDTH } from '../../../helpers/Constants';
-import { getStrings } from '../../../helpers/functions';
-import { CountDownItem } from '..';
-/**
- * Uppropet är den 4:e februari
+import { COUNT_DOWN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { getStrings } from '~/src/helpers/functions';
+
+import { CountDownItem } from './CountDownItem';
+import { countDownStyles } from './styles';
+/* Uppropet är den 4:e februari
  *
  */
-const SIZE = WIDTH;
 const ONE_DAY = 86400000;
 const ONE_HOUR = 3600000;
 const ONE_MIN = 60000;
@@ -61,23 +61,28 @@ class CountDown extends Component {
   }
 
   render() {
+    const {
+      containerStyle,
+      containerStyle2,
+      textStyle2,
+      textStyle
+    } = countDownStyles;
     const strings = getStrings(this.props.language, COUNT_DOWN_STRINGS);
     if (this.state.upprop) {
       return (
-        <View style={styles.containerStyle2}>
-          <Text style={styles.textStyle2}>{strings.upprop}</Text>
+        <View style={containerStyle2}>
+          <Text style={textStyle2}>{strings.upprop}</Text>
         </View>
       );
     }
     if (this.state.karneval) {
       return (
-        <View style={styles.containerStyle2}>
-          <Text style={styles.textStyle2}>{strings.karneval}</Text>
+        <View style={containerStyle2}>
+          <Text style={textStyle2}>{strings.karneval}</Text>
         </View>
       );
     }
     const { daysLeft, hoursLeft, minutesLeft, secondsLeft } = this.state;
-    const { containerStyle, textStyle } = styles;
     return (
       <View style={containerStyle}>
         <CountDownItem time={daysLeft} />
@@ -92,31 +97,8 @@ class CountDown extends Component {
   }
 }
 
-const styles = {
-  containerStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  textStyle: {
-    fontSize: 27,
-    backgroundColor: 'transparent',
-    color: 'white',
-    fontFamily: 'Avenir Next Medium'
-  },
-  textStyle2: {
-    fontSize: 27,
-    backgroundColor: 'transparent',
-    color: 'white',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium'
-  },
-  containerStyle2: {
-    height: SIZE / 6,
-    width: SIZE,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+CountDown.propTypes = {
+  language: PropTypes.string
 };
 
 export { CountDown };

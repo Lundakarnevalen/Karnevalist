@@ -7,12 +7,14 @@ import {
   BackgroundImage,
   Popover,
   TimelineItem,
-  SuperAgileAlert
-} from '../../common';
-import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { fetchCheckInStatus } from '../../../helpers/ApiManager';
+  SuperAgileAlert,
+  CountDown
+} from '~/src/components/common';
+import { HOME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
+import { PROGRESS, WIDTH } from '~/src/helpers/Constants';
+import images from '~/assets/images';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
-import { PROGRESS, WIDTH } from '../../../helpers/Constants';
 import { getStrings } from '../../../helpers/functions';
 
 class HomeScreen extends Component {
@@ -36,10 +38,10 @@ class HomeScreen extends Component {
       return (
         <Popover
           onPress={() => this.props.setHomeScreenPopover(false)}
-          type={'bottomLeft'}
+          type="bottomLeft"
           text={text}
           big
-          name={'homeScreenPopover'}
+          name="homeScreenPopover"
         />
       );
     }
@@ -47,7 +49,7 @@ class HomeScreen extends Component {
 
   animateProgress() {
     const percent = this.props.progress * 25;
-    return percent + '%';
+    return `${percent}%`;
   }
 
   renderProgress() {
@@ -111,10 +113,7 @@ class HomeScreen extends Component {
       <Animated.View
         style={[containerAnimated, { transform: [{ rotate: spin }] }]}
       >
-        <Image
-          style={image}
-          source={require('../../../../res/Monstergubbe.png')}
-        />
+        <Image style={image} source={images.monsterGubbe} />
       </Animated.View>
     );
   }
@@ -147,7 +146,6 @@ class HomeScreen extends Component {
         screenProps.navigation.navigate('ConfirmPage');
       }
     }
-    return;
   }
 
   render() {
@@ -176,7 +174,7 @@ class HomeScreen extends Component {
               formatText={() => this.animateProgress()}
               size={WIDTH / 4}
               showsText
-              color={'#FFF'}
+              color="#FFF"
             />
             <Text style={textStyleProgress}> {strings.Karnevalist} </Text>
           </View>

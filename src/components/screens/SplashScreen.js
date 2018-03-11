@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
-import { getItem, getPopoverStatus, getFavoriteSections } from '../../helpers/LocalSave';
+import {
+  getItem,
+  getPopoverStatus,
+  getFavoriteSections
+} from '../../helpers/LocalSave';
 import { dynamicSort } from '../../helpers/functions';
 import { BackgroundImage, Loading } from '../common';
 import {
@@ -17,14 +21,17 @@ import {
 import { fetchSections, fetchUserinfo } from '../../helpers/ApiManager';
 
 class SplashScreen extends Component {
-
   componentWillMount() {
     const { language } = this.props;
     StatusBar.setBarStyle('light-content', true);
     this.authorize();
     getFavoriteSections(result => this.props.setSectionPriorities(result));
-    getPopoverStatus('homeScreenPopover', bool => this.props.setHomeScreenPopover(bool));
-    getPopoverStatus('sectionScreenPopover', bool => this.props.setSectionScreenPopover(bool));
+    getPopoverStatus('homeScreenPopover', bool =>
+      this.props.setHomeScreenPopover(bool)
+    );
+    getPopoverStatus('sectionScreenPopover', bool =>
+      this.props.setSectionScreenPopover(bool)
+    );
     fetchSections(sections => {
       sections.sort(dynamicSort('title', language));
       this.props.setSections(sections);
@@ -37,29 +44,32 @@ class SplashScreen extends Component {
       actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
       key: null
     });
-    setTimeout(() =>
-      getItem('email', email => {
-        if (email !== null) {
-          getItem('accessToken', token => {
-            fetchUserinfo(email, token, (response, error = false) => {
-              if (error) {
-                console.log(response);
-                this.props.navigation.dispatch(resetAction);
-              } else {
-                resetAction.actions = [
-                  NavigationActions.navigate({ routeName: 'MyPageNavbarScreen' })
-                ];
-                this.props.setToken(token);
-                this.props.setEmail(email);
-                this.props.setUserinfo(response)
-                this.props.navigation.dispatch(resetAction);
-              }
-            })
-          });
-        } else {
-          this.props.navigation.dispatch(resetAction);
-        }
-      }),
+    setTimeout(
+      () =>
+        getItem('email', email => {
+          if (email !== null) {
+            getItem('accessToken', token => {
+              fetchUserinfo(email, token, (response, error = false) => {
+                if (error) {
+                  console.log(response);
+                  this.props.navigation.dispatch(resetAction);
+                } else {
+                  resetAction.actions = [
+                    NavigationActions.navigate({
+                      routeName: 'MyPageNavbarScreen'
+                    })
+                  ];
+                  this.props.setToken(token);
+                  this.props.setEmail(email);
+                  this.props.setUserinfo(response);
+                  this.props.navigation.dispatch(resetAction);
+                }
+              });
+            });
+          } else {
+            this.props.navigation.dispatch(resetAction);
+          }
+        }),
       2000
     );
   }
@@ -68,11 +78,8 @@ class SplashScreen extends Component {
     const { container } = styles;
     return (
       <View style={container}>
-        <BackgroundImage picture={4} />
-        <Loading
-          loadingComplete={false}
-          redirect={null}
-        />
+        <BackgroundImage pictureNumber={4} />
+        <Loading loadingComplete={false} redirect={null} />
       </View>
     );
   }
