@@ -914,7 +914,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   phoneNumber,
   foodPreference,
   careOf: {
-    //TODO make accurate description
+    // TODO make accurate description
     SE: 'C/O',
     EN: 'C/O'
   },
@@ -1117,7 +1117,7 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
   },
   startButton: {
     SE: 'Jag förstår, nu kör vi!',
-    EN: 'I got it, let\'s GO!'
+    EN: "I got it, let's GO!"
   },
   timeLeft: {
     SE: 'TID KVAR',
@@ -1139,7 +1139,7 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
   },
   secondBody: {
     SE:
-      'Se till att du har igång GPS, vrid sen din mobil i olika riktningar and lägg märke till när den vibrerar. Detta betyder att den hemliga platsen är åt det hållet!',
+      'Se till att du har igång GPS, vrid sen din mobil i olika riktningar och lägg märke till när den vibrerar. Detta betyder att den hemliga platsen är åt det hållet!',
     EN:
       'Ensure your location sensor is on, then turn your phone various directions and notice when it vibrates. That means the secret location is that way!'
   },
@@ -1148,10 +1148,8 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
     EN: 'And then what?'
   },
   thirdBody: {
-    SE:
-      'När du kommit nära Sture får du en QR-kod att visa honom!',
-    EN:
-      "When you get close to Sture, you will get a QR code to show him!"
+    SE: 'När du kommit nära Sture får du en QR-kod att visa honom!',
+    EN: 'When you get close to Sture, you will get a QR code to show him!'
   },
   nextButton: {
     SE: 'Ge mig mer info!',
