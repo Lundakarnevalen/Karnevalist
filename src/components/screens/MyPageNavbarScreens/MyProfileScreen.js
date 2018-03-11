@@ -26,7 +26,8 @@ import {
   isEmail,
   containsOnlyLetters,
   isValidPhoneNbr,
-  containsOnlyDigits
+  containsOnlyDigits,
+  getStrings
 } from '../../../helpers/functions';
 import { removeItem } from '../../../helpers/LocalSave';
 import {
@@ -35,6 +36,24 @@ import {
 } from '../../../helpers/LanguageStrings';
 // import { handleErrorMsg } from '../../../helpers/ApiManager';
 
+const fulfilsRequirement = (key, toCheck) => {
+  switch (key) {
+    case 'firstName':
+      return containsOnlyLetters(toCheck);
+    case 'lastName':
+      return containsOnlyLetters(toCheck);
+    case 'email':
+      return isEmail(toCheck);
+    case 'city':
+      return containsOnlyLetters(toCheck);
+    case 'postNumber':
+      return containsOnlyDigits(toCheck) && toCheck.length === 5;
+    case 'phoneNumber':
+      return isValidPhoneNbr(toCheck);
+    default:
+      return true;
+  }
+};
 class MyProfileScreen extends Component {
   constructor(props) {
     super(props);
@@ -73,18 +92,12 @@ class MyProfileScreen extends Component {
     return strings;
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = MY_PROFILE_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(
-      field => (strings[field] = MY_PROFILE_SCREEN_STRINGS[field][language])
-    );
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, MY_PROFILE_SCREEN_STRINGS);
   }
 
   getRightIcon() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const { rightIconStyle } = styles;
     const { anyError, validAddress, changesMade, editMode } = this.state;
     return (
@@ -93,17 +106,13 @@ class MyProfileScreen extends Component {
         onPress={() => {
           if (editMode && changesMade) {
             if (anyError || !validAddress) {
-              this.setState({
-                alertVisible: true,
-                alertHeader: strings.invalidChangesMadeHeader,
-                message: strings.invalidChangesMadeText
-              });
+              this.handleAlert(
+                true,
+                strings.invalidChangesMadeHeader,
+                strings.invalidChangesMadeText
+              );
             } else if (changesMade) {
-              this.setState({
-                message: strings.popUpInfo,
-                alertHeader: strings.popUpHeader,
-                alertVisible: true
-              });
+              this.handleAlert(true, strings.popUpHeader, strings.popUpInfo);
             }
           } else {
             this.setState({ editMode: !editMode });
@@ -139,42 +148,22 @@ class MyProfileScreen extends Component {
       case 'phoneNumber':
         return errorStrings.errorMsgPhoneNbr;
       default:
-        return;
     }
   }
 
   handleLogout() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     removeItem('email');
     removeItem('accessToken');
-    this.setState({
-      alertVisible: true,
-      message: strings.expiredTokenMessage,
-      alertHeader: strings.expiredTokenTitle
-    });
-  }
-
-  fulfilsRequirement(key, toCheck) {
-    switch (key) {
-      case 'firstName':
-        return containsOnlyLetters(toCheck);
-      case 'lastName':
-        return containsOnlyLetters(toCheck);
-      case 'email':
-        return isEmail(toCheck);
-      case 'city':
-        return containsOnlyLetters(toCheck);
-      case 'postNumber':
-        return containsOnlyDigits(toCheck) && toCheck.length === 5;
-      case 'phoneNumber':
-        return isValidPhoneNbr(toCheck);
-      default:
-        return true;
-    }
+    this.handleAlert(
+      true,
+      strings.expiredTokenTitle,
+      strings.expiredTokenMessage
+    );
   }
 
   renderFields() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const { user, editMode, oldUser } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
@@ -210,7 +199,7 @@ class MyProfileScreen extends Component {
             }
             user[key] = text;
             this.setState({
-              anyError: !this.fulfilsRequirement(key, text),
+              anyError: !fulfilsRequirement(key, text),
               user,
               changesMade: user[key] !== oldUser[key]
             });
@@ -224,14 +213,14 @@ class MyProfileScreen extends Component {
   }
 
   setAlertVisible(visible, message) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     this.setState({ alertVisible: visible });
     if (message === strings.expiredTokenMessage)
       this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
   renderAlertButtons(message) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     switch (message) {
       case strings.expiredTokenMessage:
         return [
@@ -262,9 +251,17 @@ class MyProfileScreen extends Component {
     }
   }
 
+  handleAlert(alertVisible, alertHeader, message) {
+    this.setState({
+      alertVisible,
+      message,
+      alertHeader
+    });
+  }
+
   renderMainView() {
     const { user, showToast, success } = this.state;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     if (user === null || user === undefined)
       return (
         <View style={styles.loading}>
@@ -322,8 +319,8 @@ class MyProfileScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const strings = this.getStrings();
     const { alertVisible, message, alertHeader } = this.state;
+    const strings = this.getLanguageStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={4} />

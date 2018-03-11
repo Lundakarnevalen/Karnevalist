@@ -55,7 +55,7 @@ class MyPageNavbarScreen extends Component {
 
   getSectionPriorities(token) {
     const headers = {
-      Authorization: 'Bearer ' + token,
+      Authorization: `Bearer ${token}`,
       'content-type': 'application/json'
     };
     axios
@@ -125,7 +125,7 @@ const TabNav = TabNavigator(
           <MaterialIcons name="speaker-notes" size={SIZE} color={focused ? tintColor : '#A9A9A9'} />
         )
       })
-    },*/
+    }, */
     Sections: {
       screen: SectionScreen,
       navigationOptions: props => ({

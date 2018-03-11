@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text, Animated, Image, Easing, View } from 'react-native';
-import { HEIGHT, WIDTH } from '../../helpers/Constants';
+import PropTypes from 'prop-types';
+import images from '~/assets/images';
+import { styles } from './styles';
 /**
  * Loading class with redirect.
  * If redirect isn't needed redirect should be set to null.
@@ -27,7 +29,7 @@ class Loading extends Component {
       if (this.props.loadingComplete) {
         this.props.redirect();
       } else {
-        this.spin()
+        this.spin();
       }
     });
   }
@@ -40,41 +42,23 @@ class Loading extends Component {
     });
     return (
       <View style={container}>
-        <Animated.View style={[containerAnimated, { transform: [{ rotate: spin }] }]}>
+        <Animated.View
+          style={[containerAnimated, { transform: [{ rotate: spin }] }]}
+        >
           <Text style={text}> LOADING </Text>
-          <Image style={image} source={require('../../../res/Monstergubbe.png')} />
+          <Image style={image} source={images.monsterGubbe} />
         </Animated.View>
       </View>
     );
   }
 }
+Loading.defaultProps = {
+  redirect: null
+};
 
-const styles = {
-  container: {
-    width: WIDTH,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    position: 'absolute',
-    padding: 20,
-    height: HEIGHT
-  },
-  containerAnimated: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  image: {
-    width: 227,
-    height: 200,
-    resizeMode: 'contain'
-  },
-  text: {
-    marginTop: 50,
-    fontSize: 30,
-    color: 'white',
-    fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
-  }
+Loading.propTypes = {
+  loadingComplete: PropTypes.bool.isRequired,
+  redirect: PropTypes.func
 };
 
 export { Loading };

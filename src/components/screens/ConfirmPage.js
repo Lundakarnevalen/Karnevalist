@@ -4,11 +4,28 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import SortableList from 'react-native-sortable-list';
-import { Row, Header, BackgroundImage, CustomButton, SuperAgileAlert } from '../common';
+import {
+  Row,
+  Header,
+  BackgroundImage,
+  CustomButton,
+  SuperAgileAlert
+} from '../common';
 import { removeItem } from '../../helpers/LocalSave';
 import { fetchCheckInStatus } from '../../helpers/ApiManager';
-import { SECTION_PRIORITY_URL, PROGRESS, LOGOUT_RESET_ACTION, WIDTH, HEIGHT } from '../../helpers/Constants';
-import { removeSectionPriority, setSectionPriorities, setProgress } from '../../actions';
+import { getStrings } from '../../helpers/functions';
+import {
+  SECTION_PRIORITY_URL,
+  PROGRESS,
+  LOGOUT_RESET_ACTION,
+  WIDTH,
+  HEIGHT
+} from '../../helpers/Constants';
+import {
+  removeSectionPriority,
+  setSectionPriorities,
+  setProgress
+} from '../../actions';
 import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
 
 class ConfirmPage extends Component {
@@ -20,16 +37,19 @@ class ConfirmPage extends Component {
       alertVisible: false,
       message: '',
       alertHeader: '',
-      strings: this.getStrings()
+      strings: this.getLanguageStrings()
     };
   }
 
   componentWillMount() {
     const { email, token, sectionPriorities } = this.props;
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
     fetchCheckInStatus(email, token, checkedIn => {
       if (checkedIn === true) {
-        if (sectionPriorities.length > 4) this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+        if (sectionPriorities.length > 4)
+          this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
         else this.props.setProgress(PROGRESS.CHECK_IN);
       }
     });
@@ -52,12 +72,8 @@ class ConfirmPage extends Component {
     this.setState({ data });
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = CONFIRM_PAGE_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = CONFIRM_PAGE_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, CONFIRM_PAGE_STRINGS);
   }
 
   renderSortableListOrMessage() {
@@ -95,11 +111,17 @@ class ConfirmPage extends Component {
           data={data}
           order={sectionPriorities}
           renderRow={this.renderRow.bind(this)}
-          onChangeOrder={nextOrder => this.props.setSectionPriorities(nextOrder)}
+          onChangeOrder={nextOrder =>
+            this.props.setSectionPriorities(nextOrder)
+          }
         />
         <View style={{ width: WIDTH, paddingLeft: 8 }}>
           <CustomButton
-            style={progress < PROGRESS.CHOOSE_SECTIONS ? 'tintStandardButton' : 'standardButton'}
+            style={
+              progress < PROGRESS.CHOOSE_SECTIONS
+                ? 'tintStandardButton'
+                : 'standardButton'
+            }
             text={buttonText}
             width={WIDTH - 16}
             onPress={() => this.handleSend()}
@@ -139,7 +161,7 @@ class ConfirmPage extends Component {
   }
 
   handleLogout() {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     removeItem('email');
     removeItem('accessToken');
     this.setState({
@@ -151,7 +173,7 @@ class ConfirmPage extends Component {
 
   postSectionPriorities() {
     const { sectionPriorities } = this.props;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const headers = {
       Authorization: 'Bearer ' + this.props.token,
       'content-type': 'application/json'
@@ -197,7 +219,7 @@ class ConfirmPage extends Component {
   }
 
   renderAlertButtons(message) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     switch (message) {
       case strings.selectionOK:
         return [
@@ -211,20 +233,31 @@ class ConfirmPage extends Component {
         ];
       case strings.confirmMessage:
         return [
-          { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+          {
+            text: strings.cancel,
+            onPress: () => this.setState({ alertVisible: false })
+          },
           { text: strings.yes, onPress: () => this.postSectionPriorities() }
         ];
       case strings.expiredTokenMessage:
         return [
-          { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
+          {
+            text: strings.ok,
+            onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION)
+          }
         ];
       default:
-        return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
+        return [
+          {
+            text: strings.ok,
+            onPress: () => this.setState({ alertVisible: false })
+          }
+        ];
     }
   }
 
   setAlertVisible(visible, message) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     this.setState({ alertVisible: visible });
     if (message === strings.selectionOK)
       // This makes sure you can't stay on ConfirmPage
@@ -235,7 +268,7 @@ class ConfirmPage extends Component {
 
   render() {
     const { message, alertVisible, alertHeader } = this.state;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     return (
       <View style={styles.container}>
         <BackgroundImage pictureNumber={2} />
@@ -292,7 +325,14 @@ const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token, email, progress } = userInformation;
   const { sectionPriorities } = sections;
-  return { sections: sections.sections, progress, email, language, token, sectionPriorities };
+  return {
+    sections: sections.sections,
+    progress,
+    email,
+    language,
+    token,
+    sectionPriorities
+  };
 };
 
 export default connect(mapStateToProps, {
