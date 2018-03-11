@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, Text } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { Feather } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import { Header, BackgroundImage, CountDown, CustomButton } from '../../common'
@@ -9,12 +9,12 @@ import { HEIGHT, WIDTH, IS_IOS } from '../../../helpers/Constants'
 import { TREASURE_HUNT_SCREEN_STRINGS } from '../../../helpers/LanguageStrings'
 
 const ProgressButton = ({counter, value, onPress}) => (
-  <MaterialIcons
+  <Feather
     key={value}
-    name="face"
+    name={counter > value ? 'check-circle' : 'circle'}
     onPress={onPress}
     size={35}
-    style={styles.navContainer}
+    style={styles.navItem}
   />
 )
 
@@ -27,13 +27,15 @@ ProgressButton.propTypes = {
 const InfoText = ({counter, strings}) => {
   const HEADERS = ['first', 'second', 'third']
   return (
-    <View>
-      <Text style={styles.headerText}>
-        {strings[HEADERS[counter] + 'Header']}
-      </Text>
-      <Text style={styles.bodyText}>
-        {strings[HEADERS[counter] + 'Body']}
-      </Text>
+    <View style={styles.textContainer}>
+      <View>
+        <Text style={styles.headerText}>
+          {strings[HEADERS[counter] + 'Header']}
+        </Text>
+        <Text style={styles.bodyText}>
+          {strings[HEADERS[counter] + 'Body']}
+        </Text>
+      </View>
     </View>
   )
 }
@@ -46,7 +48,8 @@ const NextButton = ({counter, strings, onPress}) => {
   const text = counter === 2 ? strings.startButton : strings.nextButton
   return (
     <View style={styles.buttonContainer}>
-      <CustomButton style={'standardButton'} onPress={onPress} text={text}/>
+      <TouchableOpacity style={styles.nextButton} onPress={onPress}><Text
+        style={styles.btnText}>{text}</Text></TouchableOpacity>
     </View>
   )
 }
@@ -60,13 +63,13 @@ const CountDownContainer = ({screenProps, strings}) => {
   if (screenProps.endDate - new Date() < 0) {
     return (
       <View style={styles.countDownContainer}>
-        <Text>{strings.finishedText}</Text>
+        <Text style={styles.countDown}>{strings.finishedText}</Text>
       </View>
     )
   } else {
     return (
       <View style={styles.countDownContainer}>
-        <Text>{strings.timeLeft + ': '}</Text>
+        <Text style={styles.countDown}>{strings.timeLeft + ': '}</Text>
         <CountDown endDate={screenProps.endDate}/>
       </View>
     )
@@ -104,12 +107,14 @@ class SwipeScreen extends Component {
           <Header title={strings.treasureHunt}/>
           <CountDownContainer screenProps={this.props.screenProps} strings={strings}/>
           <InfoText counter={counter} strings={strings}/>
-          <NextButton counter={counter} strings={strings} onPress={counter === 2
-            ? () => this.props.navigation.navigate('CloseGameScreen')
-            : () => this.setState({counter: counter + 1})}/>
-          <View>
-            {[0, 1, 2].map(i => <ProgressButton key={i} value={i} counter={counter}
-                                                onPress={() => this.setState({counter: i})}/>)}
+          <View style={styles.bottomContain}>
+            <NextButton counter={counter} strings={strings} onPress={counter === 2
+              ? () => this.props.navigation.navigate('CloseGameScreen')
+              : () => this.setState({counter: counter + 1})}/>
+            <View style={styles.navContainer}>
+              {[0, 1, 2].map(i => <ProgressButton key={i} value={i} counter={counter}
+                                                  onPress={() => this.setState({counter: i})}/>)}
+            </View>
           </View>
         </View>
       </GestureRecognizer>
@@ -123,18 +128,126 @@ SwipeScreen.propTypes = {
 
 const styles = {
   mainContainer: {
-    height: HEIGHT - (IS_IOS ? 113 : 135),
-    width: WIDTH
+    height: HEIGHT - 90, /*(IS_IOS ? 113 : 135),*/
+    width:
+    WIDTH,
+    justifyContent:
+      'flex-start',
   },
-  headerText: {},
+  countDown: {
+    fontSize: 22,
+    color:
+      'white',
+  }
+  ,
+  nextButton: {
+    flex: 1,
+    backgroundColor:
+      '#d999fa',
+    borderRadius:
+      5,
+    flexDirection:
+      'column',
+    justifyContent:
+      'center',
+    alignItems:
+      'center',
+  }
+  ,
+  btnText: {
+    fontSize: 22,
+    fontWeight:
+      'bold',
+    fontFamily:
+      'Avenir Next Medium',
+  }
+  ,
+  textContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    marginRight:
+      10,
+    marginLeft:
+      10,
+    flex:
+      1,
+    flexDirection:
+      'column',
+    justifyContent:
+      'center',
+    borderRadius:
+      3,
+  }
+  ,
+  headerText: {
+    fontSize: 40,
+    color:
+      '#000000',
+    textAlign:
+      'center',
+    fontWeight:
+      'bold',
+    fontFamily:
+      'Avenir Next Medium',
+    backgroundColor:
+      'transparent',
+  }
+  ,
+  bodyText: {
+    fontSize: 22,
+    color:
+      '#000000',
+    textAlign:
+      'center',
+    fontWeight:
+      'bold',
+    fontFamily:
+      'Avenir Next Medium',
+    backgroundColor:
+      'transparent',
+  }
+  ,
   countDownContainer: {
     alignItems: 'center',
+    flexDirection:
+      'row',
+    backgroundColor:
+      'transparent',
+    justifyContent:
+      'center',
+  }
+  ,
+  navItem: {
+    backgroundColor: 'transparent',
+    color: '#d999fa',
+  }
+  ,
+  navContainer: {
+    marginTop: 5,
+    backgroundColor:
+      'transparent',
+    marginRight:
+      10,
+  }
+  ,
+  buttonContainer: {
+    marginTop: 5,
+    marginLeft:
+      10,
+    width:
+    WIDTH - 55,
+    borderRadius:
+      5,
+    backgroundColor:
+      '#F7A021',
+  }
+  ,
+  bottomContain: {
     flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  navContainer: {},
-  buttonContainer: {},
-  bodyText: {},
+    alignItems:
+      'stretch',
+    justifyContent:
+      'flex-end',
+  }
 }
 
 const mapStateToProps = ({currentLanguage}) => {
