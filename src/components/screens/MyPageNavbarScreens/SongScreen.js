@@ -4,18 +4,17 @@ import { connect } from 'react-redux';
 import { Header } from '../../common';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
 import { HEIGHT, WIDTH } from '../../../helpers/Constants';
+import { getStrings } from '../../../helpers/functions';
 
 class SectionItemScreen extends Component {
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = SECTION_ITEM_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = SECTION_ITEM_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, SECTION_ITEM_SCREEN_STRINGS);
   }
 
   render() {

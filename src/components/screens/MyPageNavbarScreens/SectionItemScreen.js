@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, ScrollView, BackHandler } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  BackHandler
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Header, Toast } from '../../common';
 import { PROGRESS, WIDTH, HEIGHT } from '../../../helpers/Constants';
-import { removeSectionPriority, addSectionPriority, setProgress } from '../../../actions';
+import {
+  removeSectionPriority,
+  addSectionPriority,
+  setProgress
+} from '../../../actions';
 import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { getStrings } from '../../../helpers/functions';
 
 class SectionItemScreen extends Component {
   constructor(props) {
@@ -16,15 +27,13 @@ class SectionItemScreen extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.props.navigation.goBack()
+    );
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = SECTION_ITEM_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = SECTION_ITEM_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, SECTION_ITEM_SCREEN_STRINGS);
   }
 
   renderRightIcon() {
@@ -37,13 +46,16 @@ class SectionItemScreen extends Component {
         <TouchableOpacity
           style={rightIconStyle}
           onPress={() => {
-            if (sectionPriorities.length > 3 && this.props.progress > PROGRESS.CREATE_PROFILE)
+            if (
+              sectionPriorities.length > 3 &&
+              this.props.progress > PROGRESS.CREATE_PROFILE
+            )
               this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
             this.props.addSectionPriority(id);
             this.setState({ showToast: true, favorite: true });
           }}
         >
-          <MaterialIcons name="favorite-border" size={30} color={'white'} />
+          <MaterialIcons name="favorite-border" size={30} color="white" />
         </TouchableOpacity>
       );
     }
@@ -60,13 +72,13 @@ class SectionItemScreen extends Component {
           this.setState({ showToast: true, favorite: false });
         }}
       >
-        <MaterialIcons name="favorite" size={30} color={'white'} />
+        <MaterialIcons name="favorite" size={30} color="white" />
       </TouchableOpacity>
     );
   }
 
   renderToastMessage(title) {
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     if (!this.state.favorite) {
       return strings.messageStart + title + strings.messageEndRemove;
     }
@@ -75,7 +87,13 @@ class SectionItemScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { headerTitle, title, description, image, id } = navigation.state.params;
+    const {
+      headerTitle,
+      title,
+      description,
+      image,
+      id
+    } = navigation.state.params;
     const { containerStyle, headerStyle, textStyle } = styles;
     return (
       <View style={containerStyle}>
@@ -147,6 +165,8 @@ const mapStateToProps = ({ userInformation, currentLanguage, sections }) => {
   };
 };
 
-export default connect(mapStateToProps, { removeSectionPriority, addSectionPriority, setProgress })(
-  SectionItemScreen
-);
+export default connect(mapStateToProps, {
+  removeSectionPriority,
+  addSectionPriority,
+  setProgress
+})(SectionItemScreen);

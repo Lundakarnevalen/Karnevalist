@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, BackgroundImage, ListItem } from '../../common';
 import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { dynamicSort } from '../../../helpers/functions';
+import { dynamicSort, getStrings } from '../../../helpers/functions';
 import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
 import songs2014 from '../../../../assets/songbook/songs2014.json';
 
@@ -25,22 +25,18 @@ class SongBookScreen extends Component {
     };
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = SONGBOOK_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = SONGBOOK_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, SONGBOOK_SCREEN_STRINGS);
   }
 
   render() {
-    const { navigation, screenProps } = this.props;
-    const strings = this.getStrings();
+    const { screenProps } = this.props;
+    const strings = this.getLanguageStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={3} />
         <View>
-          <Header title={strings.title} leftIcon={null} navigation={navigation} />
+          <Header title={strings.title} />
         </View>
         <FlatList
           style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}

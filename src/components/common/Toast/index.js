@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Text, Animated } from 'react-native';
-import { WIDTH } from '../../helpers/Constants';
+import PropTypes from 'prop-types';
+import { styles } from './styles';
 
 class Toast extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalShown: false,
-      toastColor: props.color,
-      message: props.message,
       animatedValue: new Animated.Value(0)
     };
   }
@@ -21,10 +20,9 @@ class Toast extends Component {
     clearTimeout(this.timer);
   }
 
-  callToast(message) {
+  callToast() {
     if (this.state.modalShown) return;
-    this.setState({ modalShown: true, message });
-    this.setState({ color: this.state.toastColor });
+    this.setState({ modalShown: true });
     Animated.timing(this.state.animatedValue, {
       toValue: 1,
       duration: 350
@@ -43,7 +41,7 @@ class Toast extends Component {
   }
 
   render() {
-    const { message = '' } = this.props;
+    const { message } = this.props;
     const animation = this.state.animatedValue.interpolate({
       inputRange: [0, 0.3, 1],
       outputRange: [-70, -40, 0]
@@ -57,26 +55,13 @@ class Toast extends Component {
   }
 }
 
-const styles = {
-  animatedStyle: {
-    height: 40,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    justifyContent: 'center',
-    width: WIDTH,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderColor: '#F7A021'
-  },
-  textStyle: {
-    marginLeft: 10,
-    color: '#F7A021',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: 'transparent'
-  }
+Toast.defaultProps = {
+  onClose: null
 };
 
+Toast.propTypes = {
+  message: PropTypes.string.isRequired,
+  onClose: PropTypes.func,
+  showToast: PropTypes.bool.isRequired
+};
 export { Toast };

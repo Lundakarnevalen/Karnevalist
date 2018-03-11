@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import { View, Text, Image, Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
-import { Header, BackgroundImage, Popover, TimelineItem, SuperAgileAlert } from '../../common';
-import { HOME_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { fetchCheckInStatus } from '../../../helpers/ApiManager';
+import {
+  Header,
+  BackgroundImage,
+  Popover,
+  TimelineItem,
+  SuperAgileAlert,
+  CountDown
+} from '~/src/components/common';
+import { HOME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
+import { PROGRESS, WIDTH } from '~/src/helpers/Constants';
+import images from '~/assets/images';
 import { setHomeScreenPopover, setProgress } from '../../../actions';
-import { PROGRESS, WIDTH } from '../../../helpers/Constants';
+import { getStrings } from '../../../helpers/functions';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -19,12 +28,8 @@ class HomeScreen extends Component {
     };
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = HOME_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = HOME_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, HOME_SCREEN_STRINGS);
   }
 
   renderPopover(text) {
@@ -33,10 +38,10 @@ class HomeScreen extends Component {
       return (
         <Popover
           onPress={() => this.props.setHomeScreenPopover(false)}
-          type={'bottomLeft'}
+          type="bottomLeft"
           text={text}
           big
-          name={'homeScreenPopover'}
+          name="homeScreenPopover"
         />
       );
     }
@@ -44,7 +49,7 @@ class HomeScreen extends Component {
 
   animateProgress() {
     const percent = this.props.progress * 25;
-    return percent + '%';
+    return `${percent}%`;
   }
 
   renderProgress() {
@@ -65,7 +70,10 @@ class HomeScreen extends Component {
             this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
           }
         }
-        this.setState({ checkInLoading: false, spinValue: new Animated.Value(0) });
+        this.setState({
+          checkInLoading: false,
+          spinValue: new Animated.Value(0)
+        });
       }, 1500);
     });
   }
@@ -102,8 +110,10 @@ class HomeScreen extends Component {
       outputRange: ['0deg', '360deg']
     });
     return (
-      <Animated.View style={[containerAnimated, { transform: [{ rotate: spin }] }]}>
-        <Image style={image} source={require('../../../../res/Monstergubbe.png')} />
+      <Animated.View
+        style={[containerAnimated, { transform: [{ rotate: spin }] }]}
+      >
+        <Image style={image} source={images.monsterGubbe} />
       </Animated.View>
     );
   }
@@ -136,17 +146,16 @@ class HomeScreen extends Component {
         screenProps.navigation.navigate('ConfirmPage');
       }
     }
-    return;
   }
 
   render() {
     const { container, textStyleProgress } = styles;
-    const { navigation, progress } = this.props;
-    const strings = this.getStrings();
+    const { progress } = this.props;
+    const strings = this.getLanguageStrings();
     return (
       <View style={{ flex: 1 }}>
         <BackgroundImage pictureNumber={1} />
-        <Header title={strings.title} leftIcon={null} rightIcon={null} navigation={navigation} />
+        <Header title={strings.title} />
         <View style={{ height: 20 }} />
         <View style={container}>
           <View
@@ -165,7 +174,7 @@ class HomeScreen extends Component {
               formatText={() => this.animateProgress()}
               size={WIDTH / 4}
               showsText
-              color={'#FFF'}
+              color="#FFF"
             />
             <Text style={textStyleProgress}> {strings.Karnevalist} </Text>
           </View>
@@ -271,7 +280,12 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ currentLanguage, popoverStatus, userInformation, sections }) => {
+const mapStateToProps = ({
+  currentLanguage,
+  popoverStatus,
+  userInformation,
+  sections
+}) => {
   const { language } = currentLanguage;
   const { progress, token, email } = userInformation;
   return {
@@ -284,4 +298,6 @@ const mapStateToProps = ({ currentLanguage, popoverStatus, userInformation, sect
   };
 };
 
-export default connect(mapStateToProps, { setProgress, setHomeScreenPopover })(HomeScreen);
+export default connect(mapStateToProps, { setProgress, setHomeScreenPopover })(
+  HomeScreen
+);

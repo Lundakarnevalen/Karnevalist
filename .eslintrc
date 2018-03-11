@@ -10,17 +10,26 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
   ],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    // "airbnb",
+    "airbnb",
     "prettier",
     "prettier/react",
     "prettier/standard",
   ],
   "rules": {
     // more rules
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    linebreak-style: 0,
+    import/prefer-default-export: 0
+  },
+
+  "settings": {
+    "import/resolver": {
+      "babel-root-import": {},
+    }
   }
 }
