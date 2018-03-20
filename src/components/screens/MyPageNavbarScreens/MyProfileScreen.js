@@ -54,6 +54,14 @@ const fulfilsRequirement = (key, toCheck) => {
       return true;
   }
 };
+
+const getInputStyle = editable => ({
+  backgroundColor: editable ? 'white' : 'transparent',
+  borderWidth: editable ? 1 : 0,
+  textColor: editable ? 'black' : 'white',
+  placeholderTextColor: editable ? '#F7A021' : 'white'
+});
+
 class MyProfileScreen extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +72,8 @@ class MyProfileScreen extends Component {
       alertVisible: false,
       anyError: false,
       validAddress: true,
-      showToast: false
+      showToast: false,
+      strings: this.getLanguageStrings()
     };
   }
 
@@ -97,9 +106,14 @@ class MyProfileScreen extends Component {
   }
 
   getRightIcon() {
-    const strings = this.getLanguageStrings();
     const { rightIconStyle } = styles;
-    const { anyError, validAddress, changesMade, editMode } = this.state;
+    const {
+      anyError,
+      validAddress,
+      changesMade,
+      editMode,
+      strings
+    } = this.state;
     return (
       <TouchableOpacity
         style={rightIconStyle}
@@ -152,7 +166,7 @@ class MyProfileScreen extends Component {
   }
 
   handleLogout() {
-    const strings = this.getLanguageStrings();
+    const { strings } = this.state;
     removeItem('email');
     removeItem('accessToken');
     this.handleAlert(
@@ -163,8 +177,7 @@ class MyProfileScreen extends Component {
   }
 
   renderFields() {
-    const strings = this.getLanguageStrings();
-    const { user, editMode, oldUser } = this.state;
+    const { user, editMode, oldUser, strings } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
     fields.forEach(field => {
@@ -173,10 +186,12 @@ class MyProfileScreen extends Component {
     });
     const textFields = Object.keys(labels).map(key => {
       const editable = editMode && key !== 'email';
-      const backgroundColor = editable ? 'white' : 'transparent';
-      const borderWidth = editable ? 1 : 0;
-      const textColor = editable ? 'black' : 'white';
-      const placeholderTextColor = editable ? '#F7A021' : 'white';
+      const {
+        backgroundColor,
+        borderWidth,
+        textColor,
+        placeholderTextColor
+      } = getInputStyle(editable);
       if (
         user[key] === '' ||
         user[key] === null ||
@@ -213,7 +228,7 @@ class MyProfileScreen extends Component {
   }
 
   setAlertVisible(visible, message) {
-    const strings = this.getLanguageStrings();
+    const { strings } = this.state;
     this.setState({ alertVisible: visible });
     if (message === strings.expiredTokenMessage)
       this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
@@ -260,8 +275,7 @@ class MyProfileScreen extends Component {
   }
 
   renderMainView() {
-    const { user, showToast, success } = this.state;
-    const strings = this.getLanguageStrings();
+    const { user, showToast, success, strings } = this.state;
     if (user === null || user === undefined)
       return (
         <View style={styles.loading}>
@@ -319,8 +333,7 @@ class MyProfileScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { alertVisible, message, alertHeader } = this.state;
-    const strings = this.getLanguageStrings();
+    const { alertVisible, message, alertHeader, strings } = this.state;
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
