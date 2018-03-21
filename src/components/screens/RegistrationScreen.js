@@ -219,7 +219,7 @@ class RegistrationScreen extends Component {
         <CustomButton
           text={title === '' ? defaultTitle + '*' : title}
           style="dropDownButton"
-          width={WIDTH}
+          width={WIDTH - 16*2}
           onPress={() => {
             Keyboard.dismiss();
             switch (tag) {
@@ -269,7 +269,7 @@ class RegistrationScreen extends Component {
             }
           }}
           selectedValue={title === '' ? defaultTitle : title}
-          style={styles.androidPicker}
+          style={androidPicker}
         >
           <Picker.Item label={defaultTitle} value={''} />
           {this.renderPickerArray(tag, tagArray)}
@@ -470,7 +470,7 @@ class RegistrationScreen extends Component {
   render() {
     const strings = this.getLanguageStrings();
     const errorStrings = this.getErrorStrings();
-    const { flexHorizontal, rightIconStyle } = styles;
+    const { flexHorizontal, rightIconStyle, contentContainer, androidPicker } = styles;
     const {
       inputs,
       errors,
@@ -521,7 +521,7 @@ class RegistrationScreen extends Component {
         <Header title={strings.header} rightIcon={closeButton} />
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={styles.contentContainer}
+          contentContainerStyle={contentContainer}
           style={{ height: HEIGHT - 64 }}
           ref={'scrollView'}
         >
@@ -686,7 +686,7 @@ class RegistrationScreen extends Component {
                   errors
                 });
               }}
-              width={WIDTH / 2 - 4}
+              width={WIDTH / 2 - 20}
               extraContainerStyle={{ marginRight: 8 }}
               value={inputs[8]}
               returnKeyType={'next'}
@@ -704,7 +704,7 @@ class RegistrationScreen extends Component {
                 errors[9] = !this.containsOnlyLetters(text);
                 this.setState({ inputs, errors });
               }}
-              width={WIDTH / 2 - 4}
+              width={WIDTH / 2 - 20}
               value={inputs[9]}
               returnKeyType={'next'}
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
@@ -769,42 +769,6 @@ class RegistrationScreen extends Component {
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgShortOnlyDigits}
           />
-          <Input
-            ref={'previousInvolvement'}
-            onSubmitEditing={() => this.refs.bff.focus()}
-            placeholder={strings.previousInvolvement}
-            onChangeText={text => {
-              this.setState({ previousInvolvement: text });
-            }}
-            value={previousInvolvement}
-            returnKeyType={'next'}
-            scrollToInput={y => this.scrollToInput(y)}
-            warningMessage={errorStrings.errorMsgPreviousInvolvement}
-            multiline
-            numberOfLines={3}
-            maxLength={200}
-          />
-          <Input
-            ref={'bff'}
-            icon={'question-circle-o'}
-            placeholder={strings.bff}
-            onChangeText={text => {
-              this.setState({ bff: text, bffError: !this.isEmail(text) });
-            }}
-            iconOnPress={() => {
-              this.setState({
-                alertVisible: true,
-                message: strings.bffInfo,
-                alertHeader: strings.bff
-              });
-            }}
-            value={bff}
-            returnKeyType={'done'}
-            hasError={bffError}
-            autoCapitalize="none"
-            warningMessage={errorStrings.errorMsgInvalidEmail}
-            scrollToInput={y => this.scrollToInput(y)}
-          />
 
           {this.renderPickerForPlatform(
             strings.shirtSize,
@@ -830,108 +794,7 @@ class RegistrationScreen extends Component {
             driversLicense,
             'driversLicense'
           )}
-          <CheckBox
-            name={strings.plenipotentiary}
-            size={30}
-            onPress={() => this.setState({ plenipotentiary: !plenipotentiary })}
-            value={plenipotentiary}
-            color={'white'}
-          />
-          <CheckBox
-            name={strings.groupLeader}
-            size={30}
-            onPress={() => this.setState({ groupLeader: !groupLeader })}
-            value={groupLeader}
-            color={'white'}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingBottom: 10
-            }}
-          >
-            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>
-              {strings.auditionSmallSceneHeader}
-            </Text>
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 5
-              }}
-              onPress={() => {
-                this.setState({
-                  alertVisible: true,
-                  message: strings.smallPleasuresInfo,
-                  alertHeader: strings.smallPleasuresHeader
-                });
-              }}
-            >
-              <FontAwesome
-                name={'question-circle-o'}
-                style={{ color: '#F7A021', backgroundColor: 'transparent' }}
-                size={25}
-              />
-            </TouchableOpacity>
-          </View>
-          {this.renderCheckBoxes(
-            strings.auditionCheckboxes,
-            smallAuditionCheckBoxes,
-            newState => this.setState({ smallAuditionCheckBoxes: newState })
-          )}
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingBottom: 10
-            }}
-          >
-            <Text style={[styles.checkBoxHeaderStyle, { flex: 6 }]}>
-              {strings.auditionBigSceneHeader}
-            </Text>
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 5
-              }}
-              onPress={() => {
-                this.setState({
-                  alertVisible: true,
-                  message: strings.bigPleasuresInfo,
-                  alertHeader: strings.bigPleasuresHeader
-                });
-              }}
-            >
-              <FontAwesome
-                name={'question-circle-o'}
-                style={{ color: '#F7A021', backgroundColor: 'transparent' }}
-                size={25}
-              />
-            </TouchableOpacity>
-          </View>
-          {this.renderCheckBoxes(
-            strings.auditionCheckboxes,
-            bigAuditionCheckBoxes,
-            newState => this.setState({ bigAuditionCheckBoxes: newState })
-          )}
-          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>
-            {strings.checkBoxesHeader}
-          </Text>
-          {this.renderCheckBoxes(
-            strings.checkBoxNames,
-            wantToWorkWith,
-            newState => this.setState({ wantToWorkWith: newState })
-          )}
-          <Text style={[styles.checkBoxHeaderStyle, { paddingBottom: 10 }]}>
-            {strings.checkBoxesHeaderToLearn}
-          </Text>
-          {this.renderCheckBoxes(strings.checkBoxNames, wantToLearn, newState =>
-            this.setState({ wantToLearn: newState })
-          )}
+
           <Input
             ref={'other'}
             placeholder={strings.other}
@@ -979,7 +842,7 @@ class RegistrationScreen extends Component {
           <CustomButton
             text={strings.register}
             style={'standardButton'}
-            width={WIDTH}
+            width={WIDTH - 16*2}
             onPress={() => {
               this.trimValues();
               if (this.anyEmpty()) {
@@ -1089,12 +952,6 @@ const styles = {
     backgroundColor: 'transparent',
     width: 60,
     paddingRight: 0
-  },
-  checkBoxHeaderStyle: {
-    backgroundColor: 'transparent',
-    width: WIDTH,
-    fontSize: 18,
-    color: 'white'
   }
 };
 
