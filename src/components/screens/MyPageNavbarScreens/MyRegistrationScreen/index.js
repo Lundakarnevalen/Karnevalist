@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Header, ListItem, BackgroundImage } from '~/src/components/common';
 import { MY_REGISTRATION_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
 import { getStrings } from '~/src/helpers/functions';
+import { styles } from './styles';
 
 class MyRegistrationScreen extends Component {
   constructor(props) {
@@ -81,20 +81,6 @@ class MyRegistrationScreen extends Component {
     );
   }
 }
-
-const styles = {
-  style: {
-    paddingBottom: IS_IOS ? 132 : 155
-  },
-  textStyle: {
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold',
-    fontSize: 36,
-    marginTop: HEIGHT / 3,
-    color: 'white'
-  }
-};
 
 MyRegistrationScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,

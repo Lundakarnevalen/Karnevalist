@@ -20,6 +20,7 @@ import { setSections, setSectionScreenPopover } from '~/src/actions';
 import { SECTION_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { dynamicSort, getStrings } from '~/src/helpers/functions';
 import { fetchSections } from '~/src/helpers/ApiManager';
+import { styles } from './styles';
 
 class SectionScreen extends Component {
   getLanguageStrings() {
@@ -121,23 +122,6 @@ class SectionScreen extends Component {
     );
   }
 }
-
-const styles = {
-  rightIconStyle: {
-    alignItems: 'center',
-    padding: 1,
-    backgroundColor: 'transparent',
-    width: 60
-  },
-  textStyle: {
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold',
-    fontSize: 36,
-    position: 'absolute',
-    top: HEIGHT / 2
-  }
-};
 
 SectionScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,

@@ -3,7 +3,7 @@ import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import MyPageNavRouter from './screens/MyPageNavRouter';
-import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
+import SectionItemScreen from './screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
 import MyRegistrationScreen from './screens/MyPageNavbarScreens/MyRegistrationScreen';
