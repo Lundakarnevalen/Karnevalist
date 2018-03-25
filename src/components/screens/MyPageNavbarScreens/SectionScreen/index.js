@@ -102,7 +102,7 @@ class SectionScreen extends Component {
                 infoText={info[language]}
                 icon={sectionPriorities.indexOf(id) === -1 ? null : 'favorite'}
                 onPress={() =>
-                  screenProps.navigation.navigate('SectionItemScreen', {
+                  this.props.navigation.navigate('SectionItemScreen', {
                     id,
                     headerTitle: strings.headerTitle,
                     title: title[language],

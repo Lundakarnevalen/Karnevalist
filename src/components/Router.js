@@ -4,7 +4,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import MyPageNavRouter from './screens/MyPageNavRouter';
 import SectionItemScreen from './screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
-import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
+import SingleNewsScreen from './screens/MyPageNavbarScreens/NewsScreen/SingleNewsScreen';
 import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
 import MyRegistrationScreen from './screens/MyPageNavbarScreens/MyRegistrationScreen';
 import ConfirmPage from './screens/ConfirmPage';
@@ -20,30 +20,6 @@ const LoggedIn = StackNavigator({
   },
   SingleNewsScreen: {
     screen: SingleNewsScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  SongScreen: {
-    screen: SongScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  SectionItemScreen: {
-    screen: SectionItemScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  MyProfile: {
-    screen: MyProfileScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  MyRegistration: {
-    screen: MyRegistrationScreen,
     navigationOptions: {
       header: null
     }

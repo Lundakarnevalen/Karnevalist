@@ -47,6 +47,13 @@ class MyProfileScreen extends Component {
     return getStrings(this.props.language, MY_PROFILE_SCREEN_STRINGS);
   }
 
+  setAlertVisible(visible, message) {
+    const strings = this.getLanguageStrings();
+    this.setState({ alertVisible: visible });
+    if (message === strings.expiredTokenMessage)
+      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
+  }
+
   renderFields() {
     const strings = this.getLanguageStrings();
     const { user, editMode } = this.state;
@@ -85,13 +92,6 @@ class MyProfileScreen extends Component {
       );
     });
     return textFields;
-  }
-
-  setAlertVisible(visible, message) {
-    const strings = this.getLanguageStrings();
-    this.setState({ alertVisible: visible });
-    if (message === strings.expiredTokenMessage)
-      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
   renderMainView() {

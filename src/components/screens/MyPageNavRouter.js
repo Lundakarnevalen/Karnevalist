@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -19,7 +19,12 @@ import {
 import HomeScreen from '~/src/components/screens/MyPageNavbarScreens/HomeScreen';
 import SectionScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen';
 import SongBookScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen';
+import SongScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen';
 import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/SettingsScreen';
+import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
+import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
+import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
+
 import {
   SECTION_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
@@ -117,7 +122,20 @@ const TabNav = TabNavigator(
       })
     }, */
     Sections: {
-      screen: SectionScreen,
+      screen: StackNavigator({
+        SectionScreen: {
+          screen: SectionScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        SectionItemScreen: {
+          screen: SectionItemScreen,
+          navigationOptions: {
+            header: null
+          }
+        }
+      }),
       navigationOptions: props => ({
         tabBarOnPress: IS_IOS
           ? (scene, jumpToIndex) => {
@@ -142,7 +160,20 @@ const TabNav = TabNavigator(
       })
     },
     SongBook: {
-      screen: SongBookScreen,
+      screen: StackNavigator({
+        SongBookScreen: {
+          screen: SongBookScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        SongScreen: {
+          screen: SongScreen,
+          navigationOptions: {
+            header: null
+          }
+        }
+      }),
       navigationOptions: props => ({
         tabBarOnPress: IS_IOS
           ? (scene, jumpToIndex) => {
@@ -166,7 +197,26 @@ const TabNav = TabNavigator(
       })
     },
     Settings: {
-      screen: SettingsScreen,
+      screen: StackNavigator({
+        SettingsScreen: {
+          screen: SettingsScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        MyProfile: {
+          screen: MyProfileScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        MyRegistration: {
+          screen: MyRegistrationScreen,
+          navigationOptions: {
+            header: null
+          }
+        }
+      }),
       navigationOptions: props => ({
         tabBarOnPress: IS_IOS
           ? (scene, jumpToIndex) => {

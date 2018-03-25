@@ -84,9 +84,9 @@ class SettingsScreen extends Component {
               title={item.title}
               onPress={() => {
                 if (item.key === 'profile') {
-                  screenProps.navigation.navigate('MyProfile', { info: item });
+                  navigation.navigate('MyProfile', { info: item });
                 } else if (item.key === 'registration') {
-                  screenProps.navigation.navigate('MyRegistration', {
+                  navigation.navigate('MyRegistration', {
                     info: item
                   });
                 } else if (item.key === 'logout') {

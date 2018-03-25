@@ -6,7 +6,7 @@ import { Header, BackgroundImage, ListItem } from '~/src/components/common';
 import { SONGBOOK_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { dynamicSort, getStrings } from '~/src/helpers/functions';
 import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
-import songs2014 from '~/src/assets/songbook/songs2014.json';
+import songs2014 from '~/assets/songbook/songs2014.json';
 
 class SongBookScreen extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class SongBookScreen extends Component {
   }
 
   render() {
-    const { screenProps } = this.props;
+    const { navigation } = this.props;
     const strings = this.getLanguageStrings();
     return (
       <View>
@@ -44,7 +44,7 @@ class SongBookScreen extends Component {
             <ListItem
               title={item.name}
               onPress={() =>
-                screenProps.navigation.navigate('SongScreen', {
+                navigation.navigate('SongScreen', {
                   headerTitle: strings.headerTitle,
                   name: item.name,
                   melody: item.melody,
@@ -60,7 +60,7 @@ class SongBookScreen extends Component {
 }
 
 SongBookScreen.propTypes = {
-  screenProps: PropTypes.shape().isRequired,
+  navigation: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired
 };
 

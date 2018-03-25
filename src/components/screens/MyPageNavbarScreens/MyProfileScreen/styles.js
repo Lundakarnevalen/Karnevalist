@@ -1,4 +1,4 @@
-import { USER_URL, LOGOUT_RESET_ACTION, HEIGHT } from '~/src/helpers/Constants';
+import { HEIGHT } from '~/src/helpers/Constants';
 
 export const styles = {
   scrollStyle: {
