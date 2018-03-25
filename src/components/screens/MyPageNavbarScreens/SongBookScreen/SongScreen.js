@@ -6,6 +6,7 @@ import { Header } from '~/src/components/common';
 import { SECTION_ITEM_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { HEIGHT, WIDTH } from '~/src/helpers/Constants';
 import { getStrings } from '~/src/helpers/functions';
+import { songScreenStyles } from './styles';
 
 class SongScreen extends Component {
   componentWillMount() {

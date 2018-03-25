@@ -6,7 +6,7 @@ import { Header, BackgroundImage, ListItem } from '~/src/components/common';
 import { SONGBOOK_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { dynamicSort, getStrings } from '~/src/helpers/functions';
 import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
-import songs2014 from '~/assets/songbook/songs2014.json';
+import songs2014 from '~/src/assets/songbook/songs2014.json';
 
 class SongBookScreen extends Component {
   constructor(props) {

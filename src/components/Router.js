@@ -8,7 +8,7 @@ import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
 import MyRegistrationScreen from './screens/MyPageNavbarScreens/MyRegistrationScreen';
 import ConfirmPage from './screens/ConfirmPage';
-import SongScreen from './screens/MyPageNavbarScreens/SongScreen';
+import SongScreen from './screens/MyPageNavbarScreens/SongBookScreen/SongScreen';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
 
 const LoggedIn = StackNavigator({
