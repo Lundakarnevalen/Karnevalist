@@ -2,7 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
-import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
+import MyPageNavRouter from './screens/MyPageNavRouter';
 import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
 import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
@@ -12,8 +12,8 @@ import SongScreen from './screens/MyPageNavbarScreens/SongScreen';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
 
 const LoggedIn = StackNavigator({
-  MyPageNavbarScreen: {
-    screen: MyPageNavbarScreen,
+  MyPageNavRouter: {
+    screen: MyPageNavRouter,
     navigationOptions: {
       header: null
     }
@@ -85,7 +85,7 @@ const Router = StackNavigator(
         header: null
       }
     },
-    MyPageNavbarScreen: {
+    MyPageNavRouter: {
       screen: LoggedIn,
       navigationOptions: {
         header: null

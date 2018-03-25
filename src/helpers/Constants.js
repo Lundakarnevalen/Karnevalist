@@ -2,16 +2,17 @@ import { NavigationActions } from 'react-navigation';
 import { Dimensions, Platform } from 'react-native';
 
 const BASE_URL = 'https://api.lundakarnevalen.se';
-export const TOKEN_URL = BASE_URL + '/api/hello/';
-export const SECTION_URL = BASE_URL + '/getallsections';
+export const TOKEN_URL = `${BASE_URL  }/api/hello/`;
+export const SECTION_URL = `${BASE_URL  }/getallsections`;
 export const IMAGE_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/media/';
-export const REGISTER_URL = BASE_URL + '/register';
-export const SECTION_PRIORITY_URL = BASE_URL + '/api/section/';
-export const FORGOT_PASSWORD_URL = BASE_URL + '/login/forgotpassword';
-export const LOGIN_URL = BASE_URL + '/login/email';
-export const USER_URL = BASE_URL + '/api/user/';
-export const CHECK_IN_URL = BASE_URL + '/api/user/checkin/';
-export const NEWS_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/posts?category=';
+export const REGISTER_URL = `${BASE_URL  }/register`;
+export const SECTION_PRIORITY_URL = `${BASE_URL  }/api/section/`;
+export const FORGOT_PASSWORD_URL = `${BASE_URL  }/login/forgotpassword`;
+export const LOGIN_URL = `${BASE_URL  }/login/email`;
+export const USER_URL = `${BASE_URL  }/api/user/`;
+export const CHECK_IN_URL = `${BASE_URL  }/api/user/checkin/`;
+export const NEWS_URL =
+  'http://lundakarnevalen.se/wp-json/wp/v2/posts?category=';
 
 export const PROGRESS = Object.freeze({
   CREATE_PROFILE: 1,
@@ -26,6 +27,6 @@ export const LOGOUT_RESET_ACTION = NavigationActions.reset({
   key: null
 });
 
-export const HEIGHT = Dimensions.get('window').height
-export const WIDTH = Dimensions.get('window').width
-export const IS_IOS = Platform.OS === 'ios'
+export const HEIGHT = Dimensions.get('window').height;
+export const WIDTH = Dimensions.get('window').width;
+export const IS_IOS = Platform.OS === 'ios';

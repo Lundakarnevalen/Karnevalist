@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { View, StatusBar } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import {
   getItem,
   getPopoverStatus,
   getFavoriteSections
-} from '../../helpers/LocalSave';
-import { dynamicSort } from '../../helpers/functions';
-import { BackgroundImage, Loading } from '../common';
+} from '~/src/helpers/LocalSave';
+import { dynamicSort } from '~/src/helpers/functions';
+import { BackgroundImage, Loading } from '~/src/components/common';
 import {
   setSections,
   setToken,
   setEmail,
-  setSectionScreenPopover,
-  setHomeScreenPopover,
   setSectionPriorities,
-  setUserinfo
-} from '../../actions';
-import { fetchSections, fetchUserinfo } from '../../helpers/ApiManager';
+  setUserinfo,
+  setPopover
+} from '~/src/actions';
+import { fetchSections, fetchUserinfo } from '~/src/helpers/ApiManager';
 
 class SplashScreen extends Component {
   componentWillMount() {
@@ -26,12 +26,9 @@ class SplashScreen extends Component {
     StatusBar.setBarStyle('light-content', true);
     this.authorize();
     getFavoriteSections(result => this.props.setSectionPriorities(result));
-    getPopoverStatus('homeScreenPopover', bool =>
-      this.props.setHomeScreenPopover(bool)
-    );
-    getPopoverStatus('sectionScreenPopover', bool =>
-      this.props.setSectionScreenPopover(bool)
-    );
+    ['homeScreenPopover', 'sectionScreenPopover'].forEach(popover => {
+      getPopoverStatus(popover, bool => this.props.setPopover(popover, bool));
+    });
     fetchSections(sections => {
       sections.sort(dynamicSort('title', language));
       this.props.setSections(sections);
@@ -51,12 +48,11 @@ class SplashScreen extends Component {
             getItem('accessToken', token => {
               fetchUserinfo(email, token, (response, error = false) => {
                 if (error) {
-                  console.log(response);
                   this.props.navigation.dispatch(resetAction);
                 } else {
                   resetAction.actions = [
                     NavigationActions.navigate({
-                      routeName: 'MyPageNavbarScreen'
+                      routeName: 'MyPageNavRouter'
                     })
                   ];
                   this.props.setToken(token);
@@ -118,12 +114,22 @@ const mapStateToProps = ({ currentLanguage }) => {
   return { language };
 };
 
+SplashScreen.propTypes = {
+  language: PropTypes.string.isRequired,
+  navigation: PropTypes.shape().isRequired,
+  setSectionPriorities: PropTypes.func.isRequired,
+  setSections: PropTypes.func.isRequired,
+  setToken: PropTypes.func.isRequired,
+  setEmail: PropTypes.func.isRequired,
+  setPopover: PropTypes.func.isRequired,
+  setUserinfo: PropTypes.func.isRequired
+};
+
 export default connect(mapStateToProps, {
   setSections,
   setToken,
   setEmail,
-  setSectionScreenPopover,
-  setHomeScreenPopover,
   setSectionPriorities,
-  setUserinfo
+  setUserinfo,
+  setPopover
 })(SplashScreen);

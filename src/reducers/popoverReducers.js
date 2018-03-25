@@ -1,4 +1,8 @@
-import { SET_HOMESCREENPOPOVER, SET_SECTIONSCREENPOPOVER } from '../actions/Types.js';
+import {
+  SET_POPOVER,
+  SET_HOMESCREENPOPOVER,
+  SET_SECTIONSCREENPOPOVER
+} from '../actions/Types.js';
 import { setPopoverStatus } from '../helpers/LocalSave';
 
 const INITIAL_STATE = {
@@ -19,6 +23,13 @@ export default (state = INITIAL_STATE, action) => {
         setPopoverStatus('sectionScreenPopover', 'sectionScreenPopover');
       }
       return { ...state, sectionScreenPopover: action.payload };
+    }
+    case SET_POPOVER: {
+      const { status, screen } = action.payload;
+      if (status === false) {
+        setPopoverStatus(screen, screen);
+      }
+      return { ...state, [screen]: status };
     }
     default:
       return state;

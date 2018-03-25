@@ -3,7 +3,7 @@ export const SET_TOKEN = 'set_token';
 export const SET_PICTURE = 'set_picture';
 export const SET_EMAIL = 'set_email';
 export const SET_PROGRESS = 'set_progress';
-export const SET_USERINFO = 'set_userinfo'
+export const SET_USERINFO = 'set_userinfo';
 export const RESET_DATA = 'reset_data';
 
 // Sections
@@ -15,6 +15,7 @@ export const ADD_SECTION_PRIO = 'add_sections_prio';
 // Popover
 export const SET_HOMESCREENPOPOVER = 'set_homescreen_popover';
 export const SET_SECTIONSCREENPOPOVER = 'set_sectionscreen_popover';
+export const SET_POPOVER = 'set_popover';
 
 // Language
 export const SET_LANGUAGE = 'set_language';

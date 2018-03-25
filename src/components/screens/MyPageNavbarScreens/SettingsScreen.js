@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   Header,
   ListItem,
   BackgroundImage,
   SuperAgileAlert
-} from '../../common';
-import { removeItem } from '../../../helpers/LocalSave';
-import { setProgress, resetData } from '../../../actions';
+} from '~/src/components/common';
+import { removeItem } from '~/src/helpers/LocalSave';
+import { setProgress, resetData } from '~/src/actions';
 import {
   LOGOUT_RESET_ACTION,
   PROGRESS,
   HEIGHT,
   IS_IOS
-} from '../../../helpers/Constants';
-import { SETTINGS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { getStrings } from '../../../helpers/functions';
+} from '~/src/helpers/Constants';
+import { SETTINGS_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { getStrings } from '~/src/helpers/functions';
 
 const WITH_MY_REG = [
   { key: 'profile' },
@@ -106,6 +107,14 @@ class SettingsScreen extends Component {
     );
   }
 }
+SettingsScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  progress: PropTypes.number.isRequired,
+  resetData: PropTypes.func.isRequired,
+  screenProps: PropTypes.shape().isRequired
+};
+
 const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { progress } = userInformation;
   const { language } = currentLanguage;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
+import PropTypes from 'prop-types';
 import { TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -9,30 +9,52 @@ import {
   setProgress,
   setHomeScreenPopover,
   setSectionPriorities
-} from '../../actions';
+} from '~/src/actions';
 import {
   SECTION_PRIORITY_URL,
   PROGRESS,
   WIDTH,
   IS_IOS
-} from '../../helpers/Constants';
-import HomeScreen from './MyPageNavbarScreens/HomeScreen';
-import SectionScreen from './MyPageNavbarScreens/SectionScreen';
-import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
-import SettingsScreen from './MyPageNavbarScreens/SettingsScreen';
+} from '~/src/helpers/Constants';
+import HomeScreen from '~/src/components/screens/MyPageNavbarScreens/HomeScreen';
+import SectionScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen';
+import SongBookScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen';
+import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/SettingsScreen';
 import {
   SECTION_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
-} from '../../helpers/LanguageStrings';
-import { fetchCheckInStatus } from '../../helpers/ApiManager';
+} from '~/src/helpers/LanguageStrings';
+import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
 
 const SIZE = WIDTH / 11;
 
-class MyPageNavbarScreen extends Component {
+class MyPageNavRouter extends Component {
   componentWillMount() {
     if (this.props.token) this.updateProgress();
+  }
+
+  getSectionPriorities(token) {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'application/json'
+    };
+    axios
+      .get(SECTION_PRIORITY_URL, { headers })
+      .then(response => {
+        const { success, sectionPriorities } = response.data;
+        if (success) {
+          if (sectionPriorities.length > 0) {
+            this.props.setProgress(PROGRESS.SENT_SECTIONS);
+            this.props.setSectionPriorities(sectionPriorities);
+          }
+        }
+      })
+      .catch(error => {
+        // const msg = handleErrorMsg(error)
+        console.log(error);
+      });
   }
 
   updateProgress() {
@@ -53,27 +75,6 @@ class MyPageNavbarScreen extends Component {
     );
   }
 
-  getSectionPriorities(token) {
-    const headers = {
-      Authorization: `Bearer ${  token}`,
-      'content-type': 'application/json'
-    };
-    axios
-      .get(SECTION_PRIORITY_URL, { headers })
-      .then(response => {
-        const { success, sectionPriorities } = response.data;
-        if (success) {
-          if (sectionPriorities.length > 0) {
-            this.props.setProgress(PROGRESS.SENT_SECTIONS);
-            this.props.setSectionPriorities(sectionPriorities);
-          }
-        }
-      })
-      .catch(error => {
-        // const msg = handleErrorMsg(error)
-        console.log(error);
-      });
-  }
   render() {
     const { navigation, language, setHomeScreenPopover, progress } = this.props;
     return (
@@ -228,9 +229,22 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
     sectionPriorities: sections.sectionPriorities
   };
 };
+
+MyPageNavRouter.propTypes = {
+  email: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  sectionPriorities: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setProgress: PropTypes.func.isRequired,
+  setSectionPriorities: PropTypes.func.isRequired,
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  setHomeScreenPopover: PropTypes.func.isRequired,
+  progress: PropTypes.number.isRequired
+};
+
 export default connect(mapStateToProps, {
   setSections,
   setProgress,
   setHomeScreenPopover,
   setSectionPriorities
-})(MyPageNavbarScreen);
+})(MyPageNavRouter);
