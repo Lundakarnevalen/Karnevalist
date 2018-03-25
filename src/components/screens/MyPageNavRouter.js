@@ -7,7 +7,7 @@ import axios from 'axios';
 import {
   setSections,
   setProgress,
-  setHomeScreenPopover,
+  setPopover,
   setSectionPriorities
 } from '~/src/actions';
 import {
@@ -81,11 +81,9 @@ class MyPageNavRouter extends Component {
   }
 
   render() {
-    const { navigation, language, setHomeScreenPopover, progress } = this.props;
+    const { navigation, language, setPopover, progress } = this.props;
     return (
-      <TabNav
-        screenProps={{ navigation, language, setHomeScreenPopover, progress }}
-      />
+      <TabNav screenProps={{ navigation, language, setPopover, progress }} />
     );
   }
 }
@@ -141,12 +139,12 @@ const TabNav = TabNavigator(
           ? (scene, jumpToIndex) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             }
           : ({ scene, jumpToIndex }) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
@@ -179,12 +177,12 @@ const TabNav = TabNavigator(
           ? (scene, jumpToIndex) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             }
           : ({ scene, jumpToIndex }) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
@@ -222,12 +220,12 @@ const TabNav = TabNavigator(
           ? (scene, jumpToIndex) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             }
           : ({ scene, jumpToIndex }) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             },
         tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
@@ -288,13 +286,13 @@ MyPageNavRouter.propTypes = {
   setSectionPriorities: PropTypes.func.isRequired,
   navigation: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired,
-  setHomeScreenPopover: PropTypes.func.isRequired,
+  setPopover: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired
 };
 
 export default connect(mapStateToProps, {
   setSections,
   setProgress,
-  setHomeScreenPopover,
+  setPopover,
   setSectionPriorities
 })(MyPageNavRouter);

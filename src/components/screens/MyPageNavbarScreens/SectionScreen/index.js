@@ -16,7 +16,7 @@ import {
   Popover
 } from '~/src/components/common';
 import { PROGRESS, HEIGHT, IS_IOS } from '~/src/helpers/Constants';
-import { setSections, setSectionScreenPopover } from '~/src/actions';
+import { setSections, setPopover } from '~/src/actions';
 import { SECTION_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { dynamicSort, getStrings } from '~/src/helpers/functions';
 import { fetchSections } from '~/src/helpers/ApiManager';
@@ -35,7 +35,7 @@ class SectionScreen extends Component {
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
-          this.props.setSectionScreenPopover(false);
+          this.props.setPopover('sectionScreenPopover', false);
           screenProps.navigation.navigate('ConfirmPage');
         }}
       >
@@ -56,7 +56,7 @@ class SectionScreen extends Component {
     if (popover && this.props.progress >= 2)
       return (
         <Popover
-          onPress={() => this.props.setSectionScreenPopover(false)}
+          onPress={() => this.props.setPopover('sectionScreenPopover', false)}
           type="topRight"
           text={text}
           name="sectionScreenPopover"
@@ -65,13 +65,7 @@ class SectionScreen extends Component {
   }
 
   render() {
-    const {
-      navigation,
-      screenProps,
-      language,
-      sectionPriorities,
-      sections
-    } = this.props;
+    const { navigation, language, sectionPriorities, sections } = this.props;
     const strings = this.getLanguageStrings();
     return (
       <View>
@@ -131,7 +125,7 @@ SectionScreen.propTypes = {
   popover: PropTypes.bool.isRequired,
   sectionPriorities: PropTypes.arrayOf(PropTypes.number).isRequired,
   sections: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  setSectionScreenPopover: PropTypes.func.isRequired,
+  setPopover: PropTypes.func.isRequired,
   setSections: PropTypes.func.isRequired
 };
 
@@ -155,5 +149,5 @@ const mapStateToProps = ({
 
 export default connect(mapStateToProps, {
   setSections,
-  setSectionScreenPopover
+  setPopover
 })(SectionScreen);

@@ -13,7 +13,7 @@ import { HOME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
 import { PROGRESS, WIDTH } from '~/src/helpers/Constants';
 import images from '~/assets/images';
-import { setHomeScreenPopover, setProgress } from '~/src/actions';
+import { setPopover, setProgress } from '~/src/actions';
 import { getStrings } from '~/src/helpers/functions';
 import { styles } from './styles';
 
@@ -49,7 +49,7 @@ class HomeScreen extends Component {
     if (popover && this.props.progress >= 2) {
       return (
         <Popover
-          onPress={() => this.props.setHomeScreenPopover(false)}
+          onPress={() => this.props.setPopover('homeScreenPopover', false)}
           type="bottomLeft"
           text={text}
           big
@@ -233,7 +233,7 @@ HomeScreen.propTypes = {
   token: PropTypes.string.isRequired,
   setProgress: PropTypes.func.isRequired,
   sectionPriorities: PropTypes.arrayOf(PropTypes.number).isRequired,
-  setHomeScreenPopover: PropTypes.func.isRequired
+  setPopover: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({
@@ -254,6 +254,6 @@ const mapStateToProps = ({
   };
 };
 
-export default connect(mapStateToProps, { setProgress, setHomeScreenPopover })(
+export default connect(mapStateToProps, { setProgress, setPopover })(
   HomeScreen
 );
