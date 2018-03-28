@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, Image, Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import * as Progress from 'react-native-progress';
@@ -6,16 +7,15 @@ import {
   Header,
   BackgroundImage,
   Popover,
-  TimelineItem,
-  SuperAgileAlert,
-  CountDown
+  TimelineItem
 } from '~/src/components/common';
 import { HOME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
 import { PROGRESS, WIDTH } from '~/src/helpers/Constants';
 import images from '~/assets/images';
-import { setHomeScreenPopover, setProgress } from '../../../actions';
-import { getStrings } from '../../../helpers/functions';
+import { setPopover, setProgress } from '~/src/actions';
+import { getStrings } from '~/src/helpers/functions';
+import { styles } from './styles';
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -23,28 +23,12 @@ class HomeScreen extends Component {
     this.state = {
       animate: true,
       checkInLoading: false,
-      alertVisible: false,
       spinValue: new Animated.Value(0)
     };
   }
 
   getLanguageStrings() {
     return getStrings(this.props.language, HOME_SCREEN_STRINGS);
-  }
-
-  renderPopover(text) {
-    const { popover } = this.props;
-    if (popover && this.props.progress >= 2) {
-      return (
-        <Popover
-          onPress={() => this.props.setHomeScreenPopover(false)}
-          type="bottomLeft"
-          text={text}
-          big
-          name="homeScreenPopover"
-        />
-      );
-    }
   }
 
   animateProgress() {
@@ -58,6 +42,21 @@ class HomeScreen extends Component {
       return 0;
     }
     return this.props.progress * 0.25;
+  }
+
+  renderPopover(text) {
+    const { popover } = this.props;
+    if (popover && this.props.progress >= 2) {
+      return (
+        <Popover
+          onPress={() => this.props.setPopover('homeScreenPopover', false)}
+          type="bottomLeft"
+          text={text}
+          big
+          name="homeScreenPopover"
+        />
+      );
+    }
   }
 
   updateProgress() {
@@ -224,60 +223,17 @@ class HomeScreen extends Component {
   }
 }
 
-const styles = {
-  container: {
-    alignItems: 'center',
-    width: WIDTH,
-    backgroundColor: 'transparent'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  rightIconStyle: {
-    alignItems: 'center',
-    padding: 1,
-    backgroundColor: 'transparent',
-    width: 60
-  },
-  buttons: {
-    position: 'absolute',
-    flexDirection: 'row',
-    flex: 1,
-    top: 0,
-    left: 0,
-    marginTop: 20
-  },
-  textStyleProgress: {
-    fontSize: WIDTH / 19,
-    fontWeight: 'bold',
-    color: '#fff',
-    fontFamily: 'Avenir Next Medium',
-    margin: 10
-  },
-  textStyle: {
-    fontSize: 18,
-    color: '#fff',
-    fontFamily: 'Avenir Next Medium'
-  },
-  popoverContainer: {
-    backgroundColor: '#114B5F',
-    padding: 8,
-    borderRadius: 5
-  },
-  popoverText: {
-    color: '#E4FDE1'
-  },
-  containerAnimated: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  image: {
-    width: 45,
-    height: 45,
-    resizeMode: 'contain'
-  }
+HomeScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  progress: PropTypes.number.isRequired,
+  screenProps: PropTypes.shape().isRequired,
+  popover: PropTypes.bool.isRequired,
+  email: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  setProgress: PropTypes.func.isRequired,
+  sectionPriorities: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setPopover: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({
@@ -298,6 +254,6 @@ const mapStateToProps = ({
   };
 };
 
-export default connect(mapStateToProps, { setProgress, setHomeScreenPopover })(
+export default connect(mapStateToProps, { setProgress, setPopover })(
   HomeScreen
 );

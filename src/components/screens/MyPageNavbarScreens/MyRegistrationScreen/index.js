@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { BackHandler, View, FlatList, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header, ListItem, BackgroundImage } from '../../common';
-import { MY_REGISTRATION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
-import { getStrings } from '../../../helpers/functions';
+import { Header, ListItem, BackgroundImage } from '~/src/components/common';
+import { MY_REGISTRATION_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { getStrings } from '~/src/helpers/functions';
+import { styles } from './styles';
 
 class MyRegistrationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
       data: this.getSectionPriority(props.sectionPriorities)
     };
   }
@@ -28,14 +28,14 @@ class MyRegistrationScreen extends Component {
   getSectionPriority(sectionPriorities) {
     const { sections, language } = this.props;
     const data = sectionPriorities.map((key, i) => {
-      const index = sections.findIndex(s => s.key + '' === key + '');
+      const index = sections.findIndex(s => `${s.key}` === `${key}`);
       const section = sections[index];
       return {
         key: section.key,
         id: section.key,
         image: section.image,
         info: section.info[language],
-        titleAndRank: i + 1 + ' ' + section.title[language],
+        titleAndRank: `${i + 1} ${section.title[language]}`,
         title: section.title[language]
       };
     });
@@ -82,18 +82,11 @@ class MyRegistrationScreen extends Component {
   }
 }
 
-const styles = {
-  style: {
-    paddingBottom: IS_IOS ? 132 : 155
-  },
-  textStyle: {
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold',
-    fontSize: 36,
-    marginTop: HEIGHT / 3,
-    color: 'white'
-  }
+MyRegistrationScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  sections: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  sectionPriorities: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 const mapStateToProps = ({ sections, currentLanguage, userInformation }) => {
