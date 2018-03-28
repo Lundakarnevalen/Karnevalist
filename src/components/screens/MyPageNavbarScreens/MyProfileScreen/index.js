@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -16,19 +17,16 @@ import {
   SuperAgileAlert,
   Header,
   Input
-} from '../../common';
-import {
-  USER_URL,
-  LOGOUT_RESET_ACTION,
-  HEIGHT
-} from '../../../helpers/Constants';
-import { getStrings } from '../../../helpers/functions';
+} from '~/src/components/common';
+import { USER_URL, LOGOUT_RESET_ACTION } from '~/src/helpers/Constants';
+import { getStrings } from '~/src/helpers/functions';
 import {
   MY_PROFILE_SCREEN_STRINGS,
   ERROR_MSG_INPUT_FIELD
-} from '../../../helpers/LanguageStrings';
-// import { handleErrorMsg } from '../../../helpers/ApiManager';
-// import { removeItem } from '../../../helpers/LocalSave';
+} from '~/src/helpers/LanguageStrings';
+// import { handleErrorMsg } from '~/src/helpers/ApiManager';
+// import { removeItem } from '~/src/helpers/LocalSave';
+import { styles } from './styles';
 
 class MyProfileScreen extends Component {
   constructor(props) {
@@ -49,6 +47,13 @@ class MyProfileScreen extends Component {
     return getStrings(this.props.language, MY_PROFILE_SCREEN_STRINGS);
   }
 
+  setAlertVisible(visible, message) {
+    const strings = this.getLanguageStrings();
+    this.setState({ alertVisible: visible });
+    if (message === strings.expiredTokenMessage)
+      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
+  }
+
   renderFields() {
     const strings = this.getLanguageStrings();
     const { user, editMode } = this.state;
@@ -65,7 +70,12 @@ class MyProfileScreen extends Component {
       const textColor = editMode && key !== 'email' ? 'black' : 'white';
       const placeholderTextColor =
         editMode && key !== 'email' ? '#F7A021' : 'white';
-      if (user[key] === '' || user[key] === null || user[key] === undefined)
+      if (
+        user[key] === '' ||
+        user[key] === null ||
+        user[key] === undefined ||
+        !user[key].length
+      )
         return null;
       if (user[key] === true) user[key] = strings.yes;
       if (user[key] === false) user[key] = strings.no;
@@ -84,19 +94,12 @@ class MyProfileScreen extends Component {
     return textFields;
   }
 
-  setAlertVisible(visible, message) {
-    const strings = this.getLanguageStrings();
-    this.setState({ alertVisible: visible });
-    if (message === strings.expiredTokenMessage)
-      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
-  }
-
   renderMainView() {
     const { user } = this.state;
     if (user === null || user === undefined)
       return (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" color={'white'} />
+          <ActivityIndicator size="large" color="white" />
         </View>
       );
     return (
@@ -117,28 +120,12 @@ class MyProfileScreen extends Component {
   }
 }
 
-const styles = {
-  scrollStyle: {
-    height: HEIGHT - 64,
-    paddingTop: 4,
-    paddingRight: 16,
-    paddingLeft: 16
-  },
-  loadingText: {
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold',
-    fontSize: 36
-  },
-  loading: {
-    marginTop: HEIGHT / 3
-  },
-  rightIconStyle: {
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    width: 60
-  }
+MyProfileScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  userinfo: PropTypes.shape().isRequired
 };
+
 const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token, email, userinfo } = userInformation;
@@ -354,7 +341,7 @@ export default connect(mapStateToProps, null)(MyProfileScreen);
 //   info={strings.invalidChangesMadeText}
 // />
 
-//<View>
+// <View>
 //   {this.renderMainView()}
 //   <Toast
 //     color={'#f4376d'}

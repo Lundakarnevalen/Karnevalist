@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Keyboard } from 'react-native';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import { setLanguage, setToken, setEmail, setUserinfo } from '../../actions';
+import { setLanguage, setToken, setEmail, setUserinfo } from '~/src/actions';
 import {
   Input,
   SuperAgileAlert,
@@ -11,17 +12,13 @@ import {
   Toast,
   CustomButton,
   Loading
-} from '../common';
-import {
-  LOGIN_URL,
-  FORGOT_PASSWORD_URL,
-  WIDTH,
-  HEIGHT
-} from '../../helpers/Constants';
-import { saveItem } from '../../helpers/LocalSave';
-import { getStrings } from '../../helpers/functions';
-import { handleErrorMsg } from '../../helpers/ApiManager';
-import { LOGIN_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
+} from '~/src/components/common';
+import { LOGIN_URL, FORGOT_PASSWORD_URL, WIDTH } from '~/src/helpers/Constants';
+import { saveItem } from '~/src/helpers/LocalSave';
+import { getStrings } from '~/src/helpers/functions';
+import { handleErrorMsg } from '~/src/helpers/ApiManager';
+import { LOGIN_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { styles } from './styles';
 
 const COMPONENT_WIDTH = WIDTH * 0.9;
 
@@ -42,38 +39,6 @@ class LoginScreen extends Component {
 
   getLanguageStrings() {
     return getStrings(this.props.language, LOGIN_SCREEN_STRINGS);
-  }
-
-  changeLang() {
-    const language = this.props.language === 'SE' ? 'EN' : 'SE';
-    this.props.setLanguage(language);
-    saveItem('language', language);
-  }
-
-  handleResetPassword() {
-    const strings = this.getLanguageStrings();
-    const forgotPasswordEmail = this.state.forgotPasswordEmail.trim();
-    this.setState({ forgotPasswordEmail });
-    axios
-      .post(FORGOT_PASSWORD_URL, {
-        email: this.state.forgotPasswordEmail
-      })
-      .then(response => {
-        if (!response.data.success) {
-          this.setState({ resetPasswordError: strings.responseFail });
-        } else {
-          this.setState({
-            alertVisible: false,
-            forgotPasswordEmail: '',
-            resetPasswordError: '',
-            showToast: true
-          });
-        }
-      })
-      .catch(error => {
-        const msg = handleErrorMsg(error, strings);
-        this.setState({ resetPasswordError: msg });
-      });
   }
 
   getAlertButtons(message) {
@@ -111,6 +76,38 @@ class LoginScreen extends Component {
           }
         ];
     }
+  }
+
+  handleResetPassword() {
+    const strings = this.getLanguageStrings();
+    const forgotPasswordEmail = this.state.forgotPasswordEmail.trim();
+    this.setState({ forgotPasswordEmail });
+    axios
+      .post(FORGOT_PASSWORD_URL, {
+        email: this.state.forgotPasswordEmail
+      })
+      .then(response => {
+        if (!response.data.success) {
+          this.setState({ resetPasswordError: strings.responseFail });
+        } else {
+          this.setState({
+            alertVisible: false,
+            forgotPasswordEmail: '',
+            resetPasswordError: '',
+            showToast: true
+          });
+        }
+      })
+      .catch(error => {
+        const msg = handleErrorMsg(error, strings);
+        this.setState({ resetPasswordError: msg });
+      });
+  }
+
+  changeLang() {
+    const language = this.props.language === 'SE' ? 'EN' : 'SE';
+    this.props.setLanguage(language);
+    saveItem('language', language);
   }
 
   handleLogin() {
@@ -172,7 +169,7 @@ class LoginScreen extends Component {
     const strings = this.getLanguageStrings();
     return (
       <View style={containerStyle}>
-        <BackgroundImage pictureNumber={'background-login'} />
+        <BackgroundImage pictureNumber="background-login" />
         <ScrollView keyboardShouldPersistTaps="handled" scrollEnabled={false}>
           <View style={container1}>
             <View style={{ alignSelf: 'flex-start' }}>
@@ -185,28 +182,28 @@ class LoginScreen extends Component {
             </View>
             <Input
               value={email}
-              keyboardType={'email-address'}
+              keyboardType="email-address"
               placeholder={strings.email}
               autoCapitalize="none"
               width={COMPONENT_WIDTH}
               onChangeText={text => this.setState({ email: text })}
-              returnKeyType={'next'}
+              returnKeyType="next"
               onSubmitEditing={() => this.refs.secondInput.focus()}
             />
             <Input
-              ref={'secondInput'}
+              ref="secondInput"
               value={password}
               placeholder={strings.password}
               width={COMPONENT_WIDTH}
               secureText
               onChangeText={text => this.setState({ password: text })}
-              returnKeyType={'done'}
+              returnKeyType="done"
               onSubmitEditing={() => this.handleLogin()}
             />
             <CustomButton
               text={strings.loginButton}
               onPress={() => this.handleLogin()}
-              style={'standardButton'}
+              style="standardButton"
               width={COMPONENT_WIDTH}
             />
             <CustomButton
@@ -242,7 +239,7 @@ class LoginScreen extends Component {
                   <Input
                     placeholder={strings.email}
                     width={WIDTH / 1.2}
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     onChangeText={text =>
                       this.setState({
                         forgotPasswordEmail: text,
@@ -250,7 +247,7 @@ class LoginScreen extends Component {
                       })
                     }
                     value={forgotPasswordEmail}
-                    returnKeyType={'done'}
+                    returnKeyType="done"
                     onSubmitEditing={() => this.handleResetPassword()}
                     hasError={resetPasswordError !== ''}
                     warningMessage={resetPasswordError}
@@ -273,7 +270,7 @@ class LoginScreen extends Component {
                 index: 0,
                 actions: [
                   NavigationActions.navigate({
-                    routeName: 'MyPageNavbarScreen'
+                    routeName: 'MyPageNavRouter'
                   })
                 ],
                 key: null
@@ -292,33 +289,14 @@ class LoginScreen extends Component {
   }
 }
 
-const styles = {
-  container1: {
-    height: HEIGHT,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'transparent'
-  },
-  container2: {
-    flex: 0,
-    margin: 0,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end'
-  },
-  textInputStyle: {
-    borderRadius: 0,
-    borderWidth: 0
-  },
-  inputHeaderTextStyle: {
-    color: 'white',
-    fontSize: 12
-  },
-  containerStyle: {
-    width: WIDTH,
-    height: HEIGHT
-  }
+LoginScreen.propTypes = {
+  language: PropTypes.string.isRequired,
+  navigation: PropTypes.shape().isRequired,
+  setEmail: PropTypes.func.isRequired,
+  setLanguage: PropTypes.func.isRequired,
+  setToken: PropTypes.func.isRequired,
+  setUserinfo: PropTypes.func.isRequired
 };
-
 const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
   return { language };

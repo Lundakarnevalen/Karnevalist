@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header, BackgroundImage, ListItem } from '../../common';
-import { SONGBOOK_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { dynamicSort, getStrings } from '../../../helpers/functions';
-import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
-import songs2014 from '../../../../assets/songbook/songs2014.json';
+import { Header, BackgroundImage, ListItem } from '~/src/components/common';
+import { SONGBOOK_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { dynamicSort, getStrings } from '~/src/helpers/functions';
+import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
+import songs2014 from '~/assets/songbook/songs2014.json';
 
 class SongBookScreen extends Component {
   constructor(props) {
     super(props);
-    const data = [];
-    songs2014.dict.array.forEach((song, i) => {
-      const item = {};
-      item.key = i;
-      item.name = song.string[1];
-      item.melody = song.string[2];
-      item.text = song.string[3];
-      data.push(item);
-    });
+    const data = songs2014.dict.array.map((song, i) => ({
+      key: i,
+      name: song.string[1],
+      melody: song.string[2],
+      text: song.string[3]
+    }));
     data.sort(dynamicSort('name'));
     this.state = {
       data
@@ -30,7 +28,7 @@ class SongBookScreen extends Component {
   }
 
   render() {
-    const { screenProps } = this.props;
+    const { navigation } = this.props;
     const strings = this.getLanguageStrings();
     return (
       <View>
@@ -46,7 +44,7 @@ class SongBookScreen extends Component {
             <ListItem
               title={item.name}
               onPress={() =>
-                screenProps.navigation.navigate('SongScreen', {
+                navigation.navigate('SongScreen', {
                   headerTitle: strings.headerTitle,
                   name: item.name,
                   melody: item.melody,
@@ -60,6 +58,11 @@ class SongBookScreen extends Component {
     );
   }
 }
+
+SongBookScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired
+};
 
 const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
