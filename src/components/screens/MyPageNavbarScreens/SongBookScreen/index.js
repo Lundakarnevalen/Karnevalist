@@ -6,15 +6,21 @@ import {
   Header,
   BackgroundImage,
   ListItem,
-  Input
+  Input,
+  Popover
 } from '~/src/components/common';
 import { SONGBOOK_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { dynamicSort, getStrings } from '~/src/helpers/functions';
+import { setPopover } from '~/src/actions';
 import { HEIGHT, IS_IOS, WIDTH } from '~/src/helpers/Constants';
 import songs2018 from '~/assets/songbook/songs2018.json';
 import { styles } from './styles';
 
 const NBR_SONGS = 32;
+const songIncludesText = (song, input) =>
+  song.name.toLowerCase().includes(input) ||
+  song.melody.toLowerCase().includes(input) ||
+  song.category.toLowerCase().includes(input);
 class SongBookScreen extends Component {
   constructor(props) {
     super(props);
@@ -25,16 +31,16 @@ class SongBookScreen extends Component {
       text: song.string[3],
       category: song.string[0]
     }));
-    const sections = songs2018.dict.array
+    const categories = songs2018.dict.array
       .map(song => song.string[0])
       .filter((item, i, ar) => ar.indexOf(item) === i);
-    const allData = sections.map(s => ({
+    const categorySongs = categories.map(s => ({
       title: s,
       data: data.filter(d => d.category === s).sort(dynamicSort('name'))
     }));
     this.state = {
-      allData,
-      currentData: allData,
+      categorySongs,
+      currentCategorySongs: categorySongs,
       input: ''
     };
   }
@@ -42,22 +48,36 @@ class SongBookScreen extends Component {
   getLanguageStrings() {
     return getStrings(this.props.language, SONGBOOK_SCREEN_STRINGS);
   }
-
+  resetFilter() {
+    this.setState({
+      input: '',
+      currentCategorySongs: this.state.categorySongs
+    });
+  }
   filterData(input) {
-    input = input.toLowerCase();
-    const { allData } = this.state;
-    const currentData = allData.map(({ title, data }) => ({
+    const value = input.toLowerCase();
+    const { categorySongs } = this.state;
+    const currentCategorySongs = categorySongs.map(({ title, data }) => ({
       title,
-      data: data.filter(
-        d =>
-          d.name.toLowerCase().includes(input) ||
-          d.melody.toLowerCase().includes(input) ||
-          d.category.toLowerCase().includes(input)
-      )
+      data: data.filter(d => songIncludesText(d, value))
     }));
-    this.setState({ input, currentData });
+    this.setState({ input, currentCategorySongs });
   }
 
+  renderPopover(text) {
+    const { popover } = this.props;
+    if (popover)
+      return (
+        <Popover
+          onPress={() => this.props.setPopover('songBookScreenPopover', false)}
+          type="topLeft"
+          text={text}
+          name="songBookScreenPopover"
+          big
+        />
+      );
+    return null;
+  }
   render() {
     const { navigation } = this.props;
     const strings = this.getLanguageStrings();
@@ -67,15 +87,19 @@ class SongBookScreen extends Component {
         <View>
           <Header title={strings.title} />
         </View>
-        <Input
-          width={WIDTH * 2 / 3}
-          placeholder="Search.."
-          value={this.state.input}
-          onChangeText={input => this.filterData(input)}
-        />
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <Input
+            width={WIDTH * 5 / 6}
+            placeholder={strings.search}
+            icon="remove"
+            iconOnPress={() => this.resetFilter()}
+            value={this.state.input}
+            onChangeText={text => this.filterData(text)}
+          />
+        </View>
         <SectionList
           style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
-          sections={this.state.currentData}
+          sections={this.state.currentCategorySongs}
           contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
           renderSectionHeader={({ section }) =>
             section.data && section.data.length > 0 ? (
@@ -99,6 +123,7 @@ class SongBookScreen extends Component {
           initialNumToRender={NBR_SONGS}
           keyExtractor={(item, index) => index}
         />
+        {this.renderPopover(strings.searchPopover)}
       </View>
     );
   }
@@ -106,12 +131,17 @@ class SongBookScreen extends Component {
 
 SongBookScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,
-  language: PropTypes.string.isRequired
+  language: PropTypes.string.isRequired,
+  popover: PropTypes.bool.isRequired,
+  setPopover: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ currentLanguage }) => {
+const mapStateToProps = ({ currentLanguage, popoverStatus }) => {
   const { language } = currentLanguage;
-  return { language };
+  const popover = popoverStatus.songBookScreenPopover;
+  return { language, popover };
 };
 
-export default connect(mapStateToProps, null)(SongBookScreen);
+export default connect(mapStateToProps, {
+  setPopover
+})(SongBookScreen);

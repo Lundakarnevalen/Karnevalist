@@ -1,16 +1,38 @@
 import { WIDTH, IS_IOS } from '~/src/helpers/Constants';
 
+const talkBubbleTop = {
+  backgroundColor: 'transparent',
+  position: 'absolute',
+  top: IS_IOS ? 70 : 74
+};
 export const styles = {
   talkBubbleTopRight: {
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    top: IS_IOS ? 70 : 74,
+    ...talkBubbleTop,
     right: 5
+  },
+  talkBubbleTopLeft: {
+    ...talkBubbleTop,
+    top: IS_IOS ? 120 : 124,
+    left: 10
   },
   talkBubbleTriangleTopRight: {
     width: 0,
     height: 0,
     left: WIDTH / 2,
+    marginBottom: -20,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderLeftWidth: 15,
+    borderRightWidth: 15,
+    borderBottomWidth: 30,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#F7A021'
+  },
+  talkBubbleTriangleTopLeft: {
+    width: 0,
+    height: 0,
+    left: WIDTH / 10,
     marginBottom: -20,
     backgroundColor: 'transparent',
     borderStyle: 'solid',

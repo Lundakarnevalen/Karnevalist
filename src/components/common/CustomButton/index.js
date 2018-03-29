@@ -55,8 +55,7 @@ const getButtonStyle = style => {
   }
 };
 
-const CustomButton = props => {
-  const { onPress, text, width, style } = props;
+const CustomButton = ({ onPress, text, width, style }) => {
   const { button } = styles;
   return (
     <TouchableOpacity
