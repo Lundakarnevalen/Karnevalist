@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header, ListItem, BackgroundImage } from '../../common';
-import { getNews } from '../../../helpers/ApiManager';
-import { NEWS_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { HEIGHT, IS_IOS } from '../../../helpers/Constants';
-import { getStrings } from '../../../helpers/functions';
+import { Header, ListItem, BackgroundImage } from '~/src/components/common';
+import { getNews } from '~/src/helpers/ApiManager';
+import { NEWS_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
+import { getStrings } from '~/src/helpers/functions';
 
 class NewsScreen extends Component {
   constructor(props) {
@@ -35,7 +36,6 @@ class NewsScreen extends Component {
           enableEmptySections
           style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
           data={data}
-          enableEmptySections
           contentContainerStyle={{ alignItems: 'center' }}
           renderItem={({ item }) => (
             <ListItem
@@ -53,6 +53,13 @@ class NewsScreen extends Component {
     );
   }
 }
+
+NewsScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  screenProps: PropTypes.shape().isRequired
+};
+
 const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
   return { language };

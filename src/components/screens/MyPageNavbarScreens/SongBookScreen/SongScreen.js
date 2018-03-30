@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, BackHandler } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '../../common';
-import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { HEIGHT, WIDTH } from '../../../helpers/Constants';
-import { getStrings } from '../../../helpers/functions';
+import { Header } from '~/src/components/common';
+import { SECTION_ITEM_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { HEIGHT, WIDTH } from '~/src/helpers/Constants';
+import { getStrings } from '~/src/helpers/functions';
+import { songScreenStyles } from './styles';
 
-class SectionItemScreen extends Component {
+class SongScreen extends Component {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.props.navigation.goBack()
@@ -67,10 +69,15 @@ const styles = {
   }
 };
 
+SongScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired
+};
+
 const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { language } = currentLanguage;
   const { progress } = userInformation;
   return { language, progress };
 };
 
-export default connect(mapStateToProps, null)(SectionItemScreen);
+export default connect(mapStateToProps, null)(SongScreen);

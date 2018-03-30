@@ -1,57 +1,44 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import PropTypes from 'prop-types';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import {
   setSections,
   setProgress,
-  setHomeScreenPopover,
+  setPopover,
   setSectionPriorities
-} from '../../actions';
+} from '~/src/actions';
 import {
   SECTION_PRIORITY_URL,
   PROGRESS,
   WIDTH,
   IS_IOS
-} from '../../helpers/Constants';
-import HomeScreen from './MyPageNavbarScreens/HomeScreen';
-import SectionScreen from './MyPageNavbarScreens/SectionScreen';
-import SongBookScreen from './MyPageNavbarScreens/SongBookScreen';
-import SettingsScreen from './MyPageNavbarScreens/SettingsScreen';
-import CardstackScreen from './CardstackScreen';
+} from '~/src/helpers/Constants';
+import HomeScreen from '~/src/components/screens/MyPageNavbarScreens/HomeScreen';
+import SectionScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen';
+import SongBookScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen';
+import SongScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen';
+import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/SettingsScreen';
+import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
+import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
+import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
+import CardstackScreen from '~/src/components/screens/MyPageNavbarScreens/CardstackScreen';
+
 import {
   SECTION_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
-} from '../../helpers/LanguageStrings';
-import { fetchCheckInStatus } from '../../helpers/ApiManager';
+} from '~/src/helpers/LanguageStrings';
+import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
 
 const SIZE = WIDTH / 11;
 
-class MyPageNavbarScreen extends Component {
+class MyPageNavRouter extends Component {
   componentWillMount() {
     if (this.props.token) this.updateProgress();
-  }
-
-  updateProgress() {
-    const { email, token } = this.props;
-    fetchCheckInStatus(
-      email,
-      token,
-      checkedInStatus => {
-        if (checkedInStatus === true) {
-          this.props.setProgress(PROGRESS.CHECK_IN);
-          if (this.props.sectionPriorities.length > 4) {
-            this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
-          }
-          this.getSectionPriorities(token);
-        }
-      },
-      null
-    );
   }
 
   getSectionPriorities(token) {
@@ -75,12 +62,29 @@ class MyPageNavbarScreen extends Component {
         console.log(error);
       });
   }
+
+  updateProgress() {
+    const { email, token } = this.props;
+    fetchCheckInStatus(
+      email,
+      token,
+      checkedInStatus => {
+        if (checkedInStatus === true) {
+          this.props.setProgress(PROGRESS.CHECK_IN);
+          if (this.props.sectionPriorities.length > 4) {
+            this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+          }
+          this.getSectionPriorities(token);
+        }
+      },
+      null
+    );
+  }
+
   render() {
-    const { navigation, language, setHomeScreenPopover, progress } = this.props;
+    const { navigation, language, setPopover, progress } = this.props;
     return (
-      <TabNav
-        screenProps={{ navigation, language, setHomeScreenPopover, progress }}
-      />
+      <TabNav screenProps={{ navigation, language, setPopover, progress }} />
     );
   }
 }
@@ -117,18 +121,31 @@ const TabNav = TabNavigator(
       })
     }, */
     Sections: {
-      screen: SectionScreen,
+      screen: StackNavigator({
+        SectionScreen: {
+          screen: SectionScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        SectionItemScreen: {
+          screen: SectionItemScreen,
+          navigationOptions: {
+            header: null
+          }
+        }
+      }),
       navigationOptions: props => ({
         tabBarOnPress: IS_IOS
           ? (scene, jumpToIndex) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             }
           : ({ scene, jumpToIndex }) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
@@ -142,18 +159,31 @@ const TabNav = TabNavigator(
       })
     },
     SongBook: {
-      screen: SongBookScreen,
+      screen: StackNavigator({
+        SongBookScreen: {
+          screen: SongBookScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        SongScreen: {
+          screen: SongScreen,
+          navigationOptions: {
+            header: null
+          }
+        }
+      }),
       navigationOptions: props => ({
         tabBarOnPress: IS_IOS
           ? (scene, jumpToIndex) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             }
           : ({ scene, jumpToIndex }) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
@@ -166,18 +196,37 @@ const TabNav = TabNavigator(
       })
     },
     Settings: {
-      screen: SettingsScreen,
+      screen: StackNavigator({
+        SettingsScreen: {
+          screen: SettingsScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        MyProfile: {
+          screen: MyProfileScreen,
+          navigationOptions: {
+            header: null
+          }
+        },
+        MyRegistration: {
+          screen: MyRegistrationScreen,
+          navigationOptions: {
+            header: null
+          }
+        }
+      }),
       navigationOptions: props => ({
         tabBarOnPress: IS_IOS
           ? (scene, jumpToIndex) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             }
           : ({ scene, jumpToIndex }) => {
               jumpToIndex(scene.index);
               if (props.screenProps.progress >= 2)
-                props.screenProps.setHomeScreenPopover(false);
+                props.screenProps.setPopover('homeScreenPopover', false);
             },
         tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({ tintColor, focused }) => (
@@ -229,9 +278,22 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
     sectionPriorities: sections.sectionPriorities
   };
 };
+
+MyPageNavRouter.propTypes = {
+  email: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  sectionPriorities: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setProgress: PropTypes.func.isRequired,
+  setSectionPriorities: PropTypes.func.isRequired,
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  setPopover: PropTypes.func.isRequired,
+  progress: PropTypes.number.isRequired
+};
+
 export default connect(mapStateToProps, {
   setSections,
   setProgress,
-  setHomeScreenPopover,
+  setPopover,
   setSectionPriorities
-})(MyPageNavbarScreen);
+})(MyPageNavRouter);

@@ -3,7 +3,7 @@ import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
 
 import { View, Text } from 'react-native';
-import { TREASURE_HUNT_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
+import { TREASURE_HUNT_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 
 class CloseGameScreen extends Component {
   getStrings() {
