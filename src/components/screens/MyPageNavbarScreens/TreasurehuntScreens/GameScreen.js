@@ -1,20 +1,42 @@
-import React, { Component } from 'react';
-import { Constants, Location, Permissions } from 'expo';
-import { View, Text, Platform } from 'react-native';
-import * as Vibration from 'react-native/Libraries/Vibration/Vibration';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Constants, Location, Permissions } from "expo";
+import { View, Text, Platform } from "react-native";
+import { MaterialIcons } from '@expo/vector-icons';
+
+import * as Vibration from "react-native/Libraries/Vibration/Vibration";
+import PropTypes from "prop-types";
+import { GAME_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
+
+import { BackgroundImage } from "~/src/components/common";
+import { WIDTH } from '../../../../helpers/Constants'
 
 class GameScreen extends Component {
-  state = {
-    myLocation: {
-      longitude: 0,
-      latitude: 0
-    },
-    dstLocation: {
-      longitude: 13.215544,
-      latitude: 55.721063
-    },
-    myBearing: 0
-  };
+  getStrings() {
+    const { language } = this.props;
+    const fields = Object.keys(GAME_SCREEN_STRINGS);
+    const strings = {};
+    fields.forEach(
+      field => (strings[field] = GAME_SCREEN_STRINGS[field][language])
+    );
+    return strings;
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      myLocation: {
+        longitude: 0,
+        latitude: 0
+      },
+      dstLocation: {
+        //Dsek
+        longitude: 13.211181,
+        latitude: 55.711306
+      },
+      myBearing: 0
+    };
+  }
 
   toRadians(deg) {
     return deg * (Math.PI / 180);
@@ -57,10 +79,10 @@ class GameScreen extends Component {
   }
 
   componentWillMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
+    if (Platform.OS === "android" && !Constants.isDevice) {
       this.setState({
         errorMessage:
-          'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
+          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
       });
     } else {
       this._getLocationAsync();
@@ -69,9 +91,9 @@ class GameScreen extends Component {
 
   _getLocationAsync = async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
+    if (status !== "granted") {
       this.setState({
-        errorMessage: 'Permission to access location was denied'
+        errorMessage: "Permission to access location was denied"
       });
     }
 
@@ -92,6 +114,7 @@ class GameScreen extends Component {
   };
 
   render() {
+    const strings = this.getStrings();
     const { myLocation, dstLocation, myBearing } = this.state;
 
     const dstBearing = this.bearing(
@@ -113,18 +136,78 @@ class GameScreen extends Component {
     }
 
     return (
-      <View style={{ flex: 1 }}>
-        <Text>{JSON.stringify(myLocation)}</Text>
-        <Text>dstBearing = {dstBearing}</Text>
-        <Text>myBearing = {myBearing}</Text>
-        <Text>
-          dstBearing - myBearing =
-          {Math.abs(dstBearing - myBearing)}
-        </Text>
-        <Text>Dist = {dstDistance}</Text>
+      <View style={styles.textContainer}>
+        <BackgroundImage pictureNumber={5} />
+        <View style={styles.opacity}>
+          <Text style={styles.bodyText}>{strings.instructions}</Text>
+          <MaterialIcons style={{marginLeft: WIDTH/2 - 75}} size={150} name="screen-rotation" color="black" />
+          <Distance distance={dstDistance} navigation={this.props.navigation} strings={strings} />
+          <Text>{"Debug location: \n  " + JSON.stringify(myLocation)}</Text>
+        </View>
       </View>
     );
   }
 }
 
-export default GameScreen;
+const Distance = props => {
+  if (props.distance > 3000) {
+    return <Text style={styles.bodyText}>{props.strings.far}</Text>;
+  }
+  if (props.distance > 1000) {
+    return <Text style={styles.bodyText}>{props.strings.medium}</Text>;
+  }
+  if (props.distance > 250) {
+    return <Text style={styles.bodyText}>{props.strings.close}</Text>;
+  }
+  return (
+    <View>
+      <Text style={styles.bodyText}> {props.strings.veryClose}</Text>
+      <Text
+        style={styles.headerText}
+        onPress={() => props.navigation.navigate("CloseGameScreen")}
+      >
+        {props.strings.getQR}
+      </Text>
+    </View>
+  );
+};
+
+Distance.protoTypes = {
+  distance: PropTypes.number.isRequired
+};
+
+const styles = {
+  textContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  headerText: {
+    fontSize: 40,
+    color: "#000000",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontFamily: "Avenir Next Medium",
+    backgroundColor: "transparent"
+  },
+  bodyText: {
+    fontSize: 22,
+    color: "#000000",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontFamily: "Avenir Next Medium",
+    backgroundColor: "transparent"
+  },
+  opacity: {
+    borderRadius: 15,
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    margin: 10,
+  }
+};
+
+const mapStateToProps = ({ userInformation, currentLanguage }) => {
+  const { language } = currentLanguage;
+  return { language };
+};
+
+export default connect(mapStateToProps, null)(GameScreen);

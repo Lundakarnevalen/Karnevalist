@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { View, Text, TouchableOpacity } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import GestureRecognizer from "react-native-swipe-gestures";
 import {
   Header,
   BackgroundImage,
   CountDown,
   CustomButton
-} from '~/src/components/common';
-import { HEIGHT, WIDTH, IS_IOS } from '~/src/helpers/Constants';
-import { TREASURE_HUNT_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+} from "~/src/components/common";
+import { HEIGHT, WIDTH, IS_IOS } from "~/src/helpers/Constants";
+import { TREASURE_HUNT_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
 
 const ProgressButton = ({ counter, value, onPress }) => (
   <Feather
     key={value}
-    name={counter > value ? 'check-circle' : 'circle'}
+    name={counter > value ? "check-circle" : "circle"}
     onPress={onPress}
     size={35}
     style={styles.navItem}
@@ -30,7 +30,7 @@ ProgressButton.propTypes = {
 };
 
 const InfoText = ({ counter, strings }) => {
-  const HEADERS = ['first', 'second', 'third'];
+  const HEADERS = ["first", "second", "third"];
   return (
     <View style={styles.textContainer}>
       <View>
@@ -121,7 +121,7 @@ class SwipeScreen extends Component {
               strings={strings}
               onPress={
                 counter === 2
-                  ? () => this.props.navigation.navigate('CloseGameScreen')
+                  ? () => this.props.navigation.navigate("GameScreen")
                   : () => this.setState({ counter: counter + 1 })
               }
             />
@@ -131,7 +131,11 @@ class SwipeScreen extends Component {
                   key={i}
                   value={i}
                   counter={counter}
-                  onPress={() => this.setState({ counter: i })}
+                  onPress={
+                    i === 2
+                      ? () => this.props.navigation.navigate("GameScreen")
+                      : () => this.setState({ counter: i + 1 })
+                  }
                 />
               ))}
             </View>
@@ -150,63 +154,63 @@ const styles = {
   mainContainer: {
     height: HEIGHT - 90 /* (IS_IOS ? 113 : 135), */,
     width: WIDTH,
-    justifyContent: 'flex-start'
+    justifyContent: "flex-start"
   },
   countDown: {
     fontSize: 22,
-    color: 'white'
+    color: "white"
   },
   nextButton: {
     flex: 1,
-    backgroundColor: '#d999fa',
+    backgroundColor: "#d999fa",
     borderRadius: 5,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
   },
   btnText: {
     fontSize: 22,
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium'
+    fontWeight: "bold",
+    fontFamily: "Avenir Next Medium"
   },
   textContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     marginRight: 10,
     marginLeft: 10,
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
     borderRadius: 3
   },
   headerText: {
     fontSize: 40,
-    color: '#000000',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
+    color: "#000000",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontFamily: "Avenir Next Medium",
+    backgroundColor: "transparent"
   },
   bodyText: {
     fontSize: 22,
-    color: '#000000',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
+    color: "#000000",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontFamily: "Avenir Next Medium",
+    backgroundColor: "transparent"
   },
   countDownContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    justifyContent: 'center'
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    justifyContent: "center"
   },
   navItem: {
-    backgroundColor: 'transparent',
-    color: '#d999fa'
+    backgroundColor: "transparent",
+    color: "#d999fa"
   },
   navContainer: {
     marginTop: 5,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     marginRight: 10
   },
   buttonContainer: {
@@ -214,12 +218,12 @@ const styles = {
     marginLeft: 10,
     width: WIDTH - 55,
     borderRadius: 5,
-    backgroundColor: '#F7A021'
+    backgroundColor: "#F7A021"
   },
   bottomContain: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    justifyContent: 'flex-end'
+    flexDirection: "row",
+    alignItems: "stretch",
+    justifyContent: "flex-end"
   }
 };
 

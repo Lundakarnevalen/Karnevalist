@@ -7,7 +7,7 @@ import CloseGameScreen from './TreasurehuntScreens/CloseGameScreen';
 
 class CardstackScreen extends Component {
   render() {
-    const endDate = new Date('March 18, 2018 00:00:01');
+    const endDate = new Date('April 18, 2018 00:00:01');
     return <CardNav screenProps={{ endDate }} />;
   }
 }

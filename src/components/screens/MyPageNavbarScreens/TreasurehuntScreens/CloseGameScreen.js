@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import QRCode from 'react-native-qrcode';
 import { connect } from 'react-redux';
-
 import { View, Text } from 'react-native';
 import { TREASURE_HUNT_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 
@@ -27,6 +26,7 @@ class CloseGameScreen extends Component {
           bgColor="black"
           fgColor="white"
         />
+        <Text onPress={() => this.props.navigation.navigate('GameScreen')}>strings.goBack</Text>
       </View>
     );
   }
