@@ -31,12 +31,17 @@ class GameScreen extends Component {
       },
       dstLocation: {
         //Dsek
-        longitude: 13.211181,
-        latitude: 55.711306
+        longitude: 13.210288,
+        latitude: 55.716491
       },
       myBearing: 0
     };
+    this.updateLocation = this.updateLocation.bind(this)
   }
+
+  updateLocation = location => {
+    this.setState({ myLocation: location.coords })
+  };
 
   toRadians(deg) {
     return deg * (Math.PI / 180);
@@ -107,9 +112,7 @@ class GameScreen extends Component {
         timeInterval: 200,
         distanceInterval: 1
       },
-      location => {
-        this.setState({ myLocation: location.coords });
-      }
+      this.updateLocation
     );
   };
 
@@ -143,6 +146,7 @@ class GameScreen extends Component {
           <MaterialIcons style={{marginLeft: WIDTH/2 - 75}} size={150} name="screen-rotation" color="black" />
           <Distance distance={dstDistance} navigation={this.props.navigation} strings={strings} />
           <Text>{"Debug location: \n  " + JSON.stringify(myLocation)}</Text>
+          <Text>{"Debug distance: \n  " + JSON.stringify(dstDistance)}</Text>
         </View>
       </View>
     );

@@ -26,7 +26,7 @@ class CloseGameScreen extends Component {
           bgColor="black"
           fgColor="white"
         />
-        <Text onPress={() => this.props.navigation.navigate('GameScreen')}>strings.goBack</Text>
+        <Text onPress={() => this.props.navigation.navigate('GameScreen')}>{strings.goBack}</Text>
       </View>
     );
   }

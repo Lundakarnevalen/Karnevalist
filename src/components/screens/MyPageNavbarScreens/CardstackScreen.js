@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Animated, Easing } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import SwipeScreen from './TreasurehuntScreens/SwipeScreen';
 import GameScreen from './TreasurehuntScreens/GameScreen';
