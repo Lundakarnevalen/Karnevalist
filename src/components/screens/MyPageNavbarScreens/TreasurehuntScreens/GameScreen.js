@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import { connect } from "react-redux";
 import { Constants, Location, Permissions } from "expo";
 import { View, Text, Platform } from "react-native";
@@ -25,18 +26,23 @@ class GameScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      treasureInfo: {
+        players: -1,
+        winnersLeft: -1
+      },
       myLocation: {
         longitude: 0,
         latitude: 0
       },
       dstLocation: {
-        //Dsek
         longitude: 13.210288,
         latitude: 55.716491
       },
       myBearing: 0
     };
     this.updateLocation = this.updateLocation.bind(this)
+
+    this.infoIntervalId = -1
   }
 
   updateLocation = location => {
@@ -92,6 +98,33 @@ class GameScreen extends Component {
     } else {
       this._getLocationAsync();
     }
+
+    this.infoIntervalId = setInterval(() => {
+      const headers = {
+        Authorization: `Bearer ${this.props.user.token}`,
+        'content-type': 'application/json'
+      }
+      axios
+        .get('https://api.10av10.com/api/treasurehunt/info', { headers })
+        .then(res => this.setState({ treasureInfo: res.data }))
+        .catch(err => console.error(err))
+    }, 1000)
+  }
+
+  componentDidMount() {
+    //  https://api.10av10.com/api/treasurehunt/start
+    const headers = {
+      Authorization: `Bearer ${this.props.user.token}`,
+      'content-type': 'application/json'
+    }
+    axios
+      .post('https://api.10av10.com/api/treasurehunt/start', {}, { headers })
+      .then(res => this.setState({ treasureInfo: res.data }))
+      .catch(err => console.error(err))
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.infoIntervalId)
   }
 
   _getLocationAsync = async () => {
@@ -145,8 +178,8 @@ class GameScreen extends Component {
           <Text style={styles.bodyText}>{strings.instructions}</Text>
           <MaterialIcons style={{marginLeft: WIDTH/2 - 75}} size={150} name="screen-rotation" color="black" />
           <Distance distance={dstDistance} navigation={this.props.navigation} strings={strings} />
-          <Text>{"Debug location: \n  " + JSON.stringify(myLocation)}</Text>
-          <Text>{"Debug distance: \n  " + JSON.stringify(dstDistance)}</Text>
+          <Text style={styles.bodyText}>Players: {this.state.treasureInfo.players}</Text>
+          <Text style={styles.bodyText}>Prices left: {this.state.treasureInfo.winnersLeft}</Text>
         </View>
       </View>
     );
@@ -211,7 +244,7 @@ const styles = {
 
 const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { language } = currentLanguage;
-  return { language };
+  return { language, user: userInformation };
 };
 
 export default connect(mapStateToProps, null)(GameScreen);
