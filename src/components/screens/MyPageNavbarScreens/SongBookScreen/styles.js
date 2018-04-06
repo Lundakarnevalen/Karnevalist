@@ -1,6 +1,11 @@
 import { HEIGHT, WIDTH } from '~/src/helpers/Constants';
 
 export const styles = {
+  containerStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 8
+  },
   sectionHeaderStyle: {
     width: WIDTH,
     backgroundColor: '#f4376d',

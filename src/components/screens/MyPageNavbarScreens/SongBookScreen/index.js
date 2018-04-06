@@ -17,40 +17,37 @@ import songs2018 from '~/assets/songbook/songs2018.json';
 import songs2014 from '~/assets/songbook/songs2014.json';
 import { styles } from './styles';
 
-const NBR_SONGS = 32;
+const NBR_SONGS = songs2014.dict.array.length + songs2018.dict.array.length;
+
 const songIncludesText = (song, input) =>
   song.name.toLowerCase().includes(input) ||
   song.melody.toLowerCase().includes(input) ||
   song.category.toLowerCase().includes(input);
 
+const getSongs = (songBook, is2014 = false) =>
+  songBook.dict.array.map((song, i) => ({
+    key: i,
+    name: song.string[1],
+    melody: song.string[2],
+    text: song.string[3],
+    category: is2014 ? '2014' : song.string[0]
+  }));
+
 class SongBookScreen extends Component {
   constructor(props) {
     super(props);
-    const data = songs2018.dict.array.map((song, i) => ({
-      key: i,
-      name: song.string[1],
-      melody: song.string[2],
-      text: song.string[3],
-      category: song.string[0]
-    }));
-    const data2014 = songs2014.dict.array
-      .map((song, i) => ({
-        key: i,
-        name: song.string[1],
-        melody: song.string[2],
-        text: song.string[3],
-        category: '2014'
-      }))
-      .sort(dynamicSort('name'));
+    const data2018 = getSongs(songs2018);
+    const data2014 = getSongs(songs2014, true).sort(dynamicSort('name'));
     const categories = songs2018.dict.array
       .map(song => song.string[0])
       .filter((item, i, ar) => ar.indexOf(item) === i);
     const categorySongs = categories
       .map(s => ({
         title: s,
-        data: data.filter(d => d.category === s).sort(dynamicSort('name'))
+        data: data2018.filter(d => d.category === s).sort(dynamicSort('name'))
       }))
       .concat({ title: '2014', data: data2014 });
+
     this.state = {
       categorySongs,
       currentCategorySongs: categorySongs,
@@ -93,6 +90,7 @@ class SongBookScreen extends Component {
       );
     return null;
   }
+
   render() {
     const { navigation } = this.props;
     const strings = this.getLanguageStrings();
@@ -102,7 +100,7 @@ class SongBookScreen extends Component {
         <View>
           <Header title={strings.title} />
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: IS_IOS ? 8 : 0 }}>
+        <View style={styles.containerStyle}>
           <Input
             width={WIDTH * 5 / 6}
             placeholder={strings.search}
