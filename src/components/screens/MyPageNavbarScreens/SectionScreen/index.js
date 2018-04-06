@@ -6,23 +6,23 @@ import {
   RefreshControl,
   Text
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Header, ListItem, BackgroundImage, Popover } from '../../common';
-import { PROGRESS, HEIGHT, IS_IOS } from '../../../helpers/Constants';
-import { setSections, setSectionScreenPopover } from '../../../actions';
-import { SECTION_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { dynamicSort, getStrings } from '../../../helpers/functions';
-import { fetchSections } from '../../../helpers/ApiManager';
+import {
+  Header,
+  ListItem,
+  BackgroundImage,
+  Popover
+} from '~/src/components/common';
+import { PROGRESS, HEIGHT, IS_IOS } from '~/src/helpers/Constants';
+import { setSections, setPopover } from '~/src/actions';
+import { SECTION_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { dynamicSort, getStrings } from '~/src/helpers/functions';
+import { fetchSections } from '~/src/helpers/ApiManager';
+import { styles } from './styles';
 
 class SectionScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false
-    };
-  }
-
   getLanguageStrings() {
     return getStrings(this.props.language, SECTION_SCREEN_STRINGS);
   }
@@ -35,11 +35,11 @@ class SectionScreen extends Component {
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
-          this.props.setSectionScreenPopover(false);
+          this.props.setPopover('sectionScreenPopover', false);
           screenProps.navigation.navigate('ConfirmPage');
         }}
       >
-        <MaterialIcons name="format-list-numbered" size={30} color={'white'} />
+        <MaterialIcons name="format-list-numbered" size={30} color="white" />
       </TouchableOpacity>
     );
   }
@@ -56,22 +56,16 @@ class SectionScreen extends Component {
     if (popover && this.props.progress >= 2)
       return (
         <Popover
-          onPress={() => this.props.setSectionScreenPopover(false)}
-          type={'topRight'}
+          onPress={() => this.props.setPopover('sectionScreenPopover', false)}
+          type="topRight"
           text={text}
-          name={'sectionScreenPopover'}
+          name="sectionScreenPopover"
         />
       );
   }
 
   render() {
-    const {
-      navigation,
-      screenProps,
-      language,
-      sectionPriorities,
-      sections
-    } = this.props;
+    const { navigation, language, sectionPriorities, sections } = this.props;
     const strings = this.getLanguageStrings();
     return (
       <View>
@@ -102,7 +96,7 @@ class SectionScreen extends Component {
                 infoText={info[language]}
                 icon={sectionPriorities.indexOf(id) === -1 ? null : 'favorite'}
                 onPress={() =>
-                  screenProps.navigation.navigate('SectionItemScreen', {
+                  this.props.navigation.navigate('SectionItemScreen', {
                     id,
                     headerTitle: strings.headerTitle,
                     title: title[language],
@@ -123,21 +117,16 @@ class SectionScreen extends Component {
   }
 }
 
-const styles = {
-  rightIconStyle: {
-    alignItems: 'center',
-    padding: 1,
-    backgroundColor: 'transparent',
-    width: 60
-  },
-  textStyle: {
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold',
-    fontSize: 36,
-    position: 'absolute',
-    top: HEIGHT / 2
-  }
+SectionScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  progress: PropTypes.number.isRequired,
+  screenProps: PropTypes.shape().isRequired,
+  popover: PropTypes.bool.isRequired,
+  sectionPriorities: PropTypes.arrayOf(PropTypes.number).isRequired,
+  sections: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  setPopover: PropTypes.func.isRequired,
+  setSections: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({
@@ -160,5 +149,5 @@ const mapStateToProps = ({
 
 export default connect(mapStateToProps, {
   setSections,
-  setSectionScreenPopover
+  setPopover
 })(SectionScreen);

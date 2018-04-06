@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -16,25 +17,7 @@ import {
   SuperAgileAlert,
   Header,
   Input
-} from '../../common';
-import {
-  USER_URL,
-  LOGOUT_RESET_ACTION,
-  HEIGHT
-} from '../../../helpers/Constants';
-import {
-  isEmail,
-  containsOnlyLetters,
-  isValidPhoneNbr,
-  containsOnlyDigits,
-  getStrings
-} from '../../../helpers/functions';
-import { removeItem } from '../../../helpers/LocalSave';
-import {
-  MY_PROFILE_SCREEN_STRINGS,
-  ERROR_MSG_INPUT_FIELD
-} from '../../../helpers/LanguageStrings';
-// import { handleErrorMsg } from '../../../helpers/ApiManager';
+} from '~/src/components/common';
 
 const fulfilsRequirement = (key, toCheck) => {
   switch (key) {
@@ -61,6 +44,21 @@ const getInputStyle = editable => ({
   textColor: editable ? 'black' : 'white',
   placeholderTextColor: editable ? '#F7A021' : 'white'
 });
+import { USER_URL, LOGOUT_RESET_ACTION, HEIGHT } from '~/src/helpers/Constants';
+import {
+  isEmail,
+  containsOnlyLetters,
+  isValidPhoneNbr,
+  containsOnlyDigits,
+  getStrings
+} from '~/src/helpers/functions';
+import {
+  MY_PROFILE_SCREEN_STRINGS,
+  ERROR_MSG_INPUT_FIELD
+} from '~/src/helpers/LanguageStrings';
+// import { handleErrorMsg } from '~/src/helpers/ApiManager';
+import { removeItem } from '~/src/helpers/LocalSave';
+import { styles } from './styles';
 
 class MyProfileScreen extends Component {
   constructor(props) {
@@ -196,7 +194,7 @@ class MyProfileScreen extends Component {
         user[key] === '' ||
         user[key] === null ||
         user[key] === undefined ||
-        user[key].length === 0
+        !user[key].length
       )
         return null;
       if (user[key] === true) user[key] = strings.yes;
@@ -355,28 +353,12 @@ class MyProfileScreen extends Component {
   }
 }
 
-const styles = {
-  scrollStyle: {
-    height: HEIGHT - 64,
-    paddingTop: 4,
-    paddingRight: 16,
-    paddingLeft: 16
-  },
-  loadingText: {
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    fontFamily: 'Avenir Next Bold',
-    fontSize: 36
-  },
-  loading: {
-    marginTop: HEIGHT / 3
-  },
-  rightIconStyle: {
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    width: 60
-  }
+MyProfileScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  userinfo: PropTypes.shape().isRequired
 };
+
 const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
   const { token, email, userinfo } = userInformation;

@@ -6,17 +6,18 @@ import {
   ScrollView,
   BackHandler
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { Header, Toast } from '../../common';
-import { PROGRESS, WIDTH, HEIGHT } from '../../../helpers/Constants';
+import { Header, Toast } from '~/src/components/common';
+import { PROGRESS, WIDTH, HEIGHT } from '~/src/helpers/Constants';
 import {
   removeSectionPriority,
   addSectionPriority,
   setProgress
-} from '../../../actions';
-import { SECTION_ITEM_SCREEN_STRINGS } from '../../../helpers/LanguageStrings';
-import { getStrings } from '../../../helpers/functions';
+} from '~/src/actions';
+import { SECTION_ITEM_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { getStrings } from '~/src/helpers/functions';
 
 class SectionItemScreen extends Component {
   constructor(props) {
@@ -152,6 +153,15 @@ const styles = {
     backgroundColor: 'transparent',
     width: 60
   }
+};
+
+SectionItemScreen.propTypes = {
+  navigation: PropTypes.shape().isRequired,
+  language: PropTypes.string.isRequired,
+  progress: PropTypes.number.isRequired,
+  sectionPriorities: PropTypes.arrayOf(PropTypes.number).isRequired,
+  addSectionPriority: PropTypes.func.isRequired,
+  removeSectionPriority: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ userInformation, currentLanguage, sections }) => {

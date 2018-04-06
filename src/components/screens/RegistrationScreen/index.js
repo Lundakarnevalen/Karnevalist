@@ -12,7 +12,7 @@ import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
-import { setToken, setEmail, setUserinfo } from '../../actions';
+import { setToken, setEmail, setUserinfo } from '~/src/actions';
 import {
   Header,
   Input,
@@ -22,15 +22,16 @@ import {
   BackgroundImage,
   SuperAgileAlert,
   Loading
-} from '../common';
-import { REGISTER_URL, HEIGHT, WIDTH, IS_IOS } from '../../helpers/Constants';
+} from '~/src/components/common';
+import { REGISTER_URL, HEIGHT, WIDTH, IS_IOS } from '~/src/helpers/Constants';
 import {
   REGISTRATION_SCREEN_STRINGS,
   ERROR_MSG_INPUT_FIELD
-} from '../../helpers/LanguageStrings';
-import { handleErrorMsg } from '../../helpers/ApiManager';
-import { saveItem } from '../../helpers/LocalSave';
-import { getStrings } from '../../helpers/functions';
+} from '~/src/helpers/LanguageStrings';
+import { handleErrorMsg } from '~/src/helpers/ApiManager';
+import { saveItem } from '~/src/helpers/LocalSave';
+import { getStrings } from '~/src/helpers/functions';
+import { styles } from './styles';
 
 let zipCodePosition = 0;
 
@@ -61,7 +62,7 @@ class RegistrationScreen extends Component {
       plenipotentiary: false,
       bff: '',
       bffError: false,
-      //CheckBoxes
+      // CheckBoxes
       groupLeader: false,
       wantToWorkWith: Array(17).fill(false),
       wantToLearn: Array(17).fill(false),
@@ -79,12 +80,12 @@ class RegistrationScreen extends Component {
     if (IS_IOS) {
       this.keyboardWillShowSub = Keyboard.addListener(
         'keyboardWillShow',
-        this.keyboardWillShow
+        () => this.keyboardWillShow
       );
     } else {
       this.keyboardDidShowListener = Keyboard.addListener(
         'keyboardDidShow',
-        this.keyboardDidShow
+        () => this.keyboardDidShow
       );
     }
   }
@@ -96,14 +97,6 @@ class RegistrationScreen extends Component {
       this.keyboardDidShowListener.remove();
     }
   }
-
-  keyboardWillShow = event => {
-    this.setState({ keyboardHeight: event.endCoordinates.height });
-  };
-
-  keyboardDidShow = event => {
-    this.setState({ keyboardHeight: event.endCoordinates.height });
-  };
 
   scrollToInput(inputPosition) {
     const dy = HEIGHT - this.state.keyboardHeight - 64;
@@ -202,6 +195,13 @@ class RegistrationScreen extends Component {
     return newList;
   }
 
+  keyboardWillShow(event) {
+    this.setState({ keyboardHeight: event.endCoordinates.height });
+  }
+
+  keyboardDidShow(event) {
+    this.setState({ keyboardHeight: event.endCoordinates.height });
+  }
   trimValues() {
     const { inputs } = this.state;
     const trimmedList = inputs;
@@ -217,7 +217,7 @@ class RegistrationScreen extends Component {
     if (IS_IOS) {
       return (
         <CustomButton
-          text={title === '' ? defaultTitle + '*' : title}
+          text={title === '' ? `${defaultTitle}*` : title}
           style="dropDownButton"
           width={WIDTH}
           onPress={() => {
@@ -271,7 +271,7 @@ class RegistrationScreen extends Component {
           selectedValue={title === '' ? defaultTitle : title}
           style={styles.androidPicker}
         >
-          <Picker.Item label={defaultTitle} value={''} />
+          <Picker.Item label={defaultTitle} value="" />
           {this.renderPickerArray(tag, tagArray)}
         </Picker>
       </View>
@@ -292,7 +292,7 @@ class RegistrationScreen extends Component {
             setState(myListToWorkWith);
           }}
           value={listToWorkWith[i]}
-          color={'white'}
+          color="white"
         />
       );
     }
@@ -300,9 +300,9 @@ class RegistrationScreen extends Component {
   }
 
   renderPickerArray(tag, tagArray) {
-    return tagArray.map(item => {
-      return <Picker.Item key={item} label={item} value={item} />;
-    });
+    return tagArray.map(item => (
+      <Picker.Item key={item} label={item} value={item} />
+    ));
   }
 
   renderDKBackgroundCloser() {
@@ -511,7 +511,7 @@ class RegistrationScreen extends Component {
         style={rightIconStyle}
         onPress={() => this.props.navigation.goBack(null)}
       >
-        <MaterialCommunityIcons size={30} name="close" color={'white'} />
+        <MaterialCommunityIcons size={30} name="close" color="white" />
       </TouchableOpacity>
     );
 
@@ -523,10 +523,10 @@ class RegistrationScreen extends Component {
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.contentContainer}
           style={{ height: HEIGHT - 64 }}
-          ref={'scrollView'}
+          ref="scrollView"
         >
           <Input
-            placeholder={strings.firstName + '*'}
+            placeholder={`${strings.firstName}*`}
             onChangeText={text => {
               inputs[0] = text;
               errors[0] = !this.containsOnlyLetters(text);
@@ -534,48 +534,48 @@ class RegistrationScreen extends Component {
             }}
             value={inputs[0]}
             onSubmitEditing={() => this.refs.secondInput.focus()}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             autoFocus
             hasError={errors[0]}
             warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
-            ref={'secondInput'}
+            ref="secondInput"
             onSubmitEditing={() => this.refs.thirdInput.focus()}
-            placeholder={strings.lastName + '*'}
+            placeholder={`${strings.lastName}*`}
             onChangeText={text => {
               inputs[1] = text;
               errors[1] = !this.containsOnlyLetters(text);
               this.setState({ inputs, errors });
             }}
             value={inputs[1]}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[1]}
             warningMessage={errorStrings.errorMsgOnlyLetters}
           />
           <Input
-            ref={'thirdInput'}
+            ref="thirdInput"
             onSubmitEditing={() => this.refs.fourthInput.focus()}
-            placeholder={strings.socialSecurityNumber + '*'}
+            placeholder={`${strings.socialSecurityNumber}*`}
             onChangeText={text => {
               inputs[2] = text;
               errors[2] = !(text.length === 10 && /^[a-zA-Z0-9_]+$/.test(text));
               this.setState({ inputs, errors });
             }}
             value={inputs[2]}
-            keyboardType={'numeric'}
-            returnKeyType={'next'}
+            keyboardType="numeric"
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[2]}
             warningMessage={errorStrings.errorMsgSocialSecurity}
             maxLength={10}
           />
           <Input
-            ref={'fourthInput'}
+            ref="fourthInput"
             onSubmitEditing={() => this.refs.fifthInput.focus()}
-            placeholder={strings.email + '*'}
+            placeholder={`${strings.email}*`}
             keyboardType="email-address"
             autoCapitalize="none"
             onChangeText={text => {
@@ -588,15 +588,15 @@ class RegistrationScreen extends Component {
               });
             }}
             value={inputs[3]}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[3]}
             warningMessage={errorStrings.errorMsgInvalidEmail}
           />
           <Input
-            ref={'fifthInput'}
+            ref="fifthInput"
             onSubmitEditing={() => this.refs.sixthInput.focus()}
-            placeholder={strings.confirmEmail + '*'}
+            placeholder={`${strings.confirmEmail}*`}
             keyboardType="email-address"
             autoCapitalize="none"
             onChangeText={text => {
@@ -605,15 +605,15 @@ class RegistrationScreen extends Component {
               this.setState({ inputs, errors });
             }}
             value={inputs[4]}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[4]}
             warningMessage={errorStrings.errorMsgNoMatchEmail}
           />
           <Input
-            ref={'sixthInput'}
+            ref="sixthInput"
             onSubmitEditing={() => this.refs.seventhInput.focus()}
-            placeholder={strings.password + '*'}
+            placeholder={`${strings.password}*`}
             onChangeText={text => {
               inputs[5] = text;
               errors[5] = text.length < 5;
@@ -622,15 +622,15 @@ class RegistrationScreen extends Component {
             }}
             value={inputs[5]}
             hasError={errors[5]}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             secureText
             warningMessage={errorStrings.errorMsgPwd}
           />
           <Input
-            ref={'seventhInput'}
+            ref="seventhInput"
             onSubmitEditing={() => this.refs.eigthInput.focus()}
-            placeholder={strings.confirmPassword + '*'}
+            placeholder={`${strings.confirmPassword}*`}
             onChangeText={text => {
               inputs[6] = text;
               errors[6] = text !== inputs[5];
@@ -638,45 +638,45 @@ class RegistrationScreen extends Component {
             }}
             value={inputs[6]}
             hasError={errors[6]}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             secureText
             warningMessage={errorStrings.errorMsgNoMatchPassword}
           />
           <Input
-            ref={'eigthInput'}
+            ref="eigthInput"
             onSubmitEditing={() => this.refs.co.focus()}
-            placeholder={strings.address + '*'}
+            placeholder={`${strings.address}*`}
             onChangeText={text => {
               inputs[7] = text;
               this.setState({ inputs });
             }}
             value={inputs[7]}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
           />
           <Input
-            ref={'co'}
+            ref="co"
             onSubmitEditing={() => this.refs.ninthInput.focus()}
             placeholder={strings.co}
             onChangeText={text => {
               this.setState({ co: text });
             }}
             value={co}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
           />
           <View
             style={flexHorizontal}
-            ref={'horizontalInputView'}
+            ref="horizontalInputView"
             onLayout={event => {
               zipCodePosition = event.nativeEvent.layout.y;
             }}
           >
             <Input
-              ref={'ninthInput'}
+              ref="ninthInput"
               onSubmitEditing={() => this.refs.tenthInput.focus()}
-              placeholder={strings.postNumber + '*'}
+              placeholder={`${strings.postNumber}*`}
               keyboardType="numeric"
               onChangeText={text => {
                 inputs[8] = text;
@@ -689,16 +689,16 @@ class RegistrationScreen extends Component {
               width={WIDTH / 2 - 4}
               extraContainerStyle={{ marginRight: 8 }}
               value={inputs[8]}
-              returnKeyType={'next'}
+              returnKeyType="next"
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
               hasError={errors[8]}
               warningMessage={errorStrings.errorMsgZipCode}
               maxLength={5}
             />
             <Input
-              ref={'tenthInput'}
+              ref="tenthInput"
               onSubmitEditing={() => this.refs.eleventhInput.focus()}
-              placeholder={strings.city + '*'}
+              placeholder={`${strings.city}*`}
               onChangeText={text => {
                 inputs[9] = text;
                 errors[9] = !this.containsOnlyLetters(text);
@@ -706,16 +706,16 @@ class RegistrationScreen extends Component {
               }}
               width={WIDTH / 2 - 4}
               value={inputs[9]}
-              returnKeyType={'next'}
+              returnKeyType="next"
               scrollToInput={() => this.scrollToInput(100 + zipCodePosition)}
               hasError={errors[9]}
               warningMessage={errorStrings.errorMsgCity}
             />
           </View>
           <Input
-            ref={'eleventhInput'}
+            ref="eleventhInput"
             onSubmitEditing={() => this.refs.twelthInput.focus()}
-            placeholder={strings.phoneNumber + '*'}
+            placeholder={`${strings.phoneNumber}*`}
             keyboardType="phone-pad"
             onChangeText={text => {
               inputs[10] = text;
@@ -726,14 +726,14 @@ class RegistrationScreen extends Component {
               });
             }}
             value={inputs[10]}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={errors[10]}
             warningMessage={errorStrings.errorMsgPhoneNbr}
             maxLength={16}
           />
           <Input
-            ref={'twelthInput'}
+            ref="twelthInput"
             placeholder={strings.foodPreference}
             onSubmitEditing={() => this.refs.yearStudyStart.focus()}
             onChangeText={text => {
@@ -743,7 +743,7 @@ class RegistrationScreen extends Component {
               });
             }}
             value={foodPreference}
-            returnKeyType={'next'}
+            returnKeyType="next"
             autoCapitalize="sentences"
             scrollToInput={y => this.scrollToInput(y)}
             hasError={foodPreferenceError}
@@ -753,9 +753,9 @@ class RegistrationScreen extends Component {
             maxLength={200}
           />
           <Input
-            ref={'yearStudyStart'}
+            ref="yearStudyStart"
             onSubmitEditing={() => this.refs.previousInvolvement.focus()}
-            placeholder={strings.yearStudyStart + '*'}
+            placeholder={`${strings.yearStudyStart}*`}
             onChangeText={text => {
               inputs[11] = text;
               errors[11] = !this.containsOnlyDigits(text);
@@ -765,19 +765,19 @@ class RegistrationScreen extends Component {
             keyboardType="numeric"
             maxLength={4}
             value={inputs[11]}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgShortOnlyDigits}
           />
           <Input
-            ref={'previousInvolvement'}
+            ref="previousInvolvement"
             onSubmitEditing={() => this.refs.bff.focus()}
             placeholder={strings.previousInvolvement}
             onChangeText={text => {
               this.setState({ previousInvolvement: text });
             }}
             value={previousInvolvement}
-            returnKeyType={'next'}
+            returnKeyType="next"
             scrollToInput={y => this.scrollToInput(y)}
             warningMessage={errorStrings.errorMsgPreviousInvolvement}
             multiline
@@ -785,8 +785,8 @@ class RegistrationScreen extends Component {
             maxLength={200}
           />
           <Input
-            ref={'bff'}
-            icon={'question-circle-o'}
+            ref="bff"
+            icon="question-circle-o"
             placeholder={strings.bff}
             onChangeText={text => {
               this.setState({ bff: text, bffError: !this.isEmail(text) });
@@ -799,7 +799,7 @@ class RegistrationScreen extends Component {
               });
             }}
             value={bff}
-            returnKeyType={'done'}
+            returnKeyType="done"
             hasError={bffError}
             autoCapitalize="none"
             warningMessage={errorStrings.errorMsgInvalidEmail}
@@ -835,14 +835,14 @@ class RegistrationScreen extends Component {
             size={30}
             onPress={() => this.setState({ plenipotentiary: !plenipotentiary })}
             value={plenipotentiary}
-            color={'white'}
+            color="white"
           />
           <CheckBox
             name={strings.groupLeader}
             size={30}
             onPress={() => this.setState({ groupLeader: !groupLeader })}
             value={groupLeader}
-            color={'white'}
+            color="white"
           />
           <View
             style={{
@@ -870,7 +870,7 @@ class RegistrationScreen extends Component {
               }}
             >
               <FontAwesome
-                name={'question-circle-o'}
+                name="question-circle-o"
                 style={{ color: '#F7A021', backgroundColor: 'transparent' }}
                 size={25}
               />
@@ -907,7 +907,7 @@ class RegistrationScreen extends Component {
               }}
             >
               <FontAwesome
-                name={'question-circle-o'}
+                name="question-circle-o"
                 style={{ color: '#F7A021', backgroundColor: 'transparent' }}
                 size={25}
               />
@@ -933,13 +933,13 @@ class RegistrationScreen extends Component {
             this.setState({ wantToLearn: newState })
           )}
           <Input
-            ref={'other'}
+            ref="other"
             placeholder={strings.other}
             onChangeText={text => {
               this.setState({ other: text });
             }}
             value={other}
-            returnKeyType={'done'}
+            returnKeyType="done"
             scrollToInput={y => this.scrollToInput(y)}
             multiline
             maxLength={200}
@@ -948,37 +948,37 @@ class RegistrationScreen extends Component {
 
           <View style={{ right: 3 }}>
             <CheckBox
-              name={strings.gdpr1 + '*'}
+              name={`${strings.gdpr1}*`}
               size={30}
               onPress={() => this.setState({ gdpr1: !gdpr1 })}
               value={gdpr1}
-              color={'white'}
+              color="white"
             />
             <CheckBox
-              name={strings.gdpr2 + '*'}
+              name={`${strings.gdpr2}*`}
               size={30}
               onPress={() => this.setState({ gdpr2: !gdpr2 })}
               value={gdpr2}
-              color={'white'}
+              color="white"
             />
             <CheckBox
-              name={strings.gdpr3 + '*'}
+              name={`${strings.gdpr3}*`}
               size={30}
               onPress={() => this.setState({ gdpr3: !gdpr3 })}
               value={gdpr3}
-              color={'white'}
+              color="white"
             />
             <CheckBox
-              name={strings.gdpr4 + '*'}
+              name={`${strings.gdpr4}*`}
               size={30}
               onPress={() => this.setState({ gdpr4: !gdpr4 })}
               value={gdpr4}
-              color={'white'}
+              color="white"
             />
           </View>
           <CustomButton
             text={strings.register}
-            style={'standardButton'}
+            style="standardButton"
             width={WIDTH}
             onPress={() => {
               this.trimValues();
@@ -1043,7 +1043,7 @@ class RegistrationScreen extends Component {
                 index: 0,
                 actions: [
                   NavigationActions.navigate({
-                    routeName: 'MyPageNavbarScreen'
+                    routeName: 'MyPageNavRouter'
                   })
                 ],
                 key: null
@@ -1064,39 +1064,6 @@ class RegistrationScreen extends Component {
     );
   }
 }
-
-const styles = {
-  flexHorizontal: {
-    flexDirection: 'row'
-  },
-  contentContainer: {
-    paddingTop: 32,
-    paddingRight: 16,
-    paddingBottom: 64,
-    paddingLeft: 16
-  },
-  androidPicker: {
-    color: 'white',
-    marginTop: 10,
-    marginBottom: 10,
-    borderColor: 'black',
-    borderRadius: 3,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    borderWidth: 1
-  },
-  rightIconStyle: {
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    width: 60,
-    paddingRight: 0
-  },
-  checkBoxHeaderStyle: {
-    backgroundColor: 'transparent',
-    width: WIDTH,
-    fontSize: 18,
-    color: 'white'
-  }
-};
 
 const mapStateToProps = ({ userInformation, currentLanguage }) => {
   const { picture } = userInformation;
