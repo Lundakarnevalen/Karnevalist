@@ -102,7 +102,7 @@ class SongBookScreen extends Component {
         <View>
           <Header title={strings.title} />
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: IS_IOS ? 8 : 0 }}>
           <Input
             width={WIDTH * 5 / 6}
             placeholder={strings.search}
