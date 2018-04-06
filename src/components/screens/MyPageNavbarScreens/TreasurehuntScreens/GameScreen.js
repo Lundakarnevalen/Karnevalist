@@ -7,9 +7,26 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Vibration from "react-native/Libraries/Vibration/Vibration";
 import PropTypes from "prop-types";
 import { GAME_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
-
+import {  CountDown} from "~/src/components/common";
 import { BackgroundImage } from "~/src/components/common";
 import { WIDTH } from '../../../../helpers/Constants'
+
+
+const CountDownContainer = ({ screenProps, strings }) => {
+  if (screenProps.endDate - new Date() < 0) {
+    return (
+      <View style={styles.countDownContainer}>
+        <Text style={styles.countDown}>{strings.finishedText}</Text>
+      </View>
+    );
+  }
+  return (
+    <View style={styles.countDownContainer}>
+      <Text style={styles.countDown}>{`${strings.timeLeft}: `}</Text>
+      <CountDown endDate={screenProps.endDate} />
+    </View>
+  );
+};
 
 class GameScreen extends Component {
   getStrings() {
@@ -30,7 +47,6 @@ class GameScreen extends Component {
         latitude: 0
       },
       dstLocation: {
-        //Dsek
         longitude: 13.210288,
         latitude: 55.716491
       },
@@ -142,6 +158,11 @@ class GameScreen extends Component {
       <View style={styles.textContainer}>
         <BackgroundImage pictureNumber={5} />
         <View style={styles.opacity}>
+          <CountDownContainer
+          screenProps={this.props.screenProps}
+          strings={strings}
+        />
+
           <Text style={styles.bodyText}>{strings.instructions}</Text>
           <MaterialIcons style={{marginLeft: WIDTH/2 - 75}} size={150} name="screen-rotation" color="black" />
           <Distance distance={dstDistance} navigation={this.props.navigation} strings={strings} />
@@ -206,6 +227,16 @@ const styles = {
     borderRadius: 15,
     backgroundColor: "rgba(255, 255, 255, 0.4)",
     margin: 10,
+  },
+  countDown: {
+    fontSize: 22,
+    color: "white"
+  },
+  countDownContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    justifyContent: "center"
   }
 };
 
