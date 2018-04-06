@@ -14,6 +14,7 @@ import { dynamicSort, getStrings } from '~/src/helpers/functions';
 import { setPopover } from '~/src/actions';
 import { HEIGHT, IS_IOS, WIDTH } from '~/src/helpers/Constants';
 import songs2018 from '~/assets/songbook/songs2018.json';
+import songs2014 from '~/assets/songbook/songs2014.json';
 import { styles } from './styles';
 
 const NBR_SONGS = 32;
@@ -21,6 +22,7 @@ const songIncludesText = (song, input) =>
   song.name.toLowerCase().includes(input) ||
   song.melody.toLowerCase().includes(input) ||
   song.category.toLowerCase().includes(input);
+
 class SongBookScreen extends Component {
   constructor(props) {
     super(props);
@@ -31,13 +33,24 @@ class SongBookScreen extends Component {
       text: song.string[3],
       category: song.string[0]
     }));
+    const data2014 = songs2014.dict.array
+      .map((song, i) => ({
+        key: i,
+        name: song.string[1],
+        melody: song.string[2],
+        text: song.string[3],
+        category: '2014'
+      }))
+      .sort(dynamicSort('name'));
     const categories = songs2018.dict.array
       .map(song => song.string[0])
       .filter((item, i, ar) => ar.indexOf(item) === i);
-    const categorySongs = categories.map(s => ({
-      title: s,
-      data: data.filter(d => d.category === s).sort(dynamicSort('name'))
-    }));
+    const categorySongs = categories
+      .map(s => ({
+        title: s,
+        data: data.filter(d => d.category === s).sort(dynamicSort('name'))
+      }))
+      .concat({ title: '2014', data: data2014 });
     this.state = {
       categorySongs,
       currentCategorySongs: categorySongs,
@@ -48,12 +61,14 @@ class SongBookScreen extends Component {
   getLanguageStrings() {
     return getStrings(this.props.language, SONGBOOK_SCREEN_STRINGS);
   }
+
   resetFilter() {
     this.setState({
       input: '',
       currentCategorySongs: this.state.categorySongs
     });
   }
+
   filterData(input) {
     const value = input.toLowerCase();
     const { categorySongs } = this.state;
