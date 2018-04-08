@@ -1193,5 +1193,13 @@ export const GAME_SCREEN_STRINGS = {
   veryClose: {
     SE: "Nästan där!!",
     EN: "Almost there!!"
+  },
+  timeLeft: {
+    SE: "TID KVAR",
+    EN: "TIME LEFT"
+  },
+  finishedText: {
+    SE: "Skattjakten är nu över",
+    EN: "The treasure hunt has ended"
   }
 };
