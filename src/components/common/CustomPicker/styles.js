@@ -1,3 +1,5 @@
+import { WIDTH, HEIGHT } from '~/src/helpers/Constants';
+
 export const styles = {
   flexHorizontal: {
     flexDirection: 'row'
@@ -15,12 +17,18 @@ export const styles = {
     borderColor: 'black',
     borderRadius: 3,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    borderWidth: 1,
-    width: '100%'
+    borderWidth: 1
   },
   pickerStyle: {
     backgroundColor: 'white',
     position: 'absolute',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: WIDTH
+  },
+  modalBackground: {
+    position: 'absolute',
+    width: WIDTH + 32,
+    height: HEIGHT,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
   }
 };

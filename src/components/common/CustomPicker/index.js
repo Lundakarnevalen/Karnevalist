@@ -7,13 +7,12 @@ import {
   Modal,
   TouchableWithoutFeedback
 } from 'react-native';
-import { BlurView } from 'expo';
 import PropTypes from 'prop-types';
-import { WIDTH, IS_IOS, HEIGHT } from '~/src/helpers/Constants';
+import { WIDTH, IS_IOS } from '~/src/helpers/Constants';
 import { CustomButton } from '~/src/components/common';
 import { styles } from './styles';
 
-class NewPicker extends Component {
+class CustomPicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,97 +22,69 @@ class NewPicker extends Component {
     };
   }
 
-  componentDidUpdate() {
-    if (this.state.isShowing) {
+  animateDropdown(showPicker) {
+    if (showPicker) {
       Animated.timing(this.state.bottom, { toValue: 0 }).start();
     } else {
       Animated.timing(this.state.bottom, {
         toValue: -this.state.height - 22
-      }).start();
+      }).start(() => this.setState({ isShowing: false }));
     }
   }
-  renderCloser() {
-    return this.state.isShowing ? (
+
+  renderModalBackground() {
+    return (
       <TouchableWithoutFeedback
-        style={{ position: 'absolute' }}
-        onPress={() =>
-          this.setState({
-            isShowing: false
-          })
-        }
+        style={{
+          position: 'absolute'
+        }}
+        onPress={() => this.animateDropdown(false)}
       >
-        <View
-          style={{
-            position: 'absolute',
-            width: WIDTH + 32,
-            height: HEIGHT,
-            backgroundColor: 'rgba(0, 0, 0, 0.3)'
-          }}
-        />
+        <View style={styles.modalBackground} />
       </TouchableWithoutFeedback>
-    ) : null;
+    );
   }
 
   render() {
     const { pickerStyle, androidPicker } = styles;
     const { selectedValue, onValueChange, items, defaultValue } = this.props;
-    return IS_IOS ? (
+    return IS_IOS ? ( // Custom component for iOS since we wan't an ok button and a nicer animation
       <View>
-        {/* this.renderCloser() */}
         <Modal
-          animationType="slide"
           transparent
           visible={this.state.isShowing}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}
+          onShow={() => this.animateDropdown(true)}
+          onRequestClose={() => {}}
         >
-          <TouchableWithoutFeedback
-            style={{ position: 'absolute' }}
-            onPress={() =>
-              this.setState({
-                isShowing: false
-              })
-            }
-          >
+          {this.renderModalBackground()}
+          <Animated.View style={[pickerStyle, { bottom: this.state.bottom }]}>
             <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'flex-end'
+              onLayout={event => {
+                this.setState({ height: event.nativeEvent.layout.height });
               }}
-            />
-          </TouchableWithoutFeedback>
-          <View
-            style={{
-              backgroundColor: 'white',
-              height: HEIGHT / 2,
-              width: WIDTH + 32
-            }}
-          >
-            <View style={{ alignItems: 'center' }}>
+            >
               <CustomButton
                 text="OK"
                 style="standardButton"
                 width={WIDTH - 50}
-                onPress={() => this.setState({ isShowing: false })}
+                onPress={() => this.animateDropdown(false)}
               />
+              <Picker
+                onValueChange={value => onValueChange(value)}
+                selectedValue={selectedValue}
+              >
+                {items.map(item => (
+                  <Picker.Item key={item} label={item} value={item} />
+                ))}
+              </Picker>
             </View>
-            <Picker
-              onValueChange={itemValue => onValueChange(itemValue)}
-              selectedValue={selectedValue}
-            >
-              {items.map(item => (
-                <Picker.Item key={item} label={item} value={item} />
-              ))}
-            </Picker>
-          </View>
+          </Animated.View>
         </Modal>
-
+        {/* The button that opens the modal */}
         <CustomButton
           text={selectedValue === '' ? `${defaultValue}*` : selectedValue}
           style="dropDownButton"
-          width={WIDTH}
+          width={WIDTH * 0.9}
           onPress={() => {
             Keyboard.dismiss();
             this.setState({ isShowing: true });
@@ -121,11 +92,10 @@ class NewPicker extends Component {
         />
       </View>
     ) : (
+      // ANDROID, uses standard picker
       <View>
         <Picker
-          onValueChange={item => {
-            onValueChange(item);
-          }}
+          onValueChange={value => onValueChange(value)}
           selectedValue={selectedValue === '' ? defaultValue : selectedValue}
           style={androidPicker}
         >
@@ -134,16 +104,15 @@ class NewPicker extends Component {
             <Picker.Item key={item} label={item} value={item} />
           ))}
         </Picker>
-        {this.renderCloser()}
       </View>
     );
   }
 }
-NewPicker.defaultProps = {
+CustomPicker.defaultProps = {
   defaultValue: ''
 };
 
-NewPicker.propTypes = {
+CustomPicker.propTypes = {
   items: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedValue: PropTypes.oneOfType([
     PropTypes.string,
@@ -157,4 +126,4 @@ NewPicker.propTypes = {
     PropTypes.bool
   ])
 };
-export { NewPicker };
+export { CustomPicker };

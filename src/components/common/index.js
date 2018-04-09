@@ -14,4 +14,4 @@ export * from './CountDown/CountDownItem';
 export * from './Popover';
 export * from './TimelineItem';
 export * from './Loading';
-export * from './NewPicker';
+export * from './CustomPicker';

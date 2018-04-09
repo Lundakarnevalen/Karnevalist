@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import {
   ScrollView,
   View,
-  Picker,
-  TouchableWithoutFeedback,
   TouchableOpacity,
   Keyboard,
   Text
@@ -16,13 +14,12 @@ import { setToken, setEmail, setUserinfo } from '~/src/actions';
 import {
   Header,
   Input,
-  DKPicker,
   CustomButton,
   CheckBox,
   BackgroundImage,
   SuperAgileAlert,
   Loading,
-  NewPicker
+  CustomPicker
 } from '~/src/components/common';
 import { REGISTER_URL, HEIGHT, WIDTH, IS_IOS } from '~/src/helpers/Constants';
 import {
@@ -214,71 +211,6 @@ class RegistrationScreen extends Component {
     this.setState({ inputs: trimmedList });
   }
 
-  renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
-    if (IS_IOS) {
-      return (
-        <CustomButton
-          text={title === '' ? `${defaultTitle}*` : title}
-          style="dropDownButton"
-          width={WIDTH}
-          onPress={() => {
-            Keyboard.dismiss();
-            switch (tag) {
-              case 'shirt':
-                this.setState({ showShirtPicker: true });
-                if (title === '') this.setState({ shirtSize: tagArray[0] });
-                break;
-              case 'nation':
-                this.setState({ showstudentNationPicker: true });
-                if (title === '') this.setState({ studentNation: tagArray[0] });
-                break;
-              case 'driversLicense':
-                this.setState({ showDriversLicensePicker: true });
-                if (title === '')
-                  this.setState({ driversLicense: tagArray[0] });
-                break;
-              case 'corps':
-                this.setState({ showCorpPicker: true });
-                if (title === '') this.setState({ corps: tagArray[0] });
-                break;
-              default:
-                break;
-            }
-          }}
-        />
-      );
-    }
-    return (
-      <View>
-        <Picker
-          onValueChange={item => {
-            switch (tag) {
-              case 'shirt':
-                this.setState({ shirtSize: item });
-                break;
-              case 'nation':
-                this.setState({ studentNation: item });
-                break;
-              case 'driversLicense':
-                this.setState({ driversLicense: item });
-                break;
-              case 'corps':
-                this.setState({ corps: item });
-                break;
-              default:
-                break;
-            }
-          }}
-          selectedValue={title === '' ? defaultTitle : title}
-          style={styles.androidPicker}
-        >
-          <Picker.Item label={defaultTitle} value="" />
-          {this.renderPickerArray(tag, tagArray)}
-        </Picker>
-      </View>
-    );
-  }
-
   renderCheckBoxes(names, listToWorkWith, setState) {
     const myListToWorkWith = listToWorkWith;
     const checkBoxes = [];
@@ -298,50 +230,6 @@ class RegistrationScreen extends Component {
       );
     }
     return checkBoxes;
-  }
-
-  renderPickerArray(tag, tagArray) {
-    return tagArray.map(item => (
-      <Picker.Item key={item} label={item} value={item} />
-    ));
-  }
-
-  renderDKBackgroundCloser() {
-    const {
-      showShirtPicker,
-      showstudentNationPicker,
-      showDriversLicensePicker,
-      showCorpPicker
-    } = this.state;
-    if (
-      showShirtPicker ||
-      showstudentNationPicker ||
-      showDriversLicensePicker ||
-      showCorpPicker
-    ) {
-      return (
-        <TouchableWithoutFeedback
-          style={{ position: 'absolute' }}
-          onPress={() =>
-            this.setState({
-              showShirtPicker: false,
-              showstudentNationPicker: false,
-              showDriversLicensePicker: false,
-              showCorpPicker: false
-            })
-          }
-        >
-          <View
-            style={{
-              position: 'absolute',
-              width: WIDTH + 32,
-              height: HEIGHT,
-              backgroundColor: 'rgba(0, 0, 0, 0.3)'
-            }}
-          />
-        </TouchableWithoutFeedback>
-      );
-    }
   }
 
   renderAlertButtons(message) {
@@ -806,44 +694,36 @@ class RegistrationScreen extends Component {
             warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
-          <NewPicker
+          <CustomPicker
             defaultValue={strings.shirtSize}
             items={strings.shirtSizeArray}
             selectedValue={shirtSize}
             onValueChange={value => {
               this.setState({ shirtSize: value });
-              if (shirtSize === '')
-                this.setState({ shirtSize: strings.shirtSizeArray[0] });
             }}
           />
-          <NewPicker
+          <CustomPicker
             defaultValue={strings.studentNation}
             items={strings.studentNationArray}
             selectedValue={studentNation}
             onValueChange={value => {
               this.setState({ studentNation: value });
-              if (shirtSize === '')
-                this.setState({ shirtSize: strings.shirtSizeArray[0] });
             }}
           />
-          <NewPicker
+          <CustomPicker
             defaultValue={strings.corps}
             items={strings.corpsList}
             selectedValue={corps}
             onValueChange={value => {
               this.setState({ corps: value });
-              if (shirtSize === '')
-                this.setState({ shirtSize: strings.shirtSizeArray[0] });
             }}
           />
-          <NewPicker
+          <CustomPicker
             defaultValue={strings.driversLicense}
             items={strings.driversLicenseArray}
             selectedValue={driversLicense}
             onValueChange={value => {
               this.setState({ driversLicense: value });
-              if (shirtSize === '')
-                this.setState({ shirtSize: strings.shirtSizeArray[0] });
             }}
           />
           <CheckBox
@@ -1019,39 +899,6 @@ class RegistrationScreen extends Component {
             }}
           />
         </ScrollView>
-        {this.renderDKBackgroundCloser()}
-        {
-          // <DKPicker
-          //   onValueChange={newValue => this.setState({ shirtSize: newValue })}
-          //   items={strings.shirtSizeArray}
-          //   value={shirtSize}
-          //   isShowing={showShirtPicker}
-          //   close={() => this.setState({ showShirtPicker: false })}
-          // />
-          // <DKPicker
-          //   onValueChange={newValue => this.setState({ studentNation: newValue })}
-          //   items={strings.studentNationArray}
-          //   value={studentNation}
-          //   isShowing={showstudentNationPicker}
-          //   close={() => this.setState({ showstudentNationPicker: false })}
-          // />
-          // <DKPicker
-          //   onValueChange={newValue =>
-          //     this.setState({ driversLicense: newValue })
-          //   }
-          //   items={strings.driversLicenseArray}
-          //   value={driversLicense}
-          //   isShowing={showDriversLicensePicker}
-          //   close={() => this.setState({ showDriversLicensePicker: false })}
-          // />
-          // <DKPicker
-          //   onValueChange={newValue => this.setState({ corps: newValue })}
-          //   items={strings.corpsList}
-          //   value={corps}
-          //   isShowing={showCorpPicker}
-          //   close={() => this.setState({ showCorpPicker: false })}
-          // />
-        }
         {loading ? (
           <Loading
             loadingComplete={loadingComplete}

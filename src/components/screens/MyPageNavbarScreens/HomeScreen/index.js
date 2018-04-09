@@ -8,7 +8,7 @@ import {
   BackgroundImage,
   Popover,
   TimelineItem,
-  NewPicker
+  CustomPicker
 } from '~/src/components/common';
 import { HOME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
