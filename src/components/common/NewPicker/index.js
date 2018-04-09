@@ -4,8 +4,10 @@ import {
   Picker,
   Animated,
   Keyboard,
+  Modal,
   TouchableWithoutFeedback
 } from 'react-native';
+import { BlurView } from 'expo';
 import PropTypes from 'prop-types';
 import { WIDTH, IS_IOS, HEIGHT } from '~/src/helpers/Constants';
 import { CustomButton } from '~/src/components/common';
@@ -51,35 +53,73 @@ class NewPicker extends Component {
       </TouchableWithoutFeedback>
     ) : null;
   }
+
   render() {
     const { pickerStyle, androidPicker } = styles;
     const { selectedValue, onValueChange, items, defaultValue } = this.props;
     return IS_IOS ? (
-      <Animated.View
-        style={[pickerStyle, { width: WIDTH, bottom: this.state.bottom }]}
-      >
-        <View
-          onLayout={event => {
-            this.setState({ height: event.nativeEvent.layout.height });
+      <View>
+        {/* this.renderCloser() */}
+        <Modal
+          animationType="slide"
+          transparent
+          visible={this.state.isShowing}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
           }}
         >
-          <CustomButton
-            text="OK"
-            style="standardButton"
-            width={WIDTH - 50}
-            onPress={() => this.setState({ isShowing: false })}
-          />
-          <CustomButton
-            text={selectedValue === '' ? `${defaultValue}*` : selectedValue}
-            style="dropDownButton"
-            width={WIDTH}
-            onPress={() => {
-              Keyboard.dismiss();
-              this.setState({ isShowing: true });
+          <TouchableWithoutFeedback
+            style={{ position: 'absolute' }}
+            onPress={() =>
+              this.setState({
+                isShowing: false
+              })
+            }
+          >
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'flex-end'
+              }}
+            />
+          </TouchableWithoutFeedback>
+          <View
+            style={{
+              backgroundColor: 'white',
+              height: HEIGHT / 2,
+              width: WIDTH + 32
             }}
-          />
-        </View>
-      </Animated.View>
+          >
+            <View style={{ alignItems: 'center' }}>
+              <CustomButton
+                text="OK"
+                style="standardButton"
+                width={WIDTH - 50}
+                onPress={() => this.setState({ isShowing: false })}
+              />
+            </View>
+            <Picker
+              onValueChange={itemValue => onValueChange(itemValue)}
+              selectedValue={selectedValue}
+            >
+              {items.map(item => (
+                <Picker.Item key={item} label={item} value={item} />
+              ))}
+            </Picker>
+          </View>
+        </Modal>
+
+        <CustomButton
+          text={selectedValue === '' ? `${defaultValue}*` : selectedValue}
+          style="dropDownButton"
+          width={WIDTH}
+          onPress={() => {
+            Keyboard.dismiss();
+            this.setState({ isShowing: true });
+          }}
+        />
+      </View>
     ) : (
       <View>
         <Picker

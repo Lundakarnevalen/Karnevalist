@@ -810,25 +810,41 @@ class RegistrationScreen extends Component {
             defaultValue={strings.shirtSize}
             items={strings.shirtSizeArray}
             selectedValue={shirtSize}
-            onValueChange={value => this.setState({ shirtSize: value })}
+            onValueChange={value => {
+              this.setState({ shirtSize: value });
+              if (shirtSize === '')
+                this.setState({ shirtSize: strings.shirtSizeArray[0] });
+            }}
           />
           <NewPicker
             defaultValue={strings.studentNation}
             items={strings.studentNationArray}
             selectedValue={studentNation}
-            onValueChange={value => this.setState({ studentNation: value })}
+            onValueChange={value => {
+              this.setState({ studentNation: value });
+              if (shirtSize === '')
+                this.setState({ shirtSize: strings.shirtSizeArray[0] });
+            }}
           />
           <NewPicker
             defaultValue={strings.corps}
             items={strings.corpsList}
             selectedValue={corps}
-            onValueChange={value => this.setState({ corps: value })}
+            onValueChange={value => {
+              this.setState({ corps: value });
+              if (shirtSize === '')
+                this.setState({ shirtSize: strings.shirtSizeArray[0] });
+            }}
           />
           <NewPicker
             defaultValue={strings.driversLicense}
             items={strings.driversLicenseArray}
             selectedValue={driversLicense}
-            onValueChange={value => this.setState({ driversLicense: value })}
+            onValueChange={value => {
+              this.setState({ driversLicense: value });
+              if (shirtSize === '')
+                this.setState({ shirtSize: strings.shirtSizeArray[0] });
+            }}
           />
           <CheckBox
             name={strings.plenipotentiary}
