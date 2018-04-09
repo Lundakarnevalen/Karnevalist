@@ -7,7 +7,8 @@ import {
   Header,
   BackgroundImage,
   Popover,
-  TimelineItem
+  TimelineItem,
+  NewPicker
 } from '~/src/components/common';
 import { HOME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
@@ -155,6 +156,7 @@ class HomeScreen extends Component {
       <View style={{ flex: 1 }}>
         <BackgroundImage pictureNumber={1} />
         <Header title={strings.title} />
+
         <View style={{ height: 20 }} />
         <View style={container}>
           <View

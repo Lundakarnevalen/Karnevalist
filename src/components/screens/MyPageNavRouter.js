@@ -91,7 +91,7 @@ class MyPageNavRouter extends Component {
 const navigate = (scene, jumpToIndex, props) => {
   jumpToIndex(scene.index);
   if (props.screenProps.progress >= 2)
-    props.screenProps.setHomeScreenPopover(false);
+    props.screenProps.setPopover('homeScreenPopover', false);
 };
 
 const namedTabBarIcon = name => {

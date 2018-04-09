@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
-import { View, Picker, Animated } from 'react-native';
-import { WIDTH } from '~/src/helpers/Constants';
-import { CustomButton } from '../common';
+import {
+  View,
+  Picker,
+  Animated,
+  Keyboard,
+  TouchableWithoutFeedback
+} from 'react-native';
+import PropTypes from 'prop-types';
+import { WIDTH, IS_IOS, HEIGHT } from '~/src/helpers/Constants';
+import { CustomButton } from '~/src/components/common';
+import { styles } from './styles';
 
-class DKPicker extends Component {
+class NewPicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bottom: new Animated.Value(-1337),
-      height: 0
+      height: 0,
+      isShowing: false
     };
   }
 
   componentDidUpdate() {
-    if (this.props.isShowing) {
+    if (this.state.isShowing) {
       Animated.timing(this.state.bottom, { toValue: 0 }).start();
     } else {
       Animated.timing(this.state.bottom, {
@@ -21,41 +30,31 @@ class DKPicker extends Component {
       }).start();
     }
   }
-
-  renderPickerForPlatform(defaultTitle, tagArray, title, tag) {
-    if (IS_IOS) {
-      return (
-        <CustomButton
-          text={title === '' ? `${defaultTitle}*` : title}
-          style="dropDownButton"
-          width={WIDTH}
-          onPress={() => {
-            Keyboard.dismiss();
-            console.log('IOS');
+  renderCloser() {
+    return this.state.isShowing ? (
+      <TouchableWithoutFeedback
+        style={{ position: 'absolute' }}
+        onPress={() =>
+          this.setState({
+            isShowing: false
+          })
+        }
+      >
+        <View
+          style={{
+            position: 'absolute',
+            width: WIDTH + 32,
+            height: HEIGHT,
+            backgroundColor: 'rgba(0, 0, 0, 0.3)'
           }}
         />
-      );
-    }
-    return (
-      <View>
-        <Picker
-          onValueChange={item => {
-            console.log(item);
-          }}
-          selectedValue={title === '' ? defaultTitle : title}
-          style={styles.androidPicker}
-        >
-          <Picker.Item label={defaultTitle} value="" />
-          {this.renderPickerArray(tag, tagArray)}
-        </Picker>
-      </View>
-    );
+      </TouchableWithoutFeedback>
+    ) : null;
   }
-
   render() {
-    const { pickerStyle } = styles;
-    const { items, value } = this.props;
-    return (
+    const { pickerStyle, androidPicker } = styles;
+    const { selectedValue, onValueChange, items, defaultValue } = this.props;
+    return IS_IOS ? (
       <Animated.View
         style={[pickerStyle, { width: WIDTH, bottom: this.state.bottom }]}
       >
@@ -68,28 +67,54 @@ class DKPicker extends Component {
             text="OK"
             style="standardButton"
             width={WIDTH - 50}
-            onPress={() => this.props.close()}
+            onPress={() => this.setState({ isShowing: false })}
           />
-          <Picker
-            onValueChange={itemValue => this.props.onValueChange(itemValue)}
-            selectedValue={value}
-          >
-            {items.map(item => (
-              <Picker.Item key={item} label={item} value={item} />
-            ))}
-          </Picker>
+          <CustomButton
+            text={selectedValue === '' ? `${defaultValue}*` : selectedValue}
+            style="dropDownButton"
+            width={WIDTH}
+            onPress={() => {
+              Keyboard.dismiss();
+              this.setState({ isShowing: true });
+            }}
+          />
         </View>
       </Animated.View>
+    ) : (
+      <View>
+        <Picker
+          onValueChange={item => {
+            onValueChange(item);
+          }}
+          selectedValue={selectedValue === '' ? defaultValue : selectedValue}
+          style={androidPicker}
+        >
+          <Picker.Item label={defaultValue} value="" />
+          {items.map(item => (
+            <Picker.Item key={item} label={item} value={item} />
+          ))}
+        </Picker>
+        {this.renderCloser()}
+      </View>
     );
   }
 }
-
-const styles = {
-  pickerStyle: {
-    backgroundColor: 'white',
-    position: 'absolute',
-    alignItems: 'center'
-  }
+NewPicker.defaultProps = {
+  defaultValue: ''
 };
 
-export { DKPicker };
+NewPicker.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool
+  ]).isRequired,
+  onValueChange: PropTypes.func.isRequired,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool
+  ])
+};
+export { NewPicker };

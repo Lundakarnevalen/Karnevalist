@@ -21,7 +21,8 @@ import {
   CheckBox,
   BackgroundImage,
   SuperAgileAlert,
-  Loading
+  Loading,
+  NewPicker
 } from '~/src/components/common';
 import { REGISTER_URL, HEIGHT, WIDTH, IS_IOS } from '~/src/helpers/Constants';
 import {
@@ -805,31 +806,30 @@ class RegistrationScreen extends Component {
             warningMessage={errorStrings.errorMsgInvalidEmail}
             scrollToInput={y => this.scrollToInput(y)}
           />
-
-          {this.renderPickerForPlatform(
-            strings.shirtSize,
-            strings.shirtSizeArray,
-            shirtSize,
-            'shirt'
-          )}
-          {this.renderPickerForPlatform(
-            strings.studentNation,
-            strings.studentNationArray,
-            studentNation,
-            'nation'
-          )}
-          {this.renderPickerForPlatform(
-            strings.corps,
-            strings.corpsList,
-            corps,
-            'corps'
-          )}
-          {this.renderPickerForPlatform(
-            strings.driversLicense,
-            strings.driversLicenseArray,
-            driversLicense,
-            'driversLicense'
-          )}
+          <NewPicker
+            defaultValue={strings.shirtSize}
+            items={strings.shirtSizeArray}
+            selectedValue={shirtSize}
+            onValueChange={value => this.setState({ shirtSize: value })}
+          />
+          <NewPicker
+            defaultValue={strings.studentNation}
+            items={strings.studentNationArray}
+            selectedValue={studentNation}
+            onValueChange={value => this.setState({ studentNation: value })}
+          />
+          <NewPicker
+            defaultValue={strings.corps}
+            items={strings.corpsList}
+            selectedValue={corps}
+            onValueChange={value => this.setState({ corps: value })}
+          />
+          <NewPicker
+            defaultValue={strings.driversLicense}
+            items={strings.driversLicenseArray}
+            selectedValue={driversLicense}
+            onValueChange={value => this.setState({ driversLicense: value })}
+          />
           <CheckBox
             name={strings.plenipotentiary}
             size={30}
@@ -945,7 +945,6 @@ class RegistrationScreen extends Component {
             maxLength={200}
             numberOfLines={3}
           />
-
           <View style={{ right: 3 }}>
             <CheckBox
               name={`${strings.gdpr1}*`}
@@ -1005,36 +1004,38 @@ class RegistrationScreen extends Component {
           />
         </ScrollView>
         {this.renderDKBackgroundCloser()}
-        <DKPicker
-          onValueChange={newValue => this.setState({ shirtSize: newValue })}
-          items={strings.shirtSizeArray}
-          value={shirtSize}
-          isShowing={showShirtPicker}
-          close={() => this.setState({ showShirtPicker: false })}
-        />
-        <DKPicker
-          onValueChange={newValue => this.setState({ studentNation: newValue })}
-          items={strings.studentNationArray}
-          value={studentNation}
-          isShowing={showstudentNationPicker}
-          close={() => this.setState({ showstudentNationPicker: false })}
-        />
-        <DKPicker
-          onValueChange={newValue =>
-            this.setState({ driversLicense: newValue })
-          }
-          items={strings.driversLicenseArray}
-          value={driversLicense}
-          isShowing={showDriversLicensePicker}
-          close={() => this.setState({ showDriversLicensePicker: false })}
-        />
-        <DKPicker
-          onValueChange={newValue => this.setState({ corps: newValue })}
-          items={strings.corpsList}
-          value={corps}
-          isShowing={showCorpPicker}
-          close={() => this.setState({ showCorpPicker: false })}
-        />
+        {
+          // <DKPicker
+          //   onValueChange={newValue => this.setState({ shirtSize: newValue })}
+          //   items={strings.shirtSizeArray}
+          //   value={shirtSize}
+          //   isShowing={showShirtPicker}
+          //   close={() => this.setState({ showShirtPicker: false })}
+          // />
+          // <DKPicker
+          //   onValueChange={newValue => this.setState({ studentNation: newValue })}
+          //   items={strings.studentNationArray}
+          //   value={studentNation}
+          //   isShowing={showstudentNationPicker}
+          //   close={() => this.setState({ showstudentNationPicker: false })}
+          // />
+          // <DKPicker
+          //   onValueChange={newValue =>
+          //     this.setState({ driversLicense: newValue })
+          //   }
+          //   items={strings.driversLicenseArray}
+          //   value={driversLicense}
+          //   isShowing={showDriversLicensePicker}
+          //   close={() => this.setState({ showDriversLicensePicker: false })}
+          // />
+          // <DKPicker
+          //   onValueChange={newValue => this.setState({ corps: newValue })}
+          //   items={strings.corpsList}
+          //   value={corps}
+          //   isShowing={showCorpPicker}
+          //   close={() => this.setState({ showCorpPicker: false })}
+          // />
+        }
         {loading ? (
           <Loading
             loadingComplete={loadingComplete}
