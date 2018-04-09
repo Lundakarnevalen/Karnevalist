@@ -5,7 +5,6 @@ export * from './Row';
 export * from './Input';
 export * from './Header';
 export * from './ExpandeblePanel';
-export * from './DKPicker';
 export * from './CustomButton';
 export * from './CheckBox';
 export * from './BackgroundImage';

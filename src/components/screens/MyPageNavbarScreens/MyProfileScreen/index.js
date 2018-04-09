@@ -18,60 +18,21 @@ import {
   Header,
   Input
 } from '~/src/components/common';
-
-const fulfilsRequirement = (key, toCheck) => {
-  switch (key) {
-    case 'firstName':
-      return containsOnlyLetters(toCheck);
-    case 'lastName':
-      return containsOnlyLetters(toCheck);
-    case 'email':
-      return isEmail(toCheck);
-    case 'city':
-      return containsOnlyLetters(toCheck);
-    case 'postNumber':
-      return containsOnlyDigits(toCheck) && toCheck.length === 5;
-    case 'phoneNumber':
-      return isValidPhoneNbr(toCheck);
-    default:
-      return true;
-  }
-};
-
-const getInputStyle = editable => ({
-  backgroundColor: editable ? 'white' : 'transparent',
-  borderWidth: editable ? 1 : 0,
-  textColor: editable ? 'black' : 'white',
-  placeholderTextColor: editable ? '#F7A021' : 'white'
-});
-import { USER_URL, LOGOUT_RESET_ACTION, HEIGHT } from '~/src/helpers/Constants';
-import {
-  isEmail,
-  containsOnlyLetters,
-  isValidPhoneNbr,
-  containsOnlyDigits,
-  getStrings
-} from '~/src/helpers/functions';
+import { USER_URL, LOGOUT_RESET_ACTION } from '~/src/helpers/Constants';
+import { getStrings } from '~/src/helpers/functions';
 import {
   MY_PROFILE_SCREEN_STRINGS,
   ERROR_MSG_INPUT_FIELD
 } from '~/src/helpers/LanguageStrings';
 // import { handleErrorMsg } from '~/src/helpers/ApiManager';
-import { removeItem } from '~/src/helpers/LocalSave';
+// import { removeItem } from '~/src/helpers/LocalSave';
 import { styles } from './styles';
 
 class MyProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: props.userinfo,
-      oldUser: Object.assign({}, props.userinfo),
-      editMode: false,
-      alertVisible: false,
-      anyError: false,
-      validAddress: true,
-      showToast: false,
-      strings: this.getLanguageStrings()
+      user: {}
     };
   }
 
@@ -79,103 +40,23 @@ class MyProfileScreen extends Component {
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.props.navigation.goBack()
     );
-  }
-
-  checkAddressError(text) {
-    if (text === '') {
-      this.setState({ validAddress: false });
-    } else {
-      this.setState({ validAddress: true });
-    }
-  }
-
-  getErrorStrings() {
-    const { language } = this.props;
-    const { fields } = ERROR_MSG_INPUT_FIELD;
-    const strings = {};
-    fields.forEach(
-      field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language])
-    );
-    return strings;
+    this.setState({ user: this.props.userinfo });
   }
 
   getLanguageStrings() {
     return getStrings(this.props.language, MY_PROFILE_SCREEN_STRINGS);
   }
 
-  getRightIcon() {
-    const { rightIconStyle } = styles;
-    const {
-      anyError,
-      validAddress,
-      changesMade,
-      editMode,
-      strings
-    } = this.state;
-    return (
-      <TouchableOpacity
-        style={rightIconStyle}
-        onPress={() => {
-          if (editMode && changesMade) {
-            if (anyError || !validAddress) {
-              this.handleAlert(
-                true,
-                strings.invalidChangesMadeHeader,
-                strings.invalidChangesMadeText
-              );
-            } else if (changesMade) {
-              this.handleAlert(true, strings.popUpHeader, strings.popUpInfo);
-            }
-          } else {
-            this.setState({ editMode: !editMode });
-          }
-        }}
-      >
-        <MaterialIcons
-          name={this.state.editMode ? 'done' : 'edit'}
-          style={{ color: 'pink', right: 0 }}
-          size={30}
-        />
-      </TouchableOpacity>
-    );
-  }
-
-  getMsg(success, strings) {
-    return success
-      ? strings.updateInfoMessageSuccess
-      : strings.updateInfoMessageFail;
-  }
-
-  getWarningMessage(key) {
-    const errorStrings = this.getErrorStrings();
-    switch (key) {
-      case 'firstName':
-        return errorStrings.errorMsgOnlyLetters;
-      case 'lastName':
-        return errorStrings.errorMsgOnlyLetters;
-      case 'city':
-        return errorStrings.errorMsgOnlyLetters;
-      case 'postNumber':
-        return errorStrings.errorMsgZipCode;
-      case 'phoneNumber':
-        return errorStrings.errorMsgPhoneNbr;
-      default:
-    }
-  }
-
-  handleLogout() {
-    const { strings } = this.state;
-    removeItem('email');
-    removeItem('accessToken');
-    this.handleAlert(
-      true,
-      strings.expiredTokenTitle,
-      strings.expiredTokenMessage
-    );
+  setAlertVisible(visible, message) {
+    const strings = this.getLanguageStrings();
+    this.setState({ alertVisible: visible });
+    if (message === strings.expiredTokenMessage)
+      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
   renderFields() {
-    const { user, editMode, oldUser, strings } = this.state;
+    const strings = this.getLanguageStrings();
+    const { user, editMode } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
     fields.forEach(field => {
@@ -183,13 +64,12 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      const editable = editMode && key !== 'email';
-      const {
-        backgroundColor,
-        borderWidth,
-        textColor,
-        placeholderTextColor
-      } = getInputStyle(editable);
+      const backgroundColor =
+        editMode && key !== 'email' ? 'white' : 'transparent';
+      const borderWidth = editMode && key !== 'email' ? 1 : 0;
+      const textColor = editMode && key !== 'email' ? 'black' : 'white';
+      const placeholderTextColor =
+        editMode && key !== 'email' ? '#F7A021' : 'white';
       if (
         user[key] === '' ||
         user[key] === null ||
@@ -206,74 +86,16 @@ class MyProfileScreen extends Component {
           extraPlaceHolderStyle={{ color: placeholderTextColor }}
           key={key}
           placeholder={labels[key]}
-          onChangeText={text => {
-            if (key === 'address') {
-              this.checkAddressError(text);
-            }
-            user[key] = text;
-            this.setState({
-              anyError: !fulfilsRequirement(key, text),
-              user,
-              changesMade: user[key] !== oldUser[key]
-            });
-          }}
           value={user[key]}
-          editable={editable}
+          editable={false}
         />
       );
     });
     return textFields;
   }
 
-  setAlertVisible(visible, message) {
-    const { strings } = this.state;
-    this.setState({ alertVisible: visible });
-    if (message === strings.expiredTokenMessage)
-      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
-  }
-
-  renderAlertButtons(message) {
-    const strings = this.getLanguageStrings();
-    switch (message) {
-      case strings.expiredTokenMessage:
-        return [
-          {
-            text: strings.ok,
-            onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION)
-          }
-        ];
-      case strings.popUpInfo:
-        return [
-          {
-            text: strings.cancel,
-            onPress: () => this.setState({ alertVisible: false })
-          },
-          {
-            text: strings.save,
-            onPress: () => this.saveChanges()
-          }
-        ];
-      case strings.ok:
-      default:
-        return [
-          {
-            text: strings.ok,
-            onPress: () => this.setState({ alertVisible: false })
-          }
-        ];
-    }
-  }
-
-  handleAlert(alertVisible, alertHeader, message) {
-    this.setState({
-      alertVisible,
-      message,
-      alertHeader
-    });
-  }
-
   renderMainView() {
-    const { user, showToast, success, strings } = this.state;
+    const { user } = this.state;
     if (user === null || user === undefined)
       return (
         <View style={styles.loading}>
@@ -281,73 +103,18 @@ class MyProfileScreen extends Component {
         </View>
       );
     return (
-      <View>
-        <ScrollView style={styles.scrollStyle}>
-          {this.renderFields()}
-        </ScrollView>
-        <Toast
-          showToast={showToast}
-          onClose={() => this.setState({ showToast: false })}
-          message={this.getMsg(success, strings)}
-        />
-      </View>
+      <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>
     );
-  }
-
-  putData(data) {
-    const url = USER_URL + this.props.email;
-    const headers = {
-      Authorization: `Bearer ${this.props.token}`,
-      'content-type': 'application/json'
-    };
-    axios
-      .put(url, data, { headers })
-      .then(response => {
-        const { success } = response.data;
-        this.setState({
-          oldUser: Object.assign({}, data),
-          success,
-          showToast: true,
-          changesMade: false
-        });
-      })
-      .catch(error => {
-        if (error.response.status === 401) this.handleLogout();
-        // const msg = handleErrorMsg(error);
-      });
-  }
-
-  saveChanges() {
-    const { user, oldUser } = this.state;
-    const data = {};
-    let ctr = 0;
-    Object.keys(user).forEach(key => {
-      ctr++;
-      if (user[key] !== oldUser[key]) data[key] = user[key];
-      if (ctr === Object.keys(user).length) this.putData(data);
-    });
-    this.setState({ oldUser: user, alertVisible: false, editMode: false });
   }
 
   render() {
     const { navigation } = this.props;
-    const { alertVisible, message, alertHeader, strings } = this.state;
+    const strings = this.getLanguageStrings();
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header
-          title={strings.title}
-          navigation={navigation}
-          rightIcon={this.getRightIcon()}
-        />
+        <Header title={strings.title} navigation={navigation} />
         {this.renderMainView()}
-        <SuperAgileAlert
-          alertVisible={alertVisible}
-          setAlertVisible={visible => this.setAlertVisible(visible, message)}
-          buttonsIn={this.renderAlertButtons(message)}
-          header={alertHeader}
-          info={message}
-        />
       </View>
     );
   }
@@ -366,3 +133,220 @@ const mapStateToProps = ({ currentLanguage, userInformation }) => {
 };
 
 export default connect(mapStateToProps, null)(MyProfileScreen);
+
+// getWarningMessage(key) {
+//   const errorStrings = this.getErrorStrings();
+//   switch (key) {
+//     case 'firstName':
+//       return errorStrings.errorMsgOnlyLetters;
+//     case 'lastName':
+//       return errorStrings.errorMsgOnlyLetters;
+//     case 'city':
+//       return errorStrings.errorMsgOnlyLetters;
+//     case 'postNumber':
+//       return errorStrings.errorMsgZipCode;
+//     case 'phoneNumber':
+//       return errorStrings.errorMsgPhoneNbr;
+//     default:
+//       return;
+//   }
+// }
+
+// checkAddressError(text) {
+//   if (text === '') {
+//     this.setState({ validAddress: false });
+//   } else {
+//     this.setState({ validAddress: true });
+//   }
+// }
+
+// handleLogout() {
+//   const strings = this.getLanguageStrings();
+//   removeItem('email');
+//   removeItem('accessToken');
+//   this.setState({
+//     alertVisible: true,
+//     message: strings.expiredTokenMessage,
+//     alertHeader: strings.expiredTokenTitle
+//   });
+// }
+
+// saveChanges() {
+//   const { user, oldUser } = this.state;
+//   const data = {};
+//   let ctr = 0;
+//   Object.keys(user).forEach(key => {
+//     ctr++;
+//     if (user[key] !== oldUser[key]) data[key] = user[key];
+//     if (ctr === Object.keys(user).length) this.putData(data);
+//   });
+//   this.setState({ oldUser: user, alertVisible: false });
+// }
+
+// putData(data) {
+//   const url = USER_URL + this.props.email;
+//   const headers = {
+//     Authorization: 'Bearer ' + this.props.token,
+//     'content-type': 'application/json'
+//   };
+//   axios
+//     .put(url, data, { headers })
+//     .then(response => {
+//       const { success } = response.data;
+//       this.setState({ success, showToast: true, changesMade: false });
+//     })
+//     .catch(error => {
+//       if (error.response.status === 401) this.handleLogout();
+//       const msg = handleErrorMsg(error);
+//     });
+// }
+
+// isEmail(toTest) {
+//   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+//     toTest
+//   );
+// }
+//
+// containsOnlyLetters(toTest) {
+//   return /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(
+//     toTest
+//   );
+// }
+//
+// isValidPhoneNbr(toTest) {
+//   return /^\+?\d+$/.test(toTest) && toTest.length >= 7 && toTest.length <= 20;
+// }
+//
+// containsOnlyDigits(text) {
+//   return /^\d+$/.test(text);
+// }
+//
+// fulfilsRequirement(key, toCheck) {
+//   switch (key) {
+//     case 'firstName':
+//       return this.containsOnlyLetters(toCheck);
+//     case 'lastName':
+//       return this.containsOnlyLetters(toCheck);
+//     case 'email':
+//       return this.isEmail(toCheck);
+//     case 'city':
+//       return this.containsOnlyLetters(toCheck);
+//     case 'postNumber':
+//       return this.containsOnlyDigits(toCheck) && toCheck.length === 5;
+//     case 'phoneNumber':
+//       return this.isValidPhoneNbr(toCheck);
+//     default:
+//       return true;
+//   }
+// }
+//
+
+// getErrorStrings() {
+//   const { language } = this.props;
+//   const { fields } = ERROR_MSG_INPUT_FIELD;
+//   const strings = {};
+//   fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
+//   return strings;
+// }
+
+// getRightIcon() {
+//   const strings = this.getLanguageStrings();
+//   const { rightIconStyle } = styles;
+//   const { anyError, validAddress } = this.state;
+//   return (
+//     <TouchableOpacity
+//       style={rightIconStyle}
+//       onPress={() => {
+//         if (this.state.editMode && this.state.changesMade) {
+//           if (anyError || !validAddress) {
+//             this.setState({ errorAlertVisible: true });
+//           } else if (this.state.changesMade) {
+//             this.setState({
+//               message: strings.popUpInfo,
+//               alertHeader: strings.popUpHeader,
+//               alertVisible: true
+//             });
+//           }
+//         } else {
+//           this.setState({ editMode: !this.state.editMode });
+//         }
+//       }}
+//     >
+//       <MaterialIcons
+//         name={this.state.editMode ? 'done' : 'edit'}
+//         style={{ color: 'white', right: 0 }}
+//         size={30}
+//       />
+//     </TouchableOpacity>
+//   );
+// }
+// getUserInfo() {
+//   const url = USER_URL + this.props.email;
+//   const headers = {
+//     Authorization: 'Bearer ' + this.props.token,
+//     'content-type': 'application/json'
+//   };
+//   axios
+//     .get(url, { headers })
+//     .then(response => {
+//       const { user } = response.data;
+//       this.setState({ oldUser: { ...user }, user });
+//     })
+//     .catch(error => {
+//       if (error.response.status === 401) this.handleLogout();
+//       const msg = handleErrorMsg(error);
+//     });
+// }
+//
+// getMsg(success, strings) {
+//   return success ? strings.updateInfoMessageSuccess : strings.updateInfoMessageFail;
+// }
+
+// renderAlertButtons(message) {
+//   const strings = this.getLanguageStrings();
+//   switch (message) {
+//     case strings.expiredTokenMessage:
+//       return [
+//         { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
+//       ];
+//     case strings.popUpInfo:
+//       return [
+//         { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
+//         {
+//           text: strings.save,
+//           onPress: () => {
+//             this.saveChanges();
+//             this.setState({ editMode: false });
+//           }
+//         }
+//       ];
+//     case strings.ok:
+//       return [{ text: strings.ok, onPress: () => this.setState({ errorAlertVisible: false }) }];
+//     default:
+//       return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
+//   }
+// }
+// <SuperAgileAlert
+//   alertVisible={alertVisible}
+//   setAlertVisible={visible => this.setAlertVisible(visible, message)}
+//   buttonsIn={this.renderAlertButtons(message)}
+//   header={alertHeader}
+//   info={message}
+// />
+// <SuperAgileAlert
+//   alertVisible={errorAlertVisible}
+//   setAlertVisible={visible => this.setState({ errorAlertVisible: visible })}
+//   buttonsIn={this.renderAlertButtons('OK')}
+//   header={strings.invalidChangesMadeHeader}
+//   info={strings.invalidChangesMadeText}
+// />
+
+// <View>
+//   {this.renderMainView()}
+//   <Toast
+//     color={'#f4376d'}
+//     showToast={showToast}
+//     onClose={() => this.setState({ showToast: false })}
+//     message={this.getMsg(success, strings)}
+//   />
+// </View>
