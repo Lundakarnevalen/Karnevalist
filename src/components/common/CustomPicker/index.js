@@ -99,7 +99,7 @@ class CustomPicker extends Component {
           selectedValue={selectedValue === '' ? defaultValue : selectedValue}
           style={androidPicker}
         >
-          <Picker.Item label={defaultValue} value="" />
+          {defaultValue ? <Picker.Item label={defaultValue} value="" /> : []}
           {items.map(item => (
             <Picker.Item key={item} label={item} value={item} />
           ))}

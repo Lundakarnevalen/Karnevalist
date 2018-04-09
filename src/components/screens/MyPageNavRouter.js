@@ -146,13 +146,15 @@ const TabNav = TabNavigator(
         }
       }),
       navigationOptions: props => ({
-        tabBarOnPress: IS_IOS
-          ? (scene, jumpToIndex) => {
-              navigate(scene, jumpToIndex, props);
-            }
-          : ({ scene, jumpToIndex }) => {
-              navigate(scene, jumpToIndex, props);
-            },
+        tabBarOnPress: (scene, jumpToIndex) => {
+          if (jumpToIndex) {
+            // This is something weird, probably with expo and stacking navigatros
+            navigate(scene, jumpToIndex, props);
+          } else {
+            jumpToIndex = scene.jumpToIndex;
+            navigate(scene.scene, scene.jumpToIndex, props);
+          }
+        },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
         tabBarIcon: namedTabBarIcon('star')
@@ -174,13 +176,15 @@ const TabNav = TabNavigator(
         }
       }),
       navigationOptions: props => ({
-        tabBarOnPress: IS_IOS
-          ? (scene, jumpToIndex) => {
-              navigate(scene, jumpToIndex, props);
-            }
-          : ({ scene, jumpToIndex }) => {
-              navigate(scene, jumpToIndex, props);
-            },
+        tabBarOnPress: (scene, jumpToIndex) => {
+          if (jumpToIndex) {
+            // This is something weird, probably with expo and stacking navigatros
+            navigate(scene, jumpToIndex, props);
+          } else {
+            jumpToIndex = scene.jumpToIndex;
+            navigate(scene.scene, scene.jumpToIndex, props);
+          }
+        },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: namedTabBarIcon('local-library')
       })
@@ -207,13 +211,15 @@ const TabNav = TabNavigator(
         }
       }),
       navigationOptions: props => ({
-        tabBarOnPress: IS_IOS
-          ? (scene, jumpToIndex) => {
-              navigate(scene, jumpToIndex, props);
-            }
-          : ({ scene, jumpToIndex }) => {
-              navigate(scene, jumpToIndex, props);
-            },
+        tabBarOnPress: (scene, jumpToIndex) => {
+          if (jumpToIndex) {
+            // This is something weird, probably with expo and stacking navigatros
+            navigate(scene, jumpToIndex, props);
+          } else {
+            jumpToIndex = scene.jumpToIndex;
+            navigate(scene.scene, scene.jumpToIndex, props);
+          }
+        },
         tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: namedTabBarIcon('settings')
       })

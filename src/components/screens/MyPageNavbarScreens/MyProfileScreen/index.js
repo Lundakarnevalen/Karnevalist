@@ -3,36 +3,76 @@ import {
   ActivityIndicator,
   BackHandler,
   View,
-  Dimensions,
   ScrollView,
   TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import axios from 'axios';
+import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import {
   Toast,
   BackgroundImage,
   SuperAgileAlert,
   Header,
-  Input
+  Input,
+  CustomPicker
 } from '~/src/components/common';
-import { USER_URL, LOGOUT_RESET_ACTION } from '~/src/helpers/Constants';
-import { getStrings } from '~/src/helpers/functions';
+import { LOGOUT_RESET_ACTION } from '~/src/helpers/Constants';
+import { setUserinfo } from '~/src/actions';
+import {
+  isEmail,
+  containsOnlyLetters,
+  isValidPhoneNbr,
+  containsOnlyDigits,
+  getStrings
+} from '~/src/helpers/functions';
 import {
   MY_PROFILE_SCREEN_STRINGS,
-  ERROR_MSG_INPUT_FIELD
+  ERROR_MSG_INPUT_FIELD,
+  REGISTRATION_SCREEN_STRINGS
 } from '~/src/helpers/LanguageStrings';
-// import { handleErrorMsg } from '~/src/helpers/ApiManager';
-// import { removeItem } from '~/src/helpers/LocalSave';
+import { removeItem } from '~/src/helpers/LocalSave';
+import { updateUser } from '~/src/helpers/ApiManager';
 import { styles } from './styles';
+
+const fulfilsRequirement = (key, toCheck) => {
+  switch (key) {
+    case 'firstName':
+      return containsOnlyLetters(toCheck);
+    case 'lastName':
+      return containsOnlyLetters(toCheck);
+    case 'email':
+      return isEmail(toCheck);
+    case 'city':
+      return containsOnlyLetters(toCheck);
+    case 'postNumber':
+      return containsOnlyDigits(toCheck) && toCheck.length === 5;
+    case 'phoneNumber':
+      return isValidPhoneNbr(toCheck);
+    case 'address':
+      return toCheck !== '';
+    default:
+      return true;
+  }
+};
+
+const getInputStyle = editable => ({
+  backgroundColor: editable ? 'white' : 'transparent',
+  borderWidth: editable ? 1 : 0,
+  textColor: editable ? 'black' : 'white',
+  placeholderTextColor: editable ? '#F7A021' : 'white'
+});
 
 class MyProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: { ...props.userinfo },
+      oldUser: { ...props.userinfo },
+      editMode: false,
+      alertVisible: false,
+      showToast: false,
+      strings: this.getLanguageStrings()
     };
   }
 
@@ -40,23 +80,223 @@ class MyProfileScreen extends Component {
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.props.navigation.goBack()
     );
-    this.setState({ user: this.props.userinfo });
+  }
+
+  getErrorStrings() {
+    return getStrings(this.props.language, ERROR_MSG_INPUT_FIELD);
   }
 
   getLanguageStrings() {
     return getStrings(this.props.language, MY_PROFILE_SCREEN_STRINGS);
   }
 
+  getRightIcon() {
+    const { rightIconStyle } = styles;
+    const { editMode } = this.state;
+    return (
+      <TouchableOpacity
+        style={rightIconStyle}
+        onPress={() => {
+          if (editMode) this.handleDoneEditing();
+          else this.setState({ editMode: true });
+        }}
+      >
+        <MaterialIcons
+          name={editMode ? 'done' : 'edit'}
+          style={{ color: 'white', right: 0 }}
+          size={30}
+        />
+      </TouchableOpacity>
+    );
+  }
+
+  getWarningMessage(key) {
+    const errorStrings = this.getErrorStrings();
+    switch (key) {
+      case 'firstName':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'lastName':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'city':
+        return errorStrings.errorMsgOnlyLetters;
+      case 'postNumber':
+        return errorStrings.errorMsgZipCode;
+      case 'phoneNumber':
+        return errorStrings.errorMsgPhoneNbr;
+      default:
+        return '';
+    }
+  }
+
+  getComponent(key, labels, editable) {
+    const { user } = this.state;
+    const strings = getStrings(
+      this.props.language,
+      REGISTRATION_SCREEN_STRINGS
+    );
+    const {
+      backgroundColor,
+      borderWidth,
+      textColor,
+      placeholderTextColor
+    } = getInputStyle(editable);
+    if (
+      (key === 'driversLicense' ||
+        key === 'corps' ||
+        key === 'studentNation') &&
+      editable
+    ) {
+      return (
+        <CustomPicker
+          key={key}
+          defaultValue=""
+          items={strings[`${key}Array`]}
+          selectedValue={user[key]}
+          onValueChange={value => {
+            user[key] = value;
+            this.setState({ user });
+          }}
+        />
+      );
+    }
+    return (
+      <Input
+        extraContainerStyle={{ backgroundColor, borderWidth }}
+        extraInputStyle={{ color: textColor }}
+        extraPlaceHolderStyle={{ color: placeholderTextColor }}
+        key={key}
+        keyboardType={
+          key === 'phoneNumber' ||
+          key === 'postNumber' ||
+          key === 'startOfStudies'
+            ? 'numeric'
+            : 'default'
+        }
+        placeholder={labels[key]}
+        onChangeText={text => {
+          user[key] = text;
+          this.setState({ user });
+        }}
+        value={user[key]}
+        editable={editable}
+      />
+    );
+  }
+
   setAlertVisible(visible, message) {
-    const strings = this.getLanguageStrings();
+    const { strings } = this.state;
     this.setState({ alertVisible: visible });
     if (message === strings.expiredTokenMessage)
       this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
 
-  renderFields() {
+  handleDoneEditing() {
+    const { user, oldUser, strings } = this.state;
+    const changesMade =
+      Object.keys(user).filter(key => user[key] !== oldUser[key]).length > 0;
+    const anyError = Object.keys(user)
+      .map(key => fulfilsRequirement(key, user[key]))
+      .some(v => v === false);
+    if (changesMade && anyError) {
+      this.handleAlert(
+        true,
+        strings.invalidChangesMadeHeader,
+        strings.invalidChangesMadeText
+      );
+    } else if (changesMade) {
+      this.handleAlert(true, strings.popUpHeader, strings.popUpInfo);
+    } else {
+      this.setState({ editMode: false });
+    }
+  }
+
+  handleLogout() {
+    const { strings } = this.state;
+    removeItem('email');
+    removeItem('accessToken');
+    this.handleAlert(
+      true,
+      strings.expiredTokenTitle,
+      strings.expiredTokenMessage
+    );
+  }
+
+  handleAlert(alertVisible, alertHeader, message) {
+    this.setState({
+      alertVisible,
+      message,
+      alertHeader
+    });
+  }
+
+  // Checks which changes has been made and sends the to the API
+  saveChanges() {
+    const { user, oldUser } = this.state;
+    const { email, token } = this.props;
+    const data = {};
+    let ctr = 0;
+    Object.keys(user).forEach(key => {
+      ctr++;
+      if (user[key] !== oldUser[key]) data[key] = user[key];
+      if (ctr === Object.keys(user).length) {
+        updateUser(
+          email,
+          token,
+          data,
+          success => {
+            if (success) {
+              this.props.setUserinfo(user);
+              this.setState({ oldUser: { ...user } });
+            }
+            this.setState({
+              success,
+              showToast: true
+            });
+          },
+          () => this.handleLogout()
+        );
+      }
+    });
+    this.setState({
+      alertVisible: false,
+      editMode: false
+    });
+  }
+
+  renderAlertButtons(message) {
     const strings = this.getLanguageStrings();
-    const { user, editMode } = this.state;
+    switch (message) {
+      case strings.expiredTokenMessage:
+        return [
+          {
+            text: strings.ok,
+            onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION)
+          }
+        ];
+      case strings.popUpInfo:
+        return [
+          {
+            text: strings.cancel,
+            onPress: () => this.setState({ alertVisible: false })
+          },
+          {
+            text: strings.save,
+            onPress: () => this.saveChanges()
+          }
+        ];
+      case strings.ok:
+      default:
+        return [
+          {
+            text: strings.ok,
+            onPress: () => this.setState({ alertVisible: false })
+          }
+        ];
+    }
+  }
+
+  renderFields() {
+    const { user, editMode, strings, oldUser } = this.state;
     const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
     fields.forEach(field => {
@@ -64,38 +304,24 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      const backgroundColor =
-        editMode && key !== 'email' ? 'white' : 'transparent';
-      const borderWidth = editMode && key !== 'email' ? 1 : 0;
-      const textColor = editMode && key !== 'email' ? 'black' : 'white';
-      const placeholderTextColor =
-        editMode && key !== 'email' ? '#F7A021' : 'white';
+      const editable = editMode && key !== 'email';
       if (
-        user[key] === '' ||
-        user[key] === null ||
-        user[key] === undefined ||
-        !user[key].length
+        oldUser[key] === '' ||
+        oldUser[key] === null ||
+        oldUser[key] === undefined ||
+        !oldUser[key].length
       )
         return null;
       if (user[key] === true) user[key] = strings.yes;
       if (user[key] === false) user[key] = strings.no;
-      return (
-        <Input
-          extraContainerStyle={{ backgroundColor, borderWidth }}
-          extraInputStyle={{ color: textColor }}
-          extraPlaceHolderStyle={{ color: placeholderTextColor }}
-          key={key}
-          placeholder={labels[key]}
-          value={user[key]}
-          editable={false}
-        />
-      );
+
+      return this.getComponent(key, labels, editable, user);
     });
     return textFields;
   }
 
   renderMainView() {
-    const { user } = this.state;
+    const { user, showToast, success, strings } = this.state;
     if (user === null || user === undefined)
       return (
         <View style={styles.loading}>
@@ -103,18 +329,42 @@ class MyProfileScreen extends Component {
         </View>
       );
     return (
-      <ScrollView style={styles.scrollStyle}>{this.renderFields()}</ScrollView>
+      <View>
+        <ScrollView style={styles.scrollStyle}>
+          {this.renderFields()}
+        </ScrollView>
+        <Toast
+          showToast={showToast}
+          onClose={() => this.setState({ showToast: false })}
+          message={
+            success
+              ? strings.updateInfoMessageSuccess
+              : strings.updateInfoMessageFail
+          }
+        />
+      </View>
     );
   }
 
   render() {
     const { navigation } = this.props;
-    const strings = this.getLanguageStrings();
+    const { alertVisible, message, alertHeader, strings } = this.state;
     return (
       <View>
         <BackgroundImage pictureNumber={4} />
-        <Header title={strings.title} navigation={navigation} />
+        <Header
+          title={strings.title}
+          navigation={navigation}
+          rightIcon={this.getRightIcon()}
+        />
         {this.renderMainView()}
+        <SuperAgileAlert
+          alertVisible={alertVisible}
+          setAlertVisible={visible => this.setAlertVisible(visible, message)}
+          buttonsIn={this.renderAlertButtons(message)}
+          header={alertHeader}
+          info={message}
+        />
       </View>
     );
   }
@@ -123,7 +373,10 @@ class MyProfileScreen extends Component {
 MyProfileScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired,
-  userinfo: PropTypes.shape().isRequired
+  userinfo: PropTypes.shape().isRequired,
+  token: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  setUserinfo: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ currentLanguage, userInformation }) => {
@@ -132,221 +385,4 @@ const mapStateToProps = ({ currentLanguage, userInformation }) => {
   return { language, token, email, userinfo };
 };
 
-export default connect(mapStateToProps, null)(MyProfileScreen);
-
-// getWarningMessage(key) {
-//   const errorStrings = this.getErrorStrings();
-//   switch (key) {
-//     case 'firstName':
-//       return errorStrings.errorMsgOnlyLetters;
-//     case 'lastName':
-//       return errorStrings.errorMsgOnlyLetters;
-//     case 'city':
-//       return errorStrings.errorMsgOnlyLetters;
-//     case 'postNumber':
-//       return errorStrings.errorMsgZipCode;
-//     case 'phoneNumber':
-//       return errorStrings.errorMsgPhoneNbr;
-//     default:
-//       return;
-//   }
-// }
-
-// checkAddressError(text) {
-//   if (text === '') {
-//     this.setState({ validAddress: false });
-//   } else {
-//     this.setState({ validAddress: true });
-//   }
-// }
-
-// handleLogout() {
-//   const strings = this.getLanguageStrings();
-//   removeItem('email');
-//   removeItem('accessToken');
-//   this.setState({
-//     alertVisible: true,
-//     message: strings.expiredTokenMessage,
-//     alertHeader: strings.expiredTokenTitle
-//   });
-// }
-
-// saveChanges() {
-//   const { user, oldUser } = this.state;
-//   const data = {};
-//   let ctr = 0;
-//   Object.keys(user).forEach(key => {
-//     ctr++;
-//     if (user[key] !== oldUser[key]) data[key] = user[key];
-//     if (ctr === Object.keys(user).length) this.putData(data);
-//   });
-//   this.setState({ oldUser: user, alertVisible: false });
-// }
-
-// putData(data) {
-//   const url = USER_URL + this.props.email;
-//   const headers = {
-//     Authorization: 'Bearer ' + this.props.token,
-//     'content-type': 'application/json'
-//   };
-//   axios
-//     .put(url, data, { headers })
-//     .then(response => {
-//       const { success } = response.data;
-//       this.setState({ success, showToast: true, changesMade: false });
-//     })
-//     .catch(error => {
-//       if (error.response.status === 401) this.handleLogout();
-//       const msg = handleErrorMsg(error);
-//     });
-// }
-
-// isEmail(toTest) {
-//   return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-//     toTest
-//   );
-// }
-//
-// containsOnlyLetters(toTest) {
-//   return /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(
-//     toTest
-//   );
-// }
-//
-// isValidPhoneNbr(toTest) {
-//   return /^\+?\d+$/.test(toTest) && toTest.length >= 7 && toTest.length <= 20;
-// }
-//
-// containsOnlyDigits(text) {
-//   return /^\d+$/.test(text);
-// }
-//
-// fulfilsRequirement(key, toCheck) {
-//   switch (key) {
-//     case 'firstName':
-//       return this.containsOnlyLetters(toCheck);
-//     case 'lastName':
-//       return this.containsOnlyLetters(toCheck);
-//     case 'email':
-//       return this.isEmail(toCheck);
-//     case 'city':
-//       return this.containsOnlyLetters(toCheck);
-//     case 'postNumber':
-//       return this.containsOnlyDigits(toCheck) && toCheck.length === 5;
-//     case 'phoneNumber':
-//       return this.isValidPhoneNbr(toCheck);
-//     default:
-//       return true;
-//   }
-// }
-//
-
-// getErrorStrings() {
-//   const { language } = this.props;
-//   const { fields } = ERROR_MSG_INPUT_FIELD;
-//   const strings = {};
-//   fields.forEach(field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language]));
-//   return strings;
-// }
-
-// getRightIcon() {
-//   const strings = this.getLanguageStrings();
-//   const { rightIconStyle } = styles;
-//   const { anyError, validAddress } = this.state;
-//   return (
-//     <TouchableOpacity
-//       style={rightIconStyle}
-//       onPress={() => {
-//         if (this.state.editMode && this.state.changesMade) {
-//           if (anyError || !validAddress) {
-//             this.setState({ errorAlertVisible: true });
-//           } else if (this.state.changesMade) {
-//             this.setState({
-//               message: strings.popUpInfo,
-//               alertHeader: strings.popUpHeader,
-//               alertVisible: true
-//             });
-//           }
-//         } else {
-//           this.setState({ editMode: !this.state.editMode });
-//         }
-//       }}
-//     >
-//       <MaterialIcons
-//         name={this.state.editMode ? 'done' : 'edit'}
-//         style={{ color: 'white', right: 0 }}
-//         size={30}
-//       />
-//     </TouchableOpacity>
-//   );
-// }
-// getUserInfo() {
-//   const url = USER_URL + this.props.email;
-//   const headers = {
-//     Authorization: 'Bearer ' + this.props.token,
-//     'content-type': 'application/json'
-//   };
-//   axios
-//     .get(url, { headers })
-//     .then(response => {
-//       const { user } = response.data;
-//       this.setState({ oldUser: { ...user }, user });
-//     })
-//     .catch(error => {
-//       if (error.response.status === 401) this.handleLogout();
-//       const msg = handleErrorMsg(error);
-//     });
-// }
-//
-// getMsg(success, strings) {
-//   return success ? strings.updateInfoMessageSuccess : strings.updateInfoMessageFail;
-// }
-
-// renderAlertButtons(message) {
-//   const strings = this.getLanguageStrings();
-//   switch (message) {
-//     case strings.expiredTokenMessage:
-//       return [
-//         { text: strings.ok, onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION) }
-//       ];
-//     case strings.popUpInfo:
-//       return [
-//         { text: strings.cancel, onPress: () => this.setState({ alertVisible: false }) },
-//         {
-//           text: strings.save,
-//           onPress: () => {
-//             this.saveChanges();
-//             this.setState({ editMode: false });
-//           }
-//         }
-//       ];
-//     case strings.ok:
-//       return [{ text: strings.ok, onPress: () => this.setState({ errorAlertVisible: false }) }];
-//     default:
-//       return [{ text: strings.ok, onPress: () => this.setState({ alertVisible: false }) }];
-//   }
-// }
-// <SuperAgileAlert
-//   alertVisible={alertVisible}
-//   setAlertVisible={visible => this.setAlertVisible(visible, message)}
-//   buttonsIn={this.renderAlertButtons(message)}
-//   header={alertHeader}
-//   info={message}
-// />
-// <SuperAgileAlert
-//   alertVisible={errorAlertVisible}
-//   setAlertVisible={visible => this.setState({ errorAlertVisible: visible })}
-//   buttonsIn={this.renderAlertButtons('OK')}
-//   header={strings.invalidChangesMadeHeader}
-//   info={strings.invalidChangesMadeText}
-// />
-
-// <View>
-//   {this.renderMainView()}
-//   <Toast
-//     color={'#f4376d'}
-//     showToast={showToast}
-//     onClose={() => this.setState({ showToast: false })}
-//     message={this.getMsg(success, strings)}
-//   />
-// </View>
+export default connect(mapStateToProps, { setUserinfo })(MyProfileScreen);

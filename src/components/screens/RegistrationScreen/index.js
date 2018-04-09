@@ -712,7 +712,7 @@ class RegistrationScreen extends Component {
           />
           <CustomPicker
             defaultValue={strings.corps}
-            items={strings.corpsList}
+            items={strings.corpsArray}
             selectedValue={corps}
             onValueChange={value => {
               this.setState({ corps: value });
