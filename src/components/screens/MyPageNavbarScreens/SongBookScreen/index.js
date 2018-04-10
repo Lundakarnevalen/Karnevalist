@@ -113,6 +113,7 @@ class SongBookScreen extends Component {
         <SectionList
           style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
           sections={this.state.currentCategorySongs}
+          stickySectionHeadersEnabled={false}
           contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
           renderSectionHeader={({ section }) =>
             section.data && section.data.length > 0 ? (
