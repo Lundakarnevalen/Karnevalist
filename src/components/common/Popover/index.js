@@ -18,7 +18,9 @@ const Popover = ({ type, big, onPress, text }) => {
     talkBubbleBottomLeft,
     talkBubbleTriangleTopRight,
     talkBubbleTriangleBottomLeft,
-    textStyle
+    textStyle,
+    talkBubbleTriangleTopLeft,
+    talkBubbleTopLeft
   } = styles;
   if (type === 'bottomLeft')
     return (
@@ -45,6 +47,23 @@ const Popover = ({ type, big, onPress, text }) => {
       >
         <PulsatingView animate>
           <View style={talkBubbleTriangleTopRight} />
+          <View
+            animate
+            style={big ? talkBubbleSquareBig : talkBubbleSquareSmall}
+          >
+            <Text style={textStyle}>{text}</Text>
+          </View>
+        </PulsatingView>
+      </TouchableOpacity>
+    );
+  if (type === 'topLeft')
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        style={[talkBubbleTopLeft, zIndexWorkaround(1000)]}
+      >
+        <PulsatingView animate>
+          <View style={talkBubbleTriangleTopLeft} />
           <View
             animate
             style={big ? talkBubbleSquareBig : talkBubbleSquareSmall}

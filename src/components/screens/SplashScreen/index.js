@@ -21,13 +21,19 @@ import {
 import { fetchSections, fetchUserinfo } from '~/src/helpers/ApiManager';
 import { styles } from './styles';
 
+const POPOVERS = [
+  'homeScreenPopover',
+  'sectionScreenPopover',
+  'songBookScreenPopover'
+];
+
 class SplashScreen extends Component {
   componentWillMount() {
     const { language } = this.props;
     StatusBar.setBarStyle('light-content', true);
     this.authorize();
     getFavoriteSections(result => this.props.setSectionPriorities(result));
-    ['homeScreenPopover', 'sectionScreenPopover'].forEach(popover => {
+    POPOVERS.forEach(popover => {
       getPopoverStatus(popover, bool => this.props.setPopover(popover, bool));
     });
     fetchSections(sections => {
