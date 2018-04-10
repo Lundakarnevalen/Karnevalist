@@ -698,33 +698,25 @@ class RegistrationScreen extends Component {
             defaultValue={strings.shirtSize}
             items={strings.shirtSizeArray}
             selectedValue={shirtSize}
-            onValueChange={value => {
-              this.setState({ shirtSize: value });
-            }}
+            onValueChange={value => this.setState({ shirtSize: value })}
           />
           <CustomPicker
             defaultValue={strings.studentNation}
             items={strings.studentNationArray}
             selectedValue={studentNation}
-            onValueChange={value => {
-              this.setState({ studentNation: value });
-            }}
+            onValueChange={value => this.setState({ studentNation: value })}
           />
           <CustomPicker
             defaultValue={strings.corps}
             items={strings.corpsArray}
             selectedValue={corps}
-            onValueChange={value => {
-              this.setState({ corps: value });
-            }}
+            onValueChange={value => this.setState({ corps: value })}
           />
           <CustomPicker
             defaultValue={strings.driversLicense}
             items={strings.driversLicenseArray}
             selectedValue={driversLicense}
-            onValueChange={value => {
-              this.setState({ driversLicense: value });
-            }}
+            onValueChange={value => this.setState({ driversLicense: value })}
           />
           <CheckBox
             name={strings.plenipotentiary}
