@@ -275,7 +275,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'gdpr2',
     'gdpr3',
     'gdpr4',
-    'corpsList',
+    'corpsArray',
     'errorMsg409EmailAndPersonalNumber',
     'errorMsg409Email',
     'errorMsg409PersonalNumber',
@@ -405,7 +405,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Jag har ett fullmaktsombud',
     EN: 'There is a power of attorney for me'
   },
-  corpsList: {
+  corpsArray: {
     SE: [
       'Corpus Medicum',
       'Humanistiska och teologiska studentkåren',
@@ -893,6 +893,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'talent',
     'entertainmentCategory',
     'corps',
+    'studentNation',
     'startOfStudies',
     'pastInvolvement',
     'groupLeader',
@@ -946,6 +947,10 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   corps: {
     SE: 'Kår',
     EN: 'Corps'
+  },
+  studentNation: {
+    SE: 'Nation',
+    EN: 'Nation'
   },
   startOfStudies: {
     SE: 'Jag började studera år',

@@ -69,7 +69,7 @@ class SettingsScreen extends Component {
   }
 
   render() {
-    const { navigation, screenProps } = this.props;
+    const { navigation } = this.props;
     const strings = this.getLanguageStrings();
     return (
       <View>
@@ -84,7 +84,7 @@ class SettingsScreen extends Component {
               title={item.title}
               onPress={() => {
                 if (item.key === 'profile') {
-                  navigation.navigate('MyProfile', { info: item });
+                  navigation.navigate('MyProfile');
                 } else if (item.key === 'registration') {
                   navigation.navigate('MyRegistration', {
                     info: item

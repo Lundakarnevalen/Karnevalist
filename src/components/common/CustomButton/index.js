@@ -12,7 +12,7 @@ const isDropDownButton = style => {
         style={{ position: 'absolute', right: 10 }}
         name="ios-arrow-dropdown"
         size={25}
-        color={styles.standardButton.color}
+        color={styles.standardButtonText.color}
       />
     );
   }

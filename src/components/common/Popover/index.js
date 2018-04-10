@@ -77,8 +77,12 @@ const Popover = ({ type, big, onPress, text }) => {
   return <View />;
 };
 
+Popover.defaultProps = {
+  big: null
+};
+
 Popover.propTypes = {
-  big: PropTypes.bool.isRequired,
+  big: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired
