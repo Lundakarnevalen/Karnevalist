@@ -183,13 +183,6 @@ class MyProfileScreen extends Component {
     );
   }
 
-  setAlertVisible(visible, message) {
-    const { strings } = this.state;
-    this.setState({ alertVisible: visible });
-    if (message === strings.expiredTokenMessage)
-      this.props.navigation.dispatch(LOGOUT_RESET_ACTION);
-  }
-
   handleDoneEditing() {
     const { user, oldUser, strings } = this.state;
     const changesMade =
@@ -270,7 +263,8 @@ class MyProfileScreen extends Component {
         return [
           {
             text: strings.ok,
-            onPress: () => this.props.navigation.dispatch(LOGOUT_RESET_ACTION)
+            onPress: () =>
+              this.props.screenProps.navigation.dispatch(LOGOUT_RESET_ACTION)
           }
         ];
       case strings.popUpInfo:
@@ -360,7 +354,7 @@ class MyProfileScreen extends Component {
         {this.renderMainView()}
         <SuperAgileAlert
           alertVisible={alertVisible}
-          setAlertVisible={visible => this.setAlertVisible(visible, message)}
+          setAlertVisible={visible => this.setState({ alertVisible: visible })}
           buttonsIn={this.renderAlertButtons(message)}
           header={alertHeader}
           info={message}
@@ -372,6 +366,7 @@ class MyProfileScreen extends Component {
 
 MyProfileScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,
+  screenProps: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired,
   userinfo: PropTypes.shape().isRequired,
   token: PropTypes.string.isRequired,
