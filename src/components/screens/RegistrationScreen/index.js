@@ -78,12 +78,12 @@ class RegistrationScreen extends Component {
     if (IS_IOS) {
       this.keyboardWillShowSub = Keyboard.addListener(
         'keyboardWillShow',
-        () => this.keyboardWillShow
+        event => this.keyboardWillShow(event)
       );
     } else {
       this.keyboardDidShowListener = Keyboard.addListener(
         'keyboardDidShow',
-        () => this.keyboardDidShow
+        event => this.keyboardDidShow(event)
       );
     }
   }
