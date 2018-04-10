@@ -1,0 +1,429 @@
+{
+  "@version": "1.0",
+  "dict": {
+    "key": ["title", "songs"],
+    "string": "Elise",
+    "array": [
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Karnevalsmelodin",
+          "Karnevalsmelodin 2018",
+          "Melodi: Pärleporten",
+          "Lund, vart fjärde år(jag och du)\nLund, all tid är vår(här och nu)\nDröm blev sann, all tid försvann\nFantasi, det är nu, det är vi\n\nJag vet vart du ska va under vår karneval\nStrunt i din tentasal, det ärimaginal\nLivet är ur balans, i karnevalens glans\nJag vill ha sång och dans, jag vill ha\n\nKarnevalen\nI Lund\nImaginalen\nVår stund\n\nSe vårt Lundagård (förändras nu)\nKänn så bra vi mår(i kärleksljus)\nÖlen len i solens sken\nLyckans år nu är det vår\n\nJag vet vart du ska va under vår karneval\nStrunt i din tentasal, det ärimaginal\nLivet är ur balans, i karnevalens glans\nJag vill ha sång och dans, jag vill ha\n\nKarnevalen\nI Lund\nImaginalen\nVår stund\n\nFör det sätter djupa spår(det blirtre dagar som vi aldrig kommer glömma bort)\nNär det är vart fjärde (så passa på)\nFör det sätter djupa spår\nNär det är vart fjärde år\n\nJag vet vart du ska va under vår karneval\nStrunt i din tentasal, det ärimaginal\nLivet är ur balans, i karnevalens glans\nJag vill ha sång och dans, jag vill ha\n\nKarnevalen\nI Lund\nImaginalen\nVår stund\n\nFör det sätter djupa spår när det är vart fjärde år\nFör det sätter djupa spår när det är vart fjärde år",
+          "not.png"
+        ],
+        "integer": "32",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Snapsvisor",
+          "Systembolagets ambivalenta snapsvisa - VINNARE",
+          "Melodi: Sjösala Vals",
+          "Fyll ditt glas med spriten!\nMen se upp om du kör\nDå så ska du välja\nUr vårt alkoholfria\n\nDu kan ta en liten!\nMen om du är gravid\nEller om du ammar\nVälj alternativ\n\nBotten upp, go vänner!\nVår rekommendation\nÄr lite, ganska sällan\n,\nEn måttlig konsumtion\nNu kör vi in i dimman!\nBesök oss gärna på Systmet\nMen handla inget\nSom du tänker dricka upp",
+          "not.png"
+        ],
+        "integer": "1",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Snapsvisor",
+          "Cyborgen",
+          "Melodi: Guld och gröna skogar",
+          "Jag kan inte dricka vin\nNej det blir ju mest bensin\nDet är följden av att jag har blitt en cyborg\nSnaps och punsch jag inte tål\nBara renad alkohol\nDet blir aldrig mer Slotts Guld och Grøna Tuborg",
+          "not.png"
+        ],
+        "integer": "2",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Snapsvisor",
+          "EU-fori",
+          "Melodi: I Apladalen i Värnamo",
+          "Till Europeiska parlamentet\nEn Österlenbonde sägs ha sänt ett\nparti potatis från egen jord\natt diskuteras på mötets bord\n\nHan ville hävda den egna rätten\natt odla brännvin på Skånska slätten\nDet är så fint med vår feta mull\ntack vare den kan man ju bli full",
+          "not.png"
+        ],
+        "integer": "3",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Snapsvisor",
+          "Svärmorsdrömmar",
+          "Melodi: Fattig bonddräng",
+          "Jag är alltid nykter om jag ska gå på fest\nTycker det känns tryggt när man är bjuden som gäst\nAldrig är jag pinsam, alltid artigt korrekt\nLer och konverserar både svärmor och släkt\n\nMen när ingen märker smiter jag in på dass\nsedan jag mig stärker med vad som finns till pass\nÖppnar badrumsskåpet, det är fest fanimej!\nDricker after shave och sniffar deo och spray",
+          "not.png"
+        ],
+        "integer": "4",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Snapsvisor",
+          "Korka opp den",
+          "Melodi: Mössens julafton",
+          "Om bordsgrannen är tråkig och varmrätten är kall\ndå ska man veta att det kan bli bra i alla fall\nså gå inte i fällan och ring inte en vän\nför plötsligt kommer brännvinsflaskan in igen\n\nKorka opp den, fallerallera!\nNär snapsen kommer blir varenda jäkel bara gla’\nBotten opp se’n, fallerallera!\nNu skålar vi och tänker inte på nå’n morgonda’",
+          "not.png"
+        ],
+        "integer": "5",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Snapsvisor",
+          "Skit i kossan",
+          "Melodi: Sov du lilla videung",
+          "Jag vill inte äta gris\ninte dricka latten\nFör var kossas minsta fis\nhöjer vårat vatten\n\nMen en liten harmlös besk\ngör ej Skåne till ett träsk\nRäddar slättens hagar\nRensar våra magar",
+          "not.png"
+        ],
+        "integer": "6",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Snapsvisor",
+          "En festlig kväll",
+          "Melodi: En kulen natt",
+          "En festlig vårdagkväll\nJag mot AF styrde\nOch drack en mikrobryggeribryggd öl så skummet yrde\nPå bordet dukat så fint för kalas\nDök upp ett spetsigt underligt glas\nLångt ned i djupettipettipett\nEn snaps jag såg och den var god!",
+          "not.png"
+        ],
+        "integer": "7",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Snapsvisor",
+          "Återvinningssystemet",
+          "Melodi: Rule Britannia",
+          "Fylla flaskor med slattar är så lätt\nDu får pengarna tillbaks från Bolaget!",
+          "not.png"
+        ],
+        "integer": "8",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Ölvisor",
+          "Mikro-ekonomi - VINNARE ÖL",
+          "Melodi: For She/He's a Jolly Good Fellow",
+          "Jag köper en öl för en tia\nOch värmer upp den i mikron\nSen säljer jag för femti-nio\nFrån mitt Mikrobryggeri!\n\nMitt Mikrobryggeri\nMitt Mikrobryggeri\n\nTjäna pengar på mikron\nTjäna pengar på mikron\nTjäna pengar på mikron\nMitt Mikrobryggeri!",
+          "not.png"
+        ],
+        "integer": "9",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Ölvisor",
+          "Uti mitt ölstop",
+          "Melodi: Uti vår hage",
+          "Uti mitt ölstop där skummar en öl\nAv bästa slag\nVill du ha lite så ge mig ett bröl!\nKom humle och beska toner\nKom lager och vitamoner\nKom ljuvaste bryggning, ja, karnevöl!",
+          "not.png"
+        ],
+        "integer": "10",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Ölvisor",
+          "Läcka i Vita Huset",
+          "Melodi: Oh Mama (Lili & Sussie)",
+          "Obama can’t you see\nObama can’t you see\nIf you drink too much\nyou will have to pee",
+          "not.png"
+        ],
+        "integer": "11",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Vinvisor",
+          "DETTA ÄR JAG - VINNARE VIN",
+          "Melodi: Med en enkel tulipan",
+          "Jag är en enkel mytoman\nSom utav ren slentrian\nHar ljugit till mig\nen plats vid bordet\noch ett glas rödvin",
+          "not.png"
+        ],
+        "integer": "12",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Vinvisor",
+          "Allergi i Chablis",
+          "Melodi: Hallelujah",
+          "Min husläkare sa till mig:\nAkta dig för Chardonnay\nDu är sensitiv mot denna druva\nJag cykla genast till Chablis\nOch testade min allergi\nOch det var gott, men oj vad jag fick snuva!\nJag fick snuva, jag fick snuva\nJag fick snuva, jag fick snu-u-uva!",
+          "not.png"
+        ],
+        "integer": "13",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Vinvisor",
+          "En telefonkiosk i Berlin",
+          "Melodi: Var nöjd med allt som livet ger",
+          "Om du vill minnas det som sker\nOch inte skämma ut dig mer\nDå ska du kanske sluta dricka vin\n\nSå tror jag att min mamma sa\nNär jag ringde henne en dag\nIfrån en telefonkiosk i Berlin",
+          "not.png"
+        ],
+        "integer": "14",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Vinvisor",
+          "JERRY I ABERDEEN",
+          "Melodi: I Apladalen i Värnamo",
+          "Min mytomaniske kompis Jerry\nHan börjar dan med en flaska sherry\nSen tar han bilen till Aberdeen\nför han är nykter i fantasin",
+          "not.png"
+        ],
+        "integer": "15",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Vinvisor",
+          "Bubbel-Trubbel",
+          "Melodi: Money, Money, Money",
+          "Bubbel, bubbel, bubbel\nKan bli trubbel\nMen vill ha mer ändå\n\nChampa-agne!\n\nDenna rusiga dryck\nOm jag bara kunde smaka\nEn liten droppe till",
+          "not.png"
+        ],
+        "integer": "16",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Punschvisor",
+          "När Hans och Greta rymt - VINNARE",
+          "Melodi: Tre pepparkaksgubbar",
+          "När häxan, när häxan\nPå småbarn blivit trött\nHon gick till Systemet\nOch köpte sig nåt sött\nNu har gamla gumman\nByggt stugan utav punsch\nStudenter kan hon nu få spisa\nFrukost, middag, lunch! ",
+          "not.png"
+        ],
+        "integer": "17",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Punschvisor",
+          "Bildad dryckesvisa",
+          "Melodi: Ritch Ratch",
+          "Öl, snaps, och en flaska vin\nGe mig lite gin, hänger i gardin\n\nCyklar med ett rosa troll,\nspelar ingen roll, vilket håll!\n\nEn hattifnatt och Gandalf i tyrolerhatt\nEn äppelskrutt – nu tar vi oss en hutt!\n\nGe oss mera whisky, vodka, rom, tequila, och en cognac\nGe oss mera sång och glädje, och till kaffet, punsch!",
+          "not.png"
+        ],
+        "integer": "18",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Punschvisor",
+          "Knäskålen",
+          "Melodi: Dinkeli dunkeli doja",
+          "När jag vill va lite klämkäck\nhäller jag punsch i mitt knäveck\nMed alkohol, i detta hål\nhöjer jag benet till knäskål!",
+          "not.png"
+        ],
+        "integer": "19",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Punschvisor",
+          "Punschen är här",
+          "Melodi: Julen är här",
+          "Punschen är här\nGul, lyser den som solen\nGlädjen är stor\nFör idag står den här på bordet\n\nHöj nu ditt glas\nTa det i dina händer\nLåt glas och mun va’ bästa vänner\nFör punschen är här!",
+          "not.png"
+        ],
+        "integer": "20",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Alkoholfria visor",
+          "Fest(is)en - VINNARE",
+          "Melodi: Blåsippan ute i backarna står",
+          "Roten ur fyra det är ju två\när fyran minus vad blir svaret då\nHuvet det snurrar och allting blir ömt\nTalen med \"i\" det är något jag glömt\n\nImaginär eller imaginal\nValet är lätt när det är karneval\nBokstaven i den används ju bäst\nNär man \"i\" strupen ska hälla en fest(is)",
+          "not.png"
+        ],
+        "integer": "21",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Alkoholfria visor",
+          "Drömsnapsen",
+          "Melodi: I Apladalen i Värnamo",
+          "Inbillar du dig att du har roligt\nDå kan jag lova att det är troligt\natt dagen efter ej ger besvär\nDen snaps du drack var imaginär!",
+          "not.png"
+        ],
+        "integer": "22",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Alkoholfria visor",
+          "Falska fyllan",
+          "Melodi: Internationalen",
+          "Denna kväll blir den bästa\nPeppen min den är total\nJa, nu jävlar ska jag festa\nMorgondan är futural\n\nVaknar upp och mår visst toppen\nLider inte några kval\nIngen alkohol i kroppen\nFyllan var imaginal",
+          "not.png"
+        ],
+        "integer": "23",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Baklängesfyllan - VINNARE",
+          "Melodi: Rövarnas visa",
+          "Jag hulkar i mig spyorna,\noch sedan med en gaffel,\nur munnen min jag plockar fram,\nen extra stor falafel.\n\nSen baklänges jag vinglar bort,\ntill efterfest av bästa sort.\nJag spottar ut shot, efter shot, efter shot\nja så här finemang har jag aldrig mått!\n\n(Å shot, shot, shot, shot. Å shot, shot, shot, shot.)\n\nTill Lundagård jag rullar sen,\noch ställer någons cykel.\nPå klubbens dansgolv hittar jag,\nmin plånbok och min nyckel.\n\nFem öl, sju snaps, en flaska vin,\njag häller upp ur halsen min.\nIkväll ska jag plugga det lovar jag dig,\nmen en endaste öl kan man unna sig!",
+          "not.png"
+        ],
+        "integer": "24",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Love me tindr",
+          "Melodi: I ett hus vid skogens sluta",
+          "I en app vid nattens slut\nLiten pojke tittar ut\nBild från sommarn i Bordeaux\nEn och åttiotvå\n”Swipea swipea inte nej\nTänk om du blir kär i mig!”\nHans profil är trött och slö\nTusen står i kö ",
+          "not.png"
+        ],
+        "integer": "25",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Sound of muzak",
+          "Melodi: doe a deer a female deer...",
+          "II: im – ett tyskt dativobjekt\nA – för när man håller med\nGin – om törsten ska bli släckt\nAl – ett ganska vanligt träd\n\nKarn – ett slut på chili-con\nE – så blir man jätteglad\nVal – en fisk som sjunger fint\n\nOckså blir det karneval-val-val-val :II",
+          "not.png"
+        ],
+        "integer": "26",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Morgon hallå",
+          "Melodi: Växeln hallå",
+          "Morgon hallå hallå hallå\nVad fan gjorde jag igår",
+          "not.png"
+        ],
+        "integer": "27",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "CSN - din livspartner",
+          "Melodi: Idas sommarvisa",
+          "Du ska inte tro att du blir nånting,\nifall inte nån sätter fart\npå studietempot och på din flit,\nså att du blir klar ganska snart.\nJag gör så att matkassan sinar,\njag gör tentaångesten skör,\nom du inte tar dina tentor,\nså blir det snart vatten och bröd.\n\nOch när du väl tagit examen,\nså väntar jag tåligt på dig,\nmed åren och ränta på ränta\nså får du ett liv långt med mig,\nJag tar dina barns julklappspengar,\ndin villa får gå på auktion,\ndu bor snart på släktingars sängar,\ntill sist tar jag barnens pension.",
+          "not.png"
+        ],
+        "integer": "28",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Nu är det Karneval",
+          "Melodi: Nu är det jul",
+          "Vart fjärde år, nu är det vår\nImaginal, nu är det karneval\nCirkus är lös, skrämmer en tös,\nnu är det ös\nSpex å tåg å tidigt dans i borgen,\nAlla kan vi glömma tenta-sorgen\nKarnevalen, i stora salen, jag tror jag somnar på balen!",
+          "not.png"
+        ],
+        "integer": "29",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Spårvagnsproblematik",
+          "Melodi: Min hatt den har tre kanter",
+          "En spårvagn kostar pengar\n600-tusen, plus\natt cykla blir ett problem\nNumera tar jag buss! ",
+          "not.png"
+        ],
+        "integer": "30",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Sleepless in Seoul",
+          "Melodi: Pretty Fly (for a White Guy)",
+          "Kim Jong Un, dos, tres, cuatro, cinco cinco, seis.",
+          "not.png"
+        ],
+        "integer": "31",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Donald skulle twittra",
+          "Melodi: Mormors lilla kråka",
+          "|: Donald skulle twittra\nPressen kom att fnittra\nIngen hade han som korra :|\n\n|: Cov-fe-fe hit, cov-fe-fe dit,\nCov-fe-fe ner i diket :| ",
+          "not.png"
+        ],
+        "integer": "32",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Den bakfulla kandidaten",
+          "Melodi: I en sal på lasarettet",
+          "I en sal på lasarettet\nGick en bakfull kandidat\nDet var måndag. Hon var darrig\nHon var röd som en tomat\n\nDoktorn sade: ”Vad du lider\nHar du sepsis? Har du kval?”\nKandidaten sa: ”D’e värre:\nJag har vart på karneval”",
+          "not.png"
+        ],
+        "integer": "33",
+        "true": []
+      },
+      {
+        "key": ["category", "name", "melodi", "text", "img"],
+        "string": [
+          "Övriga visor",
+          "Dyra drömmar",
+          "Melodi: Pärleporten",
+          "Brevid mig på nattygsbordet\nStår en GT blandat klart\nHoppas att en natt i drömmen\ndu og jag syns på en bar\n\nKöper 69 groggar,\n69 kostar dem,\nTaxi hem til Vildanden\n69 000 spänn! ",
+          "not.png"
+        ],
+        "integer": "32",
+        "true": []
+      }
+    ]
+  }
+}

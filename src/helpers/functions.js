@@ -26,11 +26,31 @@ export function stripHtmlString(string) {
     .replace(/(&#8230;)/gi, '...');
 }
 
+export function isEmail(toTest) {
+  return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    toTest
+  );
+}
+
+export function containsOnlyLetters(toTest) {
+  return /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(
+    toTest
+  );
+}
+
+export function isValidPhoneNbr(toTest) {
+  return /^\+?\d+$/.test(toTest) && toTest.length >= 7 && toTest.length <= 20;
+}
+
+export function containsOnlyDigits(text) {
+  return /^\d+$/.test(text);
+}
+
 export function getStrings(language, COMPONENT_STRINGS) {
   const { fields } = COMPONENT_STRINGS;
   const strings = {};
-  fields.forEach(field => {
-    strings[field] = COMPONENT_STRINGS[field][language];
-  });
+  fields.forEach(
+    field => (strings[field] = COMPONENT_STRINGS[field][language])
+  );
   return strings;
 }

@@ -1,5 +1,20 @@
 import { HEIGHT, WIDTH } from '~/src/helpers/Constants';
 
+export const styles = {
+  containerStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 8
+  },
+  sectionHeaderStyle: {
+    width: WIDTH,
+    backgroundColor: '#f4376d',
+    fontSize: 20,
+    padding: 5,
+    color: '#fff',
+    marginTop: 8
+  }
+};
 export const songScreenStyles = {
   containerStyle: {
     height: HEIGHT,
@@ -12,7 +27,8 @@ export const songScreenStyles = {
     marginLeft: 10,
     marginRight: 10,
     fontFamily: 'Avenir Next Bold',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    color: '#F7A021'
   },
   subHeaderStyle: {
     fontSize: 12,
@@ -20,7 +36,8 @@ export const songScreenStyles = {
     marginLeft: 10,
     marginRight: 10,
     fontFamily: 'Avenir Next Bold',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    color: '#F7A021'
   },
   textStyle: {
     fontSize: 16,

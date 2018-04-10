@@ -89,8 +89,34 @@ class MyPageNavRouter extends Component {
   }
 }
 
+const navigate = (scene, jumpToIndex, props) => {
+  jumpToIndex(scene.index);
+  if (props.screenProps.progress >= 2)
+    props.screenProps.setPopover('homeScreenPopover', false);
+};
+
+const namedTabBarIcon = name => {
+  const tabBarIcon = ({ tintColor, focused }) => (
+    <MaterialIcons
+      name={name}
+      size={SIZE}
+      color={focused ? tintColor : '#A9A9A9'}
+    />
+  );
+  return tabBarIcon;
+};
+
 const TabNav = TabNavigator(
   {
+    // THe default homescreen
+    // Home: {
+    //   screen: HomeScreen,
+    //   navigationOptions: props => ({
+    //     tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
+    //     tabBarIcon: namedTabBarIcon('home')
+    //   })
+    // },
+    // the treasure hunt homescreen
     Home: {
       screen: CardstackScreen,
       navigationOptions: props => ({
@@ -136,26 +162,18 @@ const TabNav = TabNavigator(
         }
       }),
       navigationOptions: props => ({
-        tabBarOnPress: IS_IOS
-          ? (scene, jumpToIndex) => {
-              jumpToIndex(scene.index);
-              if (props.screenProps.progress >= 2)
-                props.screenProps.setPopover('homeScreenPopover', false);
-            }
-          : ({ scene, jumpToIndex }) => {
-              jumpToIndex(scene.index);
-              if (props.screenProps.progress >= 2)
-                props.screenProps.setPopover('homeScreenPopover', false);
-            },
+        tabBarOnPress: (scene, jumpToIndex) => {
+          if (jumpToIndex) {
+            // This is something weird, probably with expo and stacking navigatros
+            navigate(scene, jumpToIndex, props);
+          } else {
+            jumpToIndex = scene.jumpToIndex;
+            navigate(scene.scene, scene.jumpToIndex, props);
+          }
+        },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="star"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
-        )
+        tabBarIcon: namedTabBarIcon('star')
       })
     },
     SongBook: {
@@ -174,25 +192,17 @@ const TabNav = TabNavigator(
         }
       }),
       navigationOptions: props => ({
-        tabBarOnPress: IS_IOS
-          ? (scene, jumpToIndex) => {
-              jumpToIndex(scene.index);
-              if (props.screenProps.progress >= 2)
-                props.screenProps.setPopover('homeScreenPopover', false);
-            }
-          : ({ scene, jumpToIndex }) => {
-              jumpToIndex(scene.index);
-              if (props.screenProps.progress >= 2)
-                props.screenProps.setPopover('homeScreenPopover', false);
-            },
+        tabBarOnPress: (scene, jumpToIndex) => {
+          if (jumpToIndex) {
+            // This is something weird, probably with expo and stacking navigatros
+            navigate(scene, jumpToIndex, props);
+          } else {
+            jumpToIndex = scene.jumpToIndex;
+            navigate(scene.scene, scene.jumpToIndex, props);
+          }
+        },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="local-library"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
-        )
+        tabBarIcon: namedTabBarIcon('local-library')
       })
     },
     Settings: {
@@ -217,25 +227,17 @@ const TabNav = TabNavigator(
         }
       }),
       navigationOptions: props => ({
-        tabBarOnPress: IS_IOS
-          ? (scene, jumpToIndex) => {
-              jumpToIndex(scene.index);
-              if (props.screenProps.progress >= 2)
-                props.screenProps.setPopover('homeScreenPopover', false);
-            }
-          : ({ scene, jumpToIndex }) => {
-              jumpToIndex(scene.index);
-              if (props.screenProps.progress >= 2)
-                props.screenProps.setPopover('homeScreenPopover', false);
-            },
+        tabBarOnPress: (scene, jumpToIndex) => {
+          if (jumpToIndex) {
+            // This is something weird, probably with expo and stacking navigatros
+            navigate(scene, jumpToIndex, props);
+          } else {
+            jumpToIndex = scene.jumpToIndex;
+            navigate(scene.scene, scene.jumpToIndex, props);
+          }
+        },
         tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialIcons
-            name="settings"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
-        )
+        tabBarIcon: namedTabBarIcon('settings')
       })
     }
   },

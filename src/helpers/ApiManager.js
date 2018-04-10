@@ -86,6 +86,24 @@ export function fetchUserinfo(email, token, cb = null) {
     });
 }
 
+export function updateUser(email, token, data, cb, cbError) {
+  const url = USER_URL + email;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'content-type': 'application/json'
+  };
+  axios
+    .put(url, data, { headers })
+    .then(response => {
+      const { success } = response.data;
+      cb(success, data);
+    })
+    .catch(error => {
+      if (error.response.status === 401 && typeof cbError === 'function')
+        cbError();
+      // const msg = handleErrorMsg(error);
+    });
+}
 export function fetchCheckInStatus(email, token, callback) {
   const URL = CHECK_IN_URL + email;
   const headers = {

@@ -3,7 +3,8 @@ import { setPopoverStatus } from '../helpers/LocalSave';
 
 const INITIAL_STATE = {
   homeScreenPopover: true,
-  sectionScreenPopover: true
+  sectionScreenPopover: true,
+  songBookScreenPopover: true
 };
 
 export default (state = INITIAL_STATE, action) => {

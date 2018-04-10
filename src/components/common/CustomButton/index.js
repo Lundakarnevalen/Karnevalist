@@ -12,7 +12,7 @@ const isDropDownButton = style => {
         style={{ position: 'absolute', right: 10 }}
         name="ios-arrow-dropdown"
         size={25}
-        color={styles.standardButton.color}
+        color={styles.standardButtonText.color}
       />
     );
   }
@@ -55,8 +55,7 @@ const getButtonStyle = style => {
   }
 };
 
-const CustomButton = props => {
-  const { onPress, text, width, style } = props;
+const CustomButton = ({ onPress, text, width, style }) => {
   const { button } = styles;
   return (
     <TouchableOpacity
