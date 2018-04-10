@@ -769,7 +769,7 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
 };
 
 export const SONGBOOK_SCREEN_STRINGS = {
-  fields: ['title', 'headerTitle'],
+  fields: ['title', 'headerTitle', 'search', 'searchPopover'],
   title: {
     SE: 'Sångbok',
     EN: 'Song Book'
@@ -777,6 +777,14 @@ export const SONGBOOK_SCREEN_STRINGS = {
   headerTitle: {
     SE: 'Sångtext',
     EN: 'Song Text'
+  },
+  search: {
+    SE: 'Sök...',
+    EN: 'Search...'
+  },
+  searchPopover: {
+    SE: 'Sök efter namn, melodi eller kategori',
+    EN: 'Search for name, melody or category'
   }
 };
 
