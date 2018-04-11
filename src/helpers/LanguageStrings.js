@@ -640,6 +640,26 @@ export const NEWS_SCREEN_STRINGS = {
   }
 };
 
+export const KARNESKOJ_SCREEN_STRINGS = {
+  fields: ['title', 'KarneJodel', 'Eldoradio', 'Songbook'],
+  title: {
+    SE: 'Karneskoj',
+    EN: 'Karnefun'
+  },
+  KarneJodel: {
+    SE: 'KarneJodel',
+    EN: 'KarneJodel'
+  },
+  Eldoradio: {
+    SE: 'EldoRadio',
+    EN: 'EldoRadio'
+  },
+  Songbook: {
+    SE: 'Sångbok',
+    EN: 'Songbook'
+  },
+};
+
 export const HOME_SCREEN_STRINGS = {
   fields: [
     'title',
