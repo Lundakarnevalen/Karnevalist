@@ -660,6 +660,22 @@ export const KARNESKOJ_SCREEN_STRINGS = {
   },
 };
 
+export const JODEL_SCREEN_STRINGS = {
+  fields: ['title', 'Place', 'Placeholder'],
+  title: {
+    SE: 'Karneskoj',
+    EN: 'Karnefun'
+  },
+  Place: {
+    SE: 'KC * 23 min',
+    EN: 'KC * 23 min'
+  },
+  Placeholder: {
+    SE: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam quis lacus volutpat, eget porttitor tellus maximus. Mauris interdum in libero auctor mollis. Duis elementum nulla nibh, quis porta felis posuere at.',
+    EN: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam quis lacus volutpat, eget porttitor tellus maximus. Mauris interdum in libero auctor mollis. Duis elementum nulla nibh, quis porta felis posuere at.'
+  },
+};
+
 export const HOME_SCREEN_STRINGS = {
   fields: [
     'title',

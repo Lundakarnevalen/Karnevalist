@@ -24,6 +24,7 @@ import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/Setting
 import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
 import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
 import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
+import JodelThreadScreen from '~/src/components/screens/MyPageNavbarScreens/JodelThreadScreen';
 
 import {
   SECTION_SCREEN_STRINGS,
@@ -133,7 +134,7 @@ const TabNav = TabNavigator(
     Sections: {
       screen: StackNavigator({
         SectionScreen: {
-          screen: SectionScreen,
+          screen: JodelThreadScreen,
           navigationOptions: {
             header: null
           }
@@ -232,7 +233,7 @@ const TabNav = TabNavigator(
   {
     tabBarPosition: 'bottom',
     animationEnabled: true,
-    initialRouteName: 'Home',
+    initialRouteName: 'Sections',
     tabBarVisible: false,
     tabBarOptions: {
       showIcon: true,

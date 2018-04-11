@@ -15,3 +15,4 @@ export * from './TimelineItem';
 export * from './Loading';
 export * from './CustomPicker';
 export * from './KarneskojItem';
+export * from './JodelItem';
