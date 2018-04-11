@@ -1,99 +1,75 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import {
   Header,
-  ListItem,
   BackgroundImage,
-  SuperAgileAlert,
-  CustomButton
+  KarneskojItem
 } from '~/src/components/common';
-import { removeItem } from '~/src/helpers/LocalSave';
-import { setProgress, resetData } from '~/src/actions';
-import {
-  LOGOUT_RESET_ACTION,
-  PROGRESS,
-  HEIGHT,
-  IS_IOS
-} from '~/src/helpers/Constants';
-import { SETTINGS_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { KARNESKOJ_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { setPopover, setProgress } from '~/src/actions';
 import { getStrings } from '~/src/helpers/functions';
 
-const WITH_MY_REG = [
-  { key: 'profile' },
-  { key: 'registration' },
-  { key: 'sections' }
-];
-const WO_MY_REG = [{ key: 'profile' }, { key: 'sections' }];
-
 class KarneskojScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      alertVisible: false
-    };
-  }
-
-  getItems() {
-    const strings = this.getLanguageStrings();
-    const { progress } = this.props;
-    const settingsTitles =
-      progress === PROGRESS.SENT_SECTIONS ? WITH_MY_REG : WO_MY_REG;
-    const items = settingsTitles.map(item => ({
-      key: item.key,
-      title: strings[item.key]
-    }));
-    return items;
-  }
-
   getLanguageStrings() {
-    return getStrings(this.props.language, SETTINGS_SCREEN_STRINGS);
-  }
-
-  handleLogout() {
-    removeItem('email');
-    removeItem('accessToken');
-    this.props.resetData();
-    this.props.screenProps.navigation.dispatch(LOGOUT_RESET_ACTION);
-  }
-
-  renderAlertButtons() {
-    const strings = this.getLanguageStrings();
-    return [
-      {
-        text: strings.cancel,
-        onPress: () => this.setState({ alertVisible: false })
-      },
-      { text: strings.ok, onPress: () => this.handleLogout() }
-    ];
+    return getStrings(this.props.language, KARNESKOJ_SCREEN_STRINGS);
   }
 
   render() {
     const { navigation } = this.props;
     const strings = this.getLanguageStrings();
     return (
-      <View style={{ alignItems: 'center' }}>
-        <BackgroundImage pictureNumber={5} />
-        <Header title={strings.title} leftIcon={null} navigation={navigation} />
+      <View style={{ flex: 1 }}>
+        <BackgroundImage pictureNumber={1} />
+        <Header title={strings.title} />
+        <View style={{ marginTop: 2, flexDirection: 'row', marginBottom: 10 }}>
+          <KarneskojItem
+            title={strings.KarneJodel}
+            icon="free-breakfast"
+            onPress={() => navigation.navigate('KarneskojScreen')}
+          />
+          <KarneskojItem
+            title={strings.Eldoradio}
+            icon="wifi-tethering"
+            onPress={() => navigation.navigate('KarneskojScreen')}
+          />
+        </View>
+        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+          <KarneskojItem
+            title={strings.Songbook}
+            icon="local-library"
+            onPress={() => navigation.navigate('SongBookScreen')}
+          />
+        </View>
       </View>
     );
   }
 }
+
 KarneskojScreen.propTypes = {
-  navigation: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired,
-  progress: PropTypes.number.isRequired,
-  resetData: PropTypes.func.isRequired,
-  screenProps: PropTypes.shape().isRequired
+  navigation: PropTypes.shape().isRequired
 };
 
-const mapStateToProps = ({ currentLanguage, userInformation }) => {
-  const { progress } = userInformation;
+const mapStateToProps = ({
+  currentLanguage,
+  popoverStatus,
+  userInformation,
+  sections
+}) => {
   const { language } = currentLanguage;
-  return { language, progress };
+  const { progress, token, email } = userInformation;
+  return {
+    language,
+    popover: popoverStatus.homeScreenPopover,
+    progress,
+    token,
+    email,
+    sectionPriorities: sections.sectionPriorities
+  };
 };
 
-export default connect(mapStateToProps, { setProgress, resetData })(
+export default connect(mapStateToProps, { setProgress, setPopover })(
   KarneskojScreen
 );
