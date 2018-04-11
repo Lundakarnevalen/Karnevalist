@@ -27,7 +27,8 @@ import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProf
 import KarneskojScreen from '~/src/components/screens/MyPageNavbarScreens/KarneskojScreen';
 import ChangeLanguageScreen from '~/src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen';
 import KarnevalIDScreen from '~/src/components/screens/MyPageNavbarScreens/KarnevalIDScreen';
-
+import CameraScreen from '~/src/components/screens/MyPageNavbarScreens/KarneskojScreen/CameraScreen';
+import EditPhotoScreen from '~/src/components/screens/MyPageNavbarScreens/KarneskojScreen/EditPhotoScreen';
 import {
   KARNEVAL_ID_SCREEN_STRINGS,
   KARNESKOJ_SCREEN_STRINGS,
@@ -192,6 +193,20 @@ const TabNav = TabNavigator(
         },
         SongScreen: {
           screen: SongScreen,
+          navigationOptions: {
+            header: null,
+            tabBarVisible: false
+          }
+        },
+        Camera: {
+          screen: CameraScreen,
+          navigationOptions: {
+            header: null,
+            tabBarVisible: false
+          }
+        },
+        EditPhoto: {
+          screen: EditPhotoScreen,
           navigationOptions: {
             header: null,
             tabBarVisible: false
