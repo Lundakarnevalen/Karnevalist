@@ -25,7 +25,7 @@ const ChangeLanguageScreen = ({ language, navigation, setLanguage }) => {
           <ListItem
             key={item.val}
             title={item.title}
-            continueIconStyle={{ marginRight: 10 }}
+            rightIconStyle={{ marginRight: 5 }}
             rightIcon={
               item.val === language
                 ? 'radio-button-checked'
