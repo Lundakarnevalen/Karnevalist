@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7d7f5d91-fae2-4e9c-beab-a6e039370ef0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/screens/MyPageNavRouter.js" afterPath="$PROJECT_DIR$/src/components/screens/MyPageNavRouter.js" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="Router.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Router.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyPageNavRouter.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavRouter.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="447">
+              <caret line="62" column="3" lean-forward="false" selection-start-line="62" selection-start-column="3" selection-end-line="62" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+                <marker date="1524491033000" expanded="true" signature="1491:2193" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="3526:4004" ph="/*...*/" />
+                <marker date="1524491033000" expanded="true" signature="3526:6943" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="4019:4953" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="4050:4374" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="4075:4187" ph="{&quot;screen&quot;: SectionScreen...}" />
+                <marker date="1524491033000" expanded="true" signature="4139:4177" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="4216:4366" ph="{&quot;screen&quot;: SectionItemScreen...}" />
+                <marker date="1524491033000" expanded="true" signature="4284:4356" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="4412:4946" ph="{&quot;tabBarInactiveTintColor&quot;: '##A9A9A9'...}" />
+                <marker date="1524491033000" expanded="true" signature="4461:4770" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="4490:4635" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="4641:4760" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="4969:5857" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5000:5312" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5026:5139" ph="{&quot;screen&quot;: SongBookScreen...}" />
+                <marker date="1524491033000" expanded="true" signature="5091:5129" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5222:5294" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5350:5850" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5399:5708" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5428:5573" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5579:5698" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5904:6399" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="5930:6043" ph="{&quot;screen&quot;: SettingsScreen...}" />
+                <marker date="1524491033000" expanded="true" signature="5995:6033" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="6064:6212" ph="{&quot;screen&quot;: MyProfileScreen...}" />
+                <marker date="1524491033000" expanded="true" signature="6130:6202" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="6238:6391" ph="{&quot;screen&quot;: MyRegistrationScreen...}" />
+                <marker date="1524491033000" expanded="true" signature="6309:6381" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="6437:6932" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="6486:6795" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="6515:6660" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="6666:6785" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="6947:7483" ph="{&quot;tabBarPosition&quot;: 'bottom'...}" />
+                <marker date="1524491033000" expanded="true" signature="7082:7479" ph="{&quot;activeTintColor&quot;: '##F7A021'...}" />
+                <marker date="1524491033000" expanded="true" signature="7194:7242" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="7261:7312" ph="{&quot;width&quot;: SIZE...}" />
+                <marker date="1524491033000" expanded="true" signature="7327:7405" ph="{&quot;backgroundColor&quot;: '##ffffff'...}" />
+                <marker date="1524491033000" expanded="true" signature="7429:7473" ph="{&quot;backgroundColor&quot;: '##F7A021'...}" />
+                <marker date="1524491033000" expanded="true" signature="7564:7810" ph="{...}" />
+                <marker date="1524491033000" expanded="true" signature="7669:7807" ph="{&quot;language&quot;: language...}" />
+                <marker date="1524491033000" expanded="true" signature="7841:8248" ph="{&quot;email&quot;: PropTypes.string.isRequired...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>comp</find>
+      <find>vibrat</find>
+      <find>mani</find>
+      <find>vibrate</find>
+      <find>mount</find>
+      <find>action</find>
+      <find>setpr</find>
+      <find>vibra</find>
+      <find>text</find>
+      <find>strings</find>
+      <find>first</find>
+      <find>info</find>
+      <find>infoTe</find>
+      <find>renderPro</find>
+      <find>contain</find>
+      <find>margin</find>
+      <find>image</find>
+      <find>console.log</find>
+      <find>.post</find>
+      <find>token</find>
+      <find>axios</find>
+      <find>default</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/components/screens/LoginScreen.js" />
+        <option value="$PROJECT_DIR$/src/components/common/Loading.js" />
+        <option value="$PROJECT_DIR$/app.json" />
+        <option value="$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/HomeScreen.js" />
+        <option value="$PROJECT_DIR$/src/components/screens/TreasurehuntScreens/GameScreen.js" />
+        <option value="$PROJECT_DIR$/src/components/common/BackgroundImage.js" />
+        <option value="$PROJECT_DIR$/src/components/screens/TreasurehuntScreens/SwipeScreen.js" />
+        <option value="$PROJECT_DIR$/src/helpers/LanguageStrings.js" />
+        <option value="$PROJECT_DIR$/src/components/screens/CardstackScreen.js" />
+        <option value="$PROJECT_DIR$/App.js" />
+        <option value="$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/HomeScreen/index.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/.eslintrc" />
+        <option value="$PROJECT_DIR$/src/components/Router.js" />
+        <option value="$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/CardstackScreen.js" />
+        <option value="$PROJECT_DIR$/src/components/screens/MyPageNavRouter.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Karnevalist" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Karnevalist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Karnevalist" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Karnevalist" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Karnevalist" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Karnevalist" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="actions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Karnevalist" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Karnevalist" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Karnevalist" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Karnevalist" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="screens" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/.eslintrc" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.selected.package.standard" value="$PROJECT_DIR$/node_modules/eslint" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7d7f5d91-fae2-4e9c-beab-a6e039370ef0" name="Default" comment="" />
+      <created>1519749280140</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1519749280140</updated>
+      <workItem from="1519749283383" duration="5621000" />
+      <workItem from="1519813432921" duration="51000" />
+      <workItem from="1520168596393" duration="4480000" />
+      <workItem from="1520355425105" duration="439000" />
+      <workItem from="1520424163510" duration="3850000" />
+      <workItem from="1520431410102" duration="980000" />
+      <workItem from="1524405054440" duration="408000" />
+      <workItem from="1524406218573" duration="237000" />
+      <workItem from="1524408428238" duration="1776000" />
+      <workItem from="1524490208376" duration="833000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="23635000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19309373" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3095526" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="6" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/res/Karneval.png" />
+    <entry file="file://$PROJECT_DIR$/assets/images/background-login-screen.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/karneval-splash.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/night2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/HomeScreenBackground.jpg" />
+    <entry file="file://$PROJECT_DIR$/res/Flicka_Tuba_Byggnader.png" />
+    <entry file="file://$PROJECT_DIR$/res/KaffeKarl.png" />
+    <entry file="file://$PROJECT_DIR$/src/helpers/ApiManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/popOverActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/sectionsReducers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/languageReducers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/languageActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native/Libraries/react-native/react-native-implementation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="101" column="10" lean-forward="false" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native/Libraries/Vibration/VibrationIOS.android.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="32" lean-forward="false" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native/Libraries/Vibration/Vibration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="101" column="2" lean-forward="false" selection-start-line="101" selection-start-column="2" selection-end-line="101" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/HomeScreen.js" />
+    <entry file="file://$PROJECT_DIR$/app.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="22" lean-forward="false" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreen.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/screens/LoginScreen.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/screens/SplashScreen.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/common/Loading.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/MyProfileScreen.js" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1650">
+          <caret line="110" column="5" lean-forward="false" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@expo/vector-icons/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="23" column="29" lean-forward="false" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@expo/vector-icons/MaterialIcons.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="22" lean-forward="true" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/Toast.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/screens/RegistrationScreen.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/screens/TreasurehuntScreens/GameScreen.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/common/BackgroundImage.js" />
+    <entry file="file://$PROJECT_DIR$/src/helpers/functions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/CardstackScreen.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/screens/TreasurehuntScreens/SwipeScreen.js" />
+    <entry file="file://$PROJECT_DIR$/src/helpers/LanguageStrings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18240">
+          <caret line="1216" column="3" lean-forward="false" selection-start-line="1216" selection-start-column="3" selection-end-line="1216" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/songbook/songs2018.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4988">
+          <caret line="59" column="37" lean-forward="true" selection-start-line="59" selection-start-column="37" selection-end-line="59" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/ConfirmPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="44" column="21" lean-forward="false" selection-start-line="44" selection-start-column="21" selection-end-line="44" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/HomeScreen/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/TreasurehuntScreens/CloseGameScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/HomeScreen/styles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="9" lean-forward="true" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.babelrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.eslintrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="33" column="3" lean-forward="true" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/RegistrationInfoScreen.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/CardstackScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/TreasurehuntScreens/GameScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1560">
+          <caret line="116" column="5" lean-forward="true" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="68" column="30" lean-forward="false" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavbarScreens/TreasurehuntScreens/SwipeScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1281">
+          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/screens/MyPageNavRouter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="62" column="3" lean-forward="false" selection-start-line="62" selection-start-column="3" selection-end-line="62" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <marker date="1524491033000" expanded="true" signature="1491:2193" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="3526:4004" ph="/*...*/" />
+            <marker date="1524491033000" expanded="true" signature="3526:6943" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="4019:4953" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="4050:4374" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="4075:4187" ph="{&quot;screen&quot;: SectionScreen...}" />
+            <marker date="1524491033000" expanded="true" signature="4139:4177" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="4216:4366" ph="{&quot;screen&quot;: SectionItemScreen...}" />
+            <marker date="1524491033000" expanded="true" signature="4284:4356" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="4412:4946" ph="{&quot;tabBarInactiveTintColor&quot;: '##A9A9A9'...}" />
+            <marker date="1524491033000" expanded="true" signature="4461:4770" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="4490:4635" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="4641:4760" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="4969:5857" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5000:5312" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5026:5139" ph="{&quot;screen&quot;: SongBookScreen...}" />
+            <marker date="1524491033000" expanded="true" signature="5091:5129" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5222:5294" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5350:5850" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5399:5708" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5428:5573" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5579:5698" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5904:6399" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="5930:6043" ph="{&quot;screen&quot;: SettingsScreen...}" />
+            <marker date="1524491033000" expanded="true" signature="5995:6033" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="6064:6212" ph="{&quot;screen&quot;: MyProfileScreen...}" />
+            <marker date="1524491033000" expanded="true" signature="6130:6202" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="6238:6391" ph="{&quot;screen&quot;: MyRegistrationScreen...}" />
+            <marker date="1524491033000" expanded="true" signature="6309:6381" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="6437:6932" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="6486:6795" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="6515:6660" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="6666:6785" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="6947:7483" ph="{&quot;tabBarPosition&quot;: 'bottom'...}" />
+            <marker date="1524491033000" expanded="true" signature="7082:7479" ph="{&quot;activeTintColor&quot;: '##F7A021'...}" />
+            <marker date="1524491033000" expanded="true" signature="7194:7242" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="7261:7312" ph="{&quot;width&quot;: SIZE...}" />
+            <marker date="1524491033000" expanded="true" signature="7327:7405" ph="{&quot;backgroundColor&quot;: '##ffffff'...}" />
+            <marker date="1524491033000" expanded="true" signature="7429:7473" ph="{&quot;backgroundColor&quot;: '##F7A021'...}" />
+            <marker date="1524491033000" expanded="true" signature="7564:7810" ph="{...}" />
+            <marker date="1524491033000" expanded="true" signature="7669:7807" ph="{&quot;language&quot;: language...}" />
+            <marker date="1524491033000" expanded="true" signature="7841:8248" ph="{&quot;email&quot;: PropTypes.string.isRequired...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
