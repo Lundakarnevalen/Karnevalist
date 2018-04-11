@@ -1026,6 +1026,13 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
     EN: 'You have not chosen any sections'
   }
 };
+export const CHANGE_LANGUAGE_SCREEN_STRINGS = {
+  fields: ['title'],
+  title: {
+    SE: 'Byt språk',
+    EN: 'Change language'
+  }
+};
 
 export const LOADING_STRINGS = {
   fields: ['loading'],

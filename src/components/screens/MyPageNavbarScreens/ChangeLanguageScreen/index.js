@@ -1,81 +1,55 @@
-import React, { Component } from 'react';
-import {
-  ActivityIndicator,
-  BackHandler,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Text
-} from 'react-native';
+import React from 'react';
+import { View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  Toast,
-  BackgroundImage,
-  SuperAgileAlert,
-  Header,
-  Input,
-  CustomPicker
-} from '~/src/components/common';
+import { BackgroundImage, Header, ListItem } from '~/src/components/common';
+import { saveItem } from '~/src/helpers/LocalSave';
 import { LANGUAGES } from '~/src/helpers/Constants';
+import { getStrings } from '~/src/helpers/functions';
+import { setLanguage } from '~/src/actions';
+import { CHANGE_LANGUAGE_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 
-class ChangeLanguageScreen extends Component {
-  renderRadioButton(props) {
-    return (
-      <View
-        style={[
-          {
-            height: 24,
-            width: 24,
-            borderRadius: 12,
-            borderWidth: 2,
-            borderColor: '#000',
-            alignItems: 'center',
-            justifyContent: 'center'
-          },
-          props.style
-        ]}
-      >
-        {props.selected ? (
-          <View
-            style={{
-              height: 12,
-              width: 12,
-              borderRadius: 6,
-              backgroundColor: '#000'
+const ChangeLanguageScreen = ({ language, navigation, setLanguage }) => {
+  const strings = getStrings(language, CHANGE_LANGUAGE_SCREEN_STRINGS);
+  return (
+    <View>
+      <BackgroundImage pictureNumber={4} />
+      <Header title={strings.title} navigation={navigation} />
+      <FlatList
+        data={LANGUAGES.map(l => {
+          l.key = l.val;
+          return l;
+        })}
+        contentContainerStyle={{ alignItems: 'center', paddingBottom: 60 }}
+        renderItem={({ item }) => (
+          <ListItem
+            key={item.val}
+            title={item.title}
+            rightIcon={
+              item.val === language
+                ? 'radio-button-checked'
+                : 'radio-button-unchecked'
+            }
+            onPress={() => {
+              saveItem('language', item.val);
+              setLanguage(item.val);
             }}
           />
-        ) : null}
-      </View>
-    );
-  }
-
-  render() {
-    const { navigation } = this.props;
-    return (
-      <View>
-        <BackgroundImage pictureNumber={4} />
-        <Header title="SPRÅK" navigation={navigation} />
-        <Text>SPRÅK </Text>
-      </View>
-    );
-  }
-}
+        )}
+      />
+    </View>
+  );
+};
 
 ChangeLanguageScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,
-  screenProps: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired,
-  userinfo: PropTypes.shape().isRequired,
-  token: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  setUserinfo: PropTypes.func.isRequired
+  setLanguage: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ currentLanguage, userInformation }) => {
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  const { token, email, userinfo } = userInformation;
-  return { language, token, email, userinfo };
+  return { language };
 };
 
-export default connect(mapStateToProps, null)(ChangeLanguageScreen);
+export default connect(mapStateToProps, { setLanguage })(ChangeLanguageScreen);

@@ -94,9 +94,7 @@ class SettingsScreen extends Component {
                     screenProps: navigation
                   });
                 } else if (item.key === 'changeLanguage') {
-                  navigation.navigate('LanguageScreen', {
-                    screenProps: navigation
-                  });
+                  navigation.navigate('LanguageScreen');
                 }
               }}
             />
