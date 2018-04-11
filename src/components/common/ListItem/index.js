@@ -46,7 +46,15 @@ const getContentStyle = itemDate => [
   }
 ];
 
-const ListItem = ({ title, icon, infoText, itemDate, onPress }) => {
+const ListItem = ({
+  title,
+  icon,
+  infoText,
+  itemDate,
+  onPress,
+  rightIcon,
+  rightIconStyle
+}) => {
   const { containerStyle, continueIconStyle, innerContainerStyle } = styles;
   return (
     <TouchableOpacity onPress={() => onPress()} style={containerStyle}>
@@ -68,10 +76,10 @@ const ListItem = ({ title, icon, infoText, itemDate, onPress }) => {
       </View>
       <View>
         <MaterialIcons
-          name="keyboard-arrow-right"
-          style={continueIconStyle}
+          name={rightIcon || 'keyboard-arrow-right'}
+          style={[continueIconStyle, rightIconStyle]}
           color="#F7A021"
-          size={icon === 'done' ? 40 : 50}
+          size={icon === 'done' || rightIcon ? 40 : 50}
         />
       </View>
     </TouchableOpacity>
@@ -81,7 +89,9 @@ ListItem.defaultProps = {
   title: '',
   icon: '',
   itemDate: '',
-  infoText: ''
+  infoText: '',
+  rightIcon: '',
+  rightIconStyle: null
 };
 
 ListItem.propTypes = {
@@ -89,7 +99,9 @@ ListItem.propTypes = {
   icon: PropTypes.string,
   itemDate: PropTypes.string,
   infoText: PropTypes.string,
-  onPress: PropTypes.func.isRequired
+  rightIcon: PropTypes.string,
+  onPress: PropTypes.func.isRequired,
+  rightIconStyle: PropTypes.shape()
 };
 
 export { ListItem };

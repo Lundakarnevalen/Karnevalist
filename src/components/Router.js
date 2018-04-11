@@ -3,12 +3,8 @@ import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import MyPageNavRouter from './screens/MyPageNavRouter';
-import SectionItemScreen from './screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
 import SingleNewsScreen from './screens/MyPageNavbarScreens/NewsScreen/SingleNewsScreen';
-import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
-import MyRegistrationScreen from './screens/MyPageNavbarScreens/MyRegistrationScreen';
 import ConfirmPage from './screens/ConfirmPage';
-import SongScreen from './screens/MyPageNavbarScreens/SongBookScreen/SongScreen';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
 
 const LoggedIn = StackNavigator({
