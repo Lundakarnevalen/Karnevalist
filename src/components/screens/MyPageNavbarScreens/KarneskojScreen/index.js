@@ -12,11 +12,6 @@ import { setPopover, setProgress } from '~/src/actions';
 import { getStrings } from '~/src/helpers/functions';
 
 class KarneskojScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
   
   getLanguageStrings() {
     return getStrings(this.props.language, KARNESKOJ_SCREEN_STRINGS);
