@@ -657,7 +657,7 @@ export const KARNESKOJ_SCREEN_STRINGS = {
   Songbook: {
     SE: 'Sångbok',
     EN: 'Songbook'
-  },
+  }
 };
 
 export const HOME_SCREEN_STRINGS = {
@@ -1053,7 +1053,13 @@ export const CHANGE_LANGUAGE_SCREEN_STRINGS = {
     EN: 'Change language'
   }
 };
-
+export const KARNEVAL_ID_SCREEN_STRINGS = {
+  fields: ['title'],
+  title: {
+    SE: 'Karneval-ID',
+    EN: 'Karneval-ID'
+  }
+};
 export const LOADING_STRINGS = {
   fields: ['loading'],
   loading
