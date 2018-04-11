@@ -25,6 +25,7 @@ import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/Sect
 import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
 import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
 import KarneskojScreen from '~/src/components/screens/MyPageNavbarScreens/KarneskojScreen';
+import ChangeLanguageScreen from '~/src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen';
 
 import {
   SECTION_SCREEN_STRINGS,
@@ -195,6 +196,13 @@ const TabNav = TabNavigator(
         },
         MyRegistration: {
           screen: MyRegistrationScreen,
+          navigationOptions: {
+            header: null,
+            tabBarVisible: false
+          }
+        },
+        LanguageScreen: {
+          screen: ChangeLanguageScreen,
           navigationOptions: {
             header: null,
             tabBarVisible: false

@@ -722,6 +722,7 @@ export const HOME_SCREEN_STRINGS = {
 export const SETTINGS_SCREEN_STRINGS = {
   fields: [
     'title',
+    'changeLanguage',
     'profile',
     'registration',
     'sections',
@@ -734,6 +735,10 @@ export const SETTINGS_SCREEN_STRINGS = {
   title: {
     SE: 'Inställningar',
     EN: 'Settings'
+  },
+  changeLanguage: {
+    SE: 'Byt språk',
+    EN: 'Change language'
   },
   profile,
   registration,

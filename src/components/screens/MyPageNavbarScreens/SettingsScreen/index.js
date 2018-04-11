@@ -18,9 +18,14 @@ import { getStrings } from '~/src/helpers/functions';
 const WITH_MY_REG = [
   { key: 'profile' },
   { key: 'registration' },
+  { key: 'changeLanguage' },
   { key: 'sections' }
 ];
-const WO_MY_REG = [{ key: 'profile' }, { key: 'sections' }];
+const WO_MY_REG = [
+  { key: 'profile' },
+  { key: 'changeLanguage' },
+  { key: 'sections' }
+];
 
 class SettingsScreen extends Component {
   constructor(props) {
@@ -86,6 +91,10 @@ class SettingsScreen extends Component {
                   });
                 } else if (item.key === 'sections') {
                   navigation.navigate('Sections', {
+                    screenProps: navigation
+                  });
+                } else if (item.key === 'changeLanguage') {
+                  navigation.navigate('LanguageScreen', {
                     screenProps: navigation
                   });
                 }
