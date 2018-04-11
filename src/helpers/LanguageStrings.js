@@ -724,6 +724,7 @@ export const SETTINGS_SCREEN_STRINGS = {
     'title',
     'profile',
     'registration',
+    'sections',
     'logout',
     'cancel',
     'ok',
@@ -739,6 +740,10 @@ export const SETTINGS_SCREEN_STRINGS = {
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
+  },
+  sections: {
+    SE: 'Sektioner',
+    EN: 'Sections'
   },
   cancel,
   ok,

@@ -2,7 +2,7 @@ import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
 
 export const styles = {
   scrollStyle: {
-    height: HEIGHT - (IS_IOS ? 113 : 135),
+    height: HEIGHT - (IS_IOS ? 74 : 70),
     paddingTop: 4,
     paddingRight: 16,
     paddingLeft: 16

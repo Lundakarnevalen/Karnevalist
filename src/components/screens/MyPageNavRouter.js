@@ -159,7 +159,8 @@ const TabNav = TabNavigator(
         SongScreen: {
           screen: SongScreen,
           navigationOptions: {
-            header: null
+            header: null,
+            tabBarVisible: false
           }
         }
       }),
@@ -188,30 +189,30 @@ const TabNav = TabNavigator(
         MyProfile: {
           screen: MyProfileScreen,
           navigationOptions: {
-            header: null
+            header: null,
+            tabBarVisible: false
           }
         },
         MyRegistration: {
           screen: MyRegistrationScreen,
           navigationOptions: {
-            header: null
+            header: null,
+            tabBarVisible: false
           }
         },
         Sections: {
-          screen: StackNavigator({
-            SectionScreen: {
-              screen: SectionScreen,
-              navigationOptions: {
-                header: null
-              }
-            },
-            SectionItemScreen: {
-              screen: SectionItemScreen,
-              navigationOptions: {
-                header: null
-              }
-            }
-          })
+          screen: SectionScreen,
+          navigationOptions: {
+            header: null,
+            tabBarVisible: false
+          }
+        },
+        SectionItemScreen: {
+          screen: SectionItemScreen,
+          navigationOptions: {
+            header: null,
+            tabBarVisible: false
+          }
         }
       }),
       navigationOptions: props => ({
@@ -233,6 +234,7 @@ const TabNav = TabNavigator(
     tabBarPosition: 'bottom',
     animationEnabled: true,
     initialRouteName: 'Home',
+    tabBarVisible: false,
     tabBarOptions: {
       showIcon: true,
       activeTintColor: '#F7A021',

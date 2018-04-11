@@ -22,7 +22,7 @@ export const styles = {
     height: 44
   },
   alertButton: {
-    height: HEIGHT / (4 * 4),
+    height: HEIGHT / (3.5 * 4),
     backgroundColor: '#f4376d',
     borderRadius: 0,
     margin: 0,

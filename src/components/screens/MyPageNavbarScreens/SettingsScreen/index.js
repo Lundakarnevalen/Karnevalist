@@ -11,12 +11,7 @@ import {
 } from '~/src/components/common';
 import { removeItem } from '~/src/helpers/LocalSave';
 import { setProgress, resetData } from '~/src/actions';
-import {
-  LOGOUT_RESET_ACTION,
-  PROGRESS,
-  HEIGHT,
-  IS_IOS
-} from '~/src/helpers/Constants';
+import { LOGOUT_RESET_ACTION, PROGRESS, WIDTH } from '~/src/helpers/Constants';
 import { SETTINGS_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { getStrings } from '~/src/helpers/functions';
 
@@ -70,10 +65,10 @@ class SettingsScreen extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     const strings = this.getLanguageStrings();
     return (
-      <View style={{ alignItems: 'center' }}>
+      <View>
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <FlatList
@@ -90,13 +85,22 @@ class SettingsScreen extends Component {
                     info: item
                   });
                 } else if (item.key === 'sections') {
-                  // navigation.navigate('Sections');
+                  navigation.navigate('Sections', {
+                    screenProps: navigation
+                  });
                 }
               }}
             />
           )}
         />
-        <CustomButton text={strings.logout} style="alertButton" />
+        <View style={{ alignItems: 'center', marginTop: 100 }}>
+          <CustomButton
+            text={strings.logout}
+            width={WIDTH * 0.9}
+            style="alertButton"
+            onPress={() => this.setState({ alertVisible: true })}
+          />
+        </View>
         <SuperAgileAlert
           alertVisible={this.state.alertVisible}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
