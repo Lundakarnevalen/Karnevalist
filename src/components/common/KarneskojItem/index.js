@@ -14,10 +14,10 @@ const KarneskojItem = ({ title, icon, onPress }) => {
             {title}
           </Text>
         </View>
-
     </TouchableOpacity>
   );
 };
+
 KarneskojItem.defaultProps = {
   title: '',
   icon: '',

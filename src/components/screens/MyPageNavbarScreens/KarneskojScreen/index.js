@@ -17,9 +17,11 @@ class KarneskojScreen extends Component {
     this.state = {
     };
   }
+  
   getLanguageStrings() {
     return getStrings(this.props.language, KARNESKOJ_SCREEN_STRINGS);
   }
+
   render() {
     const { navigation } = this.props;
     const strings = this.getLanguageStrings();
