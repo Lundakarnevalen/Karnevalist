@@ -37,7 +37,7 @@ export const styles = {
     justifyContent: 'center'
   },
   whiteText: {
-    color: '#f4376d',
+    color: '#ffffff',
     ...text
   },
   blackText: {

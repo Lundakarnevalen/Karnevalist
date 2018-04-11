@@ -27,7 +27,7 @@ const WITH_MY_REG = [
 ];
 const WO_MY_REG = [{ key: 'profile' }, { key: 'sections' }];
 
-class SettingsScreen extends Component {
+class KarneskojScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,39 +76,11 @@ class SettingsScreen extends Component {
       <View style={{ alignItems: 'center' }}>
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
-        <FlatList
-          contentContainerStyle={{ alignItems: 'center' }}
-          data={this.getItems()}
-          renderItem={({ item }) => (
-            <ListItem
-              title={item.title}
-              onPress={() => {
-                if (item.key === 'profile') {
-                  navigation.navigate('MyProfile');
-                } else if (item.key === 'registration') {
-                  navigation.navigate('MyRegistration', {
-                    info: item
-                  });
-                } else if (item.key === 'sections') {
-                  // navigation.navigate('Sections');
-                }
-              }}
-            />
-          )}
-        />
-        <CustomButton text={strings.logout} style="alertButton" />
-        <SuperAgileAlert
-          alertVisible={this.state.alertVisible}
-          setAlertVisible={visible => this.setState({ alertVisible: visible })}
-          buttonsIn={this.renderAlertButtons()}
-          header={strings.alertHeader}
-          info={strings.alertMessage}
-        />
       </View>
     );
   }
 }
-SettingsScreen.propTypes = {
+KarneskojScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired,
   progress: PropTypes.number.isRequired,
@@ -123,5 +95,5 @@ const mapStateToProps = ({ currentLanguage, userInformation }) => {
 };
 
 export default connect(mapStateToProps, { setProgress, resetData })(
-  SettingsScreen
+  KarneskojScreen
 );
