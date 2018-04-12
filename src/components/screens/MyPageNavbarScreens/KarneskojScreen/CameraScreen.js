@@ -51,6 +51,7 @@ class CameraScreen extends React.Component {
       flipCameraStyle,
       snapPictureStyle,
       imageStyle,
+      cancelStyle,
       flashCamerastyle
     } = styles;
     const { front, back } = Camera.Constants.Type;
@@ -85,15 +86,19 @@ class CameraScreen extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={flipCameraStyle}
-              onPress={() => {
-                this.setState({ type: type === back ? front : back });
-              }}
+              onPress={() =>
+                this.setState({ type: type === back ? front : back })
+              }
             >
-              <Ionicons
-                name={'ios-reverse-camera-outline'}
-                size={WIDTH / 7}
-                color={'white'}
-              />
+              <MaterialIcons name={'cached'} size={WIDTH / 7} color={'white'} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={cancelStyle}
+              onPress={() => this.props.navigation.goBack()}
+            >
+              <Text style={{ color: 'white', fontSize: 20 }}>
+                {this.props.language === 'SE' ? 'Avbryt' : 'Cancel'}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={snapPictureStyle}
@@ -145,7 +150,17 @@ const styles = {
     position: 'absolute',
     bottom: 20,
     left: WIDTH * 0.4
+  },
+  cancelStyle: {
+    position: 'absolute',
+    bottom: 40,
+    left: 30
   }
 };
-
-export default connect(null, { setPicture })(CameraScreen);
+const mapStateToProps = ({ currentLanguage }) => {
+  const { language } = currentLanguage;
+  return {
+    language
+  };
+};
+export default connect(mapStateToProps, { setPicture })(CameraScreen);
