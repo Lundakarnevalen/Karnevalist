@@ -1,6 +1,6 @@
 import { NavigationActions } from 'react-navigation';
 import { Dimensions, Platform } from 'react-native';
-
+import { Constants } from 'expo';
 // URL constants
 const BASE_URL = 'https://api.karnevalist.se';
 export const TOKEN_URL = `${BASE_URL}/api/hello/`;
@@ -38,3 +38,10 @@ export const LANGUAGES = [
   { title: 'Svenska', val: 'SE' },
   { title: 'English', val: 'EN' }
 ];
+
+export const HEADER_HEIGHT = IS_IOS ? 64 + 15 : 50 + Constants.statusBarHeight;
+export const VIEW_HEIGHT = IS_IOS
+  ? HEIGHT - 49 - (64 + 15)
+  : HEIGHT - 60 - (50 + Constants.statusBarHeight);
+
+export const PINK = '#FBBCC0';
