@@ -96,7 +96,9 @@ class CameraScreen extends React.Component {
               style={cancelStyle}
               onPress={() => this.props.navigation.goBack()}
             >
-              <Text style={{ color: 'white', fontSize: 20 }}>
+              <Text
+                style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}
+              >
                 {this.props.language === 'SE' ? 'Avbryt' : 'Cancel'}
               </Text>
             </TouchableOpacity>
