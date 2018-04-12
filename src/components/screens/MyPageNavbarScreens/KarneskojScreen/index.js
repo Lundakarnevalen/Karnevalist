@@ -42,11 +42,6 @@ class KarneskojScreen extends Component {
             icon="local-library"
             onPress={() => navigation.navigate('SongBookScreen')}
           />
-          <KarneskojItem
-            title={strings.Songbook}
-            icon="camera"
-            onPress={() => navigation.navigate('Camera')}
-          />
         </View>
         <CameraButton
           onPress={() => this.props.navigation.navigate('Camera')}

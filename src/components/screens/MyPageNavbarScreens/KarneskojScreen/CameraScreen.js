@@ -28,8 +28,7 @@ class CameraScreen extends React.Component {
   async snap() {
     if (this.camera) {
       const photo = await this.camera.takePictureAsync();
-      this.props.setPicture(photo.uri);
-      this.props.navigation.navigate('EditPhoto');
+      this.props.navigation.navigate('EditPhoto', { uri: photo.uri });
     }
   }
   getFlashIcon() {

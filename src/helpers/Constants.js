@@ -30,6 +30,12 @@ export const LOGOUT_RESET_ACTION = NavigationActions.reset({
   key: null
 });
 
+export const CAMERA_RESET_ACTION = NavigationActions.reset({
+  index: 0,
+  actions: [NavigationActions.navigate({ routeName: 'KarneskojScreen' })],
+  key: null
+});
+
 // Useful constants
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
