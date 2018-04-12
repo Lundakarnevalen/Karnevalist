@@ -9,8 +9,7 @@ export const styles = {
     alignItems: 'left',
     justifyContent: 'left',
     width: ITEM_WIDTH,
-    borderWidth: 1,
-    marginTop: 8
+    marginTop: 8,
   },
   timeStyle: {
     fontSize: 8,
@@ -24,21 +23,38 @@ export const styles = {
     backgroundColor: 'transparent',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 5
+    marginTop: 5,
+    marginLeft: 8
   },
   textStyle: {
     fontSize: 12,
     backgroundColor: 'transparent',
     fontFamily: 'Avenir Next Medium',
     color: 'white',
-    textAlign: 'center'
+    width: WIDTH - 40,
+    marginLeft: 10
+
   },
   innerContainerStyle: {
     flexDirection: 'column',
     justifyContent: 'left',
-    alignItems: 'left'
+    alignItems: 'left',
+    textAlinment: 'left'
   },
   textViewStyle: {
     marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'left',
+    alignItems: 'left',
+    textAlinment: 'left'
+  },
+  upAndDownStyle:{
+    width: 30
+  },
+  pointStyle:{
+    backgroundColor: '#F4376D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: ITEM_WIDTH,
   }
 };

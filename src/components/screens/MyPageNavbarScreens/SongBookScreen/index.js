@@ -98,7 +98,7 @@ class SongBookScreen extends Component {
       <View>
         <BackgroundImage pictureNumber={3} />
         <View>
-          <Header title={strings.title} />
+          <Header title={strings.title} navigation={navigation} />
         </View>
         <View style={styles.containerStyle}>
           <Input
