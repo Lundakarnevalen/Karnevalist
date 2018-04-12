@@ -44,3 +44,7 @@ export const LANGUAGES = [
   { title: 'Svenska', val: 'SE' },
   { title: 'English', val: 'EN' }
 ];
+
+// COLORS
+
+export const PINK = '#f4376d';
