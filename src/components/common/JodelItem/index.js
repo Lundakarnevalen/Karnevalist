@@ -4,10 +4,10 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ITEM_WIDTH, styles } from './styles';
 
-const JodelItem = ({ title, icon, onPress, text, place, time, grade, nbr, backColor, color }) => {
+const JodelItem = ({ onPress, text, place, time, grade, nbr, backColor, color, disable }) => {
   const { containerStyle, innerContainerStyle, timeAndPlaceStyle, textStyle, textViewStyle, pointStyle, timeStyle } = styles;
   return (
-    <TouchableOpacity onPress={() => onPress()} style={containerStyle}>
+    <TouchableOpacity onPress={() => onPress()} style={containerStyle} disabled={disable}>
         <View style={innerContainerStyle}>
           <View style={timeAndPlaceStyle}>
             <MaterialIcons name="free-breakfast" size={15} color={color}/>
@@ -47,27 +47,26 @@ const JodelItem = ({ title, icon, onPress, text, place, time, grade, nbr, backCo
 };
 
 JodelItem.defaultProps = {
-  title: '',
   time: '',
   place: '',
   text: '',
   grade: '',
   nbr: '',
   backColor: 'transparent',
-  color: 'white'
+  color: 'white',
+  disable: false
 };
 
 JodelItem.propTypes = {
-  title: PropTypes.string,
-  icon: PropTypes.string,
   onPress: PropTypes.func.isRequired,
-  time: '',
+  time: PropTypes.string,
   place: PropTypes.string,
   text: PropTypes.string,
   grade: PropTypes.string,
   nbr: PropTypes.string,
   backColor: PropTypes.string,
   color: PropTypes.string,
+  disable: PropTypes.bool
 };
 
 export { JodelItem };
