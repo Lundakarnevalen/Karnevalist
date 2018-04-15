@@ -16,7 +16,7 @@ class JodelThread extends Component {
     super(props);
     const strings = this.getLanguageStrings();
     this.state = {
-      data: [{time:'47', place:'Lundagård', grade:'12', onPress:() => {}, text:strings.Placeholder, nbr:'1', color:'#F7A021', disable: 'false'}, {time:'2', place:'Delphi', grade:'22', onPress:() => {}, text:strings.Placeholder, nbr:'2', color:'#F7A021', disable:'false'}]
+      data: [{time:'47', place:'Lundagård', grade:'12', onPress:() => {}, text:strings.Placeholder, nbr:'1', color:'#F7A021', disable: 'false'}, {time:'2', place:'Delphi', grade:'22', nbr:'2', color:'#F7A021', disable:'false', text: strings.Placeholder, onPress:() => {}, text:strings.Placeholder}]
     };
   }
 
