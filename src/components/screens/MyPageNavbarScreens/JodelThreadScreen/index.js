@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {
   Header,
@@ -10,6 +10,7 @@ import { JODEL_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { setPopover, setProgress } from '~/src/actions';
 import { getStrings } from '~/src/helpers/functions';
 import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
+import { MaterialIcons } from '@expo/vector-icons';
 
 class JodelThread extends Component {
   constructor(props) {
@@ -32,8 +33,9 @@ class JodelThread extends Component {
       <Header
         title=' '
         navigation={navigation}
+        rightIcon={<MaterialIcons name='bookmark-border' style={{ color: 'white', right: 0 }} size={30}/>}
       />
-        <View style={{flexDirection: 'column', marginBottom: 15}}>
+        <View style={{flexDirection: 'column', marginBottom: 15, marginTop: -10}}>
           <JodelItem
             time='23'
             place='KC'
@@ -62,6 +64,11 @@ class JodelThread extends Component {
               />
             )}
           />
+          <View>
+            <Text color='black'>
+              Hej
+            </Text>
+          </View>
         </View>
       </View>
     );

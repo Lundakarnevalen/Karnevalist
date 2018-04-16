@@ -7,7 +7,7 @@ import { ITEM_WIDTH, styles } from './styles';
 const JodelItem = ({ onPress, text, place, time, grade, nbr, backColor, color, disable }) => {
   const { containerStyle, innerContainerStyle, timeAndPlaceStyle, textStyle, textViewStyle, pointStyle, timeStyle } = styles;
   return (
-    <TouchableOpacity onPress={() => onPress()} style={containerStyle} disabled={disable}>
+    <TouchableOpacity onPress={() => onPress()} style={containerStyle} disabled={'true'}>
         <View style={innerContainerStyle}>
           <View style={timeAndPlaceStyle}>
             <MaterialIcons name="free-breakfast" size={15} color={color}/>
