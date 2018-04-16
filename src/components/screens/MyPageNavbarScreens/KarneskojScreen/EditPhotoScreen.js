@@ -122,7 +122,7 @@ class EditPhotoscreen extends Component {
                   autoFocus
                   onContentSizeChange={event => {
                     this.setState({
-                      height: event.nativeEvent.contentSize.height
+                      height: event.nativeEvent.contentSize.height + 10
                     });
                   }}
                   placeHolder="Text..."
