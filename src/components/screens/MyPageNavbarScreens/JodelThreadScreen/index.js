@@ -32,8 +32,9 @@ class JodelThread extends Component {
       <View style={{ flex: 1 }}>
       <Header
         title=' '
-        navigation={navigation}
-        rightIcon={<MaterialIcons name='bookmark-border' style={{ color: 'white', right: 0 }} size={30}/>}
+        leftIcon={<MaterialIcons name='arrow-back' style={{ color: 'black', right: 0 }} size={30}/>}
+        rightIcon={<MaterialIcons name='bookmark-border' style={{ color: 'black', right: 0 }} size={30}/>}
+        backColor='white'
       />
         <View style={{flexDirection: 'column', marginBottom: 15, marginTop: -10}}>
           <JodelItem

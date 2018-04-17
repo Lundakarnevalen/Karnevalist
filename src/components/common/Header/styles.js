@@ -46,9 +46,5 @@ export const styles = {
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  statusBarStyle: {
-    backgroundColor: '#F7A021',
-    zIndex: 999
   }
 };

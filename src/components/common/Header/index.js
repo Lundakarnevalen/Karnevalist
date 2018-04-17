@@ -23,7 +23,7 @@ const LeftIcon = ({ icon, navigation }) => {
 
 LeftIcon.defaultProps = {
   icon: undefined,
-  navigation: undefined
+  navigation: undefined,
 };
 
 LeftIcon.propTypes = {
@@ -31,9 +31,9 @@ LeftIcon.propTypes = {
   navigation: PropTypes.shape()
 };
 
-const Header = ({ title, rightIcon, leftIcon, navigation }) => (
-  <View style={styles.statusBarStyle}>
-    <View style={styles.containerStyle}>
+const Header = ({ title, rightIcon, leftIcon, navigation, backColor }) => (
+  <View style={{backgroundColor: backColor, zIndex: 999}}>
+    <View style={[styles.containerStyle, {backgroundColor: backColor}]}>
       <LeftIcon icon={leftIcon} navigation={navigation} />
       <View style={styles.textContainerStyle}>
         <Text style={styles.textStyle} numberOfLines={1}>
@@ -48,14 +48,16 @@ const Header = ({ title, rightIcon, leftIcon, navigation }) => (
 Header.defaultProps = {
   leftIcon: undefined,
   navigation: undefined,
-  rightIcon: undefined
+  rightIcon: undefined,
+  backColor: '#F7A021'
 };
 
 Header.propTypes = {
   leftIcon: PropTypes.shape(),
   navigation: PropTypes.shape(),
   rightIcon: PropTypes.shape(),
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  backColor: PropTypes.string
 };
 
 export { Header };
