@@ -10,14 +10,14 @@ export const styles = {
   container: {
     width: WIDTH,
     height: HEIGHT,
-    backgroundColor: PINK
+    backgroundColor: '#474747'
   },
   baseImageStyle: {
     backgroundColor: 'transparent',
-    height: VIEW_HEIGHT - 15,
+    height: VIEW_HEIGHT - 5,
     position: 'absolute',
-    top: HEADER_HEIGHT + 10,
-    width: WIDTH
+    width: WIDTH-30,
+    borderRadius: 5
   },
   cupRowLeftStyle: {
     height: HEIGHT,
@@ -39,7 +39,21 @@ export const styles = {
   },
   infoView: {
     position: 'absolute',
-    bottom: 180,
-    transform: [{ rotate: '90deg' }]
+    bottom: 120,
+    transform: [{ rotate: '90deg' }],
+    marginLeft: -35
+  },
+  card: {
+    width: WIDTH,
+    height: HEIGHT-HEADER_HEIGHT-34,
+    backgroundColor: PINK,
+    borderWidth:8,
+    borderRadius: 15,
+    borderColor: '#474747'
+  },
+  cups: {
+    height: HEIGHT-HEADER_HEIGHT-50,
+    overflow: 'hidden',
+    borderRadius: 10
   }
 };
