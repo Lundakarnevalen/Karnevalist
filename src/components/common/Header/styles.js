@@ -10,7 +10,6 @@ export const styles = {
     justifyContent: 'center',
     flexDirection: 'row',
     backgroundColor: '#F7A021',
-    borderBottomWidth: 1,
     borderColor: 'gray',
     ...Platform.select({
       ios: {
@@ -41,8 +40,7 @@ export const styles = {
   },
   rightIconStyle: {
     flex: 1,
-    alignItems: 'center',
-    // marginRight: 10
+    alignItems: 'center'
   },
   textContainerStyle: {
     flex: 3,
