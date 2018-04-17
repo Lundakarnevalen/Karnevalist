@@ -31,7 +31,12 @@ class App extends Component {
       require('./assets/images/night3.png'),
       require('./assets/images/night4.png'),
       require('./assets/images/night5.png'),
-      require('./assets/images/background-login-screen.png')
+      require('./assets/images/background-login-screen.png'),
+      require('./assets/images/KarnevalID/Base.png'),
+      require('./assets/images/KarnevalID/BaseBig.png'),
+      require('./assets/images/KarnevalID/CupBig.png'),
+      require('./assets/images/KarnevalID/CupRowLeft.png'),
+      require('./assets/images/KarnevalID/CupRowRight.png')
     ]).then(() => this.setState({ imagesLoaded: true }));
     Font.loadAsync({
       'Avenir Next Bold': require('./assets/fonts/AvenirNext-Bold-01.ttf'),

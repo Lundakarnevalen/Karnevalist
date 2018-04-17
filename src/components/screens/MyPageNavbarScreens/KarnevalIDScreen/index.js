@@ -14,45 +14,75 @@ import {
 } from '~/src/helpers/Constants';
 import { karnevalID } from '~/assets/images/KarnevalID';
 import * as Animatable from 'react-native-animatable';
+import { styles } from './styles';
 
 const duration = 10000;
+
+const images = [
+  {
+    key: 0,
+    startY: 0,
+    endY: HEIGHT,
+    source: karnevalID.cupRowRight,
+    style: styles.cupRowLeftStyle
+  },
+  {
+    key: 1,
+    startY: -HEIGHT - 10,
+    endY: -10,
+    source: karnevalID.cupRowRight,
+    style: styles.cupRowLeftStyle
+  },
+  {
+    key: 2,
+    startY: 0,
+    endY: -HEIGHT,
+    source: karnevalID.cupRowRight,
+    style: styles.cupRowRightStyle
+  },
+  {
+    key: 3,
+    startY: HEIGHT,
+    endY: 0,
+    source: karnevalID.cupRowRight,
+    style: styles.cupRowRightStyle
+  }
+];
+
+const animatableImage = ({ key, startY, endY, source, style }) => (
+  <Animatable.Image
+    key={key}
+    animation={{
+      from: { translateY: startY },
+      to: { translateY: endY }
+    }}
+    easing="linear"
+    duration={duration}
+    iterationCount="infinite"
+    useNativeDriver
+    style={style}
+    source={source}
+  />
+);
 
 class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+
   render() {
     const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
-    const {
-      container,
-      textStyle,
-      cupRowLeftStyle,
-      cupRowRightStyle,
-      baseImageStyle
-    } = styles;
-
+    const { container, textStyle, baseImageStyle, infoView } = styles;
     return (
-      <View
-        style={{
-          width: WIDTH,
-          height: HEIGHT,
-          backgroundColor: PINK
-        }}
-      >
+      <View style={container}>
         <Header title={strings.title} />
         <Image
           resizeMode="contain"
           source={karnevalID.baseBig}
           style={baseImageStyle}
         />
-        <Animated.View
-          style={{
-            position: 'absolute',
-            bottom: 180,
-            transform: [{ rotate: '90deg' }]
-          }}
-        >
+        <Animated.View style={infoView}>
           <View>
             <Text style={textStyle}>
               {`${`NAMN ${this.props.userinfo.firstName}`} ${
@@ -69,90 +99,11 @@ class KarnevalIDScreen extends Component {
             </Text>
           </View>
         </Animated.View>
-        <Animatable.Image
-          animation={{
-            from: { translateY: 0 },
-            to: { translateY: HEIGHT }
-          }}
-          easing="linear"
-          duration={duration}
-          iterationCount="infinite"
-          useNativeDriver
-          style={cupRowLeftStyle}
-          source={karnevalID.cupRowRight}
-        />
-        <Animatable.Image
-          animation={{
-            from: { translateY: -HEIGHT - 10 },
-            to: { translateY: -10 }
-          }}
-          easing="linear"
-          duration={duration}
-          iterationCount="infinite"
-          useNativeDriver
-          style={cupRowLeftStyle}
-          source={karnevalID.cupRowRight}
-        />
-        <Animatable.Image
-          animation={{
-            from: { translateY: 0 },
-            to: { translateY: -HEIGHT }
-          }}
-          easing="linear"
-          duration={duration}
-          iterationCount="infinite"
-          useNativeDriver
-          style={cupRowRightStyle}
-          source={karnevalID.cupRowRight}
-        />
-        <Animatable.Image
-          animation={{
-            from: { translateY: HEIGHT },
-            to: { translateY: 0 }
-          }}
-          easing="linear"
-          duration={duration}
-          iterationCount="infinite"
-          useNativeDriver
-          style={cupRowRightStyle}
-          source={karnevalID.cupRowRight}
-        />
+        {images.map(i => animatableImage(i))}
       </View>
     );
   }
 }
-const styles = {
-  container: {
-    height: HEIGHT - 100,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  baseImageStyle: {
-    backgroundColor: 'transparent',
-    height: VIEW_HEIGHT - 15,
-    position: 'absolute',
-    top: HEADER_HEIGHT + 10,
-    width: WIDTH
-  },
-  cupRowLeftStyle: {
-    height: HEIGHT,
-    position: 'absolute',
-    left: 0,
-    width: 15,
-    zIndex: 2
-  },
-  cupRowRightStyle: {
-    height: HEIGHT,
-    position: 'absolute',
-    right: 0,
-    width: 15,
-    zIndex: 2
-  },
-  textStyle: {
-    fontSize: 14,
-    color: 'purple'
-  }
-};
 
 const mapStateToProps = ({ currentLanguage, userInformation }) => {
   const { language } = currentLanguage;
