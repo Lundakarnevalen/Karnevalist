@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Animated, Dimensions } from 'react-native';
-
-const WIDTH = Dimensions.get('window').width;
+import { Text, View, TouchableOpacity, Animated } from 'react-native';
+import { WIDTH } from '~/src/helpers/Constants';
 
 class ExpandeblePanel extends Component {
   constructor(props) {
@@ -35,15 +34,25 @@ class ExpandeblePanel extends Component {
   render() {
     const { containerStyle, rows, textStyle } = styles;
     return (
-      <TouchableOpacity onPress={() => this.setState({ expanded: !this.state.expanded })}>
+      <TouchableOpacity
+        onPress={() => this.setState({ expanded: !this.state.expanded })}
+      >
         <Animated.View
-          style={[containerStyle, { height: this.state.animation, borderColor: this.getColor() }]}
+          style={[
+            containerStyle,
+            { height: this.state.animation, borderColor: this.getColor() }
+          ]}
         >
           <View style={rows} onLayout={event => this.setMinHeight(event)}>
             {this.props.image}
-            <Text style={[textStyle, { color: this.getColor() }]}>{this.state.title}</Text>
+            <Text style={[textStyle, { color: this.getColor() }]}>
+              {this.state.title}
+            </Text>
           </View>
-          <View style={{ marginTop: 10 }} onLayout={event => this.setMaxHeight(event)}>
+          <View
+            style={{ marginTop: 10 }}
+            onLayout={event => this.setMaxHeight(event)}
+          >
             {this.props.children}
           </View>
         </Animated.View>

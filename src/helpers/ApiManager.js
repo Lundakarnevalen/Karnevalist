@@ -1,13 +1,18 @@
-import axios from 'axios';
 import React from 'react';
-import { Dimensions, Image } from 'react-native';
-import { SECTION_URL, NEWS_URL, USER_URL, CHECK_IN_URL } from './Constants';
-
-const WIDTH = Dimensions.get('window').width;
+import axios from 'axios';
+import { Image } from 'react-native';
+import {
+  SECTION_URL,
+  NEWS_URL,
+  USER_URL,
+  CHECK_IN_URL,
+  WIDTH
+} from './Constants';
+import images from '~/assets/images';
 
 export function getNews() {
   return axios
-    .get(NEWS_URL + '7')
+    .get(`${NEWS_URL}7`)
     .then(response => response.data)
     .catch(() => {
       console.log('Error fetching news');
@@ -19,7 +24,7 @@ function getImage(imageUrl) {
     <Image
       style={{ width: WIDTH, height: WIDTH, resizeMode: 'contain' }}
       source={{ uri: imageUrl }}
-      defaultSource={require('../../res/Monstergubbe.png')}
+      defaultSource={images.monsterGubbe}
     />
   );
 }
@@ -36,7 +41,7 @@ function getRowImage(imageUrl) {
         borderRadius: 8
       }}
       source={{ uri: imageUrl }}
-      defaultSource={require('../../res/Monstergubbe.png')}
+      defaultSource={images.monsterGubbe}
     />
   );
 }
@@ -67,7 +72,7 @@ export function fetchSections(cb) {
 export function fetchUserinfo(email, token, cb = null) {
   const url = USER_URL + email;
   const headers = {
-    Authorization: 'Bearer ' + token,
+    Authorization: `Bearer ${token}`,
     'content-type': 'application/json'
   };
   axios
@@ -81,10 +86,28 @@ export function fetchUserinfo(email, token, cb = null) {
     });
 }
 
+export function updateUser(email, token, data, cb, cbError) {
+  const url = USER_URL + email;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'content-type': 'application/json'
+  };
+  axios
+    .put(url, data, { headers })
+    .then(response => {
+      const { success } = response.data;
+      cb(success, data);
+    })
+    .catch(error => {
+      if (error.response.status === 401 && typeof cbError === 'function')
+        cbError();
+      // const msg = handleErrorMsg(error);
+    });
+}
 export function fetchCheckInStatus(email, token, callback) {
   const URL = CHECK_IN_URL + email;
   const headers = {
-    Authorization: 'Bearer ' + token
+    Authorization: `Bearer ${token}`
   };
   axios
     .get(URL, { headers })

@@ -69,14 +69,14 @@ Like `npm start`, but also attempts to open your app on a connected Android devi
 
 ##### Using Android Studio's `adb`
 
-1. Make sure that you can run adb from your terminal.
-2. Open Genymotion and navigate to `Settings -> ADB`. Select “Use custom Android SDK tools” and update with your [Android SDK directory](https://stackoverflow.com/questions/25176594/android-sdk-location).
+1.  Make sure that you can run adb from your terminal.
+2.  Open Genymotion and navigate to `Settings -> ADB`. Select “Use custom Android SDK tools” and update with your [Android SDK directory](https://stackoverflow.com/questions/25176594/android-sdk-location).
 
 ##### Using Genymotion's `adb`
 
-1. Find Genymotion’s copy of adb. On macOS for example, this is normally `/Applications/Genymotion.app/Contents/MacOS/tools/`.
-2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
-3. Make sure that you can run adb from your terminal.
+1.  Find Genymotion’s copy of adb. On macOS for example, this is normally `/Applications/Genymotion.app/Contents/MacOS/tools/`.
+2.  Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
+3.  Make sure that you can run adb from your terminal.
 
 #### `npm run eject`
 
@@ -119,6 +119,7 @@ REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname' npm start
 ```
 
 Windows:
+
 ```
 set REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname'
 npm start
@@ -134,10 +135,10 @@ React Native works with [Flow](http://flowtype.org/) out of the box, as long as 
 
 To add a local dependency to the correct Flow version to a Create React Native App project, follow these steps:
 
-1. Find the Flow `[version]` at the bottom of the included [.flowconfig](.flowconfig)
-2. Run `npm install --save-dev flow-bin@x.y.z` (or `yarn add --dev flow-bin@x.y.z`), where `x.y.z` is the .flowconfig version number.
-3. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-4. Add `// @flow` to any files you want to type check (for example, to `App.js`).
+1.  Find the Flow `[version]` at the bottom of the included [.flowconfig](.flowconfig)
+2.  Run `npm install --save-dev flow-bin@x.y.z` (or `yarn add --dev flow-bin@x.y.z`), where `x.y.z` is the .flowconfig version number.
+3.  Add `"flow": "flow"` to the `scripts` section of your `package.json`.
+4.  Add `// @flow` to any files you want to type check (for example, to `App.js`).
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
 You can optionally use a [plugin for your IDE or editor](https://flow.org/en/docs/editors/) for a better integrated experience.
@@ -211,12 +212,40 @@ If you're on a Mac, there are a few errors that users sometimes see when attempt
 
 There are a few steps you may want to take to troubleshoot these kinds of errors:
 
-1. Make sure Xcode is installed and open it to accept the license agreement if it prompts you. You can install it from the Mac App Store.
-2. Open Xcode's Preferences, the Locations tab, and make sure that the `Command Line Tools` menu option is set to something. Sometimes when the CLI tools are first installed by Homebrew this option is left blank, which can prevent Apple utilities from finding the simulator. Make sure to re-run `npm/yarn run ios` after doing so.
-3. If that doesn't work, open the Simulator, and under the app menu select `Reset Contents and Settings...`. After that has finished, quit the Simulator, and re-run `npm/yarn run ios`.
+1.  Make sure Xcode is installed and open it to accept the license agreement if it prompts you. You can install it from the Mac App Store.
+2.  Open Xcode's Preferences, the Locations tab, and make sure that the `Command Line Tools` menu option is set to something. Sometimes when the CLI tools are first installed by Homebrew this option is left blank, which can prevent Apple utilities from finding the simulator. Make sure to re-run `npm/yarn run ios` after doing so.
+3.  If that doesn't work, open the Simulator, and under the app menu select `Reset Contents and Settings...`. After that has finished, quit the Simulator, and re-run `npm/yarn run ios`.
 
 ### QR Code does not scan
 
 If you're not able to scan the QR code, make sure your phone's camera is focusing correctly, and also make sure that the contrast on the two colors in your terminal is high enough. For example, WebStorm's default themes may [not have enough contrast](https://github.com/react-community/create-react-native-app/issues/49) for terminal QR codes to be scannable with the system barcode scanners that the Expo app uses.
 
 If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
+
+### Setup eslint and prettier
+
+#### a. Install Atom
+
+1.  Install [Atom](https://atom.io)
+2.  Open Atom and go to Settings/Preferences and select Install in the side menu
+3.  Install the following packages: `busy-signal`, `docblockr`, `intentions`, `linter`, `linter-eslint`, `linter-ui-default`, `prettier-atom`
+4.  Setup `prettier-atom` by changing the following settings:
+    * ESLint Integration: `true`
+    * Format Files on Save: `true`
+    * Only format if prettier is found in your project's dependencies: `true` (optional)
+
+#### b. Install Visual Code
+
+1.  Install [Visual Code](https://code.visualstudio.com/)
+2.  Install [prettier plugin](https://github.com/prettier/prettier-vscode)
+3.  Setup `prettier-vscode` by changing the following settings:
+    * ESLint Integration: `true`
+    * Format Files on Save: `true`
+    * Only format if prettier is found in your project's dependencies: `true` (optional)
+
+#### c. Install Sublime (not optimal)
+
+1.  Install [Sublime](https://www.sublimetext.com/)
+2.  Follow [this guide](http://slashwhatever.com/code/leveraging-prettier-eslint-sublime/) and tell us if it works
+
+These settings are important to avoid conflicts and to get a common coding structure.

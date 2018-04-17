@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { CustomButton, Header, ExpandeblePanel, BackgroundImage } from '../common';
+import {
+  CustomButton,
+  Header,
+  ExpandeblePanel,
+  BackgroundImage
+} from '../common';
 import { REGISTRATION_INFO_SCREEN_STRINGS } from '../../helpers/LanguageStrings';
-
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+import { HEIGHT, WIDTH } from '../../helpers/Constants';
+import { getStrings } from '../../helpers/functions';
 
 class RegistrationInfoScreen extends Component {
   getColor() {
     return '#F7A021';
   }
 
-  getStrings() {
-    const { language } = this.props;
-    const { fields } = REGISTRATION_INFO_SCREEN_STRINGS;
-    const strings = {};
-    fields.forEach(field => (strings[field] = REGISTRATION_INFO_SCREEN_STRINGS[field][language]));
-    return strings;
+  getLanguageStrings() {
+    return getStrings(this.props.language, REGISTRATION_INFO_SCREEN_STRINGS);
   }
 
   render() {
     const { titelTextStyle, containerStyle, imageStyle, textStyle } = styles;
     const { navigation } = this.props;
-    const strings = this.getStrings();
+    const strings = this.getLanguageStrings();
     const image1 = (
       <MaterialCommunityIcons
         name="numeric-1-box-outline"
@@ -52,7 +52,11 @@ class RegistrationInfoScreen extends Component {
 
     const closeButton = (
       <TouchableOpacity onPress={() => navigation.goBack(null)}>
-        <MaterialCommunityIcons size={30} name="close" color={this.getColor()} />
+        <MaterialCommunityIcons
+          size={30}
+          name="close"
+          color={this.getColor()}
+        />
       </TouchableOpacity>
     );
 
@@ -62,7 +66,9 @@ class RegistrationInfoScreen extends Component {
         <Header title={strings.title} rightIcon={closeButton} />
         <ScrollView style={{ height: HEIGHT - 64 }}>
           <View style={containerStyle}>
-            <Text style={[titelTextStyle, { color: 'white' }]}>{strings.header}</Text>
+            <Text style={[titelTextStyle, { color: 'white' }]}>
+              {strings.header}
+            </Text>
             <ScrollView>
               <ExpandeblePanel title={strings.panelTitle1} image={image1}>
                 <Text style={textStyle}>{strings.infoText1}</Text>

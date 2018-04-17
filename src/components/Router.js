@@ -2,48 +2,20 @@ import { StackNavigator } from 'react-navigation';
 import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
-import MyPageNavbarScreen from './screens/MyPageNavbarScreen';
-import SectionItemScreen from './screens/MyPageNavbarScreens/SectionItemScreen';
-import SingleNewsScreen from './screens/MyPageNavbarScreens/SingleNewsScreen';
-import MyProfileScreen from './screens/MyPageNavbarScreens/MyProfileScreen';
-import MyRegistrationScreen from './screens/MyPageNavbarScreens/MyRegistrationScreen';
+import MyPageNavRouter from './screens/MyPageNavRouter';
+import SingleNewsScreen from './screens/MyPageNavbarScreens/NewsScreen/SingleNewsScreen';
 import ConfirmPage from './screens/ConfirmPage';
-import SongScreen from './screens/MyPageNavbarScreens/SongScreen';
 import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
 
 const LoggedIn = StackNavigator({
-  MyPageNavbarScreen: {
-    screen: MyPageNavbarScreen,
+  MyPageNavRouter: {
+    screen: MyPageNavRouter,
     navigationOptions: {
       header: null
     }
   },
   SingleNewsScreen: {
     screen: SingleNewsScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  SongScreen: {
-    screen: SongScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  SectionItemScreen: {
-    screen: SectionItemScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  MyProfile: {
-    screen: MyProfileScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  MyRegistration: {
-    screen: MyRegistrationScreen,
     navigationOptions: {
       header: null
     }
@@ -85,7 +57,7 @@ const Router = StackNavigator(
         header: null
       }
     },
-    MyPageNavbarScreen: {
+    MyPageNavRouter: {
       screen: LoggedIn,
       navigationOptions: {
         header: null

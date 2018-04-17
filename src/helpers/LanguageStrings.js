@@ -15,7 +15,8 @@ const expiredTokenTitle = {
   EN: 'Session Expired'
 };
 const expiredTokenMessage = {
-  SE: 'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
+  SE:
+    'Din session har tagit slut var vänlig logga in igen om du vill fortsätta',
   EN: 'Your session has expired please log in again to continue'
 };
 const studentNation = {
@@ -158,7 +159,8 @@ export const LOGIN_SCREEN_STRINGS = {
   },
   resetPasswordComplete: {
     SE: 'Ett mail har skickats med information om hur du byter lösenord.',
-    EN: 'An email has been sent with information about how to reset your password.'
+    EN:
+      'An email has been sent with information about how to reset your password.'
   },
   password,
   loginButton: {
@@ -273,7 +275,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     'gdpr2',
     'gdpr3',
     'gdpr4',
-    'corpsList',
+    'corpsArray',
     'errorMsg409EmailAndPersonalNumber',
     'errorMsg409Email',
     'errorMsg409PersonalNumber',
@@ -389,8 +391,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
   cancel,
   ok,
   confirmRegister: {
-    SE: 'Du kan endast ändra dina uppgifter via karnevalist.se efter att du har registrerat dig',
-    EN: 'You can only change your information from karnevalist.se after you have registered'
+    SE:
+      'Du kan endast ändra dina uppgifter via karnevalist.se efter att du har registrerat dig',
+    EN:
+      'You can only change your information from karnevalist.se after you have registered'
   },
   alertHeader,
   other: {
@@ -401,7 +405,7 @@ export const REGISTRATION_SCREEN_STRINGS = {
     SE: 'Jag har ett fullmaktsombud',
     EN: 'There is a power of attorney for me'
   },
-  corpsList: {
+  corpsArray: {
     SE: [
       'Corpus Medicum',
       'Humanistiska och teologiska studentkåren',
@@ -537,8 +541,10 @@ export const REGISTRATION_SCREEN_STRINGS = {
       ' use these pictures and movies on Facebook, Instagram, Youtube and in karnevalsboxen.'
   },
   gdpr3: {
-    SE: 'Jag är medveten om och godkänner att mina kontaktuppgifter behövs under hela år 2018.',
-    EN: 'I am aware of and allow the use of my contact information during the whole year of 2018.'
+    SE:
+      'Jag är medveten om och godkänner att mina kontaktuppgifter behövs under hela år 2018.',
+    EN:
+      'I am aware of and allow the use of my contact information during the whole year of 2018.'
   },
   gdpr4: {
     SE:
@@ -634,6 +640,26 @@ export const NEWS_SCREEN_STRINGS = {
   }
 };
 
+export const KARNESKOJ_SCREEN_STRINGS = {
+  fields: ['title', 'KarneJodel', 'Eldoradio', 'Songbook'],
+  title: {
+    SE: 'Karneskoj',
+    EN: 'Karnefun'
+  },
+  KarneJodel: {
+    SE: 'KarneJodel',
+    EN: 'KarneJodel'
+  },
+  Eldoradio: {
+    SE: 'EldoRadio',
+    EN: 'EldoRadio'
+  },
+  Songbook: {
+    SE: 'Sångbok',
+    EN: 'Songbook'
+  }
+};
+
 export const HOME_SCREEN_STRINGS = {
   fields: [
     'title',
@@ -716,8 +742,10 @@ export const HOME_SCREEN_STRINGS = {
 export const SETTINGS_SCREEN_STRINGS = {
   fields: [
     'title',
+    'changeLanguage',
     'profile',
     'registration',
+    'sections',
     'logout',
     'cancel',
     'ok',
@@ -728,11 +756,19 @@ export const SETTINGS_SCREEN_STRINGS = {
     SE: 'Inställningar',
     EN: 'Settings'
   },
+  changeLanguage: {
+    SE: 'Byt språk',
+    EN: 'Change language'
+  },
   profile,
   registration,
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
+  },
+  sections: {
+    SE: 'Sektioner',
+    EN: 'Sections'
   },
   cancel,
   ok,
@@ -763,7 +799,7 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
 };
 
 export const SONGBOOK_SCREEN_STRINGS = {
-  fields: ['title', 'headerTitle'],
+  fields: ['title', 'headerTitle', 'search', 'searchPopover'],
   title: {
     SE: 'Sångbok',
     EN: 'Song Book'
@@ -771,6 +807,14 @@ export const SONGBOOK_SCREEN_STRINGS = {
   headerTitle: {
     SE: 'Sångtext',
     EN: 'Song Text'
+  },
+  search: {
+    SE: 'Sök...',
+    EN: 'Search...'
+  },
+  searchPopover: {
+    SE: 'Sök efter namn, melodi eller kategori',
+    EN: 'Search for name, melody or category'
   }
 };
 
@@ -829,8 +873,10 @@ export const CONFIRM_PAGE_STRINGS = {
   ok,
   yes,
   confirmMessage: {
-    SE: 'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
-    EN: 'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
+    SE:
+      'Är du säker på dina val? Efter att ha tryckt "Ja" går det inte att ångra sig',
+    EN:
+      'Are you sure about your choices? After pressing "Yes" you can\'t change your mind'
   },
   confirmHeader: {
     SE: 'Bekräfta',
@@ -877,6 +923,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     'talent',
     'entertainmentCategory',
     'corps',
+    'studentNation',
     'startOfStudies',
     'pastInvolvement',
     'groupLeader',
@@ -906,7 +953,7 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   phoneNumber,
   foodPreference,
   careOf: {
-    //TODO make accurate description
+    // TODO make accurate description
     SE: 'C/O',
     EN: 'C/O'
   },
@@ -930,6 +977,10 @@ export const MY_PROFILE_SCREEN_STRINGS = {
   corps: {
     SE: 'Kår',
     EN: 'Corps'
+  },
+  studentNation: {
+    SE: 'Nation',
+    EN: 'Nation'
   },
   startOfStudies: {
     SE: 'Jag började studera år',
@@ -995,7 +1046,20 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
     EN: 'You have not chosen any sections'
   }
 };
-
+export const CHANGE_LANGUAGE_SCREEN_STRINGS = {
+  fields: ['title'],
+  title: {
+    SE: 'Byt språk',
+    EN: 'Change language'
+  }
+};
+export const KARNEVAL_ID_SCREEN_STRINGS = {
+  fields: ['title'],
+  title: {
+    SE: 'Karneval-ID',
+    EN: 'Karneval-ID'
+  }
+};
 export const LOADING_STRINGS = {
   fields: ['loading'],
   loading
