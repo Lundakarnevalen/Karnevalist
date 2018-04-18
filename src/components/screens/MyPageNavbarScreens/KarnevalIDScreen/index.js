@@ -80,7 +80,14 @@ class KarnevalIDScreen extends Component {
 
   render() {
     const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
-    const { container, textStyle, baseImageStyle, infoView, card, cups} = styles;
+    const {
+      container,
+      textStyle,
+      baseImageStyle,
+      infoView,
+      card,
+      cups
+    } = styles;
     return (
       <View style={container}>
         <Header title={strings.title} />
@@ -107,9 +114,8 @@ class KarnevalIDScreen extends Component {
               </Text>
             </View>
           </Animated.View>
-          <View style={cups}>
-            {images.map(i => animatableImage(i))}
-          </View>
+
+          {images.map(i => animatableImage(i))}
         </View>
       </View>
     );
