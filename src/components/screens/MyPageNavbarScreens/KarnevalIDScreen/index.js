@@ -80,33 +80,37 @@ class KarnevalIDScreen extends Component {
 
   render() {
     const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
-    const { container, textStyle, baseImageStyle, infoView } = styles;
+    const { container, textStyle, baseImageStyle, infoView, card, cups} = styles;
     return (
       <View style={container}>
         <Header title={strings.title} />
-        <Image
-          resizeMode="contain"
-          source={karnevalID.baseBig}
-          style={baseImageStyle}
-        />
-        <Animated.View style={infoView}>
-          <View>
-            <Text style={textStyle}>
-              {`${`NAMN ${this.props.userinfo.firstName}`} ${
-                this.props.userinfo.lastName
-              }`}
-            </Text>
+        <View style={card}>
+          <Image
+            resizeMode="contain"
+            source={karnevalID.baseBig}
+            style={baseImageStyle}
+          />
+          <Animated.View style={infoView}>
+            <View>
+              <Text style={textStyle}>
+                {`${`NAMN ${this.props.userinfo.firstName}`} ${
+                  this.props.userinfo.lastName
+                }`}
+              </Text>
+            </View>
+            <View style={{ marginTop: 7 }}>
+              <Text style={textStyle}>SEKTION</Text>
+            </View>
+            <View style={{ marginTop: 7 }}>
+              <Text style={textStyle}>
+                {`PERSONNUMMER ${this.props.userinfo.personalNumber}`}
+              </Text>
+            </View>
+          </Animated.View>
+          <View style={cups}>
+            {images.map(i => animatableImage(i))}
           </View>
-          <View style={{ marginTop: 7 }}>
-            <Text style={textStyle}>SEKTION</Text>
-          </View>
-          <View style={{ marginTop: 7 }}>
-            <Text style={textStyle}>
-              {`PERSONNUMMER ${this.props.userinfo.personalNumber}`}
-            </Text>
-          </View>
-        </Animated.View>
-        {images.map(i => animatableImage(i))}
+        </View>
       </View>
     );
   }
