@@ -65,6 +65,13 @@ const animatableImage = ({ key, startY, endY, source, style }) => (
   />
 );
 
+animatableImage.propTypes = {
+  key: PropTypes.number.isRequired,
+  startY: PropTypes.number.isRequired,
+  endY: PropTypes.number.isRequired,
+  source: PropTypes.shape().isRequired,
+  style: PropTypes.shape().isRequired
+};
 class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
@@ -112,7 +119,8 @@ const mapStateToProps = ({ currentLanguage, userInformation }) => {
 };
 
 KarnevalIDScreen.propTypes = {
-  language: PropTypes.string.isRequired
+  language: PropTypes.string.isRequired,
+  userinfo: PropTypes.shape().isRequired
 };
 
 export default connect(mapStateToProps)(KarnevalIDScreen);
