@@ -65,6 +65,13 @@ const animatableImage = ({ key, startY, endY, source, style }) => (
   />
 );
 
+animatableImage.propTypes = {
+  key: PropTypes.number.isRequired,
+  startY: PropTypes.number.isRequired,
+  endY: PropTypes.number.isRequired,
+  source: PropTypes.shape().isRequired,
+  style: PropTypes.shape().isRequired
+};
 class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
@@ -73,7 +80,14 @@ class KarnevalIDScreen extends Component {
 
   render() {
     const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
-    const { container, textStyle, baseImageStyle, infoView, card, cups} = styles;
+    const {
+      container,
+      textStyle,
+      baseImageStyle,
+      infoView,
+      card,
+      cups
+    } = styles;
     return (
       <View style={container}>
         <Header title={strings.title} />
@@ -100,9 +114,8 @@ class KarnevalIDScreen extends Component {
               </Text>
             </View>
           </Animated.View>
-          <View style={cups}>
-            {images.map(i => animatableImage(i))}
-          </View>
+
+          {images.map(i => animatableImage(i))}
         </View>
       </View>
     );
@@ -116,7 +129,8 @@ const mapStateToProps = ({ currentLanguage, userInformation }) => {
 };
 
 KarnevalIDScreen.propTypes = {
-  language: PropTypes.string.isRequired
+  language: PropTypes.string.isRequired,
+  userinfo: PropTypes.shape().isRequired
 };
 
 export default connect(mapStateToProps)(KarnevalIDScreen);
