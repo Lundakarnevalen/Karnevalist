@@ -3,7 +3,8 @@ import {
   HEADER_HEIGHT,
   WIDTH,
   VIEW_HEIGHT,
-  PINK
+  PINK,
+  IS_IOS
 } from '~/src/helpers/Constants';
 
 export const styles = {
@@ -14,7 +15,9 @@ export const styles = {
   },
   baseImageStyle: {
     backgroundColor: 'transparent',
-    height: VIEW_HEIGHT - 5,
+    height: IS_IOS
+      ? VIEW_HEIGHT - 5
+      : VIEW_HEIGHT - 20,
     position: 'absolute',
     width: WIDTH-30,
     borderRadius: 5
@@ -41,18 +44,24 @@ export const styles = {
     position: 'absolute',
     bottom: 120,
     transform: [{ rotate: '90deg' }],
-    marginLeft: -35
+    marginLeft: IS_IOS
+      ? -35
+      : -15,
   },
   card: {
     width: WIDTH,
-    height: HEIGHT-HEADER_HEIGHT-34,
+    height: IS_IOS
+      ? HEIGHT-HEADER_HEIGHT-34
+      : VIEW_HEIGHT,
     backgroundColor: PINK,
     borderWidth:8,
     borderRadius: 15,
     borderColor: '#474747'
   },
   cups: {
-    height: HEIGHT-HEADER_HEIGHT-50,
+    height: IS_IOS
+      ? VIEW_HEIGHT
+      : VIEW_HEIGHT - 16,
     overflow: 'hidden',
     borderRadius: 10
   }
