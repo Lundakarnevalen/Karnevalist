@@ -10,6 +10,7 @@ import {
 import { KARNESKOJ_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { setPopover, setProgress } from '~/src/actions';
 import { getStrings } from '~/src/helpers/functions';
+import CameraButton from './CameraButton';
 
 class KarneskojScreen extends Component {
   getLanguageStrings() {
@@ -42,6 +43,10 @@ class KarneskojScreen extends Component {
             onPress={() => navigation.navigate('SongBookScreen')}
           />
         </View>
+        <CameraButton
+          onPress={() => this.props.navigation.navigate('Camera')}
+          source={this.props.picture}
+        />
       </View>
     );
   }
@@ -59,13 +64,14 @@ const mapStateToProps = ({
   sections
 }) => {
   const { language } = currentLanguage;
-  const { progress, token, email } = userInformation;
+  const { progress, token, email, picture } = userInformation;
   return {
     language,
     popover: popoverStatus.homeScreenPopover,
     progress,
     token,
     email,
+    picture,
     sectionPriorities: sections.sectionPriorities
   };
 };
