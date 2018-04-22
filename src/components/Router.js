@@ -1,11 +1,12 @@
-import { StackNavigator } from 'react-navigation';
-import SplashScreen from './screens/SplashScreen';
-import LoginScreen from './screens/LoginScreen';
-import RegistrationScreen from './screens/RegistrationScreen';
-import MyPageNavRouter from './screens/MyPageNavRouter';
-import SingleNewsScreen from './screens/MyPageNavbarScreens/NewsScreen/SingleNewsScreen';
-import ConfirmPage from './screens/ConfirmPage';
-import RegistrationInfoScreen from './screens/RegistrationInfoScreen';
+import { StackNavigator } from "react-navigation";
+import SplashScreen from "./screens/SplashScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegistrationScreen from "./screens/RegistrationScreen";
+import MyPageNavRouter from "./screens/MyPageNavRouter";
+import SingleNewsScreen from "./screens/MyPageNavbarScreens/NewsScreen/SingleNewsScreen";
+import ConfirmPage from "./screens/ConfirmPage";
+import RegistrationInfoScreen from "./screens/RegistrationInfoScreen";
+import JodelFeedScreen from "./screens/MyPageNavbarScreens/JodelFeedScreen";
 
 const LoggedIn = StackNavigator({
   MyPageNavRouter: {
@@ -63,6 +64,12 @@ const Router = StackNavigator(
         header: null
       }
     },
+    JodelFeed: {
+      screen: JodelFeedScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
     ConfirmPage: {
       screen: ConfirmPage,
       navigationOptions: {
@@ -71,7 +78,7 @@ const Router = StackNavigator(
     }
   },
   {
-    mode: 'modal',
+    mode: "modal",
     navigationOptions: {
       gesturesEnabled: false
     }
