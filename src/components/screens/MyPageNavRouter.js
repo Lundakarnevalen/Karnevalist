@@ -158,7 +158,7 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: namedTabBarIcon('home'),
-        tabBarVisible: true
+        tabBarVisible: false
       })
     },
     /*
