@@ -92,6 +92,7 @@ class KarnevalIDScreen extends Component {
       <View style={container}>
         <Header title={strings.title} />
         <View style={card}>
+          <View style={styles.fixCircleClipping} />
           <Image
             resizeMode="contain"
             source={karnevalID.baseBig}
@@ -114,7 +115,6 @@ class KarnevalIDScreen extends Component {
               </Text>
             </View>
           </Animated.View>
-
           {images.map(i => animatableImage(i))}
         </View>
       </View>

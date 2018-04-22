@@ -41,7 +41,7 @@ export const LANGUAGES = [
 export const NAVBAR_HEIGHT = IS_IOS ? 49 : 60;
 export const HEADER_HEIGHT = IS_IOS ? 64 + 15 : 50 + Constants.statusBarHeight;
 export const VIEW_HEIGHT = IS_IOS
-  ? HEIGHT - 49 - HEADER_HEIGHT
-  : HEIGHT - 60 - HEADER_HEIGHT;
+  ? HEIGHT - NAVBAR_HEIGHT - HEADER_HEIGHT
+  : HEIGHT - NAVBAR_HEIGHT - HEADER_HEIGHT;
 
 export const PINK = '#FBBCC0';
