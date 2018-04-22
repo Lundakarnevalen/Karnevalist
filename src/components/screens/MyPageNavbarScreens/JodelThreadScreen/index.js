@@ -1,23 +1,43 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { View, FlatList, Text } from 'react-native';
-import { connect } from 'react-redux';
-import {
-  Header,
-  JodelItem
-} from '~/src/components/common';
-import { JODEL_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { setPopover, setProgress } from '~/src/actions';
-import { getStrings } from '~/src/helpers/functions';
-import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { View, FlatList, Text } from "react-native";
+import { connect } from "react-redux";
+import { Header, JodelItem, Input } from "~/src/components/common";
+import { JODEL_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
+import { setPopover, setProgress } from "~/src/actions";
+import { getStrings } from "~/src/helpers/functions";
+import { HEIGHT, IS_IOS } from "~/src/helpers/Constants";
+import { MaterialIcons } from "@expo/vector-icons";
 
 class JodelThread extends Component {
   constructor(props) {
     super(props);
     const strings = this.getLanguageStrings();
     this.state = {
-      data: [{time:'47', place:'Lundagård', grade:'12', onPress:() => {}, text:strings.Placeholder, nbr:'1', color:'#F7A021', disable: 'false'}, {time:'2', place:'Delphi', grade:'22', nbr:'2', color:'#F7A021', disable:'false', text: strings.Placeholder, onPress:() => {}, text:strings.Placeholder}]
+      data: [
+        {
+          time: "47",
+          place: "Lundagård",
+          grade: "12",
+          onPress: () => {},
+          text: strings.Placeholder,
+          nbr: "1",
+          color: "#F7A021",
+          disable: "false"
+        },
+        {
+          time: "2",
+          place: "Delphi",
+          grade: "22",
+          nbr: "2",
+          color: "#F7A021",
+          disable: "false",
+          text: strings.Placeholder,
+          onPress: () => {},
+          text: strings.Placeholder
+        }
+      ],
+      commentedText: ""
     };
   }
 
@@ -28,31 +48,46 @@ class JodelThread extends Component {
   render() {
     const { navigation } = this.props;
     const strings = this.getLanguageStrings();
+    const { commentedText } = this.state;
     return (
       <View style={{ flex: 1 }}>
-      <Header
-        title=' '
-        leftIcon={<MaterialIcons name='arrow-back' style={{ color: 'black', right: 0 }} size={30}/>}
-        rightIcon={<MaterialIcons name='bookmark-border' style={{ color: 'black', right: 0 }} size={30}/>}
-        backColor='white'
-      />
-        <View style={{flexDirection: 'column', marginBottom: 15, marginTop: -10}}>
+        <Header
+          title=" "
+          leftIcon={
+            <MaterialIcons
+              name="arrow-back"
+              style={{ color: "black", right: 0 }}
+              size={30}
+            />
+          }
+          rightIcon={
+            <MaterialIcons
+              name="bookmark-border"
+              style={{ color: "black", right: 0 }}
+              size={30}
+            />
+          }
+          backColor="white"
+        />
+        <View
+          style={{ flexDirection: "column", marginBottom: 15, marginTop: -10 }}
+        >
           <JodelItem
-            time='23'
-            place='KC'
-            grade='0'
-            onPress={() => navigation.navigate('JodelThread')}
+            time="23"
+            place="KC"
+            grade="0"
+            onPress={() => navigation.navigate("JodelThread")}
             text={strings.Placeholder}
-            nbr='TS'
-            color='#F7A021'
+            nbr="TS"
+            color="#F7A021"
           />
-          </View>
-          <View style={{flexDirection: 'column'}}>
+        </View>
+        <View style={{ flexDirection: "column" }}>
           <FlatList
             enableEmptySections
-            style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
+            style={{ height: HEIGHT - (IS_IOS ? 250 : 135) }}
             data={this.state.data}
-            contentContainerStyle={{ alignItems: 'center' }}
+            contentContainerStyle={{ alignItems: "center" }}
             renderItem={({ item }) => (
               <JodelItem
                 time={item.time}
@@ -65,10 +100,16 @@ class JodelThread extends Component {
               />
             )}
           />
+          <Input
+            onSubmitEditing={() => this.refs.fourthInput.focus()}
+            placeholder="Karnejodla du med..."
+            onChangeText={text => {
+              this.setState({ commentedText: text });
+            }}
+            value={commentedText}
+          />
           <View>
-            <Text color='black'>
-              Hej
-            </Text>
+            <Text color="black">Hej</Text>
           </View>
         </View>
       </View>

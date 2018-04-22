@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { ITEM_WIDTH, styles } from './styles';
+import { styles } from './styles';
 
 const JodelItem = ({ onPress, text, place, time, grade, nbr, backColor, color, disable }) => {
   const { containerStyle, innerContainerStyle, timeAndPlaceStyle, textStyle, textViewStyle, pointStyle, timeStyle } = styles;
