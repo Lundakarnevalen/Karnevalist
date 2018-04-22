@@ -1,50 +1,84 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { TabNavigator, StackNavigator } from 'react-navigation';
-import { connect } from 'react-redux';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import axios from 'axios';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { TabNavigator, StackNavigator } from "react-navigation";
+import { connect } from "react-redux";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Notifications, Permissions } from "expo";
+import axios from "axios";
 import {
   setSections,
   setProgress,
   setPopover,
   setSectionPriorities
-} from '~/src/actions';
+} from "~/src/actions";
 import {
   SECTION_PRIORITY_URL,
   PROGRESS,
   WIDTH,
   IS_IOS
-} from '~/src/helpers/Constants';
-import HomeScreen from '~/src/components/screens/MyPageNavbarScreens/HomeScreen';
-import SectionScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen';
-import SongBookScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen';
-import SongScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen';
-import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/SettingsScreen';
-import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
-import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
-import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
-import CardstackScreen from '~/src/components/screens/MyPageNavbarScreens/CardstackScreen';
+} from "~/src/helpers/Constants";
+import HomeScreen from "~/src/components/screens/MyPageNavbarScreens/HomeScreen";
+import SectionScreen from "~/src/components/screens/MyPageNavbarScreens/SectionScreen";
+import SongBookScreen from "~/src/components/screens/MyPageNavbarScreens/SongBookScreen";
+import SongScreen from "~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen";
+import SettingsScreen from "~/src/components/screens/MyPageNavbarScreens/SettingsScreen";
+import SectionItemScreen from "~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen";
+import MyRegistrationScreen from "~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen";
+import MyProfileScreen from "~/src/components/screens/MyPageNavbarScreens/MyProfileScreen";
+import CardstackScreen from "~/src/components/screens/MyPageNavbarScreens/CardstackScreen";
 
 import {
   SECTION_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
-} from '~/src/helpers/LanguageStrings';
-import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
+} from "~/src/helpers/LanguageStrings";
+import { fetchCheckInStatus } from "~/src/helpers/ApiManager";
 
 const SIZE = WIDTH / 11;
+
+const PUSH_ENDPOINT = "ttps://api.10av01.com/users/push-token";
+
+async function registerForPushNotificationsAsync(accessToken) {
+  const { status: existingStatus } = await Permissions.getAsync(
+    Permissions.NOTIFICATIONS
+  );
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== "granted") {
+    //Android asks here
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    finalStatus = status;
+  }
+
+  if (finalStatus !== "granted") {
+    return;
+  }
+
+  let token = await Notifications.getExpoPushTokenAsync();
+  //GET ACCESSTOKEN
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    "content-type": "application/json"
+  };
+  axios.post(PUSH_ENDPOINT, { pushToken: token }, { headers }).catch(error => {
+    console.log(error);
+  });
+}
 
 class MyPageNavRouter extends Component {
   componentWillMount() {
     if (this.props.token) this.updateProgress();
   }
 
+  componentDidMount() {
+    if (this.props.token) registerForPushNotificationsAsync(this.props.token);
+  }
+
   getSectionPriorities(token) {
     const headers = {
       Authorization: `Bearer ${token}`,
-      'content-type': 'application/json'
+      "content-type": "application/json"
     };
     axios
       .get(SECTION_PRIORITY_URL, { headers })
@@ -92,7 +126,7 @@ class MyPageNavRouter extends Component {
 const navigate = (scene, jumpToIndex, props) => {
   jumpToIndex(scene.index);
   if (props.screenProps.progress >= 2)
-    props.screenProps.setPopover('homeScreenPopover', false);
+    props.screenProps.setPopover("homeScreenPopover", false);
 };
 
 const namedTabBarIcon = name => {
@@ -100,7 +134,7 @@ const namedTabBarIcon = name => {
     <MaterialIcons
       name={name}
       size={SIZE}
-      color={focused ? tintColor : '#A9A9A9'}
+      color={focused ? tintColor : "#A9A9A9"}
     />
   );
   return tabBarIcon;
@@ -125,7 +159,7 @@ const TabNav = TabNavigator(
           <MaterialCommunityIcons
             name="treasure-chest"
             size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
+            color={focused ? tintColor : "#A9A9A9"}
           />
         )
       })
@@ -172,8 +206,8 @@ const TabNav = TabNavigator(
           }
         },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarInactiveTintColor: '#A9A9A9',
-        tabBarIcon: namedTabBarIcon('star')
+        tabBarInactiveTintColor: "#A9A9A9",
+        tabBarIcon: namedTabBarIcon("star")
       })
     },
     SongBook: {
@@ -202,7 +236,7 @@ const TabNav = TabNavigator(
           }
         },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon('local-library')
+        tabBarIcon: namedTabBarIcon("local-library")
       })
     },
     Settings: {
@@ -237,18 +271,18 @@ const TabNav = TabNavigator(
           }
         },
         tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon('settings')
+        tabBarIcon: namedTabBarIcon("settings")
       })
     }
   },
   {
-    tabBarPosition: 'bottom',
+    tabBarPosition: "bottom",
     animationEnabled: true,
-    initialRouteName: 'Home',
+    initialRouteName: "Home",
     tabBarOptions: {
       showIcon: true,
-      activeTintColor: '#F7A021',
-      inactiveTintColor: '#A9A9A9',
+      activeTintColor: "#F7A021",
+      inactiveTintColor: "#A9A9A9",
       labelStyle: {
         fontSize: 8,
         margin: 0
@@ -259,10 +293,10 @@ const TabNav = TabNavigator(
       },
       style: {
         height: IS_IOS ? 49 : 60,
-        backgroundColor: '#ffffff'
+        backgroundColor: "#ffffff"
       },
       indicatorStyle: {
-        backgroundColor: '#F7A021'
+        backgroundColor: "#F7A021"
       }
     }
   }

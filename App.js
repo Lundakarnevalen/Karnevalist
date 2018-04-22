@@ -7,6 +7,7 @@ import Router from './src/components/Router';
 import reducers from './src/reducers';
 
 class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
