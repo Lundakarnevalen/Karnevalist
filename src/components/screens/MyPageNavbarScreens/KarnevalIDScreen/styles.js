@@ -5,41 +5,41 @@ import {
   VIEW_HEIGHT,
   PINK,
   IS_IOS
-} from '~/src/helpers/Constants';
+} from "~/src/helpers/Constants";
 
 export const styles = {
   container: {
     width: WIDTH,
     height: HEIGHT,
-    backgroundColor: '#474747'
+    backgroundColor: "#474747"
   },
   baseImageStyle: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     height: IS_IOS ? VIEW_HEIGHT - 5 : VIEW_HEIGHT - 20,
-    position: 'absolute',
+    position: "absolute",
     width: WIDTH - 30,
     borderRadius: 5
   },
   cupRowLeftStyle: {
     height: HEIGHT,
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     width: 15
   },
   cupRowRightStyle: {
     height: HEIGHT,
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     width: 15
   },
   textStyle: {
     fontSize: 14,
-    color: 'purple'
+    color: "purple"
   },
   infoView: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 120,
-    transform: [{ rotate: '90deg' }],
+    transform: [{ rotate: "90deg" }],
     marginLeft: IS_IOS ? -35 : -15
   },
   card: {
@@ -48,14 +48,15 @@ export const styles = {
     backgroundColor: PINK,
     borderWidth: 8,
     borderRadius: 15,
-    borderColor: '#474747'
+    borderColor: "#474747"
   },
   cups: {
-    overflow: 'hidden',
-    zIndex: 99
+    height: IS_IOS ? VIEW_HEIGHT : VIEW_HEIGHT - 16,
+    overflow: "hidden",
+    borderRadius: 10
   },
   fixCircleClipping: {
-    position: 'absolute',
+    position: "absolute",
     top: -15,
     bottom: -15,
     right: -15,
@@ -63,7 +64,7 @@ export const styles = {
     borderRadius: 15,
     borderWidth: 15,
     zIndex: 99,
-    borderColor: '#474747',
-    backgroundColor: 'transparent'
+    borderColor: "#474747",
+    backgroundColor: "transparent"
   }
 };

@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { View, Text, Image, Animated, Easing } from 'react-native';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Header } from '~/src/components/common';
-import { KARNEVAL_ID_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { getStrings } from '~/src/helpers/functions';
+import React, { Component } from "react";
+import { View, Text, Image, Animated, Easing } from "react-native";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Header } from "~/src/components/common";
+import { KARNEVAL_ID_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
+import { getStrings } from "~/src/helpers/functions";
 import {
   HEIGHT,
   HEADER_HEIGHT,
   WIDTH,
   VIEW_HEIGHT,
   PINK
-} from '~/src/helpers/Constants';
-import { karnevalID } from '~/assets/images/KarnevalID';
-import * as Animatable from 'react-native-animatable';
-import { styles } from './styles';
+} from "~/src/helpers/Constants";
+import { karnevalID } from "~/assets/images/KarnevalID";
+import * as Animatable from "react-native-animatable";
+import { styles } from "./styles";
 
 const duration = 10000;
 
@@ -115,7 +115,7 @@ class KarnevalIDScreen extends Component {
               </Text>
             </View>
           </Animated.View>
-          {images.map(i => animatableImage(i))}
+          <View style={cups}>{images.map(i => animatableImage(i))}</View>
         </View>
       </View>
     );
