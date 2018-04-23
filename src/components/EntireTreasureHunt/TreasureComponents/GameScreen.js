@@ -7,7 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 import * as Vibration from 'react-native/Libraries/Vibration/Vibration'
 import PropTypes from 'prop-types'
-import { GAME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings'
+import LANGUAGE_STRINGS from './assets/languageStrings/TREASURE_HUNT_STRINGS'
 import { CountDown } from '~/src/components/common'
 import { BackgroundImage } from '~/src/components/common'
 import { WIDTH } from '../../helpers/Constants'
@@ -31,10 +31,10 @@ const CountDownContainer = ({screenProps, strings}) => {
 class GameScreen extends Component {
   getStrings () {
     const {language} = this.props
-    const fields = Object.keys(GAME_SCREEN_STRINGS)
+    const fields = Object.keys(LANGUAGE_STRINGS)
     const strings = {}
     fields.forEach(
-      field => (strings[field] = GAME_SCREEN_STRINGS[field][language])
+      field => (strings[field] = LANGUAGE_STRINGS[field][language])
     )
     return strings
   }

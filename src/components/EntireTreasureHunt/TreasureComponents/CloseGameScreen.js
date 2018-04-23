@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import QRCode from 'react-native-qrcode'
 import { connect } from 'react-redux'
 import { View, Text } from 'react-native'
-import { TREASURE_HUNT_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings'
+import LANGUAGE_STRINGS from './assets/languageStrings/TREASURE_HUNT_STRINGS'
 
 class CloseGameScreen extends Component {
   getStrings () {
     const {language} = this.props
-    const {fields} = TREASURE_HUNT_SCREEN_STRINGS
+    const {fields} = LANGUAGE_STRINGS
     const strings = {}
     fields.forEach(
-      field => (strings[field] = TREASURE_HUNT_SCREEN_STRINGS[field][language])
+      field => (strings[field] = LANGUAGE_STRINGS[field][language])
     )
     return strings
   }

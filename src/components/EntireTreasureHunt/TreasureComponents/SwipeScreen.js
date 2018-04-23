@@ -7,11 +7,10 @@ import GestureRecognizer from 'react-native-swipe-gestures'
 import {
   Header,
   BackgroundImage,
-  CountDown,
-  CustomButton
+  CountDown
 } from '~/src/components/common'
-import { HEIGHT, WIDTH, IS_IOS } from '~/src/helpers/Constants'
-import { TREASURE_HUNT_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings'
+import { HEIGHT, WIDTH } from '~/src/helpers/Constants'
+import LANGUAGE_STRINGS from './assets/languageStrings/TREASURE_HUNT_STRINGS'
 
 const ProgressButton = ({counter, value, onPress}) => (
   <Feather
@@ -46,7 +45,8 @@ const InfoText = ({counter, strings}) => {
 }
 
 InfoText.propTypes = {
-  counter: PropTypes.number.isRequired
+  counter: PropTypes.number.isRequired,
+  strings: PropTypes.array.isRequired,
 }
 
 const NextButton = ({counter, strings, onPress}) => {
@@ -233,10 +233,10 @@ const mapStateToProps = ({currentLanguage}) => {
 }
 
 const getStrings = language => {
-  const {fields} = TREASURE_HUNT_SCREEN_STRINGS
+  const {fields} = LANGUAGE_STRINGS
   const strings = {}
   fields.forEach(
-    field => (strings[field] = TREASURE_HUNT_SCREEN_STRINGS[field][language])
+    field => (strings[field] = LANGUAGE_STRINGS[field][language])
   )
   return strings
 }
