@@ -1,105 +1,105 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { TabNavigator, StackNavigator } from "react-navigation";
-import { connect } from "react-redux";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import axios from "axios";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { TabNavigator, StackNavigator } from 'react-navigation'
+import { connect } from 'react-redux'
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import axios from 'axios'
 import {
   setSections,
   setProgress,
   setPopover,
   setSectionPriorities
-} from "~/src/actions";
+} from '~/src/actions'
 import {
   SECTION_PRIORITY_URL,
   PROGRESS,
   WIDTH,
   IS_IOS
-} from "~/src/helpers/Constants";
-import SectionScreen from "~/src/components/screens/MyPageNavbarScreens/SectionScreen";
-import SongBookScreen from "~/src/components/screens/MyPageNavbarScreens/SongBookScreen";
-import SongScreen from "~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen";
-import SettingsScreen from "~/src/components/screens/MyPageNavbarScreens/SettingsScreen";
-import SectionItemScreen from "~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen";
-import MyRegistrationScreen from "~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen";
-import MyProfileScreen from "~/src/components/screens/MyPageNavbarScreens/MyProfileScreen";
-import TreasureCardStash from "~/src/components/EntireTreasureHunt/TreasureCardStash";
+} from '~/src/helpers/Constants'
+import SectionScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen'
+import SongBookScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen'
+import SongScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen'
+import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/SettingsScreen'
+import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen'
+import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen'
+import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen'
+import TreasureCardStash from '~/src/components/EntireTreasureHunt/TreasureCardStash'
 
 import {
   SECTION_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS,
   SONGBOOK_SCREEN_STRINGS
-} from "~/src/helpers/LanguageStrings";
-import { fetchCheckInStatus } from "~/src/helpers/ApiManager";
+} from '~/src/helpers/LanguageStrings'
+import { fetchCheckInStatus } from '~/src/helpers/ApiManager'
 
-const SIZE = WIDTH / 11;
+const SIZE = WIDTH / 11
 
 class MyPageNavRouter extends Component {
-  componentWillMount() {
-    if (this.props.token) this.updateProgress();
+  componentWillMount () {
+    if (this.props.token) this.updateProgress()
   }
 
-  getSectionPriorities(token) {
+  getSectionPriorities (token) {
     const headers = {
       Authorization: `Bearer ${token}`,
-      "content-type": "application/json"
-    };
+      'content-type': 'application/json'
+    }
     axios
-      .get(SECTION_PRIORITY_URL, { headers })
+      .get(SECTION_PRIORITY_URL, {headers})
       .then(response => {
-        const { success, sectionPriorities } = response.data;
+        const {success, sectionPriorities} = response.data
         if (success) {
           if (sectionPriorities.length > 0) {
-            this.props.setProgress(PROGRESS.SENT_SECTIONS);
-            this.props.setSectionPriorities(sectionPriorities);
+            this.props.setProgress(PROGRESS.SENT_SECTIONS)
+            this.props.setSectionPriorities(sectionPriorities)
           }
         }
       })
       .catch(error => {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
-  updateProgress() {
-    const { email, token } = this.props;
+  updateProgress () {
+    const {email, token} = this.props
     fetchCheckInStatus(
       email,
       token,
       checkedInStatus => {
         if (checkedInStatus === true) {
-          this.props.setProgress(PROGRESS.CHECK_IN);
+          this.props.setProgress(PROGRESS.CHECK_IN)
           if (this.props.sectionPriorities.length > 4) {
-            this.props.setProgress(PROGRESS.CHOOSE_SECTIONS);
+            this.props.setProgress(PROGRESS.CHOOSE_SECTIONS)
           }
-          this.getSectionPriorities(token);
+          this.getSectionPriorities(token)
         }
       },
       null
-    );
+    )
   }
 
-  render() {
-    const { navigation, language, setPopover, progress } = this.props;
+  render () {
+    const {navigation, language, setPopover, progress} = this.props
     return (
-      <TabNav screenProps={{ navigation, language, setPopover, progress }} />
-    );
+      <TabNav screenProps={{navigation, language, setPopover, progress}}/>
+    )
   }
 }
 
 const navigate = (scene, jumpToIndex, props) => {
-  jumpToIndex(scene.index);
+  jumpToIndex(scene.index)
   if (props.screenProps.progress >= 2)
-    props.screenProps.setPopover("homeScreenPopover", false);
-};
+    props.screenProps.setPopover('homeScreenPopover', false)
+}
 
-const namedTabBarIcon = name => ({ tintColor, focused }) => (
+const namedTabBarIcon = name => ({tintColor, focused}) => (
   <MaterialIcons
     name={name}
     size={SIZE}
-    color={focused ? tintColor : "#A9A9A9"}
+    color={focused ? tintColor : '#A9A9A9'}
   />
-);
+)
 
 const TabNav = TabNavigator(
   {
@@ -107,11 +107,11 @@ const TabNav = TabNavigator(
       screen: TreasureCardStash,
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({ tintColor, focused }) => (
+        tabBarIcon: ({tintColor, focused}) => (
           <MaterialCommunityIcons
             name="treasure-chest"
             size={SIZE}
-            color={focused ? tintColor : "#A9A9A9"}
+            color={focused ? tintColor : '#A9A9A9'}
           />
         )
       })
@@ -136,15 +136,15 @@ const TabNav = TabNavigator(
         tabBarOnPress: (scene, jumpToIndex) => {
           if (jumpToIndex) {
             // This is something weird, probably with expo and stacking navigators
-            navigate(scene, jumpToIndex, props);
+            navigate(scene, jumpToIndex, props)
           } else {
-            jumpToIndex = scene.jumpToIndex;
-            navigate(scene.scene, scene.jumpToIndex, props);
+            jumpToIndex = scene.jumpToIndex
+            navigate(scene.scene, scene.jumpToIndex, props)
           }
         },
         tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarInactiveTintColor: "#A9A9A9",
-        tabBarIcon: namedTabBarIcon("star")
+        tabBarInactiveTintColor: '#A9A9A9',
+        tabBarIcon: namedTabBarIcon('star')
       })
     },
     SongBook: {
@@ -167,14 +167,14 @@ const TabNav = TabNavigator(
         tabBarOnPress: (scene, jumpToIndex) => {
           if (jumpToIndex) {
             // This is something weird, probably with expo and stacking navigatros
-            navigate(scene, jumpToIndex, props);
+            navigate(scene, jumpToIndex, props)
           } else {
-            jumpToIndex = scene.jumpToIndex;
-            navigate(scene.scene, scene.jumpToIndex, props);
+            jumpToIndex = scene.jumpToIndex
+            navigate(scene.scene, scene.jumpToIndex, props)
           }
         },
         tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon("local-library")
+        tabBarIcon: namedTabBarIcon('local-library')
       })
     },
     Settings: {
@@ -204,24 +204,24 @@ const TabNav = TabNavigator(
         tabBarOnPress: (scene, jumpToIndex) => {
           if (jumpToIndex) {
             // This is something weird, probably with expo and stacking navigatros
-            navigate(scene, jumpToIndex, props);
+            navigate(scene, jumpToIndex, props)
           } else {
-            jumpToIndex = scene.jumpToIndex;
-            navigate(scene.scene, scene.jumpToIndex, props);
+            jumpToIndex = scene.jumpToIndex
+            navigate(scene.scene, scene.jumpToIndex, props)
           }
         },
         tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon("settings")
+        tabBarIcon: namedTabBarIcon('settings')
       })
     }
   },
   {
-    tabBarPosition: "bottom",
+    tabBarPosition: 'bottom',
     animationEnabled: true,
     tabBarOptions: {
       showIcon: true,
-      activeTintColor: "#F7A021",
-      inactiveTintColor: "#A9A9A9",
+      activeTintColor: '#F7A021',
+      inactiveTintColor: '#A9A9A9',
       labelStyle: {
         fontSize: 8,
         margin: 0
@@ -232,18 +232,18 @@ const TabNav = TabNavigator(
       },
       style: {
         height: IS_IOS ? 49 : 60,
-        backgroundColor: "#ffffff"
+        backgroundColor: '#ffffff'
       },
       indicatorStyle: {
-        backgroundColor: "#F7A021"
+        backgroundColor: '#F7A021'
       }
     }
   }
-);
+)
 
-const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
-  const { language } = currentLanguage;
-  const { token, email, progress } = userInformation;
+const mapStateToProps = ({currentLanguage, sections, userInformation}) => {
+  const {language} = currentLanguage
+  const {token, email, progress} = userInformation
   return {
     language,
     token,
@@ -251,8 +251,8 @@ const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
     progress,
     sections: sections.sections,
     sectionPriorities: sections.sectionPriorities
-  };
-};
+  }
+}
 
 MyPageNavRouter.propTypes = {
   email: PropTypes.string.isRequired,
@@ -264,11 +264,11 @@ MyPageNavRouter.propTypes = {
   language: PropTypes.string.isRequired,
   setPopover: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired
-};
+}
 
 export default connect(mapStateToProps, {
   setSections,
   setProgress,
   setPopover,
   setSectionPriorities
-})(MyPageNavRouter);
+})(MyPageNavRouter)
