@@ -14,6 +14,8 @@ const getPath = pictureNumber => {
       return images.night3;
     case 4:
       return images.night4;
+    case 5:
+      return images.skattjakt;
     case 'background-login':
       return images.login;
     default:
