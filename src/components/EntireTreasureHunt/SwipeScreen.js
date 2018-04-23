@@ -1,36 +1,36 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { View, Text, TouchableOpacity } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { connect } from "react-redux";
-import GestureRecognizer from "react-native-swipe-gestures";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { Feather } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+import GestureRecognizer from 'react-native-swipe-gestures'
 import {
   Header,
   BackgroundImage,
   CountDown,
   CustomButton
-} from "~/src/components/common";
-import { HEIGHT, WIDTH, IS_IOS } from "~/src/helpers/Constants";
-import { TREASURE_HUNT_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
+} from '~/src/components/common'
+import { HEIGHT, WIDTH, IS_IOS } from '~/src/helpers/Constants'
+import { TREASURE_HUNT_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings'
 
-const ProgressButton = ({ counter, value, onPress }) => (
+const ProgressButton = ({counter, value, onPress}) => (
   <Feather
     key={value}
-    name={counter > value ? "check-circle" : "circle"}
+    name={counter > value ? 'check-circle' : 'circle'}
     onPress={onPress}
     size={35}
     style={styles.navItem}
   />
-);
+)
 
 ProgressButton.propTypes = {
   counter: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
   onPress: PropTypes.func.isRequired
-};
+}
 
-const InfoText = ({ counter, strings }) => {
-  const HEADERS = ["first", "second", "third"];
+const InfoText = ({counter, strings}) => {
+  const HEADERS = ['first', 'second', 'third']
   return (
     <View style={styles.textContainer}>
       <View>
@@ -42,87 +42,87 @@ const InfoText = ({ counter, strings }) => {
         </Text>
       </View>
     </View>
-  );
-};
+  )
+}
 
 InfoText.propTypes = {
   counter: PropTypes.number.isRequired
-};
+}
 
-const NextButton = ({ counter, strings, onPress }) => {
-  const text = counter === 2 ? strings.startButton : strings.nextButton;
+const NextButton = ({counter, strings, onPress}) => {
+  const text = counter === 2 ? strings.startButton : strings.nextButton
   return (
     <View style={styles.buttonContainer}>
       <TouchableOpacity style={styles.nextButton} onPress={onPress}>
         <Text style={styles.btnText}>{text}</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
 NextButton.propTypes = {
   counter: PropTypes.number.isRequired,
   onPress: PropTypes.func.isRequired
-};
+}
 
-const CountDownContainer = ({ screenProps, strings }) => {
+const CountDownContainer = ({screenProps, strings}) => {
   if (screenProps.endDate - new Date() < 0) {
     return (
       <View style={styles.countDownContainer}>
         <Text style={styles.countDown}>{strings.finishedText}</Text>
       </View>
-    );
+    )
   }
   return (
     <View style={styles.countDownContainer}>
       <Text style={styles.countDown}>{`${strings.timeLeft}: `}</Text>
-      <CountDown endDate={screenProps.endDate} />
+      <CountDown endDate={screenProps.endDate}/>
     </View>
-  );
-};
+  )
+}
 
 class SwipeScreen extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       counter: 0,
       strings: getStrings(props.language)
-    };
+    }
   }
 
-  render() {
+  render () {
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 60
-    };
+    }
 
-    const { counter, strings } = this.state;
+    const {counter, strings} = this.state
     return (
       <GestureRecognizer
         onSwipeUp={() => {
-          if (counter < 2) this.setState({ counter: counter + 1 });
+          if (counter < 2) this.setState({counter: counter + 1})
         }}
         onSwipeDown={() => {
-          if (counter > 0) this.setState({ counter: counter - 1 });
+          if (counter > 0) this.setState({counter: counter - 1})
         }}
         config={config}
       >
         <View style={styles.mainContainer}>
-          <BackgroundImage pictureNumber={5} />
-          <Header title={strings.treasureHunt} />
+          <BackgroundImage pictureNumber={5}/>
+          <Header title={strings.treasureHunt}/>
           <CountDownContainer
             screenProps={this.props.screenProps}
             strings={strings}
           />
-          <InfoText counter={counter} strings={strings} />
+          <InfoText counter={counter} strings={strings}/>
           <View style={styles.bottomContain}>
             <NextButton
               counter={counter}
               strings={strings}
               onPress={
                 counter === 2
-                  ? () => this.props.navigation.navigate("GameScreen")
-                  : () => this.setState({ counter: counter + 1 })
+                  ? () => this.props.navigation.navigate('GameScreen')
+                  : () => this.setState({counter: counter + 1})
               }
             />
             <View style={styles.navContainer}>
@@ -133,8 +133,8 @@ class SwipeScreen extends Component {
                   counter={counter}
                   onPress={
                     i === 2
-                      ? () => this.props.navigation.navigate("GameScreen")
-                      : () => this.setState({ counter: i + 1 })
+                      ? () => this.props.navigation.navigate('GameScreen')
+                      : () => this.setState({counter: i + 1})
                   }
                 />
               ))}
@@ -142,75 +142,75 @@ class SwipeScreen extends Component {
           </View>
         </View>
       </GestureRecognizer>
-    );
+    )
   }
 }
 
 SwipeScreen.propTypes = {
   language: PropTypes.string.isRequired
-};
+}
 
 const styles = {
   mainContainer: {
     height: HEIGHT - 90 /* (IS_IOS ? 113 : 135), */,
     width: WIDTH,
-    justifyContent: "flex-start"
+    justifyContent: 'flex-start'
   },
   countDown: {
     fontSize: 22,
-    color: "white"
+    color: 'white'
   },
   nextButton: {
     flex: 1,
-    backgroundColor: "#d999fa",
+    backgroundColor: '#d999fa',
     borderRadius: 5,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   btnText: {
     fontSize: 22,
-    fontWeight: "bold",
-    fontFamily: "Avenir Next Medium"
+    fontWeight: 'bold',
+    fontFamily: 'Avenir Next Medium'
   },
   textContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
     marginRight: 10,
     marginLeft: 10,
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
     borderRadius: 3
   },
   headerText: {
     fontSize: 40,
-    color: "#000000",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontFamily: "Avenir Next Medium",
-    backgroundColor: "transparent"
+    color: '#000000',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Avenir Next Medium',
+    backgroundColor: 'transparent'
   },
   bodyText: {
     fontSize: 22,
-    color: "#000000",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontFamily: "Avenir Next Medium",
-    backgroundColor: "transparent"
+    color: '#000000',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Avenir Next Medium',
+    backgroundColor: 'transparent'
   },
   countDownContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    backgroundColor: "transparent",
-    justifyContent: "center"
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    justifyContent: 'center'
   },
   navItem: {
-    backgroundColor: "transparent",
-    color: "#d999fa"
+    backgroundColor: 'transparent',
+    color: '#d999fa'
   },
   navContainer: {
     marginTop: 5,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     marginRight: 10
   },
   buttonContainer: {
@@ -218,27 +218,27 @@ const styles = {
     marginLeft: 10,
     width: WIDTH - 55,
     borderRadius: 5,
-    backgroundColor: "#F7A021"
+    backgroundColor: '#F7A021'
   },
   bottomContain: {
-    flexDirection: "row",
-    alignItems: "stretch",
-    justifyContent: "flex-end"
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'flex-end'
   }
-};
+}
 
-const mapStateToProps = ({ currentLanguage }) => {
-  const { language } = currentLanguage;
-  return { language };
-};
+const mapStateToProps = ({currentLanguage}) => {
+  const {language} = currentLanguage
+  return {language}
+}
 
 const getStrings = language => {
-  const { fields } = TREASURE_HUNT_SCREEN_STRINGS;
-  const strings = {};
+  const {fields} = TREASURE_HUNT_SCREEN_STRINGS
+  const strings = {}
   fields.forEach(
     field => (strings[field] = TREASURE_HUNT_SCREEN_STRINGS[field][language])
-  );
-  return strings;
-};
+  )
+  return strings
+}
 
-export default connect(mapStateToProps, null)(SwipeScreen);
+export default connect(mapStateToProps, null)(SwipeScreen)

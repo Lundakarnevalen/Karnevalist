@@ -1,12 +1,12 @@
-import React from "react";
-import { StackNavigator } from "react-navigation";
-import SwipeScreen from "./SwipeScreen";
-import GameScreen from "./GameScreen";
-import CloseGameScreen from "./CloseGameScreen";
+import React from 'react'
+import { StackNavigator } from 'react-navigation'
+import SwipeScreen from './SwipeScreen'
+import GameScreen from './GameScreen'
+import CloseGameScreen from './CloseGameScreen'
 
 const CardstackScreen = () => (
-  <CardNav screenProps={new Date("April 18, 2018 00:00:01")} />
-);
+  <CardNav screenProps={new Date('April 18, 2018 00:00:01')}/>
+)
 
 const CardNav = StackNavigator(
   {
@@ -30,8 +30,8 @@ const CardNav = StackNavigator(
     }
   },
   {
-    mode: "modal"
+    mode: 'modal'
   }
-);
+)
 
-export default CardstackScreen;
+export default CardstackScreen
