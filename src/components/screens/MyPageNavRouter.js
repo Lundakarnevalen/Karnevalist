@@ -37,7 +37,7 @@ import { fetchCheckInStatus } from "~/src/helpers/ApiManager";
 
 const SIZE = WIDTH / 11;
 
-const PUSH_ENDPOINT = "ttps://api.10av01.com/users/push-token";
+const PUSH_ENDPOINT = "https://api.10av01.com/users/push-token";
 
 async function registerForPushNotificationsAsync(accessToken) {
   const { status: existingStatus } = await Permissions.getAsync(
@@ -92,7 +92,6 @@ class MyPageNavRouter extends Component {
         }
       })
       .catch(error => {
-        // const msg = handleErrorMsg(error)
         console.log(error);
       });
   }
@@ -130,14 +129,13 @@ const navigate = (scene, jumpToIndex, props) => {
 };
 
 const namedTabBarIcon = name => {
-  const tabBarIcon = ({ tintColor, focused }) => (
+  return ({ tintColor, focused }) => (
     <MaterialIcons
       name={name}
       size={SIZE}
       color={focused ? tintColor : "#A9A9A9"}
     />
   );
-  return tabBarIcon;
 };
 
 const TabNav = TabNavigator(
@@ -198,7 +196,7 @@ const TabNav = TabNavigator(
       navigationOptions: props => ({
         tabBarOnPress: (scene, jumpToIndex) => {
           if (jumpToIndex) {
-            // This is something weird, probably with expo and stacking navigatros
+            // This is something weird, probably with expo and stacking navigators
             navigate(scene, jumpToIndex, props);
           } else {
             jumpToIndex = scene.jumpToIndex;
