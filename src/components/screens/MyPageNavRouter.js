@@ -23,7 +23,7 @@ import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/Setting
 import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen'
 import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen'
 import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen'
-import TreasureCardStash from '~/src/components/EntireTreasureHunt/TreasureCardStash'
+import TreasureEntryPoint from '~/src/components/EntireTreasureHunt/TreasureEntryPoint'
 
 import {
   SECTION_SCREEN_STRINGS,
@@ -104,7 +104,7 @@ const namedTabBarIcon = name => ({tintColor, focused}) => (
 const TabNav = TabNavigator(
   {
     Home: {
-      screen: TreasureCardStash,
+      screen: TreasureEntryPoint,
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
         tabBarIcon: ({tintColor, focused}) => (

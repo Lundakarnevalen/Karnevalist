@@ -5,7 +5,7 @@ const night4 = require('./night4.png');
 const night5 = require('./night5.png');
 const login = require('./background-login-screen.png');
 const monsterGubbe = require('./Monstergubbe.png');
-const skattjakt = require('./skattjakt.png');
+const skattjakt = require('../../src/components/EntireTreasureHunt/assets/images/skattjakt.png');
 
 const images = {
   night1,

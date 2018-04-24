@@ -32,7 +32,7 @@ class App extends Component {
       require('./assets/images/night3.png'),
       require('./assets/images/night4.png'),
       require('./assets/images/night5.png'),
-      require('./assets/images/skattjakt.png'),
+      require('./src/components/EntireTreasureHunt/assets/images/skattjakt.png'),
       require('./assets/images/Monstergubbe.png'),
       require('./assets/images/background-login-screen.png')
     ]).then(() => this.setState({ imagesLoaded: true }));

@@ -4,16 +4,17 @@ import { connect } from 'react-redux'
 import { Constants, Location, Permissions } from 'expo'
 import { View, Text, Platform } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
-
 import * as Vibration from 'react-native/Libraries/Vibration/Vibration'
 import PropTypes from 'prop-types'
-import LANGUAGE_STRINGS from './assets/languageStrings/TREASURE_HUNT_STRINGS'
-import { CountDown } from '~/src/components/common'
-import { BackgroundImage } from '~/src/components/common'
-import { WIDTH } from '../../helpers/Constants'
+import { getStrings } from '../assets/languageStrings/TREASURE_HUNT_STRINGS'
+import { CountDown } from '../StolenComponents/CountDown/index'
+import { BackgroundImage } from '../StolenComponents/BackgroundImage'
+import styles from './GameStyles'
+import { treasureLatitidue, treasureLongitude, WIDTH } from '../assets/Constants'
+import { endDate } from '../assets/Constants'
 
-const CountDownContainer = ({screenProps, strings}) => {
-  if (screenProps.endDate - new Date() < 0) {
+const CountDownContainer = ({strings}) => {
+  if (endDate - new Date() < 0) {
     return (
       <View style={styles.countDownContainer}>
         <Text style={styles.countDown}>{strings.finishedText}</Text>
@@ -23,22 +24,12 @@ const CountDownContainer = ({screenProps, strings}) => {
   return (
     <View style={styles.countDownContainer}>
       <Text style={styles.countDown}>{`${strings.timeLeft}: `}</Text>
-      <CountDown endDate={screenProps.endDate}/>
+      <CountDown endDate={endDate} strings={strings}/>
     </View>
   )
 }
 
 class GameScreen extends Component {
-  getStrings () {
-    const {language} = this.props
-    const fields = Object.keys(LANGUAGE_STRINGS)
-    const strings = {}
-    fields.forEach(
-      field => (strings[field] = LANGUAGE_STRINGS[field][language])
-    )
-    return strings
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -51,8 +42,8 @@ class GameScreen extends Component {
         latitude: 0
       },
       dstLocation: {
-        longitude: 13.210288,
-        latitude: 55.716491
+        longitude: treasureLongitude,
+        latitude: treasureLatitidue
       },
       myBearing: 0
     }
@@ -115,9 +106,10 @@ class GameScreen extends Component {
       this._getLocationAsync()
     }
 
+    //      Authorization: `Bearer ${this.props.user.token}`,
     this.infoIntervalId = setInterval(() => {
       const headers = {
-        Authorization: `Bearer ${this.props.user.token}`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9za2FyLmRhbWtqYWVyQGdtYWlsLmNvbSIsImlhdCI6MTUyNDUwNDE4Nn0.q55W6dNa01qgtw7EZlOi_VMBsMIZzeqBwo8PvHsMzvM`,
         'content-type': 'application/json'
       }
       axios
@@ -128,9 +120,8 @@ class GameScreen extends Component {
   }
 
   componentDidMount () {
-    //  https://api.10av10.com/api/treasurehunt/start
     const headers = {
-      Authorization: `Bearer ${this.props.user.token}`,
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9za2FyLmRhbWtqYWVyQGdtYWlsLmNvbSIsImlhdCI6MTUyNDUwNDE4Nn0.q55W6dNa01qgtw7EZlOi_VMBsMIZzeqBwo8PvHsMzvM`,
       'content-type': 'application/json'
     }
     axios
@@ -166,7 +157,7 @@ class GameScreen extends Component {
   }
 
   render () {
-    const strings = this.getStrings()
+    const strings = getStrings(this.props.language)
     const {myLocation, dstLocation, myBearing} = this.state
 
     const dstBearing = this.bearing(
@@ -192,7 +183,6 @@ class GameScreen extends Component {
         <BackgroundImage pictureNumber={5}/>
         <View style={styles.opacity}>
           <CountDownContainer
-            screenProps={this.props.screenProps}
             strings={strings}
           />
 
@@ -232,45 +222,6 @@ const Distance = props => {
 
 Distance.protoTypes = {
   distance: PropTypes.number.isRequired
-}
-
-const styles = {
-  textContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  headerText: {
-    fontSize: 40,
-    color: '#000000',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
-  },
-  bodyText: {
-    fontSize: 22,
-    color: '#000000',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium',
-    backgroundColor: 'transparent'
-  },
-  opacity: {
-    borderRadius: 15,
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    margin: 10,
-  },
-  countDown: {
-    fontSize: 22,
-    color: 'white'
-  },
-  countDownContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    justifyContent: 'center'
-  }
 }
 
 const mapStateToProps = ({userInformation, currentLanguage}) => {

@@ -1,26 +1,11 @@
-
-export const TREASURE_HUNT_SCREEN_STRINGS = {
-  fields: [
-    'treasureHunt',
-    'startButton',
-    'timeLeft',
-    'firstHeader',
-    'firstBody',
-    'secondHeader',
-    'secondBody',
-    'thirdHeader',
-    'thirdBody',
-    'nextButton',
-    'finishedText',
-    'showSture'
-  ],
+const LANGUAGE_STRINGS = {
   treasureHunt: {
     SE: 'Skattjakt',
     EN: 'Treasure Hunt'
   },
   startButton: {
     SE: 'Jag förstår, nu kör vi!',
-    EN: "I got it, let's GO!"
+    EN: 'I got it, let\'s GO!'
   },
   timeLeft: {
     SE: 'TID KVAR',
@@ -69,10 +54,7 @@ export const TREASURE_HUNT_SCREEN_STRINGS = {
   goBack: {
     SE: 'Tillbaka',
     EN: 'Take me back'
-  }
-};
-
-export const GAME_SCREEN_STRINGS = {
+  },
   instructions: {
     SE: 'Rotera mobilen för att hitta rätt!',
     EN: 'Rotate your phone to find your way!'
@@ -97,12 +79,15 @@ export const GAME_SCREEN_STRINGS = {
     SE: 'Nästan där!!',
     EN: 'Almost there!!'
   },
-  timeLeft: {
-    SE: 'TID KVAR',
-    EN: 'TIME LEFT'
-  },
-  finishedText: {
-    SE: 'Skattjakten är nu över',
-    EN: 'The treasure hunt has ended'
-  }
-};
+}
+
+const getStrings = language => {
+  const fields = Object.keys(LANGUAGE_STRINGS)
+  const strings = {}
+  fields.forEach(
+    field => (strings[field] = LANGUAGE_STRINGS[field][language])
+  )
+  return strings
+}
+
+module.exports = {LANGUAGE_STRINGS, getStrings}

@@ -1,6 +1,6 @@
-import { Constants } from 'expo';
-import { Platform } from 'react-native';
-import { WIDTH, IS_IOS } from '~/src/helpers/Constants';
+import { Constants } from 'expo'
+import { Platform } from 'react-native'
+import { WIDTH, IS_IOS } from '~/src/helpers/Constants'
 
 export const styles = {
   containerStyle: {
@@ -52,4 +52,4 @@ export const styles = {
     backgroundColor: '#F7A021',
     zIndex: 999
   }
-};
+}

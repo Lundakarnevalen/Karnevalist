@@ -1,3 +1,5 @@
+import { HEIGHT, WIDTH } from '../assets/Constants'
+
 const styles = {
   mainContainer: {
     height: HEIGHT - 90 /* (IS_IOS ? 113 : 135), */,

@@ -1,8 +1,8 @@
 import React from 'react'
 import { StackNavigator } from 'react-navigation'
-import SwipeScreen from './SwipeScreen'
-import GameScreen from './GameScreen'
-import CloseGameScreen from './CloseGameScreen'
+import SwipeScreen from './TreasureComponents/SwipeScreen'
+import GameScreen from './TreasureComponents/GameScreen'
+import CloseGameScreen from './TreasureComponents/CloseGameScreen'
 
 const CardstackScreen = () => (
   <CardNav screenProps={new Date('April 18, 2018 00:00:01')}/>

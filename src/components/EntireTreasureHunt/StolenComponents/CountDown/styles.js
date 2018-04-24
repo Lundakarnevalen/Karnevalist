@@ -1,6 +1,6 @@
-import { WIDTH } from '~/src/helpers/Constants';
+import { WIDTH } from '~/src/helpers/Constants'
 
-const SIZE = WIDTH / 14;
+const SIZE = WIDTH / 14
 
 export const countDownStyles = {
   containerStyle: {
@@ -27,7 +27,7 @@ export const countDownStyles = {
     alignItems: 'center',
     justifyContent: 'center'
   }
-};
+}
 
 export const countDownItemStyles = {
   containerStyle: {
@@ -43,4 +43,4 @@ export const countDownItemStyles = {
     fontWeight: 'bold',
     fontFamily: 'Avenir Next Medium'
   }
-};
+}
