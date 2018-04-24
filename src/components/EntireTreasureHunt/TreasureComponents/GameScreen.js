@@ -106,7 +106,7 @@ class GameScreen extends Component {
       this._getLocationAsync()
     }
 
-    //      Authorization: `Bearer ${this.props.user.token}`,
+    //Authorization: `Bearer ${this.props.user.token}`,
     this.infoIntervalId = setInterval(() => {
       const headers = {
         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9za2FyLmRhbWtqYWVyQGdtYWlsLmNvbSIsImlhdCI6MTUyNDUwNDE4Nn0.q55W6dNa01qgtw7EZlOi_VMBsMIZzeqBwo8PvHsMzvM`,

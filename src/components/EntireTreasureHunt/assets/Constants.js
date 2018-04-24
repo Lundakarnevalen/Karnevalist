@@ -9,4 +9,6 @@ export const IS_IOS = Platform.OS === 'ios'
 // for the treasurehunt
 export const treasureLongitude = 13.215988
 export const treasureLatitidue = 55.722816
+export const startDate = new Date("12 May 2018")
 export const endDate = new Date("12 May 2018")
+export const basePath = "https://api.lundakarnevalen.se/"
