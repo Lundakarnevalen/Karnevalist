@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import { getStrings } from '../assets/languageStrings/TREASURE_HUNT_STRINGS'
 import { CountDown } from '../StolenComponents/CountDown/index'
 import { BackgroundImage } from '../StolenComponents/BackgroundImage'
-import styles from './GameStyles'
+import { styles } from './GameStyles'
 import { treasureLatitidue, treasureLongitude, WIDTH } from '../assets/Constants'
 import { endDate } from '../assets/Constants'
 

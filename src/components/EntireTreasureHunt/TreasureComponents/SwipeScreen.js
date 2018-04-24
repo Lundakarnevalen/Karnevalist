@@ -8,7 +8,7 @@ import { Header } from '../StolenComponents/Header'
 import { CountDown } from '../StolenComponents/CountDown/index'
 import { BackgroundImage } from '../StolenComponents/BackgroundImage/index'
 import { getStrings } from '../assets/languageStrings/TREASURE_HUNT_STRINGS'
-import styles from './SwipeStyles'
+import { styles } from './SwipeStyles'
 import { endDate } from '../assets/Constants'
 
 const ProgressButton = ({counter, value, onPress}) => (

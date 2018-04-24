@@ -1,4 +1,4 @@
-const styles = {
+export const styles = {
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -6,5 +6,3 @@ const styles = {
     justifyContent: 'center'
   }
 }
-
-module.exports = styles

@@ -1,6 +1,6 @@
 import { HEIGHT, WIDTH } from '../assets/Constants'
 
-const styles = {
+export const styles = {
   mainContainer: {
     height: HEIGHT - 90 /* (IS_IOS ? 113 : 135), */,
     width: WIDTH,
@@ -76,5 +76,3 @@ const styles = {
     justifyContent: 'flex-end'
   }
 }
-
-module.exports = styles

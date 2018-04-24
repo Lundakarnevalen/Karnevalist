@@ -1,4 +1,4 @@
-const styles = {
+export const styles = {
   textContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -36,5 +36,3 @@ const styles = {
     justifyContent: 'center'
   }
 }
-
-module.exports = styles

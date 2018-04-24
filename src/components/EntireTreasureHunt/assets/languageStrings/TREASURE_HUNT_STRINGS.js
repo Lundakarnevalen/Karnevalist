@@ -1,4 +1,4 @@
-const LANGUAGE_STRINGS = {
+export const LANGUAGE_STRINGS = {
   treasureHunt: {
     SE: 'Skattjakt',
     EN: 'Treasure Hunt'
@@ -81,7 +81,7 @@ const LANGUAGE_STRINGS = {
   },
 }
 
-const getStrings = language => {
+export const getStrings = language => {
   const fields = Object.keys(LANGUAGE_STRINGS)
   const strings = {}
   fields.forEach(
@@ -89,5 +89,3 @@ const getStrings = language => {
   )
   return strings
 }
-
-module.exports = {LANGUAGE_STRINGS, getStrings}
