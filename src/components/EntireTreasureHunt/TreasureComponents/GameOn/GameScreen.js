@@ -6,12 +6,12 @@ import { View, Text, Platform } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import * as Vibration from 'react-native/Libraries/Vibration/Vibration'
 import PropTypes from 'prop-types'
-import { getStrings } from '../assets/languageStrings/TREASURE_HUNT_STRINGS'
-import { BackgroundImage } from '../StolenComponents/BackgroundImage'
+import { getStrings } from '../../assets/languageStrings/TREASURE_HUNT_STRINGS'
+import { BackgroundImage } from '../../StolenComponents/BackgroundImage/index'
 import { styles } from './GameStyles'
-import { treasureLatitidue, treasureLongitude, WIDTH } from '../assets/Constants'
-import { endDate } from '../assets/Constants'
-import {CountDownContainer} from '../StolenComponents/CountDown/CountdownContainer'
+import { treasureLatitidue, treasureLongitude, WIDTH } from '../../assets/Constants'
+import { endDate } from '../../assets/Constants'
+import { CountDownContainer } from '../../StolenComponents/CountDown/CountdownContainer'
 
 class GameScreen extends Component {
   constructor (props) {

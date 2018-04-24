@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import QRCode from 'react-native-qrcode'
 import { connect } from 'react-redux'
 import { View, Text } from 'react-native'
-import { getStrings } from '../assets/languageStrings/TREASURE_HUNT_STRINGS'
+import { getStrings } from '../../assets/languageStrings/TREASURE_HUNT_STRINGS'
 import { styles } from './CloseGameStyles'
 
 const CloseGameScreen = (props) => {

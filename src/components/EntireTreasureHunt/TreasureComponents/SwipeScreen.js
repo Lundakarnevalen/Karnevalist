@@ -70,15 +70,20 @@ class SwipeScreen extends Component {
     this.state = {
       counter: 0,
       strings: getStrings(props.language),
-      started: true,//change back and render better
+      started: false,
+      ended: false
     }
+    // This is an ugly hack.
     this.startTheHunt = this.startTheHunt.bind(this)
+    this.finishTheHunt = this.finishTheHunt.bind(this)
   }
 
   startTheHunt () {this.setState({started: true})}
 
+  finishTheHunt () {this.setState({started: false, ended: true})}
+
   render () {
-    const {counter, strings, started} = this.state
+    const {counter, strings, started, ended} = this.state
     if (!started) {
       return (
         <View style={styles.mainContainer}>
@@ -100,6 +105,21 @@ class SwipeScreen extends Component {
         </View>
       )
     }
+
+    if (ended) {
+      return (
+        <View style={styles.mainContainer}>
+          <BackgroundImage/>
+          <Header title={strings.treasureHunt}/>
+          <View style={styles.textContainer}>
+            <Text style={styles.secretHeaderText}>
+              {strings.endedEvent}
+            </Text>
+          </View>
+        </View>
+      )
+    }
+
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 60
@@ -121,6 +141,7 @@ class SwipeScreen extends Component {
           <CountDownContainer
             strings={strings}
             endDate={endDate}
+            onDone={this.finishTheHunt}
           />
           <InfoText counter={counter} strings={strings}/>
           <View style={styles.bottomContain}>

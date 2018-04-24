@@ -21,7 +21,6 @@ export const styles = {
   },
   btnText: {
     fontSize: 22,
-    fontWeight: 'bold',
     fontFamily: 'Avenir Next Regular',
   },
   textContainer: {
@@ -29,20 +28,22 @@ export const styles = {
     marginRight: 10,
     marginLeft: 10,
     marginTop: 5,
+    padding: 2,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     borderRadius: 3
   },
   headerText: {
-    fontSize: 40,
+    fontSize: 35,
+    margin: 1,
     color: '#000000',
     textAlign: 'center',
     fontFamily: 'Avenir Next Regular',
     backgroundColor: 'transparent'
   },
   bodyText: {
-    fontSize: 22,
+    fontSize: 20,
     color: '#000000',
     textAlign: 'center',
     fontFamily: 'Avenir Next Regular',

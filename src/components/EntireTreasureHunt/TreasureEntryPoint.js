@@ -1,17 +1,17 @@
 import React from 'react'
 import { StackNavigator } from 'react-navigation'
-import SwipeScreen from './TreasureComponents/SwipeScreen'
-import GameScreen from './TreasureComponents/GameScreen'
-import CloseGameScreen from './TreasureComponents/CloseGameScreen'
+import InfoRouter from './TreasureComponents/InfoScreens/InfoRouter'
+import GameScreen from './TreasureComponents/GameOn/GameScreen'
+import CloseGameScreen from './TreasureComponents/GameOn/CloseGameScreen'
 
 const CardstackScreen = () => (
-  <CardNav screenProps={new Date('April 18, 2018 00:00:01')}/>
+  <CardNav/>
 )
 
 const CardNav = StackNavigator(
   {
     SwipeScreen: {
-      screen: SwipeScreen,
+      screen: InfoRouter,
       navigationOptions: {
         header: null
       }
