@@ -8,16 +8,14 @@ export const styles = {
     fontSize: 40,
     color: '#000000',
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium',
+    fontFamily: 'Avenir Next Regular',
     backgroundColor: 'transparent'
   },
   bodyText: {
     fontSize: 22,
     color: '#000000',
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium',
+    fontFamily: 'Avenir Next Regular',
     backgroundColor: 'transparent'
   },
   opacity: {
@@ -27,7 +25,8 @@ export const styles = {
   },
   countDown: {
     fontSize: 22,
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Avenir Next Regular',
   },
   countDownContainer: {
     alignItems: 'center',

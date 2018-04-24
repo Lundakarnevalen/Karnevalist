@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import GestureRecognizer from 'react-native-swipe-gestures'
@@ -10,6 +10,7 @@ import { getStrings } from '../assets/languageStrings/TREASURE_HUNT_STRINGS'
 import { styles } from './SwipeStyles'
 import { startDate, endDate } from '../assets/Constants'
 import { CountDownContainer } from '../StolenComponents/CountDown/CountdownContainer'
+import lockImage from '../assets/images/shhhh.png'
 
 const ProgressButton = ({counter, value, onPress}) => (
   <Feather
@@ -30,8 +31,8 @@ ProgressButton.propTypes = {
 const InfoText = ({counter, strings}) => {
   const HEADERS = ['first', 'second', 'third']
   return (
-    <View style={styles.textContainer}>
-      <View>
+    <View style={styles.infoContainer}>
+      <View style={styles.textContainer}>
         <Text style={styles.headerText}>
           {strings[`${HEADERS[counter]}Header`]}
         </Text>
@@ -69,7 +70,7 @@ class SwipeScreen extends Component {
     this.state = {
       counter: 0,
       strings: getStrings(props.language),
-      started: false
+      started: true,//change back and render better
     }
     this.startTheHunt = this.startTheHunt.bind(this)
   }
@@ -79,17 +80,23 @@ class SwipeScreen extends Component {
   render () {
     const {counter, strings, started} = this.state
     if (!started) {
-      if (new Date().getTime() > startDate) {
-        this.setState({started: true})
-      }
       return (
         <View style={styles.mainContainer}>
-          <Header title={strings.treasureHunt}/>
+          <BackgroundImage/>
+          <Header title={strings.secretHeader}/>
           <CountDownContainer
             strings={strings}
             endDate={startDate}
             onDone={this.startTheHunt}
           />
+          <View style={styles.textContainer}>
+            <Text style={styles.secretHeaderText}>
+              {strings.secretEvent}
+            </Text>
+            <Image style={styles.lockStyle}
+                   source={lockImage}
+            />
+          </View>
         </View>
       )
     }
@@ -109,7 +116,7 @@ class SwipeScreen extends Component {
         config={config}
       >
         <View style={styles.mainContainer}>
-          <BackgroundImage pictureNumber={5}/>
+          <BackgroundImage/>
           <Header title={strings.treasureHunt}/>
           <CountDownContainer
             strings={strings}

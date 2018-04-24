@@ -8,6 +8,7 @@ export const styles = {
   },
   countDown: {
     fontSize: 22,
+    fontFamily: 'Avenir Next Regular',
     color: 'white'
   },
   nextButton: {
@@ -21,12 +22,13 @@ export const styles = {
   btnText: {
     fontSize: 22,
     fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium'
+    fontFamily: 'Avenir Next Regular',
   },
   textContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
     marginRight: 10,
     marginLeft: 10,
+    marginTop: 5,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -36,16 +38,14 @@ export const styles = {
     fontSize: 40,
     color: '#000000',
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium',
+    fontFamily: 'Avenir Next Regular',
     backgroundColor: 'transparent'
   },
   bodyText: {
     fontSize: 22,
     color: '#000000',
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next Medium',
+    fontFamily: 'Avenir Next Regular',
     backgroundColor: 'transparent'
   },
   countDownContainer: {
@@ -74,5 +74,24 @@ export const styles = {
     flexDirection: 'row',
     alignItems: 'stretch',
     justifyContent: 'flex-end'
+  },
+  lockStyle: {
+    width: (WIDTH - 20) / 3,
+    maxHeight: (WIDTH - 20) / 3,
+    marginLeft: (WIDTH - 20) / 3,
+    marginRight: (WIDTH - 20) / 3,
+    marginTop: 10,
+    marginBottom: 10
+  },
+  secretHeaderText: {
+    fontSize: 30,
+    color: '#000000',
+    textAlign: 'center',
+    fontFamily: 'Avenir Next Regular',
+    backgroundColor: 'transparent'
+  },
+  infoContainer: {
+    flex: 1,
+    justifyContent: 'flex-start'
   }
 }

@@ -79,6 +79,14 @@ export const LANGUAGE_STRINGS = {
     SE: 'Nästan där!!',
     EN: 'Almost there!!'
   },
+  secretEvent: {
+    SE: 'Här kommer du hitta Lundakarnevalens nästa (TOPPHEMLIGA) event',
+    EN: 'Here you will find Lundakarnevalens next (TOP SECRET) event'
+  },
+  secretHeader: {
+    SE: '???',
+    EN: '????'
+  }
 }
 
 export const getStrings = language => {
