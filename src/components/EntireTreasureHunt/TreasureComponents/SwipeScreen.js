@@ -5,11 +5,11 @@ import { Feather } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import { Header } from '../StolenComponents/Header'
-import { CountDown } from '../StolenComponents/CountDown/index'
 import { BackgroundImage } from '../StolenComponents/BackgroundImage/index'
 import { getStrings } from '../assets/languageStrings/TREASURE_HUNT_STRINGS'
 import { styles } from './SwipeStyles'
-import { endDate } from '../assets/Constants'
+import { startDate, endDate } from '../assets/Constants'
+import { CountDownContainer } from '../StolenComponents/CountDown/CountdownContainer'
 
 const ProgressButton = ({counter, value, onPress}) => (
   <Feather
@@ -63,38 +63,41 @@ NextButton.propTypes = {
   onPress: PropTypes.func.isRequired
 }
 
-const CountDownContainer = ({strings}) => {
-  if (endDate - new Date() < 0) {
-    return (
-      <View style={styles.countDownContainer}>
-        <Text style={styles.countDown}>{strings.finishedText}</Text>
-      </View>
-    )
-  }
-  return (
-    <View style={styles.countDownContainer}>
-      <Text style={styles.countDown}>{`${strings.timeLeft}: `}</Text>
-      <CountDown endDate={endDate} strings={strings}/>
-    </View>
-  )
-}
-
 class SwipeScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       counter: 0,
-      strings: getStrings(props.language)
+      strings: getStrings(props.language),
+      started: false
     }
+    this.startTheHunt = this.startTheHunt.bind(this)
   }
 
+  startTheHunt () {this.setState({started: true})}
+
   render () {
+    const {counter, strings, started} = this.state
+    if (!started) {
+      if (new Date().getTime() > startDate) {
+        this.setState({started: true})
+      }
+      return (
+        <View style={styles.mainContainer}>
+          <Header title={strings.treasureHunt}/>
+          <CountDownContainer
+            strings={strings}
+            endDate={startDate}
+            onDone={this.startTheHunt}
+          />
+        </View>
+      )
+    }
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 60
     }
 
-    const {counter, strings} = this.state
     return (
       <GestureRecognizer
         onSwipeUp={() => {
@@ -110,6 +113,7 @@ class SwipeScreen extends Component {
           <Header title={strings.treasureHunt}/>
           <CountDownContainer
             strings={strings}
+            endDate={endDate}
           />
           <InfoText counter={counter} strings={strings}/>
           <View style={styles.bottomContain}>

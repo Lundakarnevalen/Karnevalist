@@ -7,27 +7,11 @@ import { MaterialIcons } from '@expo/vector-icons'
 import * as Vibration from 'react-native/Libraries/Vibration/Vibration'
 import PropTypes from 'prop-types'
 import { getStrings } from '../assets/languageStrings/TREASURE_HUNT_STRINGS'
-import { CountDown } from '../StolenComponents/CountDown/index'
 import { BackgroundImage } from '../StolenComponents/BackgroundImage'
 import { styles } from './GameStyles'
 import { treasureLatitidue, treasureLongitude, WIDTH } from '../assets/Constants'
 import { endDate } from '../assets/Constants'
-
-const CountDownContainer = ({strings}) => {
-  if (endDate - new Date() < 0) {
-    return (
-      <View style={styles.countDownContainer}>
-        <Text style={styles.countDown}>{strings.finishedText}</Text>
-      </View>
-    )
-  }
-  return (
-    <View style={styles.countDownContainer}>
-      <Text style={styles.countDown}>{`${strings.timeLeft}: `}</Text>
-      <CountDown endDate={endDate} strings={strings}/>
-    </View>
-  )
-}
+import {CountDownContainer} from '../StolenComponents/CountDown/CountdownContainer'
 
 class GameScreen extends Component {
   constructor (props) {
@@ -184,6 +168,7 @@ class GameScreen extends Component {
         <View style={styles.opacity}>
           <CountDownContainer
             strings={strings}
+            endDate={endDate}
           />
 
           <Text style={styles.bodyText}>{strings.instructions}</Text>
