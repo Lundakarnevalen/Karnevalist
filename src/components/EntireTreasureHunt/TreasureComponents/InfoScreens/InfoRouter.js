@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
 import { Before } from './Before'
@@ -27,23 +28,28 @@ class InfoRouter extends Component {
   calcGamePart () {
     const today = new Date()
     // only rerenders on state change
-    if (today < startDate) {
-      this.setState({gamePart: 'BEFORE'})
+    if (startDate - today > 0) {
+      return this.setState({gamePart: 'BEFORE'})
     }
-    if (today < endDate) {
-      this.setState({gamePart: 'DURING'})
+
+    if (endDate - today > 0) {
+      return this.setState({gamePart: 'DURING'})
     }
-    this.setState({gamePart: 'AFTER'})
+    return this.setState({gamePart: 'AFTER'})
   }
 
   render () {
     return (<View>
-        {this.state.gamePart === 'BEFORE' && <Before onDone={this.calcGamePart}/>}
-        {this.state.gamePart === 'DURING' && <During onDone={this.calcGamePart}/>}
-        {this.state.gamePart === 'AFTER' && <After onDone={this.calcGamePart}/>}
+        {this.state.gamePart === 'BEFORE' && <Before language={this.props.language}/>}
+        {this.state.gamePart === 'DURING' && <During language={this.props.language}/>}
+        {this.state.gamePart === 'AFTER' && <After language={this.props.language}/>}
       </View>
     )
   }
+}
+
+InfoRouter.propTypes = {
+  language: PropTypes.string.isRequired
 }
 
 const mapStateToProps = ({currentLanguage}) => {

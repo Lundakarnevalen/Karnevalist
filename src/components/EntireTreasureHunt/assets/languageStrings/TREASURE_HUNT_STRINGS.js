@@ -87,9 +87,9 @@ export const LANGUAGE_STRINGS = {
     SE: '???',
     EN: '????'
   },
-  endedEvent:{
-    SE: 'Skattjakten är nu över! Tack till er som deltog!',
-    EN: 'The treasure hunt has ended, thanks for participating!'
+  endedEvent: {
+    SE: 'Skattjakten är nu över. Tack till er som deltog!',
+    EN: 'The treasure hunt has ended. Thanks for participating!'
   }
 }
 

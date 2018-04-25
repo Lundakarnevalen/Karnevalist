@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text } from 'react-native'
 import { CountDown } from './index'
-import { styles } from '../../TreasureComponents/SwipeStyles'
+import { styles } from '../../TreasureComponents/InfoScreens/InfoStyles'
 
 export const CountDownContainer = ({strings, endDate, onDone}) => {
   if (endDate - new Date() < 0) {
@@ -27,4 +27,4 @@ CountDownContainer.propTypes = {
 
 CountDownContainer.defaultProps = {
   onDone: undefined
-};
+}

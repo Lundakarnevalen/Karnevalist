@@ -1,4 +1,4 @@
-import { HEIGHT, WIDTH } from '../assets/Constants'
+import { HEIGHT, WIDTH } from '../../assets/Constants'
 
 export const styles = {
   mainContainer: {
