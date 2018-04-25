@@ -41,7 +41,8 @@ class InfoRouter extends Component {
   render () {
     return (<View>
         {this.state.gamePart === 'BEFORE' && <Before language={this.props.language}/>}
-        {this.state.gamePart === 'DURING' && <During language={this.props.language}/>}
+        {this.state.gamePart === 'DURING' &&
+        <During language={this.props.language} navigation={this.props.navigation}/>}
         {this.state.gamePart === 'AFTER' && <After language={this.props.language}/>}
       </View>
     )

@@ -93,7 +93,7 @@ class GameScreen extends Component {
     //Authorization: `Bearer ${this.props.user.token}`,
     this.infoIntervalId = setInterval(() => {
       const headers = {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9za2FyLmRhbWtqYWVyQGdtYWlsLmNvbSIsImlhdCI6MTUyNDUwNDE4Nn0.q55W6dNa01qgtw7EZlOi_VMBsMIZzeqBwo8PvHsMzvM`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNTI0NjY0MDcwfQ.fK60T1IbCMk3xxwBREPb_5ddm4im7XoIFeOfzWTSlYw`,
         'content-type': 'application/json'
       }
       axios
@@ -105,7 +105,7 @@ class GameScreen extends Component {
 
   componentDidMount () {
     const headers = {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9za2FyLmRhbWtqYWVyQGdtYWlsLmNvbSIsImlhdCI6MTUyNDUwNDE4Nn0.q55W6dNa01qgtw7EZlOi_VMBsMIZzeqBwo8PvHsMzvM`,
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNTI0NjY0MDcwfQ.fK60T1IbCMk3xxwBREPb_5ddm4im7XoIFeOfzWTSlYw`,
       'content-type': 'application/json'
     }
     axios
