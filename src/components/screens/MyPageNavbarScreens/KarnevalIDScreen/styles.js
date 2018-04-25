@@ -66,5 +66,13 @@ export const styles = {
     zIndex: 99,
     borderColor: '#474747',
     backgroundColor: 'transparent'
+  },
+  ppContainerStyle: {
+    position: 'absolute',
+    width: 180,
+    height: 330,
+    top: -80,
+    transform: [{ rotate: '90deg' }],
+    left: 50
   }
 };

@@ -4,6 +4,9 @@ const cup = require('./CupBig.png');
 const cupRowRight = require('./CupRowRight.png');
 const cupRowLeft = require('./CupRowLeft.png');
 const ppContainer = require('./PpContainer.png');
+const placeholder = require('./placeholder.jpg');
+const header = require('./Header.png');
+const baseBig1 = require('./Asset-2.svg');
 
 export const karnevalID = {
   cup,
@@ -11,5 +14,7 @@ export const karnevalID = {
   cupRowLeft,
   base,
   baseBig,
-  ppContainer
+  ppContainer,
+  placeholder,
+  header
 };

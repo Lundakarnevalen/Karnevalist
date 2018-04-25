@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import { View, Text, Image, Animated, Easing } from "react-native";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Header } from "~/src/components/common";
-import { KARNEVAL_ID_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
-import { getStrings } from "~/src/helpers/functions";
+import React, { Component } from 'react';
+import { View, Text, Image, Animated, Easing } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Header } from '~/src/components/common';
+import { KARNEVAL_ID_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { getStrings } from '~/src/helpers/functions';
 import {
   HEIGHT,
   HEADER_HEIGHT,
   WIDTH,
   VIEW_HEIGHT,
   PINK
-} from "~/src/helpers/Constants";
-import { karnevalID } from "~/assets/images/KarnevalID";
-import * as Animatable from "react-native-animatable";
-import { styles } from "./styles";
+} from '~/src/helpers/Constants';
+import { karnevalID } from '~/assets/images/KarnevalID';
+import * as Animatable from 'react-native-animatable';
+import { styles } from './styles';
 
 const duration = 10000;
 
@@ -28,7 +28,7 @@ const images = [
   },
   {
     key: 1,
-    startY: -HEIGHT - 10,
+    startY: -HEIGHT,
     endY: -10,
     source: karnevalID.cupRowRight,
     style: styles.cupRowLeftStyle
@@ -86,7 +86,8 @@ class KarnevalIDScreen extends Component {
       baseImageStyle,
       infoView,
       card,
-      cups
+      cups,
+      ppContainerStyle
     } = styles;
     return (
       <View style={container}>
@@ -98,6 +99,26 @@ class KarnevalIDScreen extends Component {
             source={karnevalID.baseBig}
             style={baseImageStyle}
           />
+          <View style={ppContainerStyle}>
+            <Image
+              resizeMode="contain"
+              source={karnevalID.ppContainer}
+              style={{
+                width: 180,
+                height: 330
+              }}
+            />
+            <Image
+              resizeMode="cover"
+              source={karnevalID.placeholder}
+              style={{
+                position: 'absolute',
+                zIndex: 10,
+                width: 120,
+                height: 180
+              }}
+            />
+          </View>
           <Animated.View style={infoView}>
             <View>
               <Text style={textStyle}>
