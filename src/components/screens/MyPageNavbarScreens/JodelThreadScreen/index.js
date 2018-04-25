@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, FlatList, Text } from "react-native";
+import { View, FlatList, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Header, JodelItem, Input } from "~/src/components/common";
 import { JODEL_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
@@ -8,6 +8,7 @@ import { setPopover, setProgress } from "~/src/actions";
 import { getStrings } from "~/src/helpers/functions";
 import { HEIGHT, IS_IOS } from "~/src/helpers/Constants";
 import { MaterialIcons } from "@expo/vector-icons";
+import { styles } from "./styles";
 
 class JodelThread extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class JodelThread extends Component {
           text: strings.Placeholder,
           nbr: "1",
           color: "#F7A021",
-          disable: "false"
+          disable: "true"
         },
         {
           time: "2",
@@ -32,6 +33,28 @@ class JodelThread extends Component {
           nbr: "2",
           color: "#F7A021",
           disable: "false",
+          text: strings.Placeholder,
+          onPress: () => {},
+          text: strings.Placeholder
+        },
+        {
+          time: "45",
+          place: "Delphi",
+          grade: "22",
+          nbr: "1",
+          color: "#F7A021",
+          disable: "true",
+          text: strings.Placeholder,
+          onPress: () => {},
+          text: strings.Placeholder
+        },
+        {
+          time: "2",
+          place: "Delphi",
+          grade: "22",
+          nbr: "2",
+          color: "#F7A021",
+          disable: "true",
           text: strings.Placeholder,
           onPress: () => {},
           text: strings.Placeholder
@@ -49,6 +72,7 @@ class JodelThread extends Component {
     const { navigation } = this.props;
     const strings = this.getLanguageStrings();
     const { commentedText } = this.state;
+    const { textStyle, CommentStyle } = styles;
     return (
       <View style={{ flex: 1 }}>
         <Header
@@ -56,14 +80,14 @@ class JodelThread extends Component {
           leftIcon={
             <MaterialIcons
               name="arrow-back"
-              style={{ color: "black", right: 0 }}
+              style={{ color: "#474747", right: 0 }}
               size={30}
             />
           }
           rightIcon={
             <MaterialIcons
               name="bookmark-border"
-              style={{ color: "black", right: 0 }}
+              style={{ color: "#474747", right: 0 }}
               size={30}
             />
           }
@@ -76,6 +100,7 @@ class JodelThread extends Component {
             time="23"
             place="KC"
             grade="0"
+            disable="true"
             onPress={() => navigation.navigate("JodelThread")}
             text={strings.Placeholder}
             nbr="TS"
@@ -85,7 +110,7 @@ class JodelThread extends Component {
         <View style={{ flexDirection: "column" }}>
           <FlatList
             enableEmptySections
-            style={{ height: HEIGHT - (IS_IOS ? 250 : 135) }}
+            style={{ height: HEIGHT - (IS_IOS ? 235 : 135) }}
             data={this.state.data}
             contentContainerStyle={{ alignItems: "center" }}
             renderItem={({ item }) => (
@@ -100,17 +125,13 @@ class JodelThread extends Component {
               />
             )}
           />
-          <Input
-            onSubmitEditing={() => this.refs.fourthInput.focus()}
-            placeholder="Karnejodla du med..."
-            onChangeText={text => {
-              this.setState({ commentedText: text });
-            }}
-            value={commentedText}
-          />
-          <View>
-            <Text color="black">Hej</Text>
-          </View>
+
+          <TouchableOpacity
+            style={CommentStyle}
+            onPress={() => navigation.navigate("JodelThread")}
+          >
+            <Text style={textStyle}>Karnejodla du med...</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
