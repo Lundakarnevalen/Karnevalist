@@ -71,14 +71,8 @@ export const styles = {
     position: "absolute",
     width: 180,
     height: 330,
-    top: -80,
+    top: -61,
     transform: [{ rotate: "90deg" }],
-    left: IS_IOS ? 32 : 50
-  },
-  picStyle: {
-    position: "absolute",
-    left: IS_IOS ? 18 : 50,
-    top: 63,
-    borderRadius: 15
+    left: IS_IOS ? -31 : 50
   }
 };

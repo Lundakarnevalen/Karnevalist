@@ -101,19 +101,17 @@ class KarnevalIDScreen extends Component {
             style={baseImageStyle}
           />
           <View style={ppContainerStyle}>
-            <View style={picStyle}>
-              <Image
-                resizeMode="cover"
-                source={karnevalID.placeholder}
-                style={{
-                  position: "absolute",
-                  zIndex: 10,
-                  width: 145,
-                  height: 186,
-                  borderRadius: 17
-                }}
-              />
-            </View>
+            <Image
+              resizeMode="cover"
+              source={karnevalID.placeholder}
+              style={{
+                position: "absolute",
+                zIndex: 10,
+                width: 145,
+                height: 186,
+                borderRadius: 17
+              }}
+            />
           </View>
           <Animated.View style={infoView}>
             <View>
