@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { TouchableOpacity, Text, View } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { styles } from "./styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TouchableOpacity, Text, View } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { styles } from './styles';
 
 const JodelItem = ({
   onPress,
@@ -13,7 +13,7 @@ const JodelItem = ({
   nbr,
   backColor,
   color,
-  disable
+  disabled
 }) => {
   const {
     containerStyle,
@@ -28,7 +28,7 @@ const JodelItem = ({
     <TouchableOpacity
       onPress={() => onPress()}
       style={containerStyle}
-      disabled={disable}
+      disabled={disabled}
     >
       <View style={innerContainerStyle}>
         <View style={timeAndPlaceStyle}>
@@ -45,7 +45,7 @@ const JodelItem = ({
             <TouchableOpacity onPress={() => onPress()}>
               <MaterialIcons name="keyboard-arrow-up" size={25} color="white" />
             </TouchableOpacity>
-            <Text style={{ color: "white", textAlign: "center" }}>{grade}</Text>
+            <Text style={{ color: 'white', textAlign: 'center' }}>{grade}</Text>
             <TouchableOpacity onPress={() => onPress()}>
               <MaterialIcons
                 name="keyboard-arrow-down"
@@ -57,7 +57,7 @@ const JodelItem = ({
         </View>
 
         <View style={pointStyle}>
-          <TouchableOpacity onPress={() => onPress()} disabled={disable}>
+          <TouchableOpacity onPress={() => onPress()} disabled={disabled}>
             <MaterialIcons name="more-horiz" size={20} color="white" />
           </TouchableOpacity>
         </View>
@@ -67,14 +67,14 @@ const JodelItem = ({
 };
 
 JodelItem.defaultProps = {
-  time: "",
-  place: "",
-  text: "",
-  grade: "",
-  nbr: "",
-  backColor: "transparent",
-  color: "white",
-  disable: false
+  time: '',
+  place: '',
+  text: '',
+  grade: '',
+  nbr: '',
+  backColor: 'transparent',
+  color: 'white',
+  disabled: false
 };
 
 JodelItem.propTypes = {
@@ -86,7 +86,7 @@ JodelItem.propTypes = {
   nbr: PropTypes.string,
   backColor: PropTypes.string,
   color: PropTypes.string,
-  disable: PropTypes.bool
+  disabled: PropTypes.bool
 };
 
 export { JodelItem };

@@ -1,78 +1,57 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { View, FlatList, Text, TouchableOpacity } from "react-native";
-import { connect } from "react-redux";
-import { Header, JodelItem, Input } from "~/src/components/common";
-import { JODEL_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
-import { setPopover, setProgress } from "~/src/actions";
-import { getStrings } from "~/src/helpers/functions";
-import { HEIGHT, IS_IOS } from "~/src/helpers/Constants";
-import { MaterialIcons } from "@expo/vector-icons";
-import { styles } from "./styles";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { View, FlatList, Text, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { Header, JodelItem, Input } from '~/src/components/common';
+import { JODEL_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { setPopover, setProgress } from '~/src/actions';
+import { getStrings } from '~/src/helpers/functions';
+import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
+import { MaterialIcons } from '@expo/vector-icons';
+import { styles } from './styles';
 
+const tempData = [
+  { time: '47', place: 'Lundagård', grade: '12', nbr: '1' },
+  { time: '2', place: 'Delphi', grade: '22', nbr: '2' },
+  { time: '45', place: 'Delphi', grade: '22', nbr: '3' },
+  { time: '2', place: 'Delphi', grade: '22', nbr: '4' }
+];
 class JodelThread extends Component {
   constructor(props) {
     super(props);
     const strings = this.getLanguageStrings();
     this.state = {
-      data: [
-        {
-          time: "47",
-          place: "Lundagård",
-          grade: "12",
-          onPress: () => {},
-          text: strings.Placeholder,
-          nbr: "1",
-          color: "#F7A021",
-          disable: "true"
-        },
-        {
-          time: "2",
-          place: "Delphi",
-          grade: "22",
-          nbr: "2",
-          color: "#F7A021",
-          disable: "false",
-          text: strings.Placeholder,
-          onPress: () => {},
-          text: strings.Placeholder
-        },
-        {
-          time: "45",
-          place: "Delphi",
-          grade: "22",
-          nbr: "1",
-          color: "#F7A021",
-          disable: "true",
-          text: strings.Placeholder,
-          onPress: () => {},
-          text: strings.Placeholder
-        },
-        {
-          time: "2",
-          place: "Delphi",
-          grade: "22",
-          nbr: "2",
-          color: "#F7A021",
-          disable: "true",
-          text: strings.Placeholder,
-          onPress: () => {},
-          text: strings.Placeholder
-        }
-      ],
-      commentedText: ""
+      data: tempData.map((d, i) => ({
+        key: i,
+        onPress: () => {},
+        text: strings.Placeholder,
+        disabled: true,
+        ...d
+      })),
+      commentedText: ''
     };
   }
 
   getLanguageStrings() {
     return getStrings(this.props.language, JODEL_SCREEN_STRINGS);
   }
+  hanldeAddBookMark() {}
 
   render() {
     const { navigation } = this.props;
     const strings = this.getLanguageStrings();
     const { commentedText } = this.state;
     const { textStyle, CommentStyle } = styles;
+    const TSJodel = {
+      time: '23',
+      place: 'KC',
+      grade: '0',
+      disabled: true,
+      onPress: () => navigation.navigate('JodelThread'),
+      text: strings.Placeholder,
+      nbr: 'TS',
+      color: '#F7A021'
+    };
     return (
       <View style={{ flex: 1 }}>
         <Header
@@ -80,55 +59,37 @@ class JodelThread extends Component {
           leftIcon={
             <MaterialIcons
               name="arrow-back"
-              style={{ color: "#474747", right: 0 }}
+              style={{ color: '#474747', right: 0 }}
               size={30}
             />
           }
           rightIcon={
-            <MaterialIcons
-              name="bookmark-border"
-              style={{ color: "#474747", right: 0 }}
-              size={30}
-            />
+            <TouchableOpacity onPress={() => this.handleAddBookmark()}>
+              <MaterialIcons
+                name="bookmark-border"
+                style={{ color: '#474747', right: 0 }}
+                size={30}
+              />
+            </TouchableOpacity>
           }
           backColor="white"
         />
         <View
-          style={{ flexDirection: "column", marginBottom: 15, marginTop: -10 }}
+          style={{ flexDirection: 'column', marginBottom: 15, marginTop: -10 }}
         >
-          <JodelItem
-            time="23"
-            place="KC"
-            grade="0"
-            disable="true"
-            onPress={() => navigation.navigate("JodelThread")}
-            text={strings.Placeholder}
-            nbr="TS"
-            color="#F7A021"
-          />
+          <JodelItem {...TSJodel} />
         </View>
-        <View style={{ flexDirection: "column" }}>
+        <View style={{ flexDirection: 'column' }}>
           <FlatList
-            enableEmptySections
-            style={{ height: HEIGHT - (IS_IOS ? 235 : 135) }}
+            style={{ height: HEIGHT - (IS_IOS ? 235 : 300) }}
             data={this.state.data}
-            contentContainerStyle={{ alignItems: "center" }}
-            renderItem={({ item }) => (
-              <JodelItem
-                time={item.time}
-                place={item.place}
-                grade={item.grade}
-                onPress={item.onPress}
-                text={item.text}
-                nbr={item.nbr}
-                color={item.color}
-              />
-            )}
+            contentContainerStyle={{ alignItems: 'center' }}
+            renderItem={({ item }) => <JodelItem {...item} />}
           />
 
           <TouchableOpacity
             style={CommentStyle}
-            onPress={() => navigation.navigate("JodelThread")}
+            onPress={() => navigation.navigate('JodelThread')}
           >
             <Text style={textStyle}>Karnejodla du med...</Text>
           </TouchableOpacity>
