@@ -12,6 +12,7 @@ import { styles } from './GameStyles'
 import { treasureLatitidue, treasureLongitude, WIDTH } from '../../assets/Constants'
 import { endDate } from '../../assets/Constants'
 import { CountDownContainer } from '../../StolenComponents/CountDown/CountdownContainer'
+import { basePath } from '../../assets/Constants'
 
 class GameScreen extends Component {
   constructor (props) {
@@ -90,14 +91,13 @@ class GameScreen extends Component {
       this._getLocationAsync()
     }
 
-    //Authorization: `Bearer ${this.props.user.token}`,
     this.infoIntervalId = setInterval(() => {
       const headers = {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNTI0NjY0MDcwfQ.fK60T1IbCMk3xxwBREPb_5ddm4im7XoIFeOfzWTSlYw`,
+        Authorization: `Bearer ${this.props.user.token}`,
         'content-type': 'application/json'
       }
       axios
-        .get('https://api.10av10.com/api/treasurehunt/info', {headers})
+        .get(`${basePath}/api/treasurehunt/info`, {headers})
         .then(res => this.setState({treasureInfo: res.data}))
         .catch(err => console.error(err))
     }, 1000)
@@ -105,11 +105,11 @@ class GameScreen extends Component {
 
   componentDidMount () {
     const headers = {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNTI0NjY0MDcwfQ.fK60T1IbCMk3xxwBREPb_5ddm4im7XoIFeOfzWTSlYw`,
+      Authorization: `Bearer ${this.props.user.token}`,
       'content-type': 'application/json'
     }
     axios
-      .post('https://api.10av10.com/api/treasurehunt/start', {}, {headers})
+      .post(`${basePath}/api/treasurehunt/start`, {}, {headers})
       .then(res => this.setState({treasureInfo: res.data}))
       .catch(err => console.error(err))
   }
