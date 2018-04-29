@@ -17,6 +17,7 @@ const END_TIME =
   new Date('Feb 4, 2018 00:00:01') - new Date().getTime() < -ONE_DAY
     ? new Date('May 18, 2018 00:00:01')
     : new Date('Feb 4, 2018 00:00:01');
+let interval;
 
 class CountDown extends Component {
   constructor(props) {
@@ -27,24 +28,21 @@ class CountDown extends Component {
       minutesLeft: 0,
       secondsLeft: 0,
       karneval: false,
-      upprop: false,
-      endDate: props.endDate || new Date(),
-      targetDate: props.targetDate || new Date('May 18, 2018 00:00:01')
+      upprop: false
     };
   }
 
   componentWillMount() {
     this.getTimeLeft();
-    const interval = setInterval(() => this.getTimeLeft(), 1000);
-    this.setState({ interval });
+    interval = setInterval(() => this.getTimeLeft(), 1000);
   }
   componentWillUnmount() {
-    clearInterval(this.state.interval);
+    clearInterval(interval);
   }
 
   getTimeLeft() {
     const now = new Date().getTime();
-    const timeLeft = this.state.endDate - now;
+    const timeLeft = END_TIME - now;
     if (timeLeft < 0) {
       if (new Date('May 18, 2018 00:00:01') - new Date().getTime() > 0) {
         this.setState({ upprop: true });
