@@ -75,6 +75,7 @@ animatableImage.propTypes = {
 class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
+
     this.state = {};
   }
 
@@ -101,9 +102,9 @@ class KarnevalIDScreen extends Component {
             style={baseImageStyle}
           />
           <View style={ppContainerStyle}>
-            <Image
+            {this.props.userinfo.image && <Image
               resizeMode="cover"
-              source={karnevalID.placeholder}
+              source={{uri: this.props.userinfo.image}}
               style={{
                 position: "absolute",
                 zIndex: 10,
@@ -111,22 +112,20 @@ class KarnevalIDScreen extends Component {
                 height: 186,
                 borderRadius: 17
               }}
-            />
+            />}
           </View>
           <Animated.View style={infoView}>
             <View>
               <Text style={textStyle}>
-                {`${`NAMN ${this.props.userinfo.firstName}`} ${
-                  this.props.userinfo.lastName
-                }`}
+                {strings.name + ' ' + this.props.userinfo.firstName+ ' ' + this.props.userinfo.lastName}
               </Text>
             </View>
             <View style={{ marginTop: 7 }}>
-              <Text style={textStyle}>SEKTION</Text>
+              <Text style={textStyle}>{strings.section + ' ' + this.props.userinfo['section' + this.props.language]}</Text>
             </View>
             <View style={{ marginTop: 7 }}>
               <Text style={textStyle}>
-                {`PERSONNUMMER ${this.props.userinfo.personalNumber}`}
+                {strings.personalNumber + ' ' + this.props.userinfo.personalNumber}
               </Text>
             </View>
           </Animated.View>

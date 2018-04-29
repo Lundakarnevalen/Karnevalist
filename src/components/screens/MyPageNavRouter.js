@@ -8,7 +8,8 @@ import {
   setSections,
   setProgress,
   setPopover,
-  setSectionPriorities
+  setSectionPriorities,
+  setUserinfo
 } from '~/src/actions';
 import {
   SECTION_PRIORITY_URL,
@@ -34,12 +35,17 @@ import {
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS
 } from '~/src/helpers/LanguageStrings';
-import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
+import { fetchCheckInStatus, fetchMedcheck } from '~/src/helpers/ApiManager';
 
 const SIZE = WIDTH / 11;
 
 class MyPageNavRouter extends Component {
   componentWillMount() {
+    fetchMedcheck(this.props.userinfo.personalNumber, (success, userinfo) => {
+      if (success) {
+        this.props.setUserinfo({...this.props.userinfo, ...userinfo})
+      }
+    });
     if (this.props.token) this.updateProgress();
   }
 
@@ -277,12 +283,13 @@ const TabNav = TabNavigator(
 
 const mapStateToProps = ({ currentLanguage, sections, userInformation }) => {
   const { language } = currentLanguage;
-  const { token, email, progress } = userInformation;
+  const { token, email, progress, userinfo } = userInformation;
   return {
     language,
     token,
     email,
     progress,
+    userinfo,
     sections: sections.sections,
     sectionPriorities: sections.sectionPriorities
   };
@@ -304,5 +311,6 @@ export default connect(mapStateToProps, {
   setSections,
   setProgress,
   setPopover,
-  setSectionPriorities
+  setSectionPriorities,
+  setUserinfo
 })(MyPageNavRouter);

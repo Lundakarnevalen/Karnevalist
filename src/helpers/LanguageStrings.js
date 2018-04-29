@@ -1058,6 +1058,18 @@ export const KARNEVAL_ID_SCREEN_STRINGS = {
   title: {
     SE: 'Karneval-ID',
     EN: 'Karneval-ID'
+  },
+  name: {
+    SE: 'NAMN',
+    EN: 'NAME'
+  },
+  section:{
+    SE: 'SEKTION',
+    EN: 'SECTION'
+  },
+  personalNumber: {
+    SE: 'PERSONNUMMER',
+    EN: 'SSN'
   }
 };
 export const LOADING_STRINGS = {
