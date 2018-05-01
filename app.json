@@ -9,6 +9,7 @@
     },
     "slug": "lundakarnevalen2018",
     "sdkVersion": "22.0.0",
+    "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "com.lundakarnevalen2018.Karnevalist"
     },
