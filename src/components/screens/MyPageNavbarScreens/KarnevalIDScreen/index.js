@@ -14,10 +14,10 @@ import {
 } from "~/src/helpers/Constants";
 import { karnevalID } from "~/assets/images/KarnevalID";
 import * as Animatable from "react-native-animatable";
+import { takeSnapshotAsync } from 'expo';
 import { styles } from "./styles";
-
 const duration = 10000;
-
+let first = true
 const images = [
   {
     key: 0,
@@ -76,9 +76,44 @@ class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      cameraRollUri: null
+    };
   }
+componentWillReceiveProps(props){
+  if (this.image && props.userinfo.image || this.props.language !== props.language)
+    this.getIDImage()
+}
+async getIDImage(view) {
+  if (!this.state.cameraRollUri&& this.image ) {
+    first = false
+    const {
+      container,
+      textStyle,
+      baseImageStyle,
+      infoView,
+      card,
+      cups,
+      ppContainerStyle,
+      picStyle
+    } = styles;
+    const style = {
+        backgroundColor: "transparent",
+        height: 500,
+        width: 300,
+        borderRadius: 5
+    }
+    const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
 
+    let result = await takeSnapshotAsync(this.image, {
+        format: 'png',
+        result: 'file',
+        width: WIDTH - 30,
+        height: VIEW_HEIGHT - 20
+      });
+      this.setState({ cameraRollUri: result });
+    }
+  }
   render() {
     const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
     const {
@@ -91,26 +126,47 @@ class KarnevalIDScreen extends Component {
       ppContainerStyle,
       picStyle
     } = styles;
+    const style = {
+        backgroundColor: "transparent",
+        height: 460,
+        width: 300,
+        borderRadius: 5
+    }
+    const { cameraRollUri } = this.state
     return (
       <View style={container}>
         <Header title={strings.title} />
         <View style={card}>
           <View style={styles.fixCircleClipping} />
+          {cameraRollUri &&
+          <Image
+            resizeMode="cover"
+            source={{uri: cameraRollUri}}
+            style={baseImageStyle}
+          />}
+          {!cameraRollUri && this.props.userinfo.image  &&
+          <View collapsable={false} style={style}ref={view => (this.image=view)}>
           <Image
             resizeMode="contain"
             source={karnevalID.baseBig}
-            style={baseImageStyle}
+            style={{ flex: 1,
+              alignSelf: 'stretch',
+              width: undefined,
+              height: undefined}}
           />
           <View style={ppContainerStyle}>
-            {this.props.userinfo.image && <Image
+            {this.props.userinfo.image &&
+             <Image
               resizeMode="cover"
               source={{uri: this.props.userinfo.image}}
               style={{
-                position: "absolute",
+                position:'absolute',
                 zIndex: 10,
-                width: 145,
-                height: 186,
-                borderRadius: 17
+                width: 152,
+                height: 197,
+                borderRadius: 17,
+                left: 1,
+                top: 71
               }}
             />}
           </View>
@@ -129,6 +185,8 @@ class KarnevalIDScreen extends Component {
               </Text>
             </View>
           </Animated.View>
+          </View>
+        }
           <View style={cups}>{images.map(i => animatableImage(i))}</View>
         </View>
       </View>
