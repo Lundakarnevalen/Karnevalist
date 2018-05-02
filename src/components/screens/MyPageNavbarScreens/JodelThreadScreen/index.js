@@ -35,7 +35,7 @@ class JodelThread extends Component {
   getLanguageStrings() {
     return getStrings(this.props.language, JODEL_SCREEN_STRINGS);
   }
-  hanldeAddBookMark() {}
+  handleAddBookmark() {}
 
   render() {
     const { navigation } = this.props;
@@ -53,7 +53,13 @@ class JodelThread extends Component {
       color: '#F7A021'
     };
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ height: HEIGHT }}>
+        <TouchableOpacity
+          style={CommentStyle}
+          onPress={() => navigation.navigate('JodelThread')}
+        >
+          <Text style={textStyle}>Karnejodla du med...</Text>
+        </TouchableOpacity>
         <Header
           title=" "
           leftIcon={
@@ -79,20 +85,13 @@ class JodelThread extends Component {
         >
           <JodelItem {...TSJodel} />
         </View>
-        <View style={{ flexDirection: 'column' }}>
+        <View>
           <FlatList
-            style={{ height: HEIGHT - (IS_IOS ? 235 : 300) }}
+            style={{ height: HEIGHT - (IS_IOS ? 235 : 240) }}
             data={this.state.data}
             contentContainerStyle={{ alignItems: 'center' }}
             renderItem={({ item }) => <JodelItem {...item} />}
           />
-
-          <TouchableOpacity
-            style={CommentStyle}
-            onPress={() => navigation.navigate('JodelThread')}
-          >
-            <Text style={textStyle}>Karnejodla du med...</Text>
-          </TouchableOpacity>
         </View>
       </View>
     );
