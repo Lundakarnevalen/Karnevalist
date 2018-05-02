@@ -27,7 +27,6 @@ class InfoRouter extends Component {
 
   calcGamePart () {
     const today = new Date()
-    // only rerenders on state change
     if (startDate - today > 0) {
       return this.setState({gamePart: 'BEFORE'})
     }

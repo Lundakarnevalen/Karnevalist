@@ -17,9 +17,9 @@ export const LANGUAGE_STRINGS = {
   },
   firstBody: {
     SE:
-      'Lundakarnevalen anordnar en skattjakt där deltagarna letar sig igenom Lund för att hitta den hemliga plats där Sture gömt sig.\n\nDe 25 första får ett pris!',
+      'Lundakarnevalen anordnar en skattjakt där deltagarna letar sig igenom Lund för att hitta den hemliga plats där Sture gömt sig.\n\nDe 25 första vinner ett fantastiskt ett pris!',
     EN:
-      'Lundakarnevalen arranges a treasure hunt where the contestans compete to find Sture, who is hiding at a the (top) secret location.\n\nThe first 25 to find him will recieve a special prize!'
+      'Lundakarnevalen arranges a treasure hunt where the contestans compete to find Sture, who is hiding at a (top) secret location.\n\nThe first 25 to find him will recieve a special prize!'
   },
   secondHeader: {
     SE: 'Hur kommer det gå till?',
@@ -57,7 +57,7 @@ export const LANGUAGE_STRINGS = {
   },
   instructions: {
     SE: 'Rotera mobilen för att hitta rätt!',
-    EN: 'Rotate your phone to find your way!'
+    EN: 'Rotate your phone to find the way!'
   },
   getQR: {
     SE: 'Tryck här när du hittat Sture!',
@@ -80,8 +80,8 @@ export const LANGUAGE_STRINGS = {
     EN: 'Almost there!!'
   },
   secretEvent: {
-    SE: 'Här kommer du hitta Lundakarnevalens nästa (TOPPHEMLIGA) event',
-    EN: 'Here you will find Lundakarnevalens next (TOP SECRET) event'
+    SE: 'Här kommer du hitta Lundakarnevalens nästa (TOPPHEMLIGA) event, se till att ha ett fullt batteri!',
+    EN: 'Here you will find Lundakarnevalens next (TOP SECRET) event, make sure you have a full battery!'
   },
   secretHeader: {
     SE: '???',
@@ -90,6 +90,10 @@ export const LANGUAGE_STRINGS = {
   endedEvent: {
     SE: 'Skattjakten är nu över. Tack till er som deltog!',
     EN: 'The treasure hunt has ended. Thanks for participating!'
+  },
+  almostThere: {
+    SE: 'Nästan där..',
+    EN: 'Almost there..'
   }
 }
 

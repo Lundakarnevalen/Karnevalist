@@ -37,7 +37,7 @@ export const countDownItemStyles = {
     justifyContent: 'center'
   },
   textStyle: {
-    fontSize: 22,
+    fontSize: WIDTH / 18 < 22 ? 18 : 22,
     backgroundColor: 'transparent',
     color: 'white',
     fontWeight: 'bold',

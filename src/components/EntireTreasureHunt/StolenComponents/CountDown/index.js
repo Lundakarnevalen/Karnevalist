@@ -21,7 +21,6 @@ class CountDown extends Component {
       upprop: false,
       strings: props.strings,
       endDate: props.endDate,
-      onDone: props.onDone
     }
   }
 
@@ -45,9 +44,6 @@ class CountDown extends Component {
       const secondsLeft = Math.floor((timeLeft % ONE_MIN) / ONE_SECOND)
       this.setState({daysLeft, hoursLeft, minutesLeft, secondsLeft})
     } else {
-      if (this.state.onDone) {
-        this.state.onDone()
-      }
       this.setState({daysLeft: 0, hoursLeft: 0, minutesLeft: 0, secondsLeft: 0})
     }
   }
@@ -90,8 +86,7 @@ class CountDown extends Component {
 }
 
 CountDown.propTypes = {
-  endDate: PropTypes.instanceOf(Date).isRequired,
-  onDone: PropTypes.func
+  endDate: PropTypes.instanceOf(Date).isRequired
 }
 
 export { CountDown }

@@ -192,6 +192,9 @@ const Distance = props => {
   if (props.distance > 250) {
     return <Text style={styles.bodyText}>{props.strings.close}</Text>
   }
+  if (props.distance > 75) {
+    return <Text style={styles.bodyText}>{props.strings.almostThere}</Text>
+  }
   return (
     <View>
       <Text style={styles.bodyText}> {props.strings.veryClose}</Text>

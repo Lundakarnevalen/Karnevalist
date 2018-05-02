@@ -1,13 +1,13 @@
-import { HEIGHT, WIDTH } from '../../assets/Constants'
+import { HEIGHT, WIDTH, IS_IOS} from '../../assets/Constants'
 
 export const styles = {
   mainContainer: {
-    height: HEIGHT - 90 /* (IS_IOS ? 113 : 135), */,
+    height: HEIGHT - (IS_IOS ? 55 : 75) ,
     width: WIDTH,
     justifyContent: 'flex-start'
   },
   countDown: {
-    fontSize: 22,
+    fontSize: WIDTH / 18 < 22 ? 18 : 22,
     fontFamily: 'Avenir Next Regular',
     color: 'white'
   },
