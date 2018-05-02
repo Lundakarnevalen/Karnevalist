@@ -10,7 +10,8 @@ import {
   HEADER_HEIGHT,
   WIDTH,
   VIEW_HEIGHT,
-  PINK
+  PINK,
+  IS_IOS
 } from '~/src/helpers/Constants';
 import { karnevalID } from '~/assets/images/KarnevalID';
 import * as Animatable from 'react-native-animatable';
@@ -158,7 +159,7 @@ class KarnevalIDScreen extends Component {
                         height: 197,
                         borderRadius: 17,
                         left: 0,
-                        top: 71
+                        top: IS_IOS ? -10 : 71
                       }}
                     />
                   )}
