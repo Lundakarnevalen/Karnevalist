@@ -133,9 +133,8 @@ class RegistrationScreen extends Component {
 
   getErrorStrings() {
     const { language } = this.props;
-    const { fields } = ERROR_MSG_INPUT_FIELD;
     const strings = {};
-    fields.forEach(
+    Object.keys(ERROR_MSG_INPUT_FIELD).forEach(
       field => (strings[field] = ERROR_MSG_INPUT_FIELD[field][language])
     );
     return strings;
