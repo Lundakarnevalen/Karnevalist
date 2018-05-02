@@ -74,5 +74,11 @@ export const styles = {
     top: -61,
     transform: [{ rotate: "90deg" }],
     left: IS_IOS ? -31 : 50
+  },
+  imageView: {
+    backgroundColor: 'transparent',
+    height: 460,
+    width: 300,
+    borderRadius: 5
   }
 };

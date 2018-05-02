@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Animated, Easing } from 'react-native';
+import { View, Text, Image, Easing } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Header } from '~/src/components/common';
@@ -17,7 +17,6 @@ import * as Animatable from 'react-native-animatable';
 import { takeSnapshotAsync } from 'expo';
 import { styles } from './styles';
 const duration = 10000;
-let first = true;
 const images = [
   {
     key: 0,
@@ -29,7 +28,7 @@ const images = [
   {
     key: 1,
     startY: -HEIGHT,
-    endY: -10,
+    endY: 0,
     source: karnevalID.cupRowRight,
     style: styles.cupRowLeftStyle
   },
@@ -72,14 +71,15 @@ animatableImage.propTypes = {
   source: PropTypes.shape().isRequired,
   style: PropTypes.shape().isRequired
 };
+
 class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       karnevalIDUri: null
     };
   }
+
   componentWillReceiveProps(props) {
     if (
       (this.image && props.userinfo.image) ||
@@ -87,30 +87,9 @@ class KarnevalIDScreen extends Component {
     )
       this.getIDImage();
   }
+
   async getIDImage(view) {
     if (!this.state.karnevalIDUri && this.image) {
-      first = false;
-      const {
-        container,
-        textStyle,
-        baseImageStyle,
-        infoView,
-        card,
-        cups,
-        ppContainerStyle,
-        picStyle
-      } = styles;
-      const style = {
-        backgroundColor: 'transparent',
-        height: 500,
-        width: 300,
-        borderRadius: 5
-      };
-      const strings = getStrings(
-        this.props.language,
-        KARNEVAL_ID_SCREEN_STRINGS
-      );
-
       let result = await takeSnapshotAsync(this.image, {
         format: 'png',
         result: 'file',
@@ -120,6 +99,7 @@ class KarnevalIDScreen extends Component {
       this.setState({ karnevalIDUri: result });
     }
   }
+
   render() {
     const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
     const {
@@ -130,20 +110,18 @@ class KarnevalIDScreen extends Component {
       card,
       cups,
       ppContainerStyle,
-      picStyle
+      picStyle,
+      fixCircleClipping,
+      imageView
     } = styles;
-    const style = {
-      backgroundColor: 'transparent',
-      height: 460,
-      width: 300,
-      borderRadius: 5
-    };
+    const { userinfo, language } = this.props;
     const { karnevalIDUri } = this.state;
+
     return (
       <View style={container}>
         <Header title={strings.title} />
         <View style={card}>
-          <View style={styles.fixCircleClipping} />
+          <View style={fixCircleClipping} />
           {karnevalIDUri && (
             <Image
               resizeMode="cover"
@@ -152,10 +130,10 @@ class KarnevalIDScreen extends Component {
             />
           )}
           {!karnevalIDUri &&
-            this.props.userinfo.image && (
+            userinfo.image && (
               <View
                 collapsable={false}
-                style={style}
+                style={imageView}
                 ref={view => (this.image = view)}
               >
                 <Image
@@ -169,10 +147,10 @@ class KarnevalIDScreen extends Component {
                   }}
                 />
                 <View style={ppContainerStyle}>
-                  {this.props.userinfo.image && (
+                  {userinfo.image && (
                     <Image
                       resizeMode="cover"
-                      source={{ uri: this.props.userinfo.image }}
+                      source={{ uri: userinfo.image }}
                       style={{
                         position: 'absolute',
                         zIndex: 10,
@@ -185,21 +163,21 @@ class KarnevalIDScreen extends Component {
                     />
                   )}
                 </View>
-                <Animated.View style={infoView}>
+                <View style={infoView}>
                   <View style={{ marginTop: 7 }}>
                     <Text style={textStyle}>
                       {strings.name +
                         ' ' +
-                        this.props.userinfo.firstName +
+                        userinfo.firstName +
                         ' ' +
-                        this.props.userinfo.lastName}
+                        userinfo.lastName}
                     </Text>
                   </View>
                   <View style={{ marginTop: 7 }}>
                     <Text style={textStyle}>
                       {strings.section +
                         ' ' +
-                        this.props.userinfo['section' + this.props.language]
+                        userinfo['section' + language]
                           .split('-')
                           .slice(-1)[0]
                           .trim()}
@@ -207,12 +185,10 @@ class KarnevalIDScreen extends Component {
                   </View>
                   <View style={{ marginTop: 7 }}>
                     <Text style={textStyle}>
-                      {strings.personalNumber +
-                        ' ' +
-                        this.props.userinfo.personalNumber}
+                      {strings.personalNumber + ' ' + userinfo.personalNumber}
                     </Text>
                   </View>
-                </Animated.View>
+                </View>
               </View>
             )}
           <View style={cups}>{images.map(i => animatableImage(i))}</View>
