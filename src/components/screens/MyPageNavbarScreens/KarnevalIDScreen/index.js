@@ -77,7 +77,7 @@ class KarnevalIDScreen extends Component {
     super(props);
 
     this.state = {
-      cameraRollUri: null
+      karnevalIDUri: null
     };
   }
   componentWillReceiveProps(props) {
@@ -88,7 +88,7 @@ class KarnevalIDScreen extends Component {
       this.getIDImage();
   }
   async getIDImage(view) {
-    if (!this.state.cameraRollUri && this.image) {
+    if (!this.state.karnevalIDUri && this.image) {
       first = false;
       const {
         container,
@@ -117,7 +117,7 @@ class KarnevalIDScreen extends Component {
         width: WIDTH - 30,
         height: VIEW_HEIGHT - 20
       });
-      this.setState({ cameraRollUri: result });
+      this.setState({ karnevalIDUri: result });
     }
   }
   render() {
@@ -138,20 +138,20 @@ class KarnevalIDScreen extends Component {
       width: 300,
       borderRadius: 5
     };
-    const { cameraRollUri } = this.state;
+    const { karnevalIDUri } = this.state;
     return (
       <View style={container}>
         <Header title={strings.title} />
         <View style={card}>
           <View style={styles.fixCircleClipping} />
-          {cameraRollUri && (
+          {karnevalIDUri && (
             <Image
               resizeMode="cover"
-              source={{ uri: cameraRollUri }}
+              source={{ uri: karnevalIDUri }}
               style={baseImageStyle}
             />
           )}
-          {!cameraRollUri &&
+          {!karnevalIDUri &&
             this.props.userinfo.image && (
               <View
                 collapsable={false}
@@ -201,7 +201,8 @@ class KarnevalIDScreen extends Component {
                         ' ' +
                         this.props.userinfo['section' + this.props.language]
                           .split('-')
-                          .slice(-1)[0]}
+                          .slice(-1)[0]
+                          .trim()}
                     </Text>
                   </View>
                   <View style={{ marginTop: 7 }}>
