@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   ActivityIndicator,
   BackHandler,
   View,
   ScrollView,
   TouchableOpacity
-} from 'react-native';
-import PropTypes from 'prop-types';
-import { MaterialIcons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
+} from "react-native";
+import PropTypes from "prop-types";
+import { MaterialIcons } from "@expo/vector-icons";
+import { connect } from "react-redux";
 import {
   Toast,
   BackgroundImage,
@@ -16,51 +16,51 @@ import {
   Header,
   Input,
   CustomPicker
-} from '~/src/components/common';
-import { LOGOUT_RESET_ACTION } from '~/src/helpers/Constants';
-import { setUserinfo } from '~/src/actions';
+} from "~/src/components/common";
+import { LOGOUT_RESET_ACTION } from "~/src/helpers/Constants";
+import { setUserinfo } from "~/src/actions";
 import {
   isEmail,
   containsOnlyLetters,
   isValidPhoneNbr,
   containsOnlyDigits,
   getStrings
-} from '~/src/helpers/functions';
+} from "~/src/helpers/functions";
 import {
   MY_PROFILE_SCREEN_STRINGS,
   ERROR_MSG_INPUT_FIELD,
   REGISTRATION_SCREEN_STRINGS
-} from '~/src/helpers/LanguageStrings';
-import { removeItem } from '~/src/helpers/LocalSave';
-import { updateUser } from '~/src/helpers/ApiManager';
-import { styles } from './styles';
+} from "~/src/helpers/LanguageStrings";
+import { removeItem } from "~/src/helpers/LocalSave";
+import { updateUser } from "~/src/helpers/ApiManager";
+import { styles } from "./styles";
 
 const fulfilsRequirement = (key, toCheck) => {
   switch (key) {
-    case 'firstName':
+    case "firstName":
       return containsOnlyLetters(toCheck);
-    case 'lastName':
+    case "lastName":
       return containsOnlyLetters(toCheck);
-    case 'email':
+    case "email":
       return isEmail(toCheck);
-    case 'city':
+    case "city":
       return containsOnlyLetters(toCheck);
-    case 'postNumber':
+    case "postNumber":
       return containsOnlyDigits(toCheck) && toCheck.length === 5;
-    case 'phoneNumber':
+    case "phoneNumber":
       return isValidPhoneNbr(toCheck);
-    case 'address':
-      return toCheck !== '';
+    case "address":
+      return toCheck !== "";
     default:
       return true;
   }
 };
 
 const getInputStyle = editable => ({
-  backgroundColor: editable ? 'white' : 'transparent',
+  backgroundColor: editable ? "white" : "transparent",
   borderWidth: editable ? 1 : 0,
-  textColor: editable ? 'black' : 'white',
-  placeholderTextColor: editable ? '#F7A021' : 'white'
+  textColor: editable ? "black" : "white",
+  placeholderTextColor: editable ? "#F7A021" : "white"
 });
 
 class MyProfileScreen extends Component {
@@ -77,7 +77,7 @@ class MyProfileScreen extends Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', () =>
+    BackHandler.addEventListener("hardwareBackPress", () =>
       this.props.navigation.goBack()
     );
   }
@@ -92,8 +92,28 @@ class MyProfileScreen extends Component {
 
   getRightIcon() {
     const { rightIconStyle } = styles;
-    const { editMode } = this.state;
-    return (
+    const { editMode, user, oldUser } = this.state;
+    const changesMade =
+      Object.keys(user).filter(key => user[key] !== oldUser[key]).length > 0;
+    return editMode ? (
+      <TouchableOpacity
+        style={rightIconStyle}
+        onPress={() => {
+          if (changesMade) this.handleDoneEditing();
+          else this.setState({ editMode: true });
+        }}
+        disabled={!changesMade}
+      >
+        <MaterialIcons
+          name="done"
+          style={{
+            color: changesMade ? "white" : "#A9A9A9",
+            right: 0
+          }}
+          size={30}
+        />
+      </TouchableOpacity>
+    ) : (
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
@@ -102,29 +122,51 @@ class MyProfileScreen extends Component {
         }}
       >
         <MaterialIcons
-          name={editMode ? 'done' : 'edit'}
-          style={{ color: 'white', right: 0 }}
+          name="edit"
+          style={{
+            color: "white",
+            right: 0
+          }}
           size={30}
         />
       </TouchableOpacity>
     );
   }
 
+  getLeftIcon() {
+    const { rightIconStyle } = styles;
+    const { editMode } = this.state;
+    return editMode ? (
+      <TouchableOpacity
+        style={rightIconStyle}
+        onPress={() => {
+          if (editMode) this.handleDoneEditing();
+        }}
+      >
+        <MaterialIcons
+          name="clear"
+          style={{ color: "white", right: 0 }}
+          size={30}
+        />
+      </TouchableOpacity>
+    ) : null;
+  }
+
   getWarningMessage(key) {
     const errorStrings = this.getErrorStrings();
     switch (key) {
-      case 'firstName':
+      case "firstName":
         return errorStrings.errorMsgOnlyLetters;
-      case 'lastName':
+      case "lastName":
         return errorStrings.errorMsgOnlyLetters;
-      case 'city':
+      case "city":
         return errorStrings.errorMsgOnlyLetters;
-      case 'postNumber':
+      case "postNumber":
         return errorStrings.errorMsgZipCode;
-      case 'phoneNumber':
+      case "phoneNumber":
         return errorStrings.errorMsgPhoneNbr;
       default:
-        return '';
+        return "";
     }
   }
 
@@ -141,9 +183,9 @@ class MyProfileScreen extends Component {
       placeholderTextColor
     } = getInputStyle(editable);
     if (
-      (key === 'driversLicense' ||
-        key === 'corps' ||
-        key === 'studentNation') &&
+      (key === "driversLicense" ||
+        key === "corps" ||
+        key === "studentNation") &&
       editable
     ) {
       return (
@@ -166,11 +208,11 @@ class MyProfileScreen extends Component {
         extraPlaceHolderStyle={{ color: placeholderTextColor }}
         key={key}
         keyboardType={
-          key === 'phoneNumber' ||
-          key === 'postNumber' ||
-          key === 'startOfStudies'
-            ? 'numeric'
-            : 'default'
+          key === "phoneNumber" ||
+          key === "postNumber" ||
+          key === "startOfStudies"
+            ? "numeric"
+            : "default"
         }
         placeholder={labels[key]}
         onChangeText={text => {
@@ -205,8 +247,8 @@ class MyProfileScreen extends Component {
 
   handleLogout() {
     const { strings } = this.state;
-    removeItem('email');
-    removeItem('accessToken');
+    removeItem("email");
+    removeItem("accessToken");
     this.handleAlert(
       true,
       strings.expiredTokenTitle,
@@ -298,9 +340,9 @@ class MyProfileScreen extends Component {
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
     const textFields = Object.keys(labels).map(key => {
-      const editable = editMode && key !== 'email';
+      const editable = editMode && key !== "email";
       if (
-        oldUser[key] === '' ||
+        oldUser[key] === "" ||
         oldUser[key] === null ||
         oldUser[key] === undefined ||
         !oldUser[key].length
@@ -349,6 +391,7 @@ class MyProfileScreen extends Component {
         <Header
           title={strings.title}
           navigation={navigation}
+          leftIcon={this.getLeftIcon()}
           rightIcon={this.getRightIcon()}
         />
         {this.renderMainView()}

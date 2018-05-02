@@ -1,40 +1,40 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { TabNavigator, StackNavigator } from 'react-navigation';
-import { connect } from 'react-redux';
-import { MaterialIcons } from '@expo/vector-icons';
-import axios from 'axios';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { TabNavigator, StackNavigator } from "react-navigation";
+import { connect } from "react-redux";
+import { MaterialIcons } from "@expo/vector-icons";
+import axios from "axios";
 import {
   setSections,
   setProgress,
   setPopover,
   setSectionPriorities
-} from '~/src/actions';
+} from "~/src/actions";
 import {
   SECTION_PRIORITY_URL,
   PROGRESS,
   WIDTH,
   IS_IOS
-} from '~/src/helpers/Constants';
-import HomeScreen from '~/src/components/screens/MyPageNavbarScreens/HomeScreen';
-import SectionScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen';
-import SongBookScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen';
-import SongScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen';
-import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/SettingsScreen';
-import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
-import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
-import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
-import KarneskojScreen from '~/src/components/screens/MyPageNavbarScreens/KarneskojScreen';
-import ChangeLanguageScreen from '~/src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen';
-import KarnevalIDScreen from '~/src/components/screens/MyPageNavbarScreens/KarnevalIDScreen';
+} from "~/src/helpers/Constants";
+import HomeScreen from "~/src/components/screens/MyPageNavbarScreens/HomeScreen";
+import SectionScreen from "~/src/components/screens/MyPageNavbarScreens/SectionScreen";
+import SongBookScreen from "~/src/components/screens/MyPageNavbarScreens/SongBookScreen";
+import SongScreen from "~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen";
+import SettingsScreen from "~/src/components/screens/MyPageNavbarScreens/SettingsScreen";
+import SectionItemScreen from "~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen";
+import MyRegistrationScreen from "~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen";
+import MyProfileScreen from "~/src/components/screens/MyPageNavbarScreens/MyProfileScreen";
+import KarneskojScreen from "~/src/components/screens/MyPageNavbarScreens/KarneskojScreen";
+import ChangeLanguageScreen from "~/src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen";
+import KarnevalIDScreen from "~/src/components/screens/MyPageNavbarScreens/KarnevalIDScreen";
 
 import {
   KARNEVAL_ID_SCREEN_STRINGS,
   KARNESKOJ_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS
-} from '~/src/helpers/LanguageStrings';
-import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
+} from "~/src/helpers/LanguageStrings";
+import { fetchCheckInStatus } from "~/src/helpers/ApiManager";
 
 const SIZE = WIDTH / 11;
 
@@ -46,7 +46,7 @@ class MyPageNavRouter extends Component {
   getSectionPriorities(token) {
     const headers = {
       Authorization: `Bearer ${token}`,
-      'content-type': 'application/json'
+      "content-type": "application/json"
     };
     axios
       .get(SECTION_PRIORITY_URL, { headers })
@@ -94,7 +94,7 @@ class MyPageNavRouter extends Component {
 const navigate = (scene, jumpToIndex, props) => {
   jumpToIndex(scene.index);
   if (props.screenProps.progress >= 2)
-    props.screenProps.setPopover('homeScreenPopover', false);
+    props.screenProps.setPopover("homeScreenPopover", false);
 };
 
 const namedTabBarIcon = name => {
@@ -102,7 +102,7 @@ const namedTabBarIcon = name => {
     <MaterialIcons
       name={name}
       size={SIZE}
-      color={focused ? tintColor : '#A9A9A9'}
+      color={focused ? tintColor : "#A9A9A9"}
     />
   );
   return tabBarIcon;
@@ -112,13 +112,6 @@ const SettingsStack = StackNavigator({
     screen: SettingsScreen,
     navigationOptions: {
       header: null
-    }
-  },
-  MyProfile: {
-    screen: MyProfileScreen,
-    navigationOptions: {
-      header: null,
-      tabBarVisible: false
     }
   },
   MyRegistration: {
@@ -152,11 +145,21 @@ const SettingsStack = StackNavigator({
 });
 const TabNav = TabNavigator(
   {
-    Home: {
-      screen: HomeScreen,
+    KarnevalID: {
+      screen: KarnevalIDScreen,
       navigationOptions: props => ({
-        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon('home')
+        tabBarOnPress: (scene, jumpToIndex) => {
+          if (jumpToIndex) {
+            // This is something weird, probably with expo and stacking navigatros
+            navigate(scene, jumpToIndex, props);
+          } else {
+            jumpToIndex = scene.jumpToIndex;
+            navigate(scene.scene, scene.jumpToIndex, props);
+          }
+        },
+        tabBarLabel:
+          KARNEVAL_ID_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarIcon: namedTabBarIcon("credit-card")
       })
     },
     /*
@@ -209,26 +212,26 @@ const TabNav = TabNavigator(
           }
         },
         tabBarLabel: KARNESKOJ_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarInactiveTintColor: '#A9A9A9',
-        tabBarIcon: namedTabBarIcon('sentiment-very-satisfied')
+        tabBarInactiveTintColor: "#A9A9A9",
+        tabBarIcon: namedTabBarIcon("sentiment-very-satisfied")
       })
     },
-    KarnevalID: {
-      screen: KarnevalIDScreen,
+    Home: {
+      screen: HomeScreen,
       navigationOptions: props => ({
-        tabBarOnPress: (scene, jumpToIndex) => {
-          if (jumpToIndex) {
-            // This is something weird, probably with expo and stacking navigatros
-            navigate(scene, jumpToIndex, props);
-          } else {
-            jumpToIndex = scene.jumpToIndex;
-            navigate(scene.scene, scene.jumpToIndex, props);
-          }
-        },
-        tabBarLabel:
-          KARNEVAL_ID_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon('credit-card')
+        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarIcon: namedTabBarIcon("home")
       })
+    },
+    MyProfile: {
+      screen: MyProfileScreen,
+      navigationOptions: props => ({
+        tabBarLabel:
+          SETTINGS_SCREEN_STRINGS.profile[props.screenProps.language],
+        tabBarIcon: namedTabBarIcon("person")
+      }),
+      header: null,
+      tabBarVisible: true
     },
     Settings: {
       screen: SettingsStack,
@@ -243,19 +246,19 @@ const TabNav = TabNavigator(
           }
         },
         tabBarLabel: SETTINGS_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon('settings')
+        tabBarIcon: namedTabBarIcon("settings")
       })
     }
   },
   {
-    tabBarPosition: 'bottom',
+    tabBarPosition: "bottom",
     animationEnabled: true,
-    initialRouteName: 'Home',
+    initialRouteName: "Home",
     tabBarVisible: false,
     tabBarOptions: {
       showIcon: true,
-      activeTintColor: '#F7A021',
-      inactiveTintColor: '#A9A9A9',
+      activeTintColor: "#F7A021",
+      inactiveTintColor: "#A9A9A9",
       labelStyle: {
         fontSize: 8,
         margin: 0
@@ -266,10 +269,10 @@ const TabNav = TabNavigator(
       },
       style: {
         height: IS_IOS ? 49 : 60,
-        backgroundColor: '#ffffff'
+        backgroundColor: "#ffffff"
       },
       indicatorStyle: {
-        backgroundColor: '#F7A021'
+        backgroundColor: "#F7A021"
       }
     }
   }
