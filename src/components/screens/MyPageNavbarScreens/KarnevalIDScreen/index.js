@@ -1,21 +1,22 @@
-import React, { Component } from 'react';
-import { View, Text, Image, Animated, Easing } from 'react-native';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Header } from '~/src/components/common';
-import { KARNEVAL_ID_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { getStrings } from '~/src/helpers/functions';
+import React, { Component } from "react";
+import { View, Text, Image, Animated, Easing } from "react-native";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Header } from "~/src/components/common";
+import { KARNEVAL_ID_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
+import { getStrings } from "~/src/helpers/functions";
 import {
   HEIGHT,
   HEADER_HEIGHT,
   WIDTH,
   VIEW_HEIGHT,
-  PINK
-} from '~/src/helpers/Constants';
-import { karnevalID } from '~/assets/images/KarnevalID';
-import * as Animatable from 'react-native-animatable';
-import { takeSnapshotAsync } from 'expo';
-import { styles } from './styles';
+  PINK,
+  IS_IOS
+} from "~/src/helpers/Constants";
+import { karnevalID } from "~/assets/images/KarnevalID";
+import * as Animatable from "react-native-animatable";
+import { takeSnapshotAsync } from "expo";
+import { styles } from "./styles";
 const duration = 10000;
 let first = true;
 const images = [
@@ -101,7 +102,7 @@ class KarnevalIDScreen extends Component {
         picStyle
       } = styles;
       const style = {
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
         height: 500,
         width: 300,
         borderRadius: 5
@@ -112,8 +113,8 @@ class KarnevalIDScreen extends Component {
       );
 
       let result = await takeSnapshotAsync(this.image, {
-        format: 'png',
-        result: 'file',
+        format: "png",
+        result: "file",
         width: WIDTH - 30,
         height: VIEW_HEIGHT - 20
       });
@@ -133,7 +134,7 @@ class KarnevalIDScreen extends Component {
       picStyle
     } = styles;
     const style = {
-      backgroundColor: 'transparent',
+      backgroundColor: "transparent",
       height: 460,
       width: 300,
       borderRadius: 5
@@ -163,7 +164,7 @@ class KarnevalIDScreen extends Component {
                   source={karnevalID.baseBig}
                   style={{
                     flex: 1,
-                    alignSelf: 'stretch',
+                    alignSelf: "stretch",
                     width: undefined,
                     height: undefined
                   }}
@@ -174,13 +175,13 @@ class KarnevalIDScreen extends Component {
                       resizeMode="cover"
                       source={{ uri: this.props.userinfo.image }}
                       style={{
-                        position: 'absolute',
+                        position: "absolute",
                         zIndex: 10,
                         width: 154,
                         height: 197,
                         borderRadius: 17,
                         left: 0,
-                        top: 71
+                        top: IS_IOS ? -10 : 71
                       }}
                     />
                   )}
@@ -189,25 +190,25 @@ class KarnevalIDScreen extends Component {
                   <View style={{ marginTop: 7 }}>
                     <Text style={textStyle}>
                       {strings.name +
-                        ' ' +
+                        " " +
                         this.props.userinfo.firstName +
-                        ' ' +
+                        " " +
                         this.props.userinfo.lastName}
                     </Text>
                   </View>
                   <View style={{ marginTop: 7 }}>
                     <Text style={textStyle}>
                       {strings.section +
-                        ' ' +
-                        this.props.userinfo['section' + this.props.language]
-                          .split('-')
+                        " " +
+                        this.props.userinfo["section" + this.props.language]
+                          .split("-")
                           .slice(-1)[0]}
                     </Text>
                   </View>
                   <View style={{ marginTop: 7 }}>
                     <Text style={textStyle}>
                       {strings.personalNumber +
-                        ' ' +
+                        " " +
                         this.props.userinfo.personalNumber}
                     </Text>
                   </View>
