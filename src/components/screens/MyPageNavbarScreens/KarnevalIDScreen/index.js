@@ -186,7 +186,7 @@ class KarnevalIDScreen extends Component {
                   )}
                 </View>
                 <Animated.View style={infoView}>
-                  <View>
+                  <View style={{ marginTop: 7 }}>
                     <Text style={textStyle}>
                       {strings.name +
                         ' ' +
@@ -199,7 +199,9 @@ class KarnevalIDScreen extends Component {
                     <Text style={textStyle}>
                       {strings.section +
                         ' ' +
-                        this.props.userinfo['section' + this.props.language]}
+                        this.props.userinfo['section' + this.props.language]
+                          .split('-')
+                          .slice(-1)[0]}
                     </Text>
                   </View>
                   <View style={{ marginTop: 7 }}>
