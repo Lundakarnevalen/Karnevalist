@@ -17,9 +17,9 @@ export const LANGUAGE_STRINGS = {
   },
   firstBody: {
     SE:
-      'Lundakarnevalen anordnar en skattjakt där deltagarna letar sig igenom Lund för att hitta den hemliga plats där Sture gömt sig.\n\nDe 25 första vinner ett fantastiskt ett pris!',
+      'Leta er igenom Lund för att hitta var Sture gömt sig!\n\nDe 25 första vinner ett fantastiskt ett pris!',
     EN:
-      'Lundakarnevalen arranges a treasure hunt where the contestans compete to find Sture, who is hiding at a (top) secret location.\n\nThe first 25 to find him will recieve a special prize!'
+      'Find your way through Lund to find where Sture has hidden!\n\nThe first 25 to find him will recieve a special prize!'
   },
   secondHeader: {
     SE: 'Hur kommer det gå till?',
@@ -80,8 +80,8 @@ export const LANGUAGE_STRINGS = {
     EN: 'Almost there!!'
   },
   secretEvent: {
-    SE: 'Här kommer du hitta Lundakarnevalens nästa (TOPPHEMLIGA) event, se till att ha ett fullt batteri!',
-    EN: 'Here you will find Lundakarnevalens next (TOP SECRET) event, make sure you have a full battery!'
+    SE: 'Här kommer du hitta Lundakarnevalens nästa (TOPPHEMLIGA) äventyr!\nSe till att ha ett fullt batteri!',
+    EN: 'Here you will find Lundakarnevalens next (TOP SECRET) adventure!\nMake sure you have a full battery!'
   },
   secretHeader: {
     SE: '???',

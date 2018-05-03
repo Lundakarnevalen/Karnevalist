@@ -14,7 +14,7 @@ import { CountDownContainer } from '../../StolenComponents/CountDown/CountdownCo
 const ProgressButton = ({counter, value, onPress}) => (
   <Feather
     key={value}
-    name={counter > value ? 'check-circle' : 'circle'}
+    name={counter === value ? 'aperture' : 'circle'}
     onPress={onPress}
     size={35}
     style={styles.navItem}
@@ -111,9 +111,7 @@ export class During extends React.Component {
                   value={i}
                   counter={counter}
                   onPress={
-                    i === 2
-                      ? () => this.props.navigation.navigate('GameScreen')
-                      : () => this.setState({counter: i + 1})
+                    () => this.setState({counter: i})
                   }
                 />
               ))}

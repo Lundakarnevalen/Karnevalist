@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import { getStrings } from '../../assets/languageStrings/TREASURE_HUNT_STRINGS'
 import { BackgroundImage } from '../../StolenComponents/BackgroundImage/index'
 import { styles } from './GameStyles'
-import { treasureLatitidue, treasureLongitude, WIDTH } from '../../assets/Constants'
+import { treasureLatitude, treasureLongitude, WIDTH } from '../../assets/Constants'
 import { endDate } from '../../assets/Constants'
 import { CountDownContainer } from '../../StolenComponents/CountDown/CountdownContainer'
 import { basePath } from '../../assets/Constants'
@@ -28,7 +28,7 @@ class GameScreen extends Component {
       },
       dstLocation: {
         longitude: treasureLongitude,
-        latitude: treasureLatitidue
+        latitude: treasureLatitude
       },
       myBearing: 0
     }
@@ -192,7 +192,7 @@ const Distance = props => {
   if (props.distance > 250) {
     return <Text style={styles.bodyText}>{props.strings.close}</Text>
   }
-  if (props.distance > 75) {
+  if (props.distance > 50) {
     return <Text style={styles.bodyText}>{props.strings.almostThere}</Text>
   }
   return (

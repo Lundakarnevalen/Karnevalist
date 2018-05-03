@@ -24,7 +24,7 @@ const CloseGameScreen = ({language, email, navigation}) => {
 
 CloseGameScreen.propTypes = {
   email: PropTypes.string.isRequired,
-  language: PropTypes.arrayOf(PropTypes.string).isRequired,
+  language: PropTypes.string.isRequired
 }
 
 const mapStateToProps = ({userInformation, currentLanguage}) => {

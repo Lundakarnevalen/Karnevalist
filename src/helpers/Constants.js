@@ -2,7 +2,8 @@ import { NavigationActions } from 'react-navigation';
 import { Dimensions, Platform } from 'react-native';
 
 // URL constants
-const BASE_URL = 'https://api.10av10.com';
+
+const BASE_URL = 'https://api.karnevalist.se/';
 export const TOKEN_URL = `${BASE_URL}/api/hello/`;
 export const SECTION_URL = `${BASE_URL}/getallsections`;
 export const IMAGE_URL = 'http://lundakarnevalen.se/wp-json/wp/v2/media/';
