@@ -122,7 +122,11 @@ class GameScreen extends Component {
   _setupAsync = async () => {
     axios
       .get('https://api.10av10.com/location')
-      .then(res => this.setState({dstLocation: res.data}))
+      .then(res => {
+        if (res.data && res.data.longitude && res.data.latitude) {
+          this.setState({dstLocation: res.data})
+        }
+      })
       .catch(err => console.error(err))
   }
 
