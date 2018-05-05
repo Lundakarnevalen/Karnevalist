@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Easing } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Easing,
+  Animated,
+  TouchableWithoutFeedback
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Header } from '~/src/components/common';
@@ -73,11 +80,14 @@ animatableImage.propTypes = {
   style: PropTypes.shape().isRequired
 };
 
+const DEGREE = 1;
 class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      karnevalIDUri: null
+      spinValue: new Animated.Value(0),
+      karnevalIDUri: null,
+      deg: 0
     };
   }
 
@@ -100,6 +110,17 @@ class KarnevalIDScreen extends Component {
       this.setState({ karnevalIDUri: result });
     }
   }
+  spin() {
+    this.state.spinValue.setValue(0);
+    const { deg } = this.state;
+    Animated.timing(this.state.spinValue, {
+      toValue: 1,
+      duration: 5000,
+      easing: Easing.linear
+    }).start(() => {
+      this.setState({ deg: deg - DEGREE });
+    });
+  }
 
   render() {
     const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
@@ -113,87 +134,86 @@ class KarnevalIDScreen extends Component {
       ppContainerStyle,
       picStyle,
       fixCircleClipping,
-      imageView
+      imageView,
+      idCard
     } = styles;
     const { userinfo, language } = this.props;
-    const { karnevalIDUri } = this.state;
-
+    const { karnevalIDUri, deg } = this.state;
+    const spin = this.state.spinValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [deg + 'deg', deg + 360 - DEGREE + 'deg']
+    });
+    const anim = { transform: [{ rotate: spin }] };
     return (
       <View style={container}>
         <Header title={strings.title} />
-        <View style={card}>
-          <View style={fixCircleClipping} />
-          {karnevalIDUri && (
-            <Image
-              resizeMode="cover"
-              source={{ uri: karnevalIDUri }}
-              style={baseImageStyle}
-            />
-          )}
-          {!karnevalIDUri &&
-            userinfo.image && (
-              <View
-                collapsable={false}
-                style={imageView}
-                ref={view => (this.image = view)}
-              >
-                <Image
-                  resizeMode="contain"
-                  source={karnevalID.baseBig}
-                  style={{
-                    flex: 1,
-                    alignSelf: 'stretch',
-                    width: undefined,
-                    height: undefined
-                  }}
-                />
-                <View style={ppContainerStyle}>
-                  {userinfo.image && (
-                    <Image
-                      resizeMode="cover"
-                      source={{ uri: userinfo.image }}
-                      style={{
-                        position: 'absolute',
-                        zIndex: 10,
-                        width: 154,
-                        height: 197,
-                        borderRadius: 17,
-                        left: 0,
-                        top: IS_IOS ? -10 : 71
-                      }}
-                    />
-                  )}
-                </View>
-                <View style={infoView}>
-                  <View style={{ marginTop: 7 }}>
-                    <Text style={textStyle}>
-                      {strings.name +
-                        ' ' +
-                        userinfo.firstName +
-                        ' ' +
-                        userinfo.lastName}
-                    </Text>
-                  </View>
-                  <View style={{ marginTop: 7 }}>
-                    <Text style={textStyle}>
-                      {strings.section +
-                        ' ' +
-                        userinfo['section' + language]
-                          .split('-')
-                          .slice(-1)[0]
-                          .trim()}
-                    </Text>
-                  </View>
-                  <View style={{ marginTop: 7 }}>
-                    <Text style={textStyle}>
-                      {strings.personalNumber + ' ' + userinfo.personalNumber}
-                    </Text>
-                  </View>
-                </View>
-              </View>
+        <TouchableWithoutFeedback onPress={() => this.spin()}>
+          <Animated.View style={[card, anim]}>
+            <View style={fixCircleClipping} />
+            {karnevalIDUri && (
+              <Image
+                resizeMode="cover"
+                source={{ uri: karnevalIDUri }}
+                style={baseImageStyle}
+              />
             )}
-          <View style={cups}>{images.map(i => animatableImage(i))}</View>
-        </View>
+            {!karnevalIDUri &&
+              userinfo.image && (
+                <View
+                  collapsable={false}
+                  style={imageView}
+                  ref={view => (this.image = view)}
+                >
+                  <Image
+                    resizeMode="contain"
+                    source={karnevalID.baseBig}
+                    style={{
+                      flex: 1,
+                      alignSelf: 'stretch',
+                      width: undefined,
+                      height: undefined
+                    }}
+                  />
+                  <View style={ppContainerStyle}>
+                    {userinfo.image && (
+                      <Image
+                        resizeMode="cover"
+                        source={{ uri: userinfo.image }}
+                        style={idCard}
+                      />
+                    )}
+                  </View>
+                  <View style={infoView}>
+                    <View style={{ marginTop: 7 }}>
+                      <Text style={textStyle}>
+                        {strings.name +
+                          ' ' +
+                          userinfo.firstName +
+                          ' ' +
+                          userinfo.lastName}
+                      </Text>
+                    </View>
+                    <View style={{ marginTop: 7 }}>
+                      <Text style={textStyle}>
+                        {strings.section +
+                          ' ' +
+                          userinfo['section' + language]
+                            .split('-')
+                            .slice(-1)[0]
+                            .trim()}
+                      </Text>
+                    </View>
+                    <View style={{ marginTop: 7 }}>
+                      <Text style={textStyle}>
+                        {strings.personalNumber + ' ' + userinfo.personalNumber}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              )}
+            <View style={cups}>{images.map(i => animatableImage(i))}</View>
+          </Animated.View>
+        </TouchableWithoutFeedback>
       </View>
     );
   }
