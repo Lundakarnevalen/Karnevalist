@@ -138,8 +138,8 @@ class KarnevalIDScreen extends Component {
       idCard
     } = styles;
     const { userinfo, language } = this.props;
-    const { karnevalIDUri, deg } = this.state;
-    const spin = this.state.spinValue.interpolate({
+    const { karnevalIDUri, deg, spinValue } = this.state;
+    const spin = spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: [deg + 'deg', deg + 360 - DEGREE + 'deg']
     });
