@@ -180,17 +180,11 @@ const TabNav = TabNavigator(
     }, */
     Karneskoj: {
       screen: StackNavigator({
-        KarneskojScreen: {
-          screen: KarneskojScreen,
-          navigationOptions: {
-            header: null
-          }
-        },
         SongBookScreen: {
           screen: SongBookScreen,
           navigationOptions: {
             header: null,
-            tabBarVisible: false
+            tabBarVisible: true
           }
         },
         SongScreen: {
@@ -211,7 +205,8 @@ const TabNav = TabNavigator(
             navigate(scene.scene, scene.jumpToIndex, props);
           }
         },
-        tabBarLabel: KARNESKOJ_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarLabel:
+          KARNESKOJ_SCREEN_STRINGS.Songbook[props.screenProps.language],
         tabBarInactiveTintColor: "#A9A9A9",
         tabBarIcon: namedTabBarIcon("sentiment-very-satisfied")
       })
