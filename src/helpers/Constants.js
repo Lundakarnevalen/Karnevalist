@@ -46,3 +46,4 @@ export const VIEW_HEIGHT = IS_IOS
   : HEIGHT - NAVBAR_HEIGHT - HEADER_HEIGHT;
 
 export const PINK = '#FBBCC0';
+export const PURPLE = '#8A4797';

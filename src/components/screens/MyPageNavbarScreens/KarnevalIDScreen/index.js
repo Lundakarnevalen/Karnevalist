@@ -5,27 +5,32 @@ import {
   Image,
   Easing,
   Animated,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '~/src/components/common';
+import { Header, Loading } from '~/src/components/common';
 import { KARNEVAL_ID_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { getStrings } from '~/src/helpers/functions';
+import { MaterialIcons } from '@expo/vector-icons';
 import {
   HEIGHT,
   HEADER_HEIGHT,
   WIDTH,
   VIEW_HEIGHT,
   PINK,
+  PURPLE,
   IS_IOS
 } from '~/src/helpers/Constants';
+import images from '~/assets/images/';
 import { karnevalID } from '~/assets/images/KarnevalID';
 import * as Animatable from 'react-native-animatable';
 import { takeSnapshotAsync } from 'expo';
 import { styles } from './styles';
 const duration = 10000;
-const images = [
+
+const cupImages = [
   {
     key: 0,
     startY: 0,
@@ -87,7 +92,9 @@ class KarnevalIDScreen extends Component {
     this.state = {
       spinValue: new Animated.Value(0),
       karnevalIDUri: null,
-      deg: 0
+      deg: 0,
+      loadingComplete: false,
+      showBack: false
     };
   }
 
@@ -96,12 +103,12 @@ class KarnevalIDScreen extends Component {
       (this.image && props.userinfo.image) ||
       this.props.language !== props.language
     )
-      this.getIDImage();
+      this.setState({ loadingComplete: true });
   }
 
-  async getIDImage(view) {
+  async getIDImage() {
     if (!this.state.karnevalIDUri && this.image) {
-      let result = await takeSnapshotAsync(this.image, {
+      const result = await takeSnapshotAsync(this.image, {
         format: 'png',
         result: 'file',
         width: WIDTH - 30,
@@ -110,6 +117,7 @@ class KarnevalIDScreen extends Component {
       this.setState({ karnevalIDUri: result });
     }
   }
+
   spin() {
     this.state.spinValue.setValue(0);
     const { deg } = this.state;
@@ -122,8 +130,95 @@ class KarnevalIDScreen extends Component {
     });
   }
 
+  renderRefreshButton() {
+    return (
+      <TouchableOpacity onPress={() => this.setState({ karnevalIDUri: null })}>
+        <MaterialIcons name="refresh" size={35} color="white" />
+      </TouchableOpacity>
+    );
+  }
+
+  renderUserinfo(strings) {
+    const { userinfo, language } = this.props;
+    const { textStyle, infoView } = styles;
+    return (
+      <View style={infoView}>
+        <View style={{ marginTop: language === 'EN' ? -5 : 12 }}>
+          <Text style={textStyle}>
+            {strings.name + ' ' + userinfo.firstName + ' ' + userinfo.lastName}
+          </Text>
+        </View>
+        <View style={{ marginTop: 7 }}>
+          <Text style={textStyle}>
+            {strings.section +
+              ' ' +
+              userinfo['section' + language]
+                .split('-')
+                .slice(-1)[0]
+                .trim()}
+          </Text>
+        </View>
+        <View style={{ marginTop: 7 }}>
+          <Text style={textStyle}>
+            {strings.personalNumber + ' ' + userinfo.personalNumber}
+          </Text>
+        </View>
+      </View>
+    );
+  }
+  renderSwapButton() {
+    return (
+      <TouchableOpacity
+        style={{ marginRight: 10 }}
+        onPress={() => this.setState({ showBack: !this.state.showBack })}
+      >
+        <MaterialIcons name={'cached'} size={35} color={'white'} />
+      </TouchableOpacity>
+    );
+  }
+
+  renderCard() {
+    const {
+      ppContainerStyle,
+      imageView,
+      idCard,
+      loadingCard,
+      baseBig
+    } = styles;
+    const { userinfo, language } = this.props;
+    const strings = getStrings(language, KARNEVAL_ID_SCREEN_STRINGS);
+    return (
+      <View>
+        <View style={loadingCard}>
+          <Loading
+            loadingComplete={this.state.loadingComplete}
+            redirect={() => this.getIDImage()}
+          />
+        </View>
+        <View
+          collapsable={false}
+          style={imageView}
+          ref={view => (this.image = view)}
+        >
+          <Image
+            resizeMode="contain"
+            source={karnevalID.baseBig}
+            style={baseBig}
+          />
+          <View style={ppContainerStyle}>
+            <Image
+              resizeMode="cover"
+              source={{ uri: userinfo.image }}
+              style={idCard}
+            />
+          </View>
+          {this.renderUserinfo(strings)}
+        </View>
+      </View>
+    );
+  }
+
   render() {
-    const strings = getStrings(this.props.language, KARNEVAL_ID_SCREEN_STRINGS);
     const {
       container,
       textStyle,
@@ -135,10 +230,14 @@ class KarnevalIDScreen extends Component {
       picStyle,
       fixCircleClipping,
       imageView,
-      idCard
+      idCard,
+      loadingCard,
+      sponsView
     } = styles;
     const { userinfo, language } = this.props;
-    const { karnevalIDUri, deg, spinValue } = this.state;
+    const { karnevalIDUri, deg, spinValue, showBack } = this.state;
+
+    const strings = getStrings(language, KARNEVAL_ID_SCREEN_STRINGS);
     const spin = spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: [deg + 'deg', deg + 360 - DEGREE + 'deg']
@@ -146,72 +245,35 @@ class KarnevalIDScreen extends Component {
     const anim = { transform: [{ rotate: spin }] };
     return (
       <View style={container}>
-        <Header title={strings.title} />
+        <Header
+          rightIcon={this.renderSwapButton()}
+          leftIcon={this.renderRefreshButton()}
+          title={strings.title}
+        />
+
         <TouchableWithoutFeedback onPress={() => this.spin()}>
           <Animated.View style={[card, anim]}>
             <View style={fixCircleClipping} />
-            {karnevalIDUri && (
-              <Image
-                resizeMode="cover"
-                source={{ uri: karnevalIDUri }}
-                style={baseImageStyle}
-              />
+            {showBack && (
+              <View style={sponsView}>
+                <Text style={[textStyle, { fontSize: 25 }]}>Sponsored by:</Text>
+                <Image
+                  style={{ width: VIEW_HEIGHT - 100, height: WIDTH / 4 }}
+                  source={images.spons}
+                />
+              </View>
             )}
-            {!karnevalIDUri &&
+            {!showBack &&
+              karnevalIDUri &&
               userinfo.image && (
-                <View
-                  collapsable={false}
-                  style={imageView}
-                  ref={view => (this.image = view)}
-                >
-                  <Image
-                    resizeMode="contain"
-                    source={karnevalID.baseBig}
-                    style={{
-                      flex: 1,
-                      alignSelf: 'stretch',
-                      width: undefined,
-                      height: undefined
-                    }}
-                  />
-                  <View style={ppContainerStyle}>
-                    {userinfo.image && (
-                      <Image
-                        resizeMode="cover"
-                        source={{ uri: userinfo.image }}
-                        style={idCard}
-                      />
-                    )}
-                  </View>
-                  <View style={infoView}>
-                    <View style={{ marginTop: 7 }}>
-                      <Text style={textStyle}>
-                        {strings.name +
-                          ' ' +
-                          userinfo.firstName +
-                          ' ' +
-                          userinfo.lastName}
-                      </Text>
-                    </View>
-                    <View style={{ marginTop: 7 }}>
-                      <Text style={textStyle}>
-                        {strings.section +
-                          ' ' +
-                          userinfo['section' + language]
-                            .split('-')
-                            .slice(-1)[0]
-                            .trim()}
-                      </Text>
-                    </View>
-                    <View style={{ marginTop: 7 }}>
-                      <Text style={textStyle}>
-                        {strings.personalNumber + ' ' + userinfo.personalNumber}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
+                <Image
+                  resizeMode="cover"
+                  source={{ uri: karnevalIDUri }}
+                  style={baseImageStyle}
+                />
               )}
-            <View style={cups}>{images.map(i => animatableImage(i))}</View>
+            {!showBack && !karnevalIDUri && userinfo.image && this.renderCard()}
+            <View style={cups}>{cupImages.map(i => animatableImage(i))}</View>
           </Animated.View>
         </TouchableWithoutFeedback>
       </View>
