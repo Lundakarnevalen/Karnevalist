@@ -24,12 +24,15 @@ import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/Setting
 import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
 import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
 import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
+import KarneskojScreen from '~/src/components/screens/MyPageNavbarScreens/KarneskojScreen';
+import ChangeLanguageScreen from '~/src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen';
+import KarnevalIDScreen from '~/src/components/screens/MyPageNavbarScreens/KarnevalIDScreen';
 
 import {
-  SECTION_SCREEN_STRINGS,
+  KARNEVAL_ID_SCREEN_STRINGS,
+  KARNESKOJ_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
-  SETTINGS_SCREEN_STRINGS,
-  SONGBOOK_SCREEN_STRINGS
+  SETTINGS_SCREEN_STRINGS
 } from '~/src/helpers/LanguageStrings';
 import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
 
@@ -104,14 +107,59 @@ const namedTabBarIcon = name => {
   );
   return tabBarIcon;
 };
-
+const SettingsStack = StackNavigator({
+  SettingsScreen: {
+    screen: SettingsScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  MyRegistration: {
+    screen: MyRegistrationScreen,
+    navigationOptions: {
+      header: null,
+      tabBarVisible: false
+    }
+  },
+  LanguageScreen: {
+    screen: ChangeLanguageScreen,
+    navigationOptions: {
+      header: null,
+      tabBarVisible: false
+    }
+  },
+  Sections: {
+    screen: SectionScreen,
+    navigationOptions: {
+      header: null,
+      tabBarVisible: false
+    }
+  },
+  SectionItemScreen: {
+    screen: SectionItemScreen,
+    navigationOptions: {
+      header: null,
+      tabBarVisible: false
+    }
+  }
+});
 const TabNav = TabNavigator(
   {
-    Home: {
-      screen: HomeScreen,
+    KarnevalID: {
+      screen: KarnevalIDScreen,
       navigationOptions: props => ({
-        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon('home')
+        tabBarOnPress: (scene, jumpToIndex) => {
+          if (jumpToIndex) {
+            // This is something weird, probably with expo and stacking navigatros
+            navigate(scene, jumpToIndex, props);
+          } else {
+            jumpToIndex = scene.jumpToIndex;
+            navigate(scene.scene, scene.jumpToIndex, props);
+          }
+        },
+        tabBarLabel:
+          KARNEVAL_ID_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarIcon: namedTabBarIcon('credit-card')
       })
     },
     /*
@@ -130,43 +178,13 @@ const TabNav = TabNavigator(
         )
       })
     }, */
-    Sections: {
-      screen: StackNavigator({
-        SectionScreen: {
-          screen: SectionScreen,
-          navigationOptions: {
-            header: null
-          }
-        },
-        SectionItemScreen: {
-          screen: SectionItemScreen,
-          navigationOptions: {
-            header: null,
-            tabBarVisible: false
-          }
-        }
-      }),
-      navigationOptions: props => ({
-        tabBarOnPress: (scene, jumpToIndex) => {
-          if (jumpToIndex) {
-            // This is something weird, probably with expo and stacking navigatros
-            navigate(scene, jumpToIndex, props);
-          } else {
-            jumpToIndex = scene.jumpToIndex;
-            navigate(scene.scene, scene.jumpToIndex, props);
-          }
-        },
-        tabBarLabel: SECTION_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarInactiveTintColor: '#A9A9A9',
-        tabBarIcon: namedTabBarIcon('star')
-      })
-    },
-    SongBook: {
+    Karneskoj: {
       screen: StackNavigator({
         SongBookScreen: {
           screen: SongBookScreen,
           navigationOptions: {
-            header: null
+            header: null,
+            tabBarVisible: true
           }
         },
         SongScreen: {
@@ -187,33 +205,31 @@ const TabNav = TabNavigator(
             navigate(scene.scene, scene.jumpToIndex, props);
           }
         },
-        tabBarLabel: SONGBOOK_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon('local-library')
+        tabBarLabel:
+          KARNESKOJ_SCREEN_STRINGS.Songbook[props.screenProps.language],
+        tabBarInactiveTintColor: '#A9A9A9',
+        tabBarIcon: namedTabBarIcon('sentiment-very-satisfied')
       })
     },
-    Settings: {
-      screen: StackNavigator({
-        SettingsScreen: {
-          screen: SettingsScreen,
-          navigationOptions: {
-            header: null
-          }
-        },
-        MyProfile: {
-          screen: MyProfileScreen,
-          navigationOptions: {
-            header: null,
-            tabBarVisible: false
-          }
-        },
-        MyRegistration: {
-          screen: MyRegistrationScreen,
-          navigationOptions: {
-            header: null,
-            tabBarVisible: false
-          }
-        }
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: props => ({
+        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
+        tabBarIcon: namedTabBarIcon('home')
+      })
+    },
+    MyProfile: {
+      screen: MyProfileScreen,
+      navigationOptions: props => ({
+        tabBarLabel:
+          SETTINGS_SCREEN_STRINGS.profile[props.screenProps.language],
+        tabBarIcon: namedTabBarIcon('person')
       }),
+      header: null,
+      tabBarVisible: true
+    },
+    Settings: {
+      screen: SettingsStack,
       navigationOptions: props => ({
         tabBarOnPress: (scene, jumpToIndex) => {
           if (jumpToIndex) {

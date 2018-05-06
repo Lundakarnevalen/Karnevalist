@@ -34,3 +34,7 @@ export const LOGOUT_RESET_ACTION = NavigationActions.reset({
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 export const IS_IOS = Platform.OS === 'ios';
+export const LANGUAGES = [
+  { title: 'Svenska', val: 'SE' },
+  { title: 'English', val: 'EN' }
+];

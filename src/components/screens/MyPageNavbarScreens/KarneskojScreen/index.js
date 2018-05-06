@@ -12,7 +12,6 @@ import { setPopover, setProgress } from '~/src/actions';
 import { getStrings } from '~/src/helpers/functions';
 
 class KarneskojScreen extends Component {
-  
   getLanguageStrings() {
     return getStrings(this.props.language, KARNESKOJ_SCREEN_STRINGS);
   }
@@ -24,7 +23,7 @@ class KarneskojScreen extends Component {
       <View style={{ flex: 1 }}>
         <BackgroundImage pictureNumber={1} />
         <Header title={strings.title} />
-        <View style={{marginTop:2, flexDirection: 'row', marginBottom: 10}}>
+        <View style={{ marginTop: 2, flexDirection: 'row', marginBottom: 10 }}>
           <KarneskojItem
             title={strings.KarneJodel}
             icon="free-breakfast"
@@ -36,7 +35,7 @@ class KarneskojScreen extends Component {
             onPress={() => navigation.navigate('KarneskojScreen')}
           />
         </View>
-        <View style={{flexDirection: 'row', marginBottom: 10}}>
+        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
           <KarneskojItem
             title={strings.Songbook}
             icon="local-library"

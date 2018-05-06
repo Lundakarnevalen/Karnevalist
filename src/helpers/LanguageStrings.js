@@ -657,7 +657,7 @@ export const KARNESKOJ_SCREEN_STRINGS = {
   Songbook: {
     SE: 'Sångbok',
     EN: 'Songbook'
-  },
+  }
 };
 
 export const HOME_SCREEN_STRINGS = {
@@ -742,8 +742,10 @@ export const HOME_SCREEN_STRINGS = {
 export const SETTINGS_SCREEN_STRINGS = {
   fields: [
     'title',
+    'changeLanguage',
     'profile',
     'registration',
+    'sections',
     'logout',
     'cancel',
     'ok',
@@ -754,11 +756,19 @@ export const SETTINGS_SCREEN_STRINGS = {
     SE: 'Inställningar',
     EN: 'Settings'
   },
+  changeLanguage: {
+    SE: 'Byt språk',
+    EN: 'Change language'
+  },
   profile,
   registration,
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
+  },
+  sections: {
+    SE: 'Sektioner',
+    EN: 'Sections'
   },
   cancel,
   ok,
@@ -1006,8 +1016,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Save changes?'
   },
   updateInfoMessageSuccess: {
-    SE: 'Användarinfo uppdaterad',
-    EN: 'Userinfo updated'
+    SE: 'Din profil är uppdaterad',
+    EN: 'Your profile is updated'
   },
   updateInfoMessageFail: {
     SE: 'Något gick fel',
@@ -1036,7 +1046,20 @@ export const MY_REGISTRATION_SCREEN_STRINGS = {
     EN: 'You have not chosen any sections'
   }
 };
-
+export const CHANGE_LANGUAGE_SCREEN_STRINGS = {
+  fields: ['title'],
+  title: {
+    SE: 'Byt språk',
+    EN: 'Change language'
+  }
+};
+export const KARNEVAL_ID_SCREEN_STRINGS = {
+  fields: ['title'],
+  title: {
+    SE: 'Karneval-ID',
+    EN: 'Karneval-ID'
+  }
+};
 export const LOADING_STRINGS = {
   fields: ['loading'],
   loading
