@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { TouchableOpacity, Text, View } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { ITEM_WIDTH, styles } from "./styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TouchableOpacity, Text, View } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { ITEM_WIDTH, styles } from './styles';
 
 const KarneskojItem = ({ title, icon, onPress }) => {
   const { containerStyle, innerContainerStyle } = styles;
@@ -17,8 +17,8 @@ const KarneskojItem = ({ title, icon, onPress }) => {
 };
 
 KarneskojItem.defaultProps = {
-  title: "",
-  icon: ""
+  title: '',
+  icon: ''
 };
 
 KarneskojItem.propTypes = {
