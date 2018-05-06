@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { View, FlatList } from "react-native";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   Header,
   ListItem,
   BackgroundImage,
   SuperAgileAlert,
   CustomButton
-} from '~/src/components/common';
-import { removeItem } from '~/src/helpers/LocalSave';
-import { resetData } from '~/src/actions';
-import { LOGOUT_RESET_ACTION, WIDTH } from '~/src/helpers/Constants';
-import { SETTINGS_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { getStrings } from '~/src/helpers/functions';
+} from "~/src/components/common";
+import { removeItem } from "~/src/helpers/LocalSave";
+import { resetData } from "~/src/actions";
+import { LOGOUT_RESET_ACTION, WIDTH } from "~/src/helpers/Constants";
+import { SETTINGS_SCREEN_STRINGS } from "~/src/helpers/LanguageStrings";
+import { getStrings } from "~/src/helpers/functions";
 
 const SETTINGS_TITLES = [
-  { key: 'profile' },
-  { key: 'changeLanguage' },
-  { key: 'sections' }
+  { key: "profile" },
+  { key: "changeLanguage" },
+  { key: "sections" }
 ];
 class SettingsScreen extends Component {
   constructor(props) {
@@ -42,8 +42,8 @@ class SettingsScreen extends Component {
   }
 
   handleLogout() {
-    removeItem('email');
-    removeItem('accessToken');
+    removeItem("email");
+    removeItem("accessToken");
     this.props.resetData();
     this.props.screenProps.navigation.dispatch(LOGOUT_RESET_ACTION);
   }
@@ -67,30 +67,30 @@ class SettingsScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <FlatList
-          contentContainerStyle={{ alignItems: 'center' }}
+          contentContainerStyle={{ alignItems: "center" }}
           data={this.getItems()}
           renderItem={({ item }) => (
             <ListItem
               title={item.title}
               onPress={() => {
-                if (item.key === 'profile') {
-                  navigation.navigate('MyProfile');
-                } else if (item.key === 'registration') {
-                  navigation.navigate('MyRegistration', {
+                if (item.key === "profile") {
+                  navigation.navigate("MyProfile");
+                } else if (item.key === "registration") {
+                  navigation.navigate("MyRegistration", {
                     info: item
                   });
-                } else if (item.key === 'sections') {
-                  navigation.navigate('Sections', {
+                } else if (item.key === "sections") {
+                  navigation.navigate("Sections", {
                     screenProps: navigation
                   });
-                } else if (item.key === 'changeLanguage') {
-                  navigation.navigate('LanguageScreen');
+                } else if (item.key === "changeLanguage") {
+                  navigation.navigate("LanguageScreen");
                 }
               }}
             />
           )}
         />
-        <View style={{ alignItems: 'center', marginTop: 100 }}>
+        <View style={{ alignItems: "center", marginTop: 100 }}>
           <CustomButton
             text={strings.logout}
             width={WIDTH * 0.9}

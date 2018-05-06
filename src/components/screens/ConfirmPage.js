@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, BackHandler } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import SortableList from 'react-native-sortable-list';
+import React, { Component } from "react";
+import { Text, View, TouchableOpacity, BackHandler } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import axios from "axios";
+import SortableList from "react-native-sortable-list";
 import {
   Row,
   Header,
   BackgroundImage,
   CustomButton,
   SuperAgileAlert
-} from '../common';
-import { removeItem } from '../../helpers/LocalSave';
-import { fetchCheckInStatus } from '../../helpers/ApiManager';
-import { getStrings } from '../../helpers/functions';
+} from "../common";
+import { removeItem } from "../../helpers/LocalSave";
+import { fetchCheckInStatus } from "../../helpers/ApiManager";
+import { getStrings } from "../../helpers/functions";
 import {
   SECTION_PRIORITY_URL,
   PROGRESS,
   LOGOUT_RESET_ACTION,
   WIDTH,
   HEIGHT
-} from '../../helpers/Constants';
+} from "../../helpers/Constants";
 import {
   removeSectionPriority,
   setSectionPriorities,
   setProgress
-} from '../../actions';
-import { CONFIRM_PAGE_STRINGS } from '../../helpers/LanguageStrings';
+} from "../../actions";
+import { CONFIRM_PAGE_STRINGS } from "../../helpers/LanguageStrings";
 
 class ConfirmPage extends Component {
   constructor(props) {
@@ -35,15 +35,15 @@ class ConfirmPage extends Component {
       data: {},
       editMode: false,
       alertVisible: false,
-      message: '',
-      alertHeader: '',
+      message: "",
+      alertHeader: "",
       strings: this.getLanguageStrings()
     };
   }
 
   componentWillMount() {
     const { email, token, sectionPriorities } = this.props;
-    BackHandler.addEventListener('hardwareBackPress', () =>
+    BackHandler.addEventListener("hardwareBackPress", () =>
       this.props.navigation.goBack()
     );
     fetchCheckInStatus(email, token, checkedIn => {
@@ -60,7 +60,7 @@ class ConfirmPage extends Component {
     const data = {};
     const { sections, sectionPriorities, language } = this.props;
     sectionPriorities.forEach(key => {
-      const section = sections.filter(item => item.key + '' === key + '');
+      const section = sections.filter(item => `${item.key  }` === `${key  }`);
       if (section.length !== 0) {
         data[key] = {
           id: key,
@@ -80,7 +80,7 @@ class ConfirmPage extends Component {
     const { contentContainer, list, textStyle, listContainerView } = styles;
     const { navigation, sectionPriorities, progress } = this.props;
     const { strings, data } = this.state;
-    let buttonText = '';
+    let buttonText = "";
     switch (progress) {
       case PROGRESS.CHOOSE_SECTIONS:
         buttonText = strings.send;
@@ -96,7 +96,7 @@ class ConfirmPage extends Component {
         <View style={listContainerView}>
           <Text style={textStyle}>{strings.sectionSelection}</Text>
           <CustomButton
-            style={'standardButton'}
+            style="standardButton"
             text={strings.toSections}
             onPress={() => navigation.goBack()}
           />
@@ -119,8 +119,8 @@ class ConfirmPage extends Component {
           <CustomButton
             style={
               progress < PROGRESS.CHOOSE_SECTIONS
-                ? 'tintStandardButton'
-                : 'standardButton'
+                ? "tintStandardButton"
+                : "standardButton"
             }
             text={buttonText}
             width={WIDTH - 16}
@@ -137,7 +137,7 @@ class ConfirmPage extends Component {
       <Row
         data={data}
         index={index + 1}
-        iconName={this.state.editMode ? 'trash' : 'navicon'}
+        iconName={this.state.editMode ? "trash" : "navicon"}
         active={active}
         deleteRow={() => {
           if (
@@ -162,8 +162,8 @@ class ConfirmPage extends Component {
 
   handleLogout() {
     const strings = this.getLanguageStrings();
-    removeItem('email');
-    removeItem('accessToken');
+    removeItem("email");
+    removeItem("accessToken");
     this.setState({
       alertVisible: true,
       message: strings.expiredTokenMessage,
@@ -175,8 +175,8 @@ class ConfirmPage extends Component {
     const { sectionPriorities } = this.props;
     const strings = this.getLanguageStrings();
     const headers = {
-      Authorization: 'Bearer ' + this.props.token,
-      'content-type': 'application/json'
+      Authorization: `Bearer ${  this.props.token}`,
+      "content-type": "application/json"
     };
     axios
       .post(SECTION_PRIORITY_URL, { sectionPriorities }, { headers })
@@ -205,12 +205,12 @@ class ConfirmPage extends Component {
     if (sectionPriorities.length > 0) {
       return (
         <TouchableOpacity
-          style={{ width: 50, alignItems: 'center' }}
+          style={{ width: 50, alignItems: "center" }}
           onPress={() => this.setState({ editMode: !this.state.editMode })}
         >
           <MaterialIcons
-            name={this.state.editMode ? 'done' : 'edit'}
-            style={{ color: 'white', right: 0 }}
+            name={this.state.editMode ? "done" : "edit"}
+            style={{ color: "white", right: 0 }}
             size={30}
           />
         </TouchableOpacity>
@@ -282,8 +282,8 @@ class ConfirmPage extends Component {
           alertVisible={alertVisible}
           setAlertVisible={visible => this.setAlertVisible(visible, message)}
           buttonsIn={this.renderAlertButtons(message)}
-          header={alertHeader || ''}
-          info={message || ''}
+          header={alertHeader || ""}
+          info={message || ""}
         />
       </View>
     );
@@ -294,13 +294,13 @@ const styles = {
   container: {
     width: WIDTH,
     height: HEIGHT,
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0)',
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0)",
     paddingTop: 0
   },
   confimTextStyle: {
     fontSize: 20,
-    color: '#ffffff'
+    color: "#ffffff"
   },
   list: {
     flex: 1
@@ -310,14 +310,14 @@ const styles = {
   },
   textStyle: {
     fontSize: 24,
-    fontFamily: 'Avenir Next Bold',
-    backgroundColor: 'transparent',
-    color: 'white'
+    fontFamily: "Avenir Next Bold",
+    backgroundColor: "transparent",
+    color: "white"
   },
   listContainerView: {
     height: HEIGHT - 64,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   }
 };
 

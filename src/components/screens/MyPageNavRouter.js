@@ -28,6 +28,7 @@ import KarneskojScreen from "~/src/components/screens/MyPageNavbarScreens/Karnes
 import ChangeLanguageScreen from "~/src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen";
 import KarnevalIDScreen from "~/src/components/screens/MyPageNavbarScreens/KarnevalIDScreen";
 import MyJodelScreen from "~/src/components/screens/MyPageNavbarScreens/MyJodelScreen";
+import SendThreadScreen from "~/src/components/screens/MyPageNavbarScreens/SendThreadScreen";
 
 import {
   KARNEVAL_ID_SCREEN_STRINGS,
@@ -184,10 +185,17 @@ const TabNav = TabNavigator(
             header: null
           }
         },
-        MyJodelScreen: {
+        /* MyJodelScreen: {
           screen: MyJodelScreen,
           navigationOptions: {
             header: null
+          }
+        }, */
+        SendThreadScreen: {
+          screen: SendThreadScreen,
+          navigationOptions: {
+            header: null,
+            tabBarVisible: false
           }
         },
         SongBookScreen: {

@@ -27,7 +27,7 @@ class KarneskojScreen extends Component {
           <KarneskojItem
             title={strings.KarneJodel}
             icon="free-breakfast"
-            onPress={() => navigation.navigate("MyJodelScreen")}
+            onPress={() => navigation.navigate("SendThreadScreen")}
           />
           <KarneskojItem
             title={strings.Eldoradio}

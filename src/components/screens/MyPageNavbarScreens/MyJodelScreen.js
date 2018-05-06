@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, FlatList, Dimensions, Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { Header, BackgroundImage, SectionListItem } from "../../common";
+import { Header, BackgroundImage, ListItem } from "../../common";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const HEIGHT = Dimensions.get("window").height;
@@ -40,10 +40,10 @@ class MyJodelScreen extends Component {
           <Header
             rightIcon={
               <View style={{ marginRight: 15 }}>
-                <MaterialIcons name="settings" size={SIZE} color={"#ffffff"} />
+                <MaterialIcons name="settings" size={SIZE} color="#ffffff" />
               </View>
             }
-            title={"Jag"}
+            title="Jag"
             navigation={navigation}
           />
         </View>
@@ -52,7 +52,7 @@ class MyJodelScreen extends Component {
           data={this.state.data}
           contentContainerStyle={{ alignItems: "center", paddingBottom: 60 }}
           renderItem={({ item }) => (
-            <SectionListItem sectionTitle={item.name} onPress={() => {}} />
+            <ListItem title={item.name} onPress={() => {}} />
           )}
         />
       </View>

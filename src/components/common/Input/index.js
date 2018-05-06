@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   View,
   TextInput,
   Animated,
   Text,
   TouchableOpacity
-} from 'react-native';
-import PropTypes from 'prop-types';
-import { FontAwesome } from '@expo/vector-icons';
-import { styles } from './styles';
+} from "react-native";
+import PropTypes from "prop-types";
+import { FontAwesome } from "@expo/vector-icons";
+import { styles } from "./styles";
 
 const getContainerStyle = (props, borderColor) => {
   const { hasError, extraContainerStyle, value, width } = props;
-  if (value !== '' && hasError) borderColor = 'red';
+  if (value !== "" && hasError) borderColor = "red";
   return [styles.containerStyle, extraContainerStyle, { width, borderColor }];
 };
 
@@ -28,21 +28,21 @@ class Input extends Component {
     this.state = {
       fontSize: new Animated.Value(18),
       position: new Animated.ValueXY({ x: 9, y: 11 }),
-      borderColor: '#000'
+      borderColor: "#000"
     };
   }
 
   componentWillMount() {
-    if (this.props.value !== '') this.inputSelected();
+    if (this.props.value !== "") this.inputSelected();
   }
 
   getPlaceholderStyle() {
     const { fontSize, position } = this.state;
     return {
       fontSize,
-      backgroundColor: 'transparent',
-      fontFamily: 'Avenir Next Medium',
-      position: 'absolute',
+      backgroundColor: "transparent",
+      fontFamily: "Avenir Next Medium",
+      position: "absolute",
       top: position.y,
       left: position.x,
       color: this.getTextColor(),
@@ -52,8 +52,8 @@ class Input extends Component {
 
   getTextColor() {
     const { hasError, value } = this.props;
-    if (value !== '' && hasError) return 'red';
-    return '#F7A021';
+    if (value !== "" && hasError) return "red";
+    return "#F7A021";
   }
 
   focus() {
@@ -62,7 +62,7 @@ class Input extends Component {
 
   addWarningText() {
     const { warningMessage, hasError, value } = this.props;
-    if (hasError && value !== '') {
+    if (hasError && value !== "") {
       return <Text style={styles.warningTextStyle}>{warningMessage}</Text>;
     }
     return null;
@@ -70,7 +70,7 @@ class Input extends Component {
 
   inputDeselected() {
     const { value } = this.props;
-    if (value === '') {
+    if (value === "") {
       Animated.parallel([
         Animated.timing(this.state.fontSize, { toValue: 18, duration: 150 }),
         Animated.timing(this.state.position, {
@@ -78,7 +78,7 @@ class Input extends Component {
           duration: 150
         })
       ]).start();
-      this.setState({ borderColor: 'black' });
+      this.setState({ borderColor: "black" });
     }
   }
 
@@ -90,11 +90,11 @@ class Input extends Component {
         duration: 150
       })
     ]).start();
-    this.setState({ borderColor: '#F7A021' });
+    this.setState({ borderColor: "#F7A021" });
   }
 
   handleOnFocus() {
-    if (typeof this.props.scrollToInput !== 'undefined') {
+    if (typeof this.props.scrollToInput !== "undefined") {
       this.props.scrollToInput(this.state.screenPosition);
     }
     this.inputSelected();
@@ -118,7 +118,10 @@ class Input extends Component {
       autoFocus,
       icon,
       iconOnPress,
-      maxLength
+      maxLength,
+      backgroundColor,
+      borderColor,
+      color
     } = this.props;
     return (
       <View
@@ -127,9 +130,13 @@ class Input extends Component {
             screenPosition: (multiline ? 200 : 100) + event.nativeEvent.layout.y
           })
         }
-        style={getContainerStyle(this.props, this.state.borderColor)}
+        style={[
+          getContainerStyle(this.props, this.state.borderColor),
+          backgroundColor,
+          borderColor
+        ]}
       >
-        {placeholder === '' ? null : (
+        {placeholder === "" ? null : (
           <Animated.Text style={this.getPlaceholderStyle()}>
             {placeholder}
           </Animated.Text>
@@ -145,7 +152,7 @@ class Input extends Component {
             onEndEditing={() => this.inputDeselected()}
             onChangeText={text => onChangeText(text)}
             value={value}
-            style={getInputStyle(this.props)}
+            style={[getInputStyle(this.props), color]}
             autoCapitalize={autoCapitalize}
             secureTextEntry={secureText}
             autoCorrect={autoCorrect}
@@ -161,7 +168,7 @@ class Input extends Component {
           />
           {icon ? (
             <TouchableOpacity style={iconTouchableStyle} onPress={iconOnPress}>
-              <FontAwesome name={icon} style={{ color: '#F7A021' }} size={20} />
+              <FontAwesome name={icon} style={{ color: "#F7A021" }} size={20} />
             </TouchableOpacity>
           ) : null}
         </View>
@@ -171,7 +178,7 @@ class Input extends Component {
 }
 
 Input.defaultProps = {
-  autoCapitalize: 'sentences',
+  autoCapitalize: "sentences",
   autoCorrect: false,
   autoFocus: false,
   editable: true,
@@ -180,7 +187,7 @@ Input.defaultProps = {
   extraPlaceHolderStyle: null,
   icon: null,
   hasError: false,
-  keyboardType: 'default',
+  keyboardType: "default",
   maxLength: 50,
   multiline: false,
   numberOfLines: 1,
@@ -190,7 +197,7 @@ Input.defaultProps = {
   returnKeyType: null,
   scrollToInput: undefined,
   secureText: false,
-  warningMessage: '',
+  warningMessage: "",
   width: null
 };
 
