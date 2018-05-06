@@ -333,9 +333,8 @@ class MyProfileScreen extends Component {
 
   renderFields() {
     const { user, editMode, strings, oldUser } = this.state;
-    const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
-    fields.forEach(field => {
+    Object.keys(MY_PROFILE_SCREEN_STRINGS).forEach(field => {
       if (Object.prototype.hasOwnProperty.call(user, field))
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });

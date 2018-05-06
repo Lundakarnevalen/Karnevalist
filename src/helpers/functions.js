@@ -47,9 +47,8 @@ export function containsOnlyDigits(text) {
 }
 
 export function getStrings(language, COMPONENT_STRINGS) {
-  const { fields } = COMPONENT_STRINGS;
   const strings = {};
-  fields.forEach(
+  Object.keys(COMPONENT_STRINGS).forEach(
     field => (strings[field] = COMPONENT_STRINGS[field][language])
   );
   return strings;

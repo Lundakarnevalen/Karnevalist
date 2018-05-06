@@ -6,6 +6,7 @@ import {
   NEWS_URL,
   USER_URL,
   CHECK_IN_URL,
+  MEDCHECK_URL,
   WIDTH
 } from './Constants';
 import images from '~/assets/images';
@@ -116,6 +117,21 @@ export function fetchCheckInStatus(email, token, callback) {
     })
     .catch(() => {
       if (typeof callback === 'function') callback('Error fetching check in');
+    });
+}
+
+export function fetchMedcheck(pNbr, callback) {
+
+  const URL = MEDCHECK_URL + pNbr;
+  axios
+    .get(URL)
+    .then(response => {
+      const userinfo = { sectionEN: response.data.sections[0].nameEn, sectionSE: response.data.sections[0].nameSv, image:response.data.userimage }
+      if (typeof callback === 'function')callback(response.data.success, userinfo);
+    })
+    .catch((error) => {
+        console.log("fetching", error);
+      if (typeof callback === 'function') callback(false);
     });
 }
 

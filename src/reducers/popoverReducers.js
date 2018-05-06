@@ -1,9 +1,9 @@
-import { SET_POPOVER } from '../actions/Types.js';
+import { SET_POPOVER } from '../actions/Types';
 import { setPopoverStatus } from '../helpers/LocalSave';
 
 const INITIAL_STATE = {
-  homeScreenPopover: true,
-  sectionScreenPopover: true,
+  homeScreenPopover: false,
+  sectionScreenPopover: false,
   songBookScreenPopover: true
 };
 
