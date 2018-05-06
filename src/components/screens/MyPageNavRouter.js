@@ -43,7 +43,7 @@ class MyPageNavRouter extends Component {
   componentWillMount() {
     fetchMedcheck(this.props.userinfo.personalNumber, (success, userinfo) => {
       if (success) {
-        this.props.setUserinfo({...this.props.userinfo, ...userinfo})
+        this.props.setUserinfo({ ...this.props.userinfo, ...userinfo });
       }
     });
     if (this.props.token) this.updateProgress();
@@ -304,7 +304,9 @@ MyPageNavRouter.propTypes = {
   navigation: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired,
   setPopover: PropTypes.func.isRequired,
-  progress: PropTypes.number.isRequired
+  setUserinfo: PropTypes.func.isRequired,
+  progress: PropTypes.number.isRequired,
+  userinfo: PropTypes.shape().isRequired
 };
 
 export default connect(mapStateToProps, {

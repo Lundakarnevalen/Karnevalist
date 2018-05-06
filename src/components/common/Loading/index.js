@@ -23,7 +23,7 @@ class Loading extends Component {
 
   spin(bigger) {
     this.state.spinValue.setValue(0);
-    const duration = Math.floor(Math.random() * 1 + 1) === 1 ? 200 : 400;
+    const duration = Math.floor(Math.random() * 1 + 10) === 1 ? 400 : 2000;
     const size = Math.floor(Math.random() * 5 + 1);
     Animated.parallel([
       Animated.timing(this.state.spinValue, {
@@ -58,13 +58,9 @@ class Loading extends Component {
             containerAnimated,
             {
               transform: [
-                {
-                  rotate: spin
-                },
+                { rotate: spin },
                 { scaleY: this.state.size },
-                {
-                  scaleX: this.state.size
-                }
+                { scaleX: this.state.size }
               ]
             }
           ]}

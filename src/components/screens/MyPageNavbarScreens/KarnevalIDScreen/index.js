@@ -23,11 +23,13 @@ import {
   PURPLE,
   IS_IOS
 } from '~/src/helpers/Constants';
+import { setUserinfo } from '~/src/actions';
 import images from '~/assets/images/';
 import { karnevalID } from '~/assets/images/KarnevalID';
 import * as Animatable from 'react-native-animatable';
 import { takeSnapshotAsync } from 'expo';
 import { styles } from './styles';
+import { fetchMedcheck } from '~/src/helpers/ApiManager';
 const duration = 10000;
 
 const cupImages = [
@@ -85,7 +87,6 @@ animatableImage.propTypes = {
   style: PropTypes.shape().isRequired
 };
 
-const DEGREE = 1;
 class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
@@ -93,17 +94,14 @@ class KarnevalIDScreen extends Component {
       spinValue: new Animated.Value(0),
       karnevalIDUri: null,
       deg: 0,
+      turningDeg: Math.floor(Math.random() * 15) + 1,
       loadingComplete: false,
       showBack: false
     };
   }
 
   componentWillReceiveProps(props) {
-    if (
-      (this.image && props.userinfo.image) ||
-      this.props.language !== props.language
-    )
-      this.setState({ loadingComplete: true });
+    if (props.userinfo.image) this.setState({ loadingComplete: true });
   }
 
   async getIDImage() {
@@ -120,19 +118,38 @@ class KarnevalIDScreen extends Component {
 
   spin() {
     this.state.spinValue.setValue(0);
-    const { deg } = this.state;
+    const { deg, turningDeg } = this.state;
     Animated.timing(this.state.spinValue, {
       toValue: 1,
       duration: 5000,
       easing: Easing.linear
     }).start(() => {
-      this.setState({ deg: deg - DEGREE });
+      this.setState({
+        deg: deg - turningDeg,
+        turningDeg: Math.floor(Math.random() * 15) + 1
+      });
     });
   }
 
   renderRefreshButton() {
+    const { userinfo } = this.props;
     return (
-      <TouchableOpacity onPress={() => this.setState({ karnevalIDUri: null })}>
+      <TouchableOpacity
+        onPress={() => {
+          if (userinfo && !userinfo.image) {
+            fetchMedcheck(userinfo.personalNumber, (success, newUserinfo) => {
+              if (success) {
+                this.props.setUserinfo({
+                  ...userinfo,
+                  ...newUserinfo
+                });
+              }
+            });
+          } else {
+            this.setState({ karnevalIDUri: null });
+          }
+        }}
+      >
         <MaterialIcons name="refresh" size={35} color="white" />
       </TouchableOpacity>
     );
@@ -223,24 +240,19 @@ class KarnevalIDScreen extends Component {
       container,
       textStyle,
       baseImageStyle,
-      infoView,
       card,
       cups,
-      ppContainerStyle,
-      picStyle,
       fixCircleClipping,
       imageView,
-      idCard,
-      loadingCard,
       sponsView
     } = styles;
     const { userinfo, language } = this.props;
-    const { karnevalIDUri, deg, spinValue, showBack } = this.state;
+    const { karnevalIDUri, deg, spinValue, showBack, turningDeg } = this.state;
 
     const strings = getStrings(language, KARNEVAL_ID_SCREEN_STRINGS);
     const spin = spinValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [deg + 'deg', deg + 360 - DEGREE + 'deg']
+      outputRange: [deg + 'deg', deg + 360 - turningDeg + 'deg']
     });
     const anim = { transform: [{ rotate: spin }] };
     return (
@@ -250,7 +262,6 @@ class KarnevalIDScreen extends Component {
           leftIcon={this.renderRefreshButton()}
           title={strings.title}
         />
-
         <TouchableWithoutFeedback onPress={() => this.spin()}>
           <Animated.View style={[card, anim]}>
             <View style={fixCircleClipping} />
@@ -292,4 +303,4 @@ KarnevalIDScreen.propTypes = {
   userinfo: PropTypes.shape().isRequired
 };
 
-export default connect(mapStateToProps)(KarnevalIDScreen);
+export default connect(mapStateToProps, { setUserinfo })(KarnevalIDScreen);
