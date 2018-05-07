@@ -89,6 +89,7 @@ class GameScreen extends Component {
       })
     } else {
       this._getLocationAsync()
+      this._setupAsync()
     }
 
     this.infoIntervalId = setInterval(() => {
@@ -116,6 +117,17 @@ class GameScreen extends Component {
 
   componentWillUnmount () {
     clearInterval(this.infoIntervalId)
+  }
+
+  _setupAsync = async () => {
+    axios
+      .get('https://api.10av10.com/location')
+      .then(res => {
+        if (res.data && res.data.longitude && res.data.latitude) {
+          this.setState({dstLocation: res.data})
+        }
+      })
+      .catch(err => console.error(err))
   }
 
   _getLocationAsync = async () => {
