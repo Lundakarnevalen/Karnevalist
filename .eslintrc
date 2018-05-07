@@ -3,14 +3,14 @@
     "browser": true,
     "node": true,
     "mocha": true,
-    "es6": true,
+    "es6": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
   "plugins": [
-    "react",
+    "react"
   ],
   "extends": [
     "eslint:recommended",
@@ -18,18 +18,24 @@
     "airbnb",
     "prettier",
     "prettier/react",
-    "prettier/standard",
+    "prettier/standard"
   ],
   "rules": {
-    // more rules
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    linebreak-style: 0,
-    import/prefer-default-export: 0
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "linebreak-style": 0,
+    "import/prefer-default-export": 0
   },
-
   "settings": {
     "import/resolver": {
-      "babel-root-import": {},
+      "babel-root-import": {}
     }
   }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import {
   setSections,
@@ -25,6 +25,7 @@ import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/Setting
 import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
 import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
 import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
+import TreasureEntryPoint from '~/src/components/EntireTreasureHunt/TreasureEntryPoint';
 import KarneskojScreen from '~/src/components/screens/MyPageNavbarScreens/KarneskojScreen';
 import ChangeLanguageScreen from '~/src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen';
 import KarnevalIDScreen from '~/src/components/screens/MyPageNavbarScreens/KarnevalIDScreen';
@@ -218,11 +219,14 @@ const TabNav = TabNavigator(
       })
     },
     Home: {
-      screen: HomeScreen,
+      screen: TreasureEntryPoint,
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: namedTabBarIcon('home')
-      })
+        tabBarIcon: ({tintColor, focused}) => (
+          <MaterialCommunityIcons
+            name="treasure-chest"
+            size={SIZE}
+            color={focused ? tintColor : '#A9A9A9'}/>)})
     },
     MyProfile: {
       screen: MyProfileScreen,
