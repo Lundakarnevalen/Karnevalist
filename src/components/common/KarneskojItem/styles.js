@@ -12,7 +12,7 @@ export const styles = {
     borderWidth: 1,
     marginTop: 8,
     borderColor: '#F7A021',
-    marginLeft: 10,
+    marginLeft: 10
   },
   titleStyle: {
     fontSize: 20,

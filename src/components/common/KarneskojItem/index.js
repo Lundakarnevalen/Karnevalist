@@ -8,19 +8,17 @@ const KarneskojItem = ({ title, icon, onPress }) => {
   const { containerStyle, innerContainerStyle } = styles;
   return (
     <TouchableOpacity onPress={() => onPress()} style={containerStyle}>
-        <View style={innerContainerStyle}>
-          <MaterialIcons name={icon} size={ITEM_WIDTH/3.5} color="#F7A021"/>
-          <Text style= {styles.titleStyle}>
-            {title}
-          </Text>
-        </View>
+      <View style={innerContainerStyle}>
+        <MaterialIcons name={icon} size={ITEM_WIDTH / 3.5} color="#F7A021" />
+        <Text style={styles.titleStyle}>{title}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
 
 KarneskojItem.defaultProps = {
   title: '',
-  icon: '',
+  icon: ''
 };
 
 KarneskojItem.propTypes = {

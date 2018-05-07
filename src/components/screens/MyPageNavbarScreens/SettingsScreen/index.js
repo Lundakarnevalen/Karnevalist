@@ -6,26 +6,16 @@ import {
   Header,
   ListItem,
   BackgroundImage,
-  SuperAgileAlert
+  SuperAgileAlert,
+  CustomButton
 } from '~/src/components/common';
 import { removeItem } from '~/src/helpers/LocalSave';
-import { setProgress, resetData } from '~/src/actions';
-import {
-  LOGOUT_RESET_ACTION,
-  PROGRESS,
-  HEIGHT,
-  IS_IOS
-} from '~/src/helpers/Constants';
+import { resetData } from '~/src/actions';
+import { LOGOUT_RESET_ACTION, WIDTH } from '~/src/helpers/Constants';
 import { SETTINGS_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
 import { getStrings } from '~/src/helpers/functions';
 
-const WITH_MY_REG = [
-  { key: 'profile' },
-  { key: 'registration' },
-  { key: 'logout' }
-];
-const WO_MY_REG = [{ key: 'profile' }, { key: 'logout' }];
-
+const SETTINGS_TITLES = [{ key: 'changeLanguage' }, { key: 'sections' }];
 class SettingsScreen extends Component {
   constructor(props) {
     super(props);
@@ -36,10 +26,7 @@ class SettingsScreen extends Component {
 
   getItems() {
     const strings = this.getLanguageStrings();
-    const { progress } = this.props;
-    const settingsTitles =
-      progress === PROGRESS.SENT_SECTIONS ? WITH_MY_REG : WO_MY_REG;
-    const items = settingsTitles.map(item => ({
+    const items = SETTINGS_TITLES.map(item => ({
       key: item.key,
       title: strings[item.key]
     }));
@@ -76,7 +63,6 @@ class SettingsScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <FlatList
-          style={{ height: HEIGHT - (IS_IOS ? 113 : 135) }}
           contentContainerStyle={{ alignItems: 'center' }}
           data={this.getItems()}
           renderItem={({ item }) => (
@@ -89,13 +75,25 @@ class SettingsScreen extends Component {
                   navigation.navigate('MyRegistration', {
                     info: item
                   });
-                } else if (item.key === 'logout') {
-                  this.setState({ alertVisible: true });
+                } else if (item.key === 'sections') {
+                  navigation.navigate('Sections', {
+                    screenProps: navigation
+                  });
+                } else if (item.key === 'changeLanguage') {
+                  navigation.navigate('LanguageScreen');
                 }
               }}
             />
           )}
         />
+        <View style={{ alignItems: 'center', marginTop: 100 }}>
+          <CustomButton
+            text={strings.logout}
+            width={WIDTH * 0.9}
+            style="alertButton"
+            onPress={() => this.setState({ alertVisible: true })}
+          />
+        </View>
         <SuperAgileAlert
           alertVisible={this.state.alertVisible}
           setAlertVisible={visible => this.setState({ alertVisible: visible })}
@@ -110,17 +108,13 @@ class SettingsScreen extends Component {
 SettingsScreen.propTypes = {
   navigation: PropTypes.shape().isRequired,
   language: PropTypes.string.isRequired,
-  progress: PropTypes.number.isRequired,
   resetData: PropTypes.func.isRequired,
   screenProps: PropTypes.shape().isRequired
 };
 
-const mapStateToProps = ({ currentLanguage, userInformation }) => {
-  const { progress } = userInformation;
+const mapStateToProps = ({ currentLanguage }) => {
   const { language } = currentLanguage;
-  return { language, progress };
+  return { language };
 };
 
-export default connect(mapStateToProps, { setProgress, resetData })(
-  SettingsScreen
-);
+export default connect(mapStateToProps, { resetData })(SettingsScreen);

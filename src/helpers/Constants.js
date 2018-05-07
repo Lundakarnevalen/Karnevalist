@@ -1,6 +1,6 @@
 import { NavigationActions } from 'react-navigation';
 import { Dimensions, Platform } from 'react-native';
-
+import { Constants } from 'expo';
 // URL constants
 
 const BASE_URL = 'https://api.karnevalist.se/';
@@ -13,6 +13,7 @@ export const FORGOT_PASSWORD_URL = `${BASE_URL}/login/forgotpassword`;
 export const LOGIN_URL = `${BASE_URL}/login/email`;
 export const USER_URL = `${BASE_URL}/api/user/`;
 export const CHECK_IN_URL = `${BASE_URL}/api/user/checkin/`;
+export const MEDCHECK_URL = `${BASE_URL}/medcheck/`;
 export const NEWS_URL =
   'http://lundakarnevalen.se/wp-json/wp/v2/posts?category=';
 
@@ -35,3 +36,15 @@ export const LOGOUT_RESET_ACTION = NavigationActions.reset({
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 export const IS_IOS = Platform.OS === 'ios';
+export const LANGUAGES = [
+  { title: 'Svenska', val: 'SE' },
+  { title: 'English', val: 'EN' }
+];
+export const NAVBAR_HEIGHT = IS_IOS ? 49 : 60;
+export const HEADER_HEIGHT = IS_IOS ? 64 + 15 : 50 + Constants.statusBarHeight;
+export const VIEW_HEIGHT = IS_IOS
+  ? HEIGHT - NAVBAR_HEIGHT - HEADER_HEIGHT
+  : HEIGHT - NAVBAR_HEIGHT - HEADER_HEIGHT;
+
+export const PINK = '#FBBCC0';
+export const PURPLE = '#8A4797';

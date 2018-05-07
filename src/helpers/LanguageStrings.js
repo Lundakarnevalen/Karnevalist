@@ -129,30 +129,6 @@ const no = {
 };
 
 export const LOGIN_SCREEN_STRINGS = {
-  fields: [
-    'email',
-    'password',
-    'loginButton',
-    'languageButton',
-    'forgotPassword',
-    'createProfile',
-    'readMore',
-    'emailError',
-    'passwordError',
-    'error',
-    'errorMsg400',
-    'errorMsg401',
-    'errorMsg404',
-    'errorMsgInternal',
-    'passwordPopupHeader',
-    'passwordPopupInfo',
-    'ok',
-    'cancel',
-    'resetPassword',
-    'responseFail',
-    'responseSuccess',
-    'resetPasswordComplete'
-  ],
   email: {
     SE: 'Mailadress',
     EN: 'Email Address'
@@ -224,65 +200,6 @@ export const LOGIN_SCREEN_STRINGS = {
 };
 
 export const REGISTRATION_SCREEN_STRINGS = {
-  fields: [
-    'header',
-    'firstName',
-    'lastName',
-    'socialSecurityNumber',
-    'email',
-    'confirmEmail',
-    'password',
-    'confirmPassword',
-    'address',
-    'postNumber',
-    'city',
-    'phoneNumber',
-    'foodPreference',
-    'shirtSize',
-    'shirtSizeArray',
-    'studentNation',
-    'studentNationArray',
-    'activeKarneval',
-    'driversLicense',
-    'driversLicenseArray',
-    'auditionSmallSceneHeader',
-    'auditionBigSceneHeader',
-    'auditionCheckboxes',
-    'checkBoxNames',
-    'checkBoxesHeader',
-    'checkBoxesHeaderToLearn',
-    'register',
-    'error',
-    'errorMsg400',
-    'errorMsg401',
-    'errorMsg404',
-    'errorMsgInternal',
-    'ok',
-    'co',
-    'other',
-    'plenipotentiary',
-    'yearStudyStart',
-    'previousInvolvement',
-    'corps',
-    'bff',
-    'bffInfo',
-    'smallPleasuresHeader',
-    'bigPleasuresHeader',
-    'smallPleasuresInfo',
-    'bigPleasuresInfo',
-    'groupLeader',
-    'gdpr1',
-    'gdpr2',
-    'gdpr3',
-    'gdpr4',
-    'corpsArray',
-    'errorMsg409EmailAndPersonalNumber',
-    'errorMsg409Email',
-    'errorMsg409PersonalNumber',
-    'cancel',
-    'confirmRegister',
-    'alertHeader'
-  ],
   header: {
     SE: 'Skapa profil',
     EN: 'Create Profile'
@@ -557,17 +474,6 @@ export const REGISTRATION_SCREEN_STRINGS = {
 };
 
 export const REGISTRATION_INFO_SCREEN_STRINGS = {
-  fields: [
-    'title',
-    'header',
-    'panelTitle1',
-    'panelTitle2',
-    'panelTitle3',
-    'infoText1',
-    'infoText2',
-    'infoText3',
-    'buttonText'
-  ],
   title: {
     SE: 'Om registreringen',
     EN: 'About the Registration'
@@ -613,7 +519,6 @@ export const REGISTRATION_INFO_SCREEN_STRINGS = {
 };
 
 export const SECTION_SCREEN_STRINGS = {
-  fields: ['title', 'refresh', 'popoverText', 'headerTitle'],
   title: {
     SE: 'Sektioner',
     EN: 'Sections'
@@ -633,7 +538,6 @@ export const SECTION_SCREEN_STRINGS = {
 };
 
 export const NEWS_SCREEN_STRINGS = {
-  fields: ['title'],
   title: {
     SE: 'Nyheter',
     EN: 'News'
@@ -641,7 +545,6 @@ export const NEWS_SCREEN_STRINGS = {
 };
 
 export const KARNESKOJ_SCREEN_STRINGS = {
-  fields: ['title', 'KarneJodel', 'Eldoradio', 'Songbook'],
   title: {
     SE: 'Karneskoj',
     EN: 'Karnefun'
@@ -657,27 +560,10 @@ export const KARNESKOJ_SCREEN_STRINGS = {
   Songbook: {
     SE: 'Sångbok',
     EN: 'Songbook'
-  },
+  }
 };
 
 export const HOME_SCREEN_STRINGS = {
-  fields: [
-    'title',
-    'createProfile',
-    'Karnevalist',
-    'RightNow',
-    'CheckIn',
-    'ChooseSections',
-    'info',
-    'SendIn',
-    'popoverText',
-    'step1',
-    'step2',
-    'step3',
-    'step4',
-    'CheckInInformation',
-    'ok'
-  ],
   title: {
     SE: 'Hem',
     EN: 'Home'
@@ -740,25 +626,23 @@ export const HOME_SCREEN_STRINGS = {
 };
 
 export const SETTINGS_SCREEN_STRINGS = {
-  fields: [
-    'title',
-    'profile',
-    'registration',
-    'logout',
-    'cancel',
-    'ok',
-    'alertHeader',
-    'alertMessage'
-  ],
   title: {
     SE: 'Inställningar',
     EN: 'Settings'
+  },
+  changeLanguage: {
+    SE: 'Byt språk',
+    EN: 'Change language'
   },
   profile,
   registration,
   logout: {
     SE: 'Logga ut',
     EN: 'Logout'
+  },
+  sections: {
+    SE: 'Sektioner',
+    EN: 'Sections'
   },
   cancel,
   ok,
@@ -773,7 +657,6 @@ export const SETTINGS_SCREEN_STRINGS = {
 };
 
 export const SECTION_ITEM_SCREEN_STRINGS = {
-  fields: ['messageStart', 'messageEndAdd', 'messageEndRemove'],
   messageStart: {
     SE: 'Sektion: "',
     EN: 'Section: "'
@@ -789,7 +672,6 @@ export const SECTION_ITEM_SCREEN_STRINGS = {
 };
 
 export const SONGBOOK_SCREEN_STRINGS = {
-  fields: ['title', 'headerTitle', 'search', 'searchPopover'],
   title: {
     SE: 'Sångbok',
     EN: 'Song Book'
@@ -809,27 +691,6 @@ export const SONGBOOK_SCREEN_STRINGS = {
 };
 
 export const CONFIRM_PAGE_STRINGS = {
-  fields: [
-    'title',
-    'sectionSelection',
-    'selectionOK',
-    'send',
-    'toSections',
-    'expiredTokenTitle',
-    'expiredTokenMessage',
-    'alertErrorHeader',
-    'alertSuccessHeader',
-    'ok',
-    'confirmMessage',
-    'confirmHeader',
-    'yes',
-    'cancel',
-    'checkinMessage',
-    'notCheckedInButton',
-    'notFiveSections',
-    'sectionsPriosMessage',
-    'sectionsPriosHeader'
-  ],
   title: {
     SE: 'Bekräfta dina val',
     EN: 'Confirmation Page'
@@ -896,43 +757,6 @@ export const CONFIRM_PAGE_STRINGS = {
 };
 
 export const MY_PROFILE_SCREEN_STRINGS = {
-  fields: [
-    'title',
-    'firstName',
-    'lastName',
-    'email',
-    'careOf',
-    'address',
-    'postNumber',
-    'city',
-    'phoneNumber',
-    'foodPreference',
-    'language',
-    'driversLicense',
-    'audition',
-    'talent',
-    'entertainmentCategory',
-    'corps',
-    'studentNation',
-    'startOfStudies',
-    'pastInvolvement',
-    'groupLeader',
-    'interests',
-    'misc',
-    'cancel',
-    'save',
-    'popUpHeader',
-    'popUpInfo',
-    'updateInfoMessageSuccess',
-    'updateInfoMessageFail',
-    'expiredTokenTitle',
-    'expiredTokenMessage',
-    'ok',
-    'invalidChangesMadeText',
-    'invalidChangesMadeHeader',
-    'yes',
-    'no'
-  ],
   title: profile,
   firstName,
   lastName,
@@ -1006,8 +830,8 @@ export const MY_PROFILE_SCREEN_STRINGS = {
     EN: 'Save changes?'
   },
   updateInfoMessageSuccess: {
-    SE: 'Användarinfo uppdaterad',
-    EN: 'Userinfo updated'
+    SE: 'Din profil är uppdaterad',
+    EN: 'Your profile is updated'
   },
   updateInfoMessageFail: {
     SE: 'Något gick fel',
@@ -1029,21 +853,41 @@ export const MY_PROFILE_SCREEN_STRINGS = {
 };
 
 export const MY_REGISTRATION_SCREEN_STRINGS = {
-  fields: ['title', 'emptyListMessage'],
   title: registration,
   emptyListMessage: {
     SE: 'Du har inte valt några sektioner',
     EN: 'You have not chosen any sections'
   }
 };
-
+export const CHANGE_LANGUAGE_SCREEN_STRINGS = {
+  title: {
+    SE: 'Byt språk',
+    EN: 'Change language'
+  }
+};
+export const KARNEVAL_ID_SCREEN_STRINGS = {
+  title: {
+    SE: 'Karneval-ID',
+    EN: 'Karneval-ID'
+  },
+  name: {
+    SE: 'NAMN',
+    EN: 'NAME'
+  },
+  section: {
+    SE: 'SEKTION',
+    EN: 'SECTION'
+  },
+  personalNumber: {
+    SE: 'PERSONNUMMER',
+    EN: 'SSN'
+  }
+};
 export const LOADING_STRINGS = {
-  fields: ['loading'],
   loading
 };
 
 export const COUNT_DOWN_STRINGS = {
-  fields: ['karneval', 'upprop'],
   karneval: {
     SE: 'Det är karneval!',
     EN: "It's carnival!"
@@ -1055,22 +899,6 @@ export const COUNT_DOWN_STRINGS = {
 };
 
 export const ERROR_MSG_INPUT_FIELD = {
-  fields: [
-    'errorMsgOnlyDigits',
-    'errorMsgOnlyLetters',
-    'errorMsgInvalidEmail',
-    'errorMsgNoMatchEmail',
-    'errorMsgPwd',
-    'errorMsgPhoneNbr',
-    'errorMsgSocialSecurity',
-    'errorMsgNoMatchPassword',
-    'errorMsgZipCode',
-    'errorMsgFoodPreference',
-    'errorMsgWrongInput',
-    'errorMsgCity',
-    'errorMsgAnyEmpty',
-    'errorMsgShortOnlyDigits'
-  ],
   errorMsgOnlyDigits: {
     SE: 'Detta fält får endast innehålla siffror',
     EN: 'This field may only contain digits'

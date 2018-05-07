@@ -92,8 +92,28 @@ class MyProfileScreen extends Component {
 
   getRightIcon() {
     const { rightIconStyle } = styles;
-    const { editMode } = this.state;
-    return (
+    const { editMode, user, oldUser } = this.state;
+    const changesMade =
+      Object.keys(user).filter(key => user[key] !== oldUser[key]).length > 0;
+    return editMode ? (
+      <TouchableOpacity
+        style={rightIconStyle}
+        onPress={() => {
+          if (changesMade) this.handleDoneEditing();
+          else this.setState({ editMode: true });
+        }}
+        disabled={!changesMade}
+      >
+        <MaterialIcons
+          name="done"
+          style={{
+            color: changesMade ? 'white' : '#A9A9A9',
+            right: 0
+          }}
+          size={30}
+        />
+      </TouchableOpacity>
+    ) : (
       <TouchableOpacity
         style={rightIconStyle}
         onPress={() => {
@@ -102,12 +122,34 @@ class MyProfileScreen extends Component {
         }}
       >
         <MaterialIcons
-          name={editMode ? 'done' : 'edit'}
-          style={{ color: 'white', right: 0 }}
+          name="edit"
+          style={{
+            color: 'white',
+            right: 0
+          }}
           size={30}
         />
       </TouchableOpacity>
     );
+  }
+
+  getLeftIcon() {
+    const { rightIconStyle } = styles;
+    const { editMode } = this.state;
+    return editMode ? (
+      <TouchableOpacity
+        style={rightIconStyle}
+        onPress={() => {
+          if (editMode) this.handleDoneEditing();
+        }}
+      >
+        <MaterialIcons
+          name="clear"
+          style={{ color: 'white', right: 0 }}
+          size={30}
+        />
+      </TouchableOpacity>
+    ) : null;
   }
 
   getWarningMessage(key) {
@@ -291,9 +333,8 @@ class MyProfileScreen extends Component {
 
   renderFields() {
     const { user, editMode, strings, oldUser } = this.state;
-    const { fields } = MY_PROFILE_SCREEN_STRINGS;
     const labels = {};
-    fields.forEach(field => {
+    Object.keys(MY_PROFILE_SCREEN_STRINGS).forEach(field => {
       if (Object.prototype.hasOwnProperty.call(user, field))
         labels[field] = MY_PROFILE_SCREEN_STRINGS[field][this.props.language];
     });
@@ -349,6 +390,7 @@ class MyProfileScreen extends Component {
         <Header
           title={strings.title}
           navigation={navigation}
+          leftIcon={this.getLeftIcon()}
           rightIcon={this.getRightIcon()}
         />
         {this.renderMainView()}
