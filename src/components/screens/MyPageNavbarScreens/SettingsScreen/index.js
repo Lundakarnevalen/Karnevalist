@@ -63,7 +63,7 @@ class SettingsScreen extends Component {
         <BackgroundImage pictureNumber={5} />
         <Header title={strings.title} leftIcon={null} navigation={navigation} />
         <FlatList
-          contentContainerStyle={{ alignItems: 'center' }}
+          contentContainerStyle={{ alignItems: 'center', marginTop: 10 }}
           data={this.getItems()}
           renderItem={({ item }) => (
             <ListItem

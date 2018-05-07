@@ -55,7 +55,7 @@ const getButtonStyle = style => {
   }
 };
 
-const CustomButton = ({ onPress, text, width, style }) => {
+const CustomButton = ({ onPress, text, width, style, textSize }) => {
   const { button } = styles;
   return (
     <TouchableOpacity
@@ -70,13 +70,15 @@ const CustomButton = ({ onPress, text, width, style }) => {
 };
 CustomButton.defaultProps = {
   width: WIDTH / 1.5,
-  style: ''
+  style: '',
+  textSize: 16
 };
 
 CustomButton.propTypes = {
   onPress: PropTypes.func.isRequired,
   style: PropTypes.string,
   text: PropTypes.string.isRequired,
-  width: PropTypes.number
+  width: PropTypes.number,
+  textSize: PropTypes.number
 };
 export { CustomButton };
