@@ -108,8 +108,8 @@ export const styles = {
   },
   sponsView: {
     position: 'absolute',
-    top: HEADER_HEIGHT + 70,
+    top: IS_IOS ? VIEW_HEIGHT / 3 : HEADER_HEIGHT + 70,
     transform: [{ rotate: '90deg' }],
-    left: IS_IOS ? -35 : -15
+    left: IS_IOS ? -25 : -15
   }
 };
