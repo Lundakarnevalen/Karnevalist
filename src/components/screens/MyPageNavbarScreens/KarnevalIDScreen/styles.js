@@ -82,7 +82,8 @@ export const styles = {
     backgroundColor: 'transparent',
     height: 460,
     width: 300,
-    borderRadius: 5
+    borderRadius: 5,
+    overflow: 'hidden'
   },
   idCard: {
     position: 'absolute',
@@ -96,9 +97,10 @@ export const styles = {
   loadingCard: {
     backgroundColor: PINK,
     zIndex: 40,
+    overflow: 'hidden',
     position: 'absolute',
     height: HEIGHT,
-    width: WIDTH
+    width: WIDTH - 16
   },
   baseBig: {
     flex: 1,
@@ -108,7 +110,7 @@ export const styles = {
   },
   sponsView: {
     position: 'absolute',
-    top: IS_IOS ? VIEW_HEIGHT / 3 : HEADER_HEIGHT + 70,
+    top: VIEW_HEIGHT / 3,
     transform: [{ rotate: '90deg' }],
     left: IS_IOS ? -25 : -15
   }

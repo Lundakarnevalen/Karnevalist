@@ -212,11 +212,7 @@ class KarnevalIDScreen extends Component {
             redirect={() => this.getIDImage()}
           />
         </View>
-        <View
-          collapsable={false}
-          style={imageView}
-          ref={view => (this.image = view)}
-        >
+        <View style={imageView} ref={view => (this.image = view)}>
           <Image
             resizeMode="contain"
             source={karnevalID.baseBig}
@@ -254,7 +250,7 @@ class KarnevalIDScreen extends Component {
       inputRange: [0, 1],
       outputRange: [deg + 'deg', deg + 360 - turningDeg + 'deg']
     });
-    const anim = { transform: [{ rotate: spin }] };
+    const anim = { transform: [{ rotate: spin }], overflow: 'hidden' };
     return (
       <View style={container}>
         <Header
