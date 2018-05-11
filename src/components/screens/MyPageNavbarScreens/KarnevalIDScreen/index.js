@@ -100,8 +100,12 @@ class KarnevalIDScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({ loadingComplete: true });
+  }
   componentWillReceiveProps(props) {
-    if (props.userinfo.image) this.setState({ loadingComplete: true });
+    if (props.userinfo.image && !this.props.userinfo.image)
+      this.setState({ loadingComplete: true });
   }
 
   async getIDImage() {
@@ -257,11 +261,7 @@ class KarnevalIDScreen extends Component {
     const anim = { transform: [{ rotate: spin }] };
     return (
       <View style={container}>
-        <Header
-          rightIcon={this.renderSwapButton()}
-          leftIcon={this.renderRefreshButton()}
-          title={strings.title}
-        />
+        <Header leftIcon={this.renderRefreshButton()} title={strings.title} />
         <TouchableWithoutFeedback onPress={() => this.spin()}>
           <Animated.View style={[card, anim]}>
             <View style={fixCircleClipping} />
