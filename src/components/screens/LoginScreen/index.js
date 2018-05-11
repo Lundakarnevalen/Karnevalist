@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import { setLanguage, setToken, setEmail, setUserinfo } from '~/src/actions';
+import { setLanguage, setToken, setEmail, setUserinfo } from 'src/actions';
 import {
   Input,
   SuperAgileAlert,
@@ -12,12 +12,12 @@ import {
   Toast,
   CustomButton,
   Loading
-} from '~/src/components/common';
-import { LOGIN_URL, FORGOT_PASSWORD_URL, WIDTH } from '~/src/helpers/Constants';
-import { saveItem } from '~/src/helpers/LocalSave';
-import { getStrings } from '~/src/helpers/functions';
-import { handleErrorMsg } from '~/src/helpers/ApiManager';
-import { LOGIN_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+} from 'src/components/common';
+import { LOGIN_URL, FORGOT_PASSWORD_URL, WIDTH } from 'src/helpers/Constants';
+import { saveItem } from 'src/helpers/LocalSave';
+import { getStrings } from 'src/helpers/functions';
+import { handleErrorMsg } from 'src/helpers/ApiManager';
+import { LOGIN_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
 import { styles } from './styles';
 
 const COMPONENT_WIDTH = WIDTH * 0.9;

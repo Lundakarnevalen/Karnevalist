@@ -2,12 +2,12 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BackgroundImage, Header, ListItem } from '~/src/components/common';
-import { saveItem } from '~/src/helpers/LocalSave';
-import { LANGUAGES } from '~/src/helpers/Constants';
-import { getStrings } from '~/src/helpers/functions';
-import { setLanguage } from '~/src/actions';
-import { CHANGE_LANGUAGE_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
+import { BackgroundImage, Header, ListItem } from 'src/components/common';
+import { saveItem } from 'src/helpers/LocalSave';
+import { LANGUAGES } from 'src/helpers/Constants';
+import { getStrings } from 'src/helpers/functions';
+import { setLanguage } from 'src/actions';
+import { CHANGE_LANGUAGE_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
 
 const ChangeLanguageScreen = ({ language, navigation, setLanguage }) => {
   const strings = getStrings(language, CHANGE_LANGUAGE_SCREEN_STRINGS);

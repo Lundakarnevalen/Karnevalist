@@ -6,10 +6,10 @@ import {
   Header,
   BackgroundImage,
   KarneskojItem
-} from '~/src/components/common';
-import { KARNESKOJ_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { setPopover, setProgress } from '~/src/actions';
-import { getStrings } from '~/src/helpers/functions';
+} from 'src/components/common';
+import { KARNESKOJ_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
+import { setPopover, setProgress } from 'src/actions';
+import { getStrings } from 'src/helpers/functions';
 
 class KarneskojScreen extends Component {
   getLanguageStrings() {

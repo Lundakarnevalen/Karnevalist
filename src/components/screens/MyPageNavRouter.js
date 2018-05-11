@@ -10,33 +10,33 @@ import {
   setPopover,
   setSectionPriorities,
   setUserinfo
-} from '~/src/actions';
+} from 'src/actions';
 import {
   SECTION_PRIORITY_URL,
   PROGRESS,
   WIDTH,
   IS_IOS
-} from '~/src/helpers/Constants';
-import HomeScreen from '~/src/components/screens/MyPageNavbarScreens/HomeScreen';
-import SectionScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen';
-import SongBookScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen';
-import SongScreen from '~/src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen';
-import SettingsScreen from '~/src/components/screens/MyPageNavbarScreens/SettingsScreen';
-import SectionItemScreen from '~/src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
-import MyRegistrationScreen from '~/src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
-import MyProfileScreen from '~/src/components/screens/MyPageNavbarScreens/MyProfileScreen';
-import TreasureEntryPoint from '~/src/components/EntireTreasureHunt/TreasureEntryPoint';
-import KarneskojScreen from '~/src/components/screens/MyPageNavbarScreens/KarneskojScreen';
-import ChangeLanguageScreen from '~/src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen';
-import KarnevalIDScreen from '~/src/components/screens/MyPageNavbarScreens/KarnevalIDScreen';
+} from 'src/helpers/Constants';
+import HomeScreen from 'src/components/screens/MyPageNavbarScreens/HomeScreen';
+import SectionScreen from 'src/components/screens/MyPageNavbarScreens/SectionScreen';
+import SongBookScreen from 'src/components/screens/MyPageNavbarScreens/SongBookScreen';
+import SongScreen from 'src/components/screens/MyPageNavbarScreens/SongBookScreen/SongScreen';
+import SettingsScreen from 'src/components/screens/MyPageNavbarScreens/SettingsScreen';
+import SectionItemScreen from 'src/components/screens/MyPageNavbarScreens/SectionScreen/SectionItemScreen';
+import MyRegistrationScreen from 'src/components/screens/MyPageNavbarScreens/MyRegistrationScreen';
+import MyProfileScreen from 'src/components/screens/MyPageNavbarScreens/MyProfileScreen';
+import TreasureEntryPoint from 'src/components/EntireTreasureHunt/TreasureEntryPoint';
+import KarneskojScreen from 'src/components/screens/MyPageNavbarScreens/KarneskojScreen';
+import ChangeLanguageScreen from 'src/components/screens/MyPageNavbarScreens/ChangeLanguageScreen';
+import KarnevalIDScreen from 'src/components/screens/MyPageNavbarScreens/KarnevalIDScreen';
 
 import {
   KARNEVAL_ID_SCREEN_STRINGS,
   KARNESKOJ_SCREEN_STRINGS,
   HOME_SCREEN_STRINGS,
   SETTINGS_SCREEN_STRINGS
-} from '~/src/helpers/LanguageStrings';
-import { fetchCheckInStatus, fetchMedcheck } from '~/src/helpers/ApiManager';
+} from 'src/helpers/LanguageStrings';
+import { fetchCheckInStatus, fetchMedcheck } from 'src/helpers/ApiManager';
 
 const SIZE = WIDTH / 11;
 

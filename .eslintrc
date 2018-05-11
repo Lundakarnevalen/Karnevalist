@@ -21,6 +21,7 @@
     "prettier/standard"
   ],
   "rules": {
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "react/jsx-filename-extension": [
       1,
       {

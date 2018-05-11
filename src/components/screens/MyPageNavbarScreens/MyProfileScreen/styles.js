@@ -1,4 +1,4 @@
-import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
+import { HEIGHT, IS_IOS } from 'src/helpers/Constants';
 
 export const styles = {
   scrollStyle: {

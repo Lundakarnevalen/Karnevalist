@@ -1,4 +1,4 @@
-import { PROGRESS, WIDTH } from '~/src/helpers/Constants';
+import { PROGRESS, WIDTH } from 'src/helpers/Constants';
 
 export const styles = {
   container: {

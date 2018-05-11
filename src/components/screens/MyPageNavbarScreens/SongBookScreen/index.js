@@ -8,13 +8,13 @@ import {
   ListItem,
   Input,
   Popover
-} from '~/src/components/common';
-import { SONGBOOK_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { dynamicSort, getStrings } from '~/src/helpers/functions';
-import { setPopover } from '~/src/actions';
-import { HEIGHT, IS_IOS, WIDTH } from '~/src/helpers/Constants';
-import songs2018 from '~/assets/songbook/songs2018.json';
-import songs2014 from '~/assets/songbook/songs2014.json';
+} from 'src/components/common';
+import { SONGBOOK_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
+import { dynamicSort, getStrings } from 'src/helpers/functions';
+import { setPopover } from 'src/actions';
+import { HEIGHT, IS_IOS, WIDTH } from 'src/helpers/Constants';
+import songs2018 from 'assets/songbook/songs2018.json';
+import songs2014 from 'assets/songbook/songs2014.json';
 import { styles } from './styles';
 
 const NBR_SONGS = songs2014.dict.array.length + songs2018.dict.array.length;

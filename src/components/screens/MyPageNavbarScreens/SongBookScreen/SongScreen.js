@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import { Header } from '~/src/components/common';
+import { Header } from 'src/components/common';
 import { songScreenStyles } from './styles';
 
 const SongScreen = ({ navigation }) => {

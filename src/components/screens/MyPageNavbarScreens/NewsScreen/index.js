@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header, ListItem, BackgroundImage } from '~/src/components/common';
-import { getNews } from '~/src/helpers/ApiManager';
-import { NEWS_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
-import { getStrings } from '~/src/helpers/functions';
+import { Header, ListItem, BackgroundImage } from 'src/components/common';
+import { getNews } from 'src/helpers/ApiManager';
+import { NEWS_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
+import { HEIGHT, IS_IOS } from 'src/helpers/Constants';
+import { getStrings } from 'src/helpers/functions';
 
 class NewsScreen extends Component {
   constructor(props) {

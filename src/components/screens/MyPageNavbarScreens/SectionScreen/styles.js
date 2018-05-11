@@ -1,4 +1,4 @@
-import { HEIGHT } from '~/src/helpers/Constants';
+import { HEIGHT } from 'src/helpers/Constants';
 
 export const styles = {
   textStyle: {

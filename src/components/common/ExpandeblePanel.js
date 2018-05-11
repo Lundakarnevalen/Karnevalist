@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Animated } from 'react-native';
-import { WIDTH } from '~/src/helpers/Constants';
+import { WIDTH } from 'src/helpers/Constants';
 
 class ExpandeblePanel extends Component {
   constructor(props) {

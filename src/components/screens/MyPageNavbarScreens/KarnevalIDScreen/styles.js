@@ -6,7 +6,7 @@ import {
   PINK,
   PURPLE,
   IS_IOS
-} from '~/src/helpers/Constants';
+} from 'src/helpers/Constants';
 
 export const styles = {
   container: {

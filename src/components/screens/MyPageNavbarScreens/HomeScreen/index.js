@@ -9,13 +9,13 @@ import {
   Popover,
   TimelineItem,
   CustomPicker
-} from '~/src/components/common';
-import { HOME_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { fetchCheckInStatus } from '~/src/helpers/ApiManager';
-import { PROGRESS, WIDTH } from '~/src/helpers/Constants';
-import images from '~/assets/images';
-import { setPopover, setProgress } from '~/src/actions';
-import { getStrings } from '~/src/helpers/functions';
+} from 'src/components/common';
+import { HOME_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
+import { fetchCheckInStatus } from 'src/helpers/ApiManager';
+import { PROGRESS, WIDTH } from 'src/helpers/Constants';
+import images from 'assets/images';
+import { setPopover, setProgress } from 'src/actions';
+import { getStrings } from 'src/helpers/functions';
 import { styles } from './styles';
 
 class HomeScreen extends Component {

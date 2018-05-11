@@ -8,8 +8,8 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { WIDTH, IS_IOS } from '~/src/helpers/Constants';
-import { CustomButton } from '~/src/components/common';
+import { WIDTH, IS_IOS } from 'src/helpers/Constants';
+import { CustomButton } from 'src/components/common';
 import { styles } from './styles';
 
 class CustomPicker extends Component {

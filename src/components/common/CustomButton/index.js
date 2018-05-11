@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { WIDTH } from '~/src/helpers/Constants';
+import { WIDTH } from 'src/helpers/Constants';
 import { styles } from './styles';
 
 const isDropDownButton = style => {

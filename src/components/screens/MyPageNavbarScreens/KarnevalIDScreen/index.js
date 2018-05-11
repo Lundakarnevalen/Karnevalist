@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header, Loading } from '~/src/components/common';
-import { KARNEVAL_ID_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { getStrings } from '~/src/helpers/functions';
+import { Header, Loading } from 'src/components/common';
+import { KARNEVAL_ID_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
+import { getStrings } from 'src/helpers/functions';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   HEIGHT,
@@ -22,14 +22,14 @@ import {
   PINK,
   PURPLE,
   IS_IOS
-} from '~/src/helpers/Constants';
-import { setUserinfo } from '~/src/actions';
-import images from '~/assets/images/';
-import { karnevalID } from '~/assets/images/KarnevalID';
+} from 'src/helpers/Constants';
+import { setUserinfo } from 'src/actions';
+import images from 'assets/images/';
+import { karnevalID } from 'assets/images/KarnevalID';
 import * as Animatable from 'react-native-animatable';
 import { takeSnapshotAsync } from 'expo';
 import { styles } from './styles';
-import { fetchMedcheck } from '~/src/helpers/ApiManager';
+import { fetchMedcheck } from 'src/helpers/ApiManager';
 const duration = 10000;
 
 const cupImages = [

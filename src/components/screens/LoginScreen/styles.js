@@ -1,4 +1,4 @@
-import { WIDTH, HEIGHT } from '~/src/helpers/Constants';
+import { WIDTH, HEIGHT } from 'src/helpers/Constants';
 
 export const styles = {
   container1: {

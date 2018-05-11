@@ -10,7 +10,7 @@ import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
-import { setToken, setEmail, setUserinfo } from '~/src/actions';
+import { setToken, setEmail, setUserinfo } from 'src/actions';
 import {
   Header,
   Input,
@@ -20,15 +20,15 @@ import {
   SuperAgileAlert,
   Loading,
   CustomPicker
-} from '~/src/components/common';
-import { REGISTER_URL, HEIGHT, WIDTH, IS_IOS } from '~/src/helpers/Constants';
+} from 'src/components/common';
+import { REGISTER_URL, HEIGHT, WIDTH, IS_IOS } from 'src/helpers/Constants';
 import {
   REGISTRATION_SCREEN_STRINGS,
   ERROR_MSG_INPUT_FIELD
-} from '~/src/helpers/LanguageStrings';
-import { handleErrorMsg } from '~/src/helpers/ApiManager';
-import { saveItem } from '~/src/helpers/LocalSave';
-import { getStrings } from '~/src/helpers/functions';
+} from 'src/helpers/LanguageStrings';
+import { handleErrorMsg } from 'src/helpers/ApiManager';
+import { saveItem } from 'src/helpers/LocalSave';
+import { getStrings } from 'src/helpers/functions';
 import { styles } from './styles';
 
 let zipCodePosition = 0;

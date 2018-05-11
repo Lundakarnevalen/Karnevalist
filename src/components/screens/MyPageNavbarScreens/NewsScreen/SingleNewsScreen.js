@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { View, WebView, BackHandler } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '~/src/components/common';
-import { HEIGHT, WIDTH } from '~/src/helpers/LanguageStrings';
+import { Header } from 'src/components/common';
+import { HEIGHT, WIDTH } from 'src/helpers/LanguageStrings';
 
 class NewsScreen extends Component {
   componentWillMount() {

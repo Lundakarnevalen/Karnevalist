@@ -16,23 +16,23 @@ import {
   Header,
   Input,
   CustomPicker
-} from '~/src/components/common';
-import { LOGOUT_RESET_ACTION } from '~/src/helpers/Constants';
-import { setUserinfo } from '~/src/actions';
+} from 'src/components/common';
+import { LOGOUT_RESET_ACTION } from 'src/helpers/Constants';
+import { setUserinfo } from 'src/actions';
 import {
   isEmail,
   containsOnlyLetters,
   isValidPhoneNbr,
   containsOnlyDigits,
   getStrings
-} from '~/src/helpers/functions';
+} from 'src/helpers/functions';
 import {
   MY_PROFILE_SCREEN_STRINGS,
   ERROR_MSG_INPUT_FIELD,
   REGISTRATION_SCREEN_STRINGS
-} from '~/src/helpers/LanguageStrings';
-import { removeItem } from '~/src/helpers/LocalSave';
-import { updateUser } from '~/src/helpers/ApiManager';
+} from 'src/helpers/LanguageStrings';
+import { removeItem } from 'src/helpers/LocalSave';
+import { updateUser } from 'src/helpers/ApiManager';
 import { styles } from './styles';
 
 const fulfilsRequirement = (key, toCheck) => {

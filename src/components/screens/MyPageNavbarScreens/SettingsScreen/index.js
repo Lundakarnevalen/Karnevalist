@@ -8,12 +8,12 @@ import {
   BackgroundImage,
   SuperAgileAlert,
   CustomButton
-} from '~/src/components/common';
-import { removeItem } from '~/src/helpers/LocalSave';
-import { resetData } from '~/src/actions';
-import { LOGOUT_RESET_ACTION, WIDTH } from '~/src/helpers/Constants';
-import { SETTINGS_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { getStrings } from '~/src/helpers/functions';
+} from 'src/components/common';
+import { removeItem } from 'src/helpers/LocalSave';
+import { resetData } from 'src/actions';
+import { LOGOUT_RESET_ACTION, WIDTH } from 'src/helpers/Constants';
+import { SETTINGS_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
+import { getStrings } from 'src/helpers/functions';
 
 const SETTINGS_TITLES = [{ key: 'changeLanguage' }, { key: 'sections' }];
 class SettingsScreen extends Component {

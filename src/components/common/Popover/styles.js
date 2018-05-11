@@ -1,4 +1,4 @@
-import { WIDTH, IS_IOS } from '~/src/helpers/Constants';
+import { WIDTH, IS_IOS } from 'src/helpers/Constants';
 
 const talkBubbleTop = {
   backgroundColor: 'transparent',

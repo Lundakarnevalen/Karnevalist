@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
-import { COUNT_DOWN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { getStrings } from '~/src/helpers/functions';
+import { COUNT_DOWN_STRINGS } from 'src/helpers/LanguageStrings';
+import { getStrings } from 'src/helpers/functions';
 
 import { CountDownItem } from './CountDownItem';
 import { countDownStyles } from './styles';

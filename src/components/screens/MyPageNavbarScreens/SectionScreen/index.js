@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { View, FlatList, RefreshControl, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header, ListItem, BackgroundImage } from '~/src/components/common';
-import { HEIGHT, IS_IOS } from '~/src/helpers/Constants';
-import { setSections, setPopover } from '~/src/actions';
-import { SECTION_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { dynamicSort, getStrings } from '~/src/helpers/functions';
-import { fetchSections } from '~/src/helpers/ApiManager';
+import { Header, ListItem, BackgroundImage } from 'src/components/common';
+import { HEIGHT, IS_IOS } from 'src/helpers/Constants';
+import { setSections, setPopover } from 'src/actions';
+import { SECTION_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
+import { dynamicSort, getStrings } from 'src/helpers/functions';
+import { fetchSections } from 'src/helpers/ApiManager';
 import { styles } from './styles';
 
 class SectionScreen extends Component {

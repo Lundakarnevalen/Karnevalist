@@ -1,4 +1,4 @@
-import { WIDTH } from '~/src/helpers/Constants'
+import { WIDTH } from 'src/helpers/Constants'
 
 const SIZE = WIDTH / 14
 

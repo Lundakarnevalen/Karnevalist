@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { BackHandler, View, FlatList, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header, ListItem, BackgroundImage } from '~/src/components/common';
-import { MY_REGISTRATION_SCREEN_STRINGS } from '~/src/helpers/LanguageStrings';
-import { getStrings } from '~/src/helpers/functions';
+import { Header, ListItem, BackgroundImage } from 'src/components/common';
+import { MY_REGISTRATION_SCREEN_STRINGS } from 'src/helpers/LanguageStrings';
+import { getStrings } from 'src/helpers/functions';
 import { styles } from './styles';
 
 class MyRegistrationScreen extends Component {
