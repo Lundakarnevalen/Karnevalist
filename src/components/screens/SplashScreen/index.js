@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { View, StatusBar } from "react-native";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { NavigationActions } from "react-navigation";
+import React, { Component } from 'react';
+import { View, StatusBar } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import {
   getItem,
   getPopoverStatus,
   getFavoriteSections
-} from "src/helpers/LocalSave";
-import { dynamicSort } from "src/helpers/functions";
-import { BackgroundImage, Loading } from "src/components/common";
+} from 'src/helpers/LocalSave';
+import { dynamicSort } from 'src/helpers/functions';
+import { BackgroundImage, Loading } from 'src/components/common';
 import {
   setSections,
   setToken,
@@ -17,27 +17,27 @@ import {
   setSectionPriorities,
   setUserinfo,
   setPopover
-} from "src/actions";
-import { fetchSections, fetchUserinfo } from "src/helpers/ApiManager";
-import { styles } from "./styles";
+} from 'src/actions';
+import { fetchSections, fetchUserinfo } from 'src/helpers/ApiManager';
+import { styles } from './styles';
 
 const POPOVERS = [
-  "homeScreenPopover",
-  "sectionScreenPopover",
-  "songBookScreenPopover"
+  'homeScreenPopover',
+  'sectionScreenPopover',
+  'songBookScreenPopover'
 ];
 
 class SplashScreen extends Component {
   componentWillMount() {
     const { language } = this.props;
-    StatusBar.setBarStyle("light-content", true);
+    StatusBar.setBarStyle('light-content', true);
     this.authorize();
     getFavoriteSections(result => this.props.setSectionPriorities(result));
     POPOVERS.forEach(popover => {
       getPopoverStatus(popover, bool => this.props.setPopover(popover, bool));
     });
     fetchSections(sections => {
-      sections.sort(dynamicSort("title", language));
+      sections.sort(dynamicSort('title', language));
       this.props.setSections(sections);
     });
   }
@@ -45,21 +45,21 @@ class SplashScreen extends Component {
   authorize() {
     const resetAction = NavigationActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: "LoginScreen" })],
+      actions: [NavigationActions.navigate({ routeName: 'LoginScreen' })],
       key: null
     });
     setTimeout(
       () =>
-        getItem("email", email => {
+        getItem('email', email => {
           if (email !== null) {
-            getItem("accessToken", token => {
+            getItem('accessToken', token => {
               fetchUserinfo(email, token, (response, error = false) => {
                 if (error) {
                   this.props.navigation.dispatch(resetAction);
                 } else {
                   resetAction.actions = [
                     NavigationActions.navigate({
-                      routeName: "MyPageNavRouter"
+                      routeName: 'MyPageNavRouter'
                     })
                   ];
                   this.props.setToken(token);
