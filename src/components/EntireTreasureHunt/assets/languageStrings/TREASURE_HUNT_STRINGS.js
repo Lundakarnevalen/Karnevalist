@@ -17,9 +17,9 @@ export const LANGUAGE_STRINGS = {
   },
   firstBody: {
     SE:
-      'Leta er igenom Lund för att hitta var Sture gömt sig!\n\nDe 25 första vinner ett fantastiskt ett pris!',
+      'Leta er igenom Lund för att hitta var Stina gömt sig!\n\nDe 10 första vinner ett fantastiskt ett pris!',
     EN:
-      'Find your way through Lund to find where Sture has hidden!\n\nThe first 25 to find him will recieve a special prize!'
+      'Find your way through Lund to find where Stina has hidden!\n\nThe first 10 to find him will recieve a special prize!'
   },
   secondHeader: {
     SE: 'Hur kommer det gå till?',
@@ -36,8 +36,8 @@ export const LANGUAGE_STRINGS = {
     EN: 'And then what?'
   },
   thirdBody: {
-    SE: 'När du kommit nära Sture får du en QR-kod att visa honom!',
-    EN: 'When you get close to Sture, you will get a QR code to show him!'
+    SE: 'När du kommit nära Stina får du en QR-kod att visa henne!',
+    EN: 'When you get close to Stine, you will get a QR code to show her!'
   },
   nextButton: {
     SE: 'Ge mig mer info!',
@@ -48,8 +48,8 @@ export const LANGUAGE_STRINGS = {
     EN: 'The treasure hunt has ended'
   },
   showSture: {
-    SE: 'Visa denna för Sture',
-    EN: 'Show this to Sture'
+    SE: 'Visa denna för Stina',
+    EN: 'Show this to Stina'
   },
   goBack: {
     SE: 'Tillbaka',
@@ -60,16 +60,16 @@ export const LANGUAGE_STRINGS = {
     EN: 'Rotate your phone to find the way!'
   },
   getQR: {
-    SE: 'Tryck här när du hittat Sture!',
-    EN: 'Press here when you find Sture!'
+    SE: 'Tryck här när du hittat Stina!',
+    EN: 'Press here when you find Stina!'
   },
   far: {
-    SE: 'Sture är långt bort...',
-    EN: 'Sture is far away...'
+    SE: 'Stina är långt bort...',
+    EN: 'Stina is far away...'
   },
   medium: {
-    SE: 'Sture är närmre men fortfarande en bit bort.',
-    EN: 'Sture is closer but still far away.'
+    SE: 'Stina är närmre men fortfarande en bit bort.',
+    EN: 'Stina is closer but still far away.'
   },
   close: {
     SE: 'Du är nära',
