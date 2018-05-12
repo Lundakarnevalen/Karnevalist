@@ -187,7 +187,7 @@ class GameScreen extends Component {
           <MaterialIcons style={{marginLeft: WIDTH / 2 - 75}} size={150} name="screen-rotation" color="black"/>
           <Distance distance={dstDistance} navigation={this.props.navigation} strings={strings}/>
           <Text style={styles.bodyText}>Players: {this.state.treasureInfo.players}</Text>
-          <Text style={styles.bodyText}>Prices left: {this.state.treasureInfo.winnersLeft}</Text>
+          <Text style={styles.bodyText}>Prices left: {this.state.treasureInfo.winnersLeft - 15}</Text>
         </View>
       </View>
     )
