@@ -16,7 +16,7 @@
     "android": {
       "package": "com.lundakarnevalen2018.Karnevalist",
       "permissions": ["ACCESS_FINE_LOCATION", "VIBRATE"],
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }
