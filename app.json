@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Karnevalist",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "icon": "./assets/images/karneval-icon.png",
     "splash": {
       "image": "./assets/images/karneval-splash.png",
@@ -16,7 +16,7 @@
     "android": {
       "package": "com.lundakarnevalen2018.Karnevalist",
       "permissions": ["ACCESS_FINE_LOCATION", "VIBRATE"],
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }
