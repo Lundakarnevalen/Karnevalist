@@ -204,12 +204,13 @@ class KarnevalIDScreen extends Component {
       imageView,
       idCard,
       loadingCard,
-      baseBig
+      baseBig,
+      loadingContainer
     } = styles;
     const { userinfo, language } = this.props;
     const strings = getStrings(language, KARNEVAL_ID_SCREEN_STRINGS);
     return (
-      <View>
+      <View style={loadingContainer}>
         <View style={loadingCard}>
           <Loading
             loadingComplete={this.state.loadingComplete}

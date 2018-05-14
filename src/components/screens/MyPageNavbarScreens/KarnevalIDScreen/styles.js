@@ -51,7 +51,8 @@ export const styles = {
     backgroundColor: PINK,
     borderWidth: 8,
     borderRadius: 15,
-    borderColor: PURPLE
+    borderColor: PURPLE,
+    overflow: 'hidden'
   },
   cups: {
     height: IS_IOS ? VIEW_HEIGHT : VIEW_HEIGHT - 16,
@@ -111,5 +112,9 @@ export const styles = {
     top: HEADER_HEIGHT + 70,
     transform: [{ rotate: '90deg' }],
     left: IS_IOS ? -35 : -15
+  },
+  loadingContainer: {
+    height: HEIGHT,
+    width: WIDTH
   }
 };
