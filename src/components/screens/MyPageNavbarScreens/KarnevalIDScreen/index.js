@@ -21,6 +21,7 @@ import {
   VIEW_HEIGHT,
   PINK,
   PURPLE,
+  NOT_FOUND,
   IS_IOS
 } from 'src/helpers/Constants';
 import { setUserinfo } from 'src/actions';
@@ -30,7 +31,7 @@ import * as Animatable from 'react-native-animatable';
 import { takeSnapshotAsync } from 'expo';
 import { styles } from './styles';
 import { fetchMedcheck } from 'src/helpers/ApiManager';
-const duration = 10000;
+const duration = 15000;
 
 const cupImages = [
   {
@@ -101,10 +102,11 @@ class KarnevalIDScreen extends Component {
   }
 
   componentDidMount() {
-    this.setState({ loadingComplete: true });
+    if (this.props.userinfo.image) this.setState({ loadingComplete: true });
   }
+
   componentWillReceiveProps(props) {
-    if (props.userinfo.image && !this.props.userinfo.image)
+    if (props.userinfo.image && this.props.userinfo.image)
       this.setState({ loadingComplete: true });
   }
 
@@ -140,14 +142,16 @@ class KarnevalIDScreen extends Component {
     return (
       <TouchableOpacity
         onPress={() => {
-          if (userinfo && !userinfo.image) {
-            fetchMedcheck(userinfo.personalNumber, (success, newUserinfo) => {
-              if (success) {
-                this.props.setUserinfo({
-                  ...userinfo,
-                  ...newUserinfo
-                });
-              }
+          if (userinfo && userinfo.image === NOT_FOUND) {
+            this.setState({ karnevalIDUri: null }, () => {
+              fetchMedcheck(userinfo.personalNumber, (success, newUserinfo) => {
+                if (success) {
+                  this.props.setUserinfo({
+                    ...userinfo,
+                    ...newUserinfo
+                  });
+                }
+              });
             });
           } else {
             this.setState({ karnevalIDUri: null });
@@ -162,6 +166,7 @@ class KarnevalIDScreen extends Component {
   renderUserinfo(strings) {
     const { userinfo, language } = this.props;
     const { textStyle, infoView } = styles;
+    const section = userinfo['section' + language] || '';
     return (
       <View style={infoView}>
         <View style={{ marginTop: language === 'EN' ? -5 : 12 }}>
@@ -173,7 +178,7 @@ class KarnevalIDScreen extends Component {
           <Text style={textStyle}>
             {strings.section +
               ' ' +
-              userinfo['section' + language]
+              section
                 .split('-')
                 .slice(-1)[0]
                 .trim()}
@@ -181,7 +186,7 @@ class KarnevalIDScreen extends Component {
         </View>
         <View style={{ marginTop: 7 }}>
           <Text style={textStyle}>
-            {strings.personalNumber + ' ' + userinfo.personalNumber}
+            {strings.personalNumber + ' ' + userinfo.personalNumber || ''}
           </Text>
         </View>
       </View>
@@ -209,6 +214,10 @@ class KarnevalIDScreen extends Component {
     } = styles;
     const { userinfo, language } = this.props;
     const strings = getStrings(language, KARNEVAL_ID_SCREEN_STRINGS);
+    const userImage =
+      userinfo.image === NOT_FOUND
+        ? karnevalID.placeHolder
+        : { uri: userinfo.image };
     return (
       <View style={loadingContainer}>
         <View style={loadingCard}>
@@ -228,11 +237,7 @@ class KarnevalIDScreen extends Component {
             style={baseBig}
           />
           <View style={ppContainerStyle}>
-            <Image
-              resizeMode="cover"
-              source={{ uri: userinfo.image }}
-              style={idCard}
-            />
+            <Image resizeMode="cover" source={userImage} style={idCard} />
           </View>
           {this.renderUserinfo(strings)}
         </View>
@@ -276,15 +281,18 @@ class KarnevalIDScreen extends Component {
               </View>
             )}
             {!showBack &&
-              karnevalIDUri &&
-              userinfo.image && (
+              !!karnevalIDUri &&
+              !!userinfo.image && (
                 <Image
                   resizeMode="cover"
                   source={{ uri: karnevalIDUri }}
                   style={baseImageStyle}
                 />
               )}
-            {!showBack && !karnevalIDUri && userinfo.image && this.renderCard()}
+            {!showBack &&
+              !karnevalIDUri &&
+              !!userinfo.image &&
+              this.renderCard()}
             <View style={cups}>{cupImages.map(i => animatableImage(i))}</View>
           </Animated.View>
         </TouchableWithoutFeedback>

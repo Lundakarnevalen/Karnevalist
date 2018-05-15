@@ -7,6 +7,7 @@ import {
   USER_URL,
   CHECK_IN_URL,
   MEDCHECK_URL,
+  NOT_FOUND,
   WIDTH
 } from './Constants';
 import images from 'assets/images';
@@ -121,16 +122,26 @@ export function fetchCheckInStatus(email, token, callback) {
 }
 
 export function fetchMedcheck(pNbr, callback) {
-
   const URL = MEDCHECK_URL + pNbr;
   axios
     .get(URL)
     .then(response => {
-      const userinfo = { sectionEN: response.data.sections[0].nameEn, sectionSE: response.data.sections[0].nameSv, image:response.data.userimage }
-      if (typeof callback === 'function')callback(response.data.success, userinfo);
+      const { sections } = response.data;
+      let nameEn, nameSv;
+      if (sections && sections.length > 0) {
+        nameEn = sections[0].nameEn;
+        nameSv = sections[0].nameSv;
+      }
+      const userinfo = {
+        sectionEN: nameEn || '',
+        sectionSE: nameSv || '',
+        image: response.data.userimage || NOT_FOUND
+      };
+      if (typeof callback === 'function')
+        callback(response.data.success, userinfo);
     })
-    .catch((error) => {
-        console.log("fetching", error);
+    .catch(error => {
+      console.log('fetching', error);
       if (typeof callback === 'function') callback(false);
     });
 }
