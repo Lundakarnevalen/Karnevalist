@@ -106,7 +106,7 @@ class KarnevalIDScreen extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.userinfo.image && this.props.userinfo.image)
+    if (props.userinfo.image || this.props.userinfo.image)
       this.setState({ loadingComplete: true });
   }
 
@@ -142,7 +142,7 @@ class KarnevalIDScreen extends Component {
     return (
       <TouchableOpacity
         onPress={() => {
-          if (userinfo && userinfo.image === NOT_FOUND) {
+          if (userinfo && (userinfo.image === NOT_FOUND || !userinfo.image)) {
             this.setState({ karnevalIDUri: null }, () => {
               fetchMedcheck(userinfo.personalNumber, (success, newUserinfo) => {
                 if (success) {
