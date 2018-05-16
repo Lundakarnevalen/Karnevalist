@@ -87,7 +87,7 @@ animatableImage.propTypes = {
   source: PropTypes.shape().isRequired,
   style: PropTypes.shape().isRequired
 };
-
+const TURNING_DEG = 1;
 class KarnevalIDScreen extends Component {
   constructor(props) {
     super(props);
@@ -95,9 +95,7 @@ class KarnevalIDScreen extends Component {
       spinValue: new Animated.Value(0),
       karnevalIDUri: null,
       deg: 0,
-      turningDeg: Math.floor(Math.random() * 15) + 1,
-      loadingComplete: false,
-      showBack: false
+      loadingComplete: false
     };
   }
 
@@ -122,17 +120,35 @@ class KarnevalIDScreen extends Component {
     }
   }
 
+  handleLongPress() {
+    const startDuration = 1000;
+    this.setState({ released: false }, () => this.superSpin(startDuration));
+  }
+
+  superSpin(duration) {
+    this.state.spinValue.setValue(0);
+    const { deg, spinValue, released } = this.state;
+    Animated.timing(spinValue, {
+      toValue: 1,
+      duration: Math.max(duration, 50),
+      easing: Easing.linear
+    }).start(() => {
+      this.setState({
+        deg: deg - TURNING_DEG
+      });
+      if (!this.state.released) this.superSpin(duration - 50);
+    });
+  }
   spin() {
     this.state.spinValue.setValue(0);
-    const { deg, turningDeg } = this.state;
-    Animated.timing(this.state.spinValue, {
+    const { deg, spinValue } = this.state;
+    Animated.timing(spinValue, {
       toValue: 1,
       duration: 5000,
       easing: Easing.linear
     }).start(() => {
       this.setState({
-        deg: deg - turningDeg,
-        turningDeg: Math.floor(Math.random() * 15) + 1
+        deg: deg - TURNING_DEG
       });
     });
   }
@@ -192,16 +208,6 @@ class KarnevalIDScreen extends Component {
       </View>
     );
   }
-  renderSwapButton() {
-    return (
-      <TouchableOpacity
-        style={{ marginRight: 10 }}
-        onPress={() => this.setState({ showBack: !this.state.showBack })}
-      >
-        <MaterialIcons name={'cached'} size={35} color={'white'} />
-      </TouchableOpacity>
-    );
-  }
 
   renderCard() {
     const {
@@ -257,31 +263,27 @@ class KarnevalIDScreen extends Component {
       sponsView
     } = styles;
     const { userinfo, language } = this.props;
-    const { karnevalIDUri, deg, spinValue, showBack, turningDeg } = this.state;
+    const { karnevalIDUri, deg, spinValue, showBack } = this.state;
 
     const strings = getStrings(language, KARNEVAL_ID_SCREEN_STRINGS);
     const spin = spinValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [deg + 'deg', deg + 360 - turningDeg + 'deg']
+      outputRange: [deg + 'deg', deg + 360 - TURNING_DEG + 'deg']
     });
     const anim = { transform: [{ rotate: spin }] };
     return (
       <View style={container}>
         <Header leftIcon={this.renderRefreshButton()} title={strings.title} />
-        <TouchableWithoutFeedback onPress={() => this.spin()}>
+        <TouchableOpacity
+          activeOpacity={100}
+          onLongPress={() => this.handleLongPress()}
+          style={{ zIndex: 1000 }}
+          onPressOut={() => this.setState({ released: true })}
+          onPress={() => this.spin()}
+        >
           <Animated.View style={[card, anim]}>
             <View style={fixCircleClipping} />
-            {showBack && (
-              <View style={sponsView}>
-                <Text style={[textStyle, { fontSize: 25 }]}>Sponsored by:</Text>
-                <Image
-                  style={{ width: VIEW_HEIGHT - 100, height: WIDTH / 4 }}
-                  source={images.spons}
-                />
-              </View>
-            )}
-            {!showBack &&
-              !!karnevalIDUri &&
+            {!!karnevalIDUri &&
               !!userinfo.image && (
                 <Image
                   resizeMode="cover"
@@ -289,13 +291,10 @@ class KarnevalIDScreen extends Component {
                   style={baseImageStyle}
                 />
               )}
-            {!showBack &&
-              !karnevalIDUri &&
-              !!userinfo.image &&
-              this.renderCard()}
+            {!karnevalIDUri && !!userinfo.image && this.renderCard()}
             <View style={cups}>{cupImages.map(i => animatableImage(i))}</View>
           </Animated.View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
     );
   }
