@@ -10,7 +10,7 @@ export const treasureLongitude = 13.181820
 export const treasureLatitude = 55.684364
 
 export const startDate = new Date(2018, 4, 16, 17, 0, 0)
-export const endDate = new Date(2018, 4, 16, 21, 0, 0)
+export const endDate = new Date(2018, 4, 16, 19, 0, 0)
 
 export const basePath = 'https://api.karnevalist.se/'
 

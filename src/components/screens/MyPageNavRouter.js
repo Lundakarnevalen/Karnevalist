@@ -215,18 +215,21 @@ const TabNav = TabNavigator(
         tabBarLabel:
           KARNESKOJ_SCREEN_STRINGS.Songbook[props.screenProps.language],
         tabBarInactiveTintColor: '#A9A9A9',
-        tabBarIcon: namedTabBarIcon('sentiment-very-satisfied')
+        tabBarIcon: namedTabBarIcon('local-library')
       })
     },
     Home: {
       screen: TreasureEntryPoint,
       navigationOptions: props => ({
         tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({tintColor, focused}) => (
+        tabBarIcon: ({ tintColor, focused }) => (
           <MaterialCommunityIcons
             name="treasure-chest"
             size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}/>)})
+            color={focused ? tintColor : '#A9A9A9'}
+          />
+        )
+      })
     },
     MyProfile: {
       screen: MyProfileScreen,
