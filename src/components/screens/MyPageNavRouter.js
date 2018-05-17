@@ -221,19 +221,6 @@ const TabNav = TabNavigator(
         tabBarIcon: namedTabBarIcon('local-library')
       })
     },
-    Home: {
-      screen: TreasureEntryPoint,
-      navigationOptions: props => ({
-        tabBarLabel: HOME_SCREEN_STRINGS.title[props.screenProps.language],
-        tabBarIcon: ({ tintColor, focused }) => (
-          <MaterialCommunityIcons
-            name="treasure-chest"
-            size={SIZE}
-            color={focused ? tintColor : '#A9A9A9'}
-          />
-        )
-      })
-    },
     MyProfile: {
       screen: MyProfileScreen,
       navigationOptions: props => ({
@@ -264,7 +251,7 @@ const TabNav = TabNavigator(
   {
     tabBarPosition: 'bottom',
     animationEnabled: true,
-    initialRouteName: 'Home',
+    initialRouteName: 'KarnevalID',
     tabBarVisible: false,
     tabBarOptions: {
       showIcon: true,
