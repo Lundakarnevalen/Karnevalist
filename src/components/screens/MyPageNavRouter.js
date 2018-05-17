@@ -15,7 +15,8 @@ import {
   SECTION_PRIORITY_URL,
   PROGRESS,
   WIDTH,
-  IS_IOS
+  IS_IOS,
+  NOT_FOUND
 } from 'src/helpers/Constants';
 import HomeScreen from 'src/components/screens/MyPageNavbarScreens/HomeScreen';
 import SectionScreen from 'src/components/screens/MyPageNavbarScreens/SectionScreen';
@@ -45,6 +46,8 @@ class MyPageNavRouter extends Component {
     fetchMedcheck(this.props.userinfo.personalNumber, (success, userinfo) => {
       if (success) {
         this.props.setUserinfo({ ...this.props.userinfo, ...userinfo });
+      } else {
+        this.props.setUserinfo({ ...this.props.userinfo, image: NOT_FOUND });
       }
     });
     if (this.props.token) this.updateProgress();

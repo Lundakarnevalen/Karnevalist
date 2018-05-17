@@ -126,7 +126,7 @@ export function fetchMedcheck(pNbr, callback) {
   axios
     .get(URL)
     .then(response => {
-      const { sections } = response.data;
+      const { sections, userimage, success } = response.data;
       let nameEn, nameSv;
       if (sections && sections.length > 0) {
         nameEn = sections[0].nameEn;
@@ -135,10 +135,9 @@ export function fetchMedcheck(pNbr, callback) {
       const userinfo = {
         sectionEN: nameEn || '',
         sectionSE: nameSv || '',
-        image: response.data.userimage || NOT_FOUND
+        image: userimage || NOT_FOUND
       };
-      if (typeof callback === 'function')
-        callback(response.data.success, userinfo);
+      if (typeof callback === 'function') callback(success, userinfo);
     })
     .catch(error => {
       console.log('fetching', error);
