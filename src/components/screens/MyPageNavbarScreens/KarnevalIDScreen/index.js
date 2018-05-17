@@ -173,6 +173,7 @@ class KarnevalIDScreen extends Component {
             this.setState({ karnevalIDUri: null });
           }
         }}
+        style={{ marginRight: 10 }}
       >
         <MaterialIcons name="refresh" size={35} color="white" />
       </TouchableOpacity>
@@ -273,7 +274,7 @@ class KarnevalIDScreen extends Component {
     const anim = { transform: [{ rotate: spin }] };
     return (
       <View style={container}>
-        <Header leftIcon={this.renderRefreshButton()} title={strings.title} />
+        <Header rightIcon={this.renderRefreshButton()} title={strings.title} />
         <TouchableOpacity
           activeOpacity={100}
           onLongPress={() => this.handleLongPress()}
